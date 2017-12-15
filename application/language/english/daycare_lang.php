@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file      : daycare_lang.php
  * @author    : John Muchiri
@@ -128,9 +129,10 @@ $lang['records'] = 'Records';
 $lang['search_by'] = 'Search by';
 
 //family
-$lang['family']='Family';
+$lang['family'] = 'Family';
 
 //settings
+$lang['settings_notice'] = 'To change settings, go to <code>/application/production/config.php</code>';
 $lang['settings'] = 'Settings';
 $lang['company'] = 'Company';
 $lang['company_name'] = 'Company name';
@@ -310,8 +312,8 @@ $lang['no_known_allergies'] = 'No known allergies';
 $lang['insurance'] = 'Insurance';
 
 //payments
-$lang['membership']='Membership';
-$lang['subscription']='Subscription';
+$lang['membership'] = 'Membership';
+$lang['subscription'] = 'Subscription';
 $lang['pay'] = 'Pay';
 $lang['payments'] = 'Payments';
 $lang['account'] = 'Account';
@@ -394,4 +396,4 @@ $lang['downloads'] = 'Downloads';
 $lang['preview'] = 'Preview';
 
 //family
-$lang['update_child_notice']='To update information about this child, please contact a manager.';
+$lang['update_child_notice'] = 'To update information about this child, please contact a manager.';

@@ -48,12 +48,12 @@ class Files extends CI_Controller
     function do_upload()
     {
         $config = array(
-            'upload_path'   => './assets/documents/uploads/',
+            'upload_path' => './assets/uploads/',
             'allowed_types' => 'gif|jpg|png|jpeg',
             //'max_size'      => '100',
             //'max_width'     => '1240',
             //'max_height'    => '720',
-            'encrypt_name'  => true,
+            'encrypt_name' => true,
         );
 
 
@@ -70,13 +70,13 @@ class Files extends CI_Controller
 
             $data_ary = array(
                 'inventory_id' => $this->input->post('inventoryID'),
-                'title'        => $upload_data['client_name'],
-                'file'         => $upload_data['file_name'],
-                'width'        => $upload_data['image_width'],
-                'height'       => $upload_data['image_height'],
-                'type'         => $upload_data['image_type'],
-                'size'         => $upload_data['file_size'],
-                'date'         => time(),
+                'title' => $upload_data['client_name'],
+                'file' => $upload_data['file_name'],
+                'width' => $upload_data['image_width'],
+                'height' => $upload_data['image_height'],
+                'type' => $upload_data['image_type'],
+                'size' => $upload_data['file_size'],
+                'date' => time(),
             );
 
 
@@ -109,12 +109,12 @@ class Files extends CI_Controller
     {
         if ($id !== 0) {
             if (strpbrk($id, '.')) {
-                $data['imgWidth']  = 'auto';
+                $data['imgWidth'] = 'auto';
                 $data['imgHeight'] = 'auto';
 
                 $this->db->where('file', $id);
             } else {
-                $data['imgWidth']  = '250px';
+                $data['imgWidth'] = '250px';
                 $data['imgHeight'] = '250px';
 
                 $this->db->where('inventory_id', $id);

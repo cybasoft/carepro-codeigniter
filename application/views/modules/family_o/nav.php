@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#" onclick="window.location.href='<?php echo site_url(); ?>'">
-                <img src="<?php echo base_url().'assets/images/'.$this->company->company()->logo; ?>" class="logo"/>
+                <img src="<?php echo base_url() . 'assets/img/' . $this->config->item('logo', 'company'); ?>" class="logo"/>
             </a>
         </div>
         <div class="navbar-collapse collapse">
@@ -47,7 +47,7 @@
 //highlight current nav
 function cur_nav($page)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
 
     if ($ci->uri->segment(1) == $page) {
         return 'active';

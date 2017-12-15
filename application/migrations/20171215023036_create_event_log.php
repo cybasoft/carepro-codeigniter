@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 class Migration_create_event_log extends CI_Migration
 {
@@ -14,10 +14,6 @@ class Migration_create_event_log extends CI_Migration
         // Add Fields.
         $this->dbforge->add_field(array(
             'id' => array(
-                'type' => 'INT',
-                'constraint' => '11',
-            ),
-            'company' => array(
                 'type' => 'INT',
                 'constraint' => '11',
             ),

@@ -9,18 +9,16 @@
 					<?php echo $this->company->logo(); ?>
 						<br/>
 						<?php
-						echo $this->conf->company()->street;
-						echo br();
-						echo $this->conf->company()->city . '. ';
-						echo $this->conf->company()->state . ' ,';
-						echo $this->conf->company()->zip;
-						echo br();
-						echo $this->conf->company()->phone;
-						echo br();
-						echo $this->conf->company()->email;
-						echo br();
-						echo $this->conf->company()->website;
-						?>
+					echo $this->config->item('street', 'company');
+					echo br();
+					echo $this->config->item('city', 'company') . '. ';
+					echo $this->config->item('state', 'company') . ' ,';
+					echo $this->config->item('postal_code', 'company');
+					echo br();
+					echo $this->config->item('phone', 'company');
+					echo br();
+					echo $this->config->item('email', 'company');
+					?>
 				</div>
 			</div>
 		</div>
@@ -39,7 +37,7 @@
 				</tr>
 				<tr>
 					<td><?php echo lang('child'); ?>:</td>
-					<td><?php echo $this->children->child($invoice->child_id)->fname.' '.$this->children->child($invoice->child_id)->lname; ?></td>
+					<td><?php echo $this->children->child($invoice->child_id)->fname . ' ' . $this->children->child($invoice->child_id)->lname; ?></td>
 				</tr>
 				<tr>
 					<td><?php echo lang('date'); ?>:</td>
@@ -71,11 +69,11 @@
 				</thead>
 				<tbody>
 				<?php
-				$subTotal = 0;
-				$totalTax = 0;
-				$totalDiscount = 0;
-				foreach($invoice_items as $item) {
-					?>
+			$subTotal = 0;
+			$totalTax = 0;
+			$totalDiscount = 0;
+			foreach ($invoice_items as $item) {
+				?>
 					<tr id="new_item">
 						<td style="width:20%"><?php echo $item->item_name; ?></td>
 						<td><?php echo $item->item_description; ?></td>
@@ -85,14 +83,14 @@
 						<td class="text-right"
 							style="width:10%"><?php echo $item->item_discount; ?></td>
 						<td class="text-right" style="width:10%">
-							<?php echo(($item->item_quantity * $item->item_price) - $item->item_discount); ?>
+							<?php echo ( ($item->item_quantity * $item->item_price) - $item->item_discount); ?>
 						</td>
 					</tr>
 					<?php
-					$subTotal = $this->invoice->invoice_subtotal($invoice->id);
-					$totalDiscount = $item->item_discount + $totalDiscount;
-				}
-				?>
+				$subTotal = $this->invoice->invoice_subtotal($invoice->id);
+				$totalDiscount = $item->item_discount + $totalDiscount;
+			}
+			?>
 
 
 				<tr class="text-info">
@@ -119,21 +117,21 @@
 								<td class="text-right"><?php echo lang('amount_paid'); ?> :</td>
 								<td>
 									$ <?php
-									$totalPaid = $this->invoice->amount_paid($invoice->id);
-									echo($totalPaid > 0 ? number_format($totalPaid, 2) : "0.00"); ?>
+										$totalPaid = $this->invoice->amount_paid($invoice->id);
+										echo ($totalPaid > 0 ? number_format($totalPaid, 2) : "0.00"); ?>
 								</td>
 							</tr>
 							<tr class="text-right text-danger">
 								<td> <?php echo lang('amount_due'); ?> :</td>
 								<td>
 									<?php
-									$totalDue = $this->invoice->invoice_total_due($invoice->id);
-									if($totalDue > 0) {
-										echo $totalDue;
-									} else {
-										echo '<span class="label label-success">' . lang('refund') . '</span> ' . $totalDue;
-									}
-									?>
+								$totalDue = $this->invoice->invoice_total_due($invoice->id);
+								if ($totalDue > 0) {
+									echo $totalDue;
+								} else {
+									echo '<span class="label label-success">' . lang('refund') . '</span> ' . $totalDue;
+								}
+								?>
 								</td>
 							</tr>
 						</table>

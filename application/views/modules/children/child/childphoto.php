@@ -4,14 +4,14 @@
 
 <div class="child-thumb" style="width:200px">
 	<?php
-	if($child->photo !== "") {
-		echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/companies/'.$this->company->company()->code.'/images/children/' . $child->photo . '"/>';
-	} else {
-		echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/images/no-image.png"/>';
-	}
-	?>
+if ($child->photo !== "") {
+	echo '<img class="img-circle img-responsive img-thumbnail"
+         src="' . base_url() . 'assets/img/children/' . $child->photo . '"/>';
+} else {
+	echo '<img class="img-circle img-responsive img-thumbnail"
+         src="' . base_url() . 'assets/img/no-image.png"/>';
+}
+?>
 </div>
 
 <div class="text-center">

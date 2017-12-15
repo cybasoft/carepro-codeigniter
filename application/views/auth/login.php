@@ -1,10 +1,10 @@
 <?php
-
 if ($this->ion_auth->logged_in()) {
     redirect('dashboard', 'refresh');
 }
 
-$identity = array('name' => 'identity',
+$identity = array(
+    'name' => 'identity',
     'id' => 'identity',
     'type' => 'text',
     'value' => '',
@@ -12,7 +12,8 @@ $identity = array('name' => 'identity',
     'placeholder' => 'Username/Email',
     'required' => 'required'
 );
-$password = array('name' => 'password',
+$password = array(
+    'name' => 'password',
     'id' => 'password',
     'type' => 'password',
     'class' => 'form-control',
@@ -27,13 +28,13 @@ $password = array('name' => 'password',
         <div class="col-sm-4 col-sm-offset-2">
 
             <?php
-            if(count(validation_errors())):
+            if (count(validation_errors())) :
                 echo $this->session->flashdata('message');
             endif;
             ?>
 
             <div class="well well-form">
-                <img style="width:100%" src="<?php echo base_url(); ?>assets/images/logo.png" class="logo">
+                <img style="width:100%" src="<?php echo base_url(); ?>assets/img/logo.png" class="logo">
                 <hr/>
                 <h3>Login</h3>
 

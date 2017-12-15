@@ -1,6 +1,28 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+//company settings
+$config['company'] = array(
+    'name' => 'DaycarePRO',
+    'slogan' => '',
+    'phone' => '',
+    'fax' => '',
+    'email' => '',
+    'street' => '',
+    'city' => '',
+    'state' => '',
+    'postal_code' => '',
+    'country' => '',
+    'encrypt_key' => 'changethis',
+    'timezone' => 'America/New_York', //http://php.net/manual/en/timezones.america.php
+    'google_analytics' => '',
+    'currency_symbol' => '$',
+    'currency_abbr' => 'USD',
+    'date_format' => 'd-M-Y',
+    'logo' => 'logo.png', //logo must be in '/assets/img' directory
+    'invoice_logo' => 'logo.png' //logo must be in '/assets/img' directory
+);
+$config['allow_registration'] = FALSE;
+$config['allow_reset_password'] = TRUE;
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -23,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
  */
-$config['base_url'] = 'http://localhost:8080';
+$config['base_url'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -521,3 +543,6 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
  */
 $config['proxy_ips'] = '';
+
+$config['copyright'] = '<a href="http://amdtllc.com" target="_blank">A&M Digital
+Technologies</a>';

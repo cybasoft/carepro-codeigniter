@@ -14,7 +14,7 @@ class emergency extends CI_Controller
         //redirect session
 		$this->conf->setRedirect();
 
-		if ($this->conf->isParent() == true && $this->conf->isStaff() ! ==true) {
+		if ($this->conf->isParent() == true && $this->conf->isStaff() == FALSE) {
 			$this->conf->redirectPrev();
 		}
 

@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 class Migration_create_groups extends CI_Migration
 {
@@ -17,10 +17,6 @@ class Migration_create_groups extends CI_Migration
                 'type' => 'MEDIUMINT',
                 'constraint' => '8',
                 'unsigned' => TRUE,
-            ),
-            'company' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '5',
             ),
             'name' => array(
                 'type' => 'VARCHAR',

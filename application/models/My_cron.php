@@ -1,4 +1,4 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Class: my_cron
@@ -19,24 +19,24 @@ class my_cron extends CI_Model
 	}
 
 	/*Notify admin of event*/
-	function notify($event){
+	function notify($event)
+	{
 		$this->load->library('email');
 
-		$user=$this->users->user()->username;
-		$company=$this->company->company()->name;
+		$user = $this->users->user()->username;
 
-		$this->email->from($this->company->company()->email, $this->conf->company()->name);
+		$this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
 		$this->email->subject('Event alert!');
 
-		$msg[] = 'User: '.$user;
-		$msg[]='<br>Company'.$company;
+		$msg[] = 'User: ' . $user;
+		$msg[] = '<br>Company' . $this->config->item('name', 'company');
 		$msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
 		$msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
-		$msg[]='<hr/>'.$event;
+		$msg[] = '<hr/>' . $event;
 
 		$this->email->message(implode($msg));
 
-		if($this->email->send())
+		if ($this->email->send())
 			return true;
 		return false;
 	}
@@ -48,35 +48,37 @@ class my_cron extends CI_Model
 	 *
 	 *
 	 */
-	function notifyNewRegistration($company,$email){
-		$this->email->from('info@icoolpix.com');
-		$this->email->to('info@icoolpix.com');
+	function notifyNewRegistration($company, $email)
+	{
+		$this->email->from($this->config->item('email', 'company'));
+		$this->email->to($this->config->item('email', 'company'));
 		$this->email->subject('Registration! New user');
 
-		$msg[]="New user has registered <hr/>";
-		$msg[]=$company.'<br/> '.$email;
+		$msg[] = "New user has registered <hr/>";
+		$msg[] = $company . '<br/> ' . $email;
 
 		$msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
 		$msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
 
 		$this->email->message(implode($msg));
 
-		if($this->email->send())
+		if ($this->email->send())
 			return true;
 		return false;
 	}
 
-	function sendMail(){
+	function sendMail()
+	{
 		$this->load->library('email');
 
 		$child_id = $this->child->cid();
 
 		$parents = $this->getParents($child_id);
 
-		foreach($parents as $row) {
+		foreach ($parents as $row) {
 			$this->email->to($row->email); //email parent
 			//$this->email->cc('example@example.com');
-			$this->email->bcc($this->conf->company()->email); //email admin to log
+			$this->email->bcc($this->config->item('email', 'company')); //email admin to log
 
 
 			//echo $this->email->print_debugger();

@@ -65,11 +65,11 @@
 				</thead>
 				<tbody>
 				<?php
-				$subTotal = 0;
-				$totalTax = 0;
-				$totalDiscount = 0;
-				foreach($invoice_items as $item) {
-					?>
+			$subTotal = 0;
+			$totalTax = 0;
+			$totalDiscount = 0;
+			foreach ($invoice_items as $item) {
+				?>
 					<tr id="new_item">
 						<td style="width:20%">
 							<input disabled name="item_name[]"
@@ -105,7 +105,7 @@
 								   class="form-control text-right"
 								   readonly
 								   name="item_sub_total"
-								   value="<?php echo(($item->item_quantity * $item->item_price) - $item->item_discount); ?>"/>
+								   value="<?php echo ( ($item->item_quantity * $item->item_price) - $item->item_discount); ?>"/>
 						</td>
 						<td>
                                             <span class="glyphicon glyphicon-trash cursor"
@@ -113,10 +113,10 @@
 						</td>
 					</tr>
 					<?php
-					$subTotal = $this->invoice->invoice_subtotal($invoice->id);
-					$totalDiscount = $item->item_discount + $totalDiscount;
-				}
-				?>
+				$subTotal = $this->invoice->invoice_subtotal($invoice->id);
+				$totalDiscount = $item->item_discount + $totalDiscount;
+			}
+			?>
 				</tbody>
 			</table>
 		</div>
@@ -131,21 +131,21 @@
 						<?php echo lang('discounts'); ?>
 					</td>
 					<td class="col-sm-2">
-						<?php echo $this->conf->company()->curr_symbol . number_format($totalDiscount, 2); ?>
+						<?php echo $this->config->item('currency_symbol', 'company') . number_format($totalDiscount, 2); ?>
 					</td>
 				</tr>
 				<tr class="text-right">
 					<td colspan="6" class="no-border"> <?php echo lang('sub_total'); ?> :</td>
-					<td><?php echo $this->conf->company()->curr_symbol;
-						echo number_format($subTotal, 2); ?></td>
+					<td><?php echo $this->config->item('currency_symbol', 'company');
+								echo number_format($subTotal, 2); ?></td>
 				</tr>
 				<tr class="text-right text-success">
 					<td colspan="6" class="no-border"><?php echo lang('amount_paid'); ?> :</td>
 					<td>
 						<?php
-						echo $this->conf->company()->curr_symbol;
-						$totalPaid = $this->invoice->amount_paid($invoice->id);
-						echo($totalPaid > 0 ? number_format($totalPaid, 2) : "0.00"); ?>
+					echo $this->config->item('currency_symbol', 'company');
+					$totalPaid = $this->invoice->amount_paid($invoice->id);
+					echo ($totalPaid > 0 ? number_format($totalPaid, 2) : "0.00"); ?>
 					</td>
 					<td style="width:60px" class="no-border"></td>
 				</tr>
@@ -153,13 +153,13 @@
 					<td colspan="6" class="no-border "> <?php echo lang('amount_due'); ?> :</td>
 					<td>
 						<?php
-						$totalDue = number_format($subTotal - $totalPaid, 2);
-						if($totalDue > 0) {
-							echo $this->conf->company()->curr_symbol . $totalDue;
-						} else {
-							echo '<span class="label label-success">' . lang('refund') . '</span> ' . $this->conf->company()->curr_symbol . $totalDue;
-						}
-						?>
+					$totalDue = number_format($subTotal - $totalPaid, 2);
+					if ($totalDue > 0) {
+						echo $this->config->item('currency_symbol', 'company') . $totalDue;
+					} else {
+						echo '<span class="label label-success">' . lang('refund') . '</span> ' . $this->config->item('currency_symbol', 'company') . $totalDue;
+					}
+					?>
 					</td>
 				</tr>
 				</tbody>

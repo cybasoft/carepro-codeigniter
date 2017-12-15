@@ -1,21 +1,21 @@
 <div class="row">
-	<?php foreach($pickups as $pickup): ?>
+	<?php foreach ($pickups as $pickup) : ?>
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<table class="table table-bordered parent-info">
 				<tr>
 					<td class="col-sm-2">
 						<div data-toggle="modal" data-target="#new-pickup-photo">
 							<?php
-							if($pickup->photo !== "") {
-								echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/companies/' . $this->company->company()->code . '/images/pickup/' . $pickup->photo . '"/>';
+						if ($pickup->photo !== "") {
+							echo '<img class="img-circle img-responsive img-thumbnail"
+         src="' . base_url() . 'assets/img/pickup/' . $pickup->photo . '"/>';
 
-							} else {
-								echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/images/no-image.png"/>';
-							}
+						} else {
+							echo '<img class="img-circle img-responsive img-thumbnail"
+         src="' . base_url() . 'assets/img/no-image.png"/>';
+						}
 
-							?>
+						?>
 
 						</div>
 					</td>
@@ -43,8 +43,8 @@
 								<td>
 									<div class="parent-address">
 										<?php
-										echo $pickup->address;
-										?>
+									echo $pickup->address;
+									?>
 									</div>
 								</td>
 							</tr>

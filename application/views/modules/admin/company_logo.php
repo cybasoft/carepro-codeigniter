@@ -1,4 +1,4 @@
-<?php echo $this->company->logo(); ?>
+<img src="<?php echo base_url() . 'assets/img/' . $this->config->item('logo', 'company'); ?>"/>
 <hr/>
 <div class="alert alert-warning">
 	Logo dimensions should be 500px x 112px or lower
@@ -7,6 +7,6 @@
 	Logo size should be 2MB (2048kb) lower
 </div>
 <?php echo form_open_multipart('settings/upload_logo', 'class="input-group"'); ?>
-<input class="form-control" type="file" name="company_logo"/>
+<input class="form-control" type="file" name="logo"/>
 <span class="input-group-btn"><button class="btn btn-default"><?php echo lang('update'); ?></button></span>
 <?php echo form_close(); ?>

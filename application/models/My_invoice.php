@@ -223,7 +223,7 @@ class My_invoice extends CI_Model
     {
         //todo remove this and references moved to daycare library
         $url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick';
-        $business = $this->company->company()->paypal_email;
+        $business = $this->config->item('email', 'company');
         $lc = "US";
         $item_name = $item;
         $item_number = 'DayCare_' . $invoice_id;
@@ -269,7 +269,7 @@ class My_invoice extends CI_Model
         $totalPrice = 0;
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
-                $totalPrice = (($row->item_price * $row->item_quantity) - $row->item_discount) + $totalPrice;
+                $totalPrice = ( ($row->item_price * $row->item_quantity) - $row->item_discount) + $totalPrice;
             }
             return number_format($totalPrice, 2);
         } else {
@@ -350,7 +350,7 @@ class My_invoice extends CI_Model
                 $stamp = "";
             }
         }
-        return '<img src="' . base_url() . 'assets/images/icons/' . $stamp . '_stamp.png" class="stamp"/>';
+        return '<img src="' . base_url() . 'assets/img/icons/' . $stamp . '_stamp.png" class="stamp"/>';
     }
 
     function getInvoice($invoice_id)

@@ -13,12 +13,12 @@ $email = array(
             <div class="col-sm-4 col-sm-offset-2">
 
                 <?php
-                if(count(validation_errors())):
+                if (count(validation_errors())) :
                     echo $this->session->flashdata('message');
                 endif;
                 ?>
                 <div class="well well-form">
-                    <img style="width: 100%;" src="<?php echo base_url(); ?>assets/images/logo.png" class="logo">
+                    <img style="width: 100%;" src="<?php echo base_url(); ?>assets/img/logo.png" class="logo">
                     <hr/>
                     <h3>Reset password</h3>
                     <?php echo form_open("auth/forgot_password"); ?>
@@ -33,8 +33,7 @@ $email = array(
                     <?php echo anchor('login', '<i class="glyphicon glyphicon-link"></i>login', 'style="float:right"'); ?>
                     <?php echo form_close(); ?>
                     <hr/>
-                    &copy; <?php echo date('Y'); ?> <a href="http://amdtllc.com" target="_blank">A&M Digital
-                        Technologies</a>
+                    &copy; <?php echo date('Y'); ?> <?php echo $this->config->item('copyright'); ?>
                 </div>
             </div>
         </div>

@@ -21,65 +21,65 @@
 	</div>
 	<div class="col-lg-4 col-md-4 col-lg-4">
 		<?php echo anchor('children/register', '<span class="glyphicon glyphicon-plus"></span>'
-			. lang('register') . ' ' . lang('child'), 'class="btn btn-primary btn-flat"'); ?>
+		. lang('register') . ' ' . lang('child'), 'class="btn btn-primary btn-flat"'); ?>
 	</div>
 </div>
 <hr/>
 <div class="row">
 	<div class="col-lg-12 col-md-12 col-lg-12">
 		<?php
-		$page_name = $this->uri->segment(2);
-		if(!isset($_GET['limit'])) {
-			$limit = 5;
-		} else {
-			$limit = $_GET['limit'];
-		}
-		if(strlen($limit) > 0 and !is_numeric($limit)) {
-			echo 'Data Error';
-			exit;
-		}
+	$page_name = $this->uri->segment(2);
+	if (!isset($_GET['limit'])) {
+		$limit = 5;
+	} else {
+		$limit = $_GET['limit'];
+	}
+	if (strlen($limit) > 0 and !is_numeric($limit)) {
+		echo 'Data Error';
+		exit;
+	}
 
-		if(!isset($_GET['start'])) {
-			$start = 0;
-		} else {
-			$start = $_GET['start'];
-		}
-		if(strlen($start) > 0 and !is_numeric($start)) {
-			echo 'Data Error';
-			exit;
-		}
+	if (!isset($_GET['start'])) {
+		$start = 0;
+	} else {
+		$start = $_GET['start'];
+	}
+	if (strlen($start) > 0 and !is_numeric($start)) {
+		echo 'Data Error';
+		exit;
+	}
 
 		//selected option
-		function list_selected($select)
-		{
-			if(isset($_GET['limit'])) {
-				$limit = $_GET['limit'];
-			} else {
-				$limit = '';
-			}
-			if($limit == $select) {
-				return 'selected';
-			}
-			return false;
+	function list_selected($select)
+	{
+		if (isset($_GET['limit'])) {
+			$limit = $_GET['limit'];
+		} else {
+			$limit = '';
 		}
+		if ($limit == $select) {
+			return 'selected';
+		}
+		return false;
+	}
 
 		//pagination limits
-		$eu = ($start - 0);
+	$eu = ($start - 0);
 
-		if(!$limit > 0) {
-			$limit = 10; //default limit
-		}
-		$this1 = $eu + $limit;
-		$back = $eu - $limit;
-		$next = $eu + $limit;
+	if (!$limit > 0) {
+		$limit = 10; //default limit
+	}
+	$this1 = $eu + $limit;
+	$back = $eu - $limit;
+	$next = $eu + $limit;
 
-		if($this->input->post('search')) {
-			$this->db->like($this->input->post('search_term'), $this->input->post('search'));
-		}
-		$this->db->limit($limit, $eu);
-		$query = $this->db->where('company',$this->conf->cid())->get('children');
-		foreach($query->result() as $row):
-			?>
+	if ($this->input->post('search')) {
+		$this->db->like($this->input->post('search_term'), $this->input->post('search'));
+	}
+	$this->db->limit($limit, $eu);
+	$query = $this->db->get('children');
+	foreach ($query->result() as $row) :
+	?>
 			<div class="col-sm-3 col-md-3 col-lg-3" style="width:320px">
 				<div class="box box-solid box-success">
 					<div class="box-header">
@@ -92,14 +92,14 @@
 							<div class="col-sm-5 col-md-5 col-lg-5 image pull-left">
 								<div>
 								<?php
-								if($row->photo !== "") {
-									echo '<img class="img-circle"
-         src="' . base_url() . 'assets/companies/'.$this->company->company()->code.'/images/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
-								} else {
-									echo '<img class="img-circle"
-         src="' . base_url() . 'assets/images/no-image.png" style="width: 120px; height:120px"/>';
-								}
-								?>
+							if ($row->photo !== "") {
+								echo '<img class="img-circle"
+         src="' . base_url() . 'assets/img/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
+							} else {
+								echo '<img class="img-circle"
+         src="' . base_url() . 'assets/img/no-image.png" style="width: 120px; height:120px"/>';
+							}
+							?>
 								</div>
 							</div>
 							<div class="col-sm-7 col-md-7 col-lg-7 pull-right">
@@ -116,13 +116,13 @@
 						</div>
 					</div>
 					<div class="box-footer">
-						<?php if($this->child->is_checked_in($row->id) == 1): ?>
+						<?php if ($this->child->is_checked_in($row->id) == 1) : ?>
 							<a id="<?php echo $row->id; ?>" href="#"
 							   class="btn btn-danger btn-flat btn-sm child-check-out">
 								<span class="glyphicon glyphicon-new-window"></span>
 								<?php echo lang('check_out'); ?>
 							</a>
-						<?php else: ?>
+						<?php else : ?>
 							<a id="<?php echo $row->id; ?>" href="#"
 							   class="btn btn-primary btn-flat btn-sm child-check-in">
 								<span class="glyphicon glyphicon-check"></span>
@@ -147,28 +147,28 @@
 		<div class="btn-group">
 			<?php
 			//navigation
-			if($back >= 0) {
-				echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $back . '&limit=' . $limit . '">&laquo;</a>';
+		if ($back >= 0) {
+			echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $back . '&limit=' . $limit . '">&laquo;</a>';
+		} else {
+			echo '<button disabled class="btn btn-default">&laquo;</button>';
+		}
+		$i = 0;
+		$l = 1;
+		for ($i = 0; $i < $this->children->getCount(); $i = $i + $limit) {
+			if ($i <> $eu) {
+				echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $i . '&limit=' . $limit . '">' . $l . '</a>';
 			} else {
-				echo '<button disabled class="btn btn-default">&laquo;</button>';
+				echo '<button class="btn btn-danger">' . $l . '</button>';
 			}
-			$i = 0;
-			$l = 1;
-			for($i = 0; $i < $this->children->getCount(); $i = $i + $limit) {
-				if($i <> $eu) {
-					echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $i . '&limit=' . $limit . '">' . $l . '</a>';
-				} else {
-					echo '<button class="btn btn-danger">' . $l . '</button>';
-				}
-				$l = $l + 1;
-			}
+			$l = $l + 1;
+		}
 
-			if($this1 < $this->children->getCount()) {
-				echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $next . '&limit=' . $limit . '">&raquo;</a>';
-			} else {
-				echo '<button disabled class="btn btn-default">&raquo;</button>';
-			}
-			?>
+		if ($this1 < $this->children->getCount()) {
+			echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $next . '&limit=' . $limit . '">&raquo;</a>';
+		} else {
+			echo '<button disabled class="btn btn-default">&raquo;</button>';
+		}
+		?>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 class Migration_create_news extends CI_Migration
 {
@@ -16,10 +16,6 @@ class Migration_create_news extends CI_Migration
             'id' => array(
                 'type' => 'INT',
                 'constraint' => '10',
-            ),
-            'company' => array(
-                'type' => 'INT',
-                'constraint' => '11',
             ),
             'user_id' => array(
                 'type' => 'INT',

@@ -7,17 +7,17 @@
  */
 class pickup extends CI_Controller
 {
-    function __construct()
-    {
-        parent::__construct();
+	function __construct()
+	{
+		parent::__construct();
 
         //redirect session
-        $this->conf->setRedirect();
+		$this->conf->setRedirect();
 
-		if($this->conf->isParent()==true && $this->conf->isStaff() !==true){
+		if ($this->conf->isParent() == true && $this->conf->isStaff() !== true) {
 			$this->conf->redirectPrev();
 		}
-    }
+	}
 
 	/*
 	 * add pickup contact
@@ -28,7 +28,7 @@ class pickup extends CI_Controller
 		$this->form_validation->set_rules('lname', lang('last_name'), 'required|trim|xss_clean');
 		$this->form_validation->set_rules('cell', lang('cellphone'), 'required|integer|xss_clean');
 		$this->form_validation->set_rules('pin', lang('pin'), 'required|integer|trim|xss_clean');
-		if($this->form_validation->run() == TRUE) {
+		if ($this->form_validation->run() == TRUE) {
 			$this->child->add_pickup_contact();
 		} else {
 			$this->conf->msg('danger', 'Error!');
@@ -42,13 +42,13 @@ class pickup extends CI_Controller
 	function delete_pickup($pickup_id)
 	{
 		//delete images
-		$upload_path = './assets/companies/'.$this->company->company()->code.'/images/pickup';
+		$upload_path = './assets/img/pickup';
 
 		$this->db->where('child_id', $this->child->getID()); //only able to delete selected child data
 		$this->db->where('id', $pickup_id);
 		$q = $this->db->get('child_pickup');
-		foreach($q->result() as $r) {
-			if($r->photo !== ""):
+		foreach ($q->result() as $r) {
+			if ($r->photo !== "") :
 				unlink($upload_path . '/' . $r->photo);
 			endif;
 		}
@@ -56,7 +56,7 @@ class pickup extends CI_Controller
 		//delete entry
 		$this->db->where('child_id', $this->child->getID()); //only able to delete selected child data
 		$this->db->where('id', $pickup_id);
-		if($this->db->delete('child_pickup')) {
+		if ($this->db->delete('child_pickup')) {
 			$this->conf->msg('success', lang('request_success'));
 		} else {
 			$this->conf->msg('danger', lang('request_error'));
@@ -64,15 +64,15 @@ class pickup extends CI_Controller
 		$this->conf->redirectPrev();
 	}
 
-	function upload_photo($id="")
+	function upload_photo($id = "")
 	{
-		if(!$this->conf->isStaff()) $this->conf->redirectPrev();
+		if (!$this->conf->isStaff()) $this->conf->redirectPrev();
 
-		$upload_path = './assets/companies/'.$this->company->company()->code.'/images/pickup';
+		$upload_path = './assets/img/pickup';
 		$upload_db = 'child_pickup';
 
-		if(!file_exists($upload_path)){
-			mkdir($upload_path,755,true);
+		if (!file_exists($upload_path)) {
+			mkdir($upload_path, 755, true);
 		}
 
 		if ($id == "") { //make sure there are arguments
@@ -81,12 +81,12 @@ class pickup extends CI_Controller
 		}
 
 		$config = array(
-			'upload_path'   => $upload_path,
+			'upload_path' => $upload_path,
 			'allowed_types' => 'gif|jpg|png|jpeg',
 			//'max_size'      => '100',
-			'max_width'     => '1240',
-			'max_height'    => '1240',
-			'encrypt_name'  => true,
+			'max_width' => '1240',
+			'max_height' => '1240',
+			'encrypt_name' => true,
 		);
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload()) {
@@ -96,16 +96,16 @@ class pickup extends CI_Controller
 			$this->db->where('id', $id);
 			$q = $this->db->get($upload_db);
 			foreach ($q->result() as $r) {
-				if ($r->photo !== ""):
+				if ($r->photo !== "") :
 					unlink($upload_path . '/' . $r->photo);
-					$data['photo'] = '';
-					$this->db->where('id', $id);
-					$this->db->update($upload_db, $data);
+				$data['photo'] = '';
+				$this->db->where('id', $id);
+				$this->db->update($upload_db, $data);
 				endif;
 			}
 			//upload new photo
 			$upload_data = $this->upload->data();
-			$data_ary    = array(
+			$data_ary = array(
 				'photo' => $upload_data['file_name']
 			);
 			$this->db->where('id', $id);

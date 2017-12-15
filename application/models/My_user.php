@@ -1,4 +1,4 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Filename: ${FILE_NAME}
@@ -27,14 +27,13 @@ class MY_user extends CI_Model
 			'country' => $this->input->post('country')
 		);
 		$this->db->where('user_id', $id);
-		if($this->db->update('user_data', $data))
+		if ($this->db->update('user_data', $data))
 			return true;
 		return false;
 	}
 
 	function users()
 	{
-		$this->db->where('company', $this->conf->cid());
 		//$this->db->select('*,users.id as uid');
 		$this->db->select('*');
 		$this->db->from('users');
@@ -44,7 +43,7 @@ class MY_user extends CI_Model
 
 	function user($id = null)
 	{
-		if($id == null) {
+		if ($id == null) {
 			$uid = $this->uid();
 		} else {
 			$uid = $id;
@@ -56,33 +55,33 @@ class MY_user extends CI_Model
 		$this->db->from('users');
 		$this->db->join('user_data', 'user_data.user_id=users.id');
 		$query = $this->db->get();
-		if($query->num_rows() > 0) {
+		if ($query->num_rows() > 0) {
 			return $query->row();
 		}
 		return false;
 		//return $this->db->get('users')->row();
 	}
 
-    /**
-     * @param null $id
-     * @param null $item
-     * @return string
-     */
-	function userData($id = null,$item=null)
+	/**
+	 * @param null $id
+	 * @param null $item
+	 * @return string
+	 */
+	function userData($id = null, $item = null)
 	{
-		if($id == null) {
+		if ($id == null) {
 			$uid = $this->uid();
 		} else {
 			$uid = $id;
 		}
 		$this->db->where('user_id', $uid);
-        $data=$this->db->get('user_data');
-		if($item ==null)
+		$data = $this->db->get('user_data');
+		if ($item == null)
 			return $data->row();
 
-        if($data->num_rows() >0)
-            return $data->row()->$item;
-        return "";
+		if ($data->num_rows() > 0)
+			return $data->row()->$item;
+		return "";
 	}
 
 	/**
@@ -97,7 +96,7 @@ class MY_user extends CI_Model
 		$this->db->where('users_groups.user_id', $user);
 		$this->db->from('users_groups');
 		$this->db->join('groups', 'users_groups.group_id=groups.id');
-		if($this->db->get()->num_rows() > 0)
+		if ($this->db->get()->num_rows() > 0)
 			return true;
 		return false;
 	}
@@ -113,7 +112,7 @@ class MY_user extends CI_Model
 		- user_id
 		- username
 		- status
-		*/
+		 */
 		return $this->session->userdata($item);
 	}
 
@@ -125,10 +124,10 @@ class MY_user extends CI_Model
 
 	function getUser($id = "", $item)
 	{
-		if($id !== "") {
+		if ($id !== "") {
 			$this->db->where('id', $id);
 			$q = $this->db->get('users');
-			foreach($q->result() as $row) {
+			foreach ($q->result() as $row) {
 				return $row->$item;
 			}
 		}
@@ -144,7 +143,7 @@ class MY_user extends CI_Model
 	function checkData($uid)
 	{
 		$this->db->where('user_id', $uid);
-		if($this->db->get('user_data')->num_rows() == 0) {
+		if ($this->db->get('user_data')->num_rows() == 0) {
 			$data['user_id'] = $uid;
 			$this->db->insert('user_data', $data);
 		}
@@ -153,19 +152,19 @@ class MY_user extends CI_Model
 	/*
 	 * get photo of user
 	 */
-	function getPhoto($uid="",$class='img-circle')
+	function getPhoto($uid = "", $class = 'img-circle')
 	{
-		if($uid=""){
+		if ($uid = "") {
 			$id = $this->uid();
-		}else{
+		} else {
 			$id = $uid;
 		}
-		if($this->users->user($id)->photo !== "") {
-			echo '<img class="'.$class.'"
-         src="' . base_url() . 'assets/companies/' . $this->company->company()->code . '/images/staff/' . $this->users->user($id)->photo . '"/>';
+		if ($this->users->user($id)->photo !== "") {
+			echo '<img class="' . $class . '"
+         src="' . base_url() . 'assets/img/staff/' . $this->users->user($id)->photo . '"/>';
 		} else {
-			echo '<img class="'.$class.'"
-         src="' . base_url() . 'assets/images/no-image.png"/>';
+			echo '<img class="' . $class . '"
+         src="' . base_url() . 'assets/img/no-image.png"/>';
 		}
 
 	}

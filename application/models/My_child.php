@@ -18,7 +18,6 @@ class My_child extends CI_Model
 	 */
 	function children()
 	{
-		$this->db->where('company', $this->conf->company()->id);
 		return $this->db->get('children');
 	}
 
@@ -58,7 +57,6 @@ class My_child extends CI_Model
 			'gender' => $this->input->post('gender'),
 			'enroll_date' => time(),
 			'last_update' => time(),
-			'company' => $this->conf->company()->id,
 			'status' => 1
 		);
 		$this->db->insert('children', $data);
@@ -443,7 +441,7 @@ class My_child extends CI_Model
 	function notify_parent_checkin_out($child_id, $type)
 	{
 		$this->load->library('email');
-		$this->email->from($this->company->company()->email, $this->company->company()->name);
+		$this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
 		//get parents info
 		$parents = $this->getParents($child_id);
 
@@ -456,7 +454,7 @@ class My_child extends CI_Model
 
 			$this->email->to($row->email); //email parent
 			//$this->email->cc('example@example.com');
-			$this->email->bcc($this->company->company()->email); //email admin to log
+			$this->email->bcc($this->config->item('email', 'company')); //email admin to log
 			switch ($type) {
 				case 'checkin':
 					$this->email->subject(lang('check_in_alert_subject') . ' ' . $this->child($child_id)->fname);
@@ -506,7 +504,6 @@ class My_child extends CI_Model
 	 */
 	function getParent($id = null)
 	{
-		$this->db->where('children.company', $this->conf->cid());
 		$this->db->where('children.id', $id);
 		$this->db->select('*');
 		$this->db->from('children');

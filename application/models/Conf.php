@@ -16,7 +16,6 @@ class Conf extends CI_Model
 		$this->load->model('My_child', 'children');
 		$this->load->model('My_child', 'child');
 		$this->load->model('My_user', 'users');
-		$this->load->model('My_company', 'company');
 		$this->load->model('My_mailbox', 'mail');
 		$this->load->model('My_broadcast', 'broadcast');
 		$this->load->model('My_cron', 'cron');
@@ -32,7 +31,7 @@ class Conf extends CI_Model
 		$this->maintenance();
 
 		//enforce encryption
-		$this->enforce_encryption();
+		$this->check_encrypt_key();
 
 		$this->setRedirect(); //remember current page
 	}
@@ -40,8 +39,8 @@ class Conf extends CI_Model
 	function loginInit()
 	{
 		if ($this->logged_in() == true) {
-			$this->config->set_item('encryption_key', $this->settings()->encrypt_key);
-			date_default_timezone_set($this->settings()->time_zone);
+			$this->config->set_item('encryption_key', $this->config->item('encrypt_key', 'company'));
+			date_default_timezone_set($this->config->item('timezone', 'company'));
 		}
 	}
 
@@ -72,30 +71,6 @@ class Conf extends CI_Model
 		return $this->db->get('settings')->row()->$item;
 	}
 
-	function company($id = null)
-	{
-		$cid = $this->sess('company_id');
-		if ($id == null) {
-			$this->db->where('id', $cid);
-		} else if ($cid == 0) {
-			$this->msg('danger', lang('request_error') . ' > unable to find your company. Contact support');
-			redirect('logout', 'refresh');
-		} else {
-			$this->db->where('id', $id);
-		}
-		return $this->db->get('companies')->row();
-	}
-
-	function cid()
-	{
-		return $this->sess('company_id');
-	}
-
-	/*
-	 * enforce_encryption
-	 * ensure encryption key is set
-	 */
-
 	function demo()
 	{
 		if ($this->users->uid() > 0) {
@@ -108,19 +83,6 @@ class Conf extends CI_Model
 			}
 		}
 
-	}
-
-	/*
-	 * restrict data changes in demo company
-	 */
-	function demoCompany()
-	{
-		if ($this->session->userdata('company_id') == 1) {
-			if ($_POST) {
-				$this->msg('danger', 'This is a demo company. No changes are allowed. You are welcome to look around though');
-				redirect('dashboard');
-			}
-		}
 	}
 
 	/*
@@ -205,19 +167,6 @@ class Conf extends CI_Model
 	function version()
 	{
 		return '1.0.11';
-	}
-
-	function enforce_encryption()
-	{
-		$this->load->helper('language');
-		if ($this->logged_in()) {
-			if ($this->uri->segment(1) !== "admin" || $this->uri->segment(1) !== "settings") {
-				if ($this->company()->encrypt_key == 0 || $this->company()->encrypt_key == "") {
-					$this->msg('danger', lang('encryption_key_warning'));
-					//redirect('admin#settings');
-				}
-			}
-		}
 	}
 
 	function page($page, $data = array())
@@ -409,7 +358,7 @@ class Conf extends CI_Model
 	function encrypt($msg)
 	{
 		$this->check_encrypt_key();
-		$key = $this->company()->encrypt_key;
+		$key = $this->config->item('encrypt_key', 'company');
 		return $this->encrypt->encode($msg, $key);
 	}
 
@@ -423,7 +372,7 @@ class Conf extends CI_Model
 	function decrypt($msg)
 	{
 		$this->check_encrypt_key();
-		$key = $this->company()->encrypt_key;
+		$key = $this->config->item('encrypt_key', 'company');
 		return $this->encrypt->decode($msg, $key);
 	}
 
@@ -436,11 +385,14 @@ class Conf extends CI_Model
 	 */
 	function check_encrypt_key()
 	{
-		//encryption enabled?
-		if ($this->company()->encrypt_key == "") {
-			$this->load->helper('language');
-			$this->msg('danger', lang('encryption_key_warning'));
-			redirect('admin#settings');
+		$this->load->helper('language');
+		if ($this->logged_in()) {
+			if ($this->uri->segment(1) !== "admin" || $this->uri->segment(1) !== "settings") {
+				if ($this->config->item('encrypt_key', 'company') == 0 || $this->config->item('encrypt_key', 'company') == "") {
+					$this->msg('danger', lang('encryption_key_warning'));
+					//redirect('admin#settings');
+				}
+			}
 		}
 	}
 	
@@ -453,36 +405,12 @@ class Conf extends CI_Model
 	function log($event)
 	{
 		$data = array(
-			'company' => $this->company->cid(),
 			'user_id' => $this->users->uid(),
 			'date' => time(),
 			'event' => $event
 		);
 		if ($this->db->insert('event_log', $data))
 			return true;
-		return false;
-	}
-
-	/*
-	 * @method belongsTo
-	 * @params $id int
-	 * @params $db string
-	 * check whether item belongs to this company
-	 */
-	function belongsTo($id, $db)
-	{
-		if ($id == "" || $db == "") {
-			redirect('children', 'refresh');
-		}
-		$this->db->where('id', $id);
-		$this->db->where('company', $this->company->cid());
-		$query = $this->db->get($db);
-		if ($query->num_rows > 0) {
-			return true;
-		} else {
-			$this->conf->msg('danger', 'What you are looking for was not found not found');
-			redirect('children', 'refresh');
-		}
 		return false;
 	}
 

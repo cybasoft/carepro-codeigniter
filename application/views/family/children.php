@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-12">
-		<?php if($children->num_rows() > 0): ?>
-			<?php foreach($children->result() as $row): ?>
+		<?php if ($children->num_rows() > 0) : ?>
+			<?php foreach ($children->result() as $row) : ?>
 				<div class="col-sm-3 col-md-3 col-lg-3" style="width:320px">
 					<div class="box box-solid box-success">
 						<div class="box-header">
@@ -14,14 +14,14 @@
 								<div class="col-sm-5 col-md-5 col-lg-5 image pull-left">
 									<div>
 										<?php
-										if($row->photo !== "") {
-											echo '<img class="img-circle"
-         src="' . base_url() . 'assets/companies/' . $this->company->company()->code . '/images/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
-										} else {
-											echo '<img class="img-circle"
-         src="' . base_url() . 'assets/images/no-image.png" style="width: 120px; height:120px"/>';
-										}
-										?>
+									if ($row->photo !== "") {
+										echo '<img class="img-circle"
+         src="' . base_url() . 'assets/img/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
+									} else {
+										echo '<img class="img-circle"
+         src="' . base_url() . 'assets/img/no-image.png" style="width: 120px; height:120px"/>';
+									}
+									?>
 									</div>
 								</div>
 								<div class="col-sm-7 col-md-7 col-lg-7 pull-right">
@@ -60,15 +60,15 @@
 					</div>
 				</div>
 			<?php endforeach; ?>
-		<?php else: ?>
+		<?php else : ?>
 			<div class="callout callout-danger">
 				<h4>There are children associated with your profile.
 					If this is a mistake and your child has been registered,
 					please contact a staff member.</h4>
 
-				<p class="text-bold">Phone: <?php echo $this->conf->company()->phone; ?></p>
+				<p class="text-bold">Phone: <?php echo $this->config->item('phone', 'company'); ?></p>
 
-				<p class="text-bold">Email: <?php echo $this->conf->company()->email; ?></p>
+				<p class="text-bold">Email: <?php echo $this->config->item('email', 'company'); ?></p>
 			</div>
 		<?php endif; ?>
 	</div>

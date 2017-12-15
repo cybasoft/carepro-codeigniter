@@ -38,7 +38,7 @@ class Dashboard extends CI_Controller
 
 	function logo2()
 	{
-		$image = base_url() . 'assets/images/t.jpg';
+		$image = base_url() . 'assets/img/t.jpg';
 		header("Content-type: image/jpeg");
 		$string = "DaycarePRO";
 

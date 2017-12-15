@@ -1,6 +1,9 @@
 .DS_Store
 
 application/cache/*
+application/config/development/*
+application/config/testing/*
+
 !application/cache/index.html
 
 application/logs/*

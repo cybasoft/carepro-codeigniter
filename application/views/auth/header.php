@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title><?php echo $this->conf->settings()->name; ?></title>
+    <title><?php echo $this->config->item('name'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="A&M Digital Technologies">
@@ -31,7 +31,7 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', '<?php echo $this->conf->settings()->google_analytics; ?>', 'auto');
+        ga('create', '<?php echo $this->config->item('google_analytics', 'company'); ?>', 'auto');
         ga('require', 'displayfeatures');
         ga('send', 'pageview');
     </script>

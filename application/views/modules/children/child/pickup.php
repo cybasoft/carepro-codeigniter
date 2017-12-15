@@ -4,24 +4,24 @@
 
 		<table class="table table-bordered parent-info">
 			<?php
-			$this->db->where('child_id',$this->child->getID());
-			$pickups = $this->db->get('child_pickup');
-			foreach($pickups->result() as $pickup): //iterate through users
-				?>
+		$this->db->where('child_id', $this->child->getID());
+		$pickups = $this->db->get('child_pickup');
+		foreach ($pickups->result() as $pickup) : //iterate through users
+		?>
 				<tr>
 					<td class="col-sm-2">
 						<div data-toggle="modal" data-target="#new-pickup-photo">
 							<?php
-							if($pickup->photo !== "") {
-								echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/companies/'.$this->company->company()->code.'/images/pickup/' . $pickup->photo . '"/>';
+						if ($pickup->photo !== "") {
+							echo '<img class="img-circle img-responsive img-thumbnail"
+         src="' . base_url() . 'assets/img/pickup/' . $pickup->photo . '"/>';
 
-							} else {
-								echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/images/no-image.png"/>';
-							}
+						} else {
+							echo '<img class="img-circle img-responsive img-thumbnail"
+         src="' . base_url() . 'assets/img/no-image.png"/>';
+						}
 
-							?>
+						?>
 
 						</div>
 					</td>
@@ -49,8 +49,8 @@
 								<td>
 									<div class="parent-address">
 										<?php
-										echo $pickup->address;
-										?>
+									echo $pickup->address;
+									?>
 									</div>
 								</td>
 							</tr>
@@ -68,7 +68,7 @@
                                title="Send email"
                                class="send-mail"
                                href="<?php echo base_url(); ?>parent/send_email"><img
-                                    src="<?php echo base_url(); ?>assets/images/email.png"/></a>
+                                    src="<?php echo base_url(); ?>assets/img/email.png"/></a>
                         </div>-->
 
 						<span class="glyphicon glyphicon-trash cursor"
@@ -93,7 +93,7 @@
 		<div class="box box-solid box-primary">
 			<div class="box-header"><div class="box-title"></div> </div>
 			<div class="box-body">
-				<?php echo form_open('pickup/add_pickup_contact/')?>
+				<?php echo form_open('pickup/add_pickup_contact/') ?>
 				<input class="form-control" type="text" name="fname" placeholder="<?php echo lang('first_name'); ?>"
 					   required=""/>
 				<input class="form-control" type="text" name="lname" placeholder="<?php echo lang('last_name'); ?>"

@@ -37,18 +37,18 @@
             <!--div class="span5">
                         <h2><i class="glyphicons-google_maps"></i> Address</h2>
                         <address>
-                           <?php echo $this->conf->settings()->street; ?>
+                           <?php echo $this->config->item('street','company'); ?>
                             <br>
-							<?php echo $this->conf->settings()->city; ?>,
-							<?php echo $this->conf->settings()->state; ?>
-							<?php echo $this->conf->settings()->zip; ?>
+							<?php echo $this->config->item('city','company'); ?>,
+							<?php echo $this->config->item('state','company'); ?>
+							<?php echo $this->config->item('postal_code','company'); ?>
                         </address>
 						<hr/>
                         <h2><i class="glyphicons-phone"></i> Phone</h2>
                         <address>
-                            Phone: <?php echo $this->conf->settings()->phone; ?>
+                            Phone: <?php echo $this->config->item('phone','company'); ?>
                             <br>
-                            Fax: <?php echo $this->conf->settings()->fax; ?>
+                            Fax: <?php echo $this->config->item('fax','company'); ?>
                         </address>
                     </div-->
                 <!--div class="thumbnail map">

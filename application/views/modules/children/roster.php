@@ -12,7 +12,7 @@
 </head>
 <body onload="javascript:print()">
 <div class="container">
-    <img class="" style="width: 250px;" src="<?php echo base_url(); ?>assets/images/logo.png"/>
+    <img class="" style="width: 250px;" src="<?php echo base_url(); ?>assets/img/logo.png"/>
 
     <h3>Children Roster</h3>
     <table class="table table-responsive table-striped">
@@ -24,7 +24,7 @@
             <th>Blood Type</th>
             <th>Enrolled on</th>
         </tr>
-        <?php foreach ($children as $child): ?>
+        <?php foreach ($children as $child) : ?>
             <tr>
                 <td>
                     <i class="fa fa-square-o" style="font-size:20px;"></i>

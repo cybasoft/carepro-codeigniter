@@ -29,7 +29,7 @@ class family extends CI_Controller
 
 		//variables
 		$this->module = "family/";
-		$this->curr = $this->conf->settings('curr_symbol');
+		$this->curr = $this->config->item('currency_symbol', 'company');
 	}
 
 	/*

@@ -70,7 +70,7 @@
 
             area1 = new nicEditor({
                 fullPanel: true,
-                iconsPath: '<?php echo base_url(); ?>assets/images/nicEditorIcons.gif'
+                iconsPath: '<?php echo base_url(); ?>assets/img/nicEditorIcons.gif'
             }).panelInstance('editor', {hasPanel: true});
         } else {
             area1.removeInstance('editor');

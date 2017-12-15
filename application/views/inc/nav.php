@@ -58,7 +58,7 @@
 					<li class="header">You have <?php echo $this->tasks->getCount('active'); ?> pending tasks</li>
 					<li>
 						<ul class="menu">
-							<?php foreach($this->tasks->todoItems(null, null, 'active') as $item): ?>
+							<?php foreach ($this->tasks->todoItems(null, null, 'active') as $item) : ?>
 								<li>
 									<a href="<?php echo site_url('tasks'); ?>">
 										<h3>
@@ -85,14 +85,14 @@
 				<ul class="dropdown-menu">
 					<li class="user-header bg-light-blue">
 						<?php
-						if($this->users->user()->photo !== "") {
-							echo '<img class="img-circle"
-         src="' . base_url() . 'assets/companies/' . $this->company->company()->code . '/images/staff/' . $this->users->user()->photo . '"/>';
-						} else {
-							echo '<img class="img-circle"
-         src="' . base_url() . 'assets/images/no-image.png"/>';
-						}
-						?>
+					if ($this->users->user()->photo !== "") {
+						echo '<img class="img-circle"
+         src="' . base_url() . 'assets/img/staff/' . $this->users->user()->photo . '"/>';
+					} else {
+						echo '<img class="img-circle"
+         src="' . base_url() . 'assets/img/no-image.png"/>';
+					}
+					?>
 						<p>
 						</p>
 					</li>

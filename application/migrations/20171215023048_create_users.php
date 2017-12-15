@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 class Migration_create_users extends CI_Migration
 {
@@ -17,10 +17,6 @@ class Migration_create_users extends CI_Migration
                 'type' => 'INT',
                 'constraint' => '11',
                 'unsigned' => TRUE,
-            ),
-            'company' => array(
-                'type' => 'INT',
-                'constraint' => '10',
             ),
             'username' => array(
                 'type' => 'VARCHAR',

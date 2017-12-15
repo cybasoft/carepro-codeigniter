@@ -1,4 +1,4 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Class: my_news
@@ -20,7 +20,6 @@ class my_news extends CI_Model
 
 	function articles()
 	{
-		$this->db->where('company', $this->conf->cid());
 		$query = $this->db->get('news');
 		return $query;
 	}
@@ -35,13 +34,12 @@ class my_news extends CI_Model
 	function create()
 	{
 		$data = array(
-			'company' => $this->conf->cid(),
 			'article_name' => $this->input->post('article_name'),
 			'article_body' => $this->input->post('article_body'),
 			'user_id' => $this->users->uid(),
 			'publish_date' => time()
 		);
-		if($this->db->insert('news', $data))
+		if ($this->db->insert('news', $data))
 			return true;
 		return false;
 	}
@@ -54,7 +52,7 @@ class my_news extends CI_Model
 			'article_body' => $this->input->post('article_body')
 		);
 		$this->db->where('id', $id);
-		if($this->db->update('news', $data))
+		if ($this->db->update('news', $data))
 			return true;
 		return false;
 	}
@@ -62,7 +60,7 @@ class my_news extends CI_Model
 	function delete($id)
 	{
 		$this->db->where('id', $id);
-		if($this->db->delete('news'))
+		if ($this->db->delete('news'))
 			return true;
 		return false;
 	}

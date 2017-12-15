@@ -1,7 +1,7 @@
 <?php
 function is_read($read)
 {
-	if($read == 0) {
+	if ($read == 0) {
 		return 'bg-info';
 	}
 	return '';
@@ -26,18 +26,18 @@ function is_read($read)
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach($messages as $row): ?>
-				<?php if($row->sender == $this->users->uid() && $row->sender_read == 0): ?>
+			<?php foreach ($messages as $row) : ?>
+				<?php if ($row->sender == $this->users->uid() && $row->sender_read == 0) : ?>
 					<tr class="bg-info">
-				<?php elseif($row->receiver == $this->users->uid() && $row->receiver_read == 0): ?>
+				<?php elseif ($row->receiver == $this->users->uid() && $row->receiver_read == 0) : ?>
 					<tr class="bg-info">
 				<?php endif; ?>
 				<td>
-					<?php if($row->location=="starred"): ?>
+					<?php if ($row->location == "starred") : ?>
 					<i class="fa fa-star"></i>
-						<?php elseif($row->location=="important"): ?>
+						<?php elseif ($row->location == "important") : ?>
 						<i class="fa fa-exclamation"></i>
-					<?php else: ?>
+					<?php else : ?>
 					<?php endif; ?>
 				</td>
 				<td>
@@ -50,7 +50,7 @@ function is_read($read)
 				</td>
 				<td>
 					<small class="pull-right ">
-						<?php echo date($this->company->company()->date_format . ' H:iA', $row->date_sent); ?>
+						<?php echo date($this->config->item('date_format') . ' H:iA', $row->date_sent); ?>
 					</small>
 				</td>
 				</tr>

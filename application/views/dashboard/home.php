@@ -4,19 +4,15 @@
             <div class="box-body">
                 <table class="table">
                     <tr>
-                        <td colspan="2" class="text-bold"><?php echo $this->company->company()->name; ?></td>
+                        <td colspan="2" class="text-bold"><?php echo $this->config->item('name', 'company'); ?></td>
                     </tr>
-                    <!--						<tr class="bg-teal-gradient">-->
-                    <!--							<td>Company ID:</td>-->
-                    <!--							<td>-->
-                    <?php //echo chunk_split($this->conf->company()->code, 6, ' '); ?><!--</td>-->
-                    <!--						</tr>-->
+            
                     <tr>
-                        <td colspan="2"><?php echo $this->company->company()->slogan; ?></td>
+                        <td colspan="2"><?php echo $this->config->item('slogan', 'company'); ?></td>
                     </tr>
                     <tr>
                         <td>Timezone:</td>
-                        <td><?php echo $this->company->company()->time_zone; ?></td>
+                        <td><?php echo $this->config->item('timezone', 'company'); ?></td>
                     </tr>
                 </table>
             </div>
@@ -26,21 +22,21 @@
                 <table class="table">
                     <tr>
                         <td colspan="2">
-                            <?php echo $this->company->company()->street; ?>
+                            <?php echo $this->config->item('street', 'company'); ?>
                             <br/>
-                            <?php echo $this->company->company()->city; ?>
-                            <?php echo $this->company->company()->state; ?>,
-                            <?php echo $this->company->company()->zip; ?>
-                            <?php echo $this->company->company()->country; ?>
+                            <?php echo $this->config->item('city', 'company'); ?>
+                            <?php echo $this->config->item('state', 'company'); ?>,
+                            <?php echo $this->config->item('postal_code', 'company'); ?>
+                            <?php echo $this->config->item('country', 'company'); ?>
                         </td>
                     </tr>
                     <tr>
                         <td><?php echo lang('phone'); ?></td>
-                        <td><?php echo $this->company->company()->phone; ?></td>
+                        <td><?php echo $this->config->item('phone', 'company'); ?></td>
                     </tr>
                     <tr>
                         <td>Fax:</td>
-                        <td><?php echo $this->company->company()->fax; ?></td>
+                        <td><?php echo $this->config->item('fax', 'company'); ?></td>
                     </tr>
                 </table>
             </div>
@@ -57,7 +53,7 @@
                 </span>
 
                 <h2>
-                    <?php echo $this->conf->setting('curr_symbol') . $this->invoice->getTotalDue(); ?>
+                    <?php echo $this->config->item('currency_symbol') . $this->invoice->getTotalDue(); ?>
 
                 </h2>
             </div>
@@ -65,8 +61,8 @@
         <div class="box box-primary">
         <ul class="nav nav-pills nav-stacked">
             <li class="active">
-                <?php echo anchor('children/roster','<i class="fa fa-file-pdf-o"></i> Children Roster','target="_blank"'); ?>
-                <?php echo anchor('family/roster','<i class="fa fa-file-pdf-o"></i> Parents Roster','target="_blank"'); ?>
+                <?php echo anchor('children/roster', '<i class="fa fa-file-pdf-o"></i> Children Roster', 'target="_blank"'); ?>
+                <?php echo anchor('family/roster', '<i class="fa fa-file-pdf-o"></i> Parents Roster', 'target="_blank"'); ?>
             </li>
         </ul>
             </div>

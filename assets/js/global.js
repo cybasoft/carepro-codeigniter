@@ -1,4 +1,45 @@
 $(document).ready(function () {
+
+    /* Animated Skills Bar
+     * ====================== */
+    $('.progress-skills').each(function () {
+        var t = $(this),
+            label = t.attr('data-label');
+        percent = t.attr('data-percent') + '%';
+        t.find('.bar').text(label + ' ' + '(' + percent + ')').animate({ width: percent });
+    });
+
+    /* Input Validation
+     * https://github.com/ReactiveRaven/jqBootstrapValidation
+    * ====================== */
+    //$("input").not("[type=submit]").jqBootstrapValidation();
+
+    /* Scroll Effect for Alt. Homepage
+    * ====================== */
+    function scrollEffect() {
+        scrollPos = $(this).scrollTop();
+        $('#landingSlide').css({ 'background-position': 'center ' + (200 + (scrollPos / 4)) + "px" });
+    }
+    $(window).scroll(function () {
+        scrollEffect();
+    });
+
+    /* Fluid Resposive Video Embeds
+     * https://github.com/davatron5000/FitVids.js
+    * ====================== */
+    //$(".js-video").fitVids();
+
+    /* Smooth Scroll to Top
+    * ====================== */
+    $("#totop").click(function () {
+        $("html, body").animate({
+            scrollTop: 0
+        }, 300);
+        return false;
+    });
+
+    setTimeout("jQuery('#msg').slideUp('slow');", 4000);
+
     $('.msg').hide().slideDown('slow').delay(5000).slideUp("slow");
 
     // add a hash to the URL when the user clicks on a tab
@@ -57,13 +98,13 @@ $(document).ready(function () {
         var thisUrl = window.location.href.split('#')[0];
         var page = thisUrl + '/help_article/' + article_id;
 
-        $('.help-doc').html('loading <img src="../assets/images/loader.gif"/>').load(page);
+        $('.help-doc').html('loading <img src="../assets/img/loader.gif"/>').load(page);
     });
     //delete help article
     $('.del-help-btn').click(function () {
         var article_id = $(this).attr('id');
         if (confirm('Are you sure you want to delete this?')) {
-            window.location.href = '../help/delete/'+article_id;
+            window.location.href = '../help/delete/' + article_id;
         }
 
     });
@@ -75,13 +116,13 @@ $(document).ready(function () {
         var thisUrl = window.location.href.split('#')[0];
         var page = thisUrl + '/view_article/' + article_id;
 
-        $('.news-article').html('loading <img src="../assets/images/loader.gif"/>').load(page);
+        $('.news-article').html('loading <img src="../assets/img/loader.gif"/>').load(page);
     });
     //delete news article
     $('.del-article-btn').click(function () {
         var article_id = $(this).attr('id');
         if (confirm('Are you sure you want to delete this?')) {
-            window.location.href = '../news/delete/'+article_id;
+            window.location.href = '../news/delete/' + article_id;
         }
 
     });
@@ -93,28 +134,28 @@ $(document).ready(function () {
     //tooltips
     $('.send-mail,.show-pin').tooltip();
 
-    $('.delete').click(function(e){
-        var loc =$(this).attr('href');
+    $('.delete').click(function (e) {
+        var loc = $(this).attr('href');
         swal({
-            title:'Please confirm',
-            text:'You are about to delete a record...',
-            type:'warning',
-            showCancelButton:true,
-            confirmButtonColor:'#DD6B55',
-            confirmButtonText:'Yes, Do it!',
-            closeOnConfirm:false
-        },function(){
+            title: 'Please confirm',
+            text: 'You are about to delete a record...',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, Do it!',
+            closeOnConfirm: false
+        }, function () {
             swal('processing...');
-            if(loc !=undefined)
-                window.location.href=loc;
+            if (loc != undefined)
+                window.location.href = loc;
         });
         e.preventDefault();
     });
 
     /*begin persistent tabs*/
-    if (location.hash !== ''){
+    if (location.hash !== '') {
         $('a[href="' + location.hash + '"]').tab('show');
-        return $('a[data-toggle="tab"]').on('shown', function(e) {
+        return $('a[data-toggle="tab"]').on('shown', function (e) {
             return location.hash = $(e.target).attr('href').substr(1);
         });
     }
@@ -221,7 +262,7 @@ $(function () {
             // If we can't parse the cookie, ignore it, it's unusable.
             s = decodeURIComponent(s.replace(pluses, ' '));
             return config.json ? JSON.parse(s) : s;
-        } catch(e) {}
+        } catch (e) { }
     }
 
     function read(s, converter) {
@@ -244,9 +285,9 @@ $(function () {
             return (document.cookie = [
                 encode(key), '=', stringifyCookieValue(value),
                 options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path    ? '; path=' + options.path : '',
-                options.domain  ? '; domain=' + options.domain : '',
-                options.secure  ? '; secure' : ''
+                options.path ? '; path=' + options.path : '',
+                options.domain ? '; domain=' + options.domain : '',
+                options.secure ? '; secure' : ''
             ].join(''));
         }
 

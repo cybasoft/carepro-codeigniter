@@ -39,34 +39,34 @@
 					<tr>
 
 					</tr>
-					<?php if($this->conf->isAdmin() == true): ?>
+					<?php if ($this->conf->isAdmin() == true) : ?>
 						<tr>
 							<td><?php echo lang('edit_user_groups_heading'); ?></td>
 							<td>
 
-								<?php foreach($groups as $group): ?>
+								<?php foreach ($groups as $group) : ?>
 									<label class="checkbox">
 										<?php
-										$gID = $group['id'];
-										$checked = null;
-										$item = null;
-										$type='checkbox';
-										$g_name=$group['name'];
-										foreach($currentGroups as $grp) {
-											if($gID == $grp->id) {
-												$checked = ' checked="checked"';
-												break;
-											}
+									$gID = $group['id'];
+									$checked = null;
+									$item = null;
+									$type = 'checkbox';
+									$g_name = $group['name'];
+									foreach ($currentGroups as $grp) {
+										if ($gID == $grp->id) {
+											$checked = ' checked="checked"';
+											break;
 										}
-										if($this->conf->in_group($this->users->uid(), 'admin') && $group['id']==1) {
-											$type ='disabled"';
-										} else {
-											$type = 'disabled"';
-										}
-										?>
+									}
+									if ($this->conf->in_group($this->users->uid(), 'admin') && $group['id'] == 1) {
+										$type = 'disabled"';
+									} else {
+										$type = 'disabled"';
+									}
+									?>
 										<input type="checkbox" <?php echo $type; ?> name="groups[]"
 											   value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
-									<?php  echo $g_name; ?>
+									<?php echo $g_name; ?>
 									</label>
 								<?php endforeach ?>
 								<?php echo form_hidden('id', $user->id); ?>
@@ -151,14 +151,14 @@
 						<tr>
 							<td style="width:200px">
 								<?php
-								if($this->users->user($user->id)->photo !== "") {
-									echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/companies/' . $this->company->company()->code . '/images/staff/' . $this->users->user($user->id)->photo . '"/>';
-								} else {
-									echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/images/no-image.png"/>';
-								}
-								?>
+							if ($this->users->user($user->id)->photo !== "") {
+								echo '<img class="img-circle img-thumbnail"
+         src="' . base_url() . 'assets/img/staff/' . $this->users->user($user->id)->photo . '"/>';
+							} else {
+								echo '<img class="img-circle img-thumbnail"
+         src="' . base_url() . 'assets/img/no-image.png"/>';
+							}
+							?>
 							</td>
 							<td>
 								<?php echo form_open_multipart('users/upload_photo/' . $user->id, 'class="input-group"'); ?>

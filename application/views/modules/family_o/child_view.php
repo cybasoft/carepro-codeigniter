@@ -57,10 +57,10 @@
                 <?php
                 if ($child->photo !== "") {
                     echo '<img class="img-square img-responsive img-thumbnail" src="'
-                        . base_url() . 'assets/images/uploads/' . $child->photo . '"/>';
+                        . base_url() . 'assets/img/uploads/' . $child->photo . '"/>';
                 } else {
                     echo '<img class="img-square img-responsive img-thumbnail" src="'
-                        . base_url() . 'assets/images/no-image.png"/>';
+                        . base_url() . 'assets/img/no-image.png"/>';
                 }
                 ?>
             </div>
@@ -95,11 +95,11 @@
             <?php
             $this->db->where('child_id', $child->id);
             $notes = $this->db->get('child_notes');
-            if ($notes->num_rows() == 0):
+            if ($notes->num_rows() == 0) :
                 echo '<div class="alert alert-danger">' . lang('nothing_to_display') . '</div>';
-            else:
-                foreach ($notes->result() as $note):
-                    ?>
+            else :
+                foreach ($notes->result() as $note) :
+            ?>
                     <div class="children-notes pull-left">
                         <div class="children-notes-title">
                             <?php
@@ -112,7 +112,8 @@
                         </div>
                         <div class="children-notes-content"><?php echo $note->content; ?></div>
                     </div>
-                <?php endforeach; endif; ?>
+                <?php endforeach;
+                endif; ?>
         </div>
 
         <!--charges-->

@@ -1,17 +1,17 @@
 
 <table class="table table-bordered parent-info">
 	<?php
-	foreach($this->child->getParents($this->child->getID())->result() as $u): //iterate through users
-		?>
+foreach ($this->child->getParents($this->child->getID())->result() as $u) : //iterate through users
+?>
 		<tr>
 			<td class="col-sm-2">
 				<div>
-					<?php if($this->users->user($u->user_id)->photo !== ""): ?>
+					<?php if ($this->users->user($u->user_id)->photo !== "") : ?>
 						<img class="img-circle img-responsive img-thumbnail"
-							 src="<?php echo base_url() . 'assets/companies/'.$this->company->company()->code.'/images/staff/' . $this->users->user($u->user_id)->photo; ?>"/>
-					<?php else: ?>
+							 src="<?php echo base_url() . 'assets/img/staff/' . $this->users->user($u->user_id)->photo; ?>"/>
+					<?php else : ?>
 						<img class="img-circle img-responsive img-thumbnail"
-							 src="<?php echo base_url(); ?>'assets/images/no-image.png"/>
+							 src="<?php echo base_url(); ?>'assets/img/no-image.png"/>
 					<?php endif; ?>
 				</div>
 
@@ -34,18 +34,18 @@
 						<td>
 							<div class="parent-address">
 								<?php
-								if($this->users->user($u->user_id)->street != 0) {
-									echo $this->users->user($u->user_id)->street;
-									echo '. &nbsp;';
-									echo $this->users->user($u->user_id)->city;
-									echo ', &nbsp;';
-									echo $this->users->user($u->user_id)->state;
-									echo '&nbsp;';
-									echo $this->users->user($u->user_id)->zip;
-									echo '&nbsp; ';
-									echo $this->users->user($u->user_id)->country;
-								}
-								?>
+							if ($this->users->user($u->user_id)->street != 0) {
+								echo $this->users->user($u->user_id)->street;
+								echo '. &nbsp;';
+								echo $this->users->user($u->user_id)->city;
+								echo ', &nbsp;';
+								echo $this->users->user($u->user_id)->state;
+								echo '&nbsp;';
+								echo $this->users->user($u->user_id)->zip;
+								echo '&nbsp; ';
+								echo $this->users->user($u->user_id)->country;
+							}
+							?>
 							</div>
 						</td>
 					</tr>
@@ -71,8 +71,8 @@
 		</tr>
 
 	<?php
-	endforeach;
-	?>
+endforeach;
+?>
 </table>
 
 <script>

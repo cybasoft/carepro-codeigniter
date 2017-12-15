@@ -1,4 +1,4 @@
-<?php  if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Class: daycare.php
@@ -25,12 +25,12 @@ class daycare
 	function paypal($item, $due, $invoice_id = "service")
 	{
 		$url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick';
-		$business = $this->company->company()->email;
+		$business = $this->config->item('email', 'company');
 		$lc = "US";
 		$item_name = $item;
 		$item_number = 'DayCare_' . $invoice_id;
 		$amount = $due;
-		$currency_code = $this->company->company()->currency;
+		$currency_code = $this->config->item('currency_abbr', 'company');
 		$button_subtype = "services";
 		$no_note = 0;
 		$cn = "Add special remarks";
@@ -47,16 +47,16 @@ class daycare
 
 	}
 
-	function pay_by_paypal($item="", $due, $invoice_id = "service")
+	function pay_by_paypal($item = "", $due, $invoice_id = "service")
 	{
-		$ci = & get_instance();
+		$ci = &get_instance();
 		$url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick';
-		$business = $ci->conf->settings()->email;
+		$business = $ci->config->item('email', 'company');
 		$lc = "US";
 		$item_name = $item;
 		$item_number = 'DayCare_' . $invoice_id;
 		$amount = $due;
-		$currency_code = $ci->conf->settings()->currency;
+		$currency_code = $ci->config->item('currency', 'company');
 		$button_subtype = "services";
 		$no_note = 0;
 		$cn = "Add special remarks";

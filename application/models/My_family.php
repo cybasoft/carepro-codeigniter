@@ -1,4 +1,4 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @file      : my_parent.php
@@ -54,7 +54,7 @@ class my_family extends CI_Model
 		$this->db->where('user_id', $parent);
 		$this->db->where('child_id', $child);
 		$query = $this->db->get('child_users');
-		if($query->num_rows() > 0)
+		if ($query->num_rows() > 0)
 			return true;
 		return false;
 	}
@@ -68,13 +68,12 @@ class my_family extends CI_Model
 			'bday' => $this->input->post('bday'),
 			'gender' => $this->input->post('gender'),
 			'enroll_date' => time(),
-			'last_update' => time(),
-			'company' => $this->conf->settings('id')
+			'last_update' => time()
 		);
 		$this->db->insert('children', $data);
 		$last_id = $this->db->insert_id();
 
-		if($this->db->affected_rows() > 0) {
+		if ($this->db->affected_rows() > 0) {
 			$this->conf->msg('success', lang('request_success'));
 		} else {
 			$this->conf->msg('warning', lang('request_error'));
@@ -108,7 +107,7 @@ class my_family extends CI_Model
 	 */
 	function totalChildren($parent_id = null)
 	{
-		if($parent_id == null) {
+		if ($parent_id == null) {
 			return $this->getChildren($this->users->uid())->num_rows();
 		} else {
 			return $this->getChildren($parent_id)->num_rows();

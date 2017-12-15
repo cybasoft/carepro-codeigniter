@@ -11,20 +11,20 @@
 width: 213px;
 margin-top: -15px;
 margin-left: -15px;">
-				<img src="<?php echo base_url(); ?>/assets/images/logo.png" class="logo">
+				<img src="<?php echo base_url(); ?>/assets/img/logo.png" class="logo">
 			</a>
 
 			<div class="nav-collapse collapse">
 				<ul class="nav pull-right animated nav-pro">
 					<?php
-					$nav_links = array(
-						'login' => 'Login',
-						'contact' => 'Contact us'
-					);
-					foreach($nav_links as $url => $name) {
-						echo '<li>' . anchor($url, $name) . '</li>';
-					}
-					?>
+				$nav_links = array(
+					'login' => 'Login',
+					'contact' => 'Contact us'
+				);
+				foreach ($nav_links as $url => $name) {
+					echo '<li>' . anchor($url, $name) . '</li>';
+				}
+				?>
 				</ul>
 			</div>
 		</div>
