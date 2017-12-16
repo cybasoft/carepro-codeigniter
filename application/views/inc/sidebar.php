@@ -76,13 +76,6 @@
                             <!--small class="badge pull-right bg-red">3</small-->
                         </a>
                     </li>
-                    <li>
-                        <a href="<?php echo site_url('tasks'); ?>"><i class="fa fa-check-square-o"></i>
-                            <?php echo lang('tasks'); ?>
-                            <small
-                                class="badge pull-right bg-aqua"><?php echo $this->tasks->getCount('active'); ?></small>
-                        </a>
-                    </li>
                 </ul>
             </li>
 
@@ -92,13 +85,6 @@
                     <span><?php echo lang('news'); ?></span>
                 </a>
             </li>
-
-            <!--li>
-				<a href="<?php echo site_url('mailbox'); ?>">
-					<i class="fa fa-envelope"></i> <span><?php echo lang('mailbox'); ?></span>
-					<small class="badge pull-right bg-yellow">12</small>
-				</a>
-			</li-->
             <li>
                 <a href="<?php echo site_url('settings'); ?>">
                     <i class="fa fa-gears"></i> <span><?php echo lang('settings'); ?></span>

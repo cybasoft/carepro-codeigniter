@@ -92,27 +92,7 @@
 
                 </div>
             </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green cursor" onclick="location.href='<?php echo site_url('mailbox'); ?>'">
-                    <div class="inner">
-                        <h3>
-                            <?php echo $this->mail->totalUnread(); ?>
-                        </h3>
 
-                        <p>
-                            <?php echo lang('messages'); ?>
-                        </p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-envelope"></i>
-                    </div>
-                    <a href="<?php echo site_url('mailbox'); ?>" class="small-box-footer">
-                        <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
             <!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
@@ -135,26 +115,7 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red cursor" onclick="location.href='<?php echo site_url('tasks'); ?>'">
-                    <div class="inner">
-                        <h3>
-                            <?php echo $this->tasks->getCount('active'); ?>
-                        </h3>
 
-                        <p>
-                            <?php echo lang('tasks'); ?>
-                        </p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
-                    </div>
-                    <a href="<?php echo site_url('tasks'); ?>" class="small-box-footer">
-                        <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
             <!-- ./col -->
         </div>
 

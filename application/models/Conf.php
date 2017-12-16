@@ -9,10 +9,8 @@ class Conf extends CI_Model
         ini_set("display_errors", 1);
         ini_set("error_log", base_url() . 'php-error.log');
 
-        $this->load->model('My_tasks', 'tasks');
         $this->load->model('My_child', 'child');
         $this->load->model('My_user', 'users');
-        $this->load->model('My_mailbox', 'mail');
         $this->load->model('My_broadcast', 'broadcast');
         $this->load->model('My_cron', 'cron');
 

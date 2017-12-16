@@ -52,8 +52,6 @@ $lang['read'] = 'Read';
 $lang['calendar'] = 'Calendar';
 $lang['event'] = 'Event';
 $lang['events'] = 'Events';
-$lang['task'] = 'Task';
-$lang['tasks'] = 'Tasks';
 $lang['new_event'] = 'New event';
 $lang['date'] = 'Date';
 $lang['month'] = 'Month';
@@ -70,7 +68,6 @@ $lang['new_task_item'] = 'New task item';
 $lang['new_list'] = 'New list';
 $lang['list_name'] = 'List name';
 $lang['item_name'] = 'Item name';
-$lang['pending_tasks'] = 'Pending tasks';
 
 //authentication
 $lang['login'] = 'Login';

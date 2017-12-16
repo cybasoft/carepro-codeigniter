@@ -8,10 +8,6 @@
 
     <div class="navbar-right">
         <ul class="nav navbar-nav">
-            <li><a href="<?php echo site_url('mailbox'); ?>"><i class="fa fa-envelope"></i>
-                    <span class="label label-success"><?php echo $this->mail->totalUnread(); ?></span>
-                </a></li>
-
             <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-warning"></i>
@@ -39,33 +35,6 @@
                         </ul>
                     </li>
                     <!--li class="footer"><a href="#">View all</a></li-->
-                </ul>
-            </li>
-
-            <li class="dropdown tasks-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-tasks"></i>
-                    <span class="label label-danger"><?php echo $this->tasks->getCount('active'); ?></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="header">You have <?php echo $this->tasks->getCount('active'); ?> pending tasks</li>
-                    <li>
-                        <ul class="menu">
-                            <?php foreach ($this->tasks->todoItems(null, null, 'active') as $item) : ?>
-                                <li>
-                                    <a href="<?php echo site_url('tasks'); ?>">
-                                        <h3>
-                                            <?php echo $item->item_name; ?>
-                                        </h3>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-
-                        </ul>
-                    </li>
-                    <li class="footer">
-                        <a href="<?php echo site_url('tasks'); ?>">View all tasks</a>
-                    </li>
                 </ul>
             </li>
 
