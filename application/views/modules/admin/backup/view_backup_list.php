@@ -18,7 +18,7 @@
                     <?php echo anchor(base_url() . 'assets/backups/' . $backup->backup_path, $backup->backup_date); ?>
                 </td>
                 <td><?php echo date('d/m/Y', $backup->backup_date); ?></td>
-                <td><span id="<?php echo $backup->id; ?>" class="glyphicon glyphicon-trash del_sql cursor"></span></td>
+                <td><span id="<?php echo $backup->id; ?>" class="fa fa-trash del_sql cursor"></span></td>
             </tr>
         <?php } ?>
         </tbody>

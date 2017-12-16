@@ -1,7 +1,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <?php echo anchor('invoice/create_invoice', '<i class="glyphicon glyphicon-plus-sign"></i> '
+        <?php echo anchor('invoice/create_invoice', '<i class="fa fa-plus"></i> '
             . lang('new_invoice'), 'class="btn btn-info"'); ?>
         <div class="col-sm-4 pull-right">
             <input type="text" class="invoice_search" name="invoice_search"

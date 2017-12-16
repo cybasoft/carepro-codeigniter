@@ -3,9 +3,9 @@
 /**
  * @file      : my_parent.php
  * @project   : daycarepro
- * @author    : John
+ * @author    : JMuchiri
  * @date      : 8/11/14
- * @Copyright 2014 icoolpix.com
+ * @Copyright 2017 A&M Digital Technologies
  * @version   : 1.0.1
  */
 class my_family extends CI_Model

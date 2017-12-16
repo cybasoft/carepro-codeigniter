@@ -161,10 +161,10 @@ class MY_user extends CI_Model
 		}
 		if ($this->users->user($id)->photo !== "") {
 			echo '<img class="' . $class . '"
-         src="' . base_url() . 'assets/img/staff/' . $this->users->user($id)->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user($id)->photo . '"/>';
 		} else {
 			echo '<img class="' . $class . '"
-         src="' . base_url() . 'assets/img/no-image.png"/>';
+         src="' . base_url() . 'assets/img/content/no-image.png"/>';
 		}
 
 	}

@@ -1,10 +1,10 @@
 <div class="tabs">
     <ul class="nav nav-tabs">
         <li>
-            <a href="#c_invoice" data-toggle="tab"><i class="glyphicon glyphicon-time"></i> <?php echo lang('invoice'); ?></a>
+            <a href="#c_invoice" data-toggle="tab"><i class="fa fa-time"></i> <?php echo lang('invoice'); ?></a>
         </li>
         <li>
-            <a href="#payments" data-toggle="tab"><i class="glyphicon glyphicon-credit-card"></i> <?php echo lang('payments'); ?></a>
+            <a href="#payments" data-toggle="tab"><i class="fa fa-credit-card"></i> <?php echo lang('payments'); ?></a>
         </li>
     </ul>
     <div class="tab-content">

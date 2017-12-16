@@ -1,8 +1,6 @@
 <?php
-
 echo '<span class="h3">'.lang('update').' '.lang('address').'</span>';
 echo '<hr/>';
-
 $street = array(
     'name'  => 'street',
     'id'    => 'street',
@@ -45,7 +43,6 @@ $home_phone = array(
     'value' => $my_phone,
     'size'  => 30,
 );
-
 $label_attr = array(
     'class' => 'input-group-addon'
 );
@@ -71,18 +68,13 @@ echo '<div class="input-group">';
 echo form_label('country:', 'country', $label_attr);
 echo form_input($country);
 echo '</div>';
-
 echo '<hr/>';
-
 echo '<div class="input-group">';
 echo form_label('phone:', 'home_phone', $label_attr);
 echo form_input($home_phone);
 echo '</div>';
-
 echo '<hr/>';
-
 echo '<button class="btn btn-primary">'.lang('update').'</button>';
-
 echo form_close();
 ?>
 <script>

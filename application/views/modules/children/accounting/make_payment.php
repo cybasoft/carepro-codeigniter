@@ -29,7 +29,7 @@
 								<input class="datepicker1 form-control" size="16" type="text" name="date_paid"
 									   readonly required="" style="z-index: 3000" value="<?php echo date('m/d/Y'); ?>"/>
                          <span class="input-group-addon add-on">
-                             <i class="glyphicon glyphicon-calendar" style="display: inline"></i>
+                             <i class="fa fa-calendar" style="display: inline"></i>
                          </span>
 							</div>
                         </td>

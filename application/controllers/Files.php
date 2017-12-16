@@ -2,9 +2,9 @@
 
 /**
  * @file      : files.php
- * @author    : John
- * @date      : 8/9/14
- * @Copyright 2014 icoolpix.com
+ * @author    : JMuchiri
+ *
+ * @Copyright 2017 A&M Digital Technologies
  */
 class Files extends CI_Controller
 {

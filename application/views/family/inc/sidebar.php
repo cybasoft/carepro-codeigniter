@@ -8,10 +8,10 @@
 				<?php
 			if ($this->users->user()->photo !== "" ) {
 				echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/staff/' . $this->users->user()->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user()->photo . '"/>';
 			} else {
 				echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/no-image.png"/>';
+         src="' . base_url() . 'assets/img/content/no-image.png"/>';
 			}
 			?>
 			</div>

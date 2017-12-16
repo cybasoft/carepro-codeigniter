@@ -2,11 +2,11 @@
 
 /**
  * @file      : Calendar
- * @author    : John Muchiri
+ * @author    : JMuchiri
  * @date      : 8/14/14
- * @Copyright 2014 icoolpix.com
- * http://icoolpix.com
- * info@icoolpix.com
+ * @Copyright 2017 A&M Digital Technologies
+
+* https://amdtllc.com
  */
 class Calendar extends CI_Controller
 {

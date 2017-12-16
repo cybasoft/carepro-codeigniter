@@ -2,9 +2,9 @@
 
 /**
  * @file      : profile.php
- * @author    : John
- * @date      : 8/9/14
- * @Copyright 2014 icoolpix.com
+ * @author    : JMuchiri
+ *
+ * @Copyright 2017 A&M Digital Technologies
  */
 class Profile extends CI_Controller
 {
@@ -101,7 +101,7 @@ class Profile extends CI_Controller
 	function update_user_data()
 	{
 		$this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean|trim');
-		$this->form_validation->set_rules('phone2', lang('other_phone'), 'rxss_clean|trim');
+		$this->form_validation->set_rules('phone2', lang('other_phone'), 'xss_clean|trim');
 		$this->form_validation->set_rules('street', lang('street'), 'required|xss_clean|trim');
 		$this->form_validation->set_rules('street2', lang('street2'), 'xss_clean|trim');
 		$this->form_validation->set_rules('city', lang('city'), 'required|xss_clean|trim');
@@ -126,7 +126,9 @@ class Profile extends CI_Controller
 
 	}
 
-
+    /**
+     * @return bool
+     */
 	function validate_password()
 	{
 		$this->load->model('ion_auth_model', 'auth');
@@ -138,6 +140,10 @@ class Profile extends CI_Controller
 			return false;
 		}
 	}
+
+    /**
+     * @return bool
+     */
 	function email_check()
 	{
 		$this->load->model('ion_auth_model', 'auth');
@@ -149,6 +155,10 @@ class Profile extends CI_Controller
 			return true;
 		}
 	}
+
+    /**
+     * @return array
+     */
 	function _get_csrf_nonce()
 	{
 		$this->load->helper('string');
@@ -160,6 +170,9 @@ class Profile extends CI_Controller
 		return array($key => $value);
 	}
 
+    /**
+     * @return bool
+     */
 	function _valid_csrf_nonce()
 	{
 		if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
@@ -169,6 +182,63 @@ class Profile extends CI_Controller
 			return FALSE;
 		}
 	}
+    /*
+         * upload photos to specific db
+         * @param $id int
+         * @param $db string
+         */
+
+    function uploadPhoto($id = "")
+    {
+        $upload_path = './assets/img/users/staff';
+        $upload_db = 'children';
+
+        if ($id == "") { //make sure there are arguments
+            $this->conf->msg('danger', lang('request_error'));
+            $this->conf->redirectPrev();
+        }
+
+        $config = array(
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|png|jpeg',
+            //'max_size'      => '100',
+            'max_width' => '1240',
+            'max_height' => '1240',
+            'encrypt_name' => true,
+        );
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload()) {
+            $this->conf->msg('danger', lang('request_error'));
+        } else {
+            //delete if any exists
+            $this->db->where('id', $id);
+            $q = $this->db->get($upload_db);
+            foreach ($q->result() as $r) {
+                if ($r->photo !== "") :
+                    @unlink($upload_path . '/' . $r->photo);
+                    $data['photo'] = '';
+                    $this->db->where('id', $id);
+
+                    $this->db->update($upload_db, $data);
+                endif;
+            }
+            //upload new photo
+            $upload_data = $this->upload->data();
+            $data_ary = array(
+                'photo' => $upload_data['file_name']
+            );
+
+            $this->db->where('id', $id);
+            $this->db->update($upload_db, $data_ary);
+            $data = array('upload_data' => $upload_data);
+            if ($data) {
+                $this->conf->msg('success', lang('request_success'));
+            } else {
+                $this->conf->msg('danger', lang('request_error'));
+            }
+        }
+        $this->conf->redirectPrev();
+    }
 
 
 }

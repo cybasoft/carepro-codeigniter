@@ -10,13 +10,11 @@ class accounting extends CI_Controller
     function __construct()
     {
         parent::__construct();
-
         //redirect session
         $this->conf->setRedirect();
-
-		if($this->conf->isParent()==true && $this->conf->isStaff()==false){
-			$this->conf->redirectPrev();
-		}
+        if ($this->conf->isParent() == true && $this->conf->isStaff() == false) {
+            $this->conf->redirectPrev();
+        }
 
         //local variables
         $this->module = 'admin/accounting/';

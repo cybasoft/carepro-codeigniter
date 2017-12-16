@@ -1567,7 +1567,7 @@ html .halflings {
 .halflings-chevron-right:before {
   content: "\e080";
 }
-.halflings-plus-sign:before {
+.halflings-plus:before {
   content: "\e081";
 }
 .halflings-minus-sign:before {

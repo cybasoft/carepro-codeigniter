@@ -2,11 +2,11 @@
 
 /**
  * @file      : daycare_lang.php
- * @author    : John Muchiri
+ * @author    : JMuchiri
  * @date      : 8/31/14
- * @Copyright 2014 icoolpix.com
- * http://icoolpix.com
- * info@icoolpix.com
+ * @Copyright 2017 A&M Digital Technologies
+
+* https://amdtllc.com
  */
 //global strings
 $lang['dashboard'] = 'Dashboard';
@@ -192,6 +192,7 @@ $lang['child_checked_in_message'] = '<h3>Your child was checked in today </h3>';
 $lang['child_checked_out_message'] = '<h3>Your child was checked out today </h3>';
 
 //registration
+$lang['enter_email']='Enter your email address';
 $lang['name'] = 'Name';
 $lang['username'] = 'Username';
 $lang['first_name'] = 'First name';
@@ -233,8 +234,14 @@ $lang['contact_information'] = 'Contact information';
 $lang['registration_date'] = 'Date registered';
 $lang['last_login'] = 'Last login';
 
-$lang['emergency_contact'] = 'Emergency contact';
+$lang['emergency_contact'] = 'Emergency Contact';
+$lang['emergency_contacts'] = 'Emergency Contacts';
 $lang['emergency'] = 'Emergency';
+$lang['healthcare_providers'] = 'Healthcare Providers';
+$lang['new_provider']='New Provider';
+$lang['new_contact']='New Contact';
+$lang['type_role']='Type/Role';
+$lang['type_role_help']='e.g Primary doctor, insurance, dentist';
 
 $lang['assign_parent'] = 'Assign parent';
 $lang['user_already_assigned'] = 'The user selected is already assigned';
@@ -295,7 +302,7 @@ $lang['selected'] = 'selected';
 $lang['checked'] = 'checked';
 
 //health
-$lang['food_pref_header'] = 'Food preferences';
+$lang['food_pref_header'] = 'Food Preferences';
 $lang['food'] = 'Food';
 $lang['breakfast'] = 'Breakfast';
 $lang['brunch'] = 'Brunch';
@@ -351,6 +358,7 @@ $lang['no_pending_charges'] = 'You have no pending charges';
 $lang['pay_with'] = 'Pay with';
 
 //invoice
+$lang['invoice_due']='Due Invoices';
 $lang['tax'] = 'Tax';
 $lang['total_tax'] = 'Total tax';
 $lang['sub_total'] = 'Sub total';
@@ -394,6 +402,7 @@ $lang['google_analytics'] = 'Google analytics';
 $lang['download'] = 'Download';
 $lang['downloads'] = 'Downloads';
 $lang['preview'] = 'Preview';
-
+$lang['contacts'] = 'Contacts';
 //family
 $lang['update_child_notice'] = 'To update information about this child, please contact a manager.';
+$lang['copyright']='<a href="http://amdtllc.com" target="_blank">A&M Digital Technologies</a>';

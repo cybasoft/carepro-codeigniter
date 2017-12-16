@@ -16,10 +16,10 @@
 										<?php
 									if ($row->photo !== "") {
 										echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
+         src="' . base_url() . 'assets/img/users/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
 									} else {
 										echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/no-image.png" style="width: 120px; height:120px"/>';
+         src="' . base_url() . 'assets/img/content/no-image.png" style="width: 120px; height:120px"/>';
 									}
 									?>
 									</div>
@@ -47,14 +47,14 @@
 
 									<br/>
 									<span class="label label-info"><?php echo lang('status'); ?></span>
-									<?php echo lang($this->children->status($row->status)); ?>
+									<?php echo lang($this->child->status($row->status)); ?>
 								</div>
 							</div>
 						</div>
 						<div class="box-footer">
 							<a href="<?php echo site_url('family/viewchild/' . $row->child_id); ?>"
 							   class="btn btn-info btn-flat btn-sm viewChild">
-								<span class="glyphicon glyphicon-eye-open"></span> <?php echo lang('open'); ?>
+								<span class="fa fa-eye-open"></span> <?php echo lang('open'); ?>
 							</a>
 						</div>
 					</div>

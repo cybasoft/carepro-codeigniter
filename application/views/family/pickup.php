@@ -12,7 +12,7 @@
 
 						} else {
 							echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/img/no-image.png"/>';
+         src="' . base_url() . 'assets/img/content/no-image.png"/>';
 						}
 
 						?>
@@ -27,11 +27,11 @@
 						<hr/>
 						<table>
 							<tr>
-								<td><span class="glyphicon glyphicon-phone"></span>
+								<td><span class="fa fa-phone"></span>
 									<span class="label label-success"><?php echo $pickup->cell; ?></span></td>
 							</tr>
 							<tr>
-								<td><span class="glyphicon glyphicon-phone"></span>
+								<td><span class="fa fa-phone"></span>
 									<span class="label label-info"><?php echo $pickup->other_phone; ?></span></td>
 							</tr>
 
@@ -39,7 +39,7 @@
 
 						<table>
 							<tr>
-								<td><span class="glyphicon glyphicon-envelope"> </span></td>
+								<td><span class="fa fa-envelope"> </span></td>
 								<td>
 									<div class="parent-address">
 										<?php
@@ -49,14 +49,14 @@
 								</td>
 							</tr>
 							<tr>
-								<td><span class="glyphicon glyphicon-lock"></span></td>
+								<td><span class="fa fa-lock"></span></td>
 								<td class="label label-danger">
 									<?php echo $pickup->pin; ?>
 								</td>
 							</tr>
 						</table>
 
-						<span class="glyphicon glyphicon-trash cursor"
+						<span class="fa fa-trash cursor"
 							  onclick="deletePickup('<?php echo $pickup->id; ?>');"></span>
 
 					</td>

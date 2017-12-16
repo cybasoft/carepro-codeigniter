@@ -6,7 +6,7 @@
 <!--		<div class="box box-solid box-success">-->
 <!--			<div class="box-header">-->
 <!--				<div class="box-title">-->
-<!--					<span class="glyphicon glyphicon-credit-card"></span>-->
+<!--					<span class="fa fa-credit-card"></span>-->
 <!--					--><?php //echo lang('credit_debit_card'); ?>
 <!--				</div>-->
 <!--			</div>-->
@@ -14,7 +14,7 @@
 <!--				--><?php
 //				foreach($cards->result() as $row) {
 //					echo '<div>';
-//					echo anchor('charges/delete_card/' . $row->id, '<span class="glyphicon glyphicon-trash text-danger cursor credit_card_edit pull-right"></span>');
+//					echo anchor('charges/delete_card/' . $row->id, '<span class="fa fa-trash text-danger cursor credit_card_edit pull-right"></span>');
 //					echo $row->name_on_card;
 //					echo '<br/>';
 //					echo 'xxxx-xxxx-xxxx-' . substr($this->conf->decrypt($row->card_no), -4, 4);
@@ -70,7 +70,7 @@
 		<div class="box box-solid box-success">
 			<div class="box-header">
 				<div class="box-title">
-					<span class="glyphicon glyphicon-credit-card"></span>
+					<span class="fa fa-credit-card"></span>
 					<?php echo lang('bank_account'); ?>
 				</div>
 			</div>
@@ -78,7 +78,7 @@
 				<?php
 				foreach($banks->result() as $row) {
 					echo '<div>';
-					echo anchor('charges/delete_bank/' . $row->id, '<span class="glyphicon glyphicon-trash text-danger cursor bank_del pull-right"></span>');
+					echo anchor('charges/delete_bank/' . $row->id, '<span class="fa fa-trash text-danger cursor bank_del pull-right"></span>');
 					echo $row->bank_name;
 					echo '<br/>';
 					echo $this->conf->decrypt($row->account_no);

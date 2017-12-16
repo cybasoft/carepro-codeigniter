@@ -15,7 +15,7 @@
 <!-- iCheck -->
 <script src="<?php echo base_url(); ?>assets/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
-<script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/app.js" type="text/javascript"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo base_url(); ?>assets/js/AdminLTE/dashboard.js" type="text/javascript"></script>
 <!-- AdminLTE for demo purposes -->

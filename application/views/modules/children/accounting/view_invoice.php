@@ -24,15 +24,15 @@
 
 	<div class="col-sm-4 col-md-4 col-lg-4">
 		<button class="btn bg-black btn-flat" data-toggle="modal" data-target="#myModal">
-			<i class="glyphicon glyphicon-plus"></i> <?php echo lang('add_item'); ?>
+			<i class="fa fa-plus"></i> <?php echo lang('add_item'); ?>
 		</button>
 		<button class="btn bg-black btn-flat" data-toggle="modal" data-target="#make_payment">
-			<span class="glyphicon glyphicon-credit-card"></span>
+			<span class="fa fa-credit-card"></span>
 			<?php echo lang('pay'); ?>
 		</button>
 		<button class="btn bg-black btn-flat"
 				onclick="window.location.href='<?php echo site_url('invoice/preview/' . $invoice->id); ?>'">
-			<i class="glyphicon glyphicon-print"></i> <?php echo lang('print'); ?>
+			<i class="fa fa-print"></i> <?php echo lang('print'); ?>
 		</button>
 	</div>
 
@@ -108,7 +108,7 @@
 								   value="<?php echo ( ($item->item_quantity * $item->item_price) - $item->item_discount); ?>"/>
 						</td>
 						<td>
-                                            <span class="glyphicon glyphicon-trash cursor"
+                                            <span class="fa fa-trash cursor"
 												  onclick="window.location.href='<?php echo site_url('invoice/delete_item/' . $item->id); ?>'"></span>
 						</td>
 					</tr>
@@ -172,7 +172,7 @@
 			<textarea name="invoice_terms" class="form-control" required=""
 					  id="invoice_terms"><?php echo $invoice->invoice_terms; ?></textarea>
 			<button class="btn btn-large btn-success pull-right" id="invoice_terms_btn"><i
-					class="glyphicon glyphicon-check"></i> <?php echo lang('save'); ?>
+					class="fa fa-check"></i> <?php echo lang('save'); ?>
 			</button>
 		</div>
 	</div>

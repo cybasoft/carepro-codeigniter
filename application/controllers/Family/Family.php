@@ -3,9 +3,9 @@
 /**
  * @file      : family.php
  * @project   : DaycarePro
- * @author    : John
+ * @author    : JMuchiri
  * @date      : 8/10/14
- * @Copyright 2014 icoolpix.com
+ * @Copyright 2017 A&M Digital Technologies
  * @version   : 1.0.1
  */
 class family extends CI_Controller
@@ -67,18 +67,18 @@ class family extends CI_Controller
 	function child()
 	{
 		$data = array(
-			'child' => $this->children->child($this->children->getID()),
-			'pickups' => $this->children->getData('child_pickup'),
-			'attendance' => $this->children->getData('child_checkin'),
+			'child' => $this->child->child($this->child->getID()),
+			'pickups' => $this->child->getData('child_pickup'),
+			'attendance' => $this->child->getData('child_checkin'),
 
-			'insurance' => $this->children->getData('child_insurance'),
-			'foods' => $this->children->getData('child_foodpref'),
-			'allergies' => $this->children->getData('child_allergy'),
-			'meds' => $this->children->getData('child_meds'),
+			'insurance' => $this->child->getData('child_insurance'),
+			'foods' => $this->child->getData('child_foodpref'),
+			'allergies' => $this->child->getData('child_allergy'),
+			'meds' => $this->child->getData('child_meds'),
 
-			'eContact' => $this->children->getData('child_emergency'),
+			'eContact' => $this->child->getData('child_emergency'),
 
-			'notes' => $this->children->getData('child_notes')
+			'notes' => $this->child->getData('child_notes')
 		);
 		$this->family->page($this->module . 'child', $data);
 	}
@@ -128,7 +128,7 @@ class family extends CI_Controller
 		$this->table->set_template($tmpl);
 		$this->table->set_heading('#', lang('status'), lang('amount'), lang('paid'), lang('amount_due'), lang('due_date'), lang('actions'));
 		foreach ($query as $row) {
-			$preview = anchor('invoice/invoice_preview/' . $row->id, '<span class="btn btn-xs btn-info" ><i class="glyphicon glyphicon-print"></i></span>');
+			$preview = anchor('invoice/invoice_preview/' . $row->id, '<span class="btn btn-xs btn-info" ><i class="fa fa-print"></i></span>');
 
 			$subTotal = $this->invoice->invoice_subtotal($row->id);
 			$totalDue = number_format($subTotal - $this->invoice->amount_paid($row->id), 2);

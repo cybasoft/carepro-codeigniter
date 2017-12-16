@@ -7,31 +7,31 @@
 	 </li>
 	 <li>
 		 <a href="<?php echo site_url('mailbox'); ?>" class="list-group-item" id="1">
-			 <i class="glyphicon glyphicon-inbox"></i>
+			 <i class="fa fa-inbox"></i>
 			 <span class="hidden-xs"><?php echo lang('inbox'); ?> (<?php echo $this->mail->totalUnread(); ?>)</span>
 		 </a>
 	 </li>
 	 <!--li>
 		 <a href="<?php echo site_url('mailbox/index/starred'); ?>" class="list-group-item" id="2">
-			 <i class="glyphicon glyphicon-star"></i>
+			 <i class="fa fa-star"></i>
 			 <span class="hidden-xs"><?php echo lang('starred'); ?></span>
 		 </a>
 	 </li>
 	 <li>
 		 <a href="<?php echo site_url('mailbox/index/important'); ?>" class="list-group-item" id="3">
-			 <i class="glyphicon glyphicon-bookmark"></i>
+			 <i class="fa fa-bookmark"></i>
 			 <span class="hidden-xs"><?php echo lang('important'); ?></span>
 		 </a>
 	 </li-->
 	 <!--li>
 		 <a href="<?php echo site_url('mailbox/sent'); ?>" class="list-group-item" id="4">
-			 <i class="glyphicon glyphicon-share-alt"></i>
+			 <i class="fa fa-share-alt"></i>
 			 <span class="hidden-xs"><?php echo lang('sent'); ?></span>
 		 </a>
 	 </li>
 	 <li>
 		 <a href="<?php echo site_url('mailbox/index/trash'); ?>" class="list-group-item" id="9">
-			 <i class="glyphicon glyphicon-trash"></i>
+			 <i class="fa fa-trash-o"></i>
 			 <span class="hidden-xs"><?php echo lang('trash'); ?></span>
 		 </a>
 	 </li-->

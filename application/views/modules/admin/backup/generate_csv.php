@@ -37,7 +37,7 @@
                 <?php echo anchor(base_url() . 'assets/backups/csv/' . $backup->backup_date . '.csv', $backup->backup_path); ?>
             </td>
             <td><?php echo date('d/m/Y', $backup->backup_date); ?></td>
-            <td><span id="<?php echo $backup->id; ?>" class="glyphicon glyphicon-trash del_csv cursor"></span></td>
+            <td><span id="<?php echo $backup->id; ?>" class="fa fa-trash del_csv cursor"></span></td>
         </tr>
     <?php } ?>
     </tbody>

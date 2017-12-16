@@ -6,8 +6,8 @@
  * Email: jgmuchiri@gmail.com
  * Date: 11/17/2014
  *
- * http://icoolpix.com
- * info@icoolpix.com
+
+* https://amdtllc.com
  * Copyright 2014 All Rights Reserved
  */
 class my_news extends CI_Model

@@ -24,7 +24,7 @@
 						</div>
 						<div class="col-xs-2">
 							<button class="btn btn-default">
-								<span class="glyphicon glyphicon-plus-sign"></span>
+								<span class="fa fa-plus"></span>
 							</button>
 						</div>
 						<?php echo form_close(); ?>
@@ -49,7 +49,7 @@
 				<div class="box box-info">
 					<div class="box-body">
 
-							<?php echo form_open('health/add_med/' . $this->child->getID(), 'class="new-med"'); ?>
+							<?php echo form_open('health/add_med/' . $child->id, 'class="new-med"'); ?>
 						<div class="col-xs-4">
 							<input class="form-control" type="text" name="med_name" placeholder="<?php echo lang('medication'); ?>"/>
 						</div>
@@ -58,7 +58,7 @@
 						</div>
 						<div class="col-xs-2">
 							<button class="btn btn-default">
-								<span class="glyphicon glyphicon-plus-sign"></span>
+								<span class="fa fa-plus"></span>
 								<?php echo lang('add'); ?>
 							</button>
 						</div>
@@ -102,7 +102,7 @@
 
 						<div class="col-xs-2">
 							<button class="btn btn-default">
-								<span class="glyphicon glyphicon-plus-sign"></span>
+								<span class="fa fa-plus"></span>
 							</button>
 						</div>
 						<?php echo form_close(); ?>

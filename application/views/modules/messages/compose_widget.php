@@ -43,7 +43,7 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<button class="btn btn-primary">
-					<span class="glyphicon glyphicon-envelope"></span> <?php echo lang('send'); ?>
+					<span class="fa fa-envelope"></span> <?php echo lang('send'); ?>
 				</button>
 			</div>
 		</div>

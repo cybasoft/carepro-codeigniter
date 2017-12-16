@@ -21,7 +21,7 @@
 							<td class="col-sm-4"><?php echo $ec->address; ?></td>
 							<td><?php echo $ec->relation; ?></td>
 							<td>
-							<span class="glyphicon glyphicon-trash cursor"
+							<span class="fa fa-trash cursor"
 								  onclick="deleteEmer('<?php echo $ec->id; ?>');"></span>
 							</td>
 						</tr>
@@ -35,7 +35,7 @@
 		<div class="box box-solid">
 			<div class="box-header bg-maroon"><h3 class="box-title"><?php echo lang('add'); ?></h3></div>
 			<div class="box-body">
-				<?php echo form_open('emergency/add_contact/' .$this->children->child()->id); ?>
+				<?php echo form_open('emergency/add_contact/' .$this->child->child()->id); ?>
 				<input class="form-control" type="text" name="fname" placeholder="<?php echo lang('first_name'); ?>"
 					   required=""/>
 				<input class="form-control" type="text" name="lname" placeholder="<?php echo lang('last_name'); ?>"

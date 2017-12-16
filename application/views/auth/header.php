@@ -2,22 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
-    <title><?php echo $this->config->item('name'); ?></title>
+    <title><?php echo $this->config->item('name', 'company'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="A&M Digital Technologies">
-
-
-    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-
+    <link href="<?php echo base_url(); ?>assets/css/login.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/css/login.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
     <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
-
     <!--google analytic code-->
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -35,8 +30,6 @@
         ga('require', 'displayfeatures');
         ga('send', 'pageview');
     </script>
-
 </head>
-
-<body>
+<body class="login-page login-1">
 

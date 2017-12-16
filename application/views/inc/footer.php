@@ -22,7 +22,7 @@
         type="text/javascript"></script>
 
 <script src="<?php echo base_url(); ?>assets/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/AdminLTE/app.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/app.js" type="text/javascript"></script>
 
 <script src="<?php echo base_url(); ?>assets/js/summernote.min.js" type="text/javascript"></script>
 <script>

@@ -6,8 +6,8 @@
  * Email: jgmuchiri@gmail.com
  * Date: 11/24/2014
  *
- * http://icoolpix.com
- * info@icoolpix.com
+
+* https://amdtllc.com
  * Copyright 2014 All Rights Reserved
  */
 class broadcast extends CI_Controller

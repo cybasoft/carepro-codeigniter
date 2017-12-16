@@ -2,15 +2,12 @@
 
 class Reports extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
         //redirect session
         $this->conf->setRedirect();
-
 		$this->conf->allow('super');
-
         //variables
         $this->load->model('My_reports','reports');
         $this->module= 'modules/admin/backup/';

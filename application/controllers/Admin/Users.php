@@ -11,13 +11,10 @@ class Users extends CI_Controller
     function __construct()
     {
         parent::__construct();
-
         $this->conf->setRedirect();
-
         $this->conf->allow('admin,manager,staff');
         $this->module = 'modules/users/';
     }
-
     //redirect if needed, otherwise display the user list
     function index()
     {
@@ -155,13 +152,13 @@ class Users extends CI_Controller
 
         if ($this->conf->in_group($this->users->uid(), 'admin')) : //only admin can assign roles
             //Update the groups user belongs to
-        $groupData = $this->input->post('groups');
-        if (isset($groupData) && !empty($groupData)) {
-            $this->ion_auth->remove_from_group('', $id);
-            foreach ($groupData as $grp) {
-                $this->ion_auth->add_to_group($grp, $id);
+            $groupData = $this->input->post('groups');
+            if (isset($groupData) && !empty($groupData)) {
+                $this->ion_auth->remove_from_group('', $id);
+                foreach ($groupData as $grp) {
+                    $this->ion_auth->add_to_group($grp, $id);
+                }
             }
-        }
         endif;
 
         //update the password if it was posted
@@ -329,22 +326,18 @@ class Users extends CI_Controller
     /*
      * upload user photo
      */
-    function upload_photo($id = "")
+    function uploadPhoto($id = "")
     {
         if (!$this->conf->isManager()) $this->conf->redirectPrev();
-
-        $upload_path = './assets/img/staff';
+        $upload_path = './assets/img/users/staff';
         $upload_db = 'user_data';
-
         if (!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
         }
-
         if ($id == "") { //make sure there are arguments
             $this->conf->msg('danger', lang('request_error'));
             $this->conf->redirectPrev();
         }
-
         $config = array(
             'upload_path' => $upload_path,
             'allowed_types' => 'gif|jpg|png|jpeg',
@@ -362,10 +355,10 @@ class Users extends CI_Controller
             $q = $this->db->get($upload_db);
             foreach ($q->result() as $r) {
                 if ($r->photo !== "") :
-                    unlink($upload_path . '/' . $r->photo);
-                $data['photo'] = '';
-                $this->db->where('user_id', $id);
-                $this->db->update($upload_db, $data);
+                    @unlink($upload_path . '/' . $r->photo);
+                    $data['photo'] = '';
+                    $this->db->where('user_id', $id);
+                    $this->db->update($upload_db, $data);
                 endif;
             }
             //upload new photo

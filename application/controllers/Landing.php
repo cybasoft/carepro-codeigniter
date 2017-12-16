@@ -1,9 +1,9 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * @file      : landing.php
- * @author    : John
+ * @author    : JMuchiri
  * @date      : 11/5/14
- * @Copyright 2014 icoolpix.com
+ * @Copyright 2017 A&M Digital Technologies
 
  */
 

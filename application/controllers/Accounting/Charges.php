@@ -2,13 +2,11 @@
 
 /**
  * @file      : charges.php
- * @author    : John
- * @date      : 8/9/14
- * @Copyright 2014 icoolpix.com
+ * @author    : JMuchiri
+ * @Copyright 2017 A&M Digital Technologies
  */
 class Charges extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -17,10 +15,8 @@ class Charges extends CI_Controller
         if ($this->conf->isParent() == true && $this->conf->isStaff() == false) {
             $this->conf->redirectPrev();
         }
-
         //resources
         $this->load->model('My_child', 'child');
-
         //variables
         $this->module = 'modules/children/';
 
@@ -31,7 +27,7 @@ class Charges extends CI_Controller
      * @params int $id
      * @return void
      */
-    function add_charge()
+    function addCharge($child_id)
     {
         $this->form_validation->set_rules('item', 'Item name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('charge_desc', 'Description', 'required|trim|xss_clean');
@@ -39,7 +35,7 @@ class Charges extends CI_Controller
         $this->form_validation->set_rules('due_date', 'Due date', 'required|trim|xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
-            $this->my_child->add_charge($this->child->getID());
+            $this->my_child->add_charge($child_id);
         } else {
             $this->conf->msg('danger', 'Error!');
         }
@@ -71,112 +67,15 @@ class Charges extends CI_Controller
      * generate invoice
      * @return void
      */
-    function invoice()
+    function invoice($child_id)
     {
-        $this->db->where('child_id', $this->child->getID());
+        $this->db->where('child_id', $child_id);
         $data['charges'] = $this->db->get('child_charges')->result();
-
-
-        $this->db->where('child_id', $this->child->getID());
+        $this->db->where('child_id', $child_id);
         $this->db->select_sum('amount');
         $b = $this->db->get('child_charges');
         $data['total_charges'] = $b->row()->amount;
-
-
         $this->load->view($this->module . 'invoice_form', $data);
-    }
-
-    /*
-     * add card
-     */
-    function add_card()
-    {
-        $this->form_validation->set_rules('name_on_card', lang('name_on_card'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('card_no', lang('card_number'), 'required|trim|xss_clean|integer');
-        $this->form_validation->set_rules('expiry', lang('expiry'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('ccv', lang('ccv'), 'required|trim|xss_clean|integer');
-
-        if ($this->form_validation->run() == TRUE) {
-            $ccv = $this->conf->encrypt($this->input->post('ccv'));
-            $data = array(
-                'child_id' => $this->child->getID(),
-                'name_on_card' => $this->input->post('name_on_card'),
-                'card_no' => $this->conf->encrypt($this->input->post('card_no')),
-                'expiry' => $this->input->post('expiry'),
-                'ccv' => $ccv,
-            );
-            if ($this->db->insert('accnt_pay_cards', $data)) {
-                $this->conf->msg('success', lang('request_success'));
-            } else {
-                $this->conf->msg('danger', lang('request_error'));
-            }
-        } else {
-
-            $this->conf->msg('danger', lang('request_error'));
-        }
-        $this->conf->redirectPrev();
-    }
-
-    /*
-     * delete card
-     */
-    function delete_card($id)
-    {
-        if (is_numeric($id)) {
-            $this->db->where('child_id', $this->child->getID());
-            $this->db->where('id', $id);
-            if ($this->db->delete('accnt_pay_cards')) {
-                $this->conf->msg('success', lang('request_success'));
-            } else {
-                $this->conf->msg('danger', lang('request_error'));
-            }
-        }
-        $this->conf->redirectPrev();
-    }
-
-    /*
-     * add bank
-     */
-    function add_bank()
-    {
-        $this->form_validation->set_rules('bank_name', lang('bank_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('account_no', lang('account_number'), 'required|trim|xss_clean|integer');
-        $this->form_validation->set_rules('routing', lang('routing_number'), 'required|trim|xss_clean|integer');
-
-        if ($this->form_validation->run() == TRUE) {
-            $data = array(
-                'child_id' => $this->child->getID(),
-                'bank_name' => $this->input->post('bank_name'),
-                'account_no' => $this->conf->encrypt($this->input->post('account_no')),
-                'routing' => $this->input->post('routing'),
-            );
-            if ($this->db->insert('accnt_pay_bank', $data)) {
-                $this->conf->msg('success', lang('request_success'));
-            } else {
-                $this->conf->msg('danger', lang('request_error'));
-            }
-        } else {
-
-            $this->conf->msg('danger', lang('request_error'));
-        }
-        $this->conf->redirectPrev();
-    }
-
-    /*
-     * delete bank
-     */
-    function delete_bank($id)
-    {
-        if (is_numeric($id)) {
-            $this->db->where('child_id', $this->child->getID());
-            $this->db->where('id', $id);
-            if ($this->db->delete('accnt_pay_bank')) {
-                $this->conf->msg('success', lang('request_success'));
-            } else {
-                $this->conf->msg('danger', lang('request_error'));
-            }
-        }
-        $this->conf->redirectPrev();
     }
 
 

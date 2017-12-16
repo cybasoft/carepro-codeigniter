@@ -3,38 +3,37 @@ $email = array(
     'name' => 'email',
     'id' => 'email',
     'class' => 'form-control',
-    'placeholder' => 'Email address',
+    'placeholder' => lang('email'),
     'required' => 'required'
 );
 ?>
-<div class="container" style="margin-top: 45px">
 
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-2">
-
-                <?php
-                if (count(validation_errors())) :
-                    echo $this->session->flashdata('message');
-                endif;
-                ?>
-                <div class="well well-form">
-                    <img style="width: 100%;" src="<?php echo base_url(); ?>assets/img/logo.png" class="logo">
-                    <hr/>
-                    <h3>Reset password</h3>
-                    <?php echo form_open("auth/forgot_password"); ?>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <?php echo form_input($email); ?>
-                        <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit"><?php echo lang('submit'); ?></button>
-                        </span>
-                    </div>
-                    <br/>
-                    <?php echo anchor('login', '<i class="glyphicon glyphicon-link"></i>login', 'style="float:right"'); ?>
-                    <?php echo form_close(); ?>
-                    <hr/>
-                    &copy; <?php echo date('Y'); ?> <?php echo $this->config->item('copyright'); ?>
-                </div>
+<div id="app" class="login-wrapper">
+    <div class="login-box  animation flipInX">
+        <div class="logo-main">
+            <a href="/">
+                <img src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('logo', 'company'); ?>"
+                     alt="Laraspace Logo">
+            </a>
+        </div>
+        <?php
+        if (count(validation_errors())) :
+            echo $this->session->flashdata('message');
+        endif;
+        ?>
+        <?php echo form_open("auth/forgot_password", ['id' => 'loginForm']); ?>
+        <div class="form-group">
+            <?php echo form_input($email); ?>
+        </div>
+        <button class="btn btn-theme btn-full"><?php echo lang('submit'); ?></button>
+        <div class="other-actions row">
+            <div class="col-6">
+                <?php echo anchor('login', '<span class="fa fa-key"></span> '.lang('login')); ?>
             </div>
         </div>
+        <?php echo form_close(); ?>
+        <div class="page-copyright">
+            <p><?php echo lang('copyright'); ?></p>
+        </div>
     </div>
+</div>

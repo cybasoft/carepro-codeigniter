@@ -2,11 +2,11 @@
 
 /**
  * @file      : my_invoice
- * @author    : John Muchiri
- * @date      : 9/16/2014
- * @Copyright 2014 icoolpix.com
- * http://icoolpix.com
- * info@icoolpix.com
+ * @author    : JMuchiri
+
+ * @Copyright 2017 A&M Digital Technologies
+
+* https://amdtllc.com
  */
 class My_invoice extends CI_Model
 {
@@ -123,7 +123,7 @@ class My_invoice extends CI_Model
     function save_invoice()
     {
         $data = array(
-            'child_id' => $this->child->getID(),
+            'child_id' => $child->id,
             'invoice_date' => $this->input->post('invoice_date'),
             'invoice_due_date' => $this->input->post('invoice_due_date'),
             'invoice_terms' => $this->input->post('invoice_terms'),
@@ -350,7 +350,7 @@ class My_invoice extends CI_Model
                 $stamp = "";
             }
         }
-        return '<img src="' . base_url() . 'assets/img/icons/' . $stamp . '_stamp.png" class="stamp"/>';
+        return '<img src="' . base_url() . 'assets/img/content/' . $stamp . '_stamp.png" class="stamp"/>';
     }
 
     function getInvoice($invoice_id)

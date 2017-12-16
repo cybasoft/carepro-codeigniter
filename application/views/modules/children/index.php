@@ -14,13 +14,13 @@
 			<input type="radio" name="search_term" checked value="lname"/><?php echo lang('last_name'); ?>
     </span>
 		<input type="text" name="search" class="form-control" placeholder="<?php echo lang('search'); ?>..."/>
-		<span class="input-group-btn"><button class="btn btn-default"><i class="glyphicon glyphicon-search"></i>
+		<span class="input-group-btn"><button class="btn btn-default"><span class="fa fa-magnifying-glass"></span>
 			</button> </span>
 		<?php echo form_close(); ?>
 
 	</div>
 	<div class="col-lg-4 col-md-4 col-lg-4">
-		<?php echo anchor('children/register', '<span class="glyphicon glyphicon-plus"></span>'
+		<?php echo anchor('children/register', '<span class="fa fa-plus"></span>'
 		. lang('register') . ' ' . lang('child'), 'class="btn btn-primary btn-flat"'); ?>
 	</div>
 </div>
@@ -94,10 +94,10 @@
 								<?php
 							if ($row->photo !== "") {
 								echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
+         src="' . base_url() . 'assets/img/users/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
 							} else {
 								echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/no-image.png" style="width: 120px; height:120px"/>';
+         src="' . base_url() . 'assets/img/content/no-image.png" style="width: 120px; height:120px"/>';
 							}
 							?>
 								</div>
@@ -111,7 +111,7 @@
 
 								<br/>
 								<span class="label label-info"><?php echo lang('status'); ?></span>
-								<?php echo lang($this->children->status($row->status)); ?>
+								<?php echo lang($this->child->status($row->status)); ?>
 							</div>
 						</div>
 					</div>
@@ -119,20 +119,20 @@
 						<?php if ($this->child->is_checked_in($row->id) == 1) : ?>
 							<a id="<?php echo $row->id; ?>" href="#"
 							   class="btn btn-danger btn-flat btn-sm child-check-out">
-								<span class="glyphicon glyphicon-new-window"></span>
+								<span class="fa fa-new-window"></span>
 								<?php echo lang('check_out'); ?>
 							</a>
 						<?php else : ?>
 							<a id="<?php echo $row->id; ?>" href="#"
 							   class="btn btn-primary btn-flat btn-sm child-check-in">
-								<span class="glyphicon glyphicon-check"></span>
+								<span class="fa fa-check"></span>
 								<?php echo lang('check_in') . ' &nbsp; '; ?>
 							</a>
 						<?php endif; ?>
 
 						<a href="<?php echo site_url('child/' . $row->id); ?>"
 						   class="btn btn-info btn-flat btn-sm viewChild">
-							<span class="glyphicon glyphicon-eye-open"></span> <?php echo lang('open'); ?>
+							<span class="fa fa-eye"></span> <?php echo lang('open'); ?>
 						</a>
 					</div>
 				</div>
@@ -154,7 +154,7 @@
 		}
 		$i = 0;
 		$l = 1;
-		for ($i = 0; $i < $this->children->getCount(); $i = $i + $limit) {
+		for ($i = 0; $i < $this->child->getCount(); $i = $i + $limit) {
 			if ($i <> $eu) {
 				echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $i . '&limit=' . $limit . '">' . $l . '</a>';
 			} else {
@@ -163,7 +163,7 @@
 			$l = $l + 1;
 		}
 
-		if ($this1 < $this->children->getCount()) {
+		if ($this1 < $this->child->getCount()) {
 			echo '<a class="btn btn-default" href="' . $page_name . '?start=' . $next . '&limit=' . $limit . '">&raquo;</a>';
 		} else {
 			echo '<button disabled class="btn btn-default">&raquo;</button>';

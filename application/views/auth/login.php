@@ -8,61 +8,48 @@ $identity = array(
     'id' => 'identity',
     'type' => 'text',
     'value' => '',
-    'class' => 'form-control',
-    'placeholder' => 'Username/Email',
+    'class' => 'form-control form-control-danger',
+    'placeholder' => lang('enter_email'),
     'required' => 'required'
 );
 $password = array(
     'name' => 'password',
     'id' => 'password',
     'type' => 'password',
-    'class' => 'form-control',
-    'placeholder' => 'Password',
+    'class' => 'form-control form-control-danger',
+    'placeholder' => lang('password'),
     'required' => 'required'
 );
 ?>
-
-<div class="container" style="margin-top: 45px">
-
-    <div class="row">
-        <div class="col-sm-4 col-sm-offset-2">
-
-            <?php
-            if (count(validation_errors())) :
-                echo $this->session->flashdata('message');
-            endif;
-            ?>
-
-            <div class="well well-form">
-                <img style="width:100%" src="<?php echo base_url(); ?>assets/img/logo.png" class="logo">
-                <hr/>
-                <h3>Login</h3>
-
-                <form action="<?php echo site_url('auth/login'); ?>" method="post">
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <span class="add-on"><i class="glyphicon glyphicon-user"></i></span>
-                        </div>
-                        <?php echo form_input($identity); ?>
-                    </div>
-
-                    <br/>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <span class="add-on"><i class="glyphicon glyphicon-lock"></i></span>
-                        </div>
-                        <?php echo form_input($password); ?>
-                    </div>
-                    <br/>
-
-                    <button class="btn btn-primary" type="submit">Sign In</button>
-                    <?php echo anchor('forgot_password', '<i class="glyphicon glyphicon-link"></i> Forgot password', 'class="" style="float:right"'); ?>
-                </form>
-
-                <hr/>
-                &copy; <?php echo date('Y'); ?> <a href="http://amdtllc.com" target="_blank">A&M Digital
-                    Technologies</a>
+<div id="app" class="login-wrapper">
+    <div class="login-box  animation flipInX">
+        <div class="logo-main">
+            <a href="/">
+                <img src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('logo', 'company'); ?>"
+                     alt="Laraspace Logo">
+            </a>
+        </div>
+        <?php
+        if (count(validation_errors())) :
+            echo $this->session->flashdata('message');
+        endif;
+        ?>
+        <form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post">
+            <div class="form-group">
+                <?php echo form_input($identity); ?>
             </div>
+            <div class="form-group">
+                <?php echo form_input($password); ?>
+            </div>
+            <button class="btn btn-theme btn-full"><?php echo lang('login'); ?></button>
+            <div class="other-actions row">
+                <div class="col-6">
+                    <?php echo anchor('forgot_password', '<span class="fa fa-link-intact"></span> '.lang('forgot_password_heading')); ?>
+                </div>
+            </div>
+        </form>
+        <div class="page-copyright">
+            <p><?php echo lang('copyright'); ?></p>
         </div>
     </div>
 </div>

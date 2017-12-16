@@ -14,7 +14,7 @@
 
 			<li class="dropdown user user-menu">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<i class="glyphicon glyphicon-user"></i>
+					<i class="fa fa-user"></i>
 		<span><?php echo $this->users->user()->last_name; ?>
 			<i class="caret"></i></span>
 				</a>
@@ -23,10 +23,10 @@
 						<?php
 					if ($this->users->user()->photo !== "") {
 						echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/staff/' . $this->users->user()->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user()->photo . '"/>';
 					} else {
 						echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/no-image.png"/>';
+         src="' . base_url() . 'assets/img/content/no-image.png"/>';
 					}
 					?>
 						<p>

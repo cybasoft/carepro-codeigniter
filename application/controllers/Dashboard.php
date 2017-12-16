@@ -2,9 +2,9 @@
 
 /**
  * @file      : dashboard.php
- * @author    : John
- * @date      : 8/9/14
- * @Copyright 2014 icoolpix.com
+ * @author    : JMuchiri
+ *
+ * @Copyright 2017 A&M Digital Technologies
  */
 class Dashboard extends CI_Controller
 {

@@ -12,7 +12,6 @@ $config['company'] = array(
     'state' => '',
     'postal_code' => '',
     'country' => '',
-    'encrypt_key' => 'changethis',
     'timezone' => 'America/New_York', //http://php.net/manual/en/timezones.america.php
     'google_analytics' => '',
     'currency_symbol' => '$',
@@ -346,7 +345,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
  */
-$config['encryption_key'] = '';
+$config['encryption_key'] = '264a4a0605e26495be5513eaf2a1d528';
 
 /*
 |--------------------------------------------------------------------------
@@ -543,6 +542,3 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
  */
 $config['proxy_ips'] = '';
-
-$config['copyright'] = '<a href="http://amdtllc.com" target="_blank">A&M Digital
-Technologies</a>';

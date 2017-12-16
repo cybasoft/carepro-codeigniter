@@ -42,32 +42,6 @@ $(document).ready(function () {
 
     $('.msg').hide().slideDown('slow').delay(5000).slideUp("slow");
 
-    // add a hash to the URL when the user clicks on a tab
-    $('a[data-toggle="tab"]').on('click', function (e) {
-        history.pushState(null, null, $(this).attr('href'));
-    });
-    /*
-     * Manipulate tabs for redirection history
-     */
-    // navigate to a tab when the history changes
-    window.addEventListener("popstate", function (e) {
-        var activeTab = $('[href=' + location.hash + ']');
-        if (activeTab.length) {
-            activeTab.tab('show');
-        } else {
-            $('.nav-tabs a:first').tab('show');
-        }
-    });
-    if (window.location.hash) {
-        var thisTab = window.location.hash.substring(1);
-        $('#' + thisTab).addClass('active');
-        var t = $('[href=' + location.hash + ']');
-        t.tab('show');
-    } else {
-        $('.nav-tabs a:first').tab('show');
-    }
-
-
     //allergies
     $('.new-allergy').hide();
     $('.new-allergy-btn').click(function () {
@@ -100,15 +74,6 @@ $(document).ready(function () {
 
         $('.help-doc').html('loading <img src="../assets/img/loader.gif"/>').load(page);
     });
-    //delete help article
-    $('.del-help-btn').click(function () {
-        var article_id = $(this).attr('id');
-        if (confirm('Are you sure you want to delete this?')) {
-            window.location.href = '../help/delete/' + article_id;
-        }
-
-    });
-
 
     //news articles
     $('.news-sidebar>li>a').click(function () {
@@ -150,6 +115,33 @@ $(document).ready(function () {
                 window.location.href = loc;
         });
         e.preventDefault();
+    });
+
+   //  /*
+   // * Manipulate tabs for redirection history
+   // */
+   //  // navigate to a tab when the history changes
+   //  window.addEventListener("popstate", function (e) {
+   //      var activeTab = $('[href=' + location.hash + ']');
+   //      if (activeTab.length) {
+   //          activeTab.tab('show');
+   //      } else {
+   //          $('.nav-tabs a:first').tab('show');
+   //      }
+   //  });
+   //  if (window.location.hash) {
+   //      var thisTab = window.location.hash.substring(1);
+   //      $('#' + thisTab).addClass('active');
+   //      var t = $('[href=' + location.hash + ']');
+   //      t.tab('show');
+   //  } else {
+   //      $('.nav-tabs a:first').tab('show');
+   //  }
+
+
+    // // add a hash to the URL when the user clicks on a tab
+    $('a[data-toggle="tab"]').on('click', function (e) {
+        history.pushState(null, null, $(this).attr('href'));
     });
 
     /*begin persistent tabs*/

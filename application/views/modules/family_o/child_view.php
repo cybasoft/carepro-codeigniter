@@ -9,43 +9,43 @@
 <div class="tabs-left">
     <ul class="nav nav-tabs">
 		<li><a href="#dashboard" data-toggle="tab">
-				<i class="glyphicon glyphicon-dashboard"></i>
+				<i class="fa fa-dashboard"></i>
 				<span class="hidden-xs"><?php echo lang('dashboard'); ?></span>
 			</a>
         </li>
 		<li><a href="#health" data-toggle="tab">
-				<i class="glyphicon glyphicon-heart"></i>
+				<i class="fa fa-heart"></i>
 				<span class="hidden-xs"><?php echo lang('health'); ?></span>
 			</a>
         </li>
 		<li><a href="#notes" data-toggle="tab">
-				<i class="glyphicon glyphicon-list-alt"></i>
+				<i class="fa fa-list-alt"></i>
 				<span class="hidden-xs"><?php echo lang('notes'); ?></span>
 			</a>
         </li>
 		<li><a href="#p_invoice" data-toggle="tab">
-				<i class="glyphicon glyphicon-usd"></i>
+				<i class="fa fa-usd"></i>
 				<span class="hidden-xs"><?php echo lang('invoice'); ?></span>
 			</a>
         </li>
 		<li><a href="#paymethod" data-toggle="tab">
-				<i class="glyphicon glyphicon-credit-card"></i>
+				<i class="fa fa-credit-card"></i>
 				<span class="hidden-xs"><?php echo lang('payment_method'); ?></span>
 			</a>
         </li>
 		<li>
 			<a href="#pickup" role="tab" data-toggle="tab">
-				<i class="glyphicon glyphicon-user"></i>
+				<i class="fa fa-user"></i>
 				<span class="hidden-xs"><?php echo lang('pickup'); ?></span>
 			</a>
         </li>
         <li><a href="#attendance" role="tab" data-toggle="tab">
-				<i class="glyphicon glyphicon-check"></i>
+				<i class="fa fa-check"></i>
 				<span class="hidden-xs"><?php echo lang('attendance'); ?></span>
 			</a>
         </li>
         <li><a href="#emergency" role="tab" data-toggle="tab">
-				<i class="glyphicon glyphicon-phone-alt"></i>
+				<i class="fa fa-phone-alt"></i>
 				<span class="hidden-xs"><?php echo lang('emergency_contact'); ?></span>
 			</a>
 		</li>
@@ -60,7 +60,7 @@
                         . base_url() . 'assets/img/uploads/' . $child->photo . '"/>';
                 } else {
                     echo '<img class="img-square img-responsive img-thumbnail" src="'
-                        . base_url() . 'assets/img/no-image.png"/>';
+                        . base_url() . 'assets/img/content/no-image.png"/>';
                 }
                 ?>
             </div>
@@ -129,7 +129,7 @@
 
         <!--pickup-->
         <div class="tab-pane" id="pickup">
-            <?php $this->load->view('modules/children/child/pickup'); ?>
+            <?php $this->load->view('modules/child/pickup'); ?>
         </div>
         <!--attendance-->
         <div class="tab-pane" id="attendance">

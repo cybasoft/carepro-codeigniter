@@ -39,7 +39,7 @@
 						if (isset($_GET['search'])) {
 							$this->db->like('id', $_GET['search']);
 						}
-						$this->db->where('child_id', $this->child->getID());
+						$this->db->where('child_id', $child->id);
 						$query = $this->invoice->getInvoices();
 						?>
 							<table class="table table-stripped table-responsive">
@@ -72,7 +72,7 @@
 												class="text-danger"><?php echo $this->config->item('currency_symbol', 'company') . $totalDue; ?></span>
 										</td>
 										<td><?php echo strtoupper(date('d-M-y', strtotime($row->invoice_due_date))); ?></td>
-										<td><?php echo anchor(uri_string() . '?p=invoice&view=' . $row->id, '<span class="btn btn-xs btn-info" ><i class="glyphicon glyphicon-eye-open"></i></span>'); ?></td>
+										<td><?php echo anchor(uri_string() . '?p=invoice&view=' . $row->id, '<span class="btn btn-xs btn-info" ><i class="fa fa-eye-open"></i></span>'); ?></td>
 									</tr>
 								<?php endforeach; ?>
 								</tbody>
@@ -99,7 +99,7 @@
 											<div class="box-header bg-light-blue">
 											</div>
 											<div class="box-body">
-												<?php echo $this->company->logo(); ?>
+												<img sr
 												<?php
 											$this->db->where('id', $_GET['view']);
 											$invoice = $this->db->get('accnt_invoices')->row();
@@ -133,7 +133,7 @@
 											</tr>
 											<tr>
 												<td><?php echo lang('child'); ?>:</td>
-												<td><?php echo $this->children->child($invoice->child_id)->fname . ' ' . $this->children->child($invoice->child_id)->lname; ?></td>
+												<td><?php echo $this->child->child($invoice->child_id)->fname . ' ' . $this->child->child($invoice->child_id)->lname; ?></td>
 											</tr>
 											<tr>
 												<td><?php echo lang('date'); ?>:</td>
@@ -251,12 +251,12 @@
 										<a target="_blank" id="paypal-btn"
 										   href="<?php echo $this->invoice->paypal($invoice->id, 'daycarePP'); ?>"
 										   class="btn btn-primary">
-											<span class="glyphicon glyphicon-credit-card"></span>
+											<span class="fa fa-credit-card"></span>
 											PayPal
 										</a>
 										<?php endif; ?>
 										<button class="btn btn-info" onclick="window.print();">
-											<span class="glyphicon glyphicon-print"></span>
+											<span class="fa fa-print"></span>
 											<?php echo lang('print'); ?>
 										</button>
 

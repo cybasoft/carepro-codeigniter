@@ -27,7 +27,7 @@ if (!isset($_POST['confirm'])) { //double check this is the action
 
             $this->conf->msg('danger', 'Error! Unable to purge payments');
         }
-        redirect('children/child#payments');
+        redirect('child#payments');
     } else {
         redirect('admin/purge_payments');
     }

@@ -153,15 +153,15 @@
 								<?php
 							if ($this->users->user($user->id)->photo !== "") {
 								echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/img/staff/' . $this->users->user($user->id)->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user($user->id)->photo . '"/>';
 							} else {
 								echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/img/no-image.png"/>';
+         src="' . base_url() . 'assets/img/content/no-image.png"/>';
 							}
 							?>
 							</td>
 							<td>
-								<?php echo form_open_multipart('users/upload_photo/' . $user->id, 'class="input-group"'); ?>
+								<?php echo form_open_multipart('users/uploadPhoto/' . $user->id, 'class="input-group"'); ?>
 								<input class="form-control" type="file" name="userfile" size="20"/>
                         <span class="input-group-btn">
                             <button class="btn btn-info" type="submit"><?php echo lang('update'); ?></button>

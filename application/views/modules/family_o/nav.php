@@ -15,7 +15,7 @@
             <ul class="nav navbar-nav">
                 <li class="<?php echo cur_nav('children'); ?>">
                     <a href="#" onclick="window.location.href='<?php echo site_url('parents'); ?>'">
-                        <span class="glyphicon glyphicon-user"></span> <?php echo lang('my_children'); ?>
+                        <span class="fa fa-user"></span> <?php echo lang('my_children'); ?>
                     </a>
                 </li>
                 <li class="<?php echo cur_nav('inbox'); ?>">
@@ -29,12 +29,12 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="<?php echo cur_nav('help'); ?>">
                     <a href="#" onclick="window.location.href='<?php echo site_url('help'); ?>'">
-                        <span class="glyphicon glyphicon-warning-sign"></span> <?php echo lang('help'); ?>
+                        <span class="fa fa-warning-sign"></span> <?php echo lang('help'); ?>
                     </a>
                 </li>
                 <li>
                     <a href="#" onclick="window.location.href='<?php echo site_url('logout'); ?>'">
-                        <span class="glyphicon glyphicon-log-out"></span> <?php echo lang('logout'); ?>
+                        <span class="fa fa-log-out"></span> <?php echo lang('logout'); ?>
                     </a>
                 </li>
             </ul>

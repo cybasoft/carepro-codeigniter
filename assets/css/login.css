@@ -1,0 +1,599 @@
+body {
+    font-family: Roboto, sans-serif;
+    color: #292b2c;
+    background-color: #fff
+}
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: transparent
+}
+
+article, aside, footer, header, nav, section {
+    display: block
+}
+
+h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+figcaption, figure, main {
+    display: block
+}
+
+figure {
+    margin: 1em 40px
+}
+
+hr {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline;
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted
+}
+
+code, kbd, samp {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+a:focus, a:hover {
+    color: #6d7377;
+    text-decoration: none;
+    outline: none
+}
+
+*, :after, :before {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem
+}
+
+[tabindex="-1"]:focus {
+    outline: none !important
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: .5rem
+}
+
+
+.btn {
+    font-family: Roboto,sans-serif
+}
+
+.btn.btn-pressable:active {
+    transform: translateY(3px);
+    -webkit-transform: translateY(3px)
+}
+
+.btn.active.focus,.btn.active:focus,.btn.focus,.btn:active.focus,.btn:active:focus,.btn:focus {
+    outline: none
+}
+
+.btn-default {
+    border: 1px solid #ddd;
+    background-color: #fff
+}
+
+.btn-default:active,.btn-default:focus,.btn-default:hover {
+    background-color: #f8f8f8
+}
+
+.btn-outline-default {
+    border: 1px solid #ddd;
+    background-color: #fff
+}
+
+.btn-outline-default:active,.btn-outline-default:focus,.btn-outline-default:hover {
+    background-color: #f8f8f8
+}
+
+.btn-theme {
+    color: #333;
+    background-color: #ffde00;
+    border-color: #ffde00;
+    -webkit-box-shadow: inset 0 1px 0 hsla(0,0%,100%,.15),0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 0 hsla(0,0%,100%,.15),0 1px 1px rgba(0,0,0,.075)
+}
+
+.btn-theme:hover {
+    color: #333;
+    background-color: #ccb200;
+    border-color: #c2a900
+}
+
+.btn-theme.focus,.btn-theme:focus {
+    -webkit-box-shadow: 0 0 0 2px rgba(255,222,0,.5);
+    box-shadow: 0 0 0 2px rgba(255,222,0,.5)
+}
+
+.btn-theme.disabled,.btn-theme:disabled {
+    background-color: #ffde00;
+    border-color: #ffde00
+}
+
+.btn-theme.active,.btn-theme:active,.show>.btn-theme.dropdown-toggle {
+    color: #333;
+    background-color: #ccb200;
+    background-image: none;
+    border-color: #c2a900;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125)
+}
+
+.btn-outline-theme {
+    color: #ffde00;
+    background-image: none;
+    background-color: transparent;
+    border-color: #ffde00
+}
+
+.btn-outline-theme:hover {
+    color: #fff;
+    background-color: #ffde00;
+    border-color: #ffde00
+}
+
+.btn-outline-theme.focus,.btn-outline-theme:focus {
+    -webkit-box-shadow: 0 0 0 2px rgba(255,222,0,.5);
+    box-shadow: 0 0 0 2px rgba(255,222,0,.5)
+}
+
+.btn-outline-theme.disabled,.btn-outline-theme:disabled {
+    color: #ffde00;
+    background-color: transparent
+}
+
+.btn-outline-theme.active,.btn-outline-theme:active,.show>.btn-outline-theme.dropdown-toggle {
+    color: #fff;
+    background-color: #ffde00;
+    border-color: #ffde00
+}
+
+.btn-rounded {
+    border-radius: 20px
+}
+
+.btn i {
+    width: 1.2em;
+    text-align: left
+}
+
+.btn-icon {
+    padding: .6rem;
+    line-height: 1em
+}
+
+.btn-icon i {
+    text-align: center
+}
+
+.btn-xs {
+    font-size: 12px;
+    padding: 3px 10px
+}
+
+.btn-full {
+    width: 100%
+}
+
+button,input,optgroup,select,textarea {
+    font-family: sans-serif;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0
+}
+
+button,input {
+    overflow: visible
+}
+
+button,select {
+    text-transform: none
+}
+
+[type=reset],[type=submit],button,html [type=button] {
+    -webkit-appearance: button
+}
+
+[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner {
+    border-style: none;
+    padding: 0
+}
+
+[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring {
+    outline: 1px dotted ButtonText
+}
+
+fieldset {
+    border: 1px solid silver;
+    margin: 0 2px;
+    padding: .35em .625em .75em
+}
+
+legend {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    white-space: normal
+}
+.login-page .login-wrapper {
+    height: 100%;
+    padding-top: 0;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.login-page .login-box {
+    color: #fff;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px
+}
+
+.login-page .login-box .form-control {
+    margin-top: 20px
+}
+
+.login-page .login-box .other-actions {
+    margin-bottom: 10px;
+    margin-top: 20px
+}
+
+.login-page .login-box .page-copyright {
+    font-size: 14px;
+    margin-top: 50px;
+    text-align: center
+}
+
+.login-page .login-box .page-copyright p {
+    margin-bottom: 10px
+}
+
+.login-page .login-box a {
+    color: #ffde00
+}
+
+.login-page .login-box a:hover {
+    color: #e6c800
+}
+
+.login-page .login-box .btn-login {
+    background-color: #ffde00;
+    color: #333
+}
+
+.login-page .login-box .btn-login:hover {
+    background-color: #e6c800
+}
+
+.login-page .login-box .c-input {
+    color: #fff
+}
+
+.login-page .login-box .c-input .c-indicator {
+    top: 2px
+}
+
+.login-page .login-wrapper .c-input>input:checked~.c-indicator {
+    background-color: #333;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.login-page .login-wrapper .c-input>input:focus~.c-indicator {
+    -webkit-box-shadow: 0 0 0 .075rem #fff,0 0 0 .2rem #262626;
+    box-shadow: 0 0 0 .075rem #fff,0 0 0 .2rem #262626
+}
+
+.login-page .login-wrapper .c-input>input:active~.c-indicator {
+    background-color: #262626;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.login-page .logo-main {
+    margin-bottom: 40px;
+    text-align: center
+}
+
+.login-page .logo-main img {
+    height: auto;
+    width: 300px
+}
+
+.login-page .other-options {
+    padding: 1rem 0;
+    padding-top: 2rem
+}
+
+.login-page .other-options h6 {
+    color: #c7cbd1;
+    font-size: 15px;
+    margin-top: 12px
+}
+
+.login-page .other-options a,.login-page .other-options a:hover {
+    color: #fff
+}
+
+@media (max-width: 768px) {
+    .login-page .other-actions {
+        font-size:14px
+    }
+
+    .login-page .logo-main img {
+        height: auto;
+        max-width: 100%
+    }
+}
+
+.login-page.login-1 .login-wrapper:before {
+    background-image: url("../img/content/skynight.jpg");
+    background-position: top;
+    background-size: cover;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1
+}
+.login-page.login-1 .login-wrapper:after {
+    background-color: rgba(38,50,56,.6);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1
+}
+
+.login-page.login-2 .login-box {
+    color: #333;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 40px 40px 20px
+}
+
+.login-page.login-2 .c-input {
+    color: #555
+}
+
+.login-page.login-2 .login-box a {
+    color: #333
+}
+
+.login-page.login-2 .login-box a:hover {
+    color: #4d4c4c
+}
+
+.login-page.login-2 .other-options h6 {
+    color: #555
+}
+
+.login-page.login-2 .other-actions {
+    margin-top: 30px
+}
+
+.login-page.login-2 .page-copyright {
+    margin-top: 0;
+    padding-top: 60px
+}
+
+.login-page.login-2 .page-copyright a {
+    color: #ffde00
+}
+
+.login-page.login-2 .page-copyright a:hover {
+    color: #ccb200
+}
+
+.login-page.login-2 .logo-main img {
+    width: 200px
+}
+
+.login-page.login-3 .site-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.login-page.login-3:after,.login-page.login-3:before {
+    content: "";
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1
+}
+
+.login-page.login-3:after {
+    background-color: rgba(0,0,0,.35)
+}
+
+.login-page.login-3 .login-box {
+    color: #333;
+    background: #fff;
+    -webkit-box-flex: 2;
+    -ms-flex: 2;
+    flex: 2;
+    border: 1px solid #ddd;
+    padding: 150px 60px 180px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    max-width: 500px;
+    min-width: 450px
+}
+
+.login-page.login-3 .login-box .box-wrapper {
+    width: 100%
+}
+
+.login-page.login-3 .content-box {
+    -webkit-box-flex: 5;
+    -ms-flex: 5;
+    flex: 5;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.login-page.login-3 .content-box h1 {
+    color: #fff;
+    font-size: 3.5rem
+}
+
+.login-page.login-3 .c-input {
+    color: #555
+}
+
+.login-page.login-3 .login-box a {
+    color: #333
+}
+
+.login-page.login-3 .login-box a:hover {
+    color: #4d4c4c
+}
+
+.login-page.login-3 .other-options h6 {
+    color: #555
+}
+
+.login-page.login-3 .other-actions {
+    margin-top: 30px
+}
+
+.login-page.login-3 .page-copyright {
+    margin-top: 0;
+    padding-top: 60px
+}
+
+.login-page.login-3 .page-copyright a {
+    color: #ffde00
+}
+
+.login-page.login-3 .page-copyright a:hover {
+    color: #ccb200
+}
+
+.login-page.login-3 .logo-main img {
+    width: 200px
+}
+
+@media (max-width: 1199px) {
+    .login-page.login-3 .content-box h1 {
+        font-size:2.5rem
+    }
+}
+
+@media (max-width: 991px) {
+    .login-page.login-3 .content-box h1 {
+        font-size:1.5rem
+    }
+}
+
+@media (max-width: 767px) {
+    .login-page.login-3 .login-box {
+        width:100%;
+        max-width: none;
+        min-width: 0;
+        padding: 30px
+    }
+
+    .login-page.login-3 .content-box {
+        display: none
+    }
+}
+
+.animation {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+}
+
+@-webkit-keyframes flipInX {
+    0% {
+        -webkit-transform: perspective(400px) rotateX(90deg);
+        opacity: 0;
+    }
+    40% {
+        -webkit-transform: perspective(400px) rotateX(-10deg);
+    }
+    70% {
+        -webkit-transform: perspective(400px) rotateX(10deg);
+    }
+    100% {
+        -webkit-transform: perspective(400px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes flipInX {
+    0% {
+        transform: perspective(400px) rotateX(90deg);
+        opacity: 0;
+    }
+    40% {
+        transform: perspective(400px) rotateX(-10deg);
+    }
+    70% {
+        transform: perspective(400px) rotateX(10deg);
+    }
+    100% {
+        transform: perspective(400px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+.flipInX {
+    -webkit-backface-visibility: visible !important;
+    -webkit-animation-name: flipInX;
+    backface-visibility: visible !important;
+    animation-name: flipInX;
+}

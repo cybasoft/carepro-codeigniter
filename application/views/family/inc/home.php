@@ -10,7 +10,7 @@
 		<?php echo $this->config->item('slogan', 'company'); ?>
 		</span>
 <?php else : ?>
-<img src="<?php base_url() . 'assets/img/' . $this->config->item('logo', 'company'); ?>"/>
+<img src="<?php echo base_url() . 'assets/img/' . $this->config->item('logo', 'company'); ?>"/>
 		<?php endif; ?>
 
 		</a>

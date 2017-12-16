@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <span class="glyphicon glyphicon-folder-close"></span>
+                        <span class="fa fa-folder-close"></span>
                         <a data-toggle="collapse" data-parent="#accordion" href="#content"><?php echo lang('content'); ?></a>
                     </h4>
                 </div>
@@ -15,13 +15,13 @@
                         <table class="table">
                             <tr>
                                 <td>
-                                    <span class="glyphicon glyphicon-flash text-success"></span>
+                                    <span class="fa fa-flash text-success"></span>
                                     <?php echo anchor('news', lang('news')); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span class="glyphicon glyphicon-calendar text-info"></span>
+                                    <span class="fa fa-calendar text-info"></span>
                                     <?php echo anchor('calendar', lang('calendar')); ?>
                                 </td>
                             </tr>
@@ -33,7 +33,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="fa fa-user"></span>
                         <a data-toggle="collapse" data-parent="#accordion" href="#accounts"><?php echo lang('account'); ?></a>
                     </h4>
                 </div>
@@ -42,19 +42,19 @@
                         <table class="table">
                             <tr>
                                 <td>
-                                    <span class="glyphicon glyphicon-user text-info"></span>
+                                    <span class="fa fa-user text-info"></span>
                                     <?php echo anchor('account/profile/' . $this->users->uid(), lang('profile')); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span class="glyphicon glyphicon-lock text-info"></span>
+                                    <span class="fa fa-lock text-info"></span>
                                     <?php echo anchor('account/profile/' . $this->users->uid().'#demograph', lang('password')); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span class="glyphicon glyphicon-link text-info"></span>
+                                    <span class="fa fa-link text-info"></span>
                                     <?php echo anchor('account/profile/'.$this->users->uid().'#address', lang('address')); ?>
                                 </td>
                             </tr>

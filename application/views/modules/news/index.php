@@ -1,7 +1,7 @@
 <style>
 	.bg-mg{
 
-		background: url(<?php echo base_url(); ?>assets/landing/img/vector/news_v1.jpg);
+		background: url(<?php echo base_url(); ?>assets/img/content/news_v1.jpg);
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 		height: 100%;
@@ -22,7 +22,6 @@
 					<div style="height:150px; overflow: hidden">
 						<?php echo word_limiter($article->article_body,50); ?>
 					</div>
-
 				</div>
 				<div class="box-footer">
 					<a href="<?php echo site_url('news/view/' . $article->id); ?>">

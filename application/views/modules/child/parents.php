@@ -1,0 +1,82 @@
+<table class="table table-bordered parent-info">
+    <?php
+    foreach ($this->child->getParents($child->id)->result() as $u) : //iterate through users
+        ?>
+        <tr>
+            <td class="col-sm-2">
+                <div>
+                    <?php if ($this->users->user($u->user_id)->photo !== "") : ?>
+                        <img class="img-circle img-responsive img-thumbnail"
+                             src="<?php echo base_url() . 'assets/img/users/staff/' . $this->users->user($u->user_id)->photo; ?>"/>
+                    <?php else : ?>
+                        <img class="img-circle img-responsive img-thumbnail"
+                             src="<?php echo base_url(); ?>'assets/img/content/no-image.png"/>
+                    <?php endif; ?>
+                </div>
+
+            </td>
+            <td>
+                    <span class="label-text parent-name"><?php echo $u->last_name; ?>
+                        , <?php echo $u->first_name; ?></span>
+                <hr/>
+                <table>
+                    <tr>
+                        <td><span class="fa fa-inbox"></span>
+                            <span class="label label-info"><?php echo $u->email; ?></span></td>
+                    </tr>
+
+                </table>
+
+                <table>
+                    <tr>
+                        <td><span class="fa fa-envelope"> </span></td>
+                        <td>
+                            <div class="parent-address">
+                                <?php
+                                if ($this->users->user($u->user_id)->street != 0) {
+                                    echo $this->users->user($u->user_id)->street;
+                                    echo '. &nbsp;';
+                                    echo $this->users->user($u->user_id)->city;
+                                    echo ', &nbsp;';
+                                    echo $this->users->user($u->user_id)->state;
+                                    echo '&nbsp;';
+                                    echo $this->users->user($u->user_id)->zip;
+                                    echo '&nbsp; ';
+                                    echo $this->users->user($u->user_id)->country;
+                                }
+                                ?>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="fa fa-lock"></span></td>
+                        <td>
+                                    <span class="label label-success show-pin"
+                                          title="<?php echo $this->users->user($u->user_id)->pin; ?>">
+										<?php echo lang('view') . ' ' . lang('pin'); ?>
+									</span>
+
+
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
+                <a href="<?php echo site_url('child/' . $u->cu_id); ?>/removeParent"
+                   class="btn btn-danger btn-sm pull-right delete">
+                    <span class="fa fa-trash-o"></span>
+                    <?php echo lang('remove'); ?>
+                </a>
+            </td>
+        </tr>
+
+        <?php
+    endforeach;
+    ?>
+</table>
+
+<script type="text/javascript">
+    $('.assign-user').hide();
+    $('.assign-user-btn').click(function () {
+        $('.assign-user').toggle().load('<?php echo site_url('child/' . $child->id . '/assignParent'); ?>');
+    });
+</script>

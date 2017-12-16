@@ -1,11 +1,11 @@
 <div class="nav-tabs-custom">
 	<ul class="nav nav-tabs">
 		<li class="active">
-			<a href="#users" data-toggle="tab"><i class="glyphicon glyphicon-list"></i>
+			<a href="#users" data-toggle="tab"><i class="fa fa-list"></i>
 				<span class="hidden-xs"><?php echo lang('all_users'); ?></span></a>
 		</li>
 		<li>
-			<a href="#create-user" data-toggle="tab"><i class="glyphicon glyphicon-plus-sign"></i>
+			<a href="#create-user" data-toggle="tab"><i class="fa fa-plus"></i>
 				<span class="hidden-xs"><?php echo lang('new_user'); ?></span></a>
 		</li>
 	</ul>

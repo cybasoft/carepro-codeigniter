@@ -16,7 +16,7 @@ if ($status == "paid" || $status == "due" || $status == "cancelled") {
 if (isset($_GET['search'])) {
 	$this->db->like('id', $_GET['search']);
 }
-$this->db->where('child_id', $this->child->getID());
+$this->db->where('child_id', $child->id);
 $query = $this->invoice->getInvoices();
 ?>
 <table class="table table-stripped table-responsive">
@@ -33,9 +33,9 @@ $query = $this->invoice->getInvoices();
 	<tbody>
 	<?php
 foreach ($query as $row) :
-	$del = anchor('invoice/delete/' . $row->id, '<span class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></span>');
-$download = anchor('invoice/download/' . $row->id, '<span class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-download"></i> ' . lang('download') . '</span>');
-$preview = anchor('invoice/preview/' . $row->id, '<span class="btn btn-xs btn-info" ><i class="glyphicon glyphicon-print"></i></span>');
+	$del = anchor('invoice/delete/' . $row->id, '<span class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></span>');
+$download = anchor('invoice/download/' . $row->id, '<span class="btn btn-xs btn-warning"><i class="fa fa-download"></i> ' . lang('download') . '</span>');
+$preview = anchor('invoice/preview/' . $row->id, '<span class="btn btn-xs btn-info" ><i class="fa fa-print"></i></span>');
 
 $subTotal = $this->invoice->invoice_subtotal($row->id);
 $totalDue = $subTotal - $this->invoice->amount_paid($row->id);

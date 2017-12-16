@@ -2,7 +2,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<span class="glyphicon glyphicon-envelope"></span> <?php echo lang('compose'); ?>
+				<span class="fa fa-envelope"></span> <?php echo lang('compose'); ?>
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
 					<span class="sr-only">Close</span>
 				</button>
@@ -42,7 +42,7 @@
 				</div>
 				<div class="box-footer">
 					<button class="btn btn-primary">
-						<span class="glyphicon glyphicon-envelope"></span> <?php echo lang('send'); ?>
+						<span class="fa fa-envelope"></span> <?php echo lang('send'); ?>
 					</button>
 				</div>
 				<?php echo form_close(); ?>

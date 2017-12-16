@@ -6,7 +6,7 @@
 		<div class="box box-solid">
 			<div class="box-header bg-black">
 				<div class="box-title">
-					<span class="glyphicon glyphicon-credit-card"></span>
+					<span class="fa fa-credit-card"></span>
 					<?php echo lang('new_invoice'); ?>
 				</div>
 			</div>
@@ -18,7 +18,7 @@
 					<input class="datepicker1 form-control" size="16" type="text" name="invoice_date"
 						   readonly required=""/>
                          <span class="input-group-addon add-on">
-                             <i class="glyphicon glyphicon-calendar" style="display: inline"></i>
+                             <i class="fa fa-calendar" style="display: inline"></i>
                          </span>
 				</div>
 
@@ -28,7 +28,7 @@
 					<input class="datepicker2 form-control" size="16" type="text" name="invoice_due_date"
 						   readonly required=""/>
                         <span class="input-group-addon add-on">
-                            <i class="glyphicon glyphicon-calendar" style="display: inline"></i>
+                            <i class="fa fa-calendar" style="display: inline"></i>
                         </span>
 				</div>
 <hr/>
@@ -79,7 +79,7 @@
 					<textarea name="invoice_terms" class="form-control"
 							  id="invoice_terms" required=""></textarea>
 				<button class="btn btn-large btn-success" id="bttn_save_invoice"><i
-						class="glyphicon glyphicon-check"></i> <?php echo lang('save'); ?></button>
+						class="fa fa-check"></i> <?php echo lang('save'); ?></button>
 
 				<?php echo form_close(); ?>
 			</div>

@@ -18,20 +18,20 @@
 			<div class="box-footer">
 				<div class="actionbox">
 					<button class="btn btn-primary btn-xs" id="<?php echo $msg->msg_id; ?>" data="inbox">
-						<span class="glyphicon glyphicon-unchecked"></span> <?php echo lang('mark_as_unread'); ?>
+						<span class="fa fa-unchecked"></span> <?php echo lang('mark_as_unread'); ?>
 					</button>
 					<button class="btn btn-info msg-star btn-xs" id="<?php echo $msg->msg_id; ?>" data="starred">
-						<span class="glyphicon glyphicon-star"></span> <?php echo lang('mark_with_star'); ?>
+						<span class="fa fa-star"></span> <?php echo lang('mark_with_star'); ?>
 					</button>
 					<button class="btn btn-warning btn-xs" id="<?php echo $msg->msg_id; ?>" data="important">
-						<span class="glyphicon glyphicon-bookmark"></span> <?php echo lang('important'); ?>
+						<span class="fa fa-bookmark"></span> <?php echo lang('important'); ?>
 					</button>
 
 					<!--button class="btn btn-danger btn-xs" id="<?php echo $msg->msg_id; ?>" data="trash">
-						<span class="glyphicon glyphicon-trash"></span> <?php echo lang('trash'); ?>
+						<span class="fa fa-trash-o"></span> <?php echo lang('trash'); ?>
 					</button-->
 					<!--button class="btn btn-danger btn-xs" id="<?php echo $msg->msg_id; ?>" data="purge">
-						<span class="glyphicon glyphicon-remove"></span> <?php echo lang('purge'); ?>
+						<span class="fa fa-remove"></span> <?php echo lang('purge'); ?>
 					</button-->
 				</div>
 
@@ -75,7 +75,7 @@
 			</div>
 			<div class="box-footer">
 				<button class="btn btn-dark">
-					<span class="glyphicon glyphicon-envelope"></span> <?php echo lang('reply'); ?>
+					<span class="fa fa-envelope"></span> <?php echo lang('reply'); ?>
 				</button>
 			</div>
 			<?php echo form_close(); ?>

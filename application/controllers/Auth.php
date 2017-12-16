@@ -298,7 +298,7 @@ class Auth extends CI_Controller
         $this->ion_auth->logout();
 
         //redirect them to the login page
-        redirect('login', 'refresh');
+      //  redirect('login', 'refresh');
     }
     /*
      *

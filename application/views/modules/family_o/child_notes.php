@@ -1,7 +1,7 @@
 <button class="btn btn-default"
         data-toggle="modal"
         data-target="#new-child-note">
-    <span class="glyphicon glyphicon-plus-sign"></span>
+    <span class="fa fa-plus"></span>
 <?php echo lang('add').' '.lang('note'); ?>
 </button>
 <?php

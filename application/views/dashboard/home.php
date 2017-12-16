@@ -45,10 +45,10 @@
 
         <div class="box box-warning">
             <div class="box-header">
-                <div class="box-title"><i class="fa fa-money"></i> Due Invoices</div>
+                <div class="box-title"><i class="fa fa-money"></i> <?php echo lang('invoices_due'); ?></div>
             </div>
             <div class="box-body">
-                Total:
+                <?php echo lang('total'); ?>
                 <span  class="badge"> <?php echo $this->db->where('invoice_status', 2)->get('accnt_invoices')->num_rows(); ?>
                 </span>
 
@@ -76,7 +76,7 @@
                 <div class="small-box bg-aqua cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
                     <div class="inner">
                         <h3>
-                            <?php echo $this->children->getCount(); ?>
+                            <?php echo $this->child->getCount(); ?>
                         </h3>
 
                         <p>
@@ -84,7 +84,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fa fa-users"></i>
                     </div>
                     <a href="<?php echo site_url('children'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
@@ -106,7 +106,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="fa fa-envelope"></i>
                     </div>
                     <a href="<?php echo site_url('mailbox'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
@@ -127,7 +127,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                       <i class="fa fa-user-plus" aria-hidden="true"></i>
                     </div>
                     <a href="<?php echo site_url('users'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
@@ -148,7 +148,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="fa fa-pie-chart" aria-hidden="true"></i>
                     </div>
                     <a href="<?php echo site_url('tasks'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>

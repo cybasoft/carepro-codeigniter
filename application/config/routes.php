@@ -65,47 +65,61 @@ $route['forgot_password'] = 'auth/forgot_password';
 //accounting
 $route['new_invoice'] = 'invoice/create_invoice';
 
-//mailbox
-$route['mailbox/sent'] = 'mailbox/sent';
-
-$route['groups/(:num)'] = "users/edit_group/$1";
+$route['groups/:num'] = "users/edit_group/$1";
 $route['settings'] = "admin/settings";
-$route['settings/(:any)'] = "admin/settings/$1";
+$route['settings/:any'] = "admin/settings/$1";
 $route['users'] = "admin/users";
 
-$route['users/(:any)'] = "admin/users/$1";
-$route['user/(:any)'] = "admin/users/$1";
+$route['users/:any'] = "admin/users/$1";
+$route['user/:any'] = "admin/users/$1";
 
 $route['calendar'] = "events/calendar";
-$route['calendar/(:any)'] = "events/calendar/$1";
-$route['tasks'] = "events/tasks";
-$route['tasks/(:any)'] = "events/tasks/$1";
+$route['calendar/:any'] = "events/calendar/$1";
 
 $route['reports'] = "admin/reports";
-$route['reports/(:any)'] = "admin/reports/$1";
+$route['reports/:any'] = "admin/reports/$1";
 
 $route['children'] = "children/children";
 $route['children/([a-z]+)'] = "children/children/$1";
 $route['children/([a-z]+)/(.*)'] = "children/children/$1";
 $route['children/([a-z]+)'] = "children/children/$1";
-$route['children/(:any)'] = "children/children/$1";
+$route['children/:any'] = "children/children/$1";
 
-$route['child/(:num)'] = 'children/children/child/$1';
-$route['child/(:any)'] = 'children/children/$1';
-$route['health/(:any)'] = 'children/health/$1';
-$route['notes/(:any)'] = 'children/notes/$1';
-$route['pickup/(:any)'] = 'children/pickup/$1';
-$route['invoice/(:any)'] = 'accounting/invoice/$1';
+$route['child/(:num)/uploadPhoto'] = 'child/child/uploadPhoto/$1';
+$route['child/(:num)/assignParent']['get'] = 'child/child/assignParent/$1';
+$route['child/(:num)/assignParent']['post']='child/child/doAssignParent/$1';
+$route['child/(:num)/removeParent'] = 'child/child/removeParent/$1';
+
+$route['child/(:num)/health'] = 'child/health/index/$1';
+$route['child/addMedication'] = 'child/health/addMedication';
+$route['child/addAllergy'] = 'child/health/addAllergy';
+$route['child/addFoodPref']='child/health/addFoodPref';
+$route['child/addContact']='child/health/addContact';
+$route['child/addProvider']='child/health/addProvider';
+
+$route['child/deleteAllergy/(:num)'] = 'child/health/deleteAllergy/$1';
+$route['child/deleteMedication/(:num)'] = 'child/health/deleteMedication/$1';
+$route['child/deleteFoodPref/(:num)']='child/health/deleteFoodPref/$1';
+$route['child/deleteContact/(:num)']='child/health/deleteContact/$1';
+$route['child/deleteProvider/(:num)']='child/health/deleteProvider/$1';
+
+$route['child/(:num)/(:any)'] = 'child/child/$1';
+$route['child/(:num)']['get']='child/child/index/$1';
+$route['child/:num']['post']='child/child/update';
+
+$route['notes/:any'] = 'child/notes/$1';
+$route['pickup/:any'] = 'child/pickup/$1';
+$route['invoice/:any'] = 'accounting/invoice/$1';
 $route['invoice'] = 'accounting/invoice';
-$route['emergency/(:any)'] = 'children/emergency/$1';
-$route['parents/(:any)'] = 'children/parents/$1';
-$route['charges/(:any)'] = 'accounting/charges/$1';
+$route['emergency/:any'] = 'child/emergency/$1';
+$route['parents/:any'] = 'child/parents/$1';
+$route['charges/:any'] = 'accounting/charges/$1';
 
-$route['accounting/(:any)'] = 'accounting/accounting/$1';
+$route['accounting/:any'] = 'accounting/accounting/$1';
 $route['news'] = 'news/news';
-$route['news/(:any)'] = 'news/news/$1';
+$route['news/:any'] = 'news/news/$1';
 
 $route['family'] = 'family/family';
-$route['family/(:any)'] = "family/family/$1";
+$route['family/:any'] = "family/family/$1";
 
 $route['lockscreen'] = 'dashboard/lockscreen';

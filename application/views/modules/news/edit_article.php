@@ -28,7 +28,7 @@
 			<div class="box-footer">
 				<button class="btn btn-primary"><?php echo lang('update'); ?></button>
 				<button  onclick="deleteArticle('<?php echo $article->id; ?>')" type="button" class="btn btn-danger pull-right">
-					<span class="glyphicon glyphicon-trash"></span>
+					<span class="fa fa-trash-o"></span>
 					<?php echo lang('delete'); ?>
 				</button>
 			</div>
