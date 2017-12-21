@@ -1,17 +1,14 @@
 {
-	"description": "The CodeIgniter framework",
-	"name": "codeigniter/framework",
+	"description": "Daycare Management System",
+	"name": "amdtllc/daycarepro",
 	"type": "project",
-	"homepage": "https://codeigniter.com",
+	"homepage": "https://amdtllc.com",
 	"license": "MIT",
 	"support": {
-		"forum": "http://forum.codeigniter.com/",
-		"wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
-		"slack": "https://codeigniterchat.slack.com",
-		"source": "https://github.com/bcit-ci/CodeIgniter"
+		"support": "http://support.amdtllc.com/"
 	},
 	"require": {
-		"php": ">=5.3.7"
+		"php": ">=5.6"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
