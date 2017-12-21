@@ -3,7 +3,7 @@
 		<div class="callout callout-warning">
 			<h4><?php echo lang('create_user_heading'); ?></h4>
 		</div>
-		<?php echo form_open("users/create_user"); ?>
+		<?php echo form_open("users/create"); ?>
 		<div class="col-lg-6">
 			<div class="box">
 				<div class="box-body">

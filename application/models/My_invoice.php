@@ -3,23 +3,21 @@
 /**
  * @file      : my_invoice
  * @author    : JMuchiri
-
  * @Copyright 2017 A&M Digital Technologies
-
-* https://amdtllc.com
+ * https://amdtllc.com
  */
 class My_invoice extends CI_Model
 {
 
-    public $invoice_db = 'accnt_invoices';
+    public $invoice_db = 'invoices';
 
     function __construct()
     {
         parent::__construct();
 
         //dbs
-        $this->invoice_db = 'accnt_invoices';
-        $this->invoice_items_db = 'accnt_invoice_items';
+        $this->invoice_db = 'invoices';
+        $this->invoice_items_db = 'invoice_items';
         $this->payments_db = 'accnt_payments';
         $this->bank_db = 'accnt_pay_bank';
         $this->bank_card_db = 'accnt_pay_cards';
@@ -32,8 +30,8 @@ class My_invoice extends CI_Model
      */
     function invoice($id)
     {
-        $this->db->where('accnt_invoices.id', $id);
-        $this->db->from('accnt_invoices');
+        $this->db->where('invoices.id', $id);
+        $this->db->from('invoices');
     }
 
     /**
@@ -44,8 +42,8 @@ class My_invoice extends CI_Model
     {
         $this->db->where('child_id', $cid);
         $this->db->select('*');
-        $this->db->from('accnt_invoices');
-        $this->db->join('accnt_invoice_payments', 'accnt_invoice_payments.invoice_id = accnt_invoices.id');
+        $this->db->from('invoices');
+        $this->db->join('invoice_payments', 'invoice_payments.invoice_id = invoices.id');
         return $this->db->get();
     }
 
@@ -56,12 +54,12 @@ class My_invoice extends CI_Model
      */
     function invoice_items($id, $item)
     {
-        $this->db->where('accnt_invoices.id', $id);
+        $this->db->where('invoices.id', $id);
         $this->db->select('*');
-        $this->db->from('accnt_invoices');
+        $this->db->from('invoices');
         $this->db->limit(1);
-        $this->db->join('accnt_invoice_items', 'accnt_invoices_items.invoice_id = accnt_invoices.id');
-        $this->db->join('accnt_invoice_payment', 'accnt_invoice_payment.invoice_id = accnt_invoices.id');
+        $this->db->join('invoice_items', 'invoices_items.invoice_id = invoices.id');
+        $this->db->join('accnt_invoice_payment', 'accnt_invoice_payment.invoice_id = invoices.id');
 
         $query = $this->db->get()->result();
         foreach ($query as $row) {
@@ -98,7 +96,7 @@ class My_invoice extends CI_Model
      * @param $status
      * @return string
      */
-    function invoice_status($status)
+    function status($status)
     {
         switch ($status) {
             case 1:
@@ -120,20 +118,29 @@ class My_invoice extends CI_Model
     /**
      * @return bool
      */
-    function save_invoice()
+    function createInvoice($id)
     {
         $data = array(
-            'child_id' => $child->id,
-            'invoice_date' => $this->input->post('invoice_date'),
-            'invoice_due_date' => $this->input->post('invoice_due_date'),
+            'child_id' => $id,
+            'date_due' => $this->input->post('date_due'),
             'invoice_terms' => $this->input->post('invoice_terms'),
-            'invoice_status' => 2 //default = unpaid (2)
+            'invoice_status' => 2,//default = unpaid (2)
+            'user_id' => $this->user->uid(),
+            'created_at' => date_stamp()
         );
 
-        $query = $this->db->insert('accnt_invoices', $data);
+        if(!$this->db->insert('invoices', $data))
+            return false;
+
         $invoice_id = $this->db->insert_id();
-        $query2 = $this->save_invoice_items($invoice_id);
-        if ($query && $query2)
+        $data2 = array(
+            'invoice_id' => $invoice_id,
+            'item_name' => $this->input->post('item_name'),
+            'description' => $this->input->post('description'),
+            'price' => $this->input->post('price'),
+            'qty' => $this->input->post('qty')
+        );
+        if ($this->db->insert('invoice_items', $data2))
             return true;
         return false;
     }
@@ -142,50 +149,18 @@ class My_invoice extends CI_Model
      * @param $invoice_id
      * @return bool
      */
-    function save_invoice_items($invoice_id)
-    {
-        $fields = array(
-            'item_name',
-            'item_description',
-            'item_quantity',
-            'item_price',
-            'item_discount'
-        );
-
-        foreach ($fields as $field) {
-            foreach ($this->input->post($field) as $key => $value) {
-                $data[$key][$field] = $value;
-            }
-        }
-
-        foreach ($data as $values) {
-            $values['invoice_id'] = $invoice_id;
-            $values['staff_id'] = $this->users->uid();
-            if ($this->db->insert('accnt_invoice_items', $values)) {
-                $this->conf->msg('success', lang('request_success'));
-                return true;
-            } else {
-                $this->conf->msg('danger', lang('request_error'));
-                return false;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @param $invoice_id
-     * @return bool
-     */
-    function make_payment($invoice_id)
+    function makePayment($invoice_id)
     {
         $data = array(
             'invoice_id' => $invoice_id,
-            'amount_paid' => $this->input->post('amount_paid'),
+            'amount' => $this->input->post('amount'),
             'date_paid' => $this->input->post('date_paid'),
-            'method' => $this->input->post('payment_method'),
-            'remarks' => $this->input->post('remarks')
+            'method' => $this->input->post('method'),
+            'remarks' => $this->input->post('remarks'),
+            'user_id'=>$this->user->uid(),
+            'created_at'=>date_stamp()
         );
-        if ($this->db->insert('accnt_invoice_payments', $data)) {
+        if ($this->db->insert('invoice_payments', $data)) {
             return true;
         } else {
             return false;
@@ -265,11 +240,11 @@ class My_invoice extends CI_Model
     {
 
         $this->db->where('invoice_id', $invoice_id);
-        $query = $this->db->get('accnt_invoice_items');
+        $query = $this->db->get('invoice_items');
         $totalPrice = 0;
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
-                $totalPrice = ( ($row->item_price * $row->item_quantity) - $row->item_discount) + $totalPrice;
+                $totalPrice = ($row->price * $row->qty) + $totalPrice;
             }
             return number_format($totalPrice, 2);
         } else {
@@ -286,11 +261,11 @@ class My_invoice extends CI_Model
     function amount_paid($invoice_id)
     {
         $this->db->where('invoice_id', $invoice_id);
-        $this->db->select_sum('amount_paid');
-        $query = $this->db->get('accnt_invoice_payments');
+        $this->db->select_sum('amount');
+        $query = $this->db->get('invoice_payments');
         if ($query->num_rows() > 0) {
             $row = $query->row();
-            return number_format($row->amount_paid, 2);
+            return number_format($row->amount, 2);
         } else {
             return "0.00";
         }
@@ -307,7 +282,7 @@ class My_invoice extends CI_Model
             'invoice_status' => $status
         );
         $this->db->where('id', $invoice_id);
-        if ($this->db->update('accnt_invoices', $data)) {
+        if ($this->db->update('invoices', $data)) {
             return true;
         } else {
             return false;
@@ -319,7 +294,7 @@ class My_invoice extends CI_Model
      */
     function getTotalDue()
     {
-        $invoices = $this->db->where('invoice_status', 2)->get('accnt_invoices');
+        $invoices = $this->db->where('invoice_status', 2)->get('invoices');
         $total = 0;
         if ($invoices->num_rows() > 0) {
             foreach ($invoices->result() as $inv) {
@@ -357,7 +332,7 @@ class My_invoice extends CI_Model
     {
         $data = array();
         $this->db->where('id', $invoice_id);
-        $query = $this->db->get('accnt_invoices');
+        $query = $this->db->get('invoices');
         foreach ($query->result() as $row) {
             $data[] = $row;
         }

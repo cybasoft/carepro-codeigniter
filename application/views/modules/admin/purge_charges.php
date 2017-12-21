@@ -23,10 +23,10 @@ if (!isset($_POST['confirm'])) { //double check this is the action
 
         if ($this->db->affected_rows() > 0) {
 
-            $this->conf->msg('success', 'Success! Charges purged');
+            flash('success', 'Success! Charges purged');
         } else {
 
-            $this->conf->msg('danger', 'Error! Unable to purge charges');
+            flash('danger', 'Error! Unable to purge charges');
         }
         redirect('child#charges');
     } else {

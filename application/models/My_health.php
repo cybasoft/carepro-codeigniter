@@ -23,17 +23,19 @@ class my_health extends CI_Model
         $data = array(
             'child_id' => $this->input->post('child_id'),
             'med_name' => $this->input->post('med_name'),
-            'med_notes' => $this->input->post('med_notes')
+            'med_notes' => $this->input->post('med_notes'),
+            'created_at'=>date_stamp(),
+            'user_id'=>$this->user->uid()
         );
         $this->db->insert('child_meds', $data);
         if ($this->db->affected_rows() > 0) {
             //log event
-            $this->conf->log("Added med for child ID: {$this->input->post('child_id')}");
+            logEvent("Added med for child ID: {$this->input->post('child_id')}");
 
 
-            $this->conf->msg('success', lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
-            $this->conf->msg('warning', lang('no_change_to_db'));
+            flash('warning', lang('no_change_to_db'));
         }
     }
 
@@ -43,11 +45,13 @@ class my_health extends CI_Model
             'child_id' => $this->input->post('child_id'),
             'allergy' => $this->input->post('allergy'),
             'reaction' => $this->input->post('reaction'),
+            'created_at'=>date_stamp(),
+            'user_id'=>$this->user->uid()
         );
         $this->db->insert('child_allergy', $data);
         if ($this->db->affected_rows() > 0) {
             //log event
-            $this->conf->log("Added allergy for {$this->input->post('child_id')}");
+            logEvent("Added allergy for {$this->input->post('child_id')}");
             return true;
         }
         return false;
@@ -63,10 +67,12 @@ class my_health extends CI_Model
             'child_id' => $this->input->post('child_id'),
             'food' => $this->input->post('food'),
             'food_time' => $this->input->post('food_time'),
-            'comment' => $this->input->post('comment')
+            'comment' => $this->input->post('comment'),
+            'created_at'=>date_stamp(),
+            'user_id'=>$this->user->uid()
         );
         if ($this->db->insert('child_foodpref', $data)) {
-            $this->conf->log("Added food pref for child ID: {$this->input->post('child_id')}");
+            logEvent("Added food pref for child ID: {$this->input->post('child_id')}");
             return true;
         }
         return false;
@@ -82,11 +88,13 @@ class my_health extends CI_Model
             'contact_name' => $this->input->post('name'),
             'relation' => $this->input->post('relation'),
             'phone' => $this->input->post('phone'),
-            'address' => $this->input->post('address')
+            'address' => $this->input->post('address'),
+            'created_at'=>date_stamp(),
+            'user_id'=>$this->user->uid()
         );
         if ($this->db->insert('child_contacts', $data)) {
             //log event
-            $this->conf->log("Added contact for child ID: {$this->input->post('child_id')}");
+            logEvent("Added contact for child ID: {$this->input->post('child_id')}");
             return true;
         }
         return false;
@@ -103,11 +111,13 @@ class my_health extends CI_Model
             'type_role' => $this->input->post('type_role'),
             'phone' => $this->input->post('phone'),
             'address' => $this->input->post('address'),
-            'notes' => $this->input->post('notes')
+            'notes' => $this->input->post('notes'),
+            'created_at'=>date_stamp(),
+            'user_id'=>$this->user->uid()
         );
         if ($this->db->insert('child_providers', $data)) {
             //log event
-            $this->conf->log("Added provider for child ID: {$this->input->post('child_id')}");
+            logEvent("Added provider for child ID: {$this->input->post('child_id')}");
             return true;
         }
         return false;

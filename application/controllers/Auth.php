@@ -38,7 +38,7 @@ class Auth extends CI_Controller
             } else {
                 //if the login was un-successful
                 //redirect them back to the login page
-                $this->conf->msg('danger', 'Username or password is incorrect');
+                flash('danger', 'Username or password is incorrect');
 
                 redirect('login'); //use redirects instead of loading views for compatibility with MY_Controller libraries
             }
@@ -75,7 +75,6 @@ class Auth extends CI_Controller
      */
     public function reg($username, $password, $email, $additional_data = array(), $groups = array())
     {
-        $this->store_salt = $this->config->item('store_salt', 'ion_auth');
 
         $this->load->model('ion_auth_model');
         $this->ion_auth->trigger_events('pre_register');
@@ -89,8 +88,7 @@ class Auth extends CI_Controller
 
         // IP Address
         $ip_address = $this->input->ip_address();
-        $salt = $this->store_salt ? $this->salt() : FALSE;
-        $password = $this->ion_auth->hash_password($password, $salt);
+        $password = $this->ion_auth->hash_password($password);
 
         // Users table.
         $data = array(
@@ -102,10 +100,7 @@ class Auth extends CI_Controller
             'last_login' => time(),
             'active' => ($manual_activation === false ? 1 : 0)
         );
-
-        if ($this->ion_auth->store_salt) {
-            $data['salt'] = $salt;
-        }
+ 
 
         //filter out any data passed that doesnt have a matching column in the users table
         //and merge the set user data and the additional data
@@ -170,8 +165,8 @@ class Auth extends CI_Controller
                 $identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
             }
             if (empty($identity)) {
-                $this->conf->msg('danger', lang('forgot_password_email_not_found'));
-                $this->conf->redirectPrev();
+                flash('danger', lang('forgot_password_email_not_found'));
+                redirectPrev();
             }
 
             //run the forgotten password method to email an activation code to the user
@@ -179,10 +174,10 @@ class Auth extends CI_Controller
 
             if ($forgotten) {
                 //if there were no errors
-                $this->conf->msg('success', lang('password_reset_link_sent'));
+                flash('success', lang('password_reset_link_sent'));
                 redirect("login", 'refresh');
             } else {
-                $this->conf->msg('danger', lang('request_error'));
+                flash('danger', lang('request_error'));
                 redirect('forgot_password');
             }
         }
@@ -234,7 +229,7 @@ class Auth extends CI_Controller
                 $this->data['code'] = $code;
 
                 //render
-                $this->conf->page('reset_password', $this->data);
+                page('reset_password', $this->data);
             } else {
                 // do we have a valid request?
                 if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
@@ -252,17 +247,17 @@ class Auth extends CI_Controller
 
                     if ($change) {
                         //if the password was successfully changed
-                        $this->conf->msg('success', $this->ion_auth->messages());
+                        flash('success', $this->ion_auth->messages());
                         $this->logout();
                     } else {
-                        $this->conf->msg('danger', $this->ion_auth->errors());
+                        flash('danger', $this->ion_auth->errors());
                         redirect('reset_password/' . $code, 'refresh');
                     }
                 }
             }
         } else {
             //if the code is invalid then send them back to the forgot password page
-            $this->conf->msg('danger', $this->ion_auth->errors());
+            flash('danger', $this->ion_auth->errors());
             redirect("forgot_password", 'refresh');
         }
     }
@@ -310,7 +305,7 @@ class Auth extends CI_Controller
             $this->viewdata = (empty($data)) ? $this->data : $data;
 
 
-            $view_html = $this->conf->page($view, $this->viewdata, $render);
+            $view_html = page($view, $this->viewdata, $render);
 
             if (!$render) return $view_html;
         }

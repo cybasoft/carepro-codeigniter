@@ -1,13 +1,13 @@
 <div class="row">
 	<div class="col-lg-6">
 
-		<?php if($user_id == $this->users->uid()): ?>
+		<?php if($user_id == $this->user->uid()): ?>
 			<?php echo lang('user_is_self_warning'); ?>
 		<?php else: ?>
 
 		<div class="callout callout-info">
 			<h3><?php echo lang('deactivate_heading');?></h3>
-			<p><?php echo sprintf(lang('deactivate_subheading'), $this->users->user($user_id)->username);?></p>
+			<p><?php echo sprintf(lang('deactivate_subheading'), $this->user->user($user_id)->username);?></p>
 		</div>
 		<?php echo form_open(uri_string());?>
 		<p>

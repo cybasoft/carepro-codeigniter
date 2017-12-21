@@ -26,18 +26,18 @@ function blood_type($value,$type){
 					   value="<?php echo $child->bday; ?>"/></td>
 		</tr>
 		<tr>
-			<td><?php echo lang('social_security_number'); ?></td>
-			<td><input type="text" name="ssn" value="<?php echo $this->conf->decrypt($child->ssn); ?>" class="form-control"/></td>
+			<td><?php echo lang('national_id'); ?></td>
+			<td><input type="text" name="national_id" value="<?php echo decrypt($child->national_id); ?>" class="form-control"/></td>
 		</tr>
 		<tr>
 			<td><?php echo lang('gender'); ?></td>
 			<td>
 				<select required="" class="form-control" name="gender">
 					<option value="">--<?php echo lang('select'); ?>--</option>
-					<option value="1" <?php echo $this->conf->selected_option($child->gender, 1); ?>>
+					<option value="1" <?php echo selected_option($child->gender, 1); ?>>
 						<?php echo lang('male'); ?>
 					</option>
-					<option value="2" <?php echo $this->conf->selected_option($child->gender, 2); ?>>
+					<option value="2" <?php echo selected_option($child->gender, 2); ?>>
 						<?php echo lang('female'); ?>
 					</option>
 				</select>
@@ -67,7 +67,7 @@ function blood_type($value,$type){
 					<?php
 					foreach($this->db->get('child_status')->result() as $s) {
 						echo '<option value="' . $s->id . '" '
-							. $this->conf->selected_option($child->status, $s->id) . '>'
+							. selected_option($child->status, $s->id) . '>'
 							. lang($s->status_name) . '</option>';
 					}
 					?>

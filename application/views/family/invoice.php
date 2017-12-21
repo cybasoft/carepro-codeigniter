@@ -65,7 +65,7 @@
 							?>
 									<tr>
 										<td><?php echo anchor(uri_string() . '?p=invoice&view=' . $row->id, $row->id); ?></td>
-										<td><?php echo $this->invoice->invoice_status($row->invoice_status); ?></td>
+										<td><?php echo $this->invoice->status($row->invoice_status); ?></td>
 										<td><?php echo $this->config->item('currency_symbol', 'company') . $subTotal; ?></td>
 										<td><?php echo $this->config->item('currency_symbol', 'company') . $this->invoice->amount_paid($row->id); ?></td>
 										<td><span
@@ -102,7 +102,7 @@
 												<img sr
 												<?php
 											$this->db->where('id', $_GET['view']);
-											$invoice = $this->db->get('accnt_invoices')->row();
+											$invoice = $this->db->get('invoices')->row();
 											echo $this->config->item('street', 'company');
 											echo br();
 											echo $this->config->item('city', 'company') . '. ';
@@ -169,7 +169,7 @@
 										$totalTax = 0;
 										$totalDiscount = 0;
 										$this->db->where('invoice_id', $_GET['view']);
-										$invoice_items = $this->db->get('accnt_invoice_items')->result();
+										$invoice_items = $this->db->get('invoice_items')->result();
 										foreach ($invoice_items as $item) {
 											?>
 												<tr id="new_item">

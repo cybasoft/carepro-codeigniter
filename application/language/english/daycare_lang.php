@@ -14,7 +14,10 @@ $lang['health'] = 'Health';
 $lang['help'] = 'Help';
 $lang['note'] = 'Note';
 $lang['notes'] = 'Notes';
-$lang['new_note'] = 'New note';
+$lang['new_note'] = 'New Note';
+$lang['incident_report'] = 'Incident Report';
+$lang['incident_reports'] = 'Incident Reports';
+$lang['created_on']='Created on';
 $lang['pin'] = 'Pin number';
 $lang['change_pin'] = 'Change pin';
 $lang['yes'] = 'Yes';
@@ -39,7 +42,6 @@ $lang['by'] = 'by';
 $lang['male'] = 'Male';
 $lang['female'] = 'Female';
 $lang['list_order'] = 'List order';
-$lang['my_children'] = 'My children';
 $lang['administrator'] = 'Admin';
 $lang['welcome'] = 'Welcome';
 $lang['parent'] = 'Parent';
@@ -119,8 +121,10 @@ $lang['table_name'] = 'Table name';
 $lang['generate_csv'] = 'Generate CSV';
 $lang['create_backup'] = 'Create backup';
 
-$lang['child_register'] = 'Child register';
+$lang['blood_type'] = 'Blood type';
+$lang['register_child'] = 'Register child';
 $lang['registered_date'] = 'Registered on';
+$lang['enrolled_on'] = 'Enrolled on';
 $lang['record'] = 'Record';
 $lang['records'] = 'Records';
 $lang['search_by'] = 'Search by';
@@ -129,12 +133,14 @@ $lang['search_by'] = 'Search by';
 $lang['family'] = 'Family';
 
 //settings
-$lang['settings_notice'] = 'To change settings, go to <code>/application/production/config.php</code>';
+$lang['settings_notice'] = 'To change settings, make changes to files in: <code>/application/production</code> 
+';
 $lang['settings'] = 'Settings';
 $lang['company'] = 'Company';
 $lang['company_name'] = 'Company name';
 $lang['slogan'] = 'Slogan';
 $lang['logo'] = 'logo';
+$lang['logo_instructions']='Logo dimensions should be 500px x 112px or lower and size should be 2MB (2048kb) lower';
 $lang['encryption_key'] = 'Encryption key';
 $lang['paypal_email'] = 'PayPal Email';
 $lang['timezone'] = 'Timezone';
@@ -149,7 +155,6 @@ $lang['unable_to_create_company'] = 'Unable to register company. Please try agai
 //messages
 $lang['notifications'] = 'Notifications';
 $lang['registered_users'] = 'Registered users';
-$lang['enrolled_children'] = 'Enrolled children';
 $lang['nothing_to_display'] = 'There is nothing to display';
 $lang['request_success'] = 'Action processed successfully!';
 $lang['request_error'] = 'Error! Unable to process request';
@@ -159,7 +164,7 @@ $lang['contact_manager'] = 'Please contact manager to make changes';
 $lang['file_size_error'] = 'The file size is not valid';
 $lang['confirm_delete_item'] = 'Are you sure you want to delete this item?';
 $lang['confirm_delete_user'] = 'Are you sure you want to delete this user? <br/>  This action cannot be reversed! Type <strong>DELETE</strong> to confirm.';
-$lang['feature_disabled_in_demo'] = 'Feature disabled in demo mode';
+$lang['feature_disabled_in_demo'] = 'Action/Feature disabled in demo mode';
 $lang['feature_not_available'] = '<div class="alert alert-warning">This feature is not available</div>';
 $lang['maintenance_mode'] = 'We are conducting scheduled maintenance for now. Please check again later';
 $lang['no_change_to_db'] = 'No changes have been made';
@@ -207,6 +212,7 @@ $lang['relation'] = 'Relation';
 $lang['other'] = 'Other';
 $lang['time'] = 'Time';
 $lang['birthday'] = 'Birthday';
+$lang['date_of_birth'] = 'Date of Birth';
 $lang['upload'] = 'Upload';
 $lang['street'] = 'Street';
 $lang['street2'] = 'Street2';
@@ -257,20 +263,27 @@ $lang['view'] = 'View';
 $lang['my'] = 'My';
 $lang['child'] = 'Child';
 $lang['parent'] = 'Parent';
+
 $lang['children'] = 'Children';
 $lang['new_child'] = 'New child';
-$lang['social_security'] = 'Social security';
-$lang['social_security_number'] = 'Social security number';
-
+$lang['enrolled_children'] = 'Enrolled children';
+$lang['my_children'] = 'My children';
+$lang['roster'] = 'Roster';
+$lang['children_roster'] = 'Children Roster';
+$lang['national_id'] = 'National ID#';
 $lang['pickup'] = 'Pickup';
+$lang['authorized_pickup'] = 'Authorized Pickup';
 $lang['attendance'] = 'Attendance';
 $lang['time_in'] = 'Time In';
 $lang['time_out'] = 'Time out';
 $lang['picked_up_by'] = 'Picked up by';
 $lang['dropped_off_by'] = 'Dropped off by';
 
+$lang['no_results_found'] = 'No results found';
+
 //actions
 $lang['actions'] = 'Actions';
+$lang['back'] = 'Back';
 $lang['add'] = 'Add';
 $lang['register'] = 'Register';
 $lang['remove'] = 'Remove';
@@ -332,7 +345,9 @@ $lang['charge'] = 'charge';
 $lang['charges'] = 'Charges';
 $lang['accounting'] = 'Accounting';
 $lang['new_charge'] = 'New Charge';
+$lang['billing'] = 'Billing';
 $lang['invoice'] = 'Invoice';
+$lang['invoice_id'] = 'Invoice ID';
 $lang['generate_invoice'] = 'Generate invoice';
 $lang['new_invoice'] = 'New invoice';
 $lang['make_payment'] = 'Make payment';
@@ -359,6 +374,7 @@ $lang['invoice_due']='Due Invoices';
 $lang['tax'] = 'Tax';
 $lang['total_tax'] = 'Total tax';
 $lang['sub_total'] = 'Sub total';
+$lang['invoice_save_text'] = 'You will be able to add more items next page';
 $lang['new_sub_total'] = 'New sub total';
 $lang['discount'] = 'Discount';
 $lang['discounts'] = 'Discounts';
@@ -399,7 +415,16 @@ $lang['google_analytics'] = 'Google analytics';
 $lang['download'] = 'Download';
 $lang['downloads'] = 'Downloads';
 $lang['preview'] = 'Preview';
+$lang['view'] = 'View';
 $lang['contacts'] = 'Contacts';
 //family
 $lang['update_child_notice'] = 'To update information about this child, please contact a manager.';
 $lang['copyright']='<a href="http://amdtllc.com" target="_blank">A&M Digital Technologies</a>';
+$lang['location'] = 'Location';
+$lang['incident_type'] = 'Incident Type';
+$lang['actions_taken'] = 'Actions taken';
+$lang['witnesses'] = 'Witnesses';
+$lang['witness'] = 'Witness';
+$lang['incident_location_help'] = 'Where it happened';
+$lang['incident_type_help'] = 'fall, bruise, sickness, etc';
+

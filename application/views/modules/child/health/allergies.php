@@ -1,5 +1,6 @@
 <?php echo form_open('child/addAllergy'); ?>
-<?php echo form_hidden('child_id',$child->id); ?>
+<?php echo form_hidden('child_id', $child->id); ?>
+<h2><?php echo lang('allergies'); ?></h2>
 <table class="table">
     <tr>
         <td>

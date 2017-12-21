@@ -46,4 +46,4 @@
 	});
 
 </script>
-<?php $this->load->view('family/calendar/view_event'); ?>
+<?php $this->load->view('parent/calendar/view_event'); ?>

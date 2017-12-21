@@ -1,5 +1,7 @@
 <?php echo form_open('child/addMedication'); ?>
-<?php echo form_hidden('child_id',$child->id); ?>
+<?php echo form_hidden('child_id', $child->id); ?>
+<h2><?php echo lang('medications'); ?></h2>
+
 <table class="table">
     <tr>
         <td><input class="form-control" type="text" name="med_name" placeholder="<?php echo lang('medication'); ?>"/>
@@ -30,7 +32,7 @@
                     <span class="fa fa-trash-o cursor"
                           onclick="deleteMed('<?php echo $med->id; ?>');"></span>
                 </div>
-            <?php
+                <?php
             }
         } else {
             echo '<h3 class="alert alert-warning">' . lang('nothing_to_display') . '</h3>';

@@ -15,11 +15,11 @@
                 <input type="radio" name="sort_term" checked class="invoice_sort radio-inline" value="0"/>
                 <span class="label label-default"><?php echo lang('all'); ?></span> &nbsp;
                 <input type="radio" name="sort_term" class="invoice_sort radio-inline"
-                       value="1"/><?php echo $this->invoice->invoice_status(1); ?> &nbsp;
+                       value="1"/><?php echo $this->invoice->status(1); ?> &nbsp;
                 <input type="radio" name="sort_term" class="invoice_sort radio-inline"
-                       value="2"/><?php echo $this->invoice->invoice_status(2); ?> &nbsp;
+                       value="2"/><?php echo $this->invoice->status(2); ?> &nbsp;
                 <input type="radio" name="sort_term" class="invoice_sort radio-inline"
-                       value="3"/><?php echo $this->invoice->invoice_status(3); ?>
+                       value="3"/><?php echo $this->invoice->status(3); ?>
                 <hr/>
             </div>
             <div id="results"></div>

@@ -13,9 +13,9 @@
                         <tr>
                             <td style="width:100px">
 								<?php
-        if ($this->users->user($p->user_id)->photo !== "") {
+        if ($this->user->user($p->user_id)->photo !== "") {
             echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user($p->user_id)->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user($p->user_id)->photo . '"/>';
         } else {
             echo '<img class="img-circle"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';
@@ -24,7 +24,7 @@
                             </td>
                             <td>
                                 <span class="h3"><?php echo $p->first_name . ' ' . $p->last_name; ?></span>
-                                <?php echo form_open('child/checkOut/' . $child_id); ?>
+                                <?php echo form_open('child/' . $child_id.'/checkOut'); ?>
                                 <input type="hidden" name="parent_id" value="<?php echo $p->user_id; ?>"/>
                                 <div class="input-group">
                                     <span class="input-group-addon"><?php echo lang('pin'); ?>:</span>

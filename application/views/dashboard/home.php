@@ -49,7 +49,7 @@
             </div>
             <div class="box-body">
                 <?php echo lang('total'); ?>
-                <span  class="badge"> <?php echo $this->db->where('invoice_status', 2)->get('accnt_invoices')->num_rows(); ?>
+                <span  class="badge"> <?php echo $this->db->where('invoice_status', 2)->get('invoices')->num_rows(); ?>
                 </span>
 
                 <h2>
@@ -62,7 +62,7 @@
         <ul class="nav nav-pills nav-stacked">
             <li class="active">
                 <?php echo anchor('children/roster', '<i class="fa fa-file-pdf-o"></i> Children Roster', 'target="_blank"'); ?>
-                <?php echo anchor('family/roster', '<i class="fa fa-file-pdf-o"></i> Parents Roster', 'target="_blank"'); ?>
+                <?php echo anchor('parent/roster', '<i class="fa fa-file-pdf-o"></i> Parents Roster', 'target="_blank"'); ?>
             </li>
         </ul>
             </div>
@@ -99,7 +99,7 @@
                 <div class="small-box bg-yellow cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
                     <div class="inner">
                         <h3>
-                            <?php echo $this->users->getCount(); ?>
+                            <?php echo $this->user->getCount(); ?>
                         </h3>
 
                         <p>

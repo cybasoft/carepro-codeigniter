@@ -5,7 +5,7 @@
         <select class="form-control" name="parent">
             <option value="">--<?php echo ucwords(lang('select')); ?>--</option>
             <?php
-            foreach ($this->family->parents()->result() as $row): ?>
+            foreach ($this->parent->parents()->result() as $row): ?>
                 <option class="form-control"
                         value="<?php echo $row->user_id; ?>"><?php echo $row->first_name . ' ' . $row->last_name; ?></option>
             <?php endforeach; ?>

@@ -3,7 +3,6 @@
 /**
  * @file      : files.php
  * @author    : JMuchiri
- *
  * @Copyright 2017 A&M Digital Technologies
  */
 class Files extends CI_Controller
@@ -13,7 +12,7 @@ class Files extends CI_Controller
     {
         parent::__construct();
 
-        $this->conf->setRedirect();
+        setRedirect();
     }
 
     /*
@@ -63,7 +62,7 @@ class Files extends CI_Controller
 
         if (!$this->upload->do_upload()) {
 
-            $this->conf->msg('danger', 'Unable to upload. Please try again...');
+            flash('danger', 'Unable to upload. Please try again...');
         } else {
 
             $upload_data = $this->upload->data();
@@ -86,17 +85,17 @@ class Files extends CI_Controller
 
             if ($data) {
 
-                $this->conf->msg('success', 'Image uploaded successfully!');
+                flash('success', 'Image uploaded successfully!');
             } else {
 
-                $this->conf->msg('danger', 'Unable to upload. Please try again...');
+                flash('danger', 'Unable to upload. Please try again...');
             }
 
 
         }
         //redirect
 
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /*

@@ -203,7 +203,7 @@ class Ion_auth
 			return FALSE;
 		}
 
-		$new_password = $this->ion_auth_model->forgotten_password_complete($code, $profile->salt);
+		$new_password = $this->ion_auth_model->forgotten_password_complete($code);
 
 		if ($new_password) {
 			$data = array(

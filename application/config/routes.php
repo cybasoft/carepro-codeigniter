@@ -49,11 +49,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
  */
-$route['migrate'] = 'Migrate/test';
+
+//generate migration tables (!)
+$route['migrate/(:any)'] = 'migrate/$1';
 
 $route['default_controller'] = "auth";
 $route['404_override'] = 'landing/error404';
-
 $route['translate_uri_dashes'] = FALSE;
 
 
@@ -66,29 +67,48 @@ $route['forgot_password'] = 'auth/forgot_password';
 $route['new_invoice'] = 'invoice/create_invoice';
 
 $route['groups/:num'] = "users/edit_group/$1";
-$route['settings'] = "admin/settings";
-$route['settings/:any'] = "admin/settings/$1";
-$route['users'] = "admin/users";
+$route['settings/(:any)'] = "settings/$1";
 
-$route['users/:any'] = "admin/users/$1";
-$route['user/:any'] = "admin/users/$1";
+//users
+$route['users'] = "users";
+$route['users/create'] = "users/store";
+$route['users/:any'] = "users/$1";
+$route['user/(:num)']['get'] = "users/view/$1";
+$route['user/(:num)']['post'] = "users/update/$1";
+$route['user/(:num)/delete'] = "users/delete/$1";
+$route['user/(:num)/updateUserData'] = "users/updateUserData/$1";
+$route['user/:any'] = "users/$1";
 
-$route['calendar'] = "events/calendar";
-$route['calendar/:any'] = "events/calendar/$1";
+//calendar
+$route['calendar'] = "calendar";
+$route['calendar/addEvent'] = "calendar/addEvent";
+$route['calendar/events'] = "calendar/events";
+$route['calendar/updateEvent'] = "calendar/updateEvent";
+$route['calendar/deleteEvent'] = "calendar/deleteEvent";
+$route['calendar/:any'] = "calendar/$1";
 
-$route['reports'] = "admin/reports";
-$route['reports/:any'] = "admin/reports/$1";
+//reports
+$route['child/reports'] = "reports/index";
+$route['child/(:num)/reports'] = "reports/attendance/$1";
 
-$route['children'] = "children/children";
-$route['children/([a-z]+)'] = "children/children/$1";
-$route['children/([a-z]+)/(.*)'] = "children/children/$1";
-$route['children/([a-z]+)'] = "children/children/$1";
-$route['children/:any'] = "children/children/$1";
+//children
+$route['children/(:any)'] = "children/$1";
+
+//child
+$route['child/register']['post'] = "child/child/store";
+$route['child/(:num)']['get']='child/child/index/$1';
+$route['child/:num']['post']='child/child/update';
 
 $route['child/(:num)/uploadPhoto'] = 'child/child/uploadPhoto/$1';
+
 $route['child/(:num)/assignParent']['get'] = 'child/child/assignParent/$1';
 $route['child/(:num)/assignParent']['post']='child/child/doAssignParent/$1';
-$route['child/(:num)/removeParent'] = 'child/child/removeParent/$1';
+$route['child/(:num)/(:num)/removeParent'] = 'child/child/removeParent/$1/$2';
+
+$route['child/(:num)/checkIn']['get'] = 'child/child/checkIn/$1';
+$route['child/(:num)/checkIn']['post'] = 'child/child/doCheckIn/$1';
+$route['child/(:num)/checkOut']['get'] = 'child/child/checkOut/$1';
+$route['child/(:num)/checkOut']['post'] = 'child/child/doCheckOut/$1';
 
 $route['child/(:num)/health'] = 'child/health/index/$1';
 $route['child/addMedication'] = 'child/health/addMedication';
@@ -96,30 +116,45 @@ $route['child/addAllergy'] = 'child/health/addAllergy';
 $route['child/addFoodPref']='child/health/addFoodPref';
 $route['child/addContact']='child/health/addContact';
 $route['child/addProvider']='child/health/addProvider';
-
 $route['child/deleteAllergy/(:num)'] = 'child/health/deleteAllergy/$1';
 $route['child/deleteMedication/(:num)'] = 'child/health/deleteMedication/$1';
 $route['child/deleteFoodPref/(:num)']='child/health/deleteFoodPref/$1';
 $route['child/deleteContact/(:num)']='child/health/deleteContact/$1';
 $route['child/deleteProvider/(:num)']='child/health/deleteProvider/$1';
 
-$route['child/(:num)/(:any)'] = 'child/child/$1';
-$route['child/(:num)']['get']='child/child/index/$1';
-$route['child/:num']['post']='child/child/update';
+$route['child/(:num)/notes'] = 'child/notes/index/$1';
+$route['child/(:num)/addNote'] = 'child/notes/addNote/$1';
+$route['child/(:num)/incident']['post'] = 'child/notes/createIncident/$1';
+$route['child/deleteNote/(:num)'] = 'child/notes/deleteNote/$1';
+$route['child/deleteIncident/(:num)'] = 'child/notes/deleteIncident/$1';
 
-$route['notes/:any'] = 'child/notes/$1';
-$route['pickup/:any'] = 'child/pickup/$1';
+$route['child/(:num)/pickup']['post'] = 'child/pickup/store/$1';
+$route['child/deletePickup/(:num)'] = 'child/pickup/deletePickup/$1';
+
+$route['child/(:num)/attendance'] = 'child/child/attendance/$1';
+
 $route['invoice/:any'] = 'accounting/invoice/$1';
-$route['invoice'] = 'accounting/invoice';
-$route['emergency/:any'] = 'child/emergency/$1';
+
+$route['child/(:num)/billing'] = 'child/invoice/index/$1';
+$route['child/(:num)/invoices/(:any)'] = 'child/invoice/invoices/$1/$2';
+$route['child/(:num)/newInvoice'] = 'child/invoice/create/$1';
+$route['child/(:num)/createInvoice'] = 'child/invoice/store/$1';
+$route['invoice/(:num)/delete'] = 'child/invoice/delete/$1';
+$route['invoice/(:num)/view'] = 'child/invoice/view/$1';
+$route['invoice/(:num)/addItem'] = 'child/invoice/addItem/$1';
+$route['invoice/(:num)/makePayment'] = 'child/invoice/makePayment/$1';
+$route['invoice/(:num)/preview'] = 'child/invoice/preview/$1';
+
+//parents
 $route['parents/:any'] = 'child/parents/$1';
 $route['charges/:any'] = 'accounting/charges/$1';
 
 $route['accounting/:any'] = 'accounting/accounting/$1';
-$route['news'] = 'news/news';
-$route['news/:any'] = 'news/news/$1';
 
-$route['family'] = 'family/family';
-$route['family/:any'] = "family/family/$1";
+//news
+$route['news/(:any)'] = 'news/$1';
+
+//family
+$route['parent/(:any)'] = "parent/$1";
 
 $route['lockscreen'] = 'dashboard/lockscreen';

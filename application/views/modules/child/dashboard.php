@@ -22,5 +22,11 @@
                 <?php $this->load->view($this->module . 'parents'); ?>
             </div>
         </div>
+
+        <?php $this->load->view($this->module . 'pickup'); ?>
+
     </div>
 </div>
+
+
+

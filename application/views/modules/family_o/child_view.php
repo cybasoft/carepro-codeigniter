@@ -107,7 +107,7 @@
                                 echo date('d-M-y G:i', $note->date);
                             }
                             echo ' By ';
-                            echo $this->users->user($note->user_id)->username;
+                            echo $this->user->user($note->user_id)->username;
                             ?>
                         </div>
                         <div class="children-notes-content"><?php echo $note->content; ?></div>
@@ -118,7 +118,7 @@
 
         <!--charges-->
         <div class="tab-pane" id="p_invoice">
-            <?php $this->load->view('modules/family/invoice'); ?>
+            <?php $this->load->view('modules/parent/invoice'); ?>
         </div>
 
 

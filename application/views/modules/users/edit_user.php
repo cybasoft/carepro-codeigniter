@@ -10,7 +10,7 @@
 		<div class="box box-solid box-primary">
 			<div class="box-header"><h3 class="box-title"><?php echo lang('user_information'); ?></h3></div>
 			<div class="box-body">
-				<?php echo form_open('users/update_user'); ?>
+				<?php echo form_open('user/'.$user->id); ?>
 				<table class="table">
 					<tr>
 						<td><?php echo lang('first_name'); ?></td>
@@ -39,7 +39,7 @@
 					<tr>
 
 					</tr>
-					<?php if ($this->conf->isAdmin() == true) : ?>
+					<?php if (is('admin') == true) : ?>
 						<tr>
 							<td><?php echo lang('edit_user_groups_heading'); ?></td>
 							<td>
@@ -58,7 +58,7 @@
 											break;
 										}
 									}
-									if ($this->conf->in_group($this->users->uid(), 'admin') && $group['id'] == 1) {
+									if (in_group($this->user->uid(), 'admin') && $group['id'] == 1) {
 										$type = 'disabled"';
 									} else {
 										$type = 'disabled"';
@@ -89,7 +89,7 @@
 		<div class="box box-solid box-primary">
 			<div class="box-header"><h3 class="box-title"><?php echo lang('address'); ?></h3></div>
 			<div class="box-body">
-				<?php echo form_open('user/update_user_data/' . $user->id); ?>
+				<?php echo form_open('user/' . $user->id.'/updateUserData'); ?>
 				<table class="table">
 					<tr>
 						<td><?php echo lang('pin'); ?></td>
@@ -151,9 +151,9 @@
 						<tr>
 							<td style="width:200px">
 								<?php
-							if ($this->users->user($user->id)->photo !== "") {
+							if ($this->user->user($user->id)->photo !== "") {
 								echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user($user->id)->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user($user->id)->photo . '"/>';
 							} else {
 								echo '<img class="img-circle img-thumbnail"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';

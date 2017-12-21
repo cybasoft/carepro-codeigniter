@@ -1,4 +1,4 @@
-<?php $this->load->view('family/inc/header'); ?>
+<?php $this->load->view('parent/inc/header'); ?>
 	<header class="header">
 		<a href="<?php echo site_url('dashboard'); ?>" class="logo" style="left:0px !important;">
 		<?php if ($this->config->item('logo', 'company') == "") : ?>
@@ -14,11 +14,11 @@
 		<?php endif; ?>
 
 		</a>
-		<?php $this->load->view('family/inc/nav'); ?>
+		<?php $this->load->view('parent/inc/nav'); ?>
 	</header>
 
 	<div class="wrapper row-offcanvas row-offcanvas-left">
-		<?php $this->load->view('family/inc/sidebar'); ?>
+		<?php $this->load->view('parent/inc/sidebar'); ?>
 		<aside class="right-side">
 			<?php echo $this->session->flashdata('message'); ?>
 
@@ -29,4 +29,4 @@
 
 		</aside>
 	</div>
-<?php $this->load->view('family/inc/footer'); ?>
+<?php $this->load->view('parent/inc/footer'); ?>

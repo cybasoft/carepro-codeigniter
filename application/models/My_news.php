@@ -36,7 +36,7 @@ class my_news extends CI_Model
 		$data = array(
 			'article_name' => $this->input->post('article_name'),
 			'article_body' => $this->input->post('article_body'),
-			'user_id' => $this->users->uid(),
+			'user_id' => $this->user->uid(),
 			'publish_date' => time()
 		);
 		if ($this->db->insert('news', $data))

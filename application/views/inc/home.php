@@ -30,15 +30,15 @@
                     </ol>
                 </section>
             <?php endif; ?>
-
-            <?php echo $this->session->flashdata('message'); ?>
-
             <!-- Main content -->
             <section class="content">
+
+                <?php echo $this->session->flashdata('message'); ?>
+
                 <?php $this->load->view($page); ?>
             </section>
 
         </aside>
     </div>
-<?php //$this->load->view('modules/broadcast/index'); ?>
+
 <?php $this->load->view('inc/footer'); ?>

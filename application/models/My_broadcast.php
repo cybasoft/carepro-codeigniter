@@ -19,13 +19,13 @@ class my_broadcast extends CI_Model
 	}
 	function addMessage($message){
 		$data = array(
-			'user' => $this->users->uid(),
+			'user' => $this->user->uid(),
 			'message' => $message,
 			'ip_address' => $_SERVER['REMOTE_ADDR']
 		);
 		if($this->db->insert('broadcast', $data)){
 			//log event
-			$this->conf->log("Sent broadcast {{$message}}");
+			logEvent("Sent broadcast {{$message}}");
 			return true;
 		}
 		return false;

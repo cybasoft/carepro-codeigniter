@@ -13,7 +13,7 @@ class MY_profile extends CI_Model
 		$data = array(
 			'pin' => $this->input->post('pin')
 		);
-		$this->db->where('user_id', $this->users->uid());
+		$this->db->where('user_id', $this->user->uid());
 		if($this->db->update('user_data', $data))
 			return true;
 		return false;
@@ -24,7 +24,7 @@ class MY_profile extends CI_Model
 		$data = array(
 			'email' => $this->input->post('email')
 		);
-		$this->db->where('id', $this->users->uid());
+		$this->db->where('id', $this->user->uid());
 		if($this->db->update('users', $data))
 			return true;
 		return false;
@@ -36,7 +36,7 @@ class MY_profile extends CI_Model
 		$data = array(
 			'password' => $this->auth->hash_password($this->input->post('new_password'))
 		);
-		$this->db->where('id', $this->users->uid());
+		$this->db->where('id', $this->user->uid());
 		if($this->db->update('users', $data))
 			return true;
 		return false;
@@ -54,7 +54,7 @@ class MY_profile extends CI_Model
 			'zip' => $this->input->post('zip'),
 			'country' => $this->input->post('country')
 		);
-		$this->db->where('user_id', $this->users->uid());
+		$this->db->where('user_id', $this->user->uid());
 		if($this->db->update('user_data', $data))
 			return true;
 		return false;

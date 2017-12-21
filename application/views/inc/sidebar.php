@@ -6,9 +6,9 @@
         <div class="user-panel">
             <div class="pull-left image">
                 <?php
-                if ($this->users->user()->photo !== "") {
+                if ($this->user->user()->photo !== "") {
                     echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user()->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user()->photo . '"/>';
                 } else {
                     echo '<img class="img-circle"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';
@@ -16,7 +16,7 @@
                 ?>
             </div>
             <div class="pull-left info">
-                <p>Hello, <?php echo $this->users->thisUser('username'); ?></p>
+                <p>Hello, <?php echo $this->user->thisUser('username'); ?></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 
@@ -49,11 +49,11 @@
             <li>
                 <a href="<?php echo site_url('users'); ?>">
                     <i class="fa fa-user"></i> <span><?php echo lang('users'); ?></span>
-                    <small class="badge pull-right bg-blue"><?php echo $this->users->getCount(); ?></small>
+                    <small class="badge pull-right bg-blue"><?php echo $this->user->getCount(); ?></small>
                 </a>
             </li>
             <li class="bg-warning">
-                <a href="<?php echo site_url('family'); ?>">
+                <a href="<?php echo site_url('parent'); ?>">
                     <i class="fa fa-users"></i> <span>My Children
                 </a>
             </li>
@@ -62,23 +62,12 @@
 					<i class="fa fa-laptop"></i> <span><?php echo lang('accounting'); ?></span>
 				</a>
 			</li-->
-
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-calendar"></i>
-                    <span><?php echo lang('events'); ?></span>
-                    <i class="fa fa-angle-left pull-right"></i>
+            <li>
+                <a href="<?php echo site_url('calendar'); ?>">
+                    <i class="fa fa-calendar"></i> <span><?php echo lang('calendar'); ?></span>
+                    <!--small class="badge pull-right bg-red">3</small-->
                 </a>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="<?php echo site_url('calendar'); ?>">
-                            <i class="fa fa-calendar-o"></i> <span><?php echo lang('calendar'); ?></span>
-                            <!--small class="badge pull-right bg-red">3</small-->
-                        </a>
-                    </li>
-                </ul>
             </li>
-
             <li>
                 <a href="<?php echo site_url('news'); ?>">
                     <i class="fa fa-clipboard"></i>

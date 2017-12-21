@@ -43,19 +43,19 @@
                             <tr>
                                 <td>
                                     <span class="fa fa-user text-info"></span>
-                                    <?php echo anchor('account/profile/' . $this->users->uid(), lang('profile')); ?>
+                                    <?php echo anchor('account/profile/' . $this->user->uid(), lang('profile')); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <span class="fa fa-lock text-info"></span>
-                                    <?php echo anchor('account/profile/' . $this->users->uid().'#demograph', lang('password')); ?>
+                                    <?php echo anchor('account/profile/' . $this->user->uid().'#demograph', lang('password')); ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <span class="fa fa-link text-info"></span>
-                                    <?php echo anchor('account/profile/'.$this->users->uid().'#address', lang('address')); ?>
+                                    <?php echo anchor('account/profile/'.$this->user->uid().'#address', lang('address')); ?>
                                 </td>
                             </tr>
                         </table>

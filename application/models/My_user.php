@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Filename: ${FILE_NAME}
+
  * User: John Muchiri
  * Date: 11/9/2014
  */
@@ -159,9 +159,9 @@ class MY_user extends CI_Model
 		} else {
 			$id = $uid;
 		}
-		if ($this->users->user($id)->photo !== "") {
+		if ($this->user->user($id)->photo !== "") {
 			echo '<img class="' . $class . '"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user($id)->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user($id)->photo . '"/>';
 		} else {
 			echo '<img class="' . $class . '"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';

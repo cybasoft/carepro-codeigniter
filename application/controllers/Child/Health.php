@@ -1,18 +1,13 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * Filename: ${FILE_NAME}
- * User: John Muchiri
- * Date: 11/10/2014
- */
 class Health extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         //redirect session
-        $this->conf->setRedirect();
-        $this->conf->authenticate();
+        setRedirect();
+        auth();
         $this->load->model('My_child', 'child');
         $this->load->model('My_health', 'health');
         $this->module = 'modules/child/health/';
@@ -21,7 +16,11 @@ class Health extends CI_Controller
     function index($id)
     {
         $data['child'] = $this->child->first($id);
-        $this->conf->page($this->module . 'index', $data);
+        if(empty($data['child'])){
+            flash('error',lang('request_error'));
+            redirect('/dashboard');
+        }
+        page($this->module . 'index', $data);
     }
 
     /*
@@ -34,9 +33,9 @@ class Health extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $this->health->addMedication();
         } else {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /*
@@ -48,12 +47,12 @@ class Health extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('child_meds');
         if ($this->db->affected_rows() > 0) {
-            $this->conf->msg('success', lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         }
         //go back
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /*
@@ -65,15 +64,15 @@ class Health extends CI_Controller
         $this->form_validation->set_rules('allergy', 'Allergy Name', 'required|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             if ($this->health->addAllergy()) {
-                $this->conf->msg('success', lang('request_success'));
+                flash('success', lang('request_success'));
             } else {
-                $this->conf->msg('warning', lang('no_change_to_db'));
+                flash('warning', lang('no_change_to_db'));
             }
         } else {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         }
 
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /*
@@ -84,11 +83,11 @@ class Health extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('child_allergy');
         if ($this->db->affected_rows() > 0) {
-            $this->conf->msg('success', lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
 
@@ -104,13 +103,13 @@ class Health extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
 
             if ($this->health->addFoodPref()) {
-                $this->conf->msg('success', lang('request_success'));
+                flash('success', lang('request_success'));
             }
         } else {
-            $this->conf->msg('danger');
+            flash('danger');
             validation_errors();
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
 
     }
 
@@ -121,18 +120,18 @@ class Health extends CI_Controller
     {
         if ($id !== "" & is_numeric($id)) {
             //make sure its the parent authorized or admin
-            if ($this->conf->isStaff() == true || $this->is_mychild()) {
+            if (is('staff') == true || $this->is_mychild()) {
                 $this->db->where('id', $id);
                 $this->db->delete('child_foodpref');
                 if ($this->db->affected_rows() > 0) {
-                    $this->conf->msg('success', lang('request_success'));
+                    flash('success', lang('request_success'));
                 } else {
-                    $this->conf->msg('danger', lang('request_error'));
+                    flash('danger', lang('request_error'));
                 }
             }
 
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /**
@@ -146,15 +145,15 @@ class Health extends CI_Controller
         $this->form_validation->set_rules('address', lang('address'), 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             if ($this->health->addContact()) {
-                $this->conf->msg('success', lang('request_success'));
+                flash('success', lang('request_success'));
             } else {
-                $this->conf->msg('danger', lang('request_error'));
+                flash('danger', lang('request_error'));
             }
         } else {
-            $this->conf->msg('danger');
+            flash('danger');
             validation_errors();
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /**
@@ -163,11 +162,11 @@ class Health extends CI_Controller
     function deleteContact($id)
     {
         if ($this->db->where('id', $id)->delete('child_contacts')) {
-            $this->conf->msg('success', lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
-            $this->conf->msg('danger', lang('request_danger'));
+            flash('danger', lang('request_danger'));
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
 
@@ -183,15 +182,15 @@ class Health extends CI_Controller
         $this->form_validation->set_rules('notes', lang('address'), 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             if ($this->health->addProvider()) {
-                $this->conf->msg('success', lang('request_success'));
+                flash('success', lang('request_success'));
             } else {
-                $this->conf->msg('danger', lang('request_error'));
+                flash('danger', lang('request_error'));
             }
         } else {
-            $this->conf->msg('danger');
+            flash('danger');
             validation_errors();
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /**
@@ -200,10 +199,10 @@ class Health extends CI_Controller
     function deleteProvider($id)
     {
         if ($this->db->where('id', $id)->delete('child_providers')) {
-            $this->conf->msg('success', lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
-            $this->conf->msg('danger', lang('request_danger'));
+            flash('danger', lang('request_danger'));
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 }

@@ -4,7 +4,7 @@ $start = array(
     'type'  => 'date',
     'class' => 'form-control',
     'id'    => 'start_date',
-    'value' => '',
+    'value' => date('Y-m-d'),
     'placeholder'=>'mm/dd/yyyy',
 );
 $start_time = array(
@@ -12,7 +12,7 @@ $start_time = array(
     'type'  => 'time',
     'class' => 'form-control',
     'id'    => 'start_time',
-    'value' => '',
+    'value' => date('H:i'),
     'placeholder'=>'hh:mm ss',
 );
 $end = array(
@@ -20,7 +20,7 @@ $end = array(
     'type'  => 'date',
     'class' => 'form-control',
     'id'    => 'end_date',
-    'value' => '',
+    'value' => date('Y-m-d'),
     'placeholder'=>'mm/dd/yyyy',
 );
 $end_time = array(
@@ -28,7 +28,7 @@ $end_time = array(
     'type'  => 'time',
     'class' => 'form-control',
     'id'    => 'end_time',
-    'value' => '',
+    'value' => date('H:i'),
     'placeholder'=>'hh:mm ss',
 );
 
@@ -57,7 +57,7 @@ $title = array(
             </div>
             <div class="modal-body">
 
-                <?php echo form_open('calendar/add_event'); ?>
+                <?php echo form_open('calendar/addEvent'); ?>
                 <table class="table table-hover table-responsive">
                     <tr>
                         <td class="text-right">
@@ -69,7 +69,7 @@ $title = array(
                     </tr>
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('title'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('start'); ?></span>
                         </td>
                         <td class="input-group">
                             <?php echo form_input($start); ?>
@@ -92,7 +92,7 @@ $title = array(
                             <span class="label-text text-info"><?php echo lang('details'); ?></span>
                         </td>
                         <td>
-							<textarea class="form-control textarea" name="desc" rows="10"></textarea>
+							<textarea class="form-control editor" name="desc" rows="10"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -108,8 +108,3 @@ $title = array(
         </div>
     </div>
 </div>
-
-<script>
-    $("#start_date, #end_date").mask("99/99/9999");
-    $("#start_time, #end_time").mask("99:99 99");
-</script>

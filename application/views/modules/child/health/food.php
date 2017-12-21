@@ -1,5 +1,6 @@
 <?php echo form_open('child/addFoodPref'); ?>
 <?php echo form_hidden('child_id', $child->id); ?>
+<h2><?php echo lang('food_pref_header'); ?></h2>
 <table class="table table-responsive no-border">
     <tr>
         <td><input class="form-control" type="text" name="food" placeholder="<?php echo lang('food'); ?>"/></td>

@@ -55,7 +55,7 @@
 					</div>
 				</div>
 				<div class="box-footer">
-					<a href="<?php echo site_url('family/view_child/' . $row->child_id); ?>"
+					<a href="<?php echo site_url('parent/view_child/' . $row->child_id); ?>"
 					   class="btn btn-info btn-flat btn-sm viewChild">
 						<span class="fa fa-eye-open"></span> <?php echo lang('open'); ?>
 					</a>

@@ -22,6 +22,9 @@ $config['company'] = array(
 );
 $config['allow_registration'] = FALSE;
 $config['allow_reset_password'] = TRUE;
+$config['enable_captcha']=FALSE;
+$config['demo_mode']=FALSE;
+$config['maintenance_mode']=FALSE;
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -542,3 +545,6 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
  */
 $config['proxy_ips'] = '';
+
+$config['copyright'] = '<a href="http://amdtllc.com" target="_blank">A&M Digital
+Technologies</a>';

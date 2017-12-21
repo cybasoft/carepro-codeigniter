@@ -4,19 +4,19 @@
 			<div class="box-body">
 				<table class="table">
 					<tr>
-						<td>SSN:</td>
-						<td><?php echo $this->conf->decrypt($child->ssn); ?></td>
+						<td><?php echo lang('national_id'); ?></td>
+						<td><?php echo decrypt($child->national_id); ?></td>
 					</tr>
 					<tr>
-						<td>Gender:</td>
+						<td><?php echo lang('gender'); ?>:</td>
 						<td><?php echo $child->gender ==1? 'male': 'female'; ?></td>
 					</tr>
 					<tr>
-						<td>Blood type:</td>
+						<td><?php echo lang('blood_type'); ?>:</td>
 						<td><?php echo $child->blood_type; ?></td>
 					</tr>
 					<tr>
-						<td>Enrolled on:</td>
+						<td><?php echo lang('enrolled_on'); ?>:</td>
 						<td><?php echo date('d M Y',$child->enroll_date); ?></td>
 					</tr>
 				</table>
@@ -30,12 +30,12 @@
 	<div class="col-lg-4 col-md-4 col-xs-12">
 		<div class="box box-info box-solid">
 			<div class="box-header">
-				<div class="box-title">Alerts</div>
+				<div class="box-title"><?php echo lang('alerts'); ?></div>
 			</div>
 			<div class="box-body">
 				<table class="table">
 					<tr>
-						<td>SSN:</td>
+						<td><?php echo lang('national_id'); ?></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -50,7 +50,7 @@
 	<div class="col-lg-4 col-md-4 col-xs-12">
 		<div class="box box-primary box-solid">
 			<div class="box-header">
-				<div class="box-title">Upcoming events</div>
+				<div class="box-title"><?php echo lang('upcoming_events'); ?></div>
 			</div>
 			<div class="box-body">
 

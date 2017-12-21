@@ -11,8 +11,8 @@ class Child extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->conf->setRedirect();
-        $this->conf->allow('admin,manager,staff');
+        setRedirect();
+        allow('admin,manager,staff');
         $this->load->model('My_invoice', 'invoice');
         $this->module = 'modules/child/';
     }
@@ -24,9 +24,30 @@ class Child extends CI_Controller
     function index($id)
     {
         $this->session->set_userdata('view_child_id', $id);
-        $data['child'] = $this->child->child($id);
-        $data['page']=$this->module.'dashboard';
-        $this->conf->page($this->module . 'index',$data);
+        $child = $this->child->child($id);
+
+        $pickups = $this->db->where('child_id', $id)->get('child_pickup')->result();
+        if (empty($child)) {
+            flash('error', lang('record_not_found'));
+            redirect('children');
+        }
+        page($this->module . 'index', compact('child', 'pickups'));
+    }
+
+    function store()
+    {
+        $this->form_validation->set_rules('fname', lang('first_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('lname', lang('last_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
+        $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
+        if ($this->form_validation->run() == TRUE) {
+            $this->child->register();
+        } else {
+            validation_errors();
+            flash('danger');
+        }
+        redirect('children', 'refresh');
     }
 
     /*
@@ -39,7 +60,7 @@ class Child extends CI_Controller
     {
         $this->form_validation->set_rules('fname', lang('first_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('lname', lang('last_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('ssn', lang('social_security'), 'trim|xss_clean');
+        $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('blood_type', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
@@ -47,7 +68,7 @@ class Child extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $this->child->update_child($this->input->post('child_id'));
         } else {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         }
         redirect('child/' . $this->input->post('child_id'), 'refresh');
     }
@@ -58,13 +79,13 @@ class Child extends CI_Controller
      */
     function deleteChild($id)
     {
-        $this->conf->allow('admin');
+        allow('admin');
 
         $this->db->where('id', $id);
         if ($this->db->update('children', array('status', 0))) {
-            $this->conf->msg('success', lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         }
         redirect('children', 'refresh');
     }
@@ -77,20 +98,16 @@ class Child extends CI_Controller
 
     function uploadPhoto($id = "")
     {
-        if (!$this->conf->isStaff()) $this->conf->redirectPrev();
-
+        allow('admin,staff');
         $upload_path = './assets/img/users/children';
         $upload_db = 'children';
-
         if (!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
         }
-
         if ($id == "") { //make sure there are arguments
-            $this->conf->msg('danger', lang('request_error'));
-            $this->conf->redirectPrev();
+            flash('danger', lang('request_error'));
+            redirectPrev();
         }
-
         $config = array(
             'upload_path' => $upload_path,
             'allowed_types' => 'gif|jpg|png|jpeg',
@@ -101,7 +118,7 @@ class Child extends CI_Controller
         );
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         } else {
             //delete if any exists
             $this->db->where('id', $id);
@@ -120,61 +137,37 @@ class Child extends CI_Controller
             $data_ary = array(
                 'photo' => $upload_data['file_name']
             );
-
             $this->db->where('id', $id);
             $this->db->update($upload_db, $data_ary);
             $data = array('upload_data' => $upload_data);
             if ($data) {
-                $this->conf->msg('success', lang('request_success'));
+                flash('success', lang('request_success'));
             } else {
-                $this->conf->msg('danger', lang('request_error'));
+                flash('danger', lang('request_error'));
             }
         }
-
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
-    ////////////NOTES/////////////////
-    function notes()
-    {
-        $this->conf->page($this->module . 'notes');
-    }
-
-    ///////////PICKUP CONTACT/////////
-    function pickup()
-    {
-        $this->conf->page($this->module . 'pickup');
-    }
-
-    /////////INVOICE/////////////////
     function invoice($status = "")
     {
         $data['status'] = $status;
-        $this->conf->page($this->module . 'accounting/index', $data);
+        page($this->module . 'accounting/index', $data);
     }
 
-    /////////EMERGENCY CONTACT/////////
-    function emergency()
+    function attendance($id)
     {
-        $data['eContact'] = $this->db->where('child_id', $this->child->getID())->get('child_emergency');
-        $this->conf->page($this->module . 'emergency', $data);
+        $child = $this->child->first($id);
+        $attendance = $this->db->where('child_id', $id)->order_by('id', 'DESC')->get('child_checkin');
+        page($this->module . 'attendance', compact('child', 'attendance'));
     }
-
-    /////////REPORTS//////////////////
-    function reports()
-    {
-        $cid = $this->child->getID();
-        $data['attendance'] = $this->db->where('child_id', $cid)->order_by('id', 'DESC')->get('child_checkin');
-        $this->conf->page($this->module . 'reports/attendance', $data);
-    }
-
 
     //check this user and parent association
     function is_mychild()
     {
         $this->db->where('child_id', $this->child->getID());
-        $this->db->where('user_id', $this->users->uid());
-        $query = $this->db->get('child_users');
+        $this->db->where('user_id', $this->user->uid());
+        $query = $this->db->get('child_parents');
         if ($query->num_rows() > 0) {
             return true;
         } else {
@@ -185,7 +178,7 @@ class Child extends CI_Controller
     /*
      * check_in
      */
-    function check_in($id)
+    function checkIn($id)
     {
         $data = array(
             'child_id' => $id,
@@ -197,7 +190,7 @@ class Child extends CI_Controller
     /*
      * check_out
      */
-    function check_out($id)
+    function checkOut($id)
     {
         $data = array(
             'child_id' => $id,
@@ -209,7 +202,7 @@ class Child extends CI_Controller
     /*
      * check in
      */
-    function checkIn($child_id)
+    function doCheckIn($child_id)
     {
         $this->form_validation->set_rules('pin', lang('pin'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
@@ -218,15 +211,15 @@ class Child extends CI_Controller
             $this->child->check_in($child_id, $parent, $pin);
         } else {
             validation_errors();
-            $this->conf->msg('danger');
+            flash('danger');
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /*
      * check out
      */
-    function checkOut($child_id)
+    function doCheckOut($child_id)
     {
         $this->form_validation->set_rules('pin', lang('pin'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
@@ -235,9 +228,9 @@ class Child extends CI_Controller
             $this->child->check_out($child_id, $parent, $pin);
         } else {
             validation_errors();
-            $this->conf->msg('danger');
+            flash('danger');
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /*
@@ -256,14 +249,14 @@ class Child extends CI_Controller
                 'user_id' => $this->input->post('parent'),
                 'child_id' => $child_id
             );
-            if ($this->db->insert('child_users', $data)) {
-                $this->conf->msg('success', lang('request_success'));
+            if ($this->db->insert('child_parents', $data)) {
+                flash('success', lang('request_success'));
             }
         } else {
-            $this->conf->msg('danger');
+            flash('danger');
             validation_errors();
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
     /*
@@ -276,10 +269,10 @@ class Child extends CI_Controller
         $child_id = $this->input->post('child');
         $this->db->where('user_id', $user_id);
         $this->db->where('child_id', $child_id);
-        $query = $this->db->get('child_users');
+        $query = $this->db->get('child_parents');
         if ($query->num_rows() > 0) {
             $this->form_validation->set_message('user_not_assigned', lang('user_already_assigned'));
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
             return false;
         } else {
             return true;
@@ -289,14 +282,16 @@ class Child extends CI_Controller
     /*
      * removeParent
      */
-    function removeParent($id)
+    function removeParent($child_id, $parent_id)
     {
-        if ($this->db->where('id', $id)->delete('child_users')) {
-            $this->conf->msg('success', lang('request_success'));
+        if ($this->db->where('child_id', $child_id)
+            ->where('user_id', $parent_id)
+            ->delete('child_parents')) {
+            flash('success', lang('request_success'));
         } else {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
 }

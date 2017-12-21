@@ -6,7 +6,7 @@
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css" />
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,7 +25,7 @@
 	<div class="lockscreen-item">
 		<div class="lockscreen-image">
 			<?php //todo avatar gender ?>
-			<?php echo $this->users->getPhoto(); ?>
+			<?php echo $this->user->getPhoto(); ?>
 		</div>
 		<div class="lockscreen-credentials">
 			<?php echo form_open('dashboard/login'); ?>
@@ -49,6 +49,13 @@
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        history.pushState(null, document.title, location.href);
+        window.addEventListener('popstate', function (event)
+        {
+            history.pushState(null, document.title, location.href);
+        });
+    });
 	$(function() {
 		startTime();
 		$(".center").center();

@@ -22,10 +22,10 @@ if (!isset($_POST['confirm'])) { //double check this is the action
 
         if ($this->db->affected_rows() > 0) {
 
-            $this->conf->msg('success', 'Success! Payments purged');
+            flash('success', 'Success! Payments purged');
         } else {
 
-            $this->conf->msg('danger', 'Error! Unable to purge payments');
+            flash('danger', 'Error! Unable to purge payments');
         }
         redirect('child#payments');
     } else {

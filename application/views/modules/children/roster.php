@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html moznomarginboxes mozdisallowselectionprint>
 <head>
     <meta charset="UTF-8">
-    <title>DayCarePRO</title>
+    <title><?php echo config_item('company')['name']; ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
-
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .container {
+            width: 1170px;
+            margin: 0 auto;
+        }
+        @media print {
+            @page {
+                margin: 0;
+            }
 
+            body {
+                margin: 1.6cm;
+            }
+        }
+    </style>
 </head>
 <body onload="javascript:print()">
 <div class="container">
-    <img class="" style="width: 250px;" src="<?php echo base_url(); ?>assets/img/logo.png"/>
+    <img class="" style="width: 250px;" src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('invoice_logo', 'company'); ?>"/>
 
-    <h3>Children Roster</h3>
-    <table class="table table-responsive table-striped">
+    <h3><?php echo lang('children_roster'); ?></h3>
+    <table class="table table-striped table-bordered">
         <tr>
-            <td></td>
-            <th>Name</th>
-            <th>Date of Birth</th>
-            <th>SSN/National ID</th>
-            <th>Blood Type</th>
-            <th>Enrolled on</th>
+            <th></th>
+            <th><?php echo lang('name'); ?></th>
+            <th><?php echo lang('date_of_birth'); ?></th>
+            <th><?php echo lang('national_id'); ?></th>
+            <th><?php echo lang('date_of_birth'); ?></th>
+            <th><?php echo lang('enrolled_on'); ?></th>
         </tr>
         <?php foreach ($children as $child) : ?>
             <tr>
@@ -31,9 +43,9 @@
                 </td>
                 <td><?php echo $child->fname . ' ' . $child->lname; ?></td>
                 <td><?php echo $child->bday; ?></td>
-                <td><?php echo $this->conf->decrypt($child->ssn); ?></td>
+                <td><?php echo decrypt($child->national_id); ?></td>
                 <td><?php echo $child->blood_type; ?></td>
-                <td><?php echo $child->enroll_date; ?></td>
+                <td><?php echo format_date($child->enroll_date, false); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

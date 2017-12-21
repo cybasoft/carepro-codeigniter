@@ -6,9 +6,9 @@
 		<div class="user-panel">
 			<div class="pull-left image">
 				<?php
-			if ($this->users->user()->photo !== "" ) {
+			if ($this->user->user()->photo !== "" ) {
 				echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user()->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user()->photo . '"/>';
 			} else {
 				echo '<img class="img-circle"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';
@@ -16,7 +16,7 @@
 			?>
 			</div>
 			<div class="pull-left info">
-				<p>Hello, <?php echo $this->users->thisUser('username'); ?></p>
+				<p>Hello, <?php echo $this->user->thisUser('username'); ?></p>
 
 				<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 

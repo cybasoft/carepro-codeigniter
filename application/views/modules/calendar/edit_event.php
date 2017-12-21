@@ -57,7 +57,7 @@ $end_time = array(
             </div>
             <div class="modal-body">
 
-                <?php echo form_open('calendar/update_event'); ?>
+                <?php echo form_open('calendar/updateEvent'); ?>
                 <input type="hidden" id="event_id" name="id" value="" />
                 <table class="table table-hover table-responsive">
                     <tr>
@@ -109,7 +109,3 @@ $end_time = array(
         </div>
     </div>
 </div>
-<script>
-    $("#start_date, #end_date").mask("99/99/9999");
-    $("#start_time, #end_time").mask("99:99 99");
-</script>

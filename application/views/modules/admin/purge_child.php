@@ -21,10 +21,10 @@ if (!isset($_POST['confirm'])) { //double check this is the action
 
         if ($this->db->delete('children') > 0) {
 
-            $this->conf->msg('success', 'Success! Child data purged');
+            flash('success', 'Success! Child data purged');
         } else {
 
-            $this->conf->msg('danger', 'Error! Unable to purge data');
+            flash('danger', 'Error! Unable to purge data');
         }
     }
     redirect('children');

@@ -45,11 +45,11 @@ class My_calendar extends CI_Model
 		$this->db->insert('calendar', $data); //insert to db
 
 		if($this->db->affected_rows() > 0) { //successful
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 			//log event
-			$this->conf->log("Added calendar event {$data['title']}");
+			logEvent("Added calendar event {$data['title']}");
 		} else {
-			$this->conf->msg('danger', lang('request_error'));
+			flash('danger', lang('request_error'));
 		}
 	}
 
@@ -78,11 +78,11 @@ class My_calendar extends CI_Model
 		$this->db->where('id', $this->input->post('id'));
 		$this->db->update('calendar', $data);
 		if($this->db->affected_rows() > 0) { //successful
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 			//log event
-			$this->conf->log("Updated calendar event {$data['title']}");
+			logEvent("Updated calendar event {$data['title']}");
 		} else {
-			$this->conf->msg('danger', lang('request_error'));
+			flash('danger', lang('request_error'));
 		}
 	}
 
@@ -97,7 +97,7 @@ class My_calendar extends CI_Model
 		$this->db->delete('calendar');
 		if($this->db->affected_rows() > 0) { //successful
 			//log event
-			$this->conf->log("Added calendar event {$this->getEvents($id)->row()->id}");
+			logEvent("Added calendar event {$this->getEvents($id)->row()->id}");
 			return 'true';
 		} else {
 			return 'true';

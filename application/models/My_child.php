@@ -5,7 +5,7 @@ class My_child extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('My_family', 'family');
+		$this->load->model('My_parent', 'parent');
 
 	}
 	function first($id){
@@ -34,34 +34,40 @@ class My_child extends CI_Model
 	 * get all child information
 	 */
 
-	function add_child()
+	function register()
 	{
 		$data = array(
 			'fname' => $this->input->post('fname'),
 			'lname' => $this->input->post('lname'),
-			'ssn' => $this->conf->encrypt($this->input->post('ssn')),
+			'national_id' => encrypt($this->input->post('national_id')),
 			'bday' => $this->input->post('bday'),
 			'gender' => $this->input->post('gender'),
 			'enroll_date' => time(),
 			'last_update' => time(),
-			'status' => 1
+			'status' => 1,
+            'created_at'=>date_stamp(),
+            'user_id'=>$this->user->uid()
 		);
 		$this->db->insert('children', $data);
 		$last_id = $this->db->insert_id();
 
 		if ($this->db->affected_rows() > 0) {
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 		} else {
-			$this->conf->msg('warning', lang('no_change_to_db'));
+			flash('warning', lang('no_change_to_db'));
 		}
-		//associate with user
-		$data2 = array(
-			'child_id' => $last_id
-		);
 
-		$this->db->insert('child_users', $data2);
+		//assign child to user if this user is parent
+		if(is('parent')) {
+            $data2 = array(
+                'child_id' => $last_id,
+                'user_id' => $this->user->uid()
+            );
+            $this->db->insert('child_parents', $data2);
+        }
+
 		//log event
-		$this->conf->log("Add child {$data['fname']} {$data['lname']}");
+		logEvent("Add child {$data['fname']} {$data['lname']}");
 
 		redirect('child/' . $last_id); //go to child record
 	}
@@ -77,7 +83,7 @@ class My_child extends CI_Model
 			'fname' => $this->input->post('fname'),
 			'lname' => $this->input->post('lname'),
 			'bday' => $this->input->post('bday'),
-			'ssn' => $this->conf->encrypt($this->input->post('ssn')),
+			'national_id' => encrypt($this->input->post('national_id')),
 			'blood_type' => $this->input->post('blood_type'),
 			'gender' => $this->input->post('gender'),
 			'status' => $this->input->post('child_status'),
@@ -87,11 +93,11 @@ class My_child extends CI_Model
 		$this->db->update('children', $data);
 		if ($this->db->affected_rows() > 0) {
 			//log event
-			$this->conf->log("Updated child {$data['fname']} {$data['lname']}");
+			logEvent("Updated child {$data['fname']} {$data['lname']}");
 
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 		} else {
-			$this->conf->msg('warning', lang('no_change_to_db'));
+			flash('warning', lang('no_change_to_db'));
 		}
 	}
 
@@ -121,64 +127,97 @@ class My_child extends CI_Model
 		$this->db->update('child_parent', $data);
 		if ($this->db->affected_rows() > 0) {
 			//log event
-			$this->conf->log("Updated parent - {$data['fname']} {$data['lname']}");
+			logEvent("Updated parent - {$data['fname']} {$data['lname']}");
 
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 		} else {
-			$this->conf->msg('warning', lang('no_change_to_db'));
+			flash('warning', lang('no_change_to_db'));
 		}
 	}
 	/*
 	 * add emergency contact to db
 	 */
 
-	function add_pickup_contact()
+	function createPickup($id)
 	{
 		$data = array(
-			'child_id' => $this->input->post('child_id'),
+			'child_id' => $id,
 			'fname' => $this->input->post('fname'),
 			'lname' => $this->input->post('lname'),
 			'cell' => $this->input->post('cell'),
 			'other_phone' => $this->input->post('other_phone'),
 			'address' => $this->input->post('address'),
 			'pin' => $this->input->post('pin'),
-			'relation' => $this->input->post('relation')
+			'relation' => $this->input->post('relation'),
+            'user_id' => $this->user->uid(),
+            'created_at' => date_stamp()
 		);
 
 		$this->db->insert('child_pickup', $data);
+		$insert_id = $this->db->insert_id();
 		if ($this->db->affected_rows() > 0) {
-			//log event
-			$this->conf->log("Added pickup contact for child ID {$this->input->post('child_id')}");
-
-			$this->conf->msg('success', lang('request_success'));
-		} else {
-			$this->conf->msg('warning', lang('no_change_to_db'));
-		}
+            //log event
+            logEvent("Added pickup contact for child ID {$id}");
+            return $insert_id;
+        }else{
+		    return false;
+        }
 	}
 
 	/*
 	 * add pickup contact info
 	 */
 
-	function add_note()
+	function createNote($child_id)
 	{
 		$data = array(
-			'child_id' => $this->input->post('child_id'),
+			'child_id' =>$child_id,
+			'title' => $this->input->post('title'),
 			'content' => $this->input->post('note-content'),
-			'user_id' => $this->users->uid(),
-			'date' => time()
+			'user_id' => $this->user->uid(),
+			'created_at' => date_stamp()
 		);
+
 		$this->db->insert('child_notes', $data);
 		if ($this->db->affected_rows() > 0) {
 			//log event
-			$this->conf->log("Added note for child ID: {$this->input->post('child_id')}");
+			logEvent("Added note for child ID: {$child_id}");
 
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 		} else {
-			$this->conf->msg('warning', lang('no_change_to_db'));
+			flash('warning', lang('no_change_to_db'));
 		}
 	}
 
+    /**
+     * @param $child_id
+     */
+    function createIncident($child_id)
+    {
+        $date_occurred = $this->input->post('date').' '.$this->input->post('time');
+        $data = array(
+            'child_id' =>$child_id,
+            'title' => $this->input->post('title'),
+            'location' => $this->input->post('location'),
+            'incident_type' => $this->input->post('incident_type'),
+            'description' => $this->input->post('description'),
+            'actions_taken' => $this->input->post('actions_taken'),
+            'witnesses' => $this->input->post('witnesses'),
+            'remarks' => $this->input->post('remarks'),
+            'date_occurred'=>$date_occurred,
+            'user_id' => $this->user->uid(),
+            'created_at' => date_stamp()
+        );
+
+        $this->db->insert('child_incident', $data);
+        if ($this->db->affected_rows() > 0) {
+            //log event
+            logEvent("Added incident report for child ID: {$child_id}");
+            flash('success', lang('request_success'));
+        } else {
+            flash('warning', lang('no_change_to_db'));
+        }
+    }
 
 	function add_charge()
 	{
@@ -187,18 +226,18 @@ class My_child extends CI_Model
 			'item' => $this->input->post('item'),
 			'amount' => $this->input->post('amount'),
 			'due_date' => strtotime($this->input->post('due_date')),
-			'charged_by' => $this->users->uid(),
+			'charged_by' => $this->user->uid(),
 			'charge_desc' => $this->input->post('charge_desc'),
 			'charge_status' => 'Pending'
 		);
 		$this->db->insert('child_charges', $data);
 		if ($this->db->affected_rows() > 0) {
 			//log event
-			$this->conf->log("Added charge for child ID: {$this->input->post('child_id')}");
+			logEvent("Added charge for child ID: {$this->input->post('child_id')}");
 
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 		} else {
-			$this->conf->msg('warning', lang('no_change_to_db'));
+			flash('warning', lang('no_change_to_db'));
 		}
 	}
 
@@ -216,22 +255,22 @@ class My_child extends CI_Model
 			'pay_method' => $this->input->post('pay_method'),
 			'pay_date' => time(),
 			'pay_note' => $this->input->post('pay_note'),
-			'user_id' => $this->users->uid() //
+			'user_id' => $this->user->uid() //
 		);
 		$this->db->insert('child_payments', $data);
 		if ($this->db->affected_rows() > 0) {
 			//log event
-			$this->conf->log("Added payment for child ID: {$this->input->post('child_id')}");
+			logEvent("Added payment for child ID: {$this->input->post('child_id')}");
 
-			$this->conf->msg('success', lang('request_success'));
+			flash('success', lang('request_success'));
 		} else {
-			$this->conf->msg('warning', lang('no_change_to_db'));
+			flash('warning', lang('no_change_to_db'));
 		}
 		//update
 		$data2 = array(
 			'amount' => $this->newAmount($id, $amount_to_pay),
 			'charge_status' => $this->input->post('charge_status'),
-			'status_by' => $this->users->uid()
+			'status_by' => $this->user->uid()
 		);
 		$this->db->where('id', $id);
 		$this->db->update('child_charges', $data2);
@@ -264,28 +303,28 @@ class My_child extends CI_Model
 				'child_id' => $child_id,
 				'in_parent_id' => $this->input->post('parent_id'),
 				'time_in' => time(),
-				'in_staff_id' => $this->users->uid(),
+				'in_staff_id' => $this->user->uid(),
 				'checkin_status' => 1
 
 			);
 			if ($this->is_checked_in($child_id) == 1) {
-				$this->conf->msg('warning', lang('child_already_checked_in'));
+				flash('warning', lang('child_already_checked_in'));
 			} else {
 				if ($this->db->insert('child_checkin', $data)) {
-					$this->conf->msg('success', lang('request_success'));
+					flash('success', lang('request_success'));
 					//notify parents
 					$this->notify_parent_checkin_out($child_id, 'checkin');
 					//log event
-					$this->conf->log("Added checked in {$child_id} -{$this->child($child_id)->lname}");
+					logEvent("Added checked in {$child_id} -{$this->child($child_id)->lname}");
 
 
 				} else {
-					$this->conf->msg('danger', lang('request_error'));
+					flash('danger', lang('request_error'));
 				}
 			}
 
 		} else {
-			$this->conf->msg('danger', lang('invalid_pin'));
+			flash('danger', lang('invalid_pin'));
 		}
 	}
 
@@ -301,7 +340,7 @@ class My_child extends CI_Model
 				'child_id' => $child_id,
 				'out_parent_id' => $this->input->post('parent_id'),
 				'time_out' => time(),
-				'out_staff_id' => $this->users->uid(),
+				'out_staff_id' => $this->user->uid(),
 				'checkin_status' => 2
 
 			);
@@ -311,20 +350,20 @@ class My_child extends CI_Model
 				$this->db->where('child_id', $child_id);
 				$this->db->where('checkin_status', 1);
 				if ($this->db->update('child_checkin', $data)) {
-					$this->conf->msg('success', lang('request_success'));
+					flash('success', lang('request_success'));
 
                     //notify parents
 					$this->notify_parent_checkin_out($child_id, 'checkout');
                     //log event
-					$this->conf->log("Added checked out {$this->input->post('child_id')}");
+					logEvent("Added checked out {$this->input->post('child_id')}");
 				} else {
-					$this->conf->msg('danger', lang('request_error'));
+					flash('danger', lang('request_error'));
 				}
 			} else {
-				$this->conf->msg('warning', lang('child_not_checked_in'));
+				flash('warning', lang('child_not_checked_in'));
 			}
 		} else {
-			$this->conf->msg('danger', lang('invalid_pin'));
+			flash('danger', lang('invalid_pin'));
 		}
 	}
 
@@ -409,10 +448,10 @@ class My_child extends CI_Model
 	 */
 	function getParents($child_id)
 	{
-		$this->db->where('child_users.child_id', $child_id);
-		$this->db->select('child_users.id as cu_id, child_users.child_id,child_users.user_id,users.*');
+		$this->db->where('child_parents.child_id', $child_id);
+		$this->db->select('*');
 		$this->db->from('users');
-		$this->db->join('child_users', 'child_users.user_id=users.id');
+		$this->db->join('child_parents', 'child_parents.user_id=users.id');
 		return $this->db->get();
 	}
 
@@ -425,8 +464,8 @@ class My_child extends CI_Model
 		$this->db->where('children.id', $id);
 		$this->db->select('*');
 		$this->db->from('children');
-		$this->db->join('child_users', 'child_users.child_id=children.id');
-		$this->db->join('users', 'users.id=child_users.user_id');
+		$this->db->join('child_parents', 'child_parents.child_id=children.id');
+		$this->db->join('users', 'users.id=child_parents.user_id');
 		return $this->db->get()->row();
 	}
 

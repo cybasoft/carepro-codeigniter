@@ -24,7 +24,7 @@
 	<div class="col-lg-12">
 		<div class="callout callout-warning">
 			<h4>
-				<?php echo $this->users->getCount(); ?>
+				<?php echo $this->user->getCount(); ?>
 				<?php echo lang('users') . ' ' . lang('found'); ?>
 			</h4>
 		</div>
@@ -45,7 +45,7 @@
 			<?php
 			$start = 1;
 			foreach($users as $user):
-				if($this->conf->in_group($this->users->uid(), 'admin') == false && $this->conf->in_group($user->id, 'admin') == true):
+				if(in_group($this->user->uid(), 'admin') == false && in_group($user->id, 'admin') == true):
 					continue;
 				else:
 					?>
@@ -53,7 +53,7 @@
 						<td>
 							<?php echo $start; ?>
 						</td>
-						<td><?php echo anchor('user/edit/' . $user->id, $user->username); ?></td>
+						<td><?php echo anchor('user/' . $user->id, $user->username); ?></td>
 						<td><?php echo $user->first_name; ?></td>
 						<td><?php echo $user->last_name; ?></td>
 						<td><?php echo $user->email; ?></td>
@@ -70,9 +70,9 @@
 								. lang('index_inactive_link') . '</span>'); ?>
 						</td>
 						<td>
-							<?php echo anchor("user/edit/" . $user->id, '<i class="fa fa-pencil"></i>'); ?>
+							<?php echo anchor("user/" . $user->id, '<i class="fa fa-pencil"></i>'); ?>
 							&nbsp;
-							<?php echo anchor("user/delete/" . $user->id, '<i class="fa fa-trash-o"></i>'); ?>
+							<?php echo anchor("user/" . $user->id.'/delete', '<i class="fa fa-trash-o"></i>'); ?>
 						</td>
 					</tr>
 					<?php

@@ -5,15 +5,14 @@
         <tr>
             <td class="col-sm-2">
                 <div>
-                    <?php if ($this->users->user($u->user_id)->photo !== "") : ?>
+                    <?php if ($this->user->user($u->user_id)->photo !== "") : ?>
                         <img class="img-circle img-responsive img-thumbnail"
-                             src="<?php echo base_url() . 'assets/img/users/staff/' . $this->users->user($u->user_id)->photo; ?>"/>
+                             src="<?php echo base_url() . 'assets/img/users/staff/' . $this->user->user($u->user_id)->photo; ?>"/>
                     <?php else : ?>
                         <img class="img-circle img-responsive img-thumbnail"
-                             src="<?php echo base_url(); ?>'assets/img/content/no-image.png"/>
+                             src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
                     <?php endif; ?>
                 </div>
-
             </td>
             <td>
                     <span class="label-text parent-name"><?php echo $u->last_name; ?>
@@ -33,16 +32,16 @@
                         <td>
                             <div class="parent-address">
                                 <?php
-                                if ($this->users->user($u->user_id)->street != 0) {
-                                    echo $this->users->user($u->user_id)->street;
+                                if ($this->user->user($u->user_id)->street != 0) {
+                                    echo $this->user->user($u->user_id)->street;
                                     echo '. &nbsp;';
-                                    echo $this->users->user($u->user_id)->city;
+                                    echo $this->user->user($u->user_id)->city;
                                     echo ', &nbsp;';
-                                    echo $this->users->user($u->user_id)->state;
+                                    echo $this->user->user($u->user_id)->state;
                                     echo '&nbsp;';
-                                    echo $this->users->user($u->user_id)->zip;
+                                    echo $this->user->user($u->user_id)->zip;
                                     echo '&nbsp; ';
-                                    echo $this->users->user($u->user_id)->country;
+                                    echo $this->user->user($u->user_id)->country;
                                 }
                                 ?>
                             </div>
@@ -52,7 +51,7 @@
                         <td><span class="fa fa-lock"></span></td>
                         <td>
                                     <span class="label label-success show-pin"
-                                          title="<?php echo $this->users->user($u->user_id)->pin; ?>">
+                                          title="<?php echo $this->user->user($u->user_id)->pin; ?>">
 										<?php echo lang('view') . ' ' . lang('pin'); ?>
 									</span>
 
@@ -61,7 +60,7 @@
                     </tr>
                 </table>
                 <hr/>
-                <a href="<?php echo site_url('child/' . $u->cu_id); ?>/removeParent"
+                <a href="<?php echo site_url('child/' . $child->id.'/'.$u->id); ?>/removeParent"
                    class="btn btn-danger btn-sm pull-right delete">
                     <span class="fa fa-trash-o"></span>
                     <?php echo lang('remove'); ?>

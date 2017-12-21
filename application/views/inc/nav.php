@@ -28,7 +28,7 @@
                             <li>
                                 <a href="<?php echo site_url('users'); ?>">
                                     <i class="fa fa-group success"></i>
-                                    <small class="badge bg-default"><?php echo $this->users->getCount(); ?></small>
+                                    <small class="badge bg-default"><?php echo $this->user->getCount(); ?></small>
                                     <?php echo lang('registered_users'); ?>
                                 </a>
                             </li>
@@ -41,15 +41,15 @@
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-user"></i>
-                    <span><?php echo $this->users->user()->last_name; ?>
+                    <span><?php echo $this->user->user()->last_name; ?>
                         <i class="caret"></i></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li class="user-header bg-light-blue">
                         <?php
-                        if ($this->users->user()->photo !== "") {
+                        if ($this->user->user()->photo !== "") {
                             echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->users->user()->photo . '"/>';
+         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user()->photo . '"/>';
                         } else {
                             echo '<img class="img-circle"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';

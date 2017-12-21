@@ -12,11 +12,11 @@
 					<?php foreach($parents as $p): ?>
 						<tr>
 							<td style="width:100px">
-								<?php $this->users->getPhoto($p->user_id); ?>
+								<?php $this->user->getPhoto($p->user_id); ?>
 							</td>
 							<td>
 								<span class="h3"><?php echo $p->first_name . ' ' . $p->last_name; ?></span>
-								<?php echo form_open('child/checkIn/' . $child_id); ?>
+								<?php echo form_open('child/' . $child_id.'/checkIn'); ?>
 								<input type="hidden" name="parent_id" value="<?php echo $p->user_id; ?>"/>
 
 								<div class="input-group">

@@ -22,11 +22,11 @@ $bday = array(
     'value'       => $this->form_validation->set_value('bday'),
     'placeholder' => lang('birthday'),
 );
-$ssn = array(
-    'name'        => 'ssn',
+$national_id = array(
+    'name'        => 'national_id',
     'type'        => 'text',
-    'value'       => $this->form_validation->set_value('ssn'),
-    'placeholder' => lang('social_security_number'),
+    'value'       => $this->form_validation->set_value('national_id'),
+    'placeholder' => lang('national_id'),
 );
 
 ?>
@@ -34,7 +34,7 @@ $ssn = array(
 echo form_open(uri_string(), 'class="col-sm-4"');
 echo form_input($fname);
 echo form_input($lname);
-echo form_password($ssn);
+echo form_password($national_id);
 echo '<div class="input-group">';
 echo '<span class="input-group-addon"'.lang('birthday').' </span>';
 echo form_input($bday);

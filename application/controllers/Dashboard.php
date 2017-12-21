@@ -3,7 +3,6 @@
 /**
  * @file      : dashboard.php
  * @author    : JMuchiri
- *
  * @Copyright 2017 A&M Digital Technologies
  */
 class Dashboard extends CI_Controller
@@ -19,11 +18,11 @@ class Dashboard extends CI_Controller
 	function index()
 	{
 		$this->load->model('My_invoice', 'invoice');
-		if ($this->conf->authenticate() == true) {
-			if ($this->conf->isParent() == true && $this->conf->isStaff() == false) {
-				redirect('family', 'refresh');
+		if (auth() == true) {
+			if (is('parent') == true && is('staff') == false) {
+				redirect('parent', 'refresh');
 			} else {
-				$this->conf->page('dashboard/home');
+				page('dashboard/home');
 			}
 		} else {
 			redirect('login', 'refresh');
@@ -54,7 +53,7 @@ class Dashboard extends CI_Controller
 
 	function lockscreen()
 	{
-		$this->conf->authenticate();//if session has expired, logout instead
+		auth();//if session has expired, logout instead
 		$this->load->view('dashboard/lockscreen');
 	}
 	//todo suspend the previous session and create new using pin
@@ -71,15 +70,15 @@ class Dashboard extends CI_Controller
 				redirect('dashboard', 'refresh');
 			} else {
 				$this->setTimer($this->getTimer());
-				$this->conf->msg('danger', 'Invalid pin!');;
+				flash('danger', 'Invalid pin!');;
 			}
 
 		} else {
 			validation_errors();
-			$this->conf->msg('danger');
+			flash('danger');
 
 		}
-		$this->conf->redirectPrev();
+		redirectPrev();
 	}
 
 	//lockscreen timer

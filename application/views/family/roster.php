@@ -40,7 +40,7 @@
                     <?php echo $this->user->userData($parent->id, 'zip'); ?>
                 </td>
                 <td>
-                    <?php foreach ($this->family->getChildren($parent->id)->result() as $child) {
+                    <?php foreach ($this->parent->getChildren($parent->id)->result() as $child) {
                         echo $child->fname . ' ' . $child->lname . '<br/>';
                     }
                     ?>

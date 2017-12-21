@@ -21,7 +21,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger pull-left trash-event-btn">
+                <button type="button" class="btn btn-danger pull-left trash-event-btn delete">
                     <span class="fa fa-trash "></span> <?php echo lang('delete'); ?>
                 </button>
                 <button class="btn btn-info edit-event-btn">

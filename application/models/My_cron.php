@@ -23,7 +23,7 @@ class my_cron extends CI_Model
 	{
 		$this->load->library('email');
 
-		$user = $this->users->user()->username;
+		$user = $this->user->user()->username;
 
 		$this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
 		$this->email->subject('Event alert!');

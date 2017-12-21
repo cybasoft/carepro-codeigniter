@@ -3,7 +3,7 @@
 		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 			<div class="box box-primary box-solid">
 				<div class="box-header">
-					<div class="text-left pull-left"><?php echo $this->users->user($note->user_id)->username; ?></div>
+					<div class="text-left pull-left"><?php echo $this->user->user($note->user_id)->username; ?></div>
 					<div class="text-right"><?php echo date('d M Y H:i',$note->date); ?></div>
 				</div>
 				<div class="box-body">

@@ -3,7 +3,6 @@
 /**
  * @file      : profile.php
  * @author    : JMuchiri
- *
  * @Copyright 2017 A&M Digital Technologies
  */
 class Profile extends CI_Controller
@@ -14,10 +13,10 @@ class Profile extends CI_Controller
 		parent::__construct();
 
 		//redirect session
-		$this->conf->setRedirect();
+		setRedirect();
 
 		//authenticate
-		$this->conf->authenticate();
+		auth();
 
 		$this->load->model('My_profile', 'profile');
 
@@ -28,12 +27,12 @@ class Profile extends CI_Controller
 
 	function index()
 	{
-		$user_data = $this->db->query("SElECT * FROM user_data WHERE user_id={$this->users->uid()}");
+		$user_data = $this->db->query("SElECT * FROM user_data WHERE user_id={$this->user->uid()}");
 		$data = array(
 			'user' => $this->user->user(),
 			'user_data' => $user_data->row()
 		);
-		$this->conf->page($this->module . 'index', $data);
+		page($this->module . 'index', $data);
 
 	}
 
@@ -45,13 +44,13 @@ class Profile extends CI_Controller
 		$this->form_validation->set_rules('pin', lang('pin'), 'required|integer|xss_clean|trim|min_length[4]');
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->profile->change_pin()) {
-				$this->conf->msg('success', lang('request_success'));
+				flash('success', lang('request_success'));
 			} else {
-				$this->conf->msg('danger', lang('request_error'));
+				flash('danger', lang('request_error'));
 			}
 		} else {
 			validation_errors();
-			$this->conf->msg('danger');
+			flash('danger');
 		}
 		redirect('profile');
 	}
@@ -65,13 +64,13 @@ class Profile extends CI_Controller
 		$this->form_validation->set_rules('email', lang('email'), 'required|valid_email|xss_clean|trim|callback_email_check');
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->profile->change_email()) {
-				$this->conf->msg('success', lang('request_success'));
+				flash('success', lang('request_success'));
 			} else {
-				$this->conf->msg('danger', lang('request_error'));
+				flash('danger', lang('request_error'));
 			}
 		} else {
 			validation_errors();
-			$this->conf->msg('danger');
+			flash('danger');
 		}
 		redirect('profile');
 	}
@@ -87,12 +86,12 @@ class Profile extends CI_Controller
 		$this->form_validation->set_rules('new_password_confirm', lang('new_password'), 'required');
 		if ($this->form_validation->run() == false) {
 			validation_errors();
-			$this->conf->msg('danger');
+			flash('danger');
 		} else {
 			if ($this->profile->change_password()) {
-				$this->conf->msg('success', lang('request_success'));
+				flash('success', lang('request_success'));
 			} else {
-				$this->conf->msg('danger', lang('request_error'));
+				flash('danger', lang('request_error'));
 			}
 		}
 		redirect('profile', 'refresh');
@@ -111,14 +110,14 @@ class Profile extends CI_Controller
 
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->profile->update_user_data()) {
-				$this->conf->msg('success', lang('request_success'));
+				flash('success', lang('request_success'));
 			} else {
-				$this->conf->msg('danger', lang('request_error'));
+				flash('danger', lang('request_error'));
 			}
 
 		} else {
 			validation_errors();
-			$this->conf->msg('danger');
+			flash('danger');
 
 		}
 
@@ -132,7 +131,7 @@ class Profile extends CI_Controller
 	function validate_password()
 	{
 		$this->load->model('ion_auth_model', 'auth');
-		$password = $this->auth->hash_password_db($this->users->uid(), $this->input->post('password'));
+		$password = $this->auth->hash_password_db($this->user->uid(), $this->input->post('password'));
 		if ($password) {
 			return true;
 		} else {
@@ -194,8 +193,8 @@ class Profile extends CI_Controller
         $upload_db = 'children';
 
         if ($id == "") { //make sure there are arguments
-            $this->conf->msg('danger', lang('request_error'));
-            $this->conf->redirectPrev();
+            flash('danger', lang('request_error'));
+            redirectPrev();
         }
 
         $config = array(
@@ -208,7 +207,7 @@ class Profile extends CI_Controller
         );
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {
-            $this->conf->msg('danger', lang('request_error'));
+            flash('danger', lang('request_error'));
         } else {
             //delete if any exists
             $this->db->where('id', $id);
@@ -232,12 +231,12 @@ class Profile extends CI_Controller
             $this->db->update($upload_db, $data_ary);
             $data = array('upload_data' => $upload_data);
             if ($data) {
-                $this->conf->msg('success', lang('request_success'));
+                flash('success', lang('request_success'));
             } else {
-                $this->conf->msg('danger', lang('request_error'));
+                flash('danger', lang('request_error'));
             }
         }
-        $this->conf->redirectPrev();
+        redirectPrev();
     }
 
 
