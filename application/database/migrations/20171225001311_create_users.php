@@ -19,12 +19,12 @@ class Migration_create_users extends CI_Migration
             ),
             'first_name' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '50',
+                'constraint' => '100',
                 'null' => TRUE,
             ),
             'last_name' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '50',
+                'constraint' => '100',
                 'null' => TRUE,
             ),
             'email' => array(
@@ -43,7 +43,7 @@ class Migration_create_users extends CI_Migration
             ),
             'forgotten_password_code' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '40',
+                'constraint' => '100',
                 'null' => TRUE,
             ),
             'forgotten_password_time' => array(
@@ -54,17 +54,7 @@ class Migration_create_users extends CI_Migration
             ),
             'activation_code' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '40',
-                'null' => TRUE,
-            ),
-            'remember_code' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '40',
-                'null' => TRUE,
-            ),
-            'salt' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
+                'constraint' => '100',
                 'null' => TRUE,
             ),
             'created_on' => array(
@@ -80,7 +70,31 @@ class Migration_create_users extends CI_Migration
             ),
             'ip_address' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '15',
+                'constraint' => '100',
+            ),
+            'phone' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '20',
+                'null' => TRUE,
+            ),
+            'phone2' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '20',
+                'null' => TRUE,
+            ),
+            'address' => array(
+                'type' => 'TEXT',
+                'null' => TRUE,
+            ),
+            'pin' => array(
+                'type' => 'INT',
+                'constraint' => '11',
+                'null' => TRUE,
+            ),
+            'photo' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'null' => TRUE,
             ),
         ));
 

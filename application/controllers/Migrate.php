@@ -8,6 +8,10 @@ class Migrate extends CI_Controller
         if (!$this->input->is_cli_request()) {
             die("CLI only! Direct calls denied.");
         }
+        if (config_item('maintenance_mode') == false
+            || ENVIRONMENT == 'production') {
+            die('Set application to maintenance mode or environment to development');
+        }
     }
 
     public function index($version)
@@ -46,11 +50,12 @@ class Migrate extends CI_Controller
     {
         $this->load->library('Migrations');
         echo "Generating migration files for " . $tables . " " . PHP_EOL;
-       $this->migrations->generate($tables);
+        $this->migrations->generate($tables);
 
     }
 
-    function migrate($version){
+    function migrate($version)
+    {
         $this->load->library("migration");
 
         if (!$this->migration->version($version)) {
@@ -58,7 +63,7 @@ class Migrate extends CI_Controller
         }
     }
 
-    function seed($table="*")
+    function seed($table = "*")
     {
         echo "Seeding tables " . PHP_EOL;
         $this->seedGroups();
@@ -66,27 +71,31 @@ class Migrate extends CI_Controller
         echo "Seeding completed " . PHP_EOL;
     }
 
-    function seedUsers(){
-        function users(){
+    function seedUsers()
+    {
+        function users()
+        {
             $users = array(
-                'first_name'=>'Admin',
-                'last_name'=>'Admin',
-                'email'=>'admin@app.com',
-                'password'=>password_hash('password',PASSWORD_DEFAULT),
-                'active'=>1,
-                'created_at'=>date_stamp()
+                'first_name' => 'Admin',
+                'last_name' => 'Admin',
+                'email' => 'admin@app.com',
+                'password' => password_hash('password', PASSWORD_DEFAULT),
+                'active' => 1,
+                'created_at' => date_stamp()
             );
-            foreach ($users as $user){
-                $this->db->insert('users',$user);
+            foreach ($users as $user) {
+                $this->db->insert('users', $user);
             }
         }
     }
-    function seedGroups(){
+
+    function seedGroups()
+    {
         $groups = array(
-            'admin','manager','staff','parent'
+            'admin', 'manager', 'staff', 'parent'
         );
-        foreach ($groups as $group){
-            $this->db->insert('groups',array('name'=>$group));
+        foreach ($groups as $group) {
+            $this->db->insert('groups', array('name' => $group));
         }
     }
 }

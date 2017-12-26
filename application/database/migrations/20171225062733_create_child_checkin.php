@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_create_memberships extends CI_Migration
+class Migration_create_child_checkin extends CI_Migration
 {
 
     /**
@@ -17,29 +17,38 @@ class Migration_create_memberships extends CI_Migration
                 'type' => 'INT',
                 'constraint' => '11',
             ),
-            'company' => array(
+            'child_id' => array(
                 'type' => 'INT',
                 'constraint' => '11',
             ),
-            'member_type' => array(
+            'time_in' => array(
+                'type' => 'DATETIME',
+            ),
+            'time_out' => array(
+                'type' => 'DATETIME',
+                'null' => TRUE,
+            ),
+            'in_guardian' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '20',
+                'constraint' => '100',
             ),
-            'pay_method' => array(
+            'out_guardian' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '20',
+                'constraint' => '100',
+                'null' => TRUE,
             ),
-            'start_date' => array(
-                'type' => 'INT',
-                'constraint' => '20',
-            ),
-            'end_date' => array(
-                'type' => 'INT',
-                'constraint' => '20',
-            ),
-            'status' => array(
+            'in_staff_id' => array(
                 'type' => 'INT',
                 'constraint' => '11',
+            ),
+            'out_staff_id' => array(
+                'type' => 'INT',
+                'constraint' => '11',
+                'null' => TRUE,
+            ),
+            'remarks' => array(
+                'type' => 'TEXT',
+                'null' => TRUE,
             ),
         ));
 
@@ -52,8 +61,8 @@ class Migration_create_memberships extends CI_Migration
             'ENGINE' => 'InnoDB',
         );
 
-        // Create Table memberships
-        $this->dbforge->create_table("memberships", TRUE, $attributes);
+        // Create Table child_checkin
+        $this->dbforge->create_table("child_checkin", TRUE, $attributes);
 
     }
 
@@ -64,8 +73,8 @@ class Migration_create_memberships extends CI_Migration
      */
     public function down()
     {
-        // Drop table memberships
-        $this->dbforge->drop_table("memberships", TRUE);
+        // Drop table child_checkin
+        $this->dbforge->drop_table("child_checkin", TRUE);
     }
 
 }
