@@ -17,15 +17,14 @@ class Users extends CI_Controller
     function index()
     {
         //set the flash data error message if there is one
-        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+        $message = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         //list the users
-        $this->data['users'] = $this->ion_auth->users()->result();
-        foreach ($this->data['users'] as $k => $user) {
-            $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+       $users = $this->ion_auth->users()->result();
+        foreach ($users as $k => $user) {
+            $users[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
         }
-        $this->data['groups'] = $this->db->get('groups')->result();
-
-        page($this->module . 'index', $this->data);
+        $groups=$this->ion_auth->groups()->result_array();
+        page($this->module . 'index', compact('groups','users','message'));
     }
 
     //create a new user
@@ -40,14 +39,15 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('password', lang('password'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');
         if ($this->form_validation->run() == true) {
-            $email = strtolower($this->input->post('email'));
-            $password = $this->input->post('password');
             $additional_data = array(
+                'email'=>strtolower($this->input->post('email')),
+                'password'=>$this->input->post('password'),
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
                 'phone' => $this->input->post('phone'),
             );
-            if ($this->ion_auth->register($password, $email, $additional_data)) {
+            $groups = $this->input->post('groups');
+            if ($this->ion_auth->register($additional_data,$groups)) {
                 flash('success', lang('request_success'));
             }
         } else {
@@ -87,7 +87,7 @@ class Users extends CI_Controller
             'last_name' => $this->input->post('last_name'),
             'email' => $this->input->post('email'),
         );
-        if (in_group($this->user->uid(), 'admin')) : //only admin can assign roles
+        if (is('admin')) : //only admin can assign roles
             //Update the groups user belongs to
             $groupData = $this->input->post('groups');
             if (isset($groupData) && !empty($groupData)) {

@@ -62,7 +62,7 @@
         <ul class="nav nav-pills nav-stacked">
             <li class="active">
                 <?php echo anchor('children/roster', '<i class="fa fa-file-pdf-o"></i> Children Roster', 'target="_blank"'); ?>
-                <?php echo anchor('parent/roster', '<i class="fa fa-file-pdf-o"></i> Parents Roster', 'target="_blank"'); ?>
+<!--                --><?php //echo anchor('parent/roster', '<i class="fa fa-file-pdf-o"></i> Parents Roster', 'target="_blank"'); ?>
             </li>
         </ul>
             </div>
@@ -93,9 +93,7 @@
                 </div>
             </div>
 
-            <!-- ./col -->
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
                 <div class="small-box bg-yellow cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
                     <div class="inner">
                         <h3>
@@ -114,11 +112,50 @@
                     </a>
                 </div>
             </div>
-            <!-- ./col -->
 
-            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-green cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
+                    <div class="inner">
+                        <h3>
+                            <?php
+                            echo $this->db->select('id')->get('invoices')->num_rows();
+                            ?>
+                        </h3>
+
+                        <p>
+                            <?php echo lang('invoices'); ?>
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </div>
+                    <a href="<?php echo site_url('children'); ?>" class="small-box-footer">
+                        <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-gray cursor" onclick="location.href='<?php echo site_url('news'); ?>'">
+                    <div class="inner">
+                        <h3>
+                            <?php
+                            echo $this->db->select('id')->get('news')->num_rows();
+                            ?>
+                        </h3>
+
+                        <p>
+                            <?php echo lang('articles'); ?>
+                        </p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </div>
+                    <a href="<?php echo site_url('news'); ?>" class="small-box-footer">
+                        <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-
 
         <div class="row hidden-xs">
             <section class="col-sm-12 connectedSortable">
