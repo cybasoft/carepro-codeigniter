@@ -120,7 +120,8 @@ class Health extends CI_Controller
     {
         if ($id !== "" & is_numeric($id)) {
             //make sure its the parent authorized or admin
-            if (is('staff') == true || $this->is_mychild()) {
+            $childID = $this->db->where('id',$id)->get('child_foodpref')->row();
+            if (is('staff') == true || is('admin') || $this->child->belongsTo($this->user->uid(),$childID->child_id)) {
                 $this->db->where('id', $id);
                 $this->db->delete('child_foodpref');
                 if ($this->db->affected_rows() > 0) {
@@ -128,6 +129,8 @@ class Health extends CI_Controller
                 } else {
                     flash('danger', lang('request_error'));
                 }
+            }else{
+                flash('danger',lang('record_not_found'));
             }
 
         }

@@ -20,8 +20,8 @@ class pickup extends CI_Controller
      */
     function store($id)
     {
-        $this->form_validation->set_rules('fname', lang('first_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('lname', lang('last_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('cell', lang('cellphone'), 'required|xss_clean');
         $this->form_validation->set_rules('pin', lang('pin'), 'required|integer|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
@@ -46,7 +46,7 @@ class pickup extends CI_Controller
     function deletePickup($id)
     {
         //delete images
-        $upload_path = './assets/img/pickup';
+        $upload_path = './assets/uploads/pickup';
         $this->db->where('id', $id);
         $q = $this->db->get('child_pickup');
         foreach ($q->result() as $r) {
@@ -67,7 +67,7 @@ class pickup extends CI_Controller
 
     function uploadPhoto($id = "")
     {
-        $upload_path = './assets/img/users/pickup';
+        $upload_path = './assets/uploads/users/pickup';
         $upload_db = 'child_pickup';
 
         if (!file_exists($upload_path)) {

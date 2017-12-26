@@ -6,39 +6,62 @@
                         class="sr-only"><?php echo lang('close'); ?></span></button>
                 <h2 class="modal-title" id="myModalLabel"><?php echo lang('check_out'); ?></h2>
             </div>
+            <?php echo form_open('child/' . $child_id . '/checkOut'); ?>
+
             <div class="modal-body">
-                <div class="alert alert-info"><?php echo lang('check_in_out_notice'); ?></div>
-                <table class="table table-hover">
-                    <?php foreach ($parents as $p) : ?>
-                        <tr>
-                            <td style="width:100px">
-								<?php
-        if ($this->user->user($p->user_id)->photo !== "") {
-            echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user($p->user_id)->photo . '"/>';
-        } else {
-            echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/content/no-image.png"/>';
-        }
-        ?>
-                            </td>
-                            <td>
-                                <span class="h3"><?php echo $p->first_name . ' ' . $p->last_name; ?></span>
-                                <?php echo form_open('child/' . $child_id.'/checkOut'); ?>
-                                <input type="hidden" name="parent_id" value="<?php echo $p->user_id; ?>"/>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><?php echo lang('pin'); ?>:</span>
-                                    <input type="password" name="pin" class="form-control" required=""/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success"><?php echo lang('check_out'); ?></button>
-                                    </span>
-                                </div>
-                                <?php echo form_close(); ?>
-                            </td>
-                        </tr>
+                <div class="alert alert-warning text-left"><?php echo lang('check_in_out_notice'); ?></div>
+
+                <div class="row">
+                    <?php if(empty($parents)): ?>
+                        <div class="alert alert-danger">
+                            <?php echo lang('no_assigned_parent_error'); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php foreach ($parents as $p): ?>
+                        <div class="col-sm-3 text-center" style="border-right:solid 1px #ccc;">
+                            <input type="radio" name="out_guardian"
+                                   value="<?php echo $p->first_name . ' ' . $p->last_name; ?>"
+                                   style="width:30px;height:30px"/>
+                            <br/>
+                            <?php $this->user->getPhoto($p->user_id, 'style="width:100px"'); ?>
+                            <br/>
+                            <?php echo $p->first_name . ' ' . $p->last_name; ?>
+                            <br/>
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <?php echo $p->phone; ?> <br/>
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                            <?php echo $p->pin; ?>
+                        </div>
                     <?php endforeach; ?>
-                </table>
+
+                    <?php foreach ($authPickups as $p): ?>
+                        <div class="col-sm-3 text-center" style="border-right:solid 1px #ccc;">
+                            <input type="radio" name="out_guardian"
+                                   value="<?php echo $p->first_name . ' ' . $p->last_name; ?>"
+                                   style="width:30px;height:30px"/>
+                            <br/>
+                            <img style="width:100px;"
+                                 src="<?php echo base_url() . 'assets/uploads/users/pickup/' . $p->photo; ?>"/>
+                            <br/>
+                            <?php echo $p->first_name . ' ' . $p->last_name; ?>
+                            <br/>
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <?php echo $p->cell; ?> <br/>
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                            <?php echo $p->pin; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
+            <div class="modal-footer">
+                <span class="input-group-btn">
+                        <button class="btn btn-success">
+                            <?php echo lang('check_out'); ?>
+                        </button>
+                </span>
+            </div>
+            <?php echo form_close(); ?>
         </div>
     </div>
 </div>

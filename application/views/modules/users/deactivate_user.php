@@ -7,7 +7,7 @@
 
 		<div class="callout callout-info">
 			<h3><?php echo lang('deactivate_heading');?></h3>
-			<p><?php echo sprintf(lang('deactivate_subheading'), $this->user->user($user_id)->username);?></p>
+			<p><?php echo sprintf(lang('deactivate_subheading'), $this->user->user($user_id)->last_name);?></p>
 		</div>
 		<?php echo form_open(uri_string());?>
 		<p>

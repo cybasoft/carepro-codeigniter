@@ -38,7 +38,7 @@
                             <span class="fa fa-credit-card"></span>
                             <?php echo lang('pay'); ?>
                         </button>
-                        <a href="<?php echo site_url('invoice/' . $invoice->id.'/preview'); ?>"
+                        <a href="<?php echo site_url('invoice/' . $invoice->id . '/preview'); ?>"
                            target="_blank"
                            class="btn bg-black btn-flat">
                             <i class="fa fa-print"></i> <?php echo lang('print'); ?>
@@ -106,14 +106,17 @@
                                                value="<?php echo(($item->qty * $item->price)); ?>"/>
                                     </td>
                                     <td>
-                                            <span class="fa fa-trash cursor"
-                                                  onclick="window.location.href='<?php echo site_url('invoice/delete_item/' . $item->id); ?>'"></span>
+                                        <a href="<?php echo site_url('invoice/' . $invoice->id . '/deleteItem/' . $item->id); ?>"
+                                           class="delete">
+                                            <span class="fa fa-trash-o text-danger cursor"></span>
+                                        </a>
                                     </td>
                                 </tr>
                                 <?php
                                 $subTotal = $this->invoice->invoice_subtotal($invoice->id);
                             }
                             ?>
+
                             </tbody>
                         </table>
                     </div>
@@ -188,7 +191,7 @@
                 <label><?php echo lang('price'); ?></label>
                 <input type="text" name="price" class="form-control" required/>
                 <label><?php echo lang('quantity'); ?></label>
-                <input type="text" name="qty" class="form-control" required/>
+                <input type="number" name="qty" class="form-control" required/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close'); ?></button>
@@ -206,10 +209,10 @@
         $("select[name=invoice_change_status]").change(function () {
             var status = $(this).val();
             var id = $(this).attr('id');
-
+            var url = '<?php echo site_url(); ?>invoice/' + id + '/updateStatus';
             var fData = {invoice_status: status, invoice_id: id};
             $.ajax({
-                url: "<?php echo site_url('invoice/update_status'); ?>",
+                url: url,
                 type: "POST",
                 data: fData,
                 success: function (data, textStatus, jqXHR) {

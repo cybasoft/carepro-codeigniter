@@ -21,18 +21,22 @@ function date_stamp()
  * @param $date
  * @return false|string
  */
-function format_date($date,$time=true,$timestamp=false)
+function format_date($date, $time = true, $timestamp = false)
 {
-    if($timestamp==true)
-        $date = date('Y-m-d H:i:s',$date);
+    if ($timestamp == true)
+        $date = date('Y-m-d H:i:s', $date);
 
     $format = config_item('company')['date_format'];
     if ($format == "")
         return date('d M Y H:ia', strtotime($date));
 
-    if($time==false)
+    if ($time == false)
         return date('d M Y', strtotime($date));
     return date($format, strtotime($date));
+}
+function format_time($time, $timestamp = false)
+{
+    return date('H:i:s', $time);
 }
 
 /**
@@ -59,18 +63,20 @@ function flash($type = "", $msg = "")
             $icon = 'info';
             break;
     }
-    if($type=="error")
-        $type="danger";
+    if ($type == "error")
+        $type = "danger";
     $ci = &get_instance();
-    if (validation_errors() == true && $msg == "") {
-        $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-warning"></span>', '</div>');
-        $ci->session->set_flashdata('message', '<div id="msg" class="msg">' . $e . '</div>');
+    if (validation_errors() == true) {
+        if ($msg == "") {
+            $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-warning"></span>', '</div>');
+            $ci->session->set_flashdata('message', $e);
+            $ci->session->set_flashdata('type', 'error');
+            $ci->session->set_flashdata('icon', 'danger');
+        }
     } else {
-        $ci->session->set_flashdata(
-            'message',
-            '<div id="msg" class="msg alert alert-' . $type .
-            ' alert-dismissable"><span class="fa fa-' . $icon . '"></span> ' . $msg . '</div>'
-        );
+        $ci->session->set_flashdata('message', $msg);
+        $ci->session->set_flashdata('type', $type);
+        $ci->session->set_flashdata('icon', $icon);
     }
 }
 
@@ -90,11 +96,11 @@ function setRedirect()
 /**
  * redirect to previous page
  */
-function redirectPrev($msg=array())
+function redirectPrev($msg = array())
 {
     $ci = &get_instance();
-    if(!empty($msg)){
-        flash('info',$msg);
+    if (!empty($msg)) {
+        flash('info', $msg);
     }
     redirect($ci->session->userdata('last_page'));
 }
@@ -175,11 +181,11 @@ function checked_option($option, $value)
 }
 
 /*
- * encrypt
- * encrypt text
- * @params string
- * @return string
- */
+* encrypt
+* encrypt text
+* @params string
+* @return string
+*/
 function encrypt($msg)
 {
     $ci = &get_instance();
@@ -188,11 +194,11 @@ function encrypt($msg)
 }
 
 /*
- * decrypt
- * decrypt text
- * @params string
- * @return string
- */
+* decrypt
+* decrypt text
+* @params string
+* @return string
+*/
 function decrypt($msg)
 {
     $ci = &get_instance();
@@ -213,11 +219,11 @@ function logged_in()
 
 
 /*
- * log events to database
- * logs changes made by users
- * @param string
- * @return boolean
- */
+* log events to database
+* logs changes made by users
+* @param string
+* @return boolean
+*/
 function logEvent($event)
 {
     $ci = &get_instance();
@@ -260,15 +266,15 @@ function allow($group)
 
 
 /*
- * msg()
- * @params $type, $msg
- * call status messages
- */
+* msg()
+* @params $type, $msg
+* call status messages
+*/
 function page($page, $data = array())
 {
     $ci = &get_instance();
     $data['page'] = $page;
-    $ci->load->view('index', $data);
+    $ci->load->view('inc/home',$data);
 }
 
 function demo()
@@ -286,10 +292,10 @@ function demo()
 }
 
 /*
- * check if system is in maintenance mode
- * @params 0
- * redirect to prev
- */
+* check if system is in maintenance mode
+* @params 0
+* redirect to prev
+*/
 function maintenance()
 {
     $ci = &get_instance();
@@ -300,40 +306,44 @@ function maintenance()
         ->num_rows();
     if (config_item('maintenance_mode') == true && $result <= 0) {
         $ci->load->helper('language');
-        die('<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
-            . lang('maintenance_mode') . '</div>');
+        die('
+<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
+            . lang('maintenance_mode') . '
+</div>');
 
     }
 }
+
 /**
  * Lang override default and return text even if not translation found
  *
  * Fetches a language variable and optionally outputs a form label
  *
- * @param	string	$text		The language line
- * @param	string	$for		The "for" value (id of the form element)
- * @param	array	$attributes	Any additional HTML attributes
- * @return	string
+ * @param    string $text The language line
+ * @param    string $for The "for" value (id of the form element)
+ * @param    array $attributes Any additional HTML attributes
+ * @return    string
  */
 function lang($text, $for = '', $attributes = array())
 {
     $line = get_instance()->lang->line($text);
 
-    if ($for !== '')
-    {
-        $line = '<label for="'.$for.'"'._stringify_attributes($attributes).'>'.$line.'</label>';
+    if ($for !== '') {
+        $line = '<label for="' . $for . '"' . _stringify_attributes($attributes) . '>' . $line . '</label>';
     }
-    if($line==""){
-        $text = str_replace('_',' ',$text);
-        $text=ucwords($text);
+    if ($line == "") {
+        $text = str_replace('_', ' ', $text);
+        $text = ucwords($text);
         return $text;
     }
 
     return $line;
 }
 
-function dd($array){
+function dd($array)
+{
     print_r($array);
     die();
 }
+
 ?>

@@ -11,7 +11,7 @@
 			<div class="input-group">
 			<span class="input-group-addon bg-red">
 				<i class="fa fa-warning"></i>
-				<strong><?php echo $this->user->user($user_id)->username; ?></strong>
+				<strong><?php echo $this->user->user($user_id)->last_name; ?></strong>
 			</span>
 				<input type="text" name="confirm" value="" class="form-control"/>
 			<span class="input-group-btn">

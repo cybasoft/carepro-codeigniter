@@ -10,136 +10,227 @@ class Auth extends CI_Controller
             $this->config->item('error_start_delimiter', 'ion_auth'),
             $this->config->item('error_end_delimiter', 'ion_auth')
         );
-
+        $this->load->model('ion_auth_model', 'auth');
         $this->lang->load('auth');
         $this->load->helper('language');
     }
 
-    function index()
-    {
-        $this->login();
-    }
-
     function login()
     {
-        //validate form input
-        $this->form_validation->set_rules('identity', 'Identity', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->refreshCaptcha();
+        $this->form_validation->set_rules('email', lang('email'), 'required');
+        $this->form_validation->set_rules('password', lang('password'), 'required');
+        if(config_item('enable_captcha')==true)
+            $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
 
         if ($this->form_validation->run() == true) {
-            //check to see if the user is logging in
-            //check for "remember me"
             $remember = (bool)$this->input->post('remember');
-
-            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
-                //if the login is successful
-                //redirect them back to the home page
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+            if ($this->ion_auth->login($email, $password, $remember)) {
                 redirect('dashboard', 'refresh');
             } else {
-                //if the login was un-successful
-                //redirect them back to the login page
-                flash('danger', 'Username or password is incorrect');
+                flash('error', 'Username or password is incorrect');
+            }
+        } else {
+            validation_errors();
+            flash('error');
+        }
 
-                redirect('login'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+        $data['email'] = array(
+            'name' => 'email',
+            'type' => 'email',
+            'value' => set_value('email'),
+            'class' => 'form-control',
+            'placeholder' => 'Email',
+            'required' => 'required'
+        );
+        $data['password'] = array(
+            'name' => 'password',
+            'type' => 'password',
+            'class' => 'form-control',
+            'placeholder' => 'Password',
+            'required' => 'required'
+        );
+        $captcha = $this->captcha();
+        $data['captcha'] = array(
+            'name'=>'captcha',
+            'class'=>'form-control',
+            'required'=>'required',
+            'placeholder'=>lang('captcha_placeholder')
+        );
+        $data['captcha_image']=$captcha['image'];
+        $this->page('login', compact('data'));
+    }
+
+    function register()
+    {
+        $this->refreshCaptcha();
+        $this->form_validation->set_rules('email', lang('email'), 'required|is_unique[users.email]');
+        $this->form_validation->set_rules('password', lang('password'), 'required|callback_validate_password');
+        $this->form_validation->set_rules('password_confirm', lang('password_confirmation'), 'required');
+        $this->form_validation->set_rules('first_name', lang('first_name'), 'required');
+        $this->form_validation->set_rules('last_name', lang('last_name'), 'required');
+        $this->form_validation->set_rules('phone', lang('phone'), 'required');
+        if(config_item('enable_captcha')==true)
+            $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
+        if ($this->form_validation->run() == true) {
+            $groups = array($this->config->item('default_groups', 'ion_auth'));
+            $data = array(
+                'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'phone' => $this->input->post('phone'),
+                'activation_code' => time() + rand(111, 999),
+                'address' => $this->input->post('address')
+            );
+            if ($this->auth->register($data, $groups)) {
+                flash('success', lang('request_success'));
+                if ($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
+                    redirect('dashboard', 'refresh');
+                }
+            } else {
+                flash('error', lang('request_error'));
+                redirectPrev();
             }
         } else {
             //the user is not logging in so display the login page
-            $this->data['message'] = validation_errors();
-            $this->data['identity'] = array(
-                'name' => 'identity',
-                'id' => 'identity',
-                'type' => 'text',
-                'value' => $this->form_validation->set_value('identity'),
+            validation_errors();
+            flash('danger');
+            $data['email'] = array(
+                'name' => 'email',
+                'type' => 'email',
+                'value' => set_value('email'),
                 'class' => 'form-control',
-                'placeholder' => 'Username/Email'
+                'placeholder' => 'Email',
+                'required' => 'required'
             );
-            $this->data['password'] = array(
+            $data['first_name'] = array(
+                'name' => 'first_name',
+                'type' => 'text',
+                'value' => set_value('first_name'),
+                'class' => 'form-control',
+                'placeholder' => lang('first_name'),
+                'required' => 'required'
+            );
+            $data['last_name'] = array(
+                'name' => 'last_name',
+                'type' => 'text',
+                'value' => set_value('last_name'),
+                'class' => 'form-control',
+                'placeholder' => lang('last_name'),
+                'required' => 'required'
+            );
+            $data['phone'] = array(
+                'name' => 'phone',
+                'type' => 'text',
+                'value' => set_value('phone'),
+                'class' => 'form-control',
+                'placeholder' => lang('phone'),
+                'required' => 'required'
+            );
+            $data['address'] = array(
+                'name' => 'address',
+                'value' => set_value('address'),
+                'class' => 'form-control',
+                'placeholder' => lang('address'),
+                'required' => 'required',
+                'rows' => 3
+            );
+            $data['password'] = array(
                 'name' => 'password',
-                'id' => 'password',
                 'type' => 'password',
                 'class' => 'form-control',
-                'placeholder' => 'Password'
+                'placeholder' => lang('password'),
+                'required' => 'required'
             );
+            $data['password_confirm'] = array(
+                'name' => 'password_confirm',
+                'type' => 'password',
+                'class' => 'form-control',
+                'placeholder' => lang('password_confirmation'),
+                'required' => 'required'
+            );
+            $captcha = $this->captcha();
+            $data['captcha'] = array(
+                'name'=>'captcha',
+                'class'=>'form-control',
+                'required'=>'required',
+                'placeholder'=>lang('captcha_placeholder')
+            );
+            $data['captcha_image']=$captcha['image'];
+            $this->page('register', compact('data'));
+        }
+    }
 
-            $this->page('login');
+    public function validate_captcha($captcha)
+    {
+        if ((int)$captcha !== (int)$this->session->flashdata('captcha')) {
+            $this->form_validation->set_message('validate_captcha', lang('invalid_captcha'));
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    /**
+     * @return string
+     */
+    function captcha()
+    {
+        $this->load->helper('captcha');
+        $data = array(
+            'word' => rand(1111, 9999),
+            'word_length' => 4,
+            'img_path' => './assets/img/content/captcha/',
+            'img_url' => base_url() . 'assets/img/content/captcha/',
+            'font_path' => base_url() . 'system/fonts/texb.ttf',
+            'img_width' => '200',
+            'img_height' => 50,
+            'expiration' => 3600
+        );
+        $this->session->set_flashdata('captcha', $data['word']);
+        return create_captcha($data);
+    }
+
+    function refreshCaptcha()
+    {
+        $expiration = time() - 7200;
+        $path = './assets/img/content/captcha/';
+        $dir = new DirectoryIterator($path);
+        foreach ($dir as $fileinfo) {
+            if (!$fileinfo->isDot()) {
+                $image = explode('.', $fileinfo->getFilename());
+                $captcha = $image[0];
+                if ($captcha < $expiration)
+                    @unlink($path . $fileinfo->getFilename());
+            }
         }
     }
 
     /**
-     * @param $username
-     * @param $password
-     * @param $email
-     * @param array $additional_data
-     * @param array $groups
      * @return bool
      */
-    public function reg($username, $password, $email, $additional_data = array(), $groups = array())
+    function validate_password($password)
     {
-
-        $this->load->model('ion_auth_model');
-        $this->ion_auth->trigger_events('pre_register');
-
-        $manual_activation = $this->config->item('manual_activation', 'ion_auth');
-
-        if ($this->ion_auth->email_check($email)) {
-            $this->ion_auth->set_error('account_creation_duplicate_email');
-            return FALSE;
+        $password_confirmation = $this->input->post('password_confirm');
+        if ($password == $password_confirmation) {
+            return true;
+        } else {
+            $this->form_validation->set_message('validate_password', lang('password_error'));
+            return false;
         }
-
-        // IP Address
-        $ip_address = $this->input->ip_address();
-        $password = $this->ion_auth->hash_password($password);
-
-        // Users table.
-        $data = array(
-            'username' => $username,
-            'password' => $password,
-            'email' => $email,
-            'ip_address' => $ip_address,
-            'created_on' => time(),
-            'last_login' => time(),
-            'active' => ($manual_activation === false ? 1 : 0)
-        );
- 
-
-        //filter out any data passed that doesnt have a matching column in the users table
-        //and merge the set user data and the additional data
-        $user_data = array_merge($this->ion_auth->_filter_data('users', $additional_data), $data);
-
-        $this->ion_auth->trigger_events('extra_set');
-
-        $this->db->insert('users', $user_data);
-
-
-        $id = $this->db->insert_id();
-
-        //create data
-        $this->db->insert('user_data', array('user_id' => $id));
-
-
-        if (!empty($groups)) {
-            //add to groups
-            foreach ($groups as $group) {
-                $this->ion_auth->add_to_group($group, $id);
-            }
-        }
-
-        //add to default group if not already set
-        $default_group = $this->ion_auth->where('name', $this->config->item('default_reg_group', 'ion_auth'))->group()->row();
-        if ( (isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups))) {
-            $this->ion_auth->add_to_group($default_group->id, $id);
-        }
-
-        $this->ion_auth->trigger_events('post_register');
-
-        return (isset($id)) ? $id : FALSE;
     }
-    //log the user in
 
     function page($page, $data = array())
     {
         $this->load->view('auth/header');
-        $this->load->view('auth/' . $page, $data);
+        if(config_item('maintenance_mode')){
+            $this->load->view('errors/maintenance');
+        }else{
+            $this->load->view('auth/' . $page, $data);
+        }
+
         $this->load->view('auth/footer');
     }
 
@@ -149,21 +240,13 @@ class Auth extends CI_Controller
     {
         $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');
         if ($this->form_validation->run() == false) {
-            if ($this->config->item('identity', 'ion_auth') == 'username') {
-                $this->data['identity_label'] = 'username';
-            } else {
-                $this->data['identity_label'] = 'email';
-            }
+            $this->data['identity_label'] = 'email';
             validation_errors();
             $this->page('forgot_password');
 
         } else {
             // get identity from username or email
-            if ($this->config->item('identity', 'ion_auth') == 'username') {
-                $identity = $this->ion_auth->where('username', strtolower($this->input->post('email')))->users()->row();
-            } else {
-                $identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
-            }
+            $identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
             if (empty($identity)) {
                 flash('danger', lang('forgot_password_email_not_found'));
                 redirectPrev();
@@ -293,7 +376,7 @@ class Auth extends CI_Controller
         $this->ion_auth->logout();
 
         //redirect them to the login page
-      //  redirect('login', 'refresh');
+        redirect('login', 'refresh');
     }
     /*
      *

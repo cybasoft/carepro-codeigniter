@@ -13,8 +13,8 @@ class MY_profile extends CI_Model
 		$data = array(
 			'pin' => $this->input->post('pin')
 		);
-		$this->db->where('user_id', $this->user->uid());
-		if($this->db->update('user_data', $data))
+		$this->db->where('id', $this->user->uid());
+		if($this->db->update('users', $data))
 			return true;
 		return false;
 	}
@@ -30,6 +30,9 @@ class MY_profile extends CI_Model
 		return false;
 	}
 
+    /**
+     * @return bool
+     */
 	function change_password()
 	{
 		$this->load->model('ion_auth_model', 'auth');
@@ -42,20 +45,18 @@ class MY_profile extends CI_Model
 		return false;
 	}
 
+    /**
+     * @return bool
+     */
 	function update_user_data()
 	{
 		$data = array(
 			'phone' => $this->input->post('phone'),
 			'phone2' => $this->input->post('phone2'),
-			'street' => $this->input->post('street'),
-			'street2' => $this->input->post('street2'),
-			'city' => $this->input->post('city'),
-			'state' => $this->input->post('state'),
-			'zip' => $this->input->post('zip'),
-			'country' => $this->input->post('country')
+			'address' => $this->input->post('address')
 		);
-		$this->db->where('user_id', $this->user->uid());
-		if($this->db->update('user_data', $data))
+		$this->db->where('id', $this->user->uid());
+		if($this->db->update('users', $data))
 			return true;
 		return false;
 	}

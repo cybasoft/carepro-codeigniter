@@ -49,7 +49,7 @@
                         <?php
                         if ($this->user->user()->photo !== "") {
                             echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user()->photo . '"/>';
+         src="' . base_url() . 'assets/uploads/users/staff/' . $this->user->user()->photo . '"/>';
                         } else {
                             echo '<img class="img-circle"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';

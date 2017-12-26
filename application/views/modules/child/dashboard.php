@@ -2,7 +2,7 @@
     <div class="col-sm-6">
         <div class="box box-info box-solid">
             <div class="box-header">
-                <div class="box-title"><?php echo $child->fname; ?>'s Profile</div>
+                <div class="box-title"><?php echo $child->first_name; ?>'s Profile</div>
             </div>
             <div class="box-body table-responsive">
                 <?php $this->load->view($this->module . 'info'); ?>

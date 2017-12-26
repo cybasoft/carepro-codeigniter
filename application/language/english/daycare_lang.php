@@ -133,7 +133,7 @@ $lang['search_by'] = 'Search by';
 $lang['family'] = 'Family';
 
 //settings
-$lang['settings_notice'] = 'To change settings, make changes to files in: <code>/application/production</code> 
+$lang['settings_notice'] = 'To change site settings, make changes to files in: <code>/application/config/config.php</code> 
 ';
 $lang['settings'] = 'Settings';
 $lang['company'] = 'Company';
@@ -175,9 +175,10 @@ $lang['update_email'] = 'Update email';
 $lang['user_exists'] = 'User already exist!';
 $lang['invalid_pin'] = 'Pin entered is invalid!';
 $lang['child_already_checked_in'] = 'Child is already checked in!';
+$lang['child_already_checked_out'] = 'Child is already checked out!';
 $lang['child_not_checked_in'] = 'Child has not been checked in!';
 $lang['pending_pickup'] = 'Pending pickup';
-$lang['check_in_out_notice'] = "If other than parent picking up or dropping off a child, authorizing parent's pin must be obtained and annotated in notes section";
+$lang['check_in_out_notice'] = 'Ask the guardian their pin and compare';
 $lang['encryption_key_warning'] = "Encryption key must be set in Admin>Settings. This is a one time change and future changes will cause all encrypted data to be lost";
 $lang['user_is_self_warning'] = "<span class='alert alert-warning'>You cannot perform this action on yourself!</span>";
 
@@ -236,6 +237,11 @@ $lang['user_data'] = 'User data';
 $lang['contact_information'] = 'Contact information';
 $lang['registration_date'] = 'Date registered';
 $lang['last_login'] = 'Last login';
+$lang['switch_user'] = 'Switch user';
+$lang['register_form_header'] = 'Parents registration';
+$lang['register_form_notice'] = 'Register here to be a parent in this daycare.';
+$lang['captcha_placeholder']='Enter text in image above';
+$lang['invalid_captcha']='Invalid captcha entered';
 
 $lang['emergency_contact'] = 'Emergency Contact';
 $lang['emergency_contacts'] = 'Emergency Contacts';
@@ -248,6 +254,7 @@ $lang['type_role_help']='e.g Primary doctor, insurance, dentist';
 
 $lang['assign_parent'] = 'Assign parent';
 $lang['user_already_assigned'] = 'The user selected is already assigned';
+$lang['no_assigned_parent_error'] = 'No parents are assigned to this child';
 
 //forms
 $lang['submit'] = 'submit';
@@ -276,6 +283,8 @@ $lang['authorized_pickup'] = 'Authorized Pickup';
 $lang['attendance'] = 'Attendance';
 $lang['time_in'] = 'Time In';
 $lang['time_out'] = 'Time out';
+$lang['date_in']='Date in';
+$lang['date_out']='Date out';
 $lang['picked_up_by'] = 'Picked up by';
 $lang['dropped_off_by'] = 'Dropped off by';
 
@@ -427,4 +436,5 @@ $lang['witnesses'] = 'Witnesses';
 $lang['witness'] = 'Witness';
 $lang['incident_location_help'] = 'Where it happened';
 $lang['incident_type_help'] = 'fall, bruise, sickness, etc';
-
+$lang['maintenance_mode_heading']='Maintenance mode';
+$lang['maintenance_mode_notice']='We are performing some scheduled maintenance. We will be back shortly';

@@ -27,10 +27,8 @@ class Profile extends CI_Controller
 
 	function index()
 	{
-		$user_data = $this->db->query("SElECT * FROM user_data WHERE user_id={$this->user->uid()}");
 		$data = array(
-			'user' => $this->user->user(),
-			'user_data' => $user_data->row()
+			'user' => $this->user->user()
 		);
 		page($this->module . 'index', $data);
 
@@ -101,12 +99,7 @@ class Profile extends CI_Controller
 	{
 		$this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean|trim');
 		$this->form_validation->set_rules('phone2', lang('other_phone'), 'xss_clean|trim');
-		$this->form_validation->set_rules('street', lang('street'), 'required|xss_clean|trim');
-		$this->form_validation->set_rules('street2', lang('street2'), 'xss_clean|trim');
-		$this->form_validation->set_rules('city', lang('city'), 'required|xss_clean|trim');
-		$this->form_validation->set_rules('state', lang('state'), 'required|xss_clean|trim');
-		$this->form_validation->set_rules('zip', lang('zip'), 'required|xss_clean|trim');
-		$this->form_validation->set_rules('country', lang('country'), 'xss_clean|trim');
+		$this->form_validation->set_rules('address', lang('address'), 'required|xss_clean|trim');
 
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->profile->update_user_data()) {
@@ -189,7 +182,7 @@ class Profile extends CI_Controller
 
     function uploadPhoto($id = "")
     {
-        $upload_path = './assets/img/users/staff';
+        $upload_path = './assets/uploads/users/staff';
         $upload_db = 'children';
 
         if ($id == "") { //make sure there are arguments

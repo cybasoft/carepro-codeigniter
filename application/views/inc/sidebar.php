@@ -8,7 +8,7 @@
                 <?php
                 if ($this->user->user()->photo !== "") {
                     echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user()->photo . '"/>';
+         src="' . base_url() . 'assets/uploads/users/staff/' . $this->user->user()->photo . '"/>';
                 } else {
                     echo '<img class="img-circle"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';
@@ -16,9 +16,9 @@
                 ?>
             </div>
             <div class="pull-left info">
-                <p>Hello, <?php echo $this->user->thisUser('username'); ?></p>
+                <p><?php echo lang('hello'); ?>, <?php echo $this->user->thisUser('first_name'); ?></p>
 
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <a href="#"><i class="fa fa-circle text-success"></i> </a>
 
             </div>
             <i title="lockscreen" class="pull-right fa fa-lock lock-screen cursor"></i>
@@ -52,11 +52,11 @@
                     <small class="badge pull-right bg-blue"><?php echo $this->user->getCount(); ?></small>
                 </a>
             </li>
-            <li class="bg-warning">
-                <a href="<?php echo site_url('parent'); ?>">
-                    <i class="fa fa-users"></i> <span>My Children
-                </a>
-            </li>
+<!--            <li class="bg-warning">-->
+<!--                <a href="--><?php //echo site_url('parent'); ?><!--">-->
+<!--                    <i class="fa fa-users"></i> <span>My Children-->
+<!--                </a>-->
+<!--            </li>-->
             <!--li>
 				<a href="<?php echo site_url('accounting'); ?>">
 					<i class="fa fa-laptop"></i> <span><?php echo lang('accounting'); ?></span>

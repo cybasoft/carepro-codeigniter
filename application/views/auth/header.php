@@ -9,6 +9,7 @@
     <link href="<?php echo base_url(); ?>assets/css/login.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/login.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -32,4 +33,11 @@
     </script>
 </head>
 <body class="login-page login-1">
-
+<?php if (!empty($this->session->flashdata('message'))) : ?>
+    <div style="width:460px">
+        <div id="msg" class="msg alert alert-<?php echo $this->session->flashdata('type'); ?> alert-dismissable">
+            <span class="fa fa-<?php echo $this->session->flashdata('icon'); ?>"></span>
+            <?php echo $this->session->flashdata('message'); ?>
+        </div>
+    </div>
+<?php endif; ?>

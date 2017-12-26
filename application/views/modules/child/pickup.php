@@ -14,7 +14,7 @@
                             <?php
                             if ($pickup->photo !== "") {
                                 echo '<img class="img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/img/users/pickup/' . $pickup->photo . '"/>';
+         src="' . base_url() . 'assets/uploads/users/pickup/' . $pickup->photo . '"/>';
 
                             } else {
                                 echo '<img class="img-circle img-responsive img-thumbnail"
@@ -25,7 +25,7 @@
                         </div>
                     </td>
                     <td>
-                        <h3 class=""><?php echo $pickup->lname . ', ' . $pickup->fname; ?>
+                        <h3 class=""><?php echo $pickup->last_name . ', ' . $pickup->first_name; ?>
                             <a href="<?php echo site_url('child/deletePickup/' . $pickup->id); ?>"
                                class="delete">
                                 <i class="fa fa-trash-o text-danger pull-right"></i>
@@ -86,11 +86,11 @@
             <?php echo form_open_multipart('child/' . $child->id . '/pickup') ?>
             <div class="modal-body">
                 <label><?php echo lang('first_name'); ?></label>
-                <input class="form-control" type="text" name="fname"
+                <input class="form-control" type="text" name="first_name"
                        placeholder="<?php echo lang('first_name'); ?>"
                        required=""/>
                 <label><?php echo lang('last_name'); ?></label>
-                <input class="form-control" type="text" name="lname"
+                <input class="form-control" type="text" name="last_name"
                        placeholder="<?php echo lang('last_name'); ?>"
                        required=""/>
 

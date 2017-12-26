@@ -10,8 +10,6 @@ $config['tables']['groups'] = 'groups';
 $config['tables']['users_groups'] = 'users_groups';
 $config['tables']['login_attempts'] = 'login_attempts';
 
-$config['tables']['user_data'] = 'user_data';
-
 $config['tables']['help_articles'] = 'help_articles';
 $config['tables']['inbox'] = 'inbox';
 /*

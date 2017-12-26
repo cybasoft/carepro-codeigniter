@@ -22,6 +22,7 @@
             }
         }
     </style>
+    <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 </head>
 <body onload="javascript:print()">
 <div class="container" style="font-family: courier, monospace">
@@ -62,7 +63,7 @@
                 </tr>
                 <tr>
                     <td><?php echo lang('child'); ?>:</td>
-                    <td><?php echo $this->child->child($invoice->child_id)->fname . ' ' . $this->child->child($invoice->child_id)->lname; ?></td>
+                    <td><?php echo $this->child->child($invoice->child_id)->first_name . ' ' . $this->child->child($invoice->child_id)->last_name; ?></td>
                 </tr>
                 <tr>
                     <td><?php echo lang('date'); ?>:</td>

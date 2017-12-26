@@ -30,99 +30,91 @@
     </div>
 </div>
 <hr/>
+<?php
+$page_name = $this->uri->segment(2);
+if (!isset($_GET['limit'])) {
+    $limit = 5;
+} else {
+    $limit = $_GET['limit'];
+}
+if (strlen($limit) > 0 and !is_numeric($limit)) {
+    echo 'Data Error';
+    exit;
+}
+
+if (!isset($_GET['start'])) {
+    $start = 0;
+} else {
+    $start = $_GET['start'];
+}
+if (strlen($start) > 0 and !is_numeric($start)) {
+    echo 'Data Error';
+    exit;
+}
+
+//selected option
+function list_selected($select)
+{
+    if (isset($_GET['limit'])) {
+        $limit = $_GET['limit'];
+    } else {
+        $limit = '';
+    }
+    if ($limit == $select) {
+        return 'selected';
+    }
+    return false;
+}
+
+//pagination limits
+$eu = ($start - 0);
+
+if (!$limit > 0) {
+    $limit = 10; //default limit
+}
+$this1 = $eu + $limit;
+$back = $eu - $limit;
+$next = $eu + $limit;
+
+if ($this->input->post('search')) {
+    $this->db->like('last_name', $this->input->post('search'));
+    $this->db->or_like('first_name', $this->input->post('search'));
+}
+$this->db->limit($limit, $eu);
+$query = $this->db->get('children')->result();
+?>
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-lg-12">
-        <?php
-        $page_name = $this->uri->segment(2);
-        if (!isset($_GET['limit'])) {
-            $limit = 5;
-        } else {
-            $limit = $_GET['limit'];
-        }
-        if (strlen($limit) > 0 and !is_numeric($limit)) {
-            echo 'Data Error';
-            exit;
-        }
+    <?php if (!empty($query)) { ?>
+        <?php foreach ($query
 
-        if (!isset($_GET['start'])) {
-            $start = 0;
-        } else {
-            $start = $_GET['start'];
-        }
-        if (strlen($start) > 0 and !is_numeric($start)) {
-            echo 'Data Error';
-            exit;
-        }
-
-        //selected option
-        function list_selected($select)
-        {
-            if (isset($_GET['limit'])) {
-                $limit = $_GET['limit'];
-            } else {
-                $limit = '';
-            }
-            if ($limit == $select) {
-                return 'selected';
-            }
-            return false;
-        }
-
-        //pagination limits
-        $eu = ($start - 0);
-
-        if (!$limit > 0) {
-            $limit = 10; //default limit
-        }
-        $this1 = $eu + $limit;
-        $back = $eu - $limit;
-        $next = $eu + $limit;
-
-        if ($this->input->post('search')) {
-            $this->db->like('lname', $this->input->post('search'));
-            $this->db->or_like('fname', $this->input->post('search'));
-        }
-        $this->db->limit($limit, $eu);
-        $query = $this->db->get('children')->result();
-        ?>
-        <?php if (!empty($query)) { ?>
-            <?php foreach ($query as $row): ?>
-                <div class="col-sm-3 col-md-3 col-lg-3" style="width:320px">
-                    <div class="box box-solid box-success">
-                        <div class="box-header">
-                            <div class="box-title">
-                                <?php echo $row->lname . ', ' . $row->fname; ?>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-5 col-md-5 col-lg-5 image pull-left">
-                                    <div>
-                                        <?php
-                                        if ($row->photo !== "") {
-                                            echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/users/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
-                                        } else {
-                                            echo '<img class="img-circle"
+                       as $row): ?>
+            <div class="col-sm-4">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="cursor" onclick="window.location.href='<?php echo site_url('child/' . $row->id); ?>'">
+                            <?php
+                            if ($row->photo !== "") {
+                                echo '<img class=""
+         src="' . base_url() . 'assets/uploads/users/children/' . $row->photo . '" style="width: 120px; height:120px"/>';
+                            } else {
+                                echo '<img class="img-circle"
          src="' . base_url() . 'assets/img/content/no-image.png" style="width: 120px; height:120px"/>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-md-7 col-lg-7 pull-right">
-                                    <span class="label label-info"><?php echo lang('birthday'); ?></span><br/>
-                                    <?php echo $row->bday; ?>
-                                    <br/>
-                                    <span class="label label-info"><?php echo lang('registered_date'); ?></span><br/>
-                                    <?php echo date('d M, y G:i', $row->enroll_date); ?>
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <h4>
+                                <a href="<?php echo site_url('/child/' . $row->id); ?>">
+                                    <?php echo $row->last_name . ', ' . $row->first_name; ?>
+                                </a>
+                            </h4>
+                            ID:
+                            <?php echo decrypt($row->national_id); ?>
+                            <br/>
+                            <?php echo lang('birthday'); ?>:
+                            <?php echo $row->bday; ?> <br/>
 
-                                    <br/>
-                                    <span class="label label-info"><?php echo lang('status'); ?></span>
-                                    <?php echo lang($this->child->status($row->status)); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-footer">
+                            <hr/>
                             <?php if ($this->child->is_checked_in($row->id) == 1) : ?>
                                 <a id="<?php echo $row->id; ?>" href="#"
                                    class="btn btn-danger btn-flat btn-sm child-check-out">
@@ -136,23 +128,17 @@
                                     <?php echo lang('check_in') . ' &nbsp; '; ?>
                                 </a>
                             <?php endif; ?>
-
-                            <a href="<?php echo site_url('child/' . $row->id); ?>"
-                               class="btn btn-info btn-flat btn-sm viewChild">
-                                <span class="fa fa-eye"></span> <?php echo lang('open'); ?>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php } else { ?>
-            <a href="/children" class="btn btn-primary"><i class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
-            <hr/>
-            <div class="alert alert-danger">
-                <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
-        <?php } ?>
-
-    </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        <?php endforeach; ?>
+    <?php } else { ?>
+        <a href="/children" class="btn btn-primary"><i class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
+        <hr/>
+        <div class="alert alert-danger">
+            <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
+    <?php } ?>
 </div>
 <hr/>
 <div class="row">

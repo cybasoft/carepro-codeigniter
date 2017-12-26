@@ -21,11 +21,11 @@ class Migration_create_child_pickup extends CI_Migration
                 'type' => 'INT',
                 'constraint' => '11',
             ),
-            'fname' => array(
+            'first_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '20',
             ),
-            'lname' => array(
+            'last_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '20',
             ),

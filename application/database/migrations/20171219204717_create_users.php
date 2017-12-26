@@ -17,10 +17,6 @@ class Migration_create_users extends CI_Migration
                 'type' => 'INT',
                 'constraint' => '11',
             ),
-            'username' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-            ),
             'first_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '50',

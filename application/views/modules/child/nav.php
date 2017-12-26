@@ -1,6 +1,6 @@
 <div class="row no-print">
     <div class="col-sm-3" style="font-size:22px;font-weight:bold;color: #932ab6 ;">
-        <?php echo $child->lname . ', ' . $child->fname; ?>
+        <?php echo $child->last_name . ', ' . $child->first_name; ?>
     </div>
     <div class="col-sm-3">
 

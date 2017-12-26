@@ -9,10 +9,6 @@
 				<div class="box-body">
 					<table class="table">
 						<tr>
-							<td><?php echo lang('username'); ?></td>
-							<td><input type="text" name="username" class="form-control" required=""</td>
-						</tr>
-						<tr>
 							<td><?php echo lang('first_name'); ?></td>
 							<td><input type="text" name="first_name" class="form-control" required=""/></td>
 						</tr>

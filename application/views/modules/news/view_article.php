@@ -21,8 +21,7 @@
             </div>
             <div class="box-body">
                 <div class="">
-                    By: <span
-                            class=" label label-default"><?php echo $this->user->getUser($article->user_id, 'username'); ?></span>
+                    By: <span class=" label label-default"><?php echo $this->user->getUser($article->user_id, 'first_name'); ?></span>
                     &nbsp;
                     on: <span class=" label label-default"><?php echo date('d-M-Y', $article->publish_date); ?></span>
                 </div>

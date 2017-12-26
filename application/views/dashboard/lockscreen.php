@@ -17,14 +17,19 @@
 </head>
 <body>
 <div class="center">
-	<?php echo $this->session->flashdata('message'); ?>
+    <?php if (!empty($this->session->flashdata('message'))) : ?>
+        <div id="msg"
+             class="msg alert alert-<?php echo $this->session->flashdata('type'); ?> alert-dismissable">
+            <span class="fa fa-<?php echo $this->session->flashdata('icon'); ?>"></span>
+            <?php echo $this->session->flashdata('message'); ?>
+        </div>
+    <?php endif; ?>
 	<div class="headline text-center" id="time"></div>
 	<div class="lockscreen-name">
-		<?php echo strtoupper($this->user->user()->username); ?>
+		<?php echo strtoupper($this->user->user()->last_name); ?>
 	</div>
 	<div class="lockscreen-item">
 		<div class="lockscreen-image">
-			<?php //todo avatar gender ?>
 			<?php echo $this->user->getPhoto(); ?>
 		</div>
 		<div class="lockscreen-credentials">
@@ -40,8 +45,9 @@
 	</div>
 
 	<div class="lockscreen-link">
-
-		<a class="lockscreen-name label label-success" href="<?php echo site_url('logout'); ?>">Switch user</a>
+		<a class="lockscreen-name label label-success" href="<?php echo site_url('logout'); ?>">
+            <?php echo lang('switch_user'); ?>
+        </a>
 	</div>
 </div>
 

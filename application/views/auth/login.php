@@ -29,23 +29,32 @@ $password = array(
                      alt="Laraspace Logo">
             </a>
         </div>
-        <?php
-        if (count(validation_errors())) :
-            echo $this->session->flashdata('message');
-        endif;
-        ?>
+
         <form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post">
             <div class="form-group">
-                <?php echo form_input($identity); ?>
+                <?php echo form_input($data['email']); ?>
             </div>
             <div class="form-group">
-                <?php echo form_input($password); ?>
+                <?php echo form_input($data['password']); ?>
             </div>
-            <button class="btn btn-theme btn-full"><?php echo lang('login'); ?></button>
-            <div class="other-actions row">
-                <div class="col-6">
-                    <?php echo anchor('forgot_password', '<span class="fa fa-link-intact"></span> '.lang('forgot_password_heading')); ?>
+
+            <?php if (config_item('enable_captcha')): ?>
+                <div class="form-group">
+                    <?php echo $data['captcha_image']; ?>
+                    <?php echo form_input($data['captcha']); ?>
                 </div>
+            <?php endif; ?>
+
+            <button class="btn btn-theme btn-full"><?php echo lang('login'); ?></button>
+            <div class="other-actions" style="text-align:center">
+
+                <?php echo anchor('forgot_password', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading')); ?>
+
+                <?php if(config_item('allow_registration')==TRUE): ?>
+                    <br/>
+                    <br/>
+                <?php echo anchor('register', '<span class="fa fa-user"></span> ' . lang('register')); ?>
+                <?php endif; ?>
             </div>
         </form>
         <div class="page-copyright">

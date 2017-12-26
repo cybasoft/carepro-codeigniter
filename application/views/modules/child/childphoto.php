@@ -5,7 +5,7 @@
 	<?php
 if (!empty($child->photo)) {
 	echo '<img class="img-square img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/img/users/children/' . $child->photo . '"/>';
+         src="' . base_url() . 'assets/uploads/users/children/' . $child->photo . '"/>';
 } else {
 	echo '<img class="img-circle img-responsive img-thumbnail"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';
@@ -20,7 +20,7 @@ if (!empty($child->photo)) {
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
 						class="sr-only">Close</span></button>
 				<h4 class="modal-title" id="myModalLabel"><?php echo lang('upload'); ?>
-					for: <?php echo $child->lname . ', ' . $child->fname; ?></h4>
+					for: <?php echo $child->last_name . ', ' . $child->first_name; ?></h4>
 			</div>
 			<div class="modal-body">
 				<?php echo form_open_multipart('child/' . $child->id.'/uploadPhoto', 'class="input-group"'); ?>

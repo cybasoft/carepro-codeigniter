@@ -355,7 +355,7 @@ legend {
 }
 
 .login-page.login-1 .login-wrapper:before {
-    background-image: url("../img/content/skynight.jpg");
+    background-image: url("../img/content/blur-background.jpg");
     background-position: top;
     background-size: cover;
     content: "";

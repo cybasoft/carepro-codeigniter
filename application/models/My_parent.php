@@ -54,8 +54,8 @@ class My_parent extends CI_Model
 	function register_child()
 	{
 		$data = array(
-			'fname' => $this->input->post('fname'),
-			'lname' => $this->input->post('lname'),
+			'first_name' => $this->input->post('first_name'),
+			'last_name' => $this->input->post('last_name'),
 			'national_id' => encrypt($this->input->post('national_id')),
 			'bday' => $this->input->post('bday'),
 			'gender' => $this->input->post('gender'),

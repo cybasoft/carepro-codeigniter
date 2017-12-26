@@ -31,7 +31,7 @@
             </td>
             <td><?php echo format_date($row->date_due,false); ?></td>
             <td>
-                <a href="<?php echo site_url('invoice/' . $row->id.'/delete'); ?>" class="delete btn btn-danger btn-xs">
+                <a href="#" onclick="confirmDelete('<?php echo site_url("invoice/{$row->id}/delete"); ?>')" class="delete btn btn-danger btn-xs">
                     <i class="fa fa-trash-o"></i>
                     <?php echo lang('delete'); ?>
                 </a>

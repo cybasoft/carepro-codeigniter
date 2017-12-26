@@ -49,7 +49,8 @@
                                         <?php echo format_date($note->created_at); ?>
 
                                         <?php echo lang('by'); ?>
-                                        <?php echo $this->user->user($note->user_id)->username; ?>
+                                        <?php echo $this->user->user($note->user_id)->first_name; ?>
+                                        <?php echo $this->user->user($note->user_id)->last_name; ?>
                                     </em>
                                     <br/>
                                     <a style="color: #1974cc;"
@@ -75,7 +76,8 @@
                                     <em class="text-olive small">
                                         <?php echo format_date($incident->date_occurred); ?>
                                         <?php echo lang('by'); ?>
-                                        <?php echo $this->user->user($incident->user_id)->username; ?>
+                                        <?php echo $this->user->user($incident->user_id)->first_name; ?>
+                                        <?php echo $this->user->user($incident->user_id)->last_name; ?>
                                     </em>
                                     <br/>
                                     <a style="color: #1974cc;"

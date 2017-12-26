@@ -70,7 +70,7 @@ class Invoice extends CI_Controller
         $child = $this->child->first($invoice->child_id);
         $subTotal = 0;
         $totalTax = 0;
-        page($this->module . 'view_invoice', compact('invoice', 'child', 'invoice_items','subTotal','totalTax'));
+        page($this->module . 'view_invoice', compact('invoice', 'child', 'invoice_items', 'subTotal', 'totalTax'));
     }
 
     /*
@@ -80,15 +80,16 @@ class Invoice extends CI_Controller
     {
         allow('admin,manager,staff');
         $child = $this->child->first($id);
-        page($this->module . 'new_invoice',compact('child'));
+        page($this->module . 'new_invoice', compact('child'));
     }
+
     function store($id)
     {
         allow('admin,manager,staff');
 
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('description'), 'required|xss_clean');
-        $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean');
+        $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean|callback_is_money');
         $this->form_validation->set_rules('invoice_terms', lang('invoice_terms'), 'xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
@@ -103,37 +104,50 @@ class Invoice extends CI_Controller
             flash('danger');
             redirectPrev();
         }
-        redirect('child/'.$id.'/billing');
+        redirect('child/' . $id . '/billing');
+    }
+
+    function is_money($money)
+    {
+        if (preg_match('/^\s*[$]?\s*((\d+)|(\d{1,3}(\,\d{3})+))(\.\d{2})?\s*$/', $money)) {
+            return true;
+        } else {
+            $this->form_validation->set_message('is_money', "The %s field must contain a price (money) value");
+            return false;
+
+        }
     }
 
     /**
      * @param $id
      */
-    function addItem($id){
+    function addItem($id)
+    {
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('description'), 'required|xss_clean');
-        $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean');
+        $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean|callback_is_money');
         $this->form_validation->set_rules('qty', lang('quantity'), 'required|xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
-            $query = $this->db->insert('invoice_items',[
-                'invoice_id'=>$id,
-                'item_name'=>$this->input->post('item_name'),
-                'description'=>$this->input->post('description'),
-                'qty'=>$this->input->post('qty'),
-                'price'=>$this->input->post('price'),
+            $query = $this->db->insert('invoice_items', [
+                'invoice_id' => $id,
+                'item_name' => $this->input->post('item_name'),
+                'description' => $this->input->post('description'),
+                'qty' => $this->input->post('qty'),
+                'price' => $this->input->post('price'),
             ]);
-            if($query){
-                flash('success',lang('request_success'));
-            }else{
-                flash('error',lang('request_error'));
+            if ($query) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('error', lang('request_error'));
             }
-        }else{
+        } else {
             flash('error');
             validation_errors();
         }
         redirectPrev();
     }
+
     function preview($invoice_id)
     {
 
@@ -166,11 +180,12 @@ class Invoice extends CI_Controller
 
     }
 
-    function deleteItem($id)
+    function deleteItem($invoice_id, $item_id)
     {
         allow('admin,manager');
 
-        $this->db->where('id', $id);
+        $this->db->where('id', $item_id);
+        $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
         if ($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
@@ -182,13 +197,13 @@ class Invoice extends CI_Controller
     }
 
 //update status
-    function updateStatus()
+    function updateStatus($id)
     {
         if ($_POST) {
             $data = array(
                 'invoice_status' => $this->input->post("invoice_status")
             );
-            $this->db->where('id', $this->input->post('invoice_id'));
+            $this->db->where('id', $id);
             $query = $this->db->update($this->invoice_db, $data);
             if ($query) {
                 flash('success', lang('request_success'));

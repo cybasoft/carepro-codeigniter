@@ -36,8 +36,8 @@ class Child extends CI_Controller
 
     function store()
     {
-        $this->form_validation->set_rules('fname', lang('first_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('lname', lang('last_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
@@ -58,8 +58,8 @@ class Child extends CI_Controller
 
     function update()
     {
-        $this->form_validation->set_rules('fname', lang('first_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('lname', lang('last_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('blood_type', lang('birthday'), 'required|trim|xss_clean');
@@ -99,7 +99,7 @@ class Child extends CI_Controller
     function uploadPhoto($id = "")
     {
         allow('admin,staff');
-        $upload_path = './assets/img/users/children';
+        $upload_path = './assets/uploads/users/children';
         $upload_db = 'children';
         if (!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
@@ -162,19 +162,6 @@ class Child extends CI_Controller
         page($this->module . 'attendance', compact('child', 'attendance'));
     }
 
-    //check this user and parent association
-    function is_mychild()
-    {
-        $this->db->where('child_id', $this->child->getID());
-        $this->db->where('user_id', $this->user->uid());
-        $query = $this->db->get('child_parents');
-        if ($query->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     /*
      * check_in
      */
@@ -182,7 +169,8 @@ class Child extends CI_Controller
     {
         $data = array(
             'child_id' => $id,
-            'parents' => $this->child->getParents($id)->result()
+            'parents' => $this->child->getParents($id)->result(),
+            'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result()
         );
         $this->load->view($this->module . 'check_in', $data);
     }
@@ -194,7 +182,8 @@ class Child extends CI_Controller
     {
         $data = array(
             'child_id' => $id,
-            'parents' => $this->child->getParents($id)->result()
+            'parents' => $this->child->getParents($id)->result(),
+            'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result()
         );
         $this->load->view($this->module . 'check_out', $data);
     }
@@ -204,11 +193,9 @@ class Child extends CI_Controller
      */
     function doCheckIn($child_id)
     {
-        $this->form_validation->set_rules('pin', lang('pin'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('in_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
-            $parent = $this->input->post('parent_id');
-            $pin = $this->input->post('pin');
-            $this->child->check_in($child_id, $parent, $pin);
+            $this->child->check_in($child_id);
         } else {
             validation_errors();
             flash('danger');
@@ -221,11 +208,9 @@ class Child extends CI_Controller
      */
     function doCheckOut($child_id)
     {
-        $this->form_validation->set_rules('pin', lang('pin'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('out_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
-            $parent = $this->input->post('parent_id');
-            $pin = $this->input->post('pin');
-            $this->child->check_out($child_id, $parent, $pin);
+            $this->child->check_out($child_id);
         } else {
             validation_errors();
             flash('danger');

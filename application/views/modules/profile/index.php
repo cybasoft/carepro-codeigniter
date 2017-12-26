@@ -35,7 +35,7 @@
                 <table class="table no-border">
                     <tr>
                         <td><?php echo lang('pin'); ?></td>
-                        <td><input type="text" name="pin" value="<?php echo $user_data->pin; ?>"
+                        <td><input type="text" name="pin" value="<?php echo $user->pin; ?>"
                                    class="form-control" required=""/></td>
                     </tr>
                     <tr>
@@ -60,44 +60,17 @@
                 <table class="table no-border">
                     <tr>
                         <td><?php echo lang('phone'); ?></td>
-                        <td><input type="text" name="phone" value="<?php echo $user_data->phone; ?>"
+                        <td><input type="text" name="phone" value="<?php echo $user->phone; ?>"
                                    class="form-control" required=""/></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('other_phone'); ?></td>
-                        <td><input type="text" name="phone2" value="<?php echo $user_data->phone2; ?>"
-                                   class="form-control"/></td>
-                    </tr>
-
-                    <tr>
-                        <td><?php echo lang('street'); ?></td>
-                        <td><input type="text" name="street" value="<?php echo $user_data->street; ?>"
-                                   class="form-control" required=""/></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo lang('street2'); ?></td>
-                        <td><input type="text" name="street2" value="<?php echo $user_data->street2; ?>"
+                        <td><input type="text" name="phone2" value="<?php echo $user->phone2; ?>"
                                    class="form-control"/></td>
                     </tr>
                     <tr>
-                        <td><?php echo lang('city'); ?></td>
-                        <td><input type="text" name="city" value="<?php echo $user_data->city; ?>"
-                                   class="form-control" required=""/></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo lang('state'); ?></td>
-                        <td><input type="text" name="state" value="<?php echo $user_data->state; ?>"
-                                   class="form-control" required=""/></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo lang('zip_code'); ?></td>
-                        <td><input type="text" name="zip" value="<?php echo $user_data->zip; ?>" class="form-control"
-                                   required=""/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><?php echo lang('country'); ?></td>
-                        <td><input type="text" name="country" value="<?php echo $user_data->country; ?>"
+                        <td><?php echo lang('address'); ?></td>
+                        <td><input type="text" required name="country" value="<?php echo $user->address; ?>"
                                    class="form-control"/>
                         </td>
                     </tr>

@@ -9,7 +9,7 @@
             </a>
         </div>
         <?php
-        if (count(validation_errors())) :
+        if (!empty(validation_errors())) :
             echo $this->session->flashdata('message');
         endif;
         ?>

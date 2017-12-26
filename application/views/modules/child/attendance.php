@@ -9,9 +9,9 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th><?php echo lang('date'); ?></th>
-                <th><?php echo lang('time_in'); ?></th>
-                <th><?php echo lang('time_out'); ?></th>
+                <th><?php echo lang('date_in'); ?></th>
+                <th><?php echo lang('date_out'); ?></th>
+                <th><?php echo lang('picked_up_by'); ?></th>
             </tr>
             </thead>
             <?php
@@ -22,14 +22,18 @@
                     <td>
                         <?php echo $cnt; ?>
                     </td>
-                    <td><?php echo date('m/d/y', $row->time_in); ?></td>
-                    <td><?php if ($row->time_in !== NULL) {
-                            echo date('H:i:s', $row->time_in);
-                        } ?></td>
+                    <td><?php echo format_date($row->time_in); ?></td>
                     <td>
-                        <?php
-                        echo($row->time_out !== NULL ? date('H:i:s', $row->time_out) : '<span class="label label-danger">' . lang('pending_pickup') . '</span>');
-                        ?>
+                        <?php if ($row->time_out !== NULL) {
+                            echo format_date($row->time_out, true);
+                        } ?>
+                    </td>
+                    <td>
+                        <?php if ($row->out_guardian == null): ?>
+                            <span class="label label-danger"><?php echo lang('pending_pickup'); ?></span>
+                        <?php else: ?>
+                            <?php echo $row->out_guardian; ?>
+                        <?php endif; ?>
                     </td>
 
                 </tr>

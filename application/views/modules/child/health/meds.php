@@ -26,11 +26,12 @@
             foreach ($meds->result() as $med) {
                 ?>
                 <div class="alert alert-info">
-                    <div class="fa fa-heart-empty"></div>
+                    <div class="fa fa-medkit"></div>
                     <span class="label-text"><?php echo $med->med_name; ?></span>
                     <?php echo $med->med_notes; ?>
-                    <span class="fa fa-trash-o cursor"
-                          onclick="deleteMed('<?php echo $med->id; ?>');"></span>
+                    <a href="<?php echo site_url('child/deleteMedication/' . $med->id); ?>" class="delete pull-right">
+                        <span class="fa fa-trash-o cursor"></span>
+                    </a>
                 </div>
                 <?php
             }
@@ -40,11 +41,3 @@
         ?>
     </div>
 </div>
-
-<script type="text/javascript">
-    function deleteMed(id) {
-        if (confirm('<?php echo lang('confirm_delete_item'); ?>')) {
-            window.location.href = '<?php echo site_url(); ?>child/deleteMedication/' + id;
-        }
-    }
-</script>

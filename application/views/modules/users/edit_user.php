@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="callout callout-info">
-			<h3><?php echo $user->username; ?></h3>
+			<h3><?php echo $user->last_name; ?></h3>
 		</div>
 	</div>
 </div>
@@ -94,41 +94,15 @@
 					<tr>
 						<td><?php echo lang('pin'); ?></td>
 						<td>
-							<input type="text" name="pin" value="<?php echo $userData->pin; ?>"
-								   class="form-control" required=""/>
+							<input type="text" name="pin" value="<?php echo $user->pin; ?>"
+								   class="form-control" required/>
 						</td>
 					</tr>
 					<tr>
-						<td><?php echo lang('street'); ?></td>
+						<td><?php echo lang('address'); ?></td>
 						<td>
-							<input type="text" name="street" value="<?php echo $userData->street; ?>"
-								   class="form-control" required=""/>
+							<textarea required class="form-control" name="address" rows="3"><?php echo $user->address; ?></textarea>
 						</td>
-					</tr>
-					<tr>
-						<td><?php echo lang('street2'); ?></td>
-						<td><input type="text" name="street2" value="<?php echo $userData->street2; ?>"
-								   class="form-control"/></td>
-					</tr>
-					<tr>
-						<td><?php echo lang('city'); ?></td>
-						<td><input type="text" name="city" value="<?php echo $userData->city; ?>"
-								   class="form-control" required=""/></td>
-					</tr>
-					<tr>
-						<td><?php echo lang('state'); ?></td>
-						<td><input type="text" name="state" value="<?php echo $userData->state; ?>"
-								   class="form-control" required=""/></td>
-					</tr>
-					<tr>
-						<td><?php echo lang('zip_code'); ?></td>
-						<td><input type="text" name="zip" value="<?php echo $userData->zip; ?>"
-								   class="form-control" required=""/></td>
-					</tr>
-					<tr>
-						<td><?php echo lang('country'); ?></td>
-						<td><input type="text" name="country" value="<?php echo $userData->country; ?>"
-								   class="form-control" required=""/></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -153,7 +127,7 @@
 								<?php
 							if ($this->user->user($user->id)->photo !== "") {
 								echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/img/users/staff/' . $this->user->user($user->id)->photo . '"/>';
+         src="' . base_url() . 'assets/uploads/users/staff/' . $this->user->user($user->id)->photo . '"/>';
 							} else {
 								echo '<img class="img-circle img-thumbnail"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';

@@ -14,6 +14,23 @@
     setTimeout(function () {
         location.href = "<?php echo site_url('lockscreen'); ?>";
     }, 1800000);
+
+    function confirmDelete(loc){
+        swal({
+            title: 'Please confirm',
+            text: 'You are about to delete a record...',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, Do it!',
+            closeOnConfirm: false
+        }, function () {
+            swal('processing...');
+            if (loc != undefined)
+                window.location.href = loc;
+        });
+        e.preventDefault();
+    }
 </script>
 
 </body>

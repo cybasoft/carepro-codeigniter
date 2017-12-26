@@ -57,11 +57,12 @@ $route['default_controller'] = "auth";
 $route['404_override'] = 'landing/error404';
 $route['translate_uri_dashes'] = FALSE;
 
-
+$route['dashboard']= 'dashboard/index';
 //auth
 $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
-$route['forgot_password'] = 'auth/forgot_password';
+$route['register']['get'] = 'auth/register';
+$route['register']['post'] = 'auth/register';
 
 //accounting
 $route['new_invoice'] = 'invoice/create_invoice';
@@ -142,8 +143,10 @@ $route['child/(:num)/createInvoice'] = 'child/invoice/store/$1';
 $route['invoice/(:num)/delete'] = 'child/invoice/delete/$1';
 $route['invoice/(:num)/view'] = 'child/invoice/view/$1';
 $route['invoice/(:num)/addItem'] = 'child/invoice/addItem/$1';
+$route['invoice/(:num)/deleteItem/(:num)'] = 'child/invoice/deleteItem/$1/$2';
 $route['invoice/(:num)/makePayment'] = 'child/invoice/makePayment/$1';
 $route['invoice/(:num)/preview'] = 'child/invoice/preview/$1';
+$route['invoice/(:num)/updateStatus'] = 'child/invoice/updateStatus/$1';
 
 //parents
 $route['parents/:any'] = 'child/parents/$1';

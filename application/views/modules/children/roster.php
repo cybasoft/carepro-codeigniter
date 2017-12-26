@@ -11,6 +11,7 @@
             width: 1170px;
             margin: 0 auto;
         }
+
         @media print {
             @page {
                 margin: 0;
@@ -24,7 +25,8 @@
 </head>
 <body onload="javascript:print()">
 <div class="container">
-    <img class="" style="width: 250px;" src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('invoice_logo', 'company'); ?>"/>
+    <img class="" style="width: 250px;"
+         src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('invoice_logo', 'company'); ?>"/>
 
     <h3><?php echo lang('children_roster'); ?></h3>
     <table class="table table-striped table-bordered">
@@ -33,7 +35,7 @@
             <th><?php echo lang('name'); ?></th>
             <th><?php echo lang('date_of_birth'); ?></th>
             <th><?php echo lang('national_id'); ?></th>
-            <th><?php echo lang('date_of_birth'); ?></th>
+            <th><?php echo lang('blood_type'); ?></th>
             <th><?php echo lang('enrolled_on'); ?></th>
         </tr>
         <?php foreach ($children as $child) : ?>
@@ -41,7 +43,7 @@
                 <td>
                     <i class="fa fa-square-o" style="font-size:20px;"></i>
                 </td>
-                <td><?php echo $child->fname . ' ' . $child->lname; ?></td>
+                <td><?php echo $child->first_name . ' ' . $child->last_name; ?></td>
                 <td><?php echo $child->bday; ?></td>
                 <td><?php echo decrypt($child->national_id); ?></td>
                 <td><?php echo $child->blood_type; ?></td>

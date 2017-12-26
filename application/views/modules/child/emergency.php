@@ -16,7 +16,7 @@
 
 					<?php foreach($eContact->result() as $ec): ?>
 						<tr>
-							<td class="col-sm-3"><?php echo $ec->lname . ', ' . $ec->fname; ?></td>
+							<td class="col-sm-3"><?php echo $ec->last_name . ', ' . $ec->first_name; ?></td>
 							<td><?php echo $ec->cell; ?></td>
 							<td><?php echo $ec->other_phone; ?></td>
 							<td class="col-sm-4"><?php echo $ec->address; ?></td>
@@ -37,9 +37,9 @@
 			<div class="box-header bg-maroon"><h3 class="box-title"><?php echo lang('add'); ?></h3></div>
 			<div class="box-body">
 				<?php echo form_open('emergency/add_contact/' .$this->child->child()->id); ?>
-				<input class="form-control" type="text" name="fname" placeholder="<?php echo lang('first_name'); ?>"
+				<input class="form-control" type="text" name="first_name" placeholder="<?php echo lang('first_name'); ?>"
 					   required=""/>
-				<input class="form-control" type="text" name="lname" placeholder="<?php echo lang('last_name'); ?>"
+				<input class="form-control" type="text" name="last_name" placeholder="<?php echo lang('last_name'); ?>"
 					   required=""/>
 				<input class="form-control" type="text" name="cell" placeholder="<?php echo lang('cellphone'); ?>"
 					   required=""/>

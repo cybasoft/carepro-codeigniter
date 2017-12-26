@@ -11,14 +11,14 @@ function blood_type($value,$type){
 		<tr>
 			<td><?php echo lang('first_name'); ?></td>
 			<td>
-				<input class="form-control" required="" type="text" name="fname"
-					   value="<?php echo $child->fname; ?>"/>
+				<input class="form-control" required="" type="text" name="first_name"
+					   value="<?php echo $child->first_name; ?>"/>
 			</td>
 		</tr>
 		<tr>
 			<td><?php echo lang('last_name'); ?></td>
-			<td><input class="form-control" required="" type="text" name="lname"
-					   value="<?php echo $child->lname; ?>"/></td>
+			<td><input class="form-control" required="" type="text" name="last_name"
+					   value="<?php echo $child->last_name; ?>"/></td>
 		</tr>
 		<tr>
 			<td><?php echo lang('birthday'); ?></td>

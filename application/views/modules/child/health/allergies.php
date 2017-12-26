@@ -48,8 +48,10 @@
                     <br/>
                     <span class="text-olive">
                     <strong><?php echo lang('notes'); ?>:</strong> <?php echo $allergy->notes; ?></span>
-                    <span class="fa fa-trash-o cursor"
-                          onclick="deleteAllergy('<?php echo $allergy->id; ?>');"></span>
+
+                    <a href="<?php echo site_url('child/deleteAllergy/'.$allergy->id); ?>" class="delete pull-right">
+                        <span class="fa fa-trash-o cursor"></span>
+                    </a>
                 </div>
                 <?php
             }
@@ -59,10 +61,3 @@
         ?>
     </div>
 </div>
-<script type="text/javascript">
-    function deleteAllergy(id) {
-        if (confirm('<?php echo lang('confirm_delete_item'); ?>')) {
-            window.location.href = '<?php echo site_url(); ?>child/deleteAllergy/' + id;
-        }
-    }
-</script>

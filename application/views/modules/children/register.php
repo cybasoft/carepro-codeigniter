@@ -9,10 +9,10 @@
             <?php echo form_open('child/register'); ?>
             <div class="modal-body">
                 <label><?php echo lang('first_name'); ?></label>
-                <input class="form-control" type="text" name="fname" value="" required=""/>
+                <input class="form-control" type="text" name="first_name" value="" required=""/>
 
                 <label><?php echo lang('last_name'); ?></label>
-                <input class="form-control" type="text" name="lname" value="" required=""/>
+                <input class="form-control" type="text" name="last_name" value="" required=""/>
 
                 <label><?php echo lang('birthday'); ?></label>
                 <input class="form-control" id="bday" type="date" name="bday" value="" required=""

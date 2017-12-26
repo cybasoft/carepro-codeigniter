@@ -60,6 +60,33 @@ class Migrate extends CI_Controller
 
     function seed($table="*")
     {
+        echo "Seeding tables " . PHP_EOL;
+        $this->seedGroups();
+        $this->seedUsers();
+        echo "Seeding completed " . PHP_EOL;
+    }
 
+    function seedUsers(){
+        function users(){
+            $users = array(
+                'first_name'=>'Admin',
+                'last_name'=>'Admin',
+                'email'=>'admin@app.com',
+                'password'=>password_hash('password',PASSWORD_DEFAULT),
+                'active'=>1,
+                'created_at'=>date_stamp()
+            );
+            foreach ($users as $user){
+                $this->db->insert('users',$user);
+            }
+        }
+    }
+    function seedGroups(){
+        $groups = array(
+            'admin','manager','staff','parent'
+        );
+        foreach ($groups as $group){
+            $this->db->insert('groups',array('name'=>$group));
+        }
     }
 }
