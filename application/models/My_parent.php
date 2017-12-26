@@ -59,8 +59,8 @@ class My_parent extends CI_Model
 			'national_id' => encrypt($this->input->post('national_id')),
 			'bday' => $this->input->post('bday'),
 			'gender' => $this->input->post('gender'),
-			'enroll_date' => time(),
-			'last_update' => time()
+			'created_at' => date_stamp(),
+			'last_update' => date_stamp()
 		);
 		$this->db->insert('children', $data);
 		$last_id = $this->db->insert_id();

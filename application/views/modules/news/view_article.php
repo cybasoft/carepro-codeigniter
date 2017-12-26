@@ -23,7 +23,7 @@
                 <div class="">
                     By: <span class=" label label-default"><?php echo $this->user->getUser($article->user_id, 'first_name'); ?></span>
                     &nbsp;
-                    on: <span class=" label label-default"><?php echo date('d-M-Y', $article->publish_date); ?></span>
+                    on: <span class=" label label-default"><?php echo format_date($article->publish_date); ?></span>
                 </div>
                 <hr/>
                 <?php echo $article->article_body; ?>

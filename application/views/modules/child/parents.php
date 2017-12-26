@@ -21,7 +21,7 @@
                     <tr>
                         <td>
                             <span class="fa fa-inbox"></span>
-                            <span class="label label-info"><?php echo $u->email; ?></span>
+                            <?php echo $u->email; ?>
                         </td>
                     </tr>
                 </table>
@@ -39,10 +39,7 @@
                     <tr>
                         <td><span class="fa fa-lock"></span></td>
                         <td>
-                            <span class="label label-success show-pin"
-                                  title="<?php echo $this->user->user($u->user_id)->pin; ?>">
-                                <?php echo lang('view') . ' ' . lang('pin'); ?>
-                            </span>
+                            <?php echo $this->user->user($u->user_id)->pin; ?>
                         </td>
                     </tr>
                 </table>

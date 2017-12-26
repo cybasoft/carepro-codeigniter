@@ -16,11 +16,11 @@
                     </tr>
                     <tr>
                         <td><?php echo lang('last_login'); ?></td>
-                        <td><?php echo date('d M y H:i:s', $user->last_login); ?></td>
+                        <td><?php echo format_date($user->last_login); ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('registration_date'); ?></td>
-                        <td><?php echo date('d M y', $user->created_on); ?></td>
+                        <td><?php echo format_date($user->created_at); ?></td>
                     </tr>
                 </table>
             </div>

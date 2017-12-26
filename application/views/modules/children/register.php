@@ -21,9 +21,9 @@
                 <input class="form-control" type="text" name="national_id" value="" required=""/>
                 <label><?php echo lang('gender'); ?></label>
                 <select class="form-control" name="gender" required="">
-                    <option value="">--<?php echo lang('select'); ?>--</option>
-                    <option value="1"><?php echo lang('male'); ?></option>
-                    <option value="2"><?php echo lang('female'); ?></option>
+                    <option value="male"><?php echo lang('male'); ?></option>
+                    <option value="female"><?php echo lang('female'); ?></option>
+                    <option value="other"><?php echo lang('other'); ?></option>
                 </select>
             </div>
             <div class="modal-footer">

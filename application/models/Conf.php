@@ -13,7 +13,6 @@ class Conf extends CI_Model
         $this->load->model('My_child', 'child');
         $this->load->model('My_user', 'users');
         $this->load->model('My_user', 'user');
-        $this->load->model('My_broadcast', 'broadcast');
         $this->load->model('My_cron', 'cron');
 
         //disable changes to db in demo mode

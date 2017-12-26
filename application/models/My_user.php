@@ -38,8 +38,8 @@ class MY_user extends CI_Model
             'password' => $password,
             'email' => $email,
             'ip_address' => $ip_address,
-            'created_on' => time(),
-            'last_login' => time(),
+            'created_at' => date_stamp(),
+            'last_login' => date_stamp(),
             'active' => ($manual_activation === false ? 1 : 0)
 
         );
@@ -163,9 +163,9 @@ class MY_user extends CI_Model
     /*
      * get photo of user
      */
-    function getPhoto($uid = "", $attr = '')
+    function getPhoto($uid = NULL, $attr = '')
     {
-        if ($uid = "") {
+        if (empty($uid)) {
             $id = $this->uid();
         } else {
             $id = $uid;

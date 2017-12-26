@@ -57,18 +57,31 @@
                     $("#editor2").val(calEvent.description);
                 });
                 //delete event
-                $('.trash-event-btn').click(function () {
-                    $.ajax({
-                        type: "POST",
-                        url: 'calendar/deleteEvent',
-                        data: 'event_id=' + calEvent.id,
-                        success: function () {
-                            window.location.href = 'calendar';
-                        },
-                        error: function () {
-                            window.location.href = 'calendar';
-                        }
+                $('.trash-event-btn').click(function (e) {
+                    e.preventDefault();
+                    swal({
+                        title: 'Please confirm',
+                        text: 'You are about to delete an event...',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#DD6B55',
+                        confirmButtonText: 'Yes, Do it!',
+                        closeOnConfirm: false
+                    }, function () {
+                        swal('processing...');
+                        $.ajax({
+                            type: "POST",
+                            url: 'calendar/deleteEvent',
+                            data: 'event_id=' + calEvent.id,
+                            success: function () {
+                                window.location.href = 'calendar';
+                            },
+                            error: function () {
+                                window.location.href = 'calendar';
+                            }
+                        });
                     });
+
                 });
             }, eventRender: function () {
                 $('.fc-header-left').find('.fc-button-prev').html('<span class="fa fa-caret-left"></span>');

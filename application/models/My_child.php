@@ -44,8 +44,7 @@ class My_child extends CI_Model
             'national_id' => encrypt($this->input->post('national_id')),
             'bday' => $this->input->post('bday'),
             'gender' => $this->input->post('gender'),
-            'enroll_date' => time(),
-            'last_update' => time(),
+            'last_update' => date_stamp(),
             'status' => 1,
             'created_at' => date_stamp(),
             'user_id' => $this->user->uid()
@@ -88,8 +87,8 @@ class My_child extends CI_Model
             'national_id' => encrypt($this->input->post('national_id')),
             'blood_type' => $this->input->post('blood_type'),
             'gender' => $this->input->post('gender'),
-            'status' => $this->input->post('child_status'),
-            'last_update' => time()
+            'status' => $this->input->post('status'),
+            'last_update' => date_stamp()
         );
         $this->db->where('id', $child_id);
         $this->db->update('children', $data);
@@ -421,17 +420,6 @@ class My_child extends CI_Model
         $this->db->where('child_id', $child_id);
         return $this->db->get($db)->result();
     }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    function status($id)
-    {
-        $this->db->where('id', $id);
-        return $this->db->get('child_status')->row()->status_name;
-    }
-
     /**
      * @return mixed
      */

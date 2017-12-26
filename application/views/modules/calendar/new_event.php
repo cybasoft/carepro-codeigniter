@@ -37,7 +37,8 @@ $title = array(
     'type'  => 'text',
     'value' => '',
 	'class'=>'form-control',
-    'id'=>'event_title'
+    'id'=>'event_title',
+    'required'=>'required'
 );
 ?>
 

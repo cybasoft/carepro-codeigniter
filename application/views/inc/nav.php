@@ -46,15 +46,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="user-header bg-light-blue">
-                        <?php
-                        if ($this->user->user()->photo !== "") {
-                            echo '<img class="img-circle"
-         src="' . base_url() . 'assets/uploads/users/staff/' . $this->user->user()->photo . '"/>';
-                        } else {
-                            echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/content/no-image.png"/>';
-                        }
-                        ?>
+                        <?php $this->user->getPhoto(NULL,'class="img-circle"');  ?>
                         <p>
                         </p>
                     </li>

@@ -45,6 +45,7 @@ class my_health extends CI_Model
             'child_id' => $this->input->post('child_id'),
             'allergy' => $this->input->post('allergy'),
             'reaction' => $this->input->post('reaction'),
+            'notes'=>$this->input->post('notes'),
             'created_at'=>date_stamp(),
             'user_id'=>$this->user->uid()
         );

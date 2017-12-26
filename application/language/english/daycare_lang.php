@@ -17,7 +17,7 @@ $lang['notes'] = 'Notes';
 $lang['new_note'] = 'New Note';
 $lang['incident_report'] = 'Incident Report';
 $lang['incident_reports'] = 'Incident Reports';
-$lang['created_on']='Created on';
+$lang['created_at']='Created at';
 $lang['pin'] = 'Pin number';
 $lang['change_pin'] = 'Change pin';
 $lang['yes'] = 'Yes';
@@ -309,8 +309,10 @@ $lang['sort'] = 'Sort';
 
 //status
 $lang['status'] = 'Status';
-$lang['active'] = '<span class="label label-success">Active</span>';
-$lang['inactive'] = '<span class="label label-danger">Inactive</span>';
+$lang['active'] = 'Active';
+$lang['inactive'] = 'Inactive';
+$lang['active_status'] = '<span class="label label-success">Active</span>';
+$lang['inactive_status'] = '<span class="label label-danger">Inactive</span>';
 $lang['graduated'] = '<span class="label label-success">Graduated</span>';
 $lang['transferred'] = '<span class="label label-warning">Transferred</span>';
 $lang['enrolled'] = 'Enrolled';

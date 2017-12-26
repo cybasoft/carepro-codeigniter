@@ -10,6 +10,7 @@
             <tr>
                 <th>#</th>
                 <th><?php echo lang('date_in'); ?></th>
+                <th><?php echo lang('dropped_off_by'); ?></th>
                 <th><?php echo lang('date_out'); ?></th>
                 <th><?php echo lang('picked_up_by'); ?></th>
             </tr>
@@ -23,6 +24,9 @@
                         <?php echo $cnt; ?>
                     </td>
                     <td><?php echo format_date($row->time_in); ?></td>
+                    <td>
+                        <?php echo $row->in_guardian; ?>
+                    </td>
                     <td>
                         <?php if ($row->time_out !== NULL) {
                             echo format_date($row->time_out, true);

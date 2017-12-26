@@ -75,7 +75,7 @@ class Auth extends CI_Controller
         if(config_item('enable_captcha')==true)
             $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
         if ($this->form_validation->run() == true) {
-            $groups = array($this->config->item('default_groups', 'ion_auth'));
+            $groups = array(4);
             $data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),

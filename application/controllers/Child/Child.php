@@ -64,11 +64,12 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('blood_type', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('child_status', lang('status'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('status', lang('status'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             $this->child->update_child($this->input->post('child_id'));
         } else {
-            flash('danger', lang('request_error'));
+            validation_errors();
+            flash('danger');
         }
         redirect('child/' . $this->input->post('child_id'), 'refresh');
     }

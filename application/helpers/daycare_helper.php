@@ -34,6 +34,7 @@ function format_date($date, $time = true, $timestamp = false)
         return date('d M Y', strtotime($date));
     return date($format, strtotime($date));
 }
+
 function format_time($time, $timestamp = false)
 {
     return date('H:i:s', $time);
@@ -274,7 +275,7 @@ function page($page, $data = array())
 {
     $ci = &get_instance();
     $data['page'] = $page;
-    $ci->load->view('inc/home',$data);
+    $ci->load->view('inc/home', $data);
 }
 
 function demo()
@@ -299,18 +300,12 @@ function demo()
 function maintenance()
 {
     $ci = &get_instance();
-    $result = $ci->db
-        ->where('user_id', $ci->users->uid())
-        ->where('group_id', 1)
-        ->get('users_groups')
-        ->num_rows();
-    if (config_item('maintenance_mode') == true && $result <= 0) {
+
+    if (config_item('maintenance_mode') == true) {
         $ci->load->helper('language');
-        die('
-<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
+        die('<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
             . lang('maintenance_mode') . '
 </div>');
-
     }
 }
 

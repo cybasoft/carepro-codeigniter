@@ -5,15 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <?php
-                if ($this->user->user()->photo !== "") {
-                    echo '<img class="img-circle"
-         src="' . base_url() . 'assets/uploads/users/staff/' . $this->user->user()->photo . '"/>';
-                } else {
-                    echo '<img class="img-circle"
-         src="' . base_url() . 'assets/img/content/no-image.png"/>';
-                }
-                ?>
+                <?php $this->user->getPhoto(NULL,'class="img-circle"');  ?>
             </div>
             <div class="pull-left info">
                 <p><?php echo lang('hello'); ?>, <?php echo $this->user->thisUser('first_name'); ?></p>

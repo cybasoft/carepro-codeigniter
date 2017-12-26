@@ -47,7 +47,7 @@
                 <td><?php echo $child->bday; ?></td>
                 <td><?php echo decrypt($child->national_id); ?></td>
                 <td><?php echo $child->blood_type; ?></td>
-                <td><?php echo format_date($child->enroll_date, false); ?></td>
+                <td><?php echo format_date($child->created_at, false); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
