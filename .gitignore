@@ -7,6 +7,7 @@ assets/uploads/users/children/*
 assets/uploads/users/staff/*
 assets/uploads/users/parents/*
 assets/uploads/users/pickup/*
+assets/img/conent/captcha/*
 
 !application/cache/index.html
 
