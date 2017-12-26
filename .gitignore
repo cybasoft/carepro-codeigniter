@@ -3,6 +3,10 @@
 application/cache/*
 application/config/development/*
 application/config/testing/*
+assets/uploads/users/children/*
+assets/uploads/users/staff/*
+assets/uploads/users/parents/*
+assets/uploads/users/pickup/*
 
 !application/cache/index.html
 
