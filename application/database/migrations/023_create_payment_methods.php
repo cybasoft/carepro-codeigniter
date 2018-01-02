@@ -38,6 +38,7 @@ class Migration_create_payment_methods extends CI_Migration
 
         // Create Table news
         $this->dbforge->create_table("payment_methods", TRUE, $attributes);
+
     }
 
     /**

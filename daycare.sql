@@ -733,8 +733,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `payment_methods`;
 CREATE TABLE `payment_methods`(
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(100) NOT NULL UNIQUE
+  `title` VARCHAR(100) NOT NULL UNIQUE,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 LOCK TABLES `payment_methods` WRITE;
 /*!40000 ALTER TABLE `payment_methods` DISABLE KEYS */;
