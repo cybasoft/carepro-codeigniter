@@ -7,7 +7,7 @@
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    setTimeout("jQuery('#msg').slideUp('slow');", 4000);
+
     $('.lock-screen').click(function () {
         location.href = "<?php echo site_url('lockscreen'); ?>";
     });

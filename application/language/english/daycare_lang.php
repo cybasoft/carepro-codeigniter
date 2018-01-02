@@ -174,6 +174,7 @@ $lang['email_exists'] = 'Email already exist!';
 $lang['update_email'] = 'Update email';
 $lang['user_exists'] = 'User already exist!';
 $lang['invalid_pin'] = 'Pin entered is invalid!';
+$lang['invalid_request'] = 'Invalid request';
 $lang['child_already_checked_in'] = 'Child is already checked in!';
 $lang['child_already_checked_out'] = 'Child is already checked out!';
 $lang['child_not_checked_in'] = 'Child has not been checked in!';

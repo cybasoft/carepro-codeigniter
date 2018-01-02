@@ -11,6 +11,7 @@ $(document).ready(function () {
     setTimeout(function () {
         $('#msg').slideUp('slow');
     },6000);
+
     //allergies
     $('.new-allergy').hide();
     $('.new-allergy-btn').click(function () {

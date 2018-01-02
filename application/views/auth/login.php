@@ -48,7 +48,7 @@ $password = array(
             <button class="btn btn-theme btn-full"><?php echo lang('login'); ?></button>
             <div class="other-actions" style="text-align:center">
 
-                <?php echo anchor('forgot_password', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading')); ?>
+                <?php echo anchor('password/forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading')); ?>
 
                 <?php if(config_item('allow_registration')==TRUE): ?>
                     <br/>

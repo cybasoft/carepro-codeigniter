@@ -83,12 +83,10 @@ class Ion_auth
 			$this->ion_auth_model->login_remembered_user();
 		}
 
-		$email_config = $this->config->item('email_config', 'ion_auth');
-
-		if ($this->config->item('use_ci_email', 'ion_auth') && isset($email_config) && is_array($email_config)) {
+		$email_config = config_item('email_config');
+		if (isset($email_config) && is_array($email_config)) {
 			$this->email->initialize($email_config);
 		}
-
 		$this->ion_auth_model->trigger_events('library_constructor');
 	}
 
@@ -155,25 +153,34 @@ class Ion_auth
 					'forgotten_password_code' => $user->forgotten_password_code
 				);
 
-				if (!$this->config->item('use_ci_email', 'ion_auth')) {
-					$this->set_message('forgot_password_successful');
-					return $data;
-				} else {
-					$message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, true);
-					$this->email->clear();
-					$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
-					$this->email->to($user->email);
-					$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_forgotten_password_subject'));
-					$this->email->message($message);
+                $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, true);
+                $this->email->clear();
 
-					if ($this->email->send()) {
-						$this->set_message('forgot_password_successful');
-						return TRUE;
-					} else {
-						$this->set_error('forgot_password_unsuccessful');
-						return FALSE;
-					}
-				}
+                $email_config = config_item('email_config');
+                if (isset($email_config) && is_array($email_config)) {
+                    $this->email->initialize($email_config);
+                }
+
+                $this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
+                $this->email->to($user->email);
+                $this->email->subject($this->config->item('name', 'company') . ' - ' . $this->lang->line('email_forgotten_password_subject'));
+                $this->email->message($message);
+
+                $mail = $this->email->send();
+                if ($mail) {
+                    $this->set_message('forgot_password_successful');
+
+                    if(config_item('maintenance_mode')){
+                        echo $this->email->print_debugger();
+                        die();
+                    }
+
+                    return TRUE;
+                } else {
+                    $this->set_error('forgot_password_unsuccessful');
+                    return FALSE;
+                }
+
 			} else {
 				$this->set_error('forgot_password_unsuccessful');
 				return FALSE;
@@ -210,31 +217,26 @@ class Ion_auth
 				'identity' => $profile->{$identity},
 				'new_password' => $new_password
 			);
-			if (!$this->config->item('use_ci_email', 'ion_auth')) {
-				$this->set_message('password_change_successful');
-				$this->ion_auth_model->trigger_events(array('post_password_change', 'password_change_successful'));
-				return $data;
-			} else {
-				$message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password_complete', 'ion_auth'), $data, true);
+            $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password_complete', 'ion_auth'), $data, true);
 
-				$this->email->clear();
-				$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
-				$this->email->to($profile->email);
-				$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_new_password_subject'));
-				$this->email->message($message);
+            $this->email->clear();
+            $this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
+            $this->email->to($profile->email);
+            $this->email->subject($this->config->item('name', 'company') . ' - ' . $this->lang->line('email_new_password_subject'));
+            $this->email->message($message);
 
-				if ($this->email->send()) {
-					$this->set_message('password_change_successful');
-					$this->ion_auth_model->trigger_events(array('post_password_change', 'password_change_successful'));
-					return TRUE;
-				} else {
-					$this->set_error('password_change_unsuccessful');
-					$this->ion_auth_model->trigger_events(array('post_password_change', 'password_change_unsuccessful'));
-					return FALSE;
-				}
-
-			}
+            if ($this->email->send()) {
+                $this->set_message('password_change_successful');
+                $this->ion_auth_model->trigger_events(array('post_password_change', 'password_change_successful'));
+                return TRUE;
+            } else {
+                $this->set_error('password_change_unsuccessful');
+                $this->ion_auth_model->trigger_events(array('post_password_change', 'password_change_unsuccessful'));
+                return FALSE;
+            }
 		}
+
+
 
 		$this->ion_auth_model->trigger_events(array('post_password_change', 'password_change_unsuccessful'));
 		return FALSE;
@@ -317,25 +319,22 @@ class Ion_auth
 				'email' => $email,
 				'activation' => $activation_code,
 			);
-			if (!$this->config->item('use_ci_email', 'ion_auth')) {
-				$this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
-				$this->set_message('activation_email_successful');
-				return $data;
-			} else {
-				$message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_activate', 'ion_auth'), $data, true);
 
-				$this->email->clear();
-				$this->email->from($this->config->item('admin_email', 'ion_auth'), $this->config->item('site_title', 'ion_auth'));
-				$this->email->to($email);
-				$this->email->subject($this->config->item('site_title', 'ion_auth') . ' - ' . $this->lang->line('email_activation_subject'));
-				$this->email->message($message);
+			//send message
+            $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_activate', 'ion_auth'), $data, true);
 
-				if ($this->email->send() == TRUE) {
-					$this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
-					$this->set_message('activation_email_successful');
-					return $id;
-				}
-			}
+            $this->email->clear();
+            $this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
+            $this->email->to($email);
+            $this->email->subject($this->config->item('name', 'company') . ' - ' . $this->lang->line('email_activation_subject'));
+            $this->email->message($message);
+
+            if ($this->email->send() == TRUE) {
+                $this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_successful', 'activation_email_successful'));
+                $this->set_message('activation_email_successful');
+                return $id;
+            }
+
 
 			$this->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_unsuccessful', 'activation_email_unsuccessful'));
 			$this->set_error('activation_email_unsuccessful');

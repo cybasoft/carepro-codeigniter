@@ -70,15 +70,23 @@ function flash($type = "", $msg = "")
     if (validation_errors() == true) {
         if ($msg == "") {
             $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-warning"></span>', '</div>');
-            $ci->session->set_flashdata('message', $e);
-            $ci->session->set_flashdata('type', 'error');
-            $ci->session->set_flashdata('icon', 'danger');
+            $msg = $e;
+            $type = 'error';
+            $icon = 'danger';
         }
-    } else {
-        $ci->session->set_flashdata('message', $msg);
-        $ci->session->set_flashdata('type', $type);
-        $ci->session->set_flashdata('icon', $icon);
     }
+
+    $ci->session->set_flashdata('message', $msg);
+    $ci->session->set_flashdata('type', $type);
+    $ci->session->set_flashdata('icon', $icon);
+
+
+//        $tempdata = array(
+//            'message' => $msg,
+//            'type' =>$type,
+//            'icon'=>$icon);
+//
+//        $ci->session->set_tempdata($tempdata, NULL, 4);
 }
 
 /**
@@ -281,10 +289,29 @@ function page($page, $data = array())
 function demo()
 {
     $ci = &get_instance();
+
+    $seg1 = $ci->uri->segment(1);
+    $seg2 = $ci->uri->segment(2);
+    $seg3 = $ci->uri->segment(3);
+    $seg4 = $ci->uri->segment(4);
+
     if ($ci->users->uid() > 0) {
         if (config_item('demo_mode') == true) {
             $ci->load->helper('language');
-            if ($_POST) {
+
+            //prevent all post methods
+            if ($ci->input->server('REQUEST_METHOD') == 'POST' && $seg1 !== "child") {
+                flash('danger', lang('feature_disabled_in_demo'));
+                redirectPrev();
+            }
+
+            //prevent delete
+            if (strstr($seg1, 'delete')
+                || strstr($seg2, 'delete')
+                || strstr($seg3, 'delete')
+                || strstr($seg4, 'delete')
+                || strstr($seg4, 'remove')
+            ) {
                 flash('danger', lang('feature_disabled_in_demo'));
                 redirectPrev();
             }

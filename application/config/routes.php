@@ -61,6 +61,10 @@ $route['dashboard']= 'dashboard/index';
 //auth
 $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
+$route['password/forgot']['get'] = 'auth/forgotPassword';
+$route['password/forgot']['post'] = 'auth/forgotPassword';
+$route['password/reset/(:any)']['get']='auth/resetPassword/$1';
+$route['password/reset/(:any)']['post']='auth/resetPassword/$1';
 $route['register']['get'] = 'auth/register';
 $route['register']['post'] = 'auth/register';
 
@@ -98,7 +102,7 @@ $route['children/(:any)'] = "children/$1";
 //child
 $route['child/register']['post'] = "child/child/store";
 $route['child/(:num)']['get']='child/child/index/$1';
-$route['child/:num']['post']='child/child/update';
+$route['child/(:num)']['post']='child/child/update';
 
 $route['child/(:num)/uploadPhoto'] = 'child/child/uploadPhoto/$1';
 

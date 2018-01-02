@@ -112,7 +112,7 @@ $query = $this->db->get('children')->result();
                             <?php echo decrypt($row->national_id); ?>
                             <br/>
                             <?php echo lang('birthday'); ?>:
-                            <?php echo $row->bday; ?> <br/>
+                            <?php echo format_date($row->bday,false); ?> <br/>
 
                             <hr/>
                             <?php if ($this->child->is_checked_in($row->id) == 1) : ?>

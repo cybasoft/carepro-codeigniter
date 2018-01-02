@@ -14,7 +14,7 @@
         <li>
             <a href="<?php echo site_url('news/view/' . $row->id); ?>">
           <span class="label label-default">
-              <?php echo format_date($row->publish_date, false, true); ?>
+              <?php echo format_date($row->publish_date, false); ?>
           </span>
                 <br/><?php echo $row->article_name; ?>
             </a>

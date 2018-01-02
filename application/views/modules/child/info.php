@@ -16,7 +16,7 @@
 		<tr>
 			<td><?php echo lang('birthday'); ?></td>
 			<td><input class="form-control" id="bday" required="" type="date" name="bday"
-					   value="<?php echo $child->bday; ?>"/></td>
+					   value="<?php echo date('Y-m-d',strtotime($child->bday)); ?>"/></td>
 		</tr>
 		<tr>
 			<td><?php echo lang('national_id'); ?></td>

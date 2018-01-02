@@ -14,8 +14,8 @@ class Migration extends CI_Controller
         }
 
         //prevent migrations in production mode
-        if (ENVIRONMENT == 'production') {
-            show_error('Set application environment to development first');
+        if (config_item('maintenance_mode') ==TRUE) {
+            show_error('Set application config to maintenance mode first');
         }
     }
 

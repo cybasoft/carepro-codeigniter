@@ -32,7 +32,7 @@
         <?php endif; ?>
         <!-- Main content -->
         <section class="content">
-            <?php if (!empty($this->session->flashdata('message'))) : ?>
+            <?php if ($this->session->flashdata('message') !=="") : ?>
                 <div id="msg"
                      class="msg alert alert-<?php echo $this->session->flashdata('type'); ?> alert-dismissable">
                     <span class="fa fa-<?php echo $this->session->flashdata('icon'); ?>"></span>

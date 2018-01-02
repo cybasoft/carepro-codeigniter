@@ -10,7 +10,7 @@
 * https://amdtllc.com
  * Copyright 2014 All Rights Reserved
  */
-class daycare
+class Daycare
 {
 	public function __construct()
 	{

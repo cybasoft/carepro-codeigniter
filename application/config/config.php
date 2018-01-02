@@ -3,28 +3,51 @@ defined('BASEPATH') or exit('No direct script access allowed');
 //company settings
 $config['company'] = array(
     'name' => 'DaycarePRO',
-    'slogan' => 'Nice daycare',
+    'slogan' => '',
     'phone' => '',
     'fax' => '',
-    'email' => '',
+    'email' => 'admin@app.com',
     'street' => '',
     'city' => '',
     'state' => '',
     'postal_code' => '',
     'country' => '',
     'timezone' => 'America/New_York', //http://php.net/manual/en/timezones.america.php
-    'google_analytics' => '',
+    'google_analytics' => '', //enter google analytics ID
     'currency_symbol' => '$',
     'currency_abbr' => 'USD',
     'date_format' => 'd M, Y H:ia',
     'logo' => 'logo.png', //logo must be in '/assets/img' directory
     'invoice_logo' => 'logo.png' //logo must be in '/assets/img' directory
 );
-$config['allow_registration'] = FALSE;
+$config['allow_registration'] = TRUE;
 $config['allow_reset_password'] = TRUE;
 $config['enable_captcha']=FALSE;
-$config['demo_mode']=FALSE;
 $config['maintenance_mode']=FALSE;
+
+$config['demo_mode']=FALSE;
+
+
+/*
+ * Email configuration
+ *
+ * https://www.codeigniter.com/user_guide/libraries/email.html
+ *
+ */
+
+$config['user_ci_mail'] = TRUE;
+$config['email_config'] = array(
+    'protocol'=>'mail', //sendmain, smtp, mail
+    'smtp_host'=>'smtp.mailtrap.io',
+    'smtp_user'=>'2a9c56bbcb93ea',
+    'smtp_pass'=>'511f62a371a1ba',
+    'smtp_port'=>'2525', //25, 495,
+    'mailtype' => 'html',
+
+    //do not change
+    'crlf' => "\r\n",
+    'newline' => "\r\n"
+);
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -59,7 +82,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
  */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------

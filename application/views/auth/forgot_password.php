@@ -21,7 +21,7 @@ $email = array(
             echo $this->session->flashdata('message');
         endif;
         ?>
-        <?php echo form_open("auth/forgot_password", ['id' => 'loginForm']); ?>
+        <?php echo form_open("password/forgot", ['id' => 'loginForm']); ?>
         <div class="form-group">
             <?php echo form_input($email); ?>
         </div>

@@ -1,5 +1,3 @@
-<h1><?php echo lang('reset_password_heading'); ?></h1>
-
 <div id="app" class="login-wrapper">
     <div class="login-box  animation flipInX">
         <div class="logo-main">
@@ -8,13 +6,10 @@
                      alt="Laraspace Logo">
             </a>
         </div>
-        <?php
-        if (!empty(validation_errors())) :
-            echo $this->session->flashdata('message');
-        endif;
-        ?>
 
-        <?php echo form_open('auth/reset_password/' . $code, ['id' => 'loginForm']); ?>
+        <h3 class="text-center"><?php echo lang('reset_password_heading'); ?></h3>
+        <hr/>
+        <?php echo form_open('password/reset/' . $code, ['id' => 'loginForm']); ?>
         <div class="form-group">
             <?php echo sprintf(lang('reset_password_new_password_label'), $min_password_length); ?>
             <?php echo form_input($new_password); ?>

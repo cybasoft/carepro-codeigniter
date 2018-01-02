@@ -1,31 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * Name:  Ion Auth Model
- *
- * Version: 2.5.2
- *
- * Author:  Ben Edmunds
- *           ben.edmunds@gmail.com
- * @benedmunds
- *
- * Added Awesomeness: Phil Sturgeon
- *
- * Location: http://github.com/benedmunds/CodeIgniter-Ion-Auth
- *
- * Created:  10.01.2009
- *
- * Last Change: 3.22.13
- *
- * Changelog:
- * * 3-22-13 - Additional entropy added - 52aa456eef8b60ad6754b31fbdcc77bb
- *
- * Description:  Modified auth system based on redux_auth with extensive customization.  This is basically what Redux Auth 2 should be.
- * Original Author name has been kept but that does not mean that the method has not been modified.
- *
- * Requirements: PHP5 or above
- *
- */
 class Ion_auth_model extends CI_Model
 {
     /**
@@ -365,7 +339,7 @@ class Ion_auth_model extends CI_Model
         $this->trigger_events('deactivate');
 
 
-        $activation_code = sha1(md5(microtime()));
+        $activation_code = md5(time().rand(1111,9999));
         $this->activation_code = $activation_code;
 
         $data = array(
@@ -406,11 +380,10 @@ class Ion_auth_model extends CI_Model
     }
 
     /**
-     * reset password
-     *
+     * @param $identity
+     * @param $new
      * @return bool
-     * @author Mathew
-     **/
+     */
     public function reset_password($identity, $new)
     {
         $this->trigger_events('pre_change_password');
@@ -422,11 +395,9 @@ class Ion_auth_model extends CI_Model
 
         $new = $this->hash_password($new);
 
-        //store the new password and reset the remember code so all remembered instances have to re-login
         //also clear the forgotten password code
         $data = array(
             'password' => $new,
-            'remember_code' => NULL,
             'forgotten_password_code' => NULL,
             'forgotten_password_time' => NULL,
         );
@@ -441,8 +412,8 @@ class Ion_auth_model extends CI_Model
         } else {
             $this->trigger_events(array('post_change_password', 'post_change_password_unsuccessful'));
             $this->set_error('password_change_unsuccessful');
+            return false;
         }
-
         return $return;
     }
 
@@ -503,8 +474,7 @@ class Ion_auth_model extends CI_Model
         if ($old_password_matches === TRUE) {
             $hashed_new_password = $this->hash_password($new);
             $data = array(
-                'password' => $hashed_new_password,
-                'remember_code' => NULL,
+                'password' => $hashed_new_password
             );
 
             $this->trigger_events('extra_where');
@@ -554,62 +524,35 @@ class Ion_auth_model extends CI_Model
     }
 
     /**
-     * Insert a forgotten password key.
-     *
+     * @param $identity
      * @return bool
-     * @author Mathew
-     * @updated Ryan
-     * @updated 52aa456eef8b60ad6754b31fbdcc77bb
-     **/
+     */
     public function forgotten_password($identity)
     {
         if (empty($identity)) {
             $this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_unsuccessful'));
             return FALSE;
         }
-
-        //All some more randomness
-        $activation_code_part = "";
-        if (function_exists("openssl_random_pseudo_bytes")) {
-            $activation_code_part = openssl_random_pseudo_bytes(128);
-        }
-
-        for ($i = 0; $i < 1024; $i++) {
-            $activation_code_part = sha1($activation_code_part . mt_rand() . microtime());
-        }
-
-        $key = $this->hash_code($activation_code_part . $identity);
-
-        // If enable query strings is set, then we need to replace any unsafe characters so that the code can still work
-        if ($key != '' && $this->config->item('permitted_uri_chars') != '' && $this->config->item('enable_query_strings') == FALSE) {
-            // preg_quote() in PHP 5.3 escapes -, so the str_replace() and addition of - to preg_quote() is to maintain backwards
-            // compatibility as many are unaware of how characters in the permitted_uri_chars will be parsed as a regex pattern
-            if (!preg_match("|^[" . str_replace(array('\\-', '\-'), '-', preg_quote($this->config->item('permitted_uri_chars'), '-')) . "]+$|i", $key)) {
-                $key = preg_replace("/[^" . $this->config->item('permitted_uri_chars') . "]+/i", "-", $key);
-            }
-        }
-
-        $this->forgotten_password_code = $key;
-
+        $activation_code = md5(microtime().rand(1111,9999));
+        $this->forgotten_password_code =$activation_code;
         $this->trigger_events('extra_where');
-
         $update = array(
-            'forgotten_password_code' => $key,
+            'forgotten_password_code' => $activation_code,
             'forgotten_password_time' => time()
         );
-
         $this->db->update($this->tables['users'], $update, array($this->identity_column => $identity));
-
         $return = $this->db->affected_rows() == 1;
-
         if ($return)
             $this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_successful'));
         else
             $this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_unsuccessful'));
-
         return $return;
     }
 
+    /**
+     * @param $password
+     * @return bool|mixed|string
+     */
     public function hash_code($password)
     {
         return $this->hash_password($password);
@@ -957,7 +900,7 @@ class Ion_auth_model extends CI_Model
      * @return bool
      * @author Mathew
      **/
-    public function login($identity, $password, $remember = FALSE)
+    public function login($identity, $password)
     {
         $this->trigger_events('pre_login');
 
@@ -974,7 +917,6 @@ class Ion_auth_model extends CI_Model
             ->get($this->tables['users']);
 
         if ($this->is_time_locked_out($identity)) {
-            //Hash something anyway, just to take up time
             $this->hash_password($password);
 
             $this->trigger_events('post_login_unsuccessful');
@@ -995,17 +937,9 @@ class Ion_auth_model extends CI_Model
 
                     return FALSE;
                 }
-
                 $this->set_session($user);
-
                 $this->update_last_login($user->id);
-
                 $this->clear_login_attempts($identity);
-
-                if ($remember && $this->config->item('remember_users', 'ion_auth')) {
-                    $this->remember_user($user->id);
-                }
-
                 $this->trigger_events(array('post_login', 'post_login_successful'));
                 $this->set_message('login_successful');
 
@@ -1015,9 +949,7 @@ class Ion_auth_model extends CI_Model
 
         //Hash something anyway, just to take up time
         $this->hash_password($password);
-
         $this->increase_login_attempts($identity);
-
         $this->trigger_events('post_login_unsuccessful');
         $this->set_error('login_unsuccessful');
 
@@ -1161,40 +1093,6 @@ class Ion_auth_model extends CI_Model
             return $this->db->delete($this->tables['login_attempts']);
         }
         return FALSE;
-    }
-
-    /**
-     * remember_user
-     *
-     * @return bool
-     * @author Ben Edmunds
-     **/
-    public function remember_user($id)
-    {
-        $this->trigger_events('pre_remember_user');
-
-        // if the user_expire is set to zero we'll set the expiration two years from now.
-        if ($this->config->item('user_expire', 'ion_auth') === 0) {
-            $expire = (60 * 60 * 24 * 365 * 2);
-        } // otherwise use what is set
-        else {
-            $expire = $this->config->item('user_expire', 'ion_auth');
-        }
-
-        set_cookie(array(
-            'name' => $this->config->item('identity_cookie_name', 'ion_auth'),
-//            'value' => $user->{$this->identity_column},
-            'expire' => $expire
-        ));
-
-        set_cookie(array(
-            'name' => $this->config->item('remember_cookie_name', 'ion_auth'),
-//            'value' => $salt,
-            'expire' => $expire
-        ));
-
-        $this->trigger_events(array('post_remember_user', 'remember_user_successful'));
-        return TRUE;
     }
 
     /**
@@ -1508,53 +1406,6 @@ class Ion_auth_model extends CI_Model
         ));
 
         return TRUE;
-    }
-
-    /**
-     * login_remembed_user
-     *
-     * @return bool
-     * @author Ben Edmunds
-     **/
-    public function login_remembered_user()
-    {
-        $this->trigger_events('pre_login_remembered_user');
-
-        //check for valid data
-        if (!get_cookie($this->config->item('identity_cookie_name', 'ion_auth'))
-            || !get_cookie($this->config->item('remember_cookie_name', 'ion_auth'))
-            || !$this->identity_check(get_cookie($this->config->item('identity_cookie_name', 'ion_auth')))) {
-            $this->trigger_events(array('post_login_remembered_user', 'post_login_remembered_user_unsuccessful'));
-            return FALSE;
-        }
-
-        //get the user
-        $this->trigger_events('extra_where');
-        $query = $this->db->select($this->identity_column . ', id,  email, last_login')
-            ->where($this->identity_column, get_cookie($this->config->item('identity_cookie_name', 'ion_auth')))
-            ->where('remember_code', get_cookie($this->config->item('remember_cookie_name', 'ion_auth')))
-            ->limit(1)
-            ->get($this->tables['users']);
-
-        //if the user was found, sign them in
-        if ($query->num_rows() == 1) {
-            $user = $query->row();
-
-            $this->update_last_login($user->id);
-
-            $this->set_session($user);
-
-            //extend the users cookies if the option is enabled
-            if ($this->config->item('user_extend_on_login', 'ion_auth')) {
-                $this->remember_user($user->id);
-            }
-
-            $this->trigger_events(array('post_login_remembered_user', 'post_login_remembered_user_successful'));
-            return TRUE;
-        }
-
-        $this->trigger_events(array('post_login_remembered_user', 'post_login_remembered_user_unsuccessful'));
-        return FALSE;
     }
 
     /**
