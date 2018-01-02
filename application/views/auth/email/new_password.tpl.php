@@ -353,6 +353,11 @@
                     <?php echo lang('email_new_password_heading'); ?>
 
                 </span>
+                <table>
+                    <tr>
+                        <td><img  src="<?php echo base_url('assets/img/'.config_item('company')['logo']); ?>" style="width:150px;"/> </td>
+                    </tr>
+                </table>
                 <table class="main">
 
                     <tr>

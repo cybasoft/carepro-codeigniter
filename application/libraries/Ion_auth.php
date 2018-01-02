@@ -62,7 +62,6 @@ class Ion_auth
 
 		$this->load->config('ion_auth', TRUE);
 		$this->load->library('email');
-		$this->lang->load('ion_auth');
 		$this->load->helper('cookie');
 		$this->load->helper('language');
 		$this->load->helper('url');
@@ -170,7 +169,7 @@ class Ion_auth
                 if ($mail) {
                     $this->set_message('forgot_password_successful');
 
-                    if(config_item('maintenance_mode')){
+                    if(ENVIRONMENT !=='production'){
                         echo $this->email->print_debugger();
                         die();
                     }

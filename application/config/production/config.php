@@ -3,17 +3,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 //company settings
 $config['company'] = array(
     'name' => 'DaycarePRO',
-    'slogan' => '',
-    'phone' => '',
-    'fax' => '',
-    'email' => 'admin@app.com',
-    'street' => '',
-    'city' => '',
-    'state' => '',
-    'postal_code' => '',
-    'country' => '',
+    'slogan' => 'Nice daycare',
+    'phone' => '123-345-4444',
+    'fax' => '211-222-3334',
+    'email' => 'alert@amdtllc.com',
+    'street' => '123 State St',
+    'city' => 'New York',
+    'state' => 'NY',
+    'postal_code' => '13001',
+    'country' => 'USA',
     'timezone' => 'America/New_York', //http://php.net/manual/en/timezones.america.php
-    'google_analytics' => '', //enter google analytics ID
+    'google_analytics' => 'UA-101249029-4',
     'currency_symbol' => '$',
     'currency_abbr' => 'USD',
     'date_format' => 'd M, Y H:ia',
@@ -22,31 +22,23 @@ $config['company'] = array(
 );
 $config['allow_registration'] = TRUE;
 $config['allow_reset_password'] = TRUE;
-$config['enable_captcha']=FALSE;
-$config['maintenance_mode']=FALSE;
-
-$config['demo_mode']=FALSE;
-
-
-/*
- * Email configuration
- *
- * https://www.codeigniter.com/user_guide/libraries/email.html
- *
- */
+$config['enable_captcha'] = FALSE;
+$config['demo_mode'] = TRUE;
+$config['maintenance_mode'] = FALSE;
 
 $config['email_config'] = array(
     'protocol'=>'mail', //sendmain, smtp, mail
-    'smtp_host'=>'',
-    'smtp_user'=>'',
-    'smtp_pass'=>'',
-    'smtp_port'=>'25',
+    'smtp_host'=>'smtp.mailtrap.io',
+    'smtp_user'=>'2a9c56bbcb93ea',
+    'smtp_pass'=>'511f62a371a1ba',
+    'smtp_port'=>'2525', //25, 495,
     'mailtype' => 'html',
 
     //do not change
     'crlf' => "\r\n",
     'newline' => "\r\n"
 );
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -69,7 +61,7 @@ $config['email_config'] = array(
 | a PHP script and you can easily do that on your own.
 |
  */
-$config['base_url'] = '';
+$config['base_url'] = 'http://amdtllc.com/demo/daycarepro';
 
 /*
 |--------------------------------------------------------------------------
@@ -81,7 +73,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
  */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------

@@ -42,7 +42,13 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
-            $this->child->register();
+            $register = $this->child->register(true);
+            if ($register !== false) {
+                flash('success', lang('request_success'));
+                redirect('child/' . $register);
+            } else {
+                flash('error', lang('request_error'));
+            }
         } else {
             validation_errors();
             flash('danger');
@@ -196,7 +202,11 @@ class Child extends CI_Controller
     {
         $this->form_validation->set_rules('in_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
-            $this->child->check_in($child_id);
+            if ($this->child->check_in($child_id)) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('danger', lang('request_error'));
+            }
         } else {
             validation_errors();
             flash('danger');
@@ -211,7 +221,11 @@ class Child extends CI_Controller
     {
         $this->form_validation->set_rules('out_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
-            $this->child->check_out($child_id);
+            if ($this->child->check_out($child_id)) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('danger', lang('request_error'));
+            }
         } else {
             validation_errors();
             flash('danger');
@@ -229,6 +243,7 @@ class Child extends CI_Controller
 
     function doAssignParent($child_id)
     {
+        $this->child_id = $child_id;
         $this->form_validation->set_rules('parent', lang('parent'), 'required|trim|xss_clean|callback_user_not_assigned');
         if ($this->form_validation->run() == TRUE) {
             $data = array(
@@ -237,6 +252,16 @@ class Child extends CI_Controller
             );
             if ($this->db->insert('child_parents', $data)) {
                 flash('success', lang('request_success'));
+
+                $parent = $this->user->first($this->input->post('parent'));
+                $child = $this->child->first($child_id);
+                $data = array(
+                    'to' => $parent->email,
+                    'subject' => lang('assigned_child_subject'),
+                    'message' => sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false)),
+                    'template' => 'general'
+                );
+                $this->mailer->send($data);
             }
         } else {
             flash('danger');
@@ -252,11 +277,11 @@ class Child extends CI_Controller
     function user_not_assigned()
     {
         $user_id = $this->input->post('parent');
-        $child_id = $this->input->post('child');
         $this->db->where('user_id', $user_id);
-        $this->db->where('child_id', $child_id);
+        $this->db->where('child_id', $this->child_id);
         $query = $this->db->get('child_parents');
-        if ($query->num_rows() > 0) {
+
+        if (count($query->row())) {
             $this->form_validation->set_message('user_not_assigned', lang('user_already_assigned'));
             flash('danger', lang('request_error'));
             return false;

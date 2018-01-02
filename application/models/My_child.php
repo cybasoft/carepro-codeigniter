@@ -36,7 +36,7 @@ class My_child extends CI_Model
      * get all child information
      */
 
-    function register()
+    function register($getID = false)
     {
         $data = array(
             'first_name' => $this->input->post('first_name'),
@@ -55,7 +55,7 @@ class My_child extends CI_Model
         if ($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
-            flash('warning', lang('no_change_to_db'));
+            return false;
         }
 
         //assign child to user if this user is parent
@@ -70,7 +70,9 @@ class My_child extends CI_Model
         //log event
         logEvent("Add child {$data['first_name']} {$data['last_name']}");
 
-        redirect('child/' . $last_id); //go to child record
+        if($getID)
+            return $last_id;
+        return true;
     }
 
     /*
@@ -150,6 +152,10 @@ class My_child extends CI_Model
         if ($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added note for child ID: {$child_id}");
+
+            //notify parents
+
+            //notify admin
 
             flash('success', lang('request_success'));
         } else {
@@ -276,12 +282,11 @@ class My_child extends CI_Model
             'in_staff_id' => $this->user->uid()
         );
         if ($this->db->insert('child_checkin', $data)) {
-            flash('success', lang('request_success'));
-            $this->notify_parent_checkin_out($child_id, 'checkin');
+            $this->notify_parent_checkin_out($child_id, 'checkin', $this->input->post('in_guardian'));
             logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
-        } else {
-            flash('danger', lang('request_error'));
+            return true;
         }
+        return false;
     }
 
     /**
@@ -306,12 +311,12 @@ class My_child extends CI_Model
             ->where('child_id', $child_id)
             ->where('out_guardian', null)
             ->update('child_checkin', $data)) {
-            flash('success', lang('request_success'));
-            $this->notify_parent_checkin_out($child_id, 'checkout');
+
+            $this->notify_parent_checkin_out($child_id, 'checkout', $this->input->post('out_guardian'));
             logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
-        } else {
-            flash('danger', lang('request_error'));
+            return true;
         }
+        return false;
     }
 
     /*
@@ -334,49 +339,53 @@ class My_child extends CI_Model
      * check in child
      */
 
-    function notify_parent_checkin_out($child_id, $type)
+    function notify_parent_checkin_out($child_id, $type, $user)
     {
-        $this->load->library('email');
-        $this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
+        $child = $this->child($child_id);
+        $childName = $child->first_name . ' ' . $child->last_name;
+
         //get parents info
         $parents = $this->getParents($child_id);
-
         if (count($parents) == 0)
             return false;
 
         foreach ($parents->result() as $row) {
-            if (count($row) == 0)
-                return false;
+            $email_config = config_item('email_config');
+            if (isset($email_config) && is_array($email_config)) {
+                $this->email->initialize($email_config);
+            }
 
-            $this->email->to($row->email); //email parent
-            //$this->email->cc('example@example.com');
-            $this->email->bcc($this->config->item('email', 'company')); //email admin to log
             switch ($type) {
                 case 'checkin':
-                    $this->email->subject(lang('check_in_alert_subject') . ' ' . $this->child($child_id)->first_name);
-                    $msg[] = '<br>' . lang('child_checked_in_message');
-                    $msg[] = '<br><h2>' . $this->child($child_id)->last_name . ', '
-                        . $this->child($child_id)->first_name . '</h2>';
-                    $msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
-                    $msg[] = '<br>' . lang('time') . ': ' . date('H:i', time());
+                    $message = sprintf(lang('child_checked_in_message'), $childName, date('d M Y @ H:i:A'), $user);
+                    $subject = sprintf(lang('child_checked_in_subject'), $childName);
                     break;
                 case 'checkout':
-                    $this->email->subject(lang('check_out_alert_subject') . ' ' . $this->child($child_id)->last_name);
-                    $msg[] = '<br>' . lang('child_checked_out_message');
-                    $msg[] = '<br><h2>' . $this->child($child_id)->last_name . ', '
-                        . $this->child($child_id)->first_name . '</h2>';
-                    $msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
-                    $msg[] = '<br>' . lang('time') . ': ' . date('H:i', time());
+                    $message = sprintf(lang('child_checked_out_message'), $childName, date('d M Y @ H:i:A'), $user);
+                    $subject = sprintf(lang('child_checked_out_subject'), $childName);
                     break;
                 default:
-                    $msg[] = "";
+                    $message = "";
+                    $subject = 'RE: ' . $childName;
                     break;
             }
-            $this->email->message(implode($msg));
-            if ($this->email->send())
+
+            $email = array(
+                'subject' => $subject,
+                'to' => $row->email,
+                'message'=>$message,
+                'template'=>'child_check_in_out'
+            );
+
+            if ($this->mailer->send($email))
                 return true;
+
+            if (ENVIRONMENT !== 'production') {
+                echo $this->email->print_debugger();
+                die();
+            }
+
             return false;
-            //echo $this->email->print_debugger();
         }
     }
 
@@ -420,6 +429,7 @@ class My_child extends CI_Model
         $this->db->where('child_id', $child_id);
         return $this->db->get($db)->result();
     }
+
     /**
      * @return mixed
      */
@@ -444,7 +454,8 @@ class My_child extends CI_Model
      * @param $child_id
      * @return bool
      */
-    function belongsTo($user_id,$child_id){
+    function belongsTo($user_id, $child_id)
+    {
         $this->db->where('child_id', $child_id);
         $this->db->where('user_id', $user_id);
         $query = $this->db->get('child_parents');

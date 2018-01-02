@@ -352,6 +352,11 @@
                 <span class="preheader">
                     <?php echo lang('forgot_password'); ?>
                 </span>
+                <table>
+                    <tr>
+                        <td><img  src="<?php echo base_url('assets/img/'.config_item('company')['logo']); ?>" style="width:150px;"/> </td>
+                    </tr>
+                </table>
                 <table class="main">
 
                     <tr>

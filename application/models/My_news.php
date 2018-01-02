@@ -10,7 +10,7 @@
 * https://amdtllc.com
  * Copyright 2014 All Rights Reserved
  */
-class my_news extends CI_Model
+class My_news extends CI_Model
 {
 
 	function __construct()

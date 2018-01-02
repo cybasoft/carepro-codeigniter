@@ -121,9 +121,6 @@ $lang['table_name'] = 'Table name';
 $lang['generate_csv'] = 'Generate CSV';
 $lang['create_backup'] = 'Create backup';
 
-$lang['blood_type'] = 'Blood type';
-$lang['register_child'] = 'Register child';
-$lang['registered_date'] = 'Registered on';
 $lang['enrolled_on'] = 'Enrolled on';
 $lang['record'] = 'Record';
 $lang['records'] = 'Records';
@@ -169,31 +166,20 @@ $lang['feature_not_available'] = '<div class="alert alert-warning">This feature 
 $lang['maintenance_mode'] = 'We are conducting scheduled maintenance for now. Please check again later';
 $lang['no_change_to_db'] = 'No changes have been made';
 $lang['access_denied'] = 'Access denied';
-$lang['parent_child_registration_notice'] = 'Please complete the registration form below. Your child will appear in your profile after staff member has reviewed the information';
 $lang['email_exists'] = 'Email already exist!';
 $lang['update_email'] = 'Update email';
 $lang['user_exists'] = 'User already exist!';
 $lang['invalid_pin'] = 'Pin entered is invalid!';
 $lang['invalid_request'] = 'Invalid request';
-$lang['child_already_checked_in'] = 'Child is already checked in!';
-$lang['child_already_checked_out'] = 'Child is already checked out!';
-$lang['child_not_checked_in'] = 'Child has not been checked in!';
 $lang['pending_pickup'] = 'Pending pickup';
 $lang['check_in_out_notice'] = 'Ask the guardian their pin and compare';
 $lang['encryption_key_warning'] = "Encryption key must be set in Admin>Settings. This is a one time change and future changes will cause all encrypted data to be lost";
 $lang['user_is_self_warning'] = "<span class='alert alert-warning'>You cannot perform this action on yourself!</span>";
 
-$lang['message_sent'] = 'Your message has been sent';
 $lang['user_activated'] = 'User activated';
 $lang['user_deactivated'] = 'User deactivated';
 $lang['action_cancelled'] = 'Action cancelled';
 $lang['item_deleted'] = 'Item deleted successfully!';
-
-//email notifications
-$lang['check_in_alert_subject'] = 'Check-in Alert for: ';
-$lang['check_out_alert_subject'] = 'Check-out Alert for: ';
-$lang['child_checked_in_message'] = '<h3>Your child was checked in today </h3>';
-$lang['child_checked_out_message'] = '<h3>Your child was checked out today </h3>';
 
 //registration
 $lang['enter_email']='Enter your email address';
@@ -243,19 +229,7 @@ $lang['register_form_header'] = 'Parents registration';
 $lang['register_form_notice'] = 'Register here to be a parent in this daycare.';
 $lang['captcha_placeholder']='Enter text in image above';
 $lang['invalid_captcha']='Invalid captcha entered';
-
-$lang['emergency_contact'] = 'Emergency Contact';
-$lang['emergency_contacts'] = 'Emergency Contacts';
-$lang['emergency'] = 'Emergency';
-$lang['healthcare_providers'] = 'Healthcare Providers';
-$lang['new_provider']='New Provider';
-$lang['new_contact']='New Contact';
-$lang['type_role']='Type/Role';
-$lang['type_role_help']='e.g Primary doctor, insurance, dentist';
-
-$lang['assign_parent'] = 'Assign parent';
 $lang['user_already_assigned'] = 'The user selected is already assigned';
-$lang['no_assigned_parent_error'] = 'No parents are assigned to this child';
 
 //forms
 $lang['submit'] = 'submit';
@@ -269,25 +243,11 @@ $lang['users'] = 'Users';
 $lang['new'] = 'New';
 $lang['view'] = 'View';
 $lang['my'] = 'My';
-$lang['child'] = 'Child';
-$lang['parent'] = 'Parent';
 
-$lang['children'] = 'Children';
-$lang['new_child'] = 'New child';
-$lang['enrolled_children'] = 'Enrolled children';
-$lang['my_children'] = 'My children';
-$lang['roster'] = 'Roster';
-$lang['children_roster'] = 'Children Roster';
-$lang['national_id'] = 'National ID#';
-$lang['pickup'] = 'Pickup';
-$lang['authorized_pickup'] = 'Authorized Pickup';
-$lang['attendance'] = 'Attendance';
 $lang['time_in'] = 'Time In';
 $lang['time_out'] = 'Time out';
 $lang['date_in']='Date in';
 $lang['date_out']='Date out';
-$lang['picked_up_by'] = 'Picked up by';
-$lang['dropped_off_by'] = 'Dropped off by';
 
 $lang['no_results_found'] = 'No results found';
 
@@ -429,15 +389,7 @@ $lang['downloads'] = 'Downloads';
 $lang['preview'] = 'Preview';
 $lang['view'] = 'View';
 $lang['contacts'] = 'Contacts';
-//family
-$lang['update_child_notice'] = 'To update information about this child, please contact a manager.';
 $lang['copyright']='<a href="http://amdtllc.com" target="_blank">A&M Digital Technologies</a>';
 $lang['location'] = 'Location';
-$lang['incident_type'] = 'Incident Type';
-$lang['actions_taken'] = 'Actions taken';
-$lang['witnesses'] = 'Witnesses';
-$lang['witness'] = 'Witness';
-$lang['incident_location_help'] = 'Where it happened';
-$lang['incident_type_help'] = 'fall, bruise, sickness, etc';
 $lang['maintenance_mode_heading']='Maintenance mode';
 $lang['maintenance_mode_notice']='We are performing some scheduled maintenance. We will be back shortly';

@@ -350,8 +350,7 @@
 
                 <!-- START CENTERED WHITE CONTAINER -->
                 <span class="preheader">
-                    <?php echo lang('email_activate_subheading'); ?>
-
+                    <?php echo $data['subject']; ?>
                 </span>
 
                 <table>
@@ -368,28 +367,8 @@
                                     <td>
                                         <p>Hi there,</p>
 
-                                        <h3><?php echo sprintf(lang('email_activate_heading'), $identity);?></h3>
-
-                                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                                            <tbody>
-                                            <tr>
-                                                <td align="left">
-                                                    <table border="0" cellpadding="0" cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <?php echo anchor('activate/'. $id .'/'. $activation, lang('email_activate_link')); ?>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
                                         <p>
-                                            If the above link doesn't work, copy and paste this to your browser
-                                            <?php echo site_url('activate/'. $id .'/'. $activation); ?>
+                                            <?php echo $data['message']; ?>
                                         </p>
                                     </td>
                                 </tr>

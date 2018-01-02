@@ -12,6 +12,11 @@ class MY_user extends CI_Model
         parent::__construct();
     }
 
+    function first($id)
+    {
+        return $this->get($id);
+    }
+
     /**
      * @param $username
      * @param $password
@@ -20,7 +25,7 @@ class MY_user extends CI_Model
      * @param array $groups
      * @return bool
      */
-    public function reg( $password, $email, $additional_data = array(), $groups = array())
+    public function reg($password, $email, $additional_data = array(), $groups = array())
     {
         $this->load->model('ion_auth_model');
         $this->ion_auth->trigger_events('pre_register');
@@ -141,6 +146,11 @@ class MY_user extends CI_Model
      * @param string, int
      * @return string, int
      */
+    function get($id)
+    {
+        return $this->db->where('id',$id)->get('users')->row();
+    }
+
 
     function getUser($id = "", $item)
     {
