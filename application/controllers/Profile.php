@@ -16,7 +16,7 @@ class Profile extends CI_Controller
 		setRedirect();
 
 		//authenticate
-		auth();
+		auth(true);
 
 		$this->load->model('My_profile', 'profile');
 

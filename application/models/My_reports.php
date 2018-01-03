@@ -24,7 +24,7 @@ class my_reports extends CI_Model
 	function add_record_id($tablename, $data)
 	{
 		$this->db->insert($tablename, $data);
-		$id = mysql_insert_id();
+		$id = $this->db->insert_id();
 		return $id;
 	}
 

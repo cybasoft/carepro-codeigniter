@@ -16,8 +16,15 @@
                         <?php echo lang('new_invoice'); ?>
                     </a>
                     <div class="col-sm-4 pull-right">
-                        <input type="text" class="invoice_search form-control" name="invoice_search"
-                               placeholder="<?php echo lang('search'); ?>" value=""/>
+                        <form class="invoice_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="invoice_search"
+                                       placeholder="<?php echo lang('enter_invoice_id'); ?>" value=""/>
+                                <span class="input-group-btn">
+                                <button class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </span>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -49,19 +56,14 @@
             $('#results').html('<span class="fa fa-spinner fa-spin fa-2x"></span>').load('<?php echo site_url('child/' . $child->id . '/invoices'); ?>/' + sort_id);
         });
 
-        //search
-        var thread = null;
-
-        function findInvoice(search_term) {
-            $('#results').html('<div class="loading"></div>').load('<?php echo site_url('child/' . $child->id . '/invoice'); ?>?search=' + search_term);
-        }
-
-        $('.invoice_search').keyup(function () {
-            clearTimeout(thread);
-            var search_term = $(this).val();
-            thread = setTimeout(function () {
-                findInvoice(search_term);
-            }, 300);
+        $('.invoice_search').on('submit', function (e) {
+            e.preventDefault();
+            var search_term = $(this).find('input[name=invoice_search]').val();
+            if (search_term === "") {
+                swal('<?php echo lang('enter_a_search_term'); ?>' + code);
+                return;
+            }
+            $('#results').html('<div class="loading"></div>').load('<?php echo site_url('child/' . $child->id . '/invoices/search'); ?>?search=' + search_term);
         });
 
     });

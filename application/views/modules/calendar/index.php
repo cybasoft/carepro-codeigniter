@@ -105,6 +105,10 @@
 
 </script>
 
-<?php $this->load->view('modules/calendar/view_event'); ?>
-<?php $this->load->view('modules/calendar/new_event'); ?>
-<?php $this->load->view('modules/calendar/edit_event'); ?>
+<?php
+$this->load->view('modules/calendar/view_event');
+if (is('admin') || is('manager') || is('staff'))
+    $this->load->view('modules/calendar/new_event');
+if (is('admin') || is('manager') || is('staff'))
+    $this->load->view('modules/calendar/edit_event');
+?>

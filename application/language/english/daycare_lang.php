@@ -5,8 +5,7 @@
  * @author    : JMuchiri
  * @date      : 8/31/14
  * @Copyright 2017 A&M Digital Technologies
-
-* https://amdtllc.com
+ * https://amdtllc.com
  */
 //global strings
 $lang['dashboard'] = 'Dashboard';
@@ -17,7 +16,7 @@ $lang['notes'] = 'Notes';
 $lang['new_note'] = 'New Note';
 $lang['incident_report'] = 'Incident Report';
 $lang['incident_reports'] = 'Incident Reports';
-$lang['created_at']='Created at';
+$lang['created_at'] = 'Created at';
 $lang['pin'] = 'Pin number';
 $lang['change_pin'] = 'Change pin';
 $lang['yes'] = 'Yes';
@@ -137,7 +136,7 @@ $lang['company'] = 'Company';
 $lang['company_name'] = 'Company name';
 $lang['slogan'] = 'Slogan';
 $lang['logo'] = 'logo';
-$lang['logo_instructions']='Logo dimensions should be 500px x 112px or lower and size should be 2MB (2048kb) lower';
+$lang['logo_instructions'] = 'Logo dimensions should be 500px x 112px or lower and size should be 2MB (2048kb) lower';
 $lang['encryption_key'] = 'Encryption key';
 $lang['paypal_email'] = 'PayPal Email';
 $lang['timezone'] = 'Timezone';
@@ -159,6 +158,9 @@ $lang['record_not_found'] = 'Record not found';
 $lang['file_not_found'] = 'File not found';
 $lang['contact_manager'] = 'Please contact manager to make changes';
 $lang['file_size_error'] = 'The file size is not valid';
+$lang['confirm_delete_title']='Please confirm';
+$lang['confirm_delete_warning']='You cannot undo this action!';
+$lang['confirm_delete_btn']='Yes, Do it!';
 $lang['confirm_delete_item'] = 'Are you sure you want to delete this item?';
 $lang['confirm_delete_user'] = 'Are you sure you want to delete this user? <br/>  This action cannot be reversed! Type <strong>DELETE</strong> to confirm.';
 $lang['feature_disabled_in_demo'] = 'Action/Feature disabled in demo mode';
@@ -180,9 +182,10 @@ $lang['user_activated'] = 'User activated';
 $lang['user_deactivated'] = 'User deactivated';
 $lang['action_cancelled'] = 'Action cancelled';
 $lang['item_deleted'] = 'Item deleted successfully!';
+$lang['enter_a_search_term']='Enter a search term';
 
 //registration
-$lang['enter_email']='Enter your email address';
+$lang['enter_email'] = 'Enter your email address';
 $lang['name'] = 'Name';
 $lang['username'] = 'Username';
 $lang['first_name'] = 'First name';
@@ -227,10 +230,13 @@ $lang['last_login'] = 'Last login';
 $lang['switch_user'] = 'Switch user';
 $lang['register_form_header'] = 'Parents registration';
 $lang['register_form_notice'] = 'Register here to be a parent in this daycare.';
-$lang['captcha_placeholder']='Enter text in image above';
-$lang['invalid_captcha']='Invalid captcha entered';
+$lang['captcha_placeholder'] = 'Enter text in image above';
+$lang['invalid_captcha'] = 'Invalid captcha entered';
 $lang['user_already_assigned'] = 'The user selected is already assigned';
 
+$lang['file'] = 'File';
+$lang['filename'] = 'Filename';
+$lang['toggle_navigation'] = 'Toggle navigation';
 //forms
 $lang['submit'] = 'submit';
 $lang['update'] = 'update';
@@ -246,8 +252,8 @@ $lang['my'] = 'My';
 
 $lang['time_in'] = 'Time In';
 $lang['time_out'] = 'Time out';
-$lang['date_in']='Date in';
-$lang['date_out']='Date out';
+$lang['date_in'] = 'Date in';
+$lang['date_out'] = 'Date out';
 
 $lang['no_results_found'] = 'No results found';
 
@@ -279,6 +285,7 @@ $lang['transferred'] = '<span class="label label-warning">Transferred</span>';
 $lang['enrolled'] = 'Enrolled';
 $lang['pending'] = '<span class="label label-info">Pending</span>';
 
+$lang['account_pending_approval']='<i class="fa fa-warning"></i> Your account is pending approval';
 $lang['select'] = 'select';
 $lang['selected'] = 'selected';
 $lang['checked'] = 'checked';
@@ -322,6 +329,7 @@ $lang['invoice'] = 'Invoice';
 $lang['invoice_id'] = 'Invoice ID';
 $lang['generate_invoice'] = 'Generate invoice';
 $lang['new_invoice'] = 'New invoice';
+$lang['enter_invoice_id']='Enter invoice ID';
 $lang['make_payment'] = 'Make payment';
 $lang['paid'] = 'Paid';
 $lang['unpaid'] = 'Unpaid';
@@ -342,7 +350,7 @@ $lang['no_pending_charges'] = 'You have no pending charges';
 $lang['pay_with'] = 'Pay with';
 
 //invoice
-$lang['invoice_due']='Due Invoices';
+$lang['invoice_due'] = 'Due Invoices';
 $lang['tax'] = 'Tax';
 $lang['total_tax'] = 'Total tax';
 $lang['sub_total'] = 'Sub total';
@@ -389,7 +397,11 @@ $lang['downloads'] = 'Downloads';
 $lang['preview'] = 'Preview';
 $lang['view'] = 'View';
 $lang['contacts'] = 'Contacts';
-$lang['copyright']='<a href="http://amdtllc.com" target="_blank">A&M Digital Technologies</a>';
+$lang['copyright'] = '<a href="http://amdtllc.com" target="_blank">A&M Digital Technologies</a>';
 $lang['location'] = 'Location';
-$lang['maintenance_mode_heading']='Maintenance mode';
-$lang['maintenance_mode_notice']='We are performing some scheduled maintenance. We will be back shortly';
+$lang['maintenance_mode_heading'] = 'Maintenance mode';
+$lang['maintenance_mode_notice'] = 'We are performing some scheduled maintenance. We will be back shortly';
+
+$lang['admin_purge_warnng'] = ' Warning! This is an admin action. This will delete all records. Type "PURGE" to
+    continue';
+$lang['purge']='Purge!';

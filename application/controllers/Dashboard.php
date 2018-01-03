@@ -13,24 +13,23 @@ class Dashboard extends CI_Controller
     function index()
     {
         $this->load->model('my_invoice', 'invoice');
-        if (auth() == true) {
-            if (is('parent')) {
-//			    $children = $this->db->get('children');
-                //page('modules/family/index',compact('children'));
-                echo lang('coming_soon');
-                echo anchor('logout', 'logout');
-                die();
-            } else {
-                page('dashboard/home');
-            }
-        } else {
-            redirect('login', 'refresh');
+        if(is('admin') || is('manager') || is('staff')){
+            page('dashboard/home');
+        }
+
+        if (is('parent')) {
+            $children = $this->db->get('children');
+            page('modules/family/index',compact('children'));
+        }
+
+        if(!is('admin') || is('manager') || !is('staff') || !is('parent')){
+            page('dashboard/pending');
         }
     }
 
     function lockscreen()
     {
-        if (auth())
+        if (auth(true))
             $this->load->view('dashboard/lockscreen');
     }
     //todo suspend the previous session and create new using pin

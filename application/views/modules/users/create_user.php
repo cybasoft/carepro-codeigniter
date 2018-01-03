@@ -29,7 +29,7 @@
                                         $gID = $group['id'];
                                         $g_name = $group['name'];
                                         ?>
-                                        <input type="checkbox" name="groups[]" value="<?php echo $group['id']; ?>">
+                                        <input type="radio" name="groups[]" value="<?php echo $group['id']; ?>">
                                         <?php echo $g_name; ?>
                                     </label>
                                 <?php endforeach ?>

@@ -42,8 +42,8 @@
                 <div role="tabpanel" class="tab-pane fade in active" id="notes">
                     <br/>
                     <?php foreach ($notes as $note): ?>
-                        <div class="box  box-info">
-                            <div class="box-header">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
                                 <div class="box-title">
                                     <em class="text-olive small">
                                         <?php echo format_date($note->created_at); ?>
@@ -71,7 +71,7 @@
                     <br/>
                     <?php foreach ($incidents as $incident): ?>
                         <div class="box  box-info">
-                            <div class="box-header">
+                            <div class="box-header with-border">
                                 <div class="box-title">
                                     <em class="text-olive small">
                                         <?php echo format_date($incident->date_occurred); ?>

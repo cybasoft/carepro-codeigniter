@@ -2,7 +2,11 @@
     <div class="col-sm-6">
         <div class="box box-info box-solid">
             <div class="box-header">
-                <div class="box-title"><?php echo $child->first_name; ?>'s Profile</div>
+                <h3 class="box-title"><?php echo sprintf(lang('child_page_heading'),$child->first_name.' '.$child->last_name); ?></h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
             </div>
             <div class="box-body table-responsive">
                 <?php $this->load->view($this->module . 'info'); ?>
@@ -10,11 +14,13 @@
         </div>
     </div>
     <div class="col-sm-6">
-
-        <div class="box box-solid box-primary">
-            <div class="box-header">
-                <div class="box-title btn-block"><?php echo lang('parents'); ?>
-                    <span class="fa fa-plus assign-user-btn pull-right"></span>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"><?php echo lang('parents'); ?></h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool  assign-user-btn">
+                        <span class="fa fa-plus"></span>
+                    </button>
                 </div>
             </div>
             <div class="box-body table-responsive">
@@ -22,9 +28,7 @@
                 <?php $this->load->view($this->module . 'parents'); ?>
             </div>
         </div>
-
         <?php $this->load->view($this->module . 'pickup'); ?>
-
     </div>
 </div>
 

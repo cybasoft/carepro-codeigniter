@@ -18,9 +18,9 @@ if (!empty($child->photo)) {
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-						class="sr-only">Close</span></button>
+						class="sr-only"><?php echo lang('close'); ?></span></button>
 				<h4 class="modal-title" id="myModalLabel"><?php echo lang('upload'); ?>
-					for: <?php echo $child->last_name . ', ' . $child->first_name; ?></h4>
+					-  <?php echo $child->last_name . ', ' . $child->first_name; ?></h4>
 			</div>
 			<div class="modal-body">
 				<?php echo form_open_multipart('child/' . $child->id.'/uploadPhoto', 'class="input-group"'); ?>

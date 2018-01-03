@@ -5,83 +5,84 @@
  * User: John Muchiri
  * Email: jgmuchiri@gmail.com
  * Date: 12/21/2014
- * 
-
-* https://amdtllc.com
+ *
+ * https://amdtllc.com
  * Copyright 2014 All Rights Reserved
  */
 class my_cron extends CI_Model
 {
 
-	function __construct()
-	{
-		parent::__construct();
-	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
-	/*Notify admin of event*/
-	function notify($event)
-	{
-		$this->load->library('email');
+    /*Notify admin of event*/
+    function notify($event)
+    {
+        $this->load->library('email');
 
-		$user = $this->user->user()->last_name;
+        $user = $this->user->user()->last_name;
 
-		$this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
-		$this->email->subject('Event alert!');
+        $this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
+        $this->email->subject('Event alert!');
 
-		$msg[] = 'User: ' . $user;
-		$msg[] = '<br>Company' . $this->config->item('name', 'company');
-		$msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
-		$msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
-		$msg[] = '<hr/>' . $event;
+        $msg[] = 'User: ' . $user;
+        $msg[] = '<br>Company' . $this->config->item('name', 'company');
+        $msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
+        $msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
+        $msg[] = '<hr/>' . $event;
 
-		$this->email->message(implode($msg));
+        $this->email->message(implode($msg));
 
-		if ($this->email->send())
-			return true;
-		return false;
-	}
-	/*
-	 * notify admin of user registration
-	 *
-	 * @param none
-	 * @return void
-	 *
-	 *
-	 */
-	function notifyNewRegistration($company, $email)
-	{
-		$this->email->from($this->config->item('email', 'company'));
-		$this->email->to($this->config->item('email', 'company'));
-		$this->email->subject('Registration! New user');
+        if ($this->email->send())
+            return true;
+        return false;
+    }
 
-		$msg[] = "New user has registered <hr/>";
-		$msg[] = $company . '<br/> ' . $email;
+    /*
+     * notify admin of user registration
+     *
+     * @param none
+     * @return void
+     *
+     *
+     */
+    function notifyNewRegistration($company, $email)
+    {
+        $this->email->from($this->config->item('email', 'company'));
+        $this->email->to($this->config->item('email', 'company'));
+        $this->email->subject('Registration! New user');
 
-		$msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
-		$msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
+        $msg[] = "New user has registered <hr/>";
+        $msg[] = $company . '<br/> ' . $email;
 
-		$this->email->message(implode($msg));
+        $msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
+        $msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
 
-		if ($this->email->send())
-			return true;
-		return false;
-	}
+        $this->email->message(implode($msg));
 
-	function sendMail()
-	{
-		$this->load->library('email');
+        if ($this->email->send())
+            return true;
+        return false;
+    }
 
-		$child_id = $this->child->cid();
+//todo move to mailer
+    function sendMail()
+    {
+        $this->load->library('email');
 
-		$parents = $this->getParents($child_id);
+        $child_id = $this->child->cid();
 
-		foreach ($parents as $row) {
-			$this->email->to($row->email); //email parent
-			//$this->email->cc('example@example.com');
-			$this->email->bcc($this->config->item('email', 'company')); //email admin to log
+        $parents = $this->child->getParents($child_id);
+
+        foreach ($parents as $row) {
+            $this->email->to($row->email); //email parent
+            //$this->email->cc('example@example.com');
+            $this->email->bcc($this->config->item('email', 'company')); //email admin to log
 
 
-			//echo $this->email->print_debugger();
-		}
-	}
+            //echo $this->email->print_debugger();
+        }
+    }
 }

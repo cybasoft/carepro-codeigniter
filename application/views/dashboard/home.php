@@ -11,7 +11,7 @@
                         <td colspan="2"><?php echo $this->config->item('slogan', 'company'); ?></td>
                     </tr>
                     <tr>
-                        <td>Timezone:</td>
+                        <td><?php echo lang('timezone'); ?>:</td>
                         <td><?php echo $this->config->item('timezone', 'company'); ?></td>
                     </tr>
                 </table>
@@ -35,7 +35,7 @@
                         <td><?php echo $this->config->item('phone', 'company'); ?></td>
                     </tr>
                     <tr>
-                        <td>Fax:</td>
+                        <td><?php echo lang('fax'); ?>:</td>
                         <td><?php echo $this->config->item('fax', 'company'); ?></td>
                     </tr>
                 </table>
@@ -44,7 +44,7 @@
 
 
         <div class="box box-warning">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <div class="box-title"><i class="fa fa-money"></i> <?php echo lang('invoices_due'); ?></div>
             </div>
             <div class="box-body">
@@ -71,6 +71,7 @@
 
     <div class="col-lg-9 col-md-8 col-sm-8">
         <div class="row">
+
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
@@ -105,7 +106,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                       <i class="fa fa-user-plus" aria-hidden="true"></i>
+                       <i class="fa fa-user" aria-hidden="true"></i>
                     </div>
                     <a href="<?php echo site_url('users'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
@@ -127,7 +128,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                        <i class="fa fa-credit-card" aria-hidden="true"></i>
                     </div>
                     <a href="<?php echo site_url('children'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>
@@ -148,7 +149,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                        <i class="fa fa-clipboard" aria-hidden="true"></i>
                     </div>
                     <a href="<?php echo site_url('news'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>

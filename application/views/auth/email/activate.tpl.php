@@ -366,7 +366,7 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hi there,</p>
+                                        <p><?php echo lang('email_salute'); ?>,</p>
 
                                         <h3><?php echo sprintf(lang('email_activate_heading'), $identity);?></h3>
 
@@ -388,7 +388,7 @@
                                             </tbody>
                                         </table>
                                         <p>
-                                            If the above link doesn't work, copy and paste this to your browser
+                                            <?php echo lang('copy_paste_link_if_not_working'); ?>
                                             <?php echo site_url('activate/'. $id .'/'. $activation); ?>
                                         </p>
                                     </td>

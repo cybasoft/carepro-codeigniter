@@ -16,3 +16,5 @@
     </div>
     <?php echo form_close(); ?>
 </div>
+<br/>
+<hr/>

@@ -51,12 +51,12 @@ class Invoice extends CI_Controller
             }
             $this->db->where('invoice_status', $s);
         }
-
         if (isset($_GET['search'])) {
-            $this->db->like('id', $_GET['search']);
+            $this->db->where('id', $_GET['search']);
         }
         $this->db->where('child_id', $child->id);
         $invoices = $this->invoice->getInvoices();
+
         $this->load->view($this->module . 'invoices', compact('child', 'invoices'));
     }
 

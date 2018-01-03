@@ -13,7 +13,7 @@ class news extends CI_Controller
         parent::__construct();
         setRedirect();
         //authenticate
-        auth();
+        auth(true);
         //vars
         $this->module = 'modules/news/';
         $this->load->model('My_user', 'user');
@@ -33,9 +33,9 @@ class news extends CI_Controller
     {
         allow('admin,manager,staff');
 
-        $this->form_validation->set_rules('article_order', 'order', 'required|trim|xss_clean|integer');
-        $this->form_validation->set_rules('article_name', 'File name', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('article_body', 'Article body', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('article_order', lang('order'), 'required|trim|xss_clean|integer');
+        $this->form_validation->set_rules('article_name', lang('title'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('article_body', lang('content'), 'required|trim|xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
             if ($this->news->create()) {
@@ -82,9 +82,9 @@ class news extends CI_Controller
             redirect('news/edit', 'refresh');
         }
         //edit and update
-        $this->form_validation->set_rules('article_order', 'order', 'required|trim|xss_clean|integer');
-        $this->form_validation->set_rules('article_name', 'File name', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('article_body', 'Article body', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('article_order', lang('order'), 'required|trim|xss_clean|integer');
+        $this->form_validation->set_rules('article_name', lang('title'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('article_body', lang('content'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             if ($this->news->update($article) == true) {
                 flash('success', lang('request_success'));

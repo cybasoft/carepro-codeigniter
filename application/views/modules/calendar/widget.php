@@ -1,5 +1,5 @@
 <div class="box box-solid box-info">
-    <div class="box-header ui-sortable-handle">
+    <div class="box-header with-border ui-sortable-handle">
         <i class="fa fa-calendar"></i>
         <h3 class="box-title"><?php echo lang('calendar'); ?></h3>
     </div>

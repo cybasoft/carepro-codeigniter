@@ -78,10 +78,10 @@ class Users extends CI_Controller
         allow('admin,manager');
         $id = $this->input->post('id');
         //validate form input
-        $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_first_name_label'), 'required|xss_clean');
-        $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_last_name_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('first_name', lang('edit_user_validation_first_name_label'), 'required|xss_clean');
+        $this->form_validation->set_rules('last_name', lang('edit_user_validation_last_name_label'), 'required|xss_clean');
         $this->form_validation->set_rules('email', lang('email'), 'required|xss_clean|valid_email');
-        $this->form_validation->set_rules('groups', $this->lang->line('edit_user_validation_groups_label'), 'xss_clean');
+        $this->form_validation->set_rules('groups', lang('edit_user_validation_groups_label'), 'xss_clean');
         $data = array(
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
@@ -100,8 +100,8 @@ class Users extends CI_Controller
 
         //update the password if it was posted
         if ($this->input->post('password')) {
-            $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-            $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+            $this->form_validation->set_rules('password', lang('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+            $this->form_validation->set_rules('password_confirm', lang('edit_user_validation_password_confirm_label'), 'required');
 
             $data['password'] = $this->input->post('password');
         }
@@ -122,7 +122,7 @@ class Users extends CI_Controller
     function updateUserData($id)
     {
         //validate form input
-        $this->form_validation->set_rules('pin', 'Pin', 'required|xss_clean|trim|integer');
+        $this->form_validation->set_rules('pin', lang('pin'), 'required|xss_clean|trim|integer');
         $this->form_validation->set_rules('address', lang('address'), 'required|xss_clean|trim');
         if ($this->form_validation->run() === TRUE) {
             if ($this->user->update_user_data($id)) {
@@ -166,8 +166,8 @@ class Users extends CI_Controller
         $id = (int)$id;
 
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
-        $this->form_validation->set_rules('id', $this->lang->line('deactivate_validation_user_id_label'), 'required|alpha_numeric');
+        $this->form_validation->set_rules('confirm', lang('deactivate_validation_confirm_label'), 'required');
+        $this->form_validation->set_rules('id', lang('deactivate_validation_user_id_label'), 'required|alpha_numeric');
 
         if ($this->form_validation->run() == FALSE) {
 
@@ -218,13 +218,13 @@ class Users extends CI_Controller
 
     function create_group()
     {
-        $this->data['title'] = $this->lang->line('create_group_title');
+        $this->data['title'] = lang('create_group_title');
 
         allow('admin');
 
         //validate form input
-        $this->form_validation->set_rules('group_name', $this->lang->line('create_group_validation_name_label'), 'required|alpha_dash|xss_clean');
-        $this->form_validation->set_rules('description', $this->lang->line('create_group_validation_desc_label'), 'xss_clean');
+        $this->form_validation->set_rules('group_name', lang('create_group_validation_name_label'), 'required|alpha_dash|xss_clean');
+        $this->form_validation->set_rules('description', lang('create_group_validation_desc_label'), 'xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
             $new_group_id = $this->ion_auth->create_group($this->input->post('group_name'), $this->input->post('description'));
@@ -250,12 +250,12 @@ class Users extends CI_Controller
             redirect('auth', 'refresh');
         }
         //validate form input
-        $this->form_validation->set_rules('group_name', $this->lang->line('edit_group_validation_name_label'), 'required|alpha_dash|xss_clean');
-        $this->form_validation->set_rules('group_description', $this->lang->line('edit_group_validation_desc_label'), 'xss_clean');
+        $this->form_validation->set_rules('group_name', lang('edit_group_validation_name_label'), 'required|alpha_dash|xss_clean');
+        $this->form_validation->set_rules('group_description', lang('edit_group_validation_desc_label'), 'xss_clean');
         if ($this->form_validation->run() === TRUE) {
             $group_update = $this->ion_auth->update_group($id, $_POST['group_name'], $_POST['group_description']);
             if ($group_update) {
-                flash('success', $this->lang->line('edit_group_saved'));
+                flash('success', lang('edit_group_saved'));
             } else {
 
             }

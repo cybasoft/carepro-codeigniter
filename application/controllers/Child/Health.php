@@ -7,7 +7,7 @@ class Health extends CI_Controller
         parent::__construct();
         //redirect session
         setRedirect();
-        auth();
+        auth(true);
         $this->load->model('My_child', 'child');
         $this->load->model('My_health', 'health');
         $this->module = 'modules/child/health/';

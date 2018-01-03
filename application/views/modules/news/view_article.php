@@ -3,7 +3,7 @@
         <?php $this->load->view($this->module . 'sidebar'); ?>
     </div>
     <div class="col-sm-9">
-        <div class="box box-success">
+        <div class="box box-success box-solid-head">
             <div class="box-header">
                 <div class="box-title">
                     <h3>
@@ -20,17 +20,16 @@
                 </div>
             </div>
             <div class="box-body">
-                <div class="">
-                    By: <span class=" label label-default"><?php echo $this->user->getUser($article->user_id, 'first_name'); ?></span>
-                    &nbsp;
-                    on: <span class=" label label-default"><?php echo format_date($article->publish_date); ?></span>
-                </div>
-                <hr/>
+                <em>
+                    <?php echo format_date($article->publish_date); ?>
+                    |
+                    <?php echo $this->user->getUser($article->user_id, 'first_name'); ?>
+                </em>
+                <br/>
+                <br/>
                 <?php echo $article->article_body; ?>
             </div>
-            <div class="box-footer">
 
-            </div>
         </div>
     </div>
 </div>

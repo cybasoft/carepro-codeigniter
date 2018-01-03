@@ -80,11 +80,11 @@ class Parents extends CI_Controller
 	 */
 	function register()
 	{
-		$this->form_validation->set_rules('first_name', 'Firstname', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('last_name', 'Lastname', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
+		$this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
 		$this->form_validation->set_rules('national_id', lang('national_id'), 'required|trim|xss_clean|integer');
-		$this->form_validation->set_rules('bday', 'Birthday', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('gender', 'Gender', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
+		$this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
 		if ($this->form_validation->run() == TRUE) {
 			$this->parent->register_child();
 		} else {

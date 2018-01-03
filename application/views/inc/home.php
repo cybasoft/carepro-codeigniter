@@ -25,7 +25,7 @@
                     <?php echo strtoupper($this->uri->segment(1)); ?>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo lang('home'); ?></a></li>
                     <li class="active"><?php echo ucwords($this->uri->segment(1)); ?></li>
                 </ol>
             </section>

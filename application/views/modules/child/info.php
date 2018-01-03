@@ -40,7 +40,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Blood type</td>
+			<td><?php echo lang('blood_type'); ?></td>
 			<td>
 				<select name="blood_type" required="" class="form-control">
 					<option value="unknown">--<?php echo lang('select'); ?>--</option>

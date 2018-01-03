@@ -365,7 +365,7 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hi there,</p>
+                                        <p><?php echo lang('email_salute'); ?>,</p>
 
                                         <h3><?php echo sprintf(lang('email_new_password_heading'), $identity);?></h3>
 

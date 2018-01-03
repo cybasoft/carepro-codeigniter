@@ -1,5 +1,5 @@
-<div class="alert alert-danger">Warning! This is an admin action. This will delete all records. Type "PURGE" to
-    continue
+<div class="alert alert-danger">
+    <?php echo lang('admin_purge_warning'); ?>
 </div>
 <?php
 if (!isset($_POST['confirm'])) { //double check this is the action
@@ -8,7 +8,7 @@ if (!isset($_POST['confirm'])) { //double check this is the action
     <div class="input-group">
         <input type="text" name="confirm" class="form-control"/>
     <span class="input-group-btn">
-        <button class="btn btn-danger">PURGE!</button>
+        <button class="btn btn-danger"><?php echo lang('purge'); ?>!</button>
     </span>
     </div>
     <?php
@@ -22,10 +22,10 @@ if (!isset($_POST['confirm'])) { //double check this is the action
 
         if ($this->db->affected_rows() > 0) {
 
-            flash('success', 'Success! Payments purged');
+            flash('success', lang('request_success'));
         } else {
 
-            flash('danger', 'Error! Unable to purge payments');
+            flash('danger', lang('request_success'));
         }
         redirect('child#payments');
     } else {

@@ -122,7 +122,7 @@ function redirectPrev($msg = array())
 function is($group)
 {
     $ci = &get_instance();
-    auth();
+    auth(true);
     if ($ci->ion_auth->in_group($group))
         return true;
     return false;
@@ -132,12 +132,13 @@ function is($group)
  * check if authenticated or send to login
  * @return bool
  */
-function auth()
+function auth($redirect = false)
 {
     if (logged_in() == true) {
         return true;
     } else {
-        redirect('login', 'refresh');
+        if($redirect)
+            redirect('login', 'refresh');
         return false;
     }
 }
@@ -254,7 +255,7 @@ function logEvent($event)
 function allow($group)
 {
     $ci = &get_instance();
-    auth();
+    auth(true);
     $groups = explode(',', $group);
     $data = array();
     for ($i = 0; $i < count($groups); $i++) {
@@ -362,10 +363,40 @@ function lang($text, $for = '', $attributes = array())
     return $line;
 }
 
+/**
+ * dump and die
+ *
+ * @param $array
+ */
 function dd($array)
 {
     print_r($array);
     die();
+}
+
+/**
+ * @param $num
+ * @return mixed
+ */
+function uri_segment($num)
+{
+    $ci = &get_instance();
+    return $ci->uri->segment($num);
+}
+
+/**
+ * @param $page
+ * @return string
+ */
+function set_active($page)
+{
+    $uri = uri_string();
+    if (is_array($page)) {
+        $uri = uri_segment(1);
+        if (in_array($uri, $page))
+            return 'active';
+    }
+    return ($page == $uri) ? 'active' : '';
 }
 
 ?>

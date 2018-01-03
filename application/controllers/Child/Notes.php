@@ -7,7 +7,7 @@ class notes extends CI_Controller
         parent::__construct();
         //redirect session
         setRedirect();
-        auth();
+        auth(true);
         //local variables
         $this->module = 'modules/child/notes/';
         $this->load->helper('text');

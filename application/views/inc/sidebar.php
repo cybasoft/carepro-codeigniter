@@ -5,7 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <?php $this->user->getPhoto(NULL,'class="img-circle"');  ?>
+                <?php $this->user->getPhoto(NULL, 'class="img-circle"'); ?>
             </div>
             <div class="pull-left info">
                 <p><?php echo lang('hello'); ?>, <?php echo $this->user->thisUser('first_name'); ?></p>
@@ -27,50 +27,51 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li class="active">
+            <li class="<?php echo set_active('dashboard'); ?>">
                 <a href="<?php echo site_url('dashboard'); ?>">
                     <i class="fa fa-dashboard"></i> <span><?php echo lang('dashboard'); ?></span>
                 </a>
             </li>
-            <li>
+
+            <?php if(is('admin') || is('manager') || is('staff')): ?>
+            <li class="<?php echo set_active(array('children','child')); ?>">
                 <a href="<?php echo site_url('children'); ?>">
                     <i class="fa fa-users"></i> <span><?php echo lang('children'); ?>
                         <small class="badge pull-right bg-green"><?php echo $this->child->getCount(); ?></small>
                 </a>
             </li>
-            <li>
+            <?php endif; ?>
+
+            <?php if(is('admin') || is('manager')): ?>
+            <li class="<?php echo set_active('users'); ?>">
                 <a href="<?php echo site_url('users'); ?>">
                     <i class="fa fa-user"></i> <span><?php echo lang('users'); ?></span>
                     <small class="badge pull-right bg-blue"><?php echo $this->user->getCount(); ?></small>
                 </a>
             </li>
-<!--            <li class="bg-warning">-->
-<!--                <a href="--><?php //echo site_url('parent'); ?><!--">-->
-<!--                    <i class="fa fa-users"></i> <span>My Children-->
-<!--                </a>-->
-<!--            </li>-->
-            <!--li>
-				<a href="<?php echo site_url('accounting'); ?>">
-					<i class="fa fa-laptop"></i> <span><?php echo lang('accounting'); ?></span>
-				</a>
-			</li-->
-            <li>
+            <?php endif; ?>
+
+            <li class="<?php echo set_active('calendar'); ?>">
                 <a href="<?php echo site_url('calendar'); ?>">
                     <i class="fa fa-calendar"></i> <span><?php echo lang('calendar'); ?></span>
                     <!--small class="badge pull-right bg-red">3</small-->
                 </a>
             </li>
-            <li>
+            <li class="<?php echo set_active(['news']); ?>">
                 <a href="<?php echo site_url('news'); ?>">
                     <i class="fa fa-clipboard"></i>
                     <span><?php echo lang('news'); ?></span>
                 </a>
             </li>
-            <li>
+
+            <?php if(is('admin')): ?>
+            <li class="<?php echo set_active('settings'); ?>">
                 <a href="<?php echo site_url('settings'); ?>">
                     <i class="fa fa-gears"></i> <span><?php echo lang('settings'); ?></span>
                 </a>
             </li>
+            <?php endif; ?>
+
         </ul>
     </section>
     <!-- /.sidebar -->
@@ -80,7 +81,7 @@
 
         <div style="font-size:11px;padding:5px;">
             &copy; <?php echo date('Y'); ?>
-            By <a href="http://amdtllc.com" target="_blank">A&M Digital Technologies</a>
+            <?php echo lang('copyright'); ?>
             <br/>
             <br/>
             <a href="https://amdtllc.com/support" target="_blank">Open support ticket</a>

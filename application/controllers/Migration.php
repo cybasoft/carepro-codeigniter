@@ -63,7 +63,7 @@ class Migration extends CI_Controller
                 $this->seedGroups();
                 break;
             default:
-                show_error("Unable to perform action requested");
+                show_error(lang('request_error'));
                 break;
         }
         echo "Seeding completed " . PHP_EOL;

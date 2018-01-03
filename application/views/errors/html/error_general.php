@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Error</title>
+<title><?php echo lang('error'); ?></title>
 <style type="text/css">
 
 ::selection { background-color: #E13300; color: white; }

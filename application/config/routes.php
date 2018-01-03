@@ -139,8 +139,8 @@ $route['child/deletePickup/(:num)'] = 'child/pickup/deletePickup/$1';
 $route['child/(:num)/attendance'] = 'child/child/attendance/$1';
 
 $route['invoice/:any'] = 'accounting/invoice/$1';
-
 $route['child/(:num)/billing'] = 'child/invoice/index/$1';
+$route['child/(:num)/invoices/search'] = 'child/invoice/invoices/$1/all';
 $route['child/(:num)/invoices/(:any)'] = 'child/invoice/invoices/$1/$2';
 $route['child/(:num)/newInvoice'] = 'child/invoice/create/$1';
 $route['child/(:num)/createInvoice'] = 'child/invoice/store/$1';

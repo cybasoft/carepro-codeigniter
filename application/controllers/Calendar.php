@@ -14,7 +14,7 @@ class Calendar extends CI_Controller
 
         //redirect session
         setRedirect();
-        auth();
+        auth(true);
         //local resources (models,libraries etc)
         $this->load->model('My_calendar', 'calendar');
 
@@ -49,10 +49,10 @@ class Calendar extends CI_Controller
     {
         allow('admin,manager,staff');
 
-        $this->form_validation->set_rules('title', 'Event title', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('start', 'Event start date', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('end', 'Event end date', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('desc', 'Details', 'trim|xss_clean');
+        $this->form_validation->set_rules('title', lang('title'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('start', lang('start_date'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('end', lang('end_date'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('desc', lang('details'), 'required|trim|xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
             $this->calendar->add_event();
@@ -70,15 +70,15 @@ class Calendar extends CI_Controller
     {
         allow('admin,manager,staff');
 
-        $this->form_validation->set_rules('title', 'Event title', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('start', 'Event start date', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('end', 'Event end date', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('desc', 'Details', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('title', lang('title'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('start', lang('start_date'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('end', lang('end_date'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('desc', lang('details'), 'required|trim|xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
             $this->calendar->update_event();
         } else {
-            flash('danger', 'Error!');
+            flash('danger', lang('request_error'));
         }
         redirectPrev();
 
@@ -91,9 +91,9 @@ class Calendar extends CI_Controller
     {
         allow('admin,manager,staff');
         if ($this->calendar->delete_event()) {
-            flash('success', 'Event has been delete');
+            flash('success', lang('request_success'));
         } else {
-            flash('danger', 'Unable to delete event!');
+            flash('danger', lang('request_success'));
         }
     }
 }

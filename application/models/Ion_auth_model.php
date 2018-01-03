@@ -338,7 +338,7 @@ class Ion_auth_model extends CI_Model
         $this->trigger_events('deactivate');
 
 
-        $activation_code = md5(time().rand(1111,9999));
+        $activation_code = md5(time() . rand(1111, 9999));
         $this->activation_code = $activation_code;
 
         $data = array(
@@ -532,8 +532,8 @@ class Ion_auth_model extends CI_Model
             $this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_unsuccessful'));
             return FALSE;
         }
-        $activation_code = md5(microtime().rand(1111,9999));
-        $this->forgotten_password_code =$activation_code;
+        $activation_code = md5(microtime() . rand(1111, 9999));
+        $this->forgotten_password_code = $activation_code;
         $this->trigger_events('extra_where');
         $update = array(
             'forgotten_password_code' => $activation_code,
@@ -744,17 +744,21 @@ class Ion_auth_model extends CI_Model
         $this->db->insert($this->tables['users'], $userData);
         $id = $this->db->insert_id();
 
-        if (!empty($groups)) {
-            //add to groups
-            foreach ($groups as $group) {
-                $this->add_to_group($group, $id);
+        //if this user is logged in we assume they can register and they are not parents
+        if (auth() && !is('parent')) {
+            if (!empty($groups)) {
+                //add to groups
+                foreach ($groups as $group) {
+                    $this->add_to_group($group, $id);
+                }
+            }
+        } else { //assume this is self registration
+            $default_group = $this->where('name', $this->config->item('default_group', 'ion_auth'))->group()->row();
+            if ((isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups))) {
+                $this->add_to_group($default_group->id, $id);
             }
         }
-        //add to default group if not already set
-        $default_group = $this->where('name', $this->config->item('default_group', 'ion_auth'))->group()->row();
-        if ((isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups))) {
-            $this->add_to_group($default_group->id, $id);
-        }
+
         $this->trigger_events('post_register');
         return (isset($id)) ? $id : FALSE;
     }
@@ -1272,7 +1276,7 @@ class Ion_auth_model extends CI_Model
         // Filter the data passed
         $data = $this->_filter_data($this->tables['users'], $data);
 
-        if ( array_key_exists('password', $data) || array_key_exists('email', $data)) {
+        if (array_key_exists('password', $data) || array_key_exists('email', $data)) {
             if (array_key_exists('password', $data)) {
                 if (!empty($data['password'])) {
                     $data['password'] = $this->hash_password($data['password']);
