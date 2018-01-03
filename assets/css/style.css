@@ -2158,7 +2158,10 @@ body > .header .logo .icon {
     font-weight: 400;
     font-size: 12px
 }
-
+.fc-event-hori{
+    margin-bottom:2px !important;
+    border-radius:0 !important;
+}
 
 .btn {
     border-radius: 3px;

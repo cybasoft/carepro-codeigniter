@@ -25,16 +25,18 @@
                         </a>
                     </li>
                 <?php endif; ?>
-                <li class="pull-right">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newNoteModal">
-                        <i class="fa fa-plus"></i> <?php echo lang('new_note'); ?>
-                    </button>
+                <?php if (!is('parent')): ?>
+                    <li class="pull-right">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newNoteModal">
+                            <i class="fa fa-plus"></i> <?php echo lang('new_note'); ?>
+                        </button>
 
-                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                            data-target="#newIncidentModal">
-                        <i class="fa fa-plus"></i> <?php echo lang('incident_report'); ?>
-                    </button>
-                </li>
+                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                data-target="#newIncidentModal">
+                            <i class="fa fa-plus"></i> <?php echo lang('incident_report'); ?>
+                        </button>
+                    </li>
+                <?php endif; ?>
             </ul>
 
             <!-- Tab panes -->
@@ -56,9 +58,11 @@
                                     <a style="color: #1974cc;"
                                        href="?viewNote=<?php echo $note->id; ?>#view-notes"><?php echo $note->title; ?></a sty>
                                 </div>
-                                <a class="pull-right delete "
-                                   href="<?php echo site_url('child/deleteNote/' . $note->id); ?>">
-                                    <i class="fa fa-trash-o text-danger"></i></a>
+                                <?php if (!is('parent')): ?>
+                                    <a class="pull-right delete "
+                                       href="<?php echo site_url('child/deleteNote/' . $note->id); ?>">
+                                        <i class="fa fa-trash-o text-danger"></i></a>
+                                <?php endif; ?>
                             </div>
                             <div class="box-body">
 
@@ -84,9 +88,11 @@
                                        href="?viewIncident=<?php echo $incident->id; ?>#view-notes"
                                        class="text-info"> <?php echo $incident->title; ?></a>
                                 </div>
-                                <a class="pull-right delete "
-                                   href="<?php echo site_url('child/deleteIncident/' . $incident->id); ?>">
-                                    <i class="fa fa-trash-o text-danger"></i></a>
+                                <?php if (!is('parent')): ?>
+                                    <a class="pull-right delete "
+                                       href="<?php echo site_url('child/deleteIncident/' . $incident->id); ?>">
+                                        <i class="fa fa-trash-o text-danger"></i></a>
+                                <?php endif; ?>
                             </div>
                             <div class="box-body">
                                 <?php echo word_limiter($incident->description); ?>

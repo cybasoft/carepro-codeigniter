@@ -84,9 +84,12 @@ class My_parent extends CI_Model
 	 * @param $parent_id
 	 * @return mixed
 	 */
-	function getChildren($parent_id)
+	function getChildren($parent_id=null)
 	{
-		$this->db->select('*');
+	    if($parent_id == null)
+	        $parent_id = $this->user->uid();
+
+		$this->db->select('children.*');
 		$this->db->where('child_parents.user_id', $parent_id);
 		$this->db->from('children');
 		$this->db->join('child_parents', 'children.id=child_parents.child_id');

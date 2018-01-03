@@ -5,13 +5,8 @@ class pickup extends CI_Controller
     function __construct()
     {
         parent::__construct();
-
-        //redirect session
         setRedirect();
-
-        if (is('parent') == true && is('staff') !== true) {
-            redirectPrev();
-        }
+        allow('admin,manager,staff,parent');
         $this->module = 'modules/child/';
     }
 
@@ -25,8 +20,8 @@ class pickup extends CI_Controller
         $this->form_validation->set_rules('cell', lang('cellphone'), 'required|xss_clean');
         $this->form_validation->set_rules('pin', lang('pin'), 'required|integer|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
-            $pickup=$this->child->createPickup($id);
-            if ($pickup>0) {
+            $pickup = $this->child->createPickup($id);
+            if ($pickup > 0) {
                 //upload photo
                 $this->uploadPhoto($pickup);
                 flash('success', lang('request_success'));
@@ -45,6 +40,7 @@ class pickup extends CI_Controller
      */
     function deletePickup($id)
     {
+        allow('admin,manager,staff');
         //delete images
         $upload_path = './assets/uploads/pickup';
         $this->db->where('id', $id);

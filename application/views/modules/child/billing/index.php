@@ -7,28 +7,30 @@
 
         <h2><i class="fa fa-money"></i> <?php echo lang('invoices'); ?></h2>
 
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="panel-title">
-                    <a href="<?php echo site_url('child/' . $child->id . '/newInvoice'); ?>"
-                       class="btn btn-info">
-                        <i class="fa fa-plus"></i>
-                        <?php echo lang('new_invoice'); ?>
-                    </a>
-                    <div class="col-sm-4 pull-right">
-                        <form class="invoice_search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="invoice_search"
-                                       placeholder="<?php echo lang('enter_invoice_id'); ?>" value=""/>
-                                <span class="input-group-btn">
-                                <button class="btn btn-default"><i class="fa fa-search"></i></button>
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <?php if (!is('parent')): ?>
+                        <a href="<?php echo site_url('child/' . $child->id . '/newInvoice'); ?>"
+                           class="btn btn-info">
+                            <i class="fa fa-plus"></i>
+                            <?php echo lang('new_invoice'); ?>
+                        </a>
+                    <?php endif; ?>
+                </h3>
+                <div class="box-tools pull-right">
+                    <form class="invoice_search col-sm-6 pull-right">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="invoice_search"
+                                   placeholder="<?php echo lang('enter_invoice_id'); ?>" value=""/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-warning"><i class="fa fa-search"></i></button>
                                     </span>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="box-body">
                 <div class="h4">
                     <?php echo lang('sort'); ?>:
                     <input type="radio" name="sort_term" class="invoice_sort radio-inline" value="all"/>

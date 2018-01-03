@@ -13,7 +13,7 @@ class Settings extends CI_Controller
         setRedirect();
         allow('admin,manager');
         //variables
-        $this->module = 'modules/admin/';
+        $this->module = 'admin/';
 
     }
 

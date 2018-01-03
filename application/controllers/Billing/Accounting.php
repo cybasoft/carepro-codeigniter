@@ -7,9 +7,6 @@ class accounting extends CI_Controller
         parent::__construct();
         //redirect session
         setRedirect();
-        if (is('parent') == true && is('staff') == false) {
-            redirectPrev();
-        }
 
         //local variables
         $this->module = 'admin/accounting/';

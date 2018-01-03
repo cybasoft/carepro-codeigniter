@@ -26,11 +26,11 @@ class notes extends CI_Controller
             ->get('child_notes')
             ->result();
         $incidents = $this->db
-            ->where('child_id',$child->id)
-            ->order_by('created_at','DESC')
+            ->where('child_id', $child->id)
+            ->order_by('created_at', 'DESC')
             ->get('child_incident')
             ->result();
-        page($this->module . 'index', compact('child', 'notes','incidents'));
+        page($this->module . 'index', compact('child', 'notes', 'incidents'));
     }
 
     /*
@@ -56,6 +56,7 @@ class notes extends CI_Controller
      */
     function deleteNote($id)
     {
+        allow('admin,manager,staff');
         $this->db->where('id', $id);
         $this->db->delete('child_notes');
         if ($this->db->affected_rows() > 0) {
@@ -72,6 +73,7 @@ class notes extends CI_Controller
      */
     function createIncident($child_id)
     {
+        allow('admin,manager,staff');
         $this->load->library('form_validation');
         $this->form_validation->set_rules('title', lang('title'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('location', lang('location'), 'required|trim|xss_clean');
@@ -97,6 +99,7 @@ class notes extends CI_Controller
      */
     function deleteIncident($id)
     {
+        allow('admin,manager');
         $this->db->where('id', $id);
         $this->db->delete('child_incident');
         if ($this->db->affected_rows() > 0) {

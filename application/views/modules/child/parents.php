@@ -43,12 +43,14 @@
                         </td>
                     </tr>
                 </table>
+                <?php if(!is('parent')): ?>
                 <hr/>
                 <a href="<?php echo site_url('child/' . $child->id . '/' . $u->id); ?>/removeParent"
                    class="btn btn-danger btn-sm pull-right delete">
                     <span class="fa fa-trash-o"></span>
                     <?php echo lang('remove'); ?>
                 </a>
+                <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>

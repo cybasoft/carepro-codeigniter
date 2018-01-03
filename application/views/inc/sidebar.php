@@ -33,14 +33,12 @@
                 </a>
             </li>
 
-            <?php if(is('admin') || is('manager') || is('staff')): ?>
             <li class="<?php echo set_active(array('children','child')); ?>">
                 <a href="<?php echo site_url('children'); ?>">
                     <i class="fa fa-users"></i> <span><?php echo lang('children'); ?>
                         <small class="badge pull-right bg-green"><?php echo $this->child->getCount(); ?></small>
                 </a>
             </li>
-            <?php endif; ?>
 
             <?php if(is('admin') || is('manager')): ?>
             <li class="<?php echo set_active('users'); ?>">

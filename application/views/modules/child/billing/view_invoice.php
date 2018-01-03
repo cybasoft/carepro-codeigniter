@@ -7,8 +7,11 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="panel-title"><h4><i
-                                class="fa fa-money"></i> <?php echo lang('invoice') . ' #: ' . $invoice->id; ?></h4>
+                <div class="panel-title">
+                    <h4>
+                        <i class="fa fa-money"></i>
+                        <?php echo lang('invoice') . ' #: ' . $invoice->id; ?>
+                    </h4>
 
                 </div>
             </div>
@@ -31,6 +34,7 @@
                     </div>
 
                     <div class="col-sm-8">
+                        <?php if (!is('parent')): ?>
                         <button class="btn bg-black btn-flat" data-toggle="modal" data-target="#newItemModal">
                             <i class="fa fa-plus"></i> <?php echo lang('add_item'); ?>
                         </button>
@@ -38,12 +42,14 @@
                             <span class="fa fa-credit-card"></span>
                             <?php echo lang('pay'); ?>
                         </button>
+                        <?php endif; ?>
                         <a href="<?php echo site_url('invoice/' . $invoice->id . '/preview'); ?>"
                            target="_blank"
                            class="btn bg-black btn-flat">
                             <i class="fa fa-print"></i> <?php echo lang('print'); ?>
                         </a>
 
+                        <?php if (!is('parent')): ?>
                         <div class="input-group col-sm-6 pull-right">
                             <span class="input-group-addon"><?php echo lang('change_status'); ?>: </span>
                             <select id="<?php echo $invoice->id; ?>" class="form-control invoice_change_status"
@@ -56,6 +62,7 @@
                                         value="3"><?php echo lang('cancelled'); ?></option>
                             </select>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -105,12 +112,14 @@
                                                name="item_sub_total"
                                                value="<?php echo(($item->qty * $item->price)); ?>"/>
                                     </td>
+                                <?php if (!is('parent')): ?>
                                     <td>
                                         <a href="<?php echo site_url('invoice/' . $invoice->id . '/deleteItem/' . $item->id); ?>"
                                            class="delete">
                                             <span class="fa fa-trash-o text-danger cursor"></span>
                                         </a>
                                     </td>
+                                    <?php endif; ?>
                                 </tr>
                                 <?php
                                 $subTotal = $this->invoice->invoice_subtotal($invoice->id);

@@ -9,27 +9,28 @@
         <table class="table table-bordered parent-info">
             <?php foreach ($pickups as $pickup) : ?>
                 <tr>
-                    <td class="col-sm-4">
+                    <td style="width:132px;">
                         <div data-toggle="modal" data-target="#new-pickup-photo">
-                            <?php
-                            if ($pickup->photo !== "") {
-                                echo '<img class="img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/uploads/users/pickup/' . $pickup->photo . '"/>';
-
-                            } else {
-                                echo '<img class="img-circle img-responsive img-thumbnail"
-         src="' . base_url('assets/img/content/no-image.png') . '/>';
-                            }
-                            ?>
+                            <?php if ($pickup->photo !== ""): ?>
+                                <img class="img-responsive img-thumbnail"
+                                     style="width:130px;height:130px;"
+                                     src="<?php echo base_url(); ?>assets/uploads/users/pickup/<?php echo $pickup->photo; ?>"/>
+                            <?php else: ?>
+                                <img class="img-circle img-responsive img-thumbnail"
+                                     style="width:130px;height:130px;"
+                                     src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
+                            <?php endif; ?>
 
                         </div>
                     </td>
                     <td>
                         <h3 class=""><?php echo $pickup->last_name . ', ' . $pickup->first_name; ?>
-                            <a href="<?php echo site_url('child/deletePickup/' . $pickup->id); ?>"
-                               class="delete">
-                                <i class="fa fa-trash-o text-danger pull-right"></i>
-                            </a>
+                            <?php if (!is('parent')): ?>
+                                <a href="<?php echo site_url('child/deletePickup/' . $pickup->id); ?>"
+                                   class="delete">
+                                    <i class="fa fa-trash-o text-danger pull-right"></i>
+                                </a>
+                            <?php endif; ?>
                         </h3>
                         <h4><?php echo $pickup->relation; ?></h4>
 

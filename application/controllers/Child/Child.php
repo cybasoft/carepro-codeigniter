@@ -12,7 +12,6 @@ class Child extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        allow('admin,manager,staff');
         $this->load->model('My_invoice', 'invoice');
         $this->module = 'modules/child/';
     }
@@ -36,6 +35,7 @@ class Child extends CI_Controller
 
     function store()
     {
+        allow('admin,manager,staff');
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
@@ -64,6 +64,7 @@ class Child extends CI_Controller
 
     function update()
     {
+        allow('admin,manager,staff');
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
@@ -87,7 +88,6 @@ class Child extends CI_Controller
     function deleteChild($id)
     {
         allow('admin');
-
         $this->db->where('id', $id);
         if ($this->db->update('children', array('status', 0))) {
             flash('success', lang('request_success'));
@@ -105,7 +105,7 @@ class Child extends CI_Controller
 
     function uploadPhoto($id = "")
     {
-        allow('admin,staff');
+        allow('admin,manager,staff');
         $upload_path = './assets/uploads/users/children';
         $upload_db = 'children';
         if (!file_exists($upload_path)) {
@@ -200,6 +200,7 @@ class Child extends CI_Controller
      */
     function doCheckIn($child_id)
     {
+        allow('admin,manager,staff');
         $this->form_validation->set_rules('in_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
             if ($this->child->check_in($child_id)) {
@@ -219,6 +220,7 @@ class Child extends CI_Controller
      */
     function doCheckOut($child_id)
     {
+        allow('admin,manager,staff');
         $this->form_validation->set_rules('out_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
             if ($this->child->check_out($child_id)) {
@@ -238,11 +240,13 @@ class Child extends CI_Controller
      */
     function assignParent($child_id)
     {
+        allow('admin,manager,staff');
         $this->load->view($this->module . 'assign_parent', compact('child_id'));
     }
 
     function doAssignParent($child_id)
     {
+        allow('admin,manager,staff');
         $this->child_id = $child_id;
         $this->form_validation->set_rules('parent', lang('parent'), 'required|trim|xss_clean|callback_user_not_assigned');
         if ($this->form_validation->run() == TRUE) {
@@ -295,6 +299,7 @@ class Child extends CI_Controller
      */
     function removeParent($child_id, $parent_id)
     {
+        allow('admin,manager,staff');
         if ($this->db->where('child_id', $child_id)
             ->where('user_id', $parent_id)
             ->delete('child_parents')) {

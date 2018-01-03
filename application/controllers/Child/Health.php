@@ -16,8 +16,8 @@ class Health extends CI_Controller
     function index($id)
     {
         $data['child'] = $this->child->first($id);
-        if(empty($data['child'])){
-            flash('error',lang('request_error'));
+        if (empty($data['child'])) {
+            flash('error', lang('request_error'));
             redirect('/dashboard');
         }
         page($this->module . 'index', $data);
@@ -44,6 +44,7 @@ class Health extends CI_Controller
      */
     function deleteMedication($id)
     {
+        allow('admin,manager,staff');
         $this->db->where('id', $id);
         $this->db->delete('child_meds');
         if ($this->db->affected_rows() > 0) {
@@ -80,6 +81,7 @@ class Health extends CI_Controller
      */
     function deleteAllergy($id)
     {
+        allow('admin,manager,staff');
         $this->db->where('id', $id);
         $this->db->delete('child_allergy');
         if ($this->db->affected_rows() > 0) {
@@ -118,10 +120,12 @@ class Health extends CI_Controller
      */
     function deleteFoodPref($id = "")
     {
+        allow('admin,manager,staff');
+
         if ($id !== "" & is_numeric($id)) {
             //make sure its the parent authorized or admin
-            $childID = $this->db->where('id',$id)->get('child_foodpref')->row();
-            if (is('staff') == true || is('admin') || $this->child->belongsTo($this->user->uid(),$childID->child_id)) {
+            $childID = $this->db->where('id', $id)->get('child_foodpref')->row();
+            if (is('staff') == true || is('admin') || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
                 $this->db->where('id', $id);
                 $this->db->delete('child_foodpref');
                 if ($this->db->affected_rows() > 0) {
@@ -129,8 +133,8 @@ class Health extends CI_Controller
                 } else {
                     flash('danger', lang('request_error'));
                 }
-            }else{
-                flash('danger',lang('record_not_found'));
+            } else {
+                flash('danger', lang('record_not_found'));
             }
 
         }
@@ -164,6 +168,7 @@ class Health extends CI_Controller
      */
     function deleteContact($id)
     {
+        allow('admin,manager,staff');
         if ($this->db->where('id', $id)->delete('child_contacts')) {
             flash('success', lang('request_success'));
         } else {
@@ -201,6 +206,7 @@ class Health extends CI_Controller
      */
     function deleteProvider($id)
     {
+        allow('admin,manager,staff');
         if ($this->db->where('id', $id)->delete('child_providers')) {
             flash('success', lang('request_success'));
         } else {

@@ -22,23 +22,26 @@
         }
         ?>
         <tr>
-            <td><?php echo anchor('invoice/' . $row->id.'/view', $row->id); ?></td>
+            <td><?php echo anchor('invoice/' . $row->id . '/view', $row->id); ?></td>
             <td><?php echo $this->invoice->status($row->invoice_status); ?></td>
             <td><?php echo $this->config->item('currency_symbol', 'company') . $subTotal; ?></td>
             <td><?php echo $this->config->item('currency_symbol', 'company') . $this->invoice->amount_paid($row->id); ?></td>
             <td>
                 <span class="text-danger"><?php echo $this->config->item('currency_symbol', 'company') . $totalDue; ?></span>
             </td>
-            <td><?php echo format_date($row->date_due,false); ?></td>
+            <td><?php echo format_date($row->date_due, false); ?></td>
             <td>
-                <a href="#" onclick="confirmDelete('<?php echo site_url("invoice/{$row->id}/delete"); ?>')" class="delete btn btn-danger btn-xs">
-                    <i class="fa fa-trash-o"></i>
-                    <?php echo lang('delete'); ?>
-                </a>
-                <a href="<?php echo site_url('invoice/' . $row->id.'/view'); ?>" class="btn btn-info btn-xs">
+                <?php if (!is('parent')): ?>
+                    <a href="#" onclick="confirmDelete('<?php echo site_url("invoice/{$row->id}/delete"); ?>')"
+                       class="delete btn btn-danger btn-xs">
+                        <i class="fa fa-trash-o"></i>
+                        <?php echo lang('delete'); ?>
+                    </a>
+                <?php endif; ?>
+                <a href="<?php echo site_url('invoice/' . $row->id . '/view'); ?>" class="btn btn-info btn-xs">
                     <i class="fa fa-eye"></i> <?php echo lang('view'); ?>
                 </a>
-                <a href="<?php echo site_url('invoice/' . $row->id.'/print'); ?>" class="btn btn-info btn-xs">
+                <a href="<?php echo site_url('invoice/' . $row->id . '/preview'); ?>" class="btn btn-info btn-xs">
                     <i class="fa fa-print"></i> <?php echo lang('print'); ?>
                 </a>
             </td>

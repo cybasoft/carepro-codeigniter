@@ -27,8 +27,8 @@ class Calendar extends CI_Controller
      */
     function index()
     {
-        if (is('parent') == true && is('staff') == false) :
-            page('parent/calendar');
+        if (is('parent') && is('staff') == false) :
+            page($this->module.'parent_view');
         else :
             page($this->module . 'index');
         endif;

@@ -11,7 +11,8 @@ class Children extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        allow('admin,manager,staff');
+
+        allow('admin,manager,staff,parent');
         $this->load->model('My_invoice', 'invoice');
         $this->module = 'modules/children/';
     }
@@ -22,7 +23,12 @@ class Children extends CI_Controller
      */
     function index()
     {
-        page($this->module . 'index');
+        if(is('parent')){
+            $children = $this->parent->getChildren();
+            page('modules/parent/index', compact('children'));
+        }else{
+            page($this->module . 'index');
+        }
     }
     /*
      * child registration form

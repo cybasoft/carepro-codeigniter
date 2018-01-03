@@ -10,7 +10,7 @@ class Reports extends CI_Controller
 		allow('super,admin');
         //variables
         $this->load->model('My_reports','reports');
-        $this->module= 'modules/admin/backup/';
+        $this->module= 'admin/backup/';
     }
 
     public function index()

@@ -1,4 +1,3 @@
-
 <h2>
     <?php echo lang('healthcare_providers'); ?>
     <button data-toggle="modal" data-target="#newProvider" class="btn btn-success pull-right">
@@ -21,9 +20,11 @@
             <td><?php echo $row->address; ?></td>
             <td><?php echo $row->notes; ?></td>
             <td>
-                <a class="delete" href="<?php echo site_url('child/deleteProvider/' . $row->id); ?>">
-                    <i class="fa fa-trash-o"></i>
-                </a>
+                <?php if (!is('parent')): ?>
+                    <a class="delete" href="<?php echo site_url('child/deleteProvider/' . $row->id); ?>">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>
@@ -52,7 +53,8 @@
                 <input type="text" name="address" class="form-control" required
                        placeholder="<?php echo lang('address'); ?>"/>
                 <br/>
-                <textarea placeholder="<?php echo lang('notes'); ?>" class="form-control" name="notes" rows="3"></textarea>
+                <textarea placeholder="<?php echo lang('notes'); ?>" class="form-control" name="notes"
+                          rows="3"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">

@@ -20,6 +20,7 @@
                     </tr>
                 </table>
             </div>
+            <?php if(!is('parent')): ?>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger pull-left trash-event-btn">
                     <span class="fa fa-trash "></span> <?php echo lang('delete'); ?>
@@ -28,6 +29,7 @@
                     <span class="fa fa-pencil"></span> <?php echo lang('edit'); ?>
                 </button>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

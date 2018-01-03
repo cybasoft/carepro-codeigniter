@@ -29,9 +29,12 @@
                     <div class="fa fa-medkit"></div>
                     <span class="label-text"><?php echo $med->med_name; ?></span>
                     <?php echo $med->med_notes; ?>
-                    <a href="<?php echo site_url('child/deleteMedication/' . $med->id); ?>" class="delete pull-right">
-                        <span class="fa fa-trash-o cursor"></span>
-                    </a>
+                    <?php if (!is('parent')): ?>
+                        <a href="<?php echo site_url('child/deleteMedication/' . $med->id); ?>"
+                           class="delete pull-right">
+                            <span class="fa fa-trash-o cursor"></span>
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <?php
             }

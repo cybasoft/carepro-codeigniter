@@ -2,7 +2,7 @@
 <h2 class="text-purple"><?php echo $incident->title; ?></h2>
 <em>
     <?php
-        echo lang('created_at') . ': '
+    echo lang('created_at') . ': '
         . format_date($incident->created_at)
         . ' ' . lang('by') . ' '
         . $this->user->user($incident->user_id)->first_name . ' '

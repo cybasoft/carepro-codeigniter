@@ -7,91 +7,14 @@ class Parents extends CI_Controller
 	{
 		parent::__construct();
 		setRedirect();
-		if (is('parent') == false || is('admin') == false) {
-			redirectPrev();
-		}
-
+		allow('parent');
 		//resources
 		$this->load->library('table');
 		$this->load->model('My_parent', 'parent');
 		$this->load->model('My_invoice', 'invoice');
-		$this->load->model('My_health', 'health');
 
 		//variables
 		$this->module = "parent/";
-		$this->curr = $this->config->item('currency_symbol', 'company');
-	}
-
-	/*
-	 * load header, nav, footer
-	 */
-
-	function index()
-	{
-		$data['children'] = $this->parent->getChildren($this->user->uid());
-		$this->parent->page($this->module . 'children', $data);
-	}
-
-	/*
-	 * set child session
-	 */
-	function viewchild($child_id = 0)
-	{
-		//prevent errors from non numerals and negatives
-		if ($child_id <= 0 || !is_numeric($child_id)) {
-			redirectPrev();
-		} else {
-			if ($this->parent->child_belongs_to_parent($child_id, $this->user->uid()) == true) { //make sure parent can view this child
-				$this->session->set_userdata('view_child_id', $child_id);
-				redirect('parent/child');
-			} else {
-				flash('danger', lang('access_denied'));
-				redirectPrev();
-			}
-		}
-	}
-
-	/*
-	 * view child
-	 */
-	function child()
-	{
-		$data = array(
-			'child' => $this->child->child($this->child->getID()),
-			'pickups' => $this->child->getData('child_pickup'),
-			'attendance' => $this->child->getData('child_checkin'),
-
-			'insurance' => $this->child->getData('child_insurance'),
-			'foods' => $this->child->getData('child_foodpref'),
-			'allergies' => $this->child->getData('child_allergy'),
-			'meds' => $this->child->getData('child_meds'),
-
-			'eContact' => $this->child->getData('child_emergency'),
-
-			'notes' => $this->child->getData('child_notes')
-		);
-		$this->parent->page($this->module . 'child', $data);
-	}
-
-	/*
-	 * validate and add child record to db
-	 * @params 0
-	 * @return void
-	 */
-	function register()
-	{
-		$this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
-		$this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
-		$this->form_validation->set_rules('national_id', lang('national_id'), 'required|trim|xss_clean|integer');
-		$this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
-		$this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
-		if ($this->form_validation->run() == TRUE) {
-			$this->parent->register_child();
-		} else {
-			flash('danger');
-			validation_errors();
-			$this->parent->page($this->module . 'register_child');
-		}
 	}
 
 	function invoice($term = 0)
@@ -140,14 +63,6 @@ class Parents extends CI_Controller
 			);
 		}
 		echo $this->table->generate();
-	}
-
-	function roster()
-	{
-		$this->load->model('My_parent', 'parent');
-		$this->load->model('My_user', 'user');
-		$parents = $this->parent->parents();
-		$this->load->view('parent/roster', compact('parents'));
 	}
 
 }

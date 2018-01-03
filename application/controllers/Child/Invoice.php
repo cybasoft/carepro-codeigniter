@@ -13,9 +13,7 @@ class Invoice extends CI_Controller
         parent::__construct();
         //redirect session
         setRedirect();
-        if (is('parent') == true && is('staff') == false) {
-            redirectPrev();
-        }
+        allow('admin,manager,staff,parent');
         //local variables
         $this->module = 'modules/child/billing/';
         $this->invoice_db = 'invoices';
@@ -199,6 +197,7 @@ class Invoice extends CI_Controller
 //update status
     function updateStatus($id)
     {
+        allow('admin,manager,staff');
         if ($_POST) {
             $data = array(
                 'invoice_status' => $this->input->post("invoice_status")
@@ -216,6 +215,7 @@ class Invoice extends CI_Controller
     //update terms
     function updateTerms()
     {
+        allow('admin,manager,staff');
         if ($_POST) {
             $data = array(
                 'invoice_terms' => $this->input->post("invoice_terms")

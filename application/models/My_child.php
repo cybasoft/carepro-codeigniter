@@ -435,6 +435,10 @@ class My_child extends CI_Model
      */
     function getCount()
     {
+        if(is('parent')){
+         $query =$this->parent->getChildren($this->user->uid());
+            return $query->num_rows();
+        }
         return $this->children()->num_rows();
     }
 

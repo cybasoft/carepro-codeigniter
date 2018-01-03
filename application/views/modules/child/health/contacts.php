@@ -18,10 +18,12 @@
             <td><?php echo $row->phone; ?></td>
             <td><?php echo $row->address; ?></td>
             <td>
-                <a class="delete" href="<?php echo site_url('child/deleteContact/' . $row->id); ?>">
-                    <i class="fa fa-trash-o"></i>
-                </a>
-            </td>
+                <?php if (!is('parent')): ?>
+                    <a class="delete" href="<?php echo site_url('child/deleteContact/' . $row->id); ?>">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                <?php endif; ?>
+            </td >
         </tr>
     <?php endforeach; ?>
 </table>

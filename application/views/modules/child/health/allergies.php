@@ -48,10 +48,12 @@
                     <br/>
                     <span class="text-olive">
                     <strong><?php echo lang('notes'); ?>:</strong> <?php echo $allergy->notes; ?></span>
-
-                    <a href="<?php echo site_url('child/deleteAllergy/'.$allergy->id); ?>" class="delete pull-right">
-                        <span class="fa fa-trash-o cursor"></span>
-                    </a>
+                    <?php if (!is('parent')): ?>
+                        <a href="<?php echo site_url('child/deleteAllergy/' . $allergy->id); ?>"
+                           class="delete pull-right">
+                            <span class="fa fa-trash-o cursor"></span>
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <?php
             }
