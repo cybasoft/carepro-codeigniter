@@ -9,7 +9,7 @@ assets/uploads/users/parents/*
 assets/uploads/users/pickup/*
 assets/img/content/captcha/*
 !assets/img/content/captcha/index.html
-
+application/temp/*
 !application/cache/index.html
 
 application/logs/*

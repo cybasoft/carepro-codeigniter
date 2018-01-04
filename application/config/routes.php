@@ -150,7 +150,10 @@ $route['invoice/(:num)/addItem'] = 'child/invoice/addItem/$1';
 $route['invoice/(:num)/deleteItem/(:num)'] = 'child/invoice/deleteItem/$1/$2';
 $route['invoice/(:num)/makePayment'] = 'child/invoice/makePayment/$1';
 $route['invoice/(:num)/preview'] = 'child/invoice/preview/$1';
+$route['invoice/(:num)/download'] = 'child/invoice/pdf/$1/I';
+$route['invoice/(:num)/send'] = 'child/invoice/pdf/$1/F/1';
 $route['invoice/(:num)/updateStatus'] = 'child/invoice/updateStatus/$1';
+
 
 //parents
 $route['parents/:any'] = 'child/parents/$1';

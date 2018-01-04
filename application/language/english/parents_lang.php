@@ -12,4 +12,6 @@ $lang['parents'] = 'Parents';
 $lang['no_children_notice'] = 'There are children associated with your profile.
             If this is a mistake and your child has been registered,
             please contact a staff member.';
+$lang['send_to_parent']='Send to parent';
+$lang['invoice_email_message']='You have an invoice for %s. <br/>Please see attachment. <br/>You will need Adobe PDF reader to view';
 ?>

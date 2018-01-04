@@ -2,41 +2,37 @@
     <div class="col-lg-3 col-md-4 col-sm-4">
         <div class="box box-info">
             <div class="box-body">
-                <table class="table">
-                    <tr>
-                        <td colspan="2" class="text-bold"><?php echo $this->config->item('name', 'company'); ?></td>
-                    </tr>
-            
-                    <tr>
-                        <td colspan="2"><?php echo $this->config->item('slogan', 'company'); ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo lang('timezone'); ?>:</td>
-                        <td><?php echo $this->config->item('timezone', 'company'); ?></td>
-                    </tr>
-                </table>
+                <div class="text-center">
+                    <h3><?php echo $this->config->item('name', 'company'); ?></h3>
+                    <em><?php echo $this->config->item('slogan', 'company'); ?></em>
+                    <br/>
+                    <?php echo $this->config->item('street', 'company'); ?>
+                    <br/>
+                    <?php echo $this->config->item('city', 'company'); ?>
+                    <?php echo $this->config->item('state', 'company'); ?>,
+                    <?php echo $this->config->item('postal_code', 'company'); ?>
+                    <?php echo $this->config->item('country', 'company'); ?>
+                </div>
             </div>
         </div>
         <div class="box box-success">
             <div class="box-body">
                 <table class="table">
                     <tr>
-                        <td colspan="2">
-                            <?php echo $this->config->item('street', 'company'); ?>
-                            <br/>
-                            <?php echo $this->config->item('city', 'company'); ?>
-                            <?php echo $this->config->item('state', 'company'); ?>,
-                            <?php echo $this->config->item('postal_code', 'company'); ?>
-                            <?php echo $this->config->item('country', 'company'); ?>
-                        </td>
+                        <td><?php echo lang('email'); ?></td>
+                        <td><?php echo config_item('company')['email'] ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('phone'); ?></td>
-                        <td><?php echo $this->config->item('phone', 'company'); ?></td>
+                        <td><?php echo config_item('company')['phone'] ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('fax'); ?>:</td>
-                        <td><?php echo $this->config->item('fax', 'company'); ?></td>
+                        <td><?php echo config_item('company')['fax'] ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo lang('timezone'); ?>:</td>
+                        <td><?php echo $this->config->item('timezone', 'company'); ?></td>
                     </tr>
                 </table>
             </div>
@@ -49,7 +45,7 @@
             </div>
             <div class="box-body">
                 <?php echo lang('total'); ?>
-                <span  class="badge"> <?php echo $this->db->where('invoice_status', 2)->get('invoices')->num_rows(); ?>
+                <span class="badge"> <?php echo $this->db->where('invoice_status', 2)->get('invoices')->num_rows(); ?>
                 </span>
 
                 <h2>
@@ -59,13 +55,12 @@
             </div>
         </div>
         <div class="box box-primary">
-        <ul class="nav nav-pills nav-stacked">
-            <li class="active">
-                <?php echo anchor('children/roster', '<i class="fa fa-file-pdf-o"></i> Children Roster', 'target="_blank"'); ?>
-<!--                --><?php //echo anchor('parent/roster', '<i class="fa fa-file-pdf-o"></i> Parents Roster', 'target="_blank"'); ?>
-            </li>
-        </ul>
-            </div>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <?php echo anchor('children/roster', '<i class="fa fa-file-pdf-o"></i> Children Roster', 'target="_blank"'); ?>
+                </li>
+            </ul>
+        </div>
     </div>
 
 
@@ -106,7 +101,7 @@
                         </p>
                     </div>
                     <div class="icon">
-                       <i class="fa fa-user" aria-hidden="true"></i>
+                        <i class="fa fa-user" aria-hidden="true"></i>
                     </div>
                     <a href="<?php echo site_url('users'); ?>" class="small-box-footer">
                         <?php echo lang('open'); ?> <i class="fa fa-arrow-circle-right"></i>

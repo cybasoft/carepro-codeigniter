@@ -12,38 +12,66 @@
     </thead>
     <tbody>
     <?php
-    foreach ($invoices as $row) :
+    foreach ($invoices as $invoice) :
 
-        $download = anchor('invoice/download/' . $row->id, '<span class="btn btn-xs btn-warning"><i class="fa fa-download"></i> ' . lang('download') . '</span>');
-        $subTotal = $this->invoice->invoice_subtotal($row->id);
-        $totalDue = $subTotal - $this->invoice->amount_paid($row->id);
+        $download = anchor('invoice/download/' . $invoice->id, '<span class="btn btn-xs btn-warning"><i class="fa fa-download"></i> ' . lang('download') . '</span>');
+        $subTotal = $this->invoice->invoice_subtotal($invoice->id);
+        $totalDue = $subTotal - $this->invoice->amount_paid($invoice->id);
         if ($totalDue < 0) {
             $totalDue = $totalDue . ' <span class="label label-success">' . lang('refund') . ' </span>';
         }
         ?>
         <tr>
-            <td><?php echo anchor('invoice/' . $row->id . '/view', $row->id); ?></td>
-            <td><?php echo $this->invoice->status($row->invoice_status); ?></td>
+            <td>
+                <?php echo anchor('invoice/' . $invoice->id . '/view', ($invoice->id <10)?'000'.$invoice->id:$invoice->id); ?></td>
+            <td><?php echo $this->invoice->status($invoice->invoice_status); ?></td>
             <td><?php echo $this->config->item('currency_symbol', 'company') . $subTotal; ?></td>
-            <td><?php echo $this->config->item('currency_symbol', 'company') . $this->invoice->amount_paid($row->id); ?></td>
+            <td><?php echo $this->config->item('currency_symbol', 'company') . $this->invoice->amount_paid($invoice->id); ?></td>
             <td>
                 <span class="text-danger"><?php echo $this->config->item('currency_symbol', 'company') . $totalDue; ?></span>
             </td>
-            <td><?php echo format_date($row->date_due, false); ?></td>
+            <td><?php echo format_date($invoice->date_due, false); ?></td>
             <td>
-                <?php if (!is('parent')): ?>
-                    <a href="#" onclick="confirmDelete('<?php echo site_url("invoice/{$row->id}/delete"); ?>')"
-                       class="delete btn btn-danger btn-xs">
-                        <i class="fa fa-trash-o"></i>
-                        <?php echo lang('delete'); ?>
-                    </a>
-                <?php endif; ?>
-                <a href="<?php echo site_url('invoice/' . $row->id . '/view'); ?>" class="btn btn-info btn-xs">
+                <a href="<?php echo site_url('invoice/' . $invoice->id . '/view'); ?>" class="btn btn-info btn-xs">
                     <i class="fa fa-eye"></i> <?php echo lang('view'); ?>
                 </a>
-                <a href="<?php echo site_url('invoice/' . $row->id . '/preview'); ?>" class="btn btn-info btn-xs">
-                    <i class="fa fa-print"></i> <?php echo lang('print'); ?>
-                </a>
+
+                <div class="dropdown pull-right">
+                    <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                        <?php echo lang('actions'); ?>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a target="_blank" href="<?php echo site_url('invoice/' . $invoice->id . '/preview'); ?>">
+                                <i class="fa fa-print"></i> <?php echo lang('print'); ?>
+                            </a>
+                        </li>
+
+                        <?php if (!is('parent')): ?>
+                            <li>
+                                <a href="<?php echo site_url('invoice/'.$invoice->id.'/download'); ?>"
+                                   target="_blank">
+                                    <i class="fa fa-file-pdf-o"></i>
+                                    <?php echo lang('download'); ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('invoice/'. $invoice->id.'/send'); ?>">
+                                    <i class="fa fa-mail-forward"></i>
+                                    <?php echo lang('send_to_parent'); ?>
+                                </a>
+                            </li>
+                            <li class="bg-danger">
+                                <a href="#"
+                                   onclick="confirmDelete('<?php echo site_url("invoice/{$invoice->id}/delete"); ?>')"
+                                   class="delete">
+                                    <i class="fa fa-trash-o text-danger"></i>
+                                    <?php echo lang('delete'); ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </td>
         </tr>
     <?php endforeach; ?>

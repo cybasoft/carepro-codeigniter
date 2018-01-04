@@ -8,7 +8,7 @@ class My_mailer extends CI_Model
         parent::__construct();
     }
 
-    function send($data)
+    function send($data, $template = true)
     {
         $this->email->clear();
 
@@ -25,11 +25,11 @@ class My_mailer extends CI_Model
             $data['to'] = $this->config->item('email', 'company');
         if (!isset($data['subject']))
             $data['subject'] = 'Message from ' . $this->config->item('name', 'company');
-        if(isset($data['bcc']))
+        if (isset($data['bcc']))
             $this->email->bcc($data['bcc']);
-        if(isset($data['cc']))
+        if (isset($data['cc']))
             $this->email->bcc($data['cc']);
-        if(!isset($data['template'])) {
+        if (!isset($data['template']) && $template == true) {
             $data['template'] = 'general';
         }
 
@@ -37,10 +37,25 @@ class My_mailer extends CI_Model
         $this->email->to($data['to']);
         $this->email->subject($data['subject']);
 
-        $message = $this->load->view('email/'.$data['template'], compact('data'), TRUE);
+        if ($template == false) {
+            $message = $data['message'];
+        } else {
+            $message = $this->load->view('email/' . $data['template'], compact('data'), TRUE);
+        }
+        if (isset($data['file'])) {
+            $file = dirname(__FILE__, 2) . '/temp/' . $data['file'];
+//            $file = $_SERVER["DOCUMENT_ROOT"].'/application/temp/'.$data['file'];
+            if (@file_exists($file))
+                $this->email->attach($file);
+        }
 
         $this->email->message($message);
         $mail = $this->email->send();
+
+        if (isset($data['file'])) {
+            @unlink($file);
+        }
+
         if ($mail) {
             if (ENVIRONMENT !== 'production') {
                 echo $this->email->print_debugger();

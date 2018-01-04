@@ -140,8 +140,10 @@ class My_invoice extends CI_Model
             'price' => $this->input->post('price'),
             'qty' => $this->input->post('qty')
         );
-        if ($this->db->insert('invoice_items', $data2))
+
+        if ($this->db->insert('invoice_items', $data2)){
             return true;
+        }
         return false;
     }
 

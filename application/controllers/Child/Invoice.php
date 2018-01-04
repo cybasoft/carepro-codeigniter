@@ -148,7 +148,6 @@ class Invoice extends CI_Controller
 
     function preview($invoice_id)
     {
-
         $data = array(
             'invoice' => $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row(),
             'invoice_items' => $this->invoice->getInvoiceItems($invoice_id)
@@ -156,10 +155,22 @@ class Invoice extends CI_Controller
         $this->load->view($this->module . 'invoice_preview', $data);
     }
 
+
+    /**
+     * @param $id
+     * @param string $action
+     * @param int $send
+     */
+    function pdf($id,$action ='I',$send = 0){
+        $this->load->library('PDF');
+        $invoice= $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
+        $invoice_items= $this->invoice->getInvoiceItems($id);
+        $child=$this->child->first($invoice->child_id);
+        $this->load->view($this->module.'pdf_invoice',compact('invoice','invoice_items','child','action','send'));
+    }
     function delete($invoice_id)
     {
         allow('admin,manager');
-
         //delete items
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');

@@ -328,6 +328,7 @@ $lang['invoice_id'] = 'Invoice ID';
 $lang['generate_invoice'] = 'Generate invoice';
 $lang['new_invoice'] = 'New invoice';
 $lang['enter_invoice_id']='Enter invoice ID';
+$lang['invoice_email_subject']='Invoice for %s';
 $lang['make_payment'] = 'Make payment';
 $lang['paid'] = 'Paid';
 $lang['unpaid'] = 'Unpaid';
