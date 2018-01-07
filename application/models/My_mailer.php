@@ -42,9 +42,9 @@ class My_mailer extends CI_Model
         } else {
             $message = $this->load->view('email/' . $data['template'], compact('data'), TRUE);
         }
+
         if (isset($data['file'])) {
             $file = dirname(__FILE__, 2) . '/temp/' . $data['file'];
-//            $file = $_SERVER["DOCUMENT_ROOT"].'/application/temp/'.$data['file'];
             if (@file_exists($file))
                 $this->email->attach($file);
         }
@@ -58,7 +58,7 @@ class My_mailer extends CI_Model
 
         if ($mail) {
             if (ENVIRONMENT !== 'production') {
-                echo $this->email->print_debugger();
+                log_message('debug', $this->email->print_debugger());
             }
             return TRUE;
         } else {

@@ -101,7 +101,7 @@ CREATE TABLE `child_checkin` (
   KEY `out_staff_id` (`out_staff_id`),
   CONSTRAINT `child_checkin_ibfk_1` FOREIGN KEY (`child_id`) REFERENCES `children` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `child_checkin_ibfk_2` FOREIGN KEY (`in_staff_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `child_checkin_ibfk_3` FOREIGN KEY (`out_staff_id`) REFERENCES `children` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `child_checkin_ibfk_3` FOREIGN KEY (`out_staff_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

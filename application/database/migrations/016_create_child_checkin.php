@@ -71,7 +71,7 @@ class Migration_create_child_checkin extends CI_Migration
 
         $this->db->query('ALTER TABLE `child_checkin` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_checkin` ADD FOREIGN KEY (`in_staff_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
-        $this->db->query('ALTER TABLE `child_checkin` ADD FOREIGN KEY (`out_staff_id`) REFERENCES children(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
+        $this->db->query('ALTER TABLE `child_checkin` ADD FOREIGN KEY (`out_staff_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
     }
 
     /**
