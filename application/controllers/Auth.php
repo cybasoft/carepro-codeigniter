@@ -186,8 +186,8 @@ class Auth extends CI_Controller
         $data = array(
             'word' => rand(1111, 9999),
             'word_length' => 4,
-            'img_path' => './assets/img/content/captcha/',
-            'img_url' => base_url() . 'assets/img/content/captcha/',
+            'img_path' => './application/temp/captcha/',
+            'img_url' => base_url() . 'application/temp/captcha/',
             'font_path' => base_url() . 'system/fonts/texb.ttf',
             'img_width' => '200',
             'img_height' => 50,
@@ -200,7 +200,7 @@ class Auth extends CI_Controller
     function refreshCaptcha()
     {
         $expiration = time() - 7200;
-        $path = './assets/img/content/captcha/';
+        $path = './application/temp/captcha/';
         $dir = new DirectoryIterator($path);
         foreach ($dir as $fileinfo) {
             if (!$fileinfo->isDot()) {

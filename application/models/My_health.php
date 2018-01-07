@@ -31,12 +31,11 @@ class my_health extends CI_Model
         if ($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added med for child ID: {$this->input->post('child_id')}");
-
-
-            flash('success', lang('request_success'));
-        } else {
-            flash('warning', lang('no_change_to_db'));
+            //notify parent
+            $this->parent->notifyParents($data['child_id'],lang('new_medication_subject'),lang('new_medication_message'));
+            return true;
         }
+        return false;
     }
 
     function addAllergy()
@@ -53,6 +52,8 @@ class my_health extends CI_Model
         if ($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added allergy for {$this->input->post('child_id')}");
+            //notify parent
+            $this->parent->notifyParents($data['child_id'],lang('new_allergy_subject'),lang('new_allergy_message'));
             return true;
         }
         return false;
@@ -73,7 +74,10 @@ class my_health extends CI_Model
             'user_id'=>$this->user->uid()
         );
         if ($this->db->insert('child_foodpref', $data)) {
+            //log
             logEvent("Added food pref for child ID: {$this->input->post('child_id')}");
+            //notify parent
+            $this->parent->notifyParents($data['child_id'],lang('new_foodpref_subject'),lang('new_foodpref_message'));
             return true;
         }
         return false;
@@ -94,8 +98,10 @@ class my_health extends CI_Model
             'user_id'=>$this->user->uid()
         );
         if ($this->db->insert('child_contacts', $data)) {
-            //log event
+            //log
             logEvent("Added contact for child ID: {$this->input->post('child_id')}");
+            //notify parent
+            $this->parent->notifyParents($data['child_id'],lang('new_contact_subject'),lang('new_contact_message'));
             return true;
         }
         return false;
@@ -119,6 +125,8 @@ class my_health extends CI_Model
         if ($this->db->insert('child_providers', $data)) {
             //log event
             logEvent("Added provider for child ID: {$this->input->post('child_id')}");
+            //notify parent
+            $this->parent->notifyParents($data['child_id'],lang('new_provider_subject'),lang('new_provider_message'));
             return true;
         }
         return false;

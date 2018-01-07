@@ -262,8 +262,7 @@ class Child extends CI_Controller
                 $data = array(
                     'to' => $parent->email,
                     'subject' => lang('assigned_child_subject'),
-                    'message' => sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false)),
-                    'template' => 'general'
+                    'message' => sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false))
                 );
                 $this->mailer->send($data);
             }

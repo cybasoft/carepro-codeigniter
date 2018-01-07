@@ -23,7 +23,7 @@
             <span class="fa fa-plus"></span>
             <?php echo lang('register_child'); ?>
         </button>
-        <a href="/children/roster" target="_blank" class="btn btn-warning btn-flat">
+        <a href="<?php echo site_url('children/roster'); ?>" target="_blank" class="btn btn-warning btn-flat">
             <span class="fa fa-print"></span>
             <?php echo lang('children_roster'); ?>
         </a>
@@ -134,7 +134,7 @@ $query = $this->db->get('children')->result();
             </div>
         <?php endforeach; ?>
     <?php } else { ?>
-        <a href="/children" class="btn btn-primary"><i class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
+        <a href="<?php echo site_url('children'); ?>" class="btn btn-primary"><i class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
         <hr/>
         <div class="alert alert-danger">
             <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>

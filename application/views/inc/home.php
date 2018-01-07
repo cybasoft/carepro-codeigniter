@@ -18,7 +18,7 @@
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <?php $this->load->view('inc/sidebar'); ?>
-    <aside class="right-side">
+    <aside class="right-side" style="">
         <?php if ($this->uri->segment(1) !== 'child' && $this->uri->segment(1) !== 'invoice') : ?>
             <section class="content-header">
                 <h1>

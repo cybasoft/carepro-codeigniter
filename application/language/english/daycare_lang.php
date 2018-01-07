@@ -404,3 +404,4 @@ $lang['maintenance_mode_notice'] = 'We are performing some scheduled maintenance
 $lang['admin_purge_warnng'] = ' Warning! This is an admin action. This will delete all records. Type "PURGE" to
     continue';
 $lang['purge']='Purge!';
+$lang['ip_address']='IP Address';

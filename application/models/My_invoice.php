@@ -25,6 +25,9 @@ class My_invoice extends CI_Model
 
     }
 
+    function first($id){
+        return  $this->db->where('id', $id)->get('invoices')->row();
+    }
     /**
      * @param $id
      */
@@ -128,10 +131,8 @@ class My_invoice extends CI_Model
             'user_id' => $this->user->uid(),
             'created_at' => date_stamp()
         );
-
         if(!$this->db->insert('invoices', $data))
             return false;
-
         $invoice_id = $this->db->insert_id();
         $data2 = array(
             'invoice_id' => $invoice_id,
@@ -140,8 +141,8 @@ class My_invoice extends CI_Model
             'price' => $this->input->post('price'),
             'qty' => $this->input->post('qty')
         );
-
         if ($this->db->insert('invoice_items', $data2)){
+            $this->parent->notifyParents($id,lang('new_invoice_subject'),sprintf(lang('new_invoice_message'),$this->child->first($id)->first_name));
             return true;
         }
         return false;
@@ -163,6 +164,9 @@ class My_invoice extends CI_Model
             'created_at'=>date_stamp()
         );
         if ($this->db->insert('invoice_payments', $data)) {
+            $invoice = $this->first($invoice_id);
+            $child =$this->child->first($invoice->child_id);
+            $this->parent->notifyParents($child->id,lang('new_invoice_subject'),sprintf(lang('new_invoice_message'),$child->first_name));
             return true;
         } else {
             return false;

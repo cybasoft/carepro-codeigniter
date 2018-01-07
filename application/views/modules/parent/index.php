@@ -20,7 +20,7 @@
             <div class="box box-info">
                 <div class="box-header box-border">
                     <h3 class="box-title">
-                        <a href="/child/<?php echo $child->id; ?>">
+                        <a href="<?php echo site_url('child/'.$child->id); ?>">
                             <?php echo $child->first_name . ' ' . $child->last_name; ?>
                         </a>
                     </h3>

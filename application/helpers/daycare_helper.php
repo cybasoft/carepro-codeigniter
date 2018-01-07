@@ -66,7 +66,7 @@ function flash($type = "", $msg = "")
     }
     if ($type == "error")
         $type = "danger";
-    $ci = &get_instance();
+    $ci = & get_instance();
     if (validation_errors() == true) {
         if ($msg == "") {
             $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-warning"></span>', '</div>');
@@ -94,7 +94,7 @@ function flash($type = "", $msg = "")
  */
 function setRedirect()
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     if (isset($_SERVER['HTTP_REFERER'])) {
         $ci->session->set_userdata('last_page', $_SERVER['HTTP_REFERER']);
     } else {
@@ -107,7 +107,7 @@ function setRedirect()
  */
 function redirectPrev($msg = array())
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     if (!empty($msg)) {
         flash('info', $msg);
     }
@@ -121,7 +121,7 @@ function redirectPrev($msg = array())
  */
 function is($group)
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     auth(true);
     if ($ci->ion_auth->in_group($group))
         return true;
@@ -151,7 +151,7 @@ function auth($redirect = false)
  */
 function in_group($id, $group)
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     $query = $ci->db
         ->where('users_groups.user_id', $id)
         ->where('groups.name', $group)
@@ -198,7 +198,7 @@ function checked_option($option, $value)
 */
 function encrypt($msg)
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     $ci->conf->check_encrypt_key();
     return $ci->encryption->encrypt($msg);
 }
@@ -211,7 +211,7 @@ function encrypt($msg)
 */
 function decrypt($msg)
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     $ci->conf->check_encrypt_key();
     return $ci->encryption->decrypt($msg);
 }
@@ -221,7 +221,7 @@ function decrypt($msg)
  */
 function logged_in()
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     if ($ci->ion_auth->logged_in() == true)
         return true;
     return false;
@@ -236,7 +236,7 @@ function logged_in()
 */
 function logEvent($event)
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     $data = array(
         'user_id' => $ci->users->uid(),
         'date' => time(),
@@ -254,7 +254,7 @@ function logEvent($event)
  */
 function allow($group)
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     auth(true);
     $groups = explode(',', $group);
     $data = array();
@@ -282,14 +282,14 @@ function allow($group)
 */
 function page($page, $data = array())
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     $data['page'] = $page;
     $ci->load->view('inc/home', $data);
 }
 
 function demo()
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
 
     $seg1 = $ci->uri->segment(1);
     $seg2 = $ci->uri->segment(2);
@@ -327,7 +327,7 @@ function demo()
 */
 function maintenance()
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
 
     if (config_item('maintenance_mode') == true) {
         $ci->load->helper('language');
@@ -380,7 +380,7 @@ function dd($array)
  */
 function uri_segment($num)
 {
-    $ci = &get_instance();
+    $ci = & get_instance();
     return $ci->uri->segment($num);
 }
 

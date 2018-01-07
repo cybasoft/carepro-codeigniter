@@ -55,7 +55,7 @@ class Migrations
     {
         // Get Codeigniter Object
         if (!isset($this->_ci)) {
-            $this->_ci = &get_instance();
+            $this->_ci = & get_instance();
         }
 
         $this->path = APPPATH . $this->_migration_folder_name;

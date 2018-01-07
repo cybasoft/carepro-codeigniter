@@ -10,16 +10,7 @@
         <div class="box box-solid box-primary">
             <div class="box-header">
                 <h3 class="box-title">
-                    <?php if (!is('parent')): ?>
-                        <a href="<?php echo site_url('child/' . $child->id . '/newInvoice'); ?>"
-                           class="btn btn-info">
-                            <i class="fa fa-plus"></i>
-                            <?php echo lang('new_invoice'); ?>
-                        </a>
-                    <?php endif; ?>
-                </h3>
-                <div class="box-tools pull-right">
-                    <form class="invoice_search col-sm-6 pull-right">
+                    <form class="invoice_search col-sm-6">
                         <div class="input-group">
                             <input type="text" class="form-control" name="invoice_search"
                                    placeholder="<?php echo lang('enter_invoice_id'); ?>" value=""/>
@@ -28,6 +19,15 @@
                                     </span>
                         </div>
                     </form>
+                </h3>
+                <div class="box-tools pull-right">
+                    <?php if (!is('parent')): ?>
+                        <a href="<?php echo site_url('child/' . $child->id . '/newInvoice'); ?>"
+                           class="btn btn-info">
+                            <i class="fa fa-plus"></i>
+                            <?php echo lang('new_invoice'); ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="box-body">

@@ -75,9 +75,9 @@
                             <input type="text" readonly value="0.00" class="subTotal"/>
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="display: none;">
                         <td colspan="4" class="text-right"><?php echo lang('tax'); ?>:</td>
-                        <td><input type="text" class="tax" name="tax" value="0"/></td>
+                        <td><input type="hidden" class="tax" name="tax" value="0"/></td>
                     </tr>
                     <tr>
                         <td colspan="4" class="text-right"><?php echo lang('total'); ?>:</td>

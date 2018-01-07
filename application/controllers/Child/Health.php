@@ -31,7 +31,11 @@ class Health extends CI_Controller
     {
         $this->form_validation->set_rules('med_name', lang('medication'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
-            $this->health->addMedication();
+            if ($this->health->addMedication()) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('danger', lang('request_error'));
+            }
         } else {
             flash('danger', lang('request_error'));
         }
@@ -106,6 +110,8 @@ class Health extends CI_Controller
 
             if ($this->health->addFoodPref()) {
                 flash('success', lang('request_success'));
+            } else {
+                flash('danger', lang('request_error'));
             }
         } else {
             flash('danger');

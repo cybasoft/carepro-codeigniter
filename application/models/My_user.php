@@ -18,7 +18,6 @@ class MY_user extends CI_Model
     }
 
     /**
-     * @param $username
      * @param $password
      * @param $email
      * @param array $additional_data

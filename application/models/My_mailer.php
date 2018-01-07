@@ -8,7 +8,7 @@ class My_mailer extends CI_Model
         parent::__construct();
     }
 
-    function send($data, $template = true)
+    function send($data)
     {
         $this->email->clear();
 
@@ -29,20 +29,20 @@ class My_mailer extends CI_Model
             $this->email->bcc($data['bcc']);
         if (isset($data['cc']))
             $this->email->bcc($data['cc']);
-        if (!isset($data['template']) && $template == true) {
+        if (!isset($data['template']))
             $data['template'] = 'general';
+        if(isset($data['salute'])) {
+            $data['salute'] = sprintf(lang('email_salute'), $data['salute']);
+        }else{
+            $data['salute']=sprintf(lang('email_salute'),'');
         }
-
         $this->email->from($data['from'], $data['from_name']);
         $this->email->to($data['to']);
         $this->email->subject($data['subject']);
 
-        if ($template == false) {
-            $message = $data['message'];
-        } else {
-            $message = $this->load->view('email/' . $data['template'], compact('data'), TRUE);
-        }
+        $message = $this->load->view('email/layout', compact('data'), TRUE);
 
+        $file='';
         if (isset($data['file'])) {
             $file = dirname(__FILE__, 2) . '/temp/' . $data['file'];
             if (@file_exists($file))

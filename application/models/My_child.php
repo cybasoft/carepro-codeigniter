@@ -31,6 +31,88 @@ class My_child extends CI_Model
         return $this->db->where('id', $id)->get('children')->row();
     }
 
+
+    /**
+     * @param $child_id
+     * @return mixed|object
+     */
+    function getParents($child_id)
+    {
+        $this->db->where('child_parents.child_id', $child_id);
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->join('child_parents', 'child_parents.user_id=users.id');
+        return $this->db->get();
+    }
+
+    /**
+     * @param null $id
+     * @return mixed
+     */
+    function getParent($id = null)
+    {
+        $this->db->where('children.id', $id);
+        $this->db->select('*');
+        $this->db->from('children');
+        $this->db->join('child_parents', 'child_parents.child_id=children.id');
+        $this->db->join('users', 'users.id=child_parents.user_id');
+        return $this->db->get()->row();
+    }
+
+    /**
+     * @param $db
+     * @return mixed
+     */
+    function getData($db, $child_id)
+    {
+        $data = array();
+        if ($db == 'child_checkin') $this->db->order_by('id', 'DESC');
+
+        $this->db->where('child_id', $child_id);
+        return $this->db->get($db)->result();
+    }
+
+    /**
+     * @return mixed
+     */
+    function getCount()
+    {
+        if (is('parent')) {
+            $query = $this->parent->getChildren($this->user->uid());
+            return $query->num_rows();
+        }
+        return $this->children()->num_rows();
+    }
+
+    /**
+     * @param $db
+     * @param $child_id
+     * @return int|string
+     */
+    function totalRecords($db, $child_id)
+    {
+        $this->db->where('child_id', $child_id);
+        return $this->db->count_all_results($db);
+    }
+
+    /**
+     * @param $user_id
+     * @param $child_id
+     * @return bool
+     */
+    function belongsTo($user_id, $child_id)
+    {
+        $this->db->where('child_id', $child_id);
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get('child_parents');
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     /*
      * get_child
      * get all child information
@@ -70,7 +152,7 @@ class My_child extends CI_Model
         //log event
         logEvent("Add child {$data['first_name']} {$data['last_name']}");
 
-        if($getID)
+        if ($getID)
             return $last_id;
         return true;
     }
@@ -128,6 +210,7 @@ class My_child extends CI_Model
         if ($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added pickup contact for child ID {$id}");
+            $this->parent->notifyParents($id,lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'),$data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
             return false;
@@ -152,19 +235,17 @@ class My_child extends CI_Model
         if ($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added note for child ID: {$child_id}");
-
             //notify parents
+            $this->parent->notifyParents($child_id,lang('note_created_email_subject'),sprintf(lang('note_created_email_message'),$this->first($child_id)->first_name));
 
-            //notify admin
-
-            flash('success', lang('request_success'));
-        } else {
-            flash('warning', lang('no_change_to_db'));
+            return true;
         }
+        return false;
     }
 
     /**
      * @param $child_id
+     * @return bool
      */
     function createIncident($child_id)
     {
@@ -187,78 +268,10 @@ class My_child extends CI_Model
         if ($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added incident report for child ID: {$child_id}");
-            flash('success', lang('request_success'));
-        } else {
-            flash('warning', lang('no_change_to_db'));
-        }
-    }
 
-    function add_charge()
-    {
-        $data = array(
-            'child_id' => $this->input->post('child_id'),
-            'item' => $this->input->post('item'),
-            'amount' => $this->input->post('amount'),
-            'due_date' => strtotime($this->input->post('due_date')),
-            'charged_by' => $this->user->uid(),
-            'charge_desc' => $this->input->post('charge_desc'),
-            'charge_status' => 'Pending'
-        );
-        $this->db->insert('child_charges', $data);
-        if ($this->db->affected_rows() > 0) {
-            //log event
-            logEvent("Added charge for child ID: {$this->input->post('child_id')}");
-
-            flash('success', lang('request_success'));
-        } else {
-            flash('warning', lang('no_change_to_db'));
-        }
-    }
-
-    /*
-     * add charge against a child
-     */
-
-    function pay_charge($id)
-    {
-        $amount_to_pay = $this->input->post('paid_amount');
-        $data = array(
-            'charge_id' => $id,
-            'child_id' => $this->input->post('child_id'),
-            'paid_amount' => $amount_to_pay,
-            'pay_method' => $this->input->post('pay_method'),
-            'pay_date' => time(),
-            'pay_note' => $this->input->post('pay_note'),
-            'user_id' => $this->user->uid() //
-        );
-        $this->db->insert('child_payments', $data);
-        if ($this->db->affected_rows() > 0) {
-            //log event
-            logEvent("Added payment for child ID: {$this->input->post('child_id')}");
-
-            flash('success', lang('request_success'));
-        } else {
-            flash('warning', lang('no_change_to_db'));
-        }
-        //update
-        $data2 = array(
-            'amount' => $this->newAmount($id, $amount_to_pay),
-            'charge_status' => $this->input->post('charge_status'),
-            'status_by' => $this->user->uid()
-        );
-        $this->db->where('id', $id);
-        $this->db->update('child_charges', $data2);
-    }
-
-    /*
-     * add charge payment to db
-     */
-
-    function newAmount($id, $amount)
-    {
-        $this->db->where('id', $id);
-        foreach ($this->db->get('child_charges')->result() as $r) {
-            return ($r->amount - $amount);
+            //notify parents
+            $this->parent->notifyParents($child_id,lang('incident_email_subject'),sprintf(lang('incident_email_message'),$this->first($child_id)->first_name));
+            return true;
         }
         return false;
     }
@@ -282,7 +295,11 @@ class My_child extends CI_Model
             'in_staff_id' => $this->user->uid()
         );
         if ($this->db->insert('child_checkin', $data)) {
-            $this->notify_parent_checkin_out($child_id, 'checkin', $this->input->post('in_guardian'));
+            $child = $this->child($child_id);
+            $childName = $child->first_name . ' ' . $child->last_name;
+            $message = sprintf(lang('child_checked_in_message'), $childName, date('d M Y @ H:i:A'), $this->input->post('in_guardian'));
+            $subject = sprintf(lang('child_checked_in_subject'), $childName);
+            $this->parent->notifyParents($child_id, $subject, $message);
             logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
             return true;
         }
@@ -312,7 +329,11 @@ class My_child extends CI_Model
             ->where('out_guardian', null)
             ->update('child_checkin', $data)) {
 
-            $this->notify_parent_checkin_out($child_id, 'checkout', $this->input->post('out_guardian'));
+            $child = $this->child($child_id);
+            $childName = $child->first_name . ' ' . $child->last_name;
+            $message = sprintf(lang('child_checked_out_message'), $childName, date('d M Y @ H:i:A'), $this->input->post('out_guardian'));
+            $subject = sprintf(lang('child_checked_out_subject'), $childName);
+            $this->parent->notifyParents($child_id, $subject, $message);
             logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
             return true;
         }
@@ -334,140 +355,4 @@ class My_child extends CI_Model
             return true;
         }
     }
-
-    /*
-     * check in child
-     */
-
-    function notify_parent_checkin_out($child_id, $type, $user)
-    {
-        $child = $this->child($child_id);
-        $childName = $child->first_name . ' ' . $child->last_name;
-
-        //get parents info
-        $parents = $this->getParents($child_id);
-        if (count($parents) == 0)
-            return false;
-
-        foreach ($parents->result() as $row) {
-            $email_config = config_item('email_config');
-            if (isset($email_config) && is_array($email_config)) {
-                $this->email->initialize($email_config);
-            }
-
-            switch ($type) {
-                case 'checkin':
-                    $message = sprintf(lang('child_checked_in_message'), $childName, date('d M Y @ H:i:A'), $user);
-                    $subject = sprintf(lang('child_checked_in_subject'), $childName);
-                    break;
-                case 'checkout':
-                    $message = sprintf(lang('child_checked_out_message'), $childName, date('d M Y @ H:i:A'), $user);
-                    $subject = sprintf(lang('child_checked_out_subject'), $childName);
-                    break;
-                default:
-                    $message = "";
-                    $subject = 'RE: ' . $childName;
-                    break;
-            }
-
-            $email = array(
-                'subject' => $subject,
-                'to' => $row->email,
-                'message'=>$message,
-                'template'=>'child_check_in_out'
-            );
-
-            if ($this->mailer->send($email))
-                return true;
-
-            if (ENVIRONMENT !== 'production') {
-                echo $this->email->print_debugger();
-                die();
-            }
-
-            return false;
-        }
-    }
-
-
-    /**
-     * @param $child_id
-     * @return mixed|object
-     */
-    function getParents($child_id)
-    {
-        $this->db->where('child_parents.child_id', $child_id);
-        $this->db->select('*');
-        $this->db->from('users');
-        $this->db->join('child_parents', 'child_parents.user_id=users.id');
-        return $this->db->get();
-    }
-
-    /**
-     * @param null $id
-     * @return mixed
-     */
-    function getParent($id = null)
-    {
-        $this->db->where('children.id', $id);
-        $this->db->select('*');
-        $this->db->from('children');
-        $this->db->join('child_parents', 'child_parents.child_id=children.id');
-        $this->db->join('users', 'users.id=child_parents.user_id');
-        return $this->db->get()->row();
-    }
-
-    /**
-     * @param $db
-     * @return mixed
-     */
-    function getData($db, $child_id)
-    {
-        $data = array();
-        if ($db == 'child_checkin') $this->db->order_by('id', 'DESC');
-
-        $this->db->where('child_id', $child_id);
-        return $this->db->get($db)->result();
-    }
-
-    /**
-     * @return mixed
-     */
-    function getCount()
-    {
-        if(is('parent')){
-         $query =$this->parent->getChildren($this->user->uid());
-            return $query->num_rows();
-        }
-        return $this->children()->num_rows();
-    }
-
-    /**
-     * @param $db
-     * @param $child_id
-     * @return int|string
-     */
-    function totalRecords($db, $child_id)
-    {
-        $this->db->where('child_id', $child_id);
-        return $this->db->count_all_results($db);
-    }
-
-    /**
-     * @param $user_id
-     * @param $child_id
-     * @return bool
-     */
-    function belongsTo($user_id, $child_id)
-    {
-        $this->db->where('child_id', $child_id);
-        $this->db->where('user_id', $user_id);
-        $query = $this->db->get('child_parents');
-        if ($query->num_rows() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

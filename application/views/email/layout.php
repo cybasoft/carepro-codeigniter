@@ -365,11 +365,7 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p><?php echo lang('email_salute'); ?>,</p>
-
-                                        <p>
-                                            <?php echo $data['message']; ?>
-                                        </p>
+                                        <?php $this->load->view('email/'.$data['template'],$data); ?>
                                     </td>
                                 </tr>
                             </table>

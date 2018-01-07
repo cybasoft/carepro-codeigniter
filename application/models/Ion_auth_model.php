@@ -142,7 +142,6 @@ class Ion_auth_model extends CI_Model
         $this->load->helper('cookie');
         $this->load->helper('date');
 
-
         //initialize db tables data
         $this->tables = $this->config->item('tables', 'ion_auth');
 
@@ -150,14 +149,12 @@ class Ion_auth_model extends CI_Model
         $this->identity_column = $this->config->item('identity', 'ion_auth');
         $this->join = $this->config->item('join', 'ion_auth');
 
-
         //initialize hash method options (Bcrypt)
         $this->hash_method = $this->config->item('hash_method', 'ion_auth');
         $this->default_rounds = $this->config->item('default_rounds', 'ion_auth');
         $this->random_rounds = $this->config->item('random_rounds', 'ion_auth');
         $this->min_rounds = $this->config->item('min_rounds', 'ion_auth');
         $this->max_rounds = $this->config->item('max_rounds', 'ion_auth');
-
 
         //initialize messages and error
         $this->messages = array();
@@ -187,8 +184,6 @@ class Ion_auth_model extends CI_Model
             $this->error_start_delimiter = $this->config->item('error_start_delimiter', 'ion_auth');
             $this->error_end_delimiter = $this->config->item('error_end_delimiter', 'ion_auth');
         }
-
-
         //initialize our hooks object
         $this->_ion_hooks = new stdClass;
 
@@ -222,6 +217,11 @@ class Ion_auth_model extends CI_Model
         }
     }
 
+    /**
+     * @param $event
+     * @param $name
+     * @return bool|mixed
+     */
     protected function _call_hook($event, $name)
     {
         if (isset($this->_ion_hooks->{$event}[$name]) && method_exists($this->_ion_hooks->{$event}[$name]->class, $this->_ion_hooks->{$event}[$name]->method)) {
@@ -234,10 +234,10 @@ class Ion_auth_model extends CI_Model
     }
 
     /**
-     * activate
-     *
-     * @author Mathew
-     **/
+     * @param $id
+     * @param bool $code
+     * @return bool
+     */
     public function activate($id, $code = false)
     {
         $this->trigger_events('pre_activate');
@@ -753,13 +753,26 @@ class Ion_auth_model extends CI_Model
                 }
             }
         } else { //assume this is self registration
-            $default_group = $this->where('name', $this->config->item('default_group', 'ion_auth'))->group()->row();
-            if ((isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups))) {
+            $default_group = $this->db
+                ->where('name', $this->config->item('default_group', 'ion_auth'))
+                ->get('groups')
+                ->row();
+            if (isset($default_group->id)) {
                 $this->add_to_group($default_group->id, $id);
             }
         }
-
         $this->trigger_events('post_register');
+
+        //notify admin
+        $email = array(
+            'to'=>config_item('company')['email'],
+            'from'=>config_item('company')['email'],
+            'subject'=>lang('new_user_email_subject'),
+            'message'=>lang('new_user_email_body'),
+            'template'=>'new_user_notice',
+        );
+        $data2 = array_merge($data,$email,$additional_data);
+        $this->mailer->send($data2);
         return (isset($id)) ? $id : FALSE;
     }
 

@@ -5,17 +5,31 @@
     </div>
     <div class="col-sm-10 col-lg-10 col-md-10">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="panel-title">
-                    <h4>
-                        <i class="fa fa-money"></i>
-                        <?php echo lang('invoice') . ' #: ' . $invoice->id; ?>
-                    </h4>
-
+        <div class="box box-default box-solid">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <i class="fa fa-money"></i>
+                    <?php echo lang('invoice') . ' #: ' . $invoice->id; ?>
+                </h3>
+                <div class="box-tools pull-right">
+                    <?php if (!is('parent')): ?>
+                        <button class="btn bg-black btn-flat btn-box-tool" data-toggle="modal"
+                                data-target="#newItemModal">
+                            <i class="fa fa-plus"></i> <?php echo lang('add_item'); ?>
+                        </button>
+                        <button class="btn bg-black btn-flat btn-box-tool" data-toggle="modal" data-target="#payModal">
+                            <span class="fa fa-credit-card"></span>
+                            <?php echo lang('pay'); ?>
+                        </button>
+                    <?php endif; ?>
+                    <a href="<?php echo site_url('invoice/' . $invoice->id . '/preview'); ?>"
+                       target="_blank"
+                       class="btn bg-black btn-flat btn-box-tool">
+                        <i class="fa fa-print"></i> <?php echo lang('print'); ?>
+                    </a>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="box-body">
 
                 <div class="row">
                     <div class="col-sm-4">
@@ -34,34 +48,20 @@
                     </div>
 
                     <div class="col-sm-8">
-                        <?php if (!is('parent')): ?>
-                        <button class="btn bg-black btn-flat" data-toggle="modal" data-target="#newItemModal">
-                            <i class="fa fa-plus"></i> <?php echo lang('add_item'); ?>
-                        </button>
-                        <button class="btn bg-black btn-flat" data-toggle="modal" data-target="#payModal">
-                            <span class="fa fa-credit-card"></span>
-                            <?php echo lang('pay'); ?>
-                        </button>
-                        <?php endif; ?>
-                        <a href="<?php echo site_url('invoice/' . $invoice->id . '/preview'); ?>"
-                           target="_blank"
-                           class="btn bg-black btn-flat">
-                            <i class="fa fa-print"></i> <?php echo lang('print'); ?>
-                        </a>
 
                         <?php if (!is('parent')): ?>
-                        <div class="input-group col-sm-6 pull-right">
-                            <span class="input-group-addon"><?php echo lang('change_status'); ?>: </span>
-                            <select id="<?php echo $invoice->id; ?>" class="form-control invoice_change_status"
-                                    name="invoice_change_status">
-                                <option <?php echo selected_option(1, $invoice->invoice_status); ?>
-                                        value="1"><?php echo lang('paid'); ?></option>
-                                <option <?php echo selected_option(2, $invoice->invoice_status); ?>
-                                        value="2"><?php echo lang('due'); ?></option>
-                                <option <?php echo selected_option(3, $invoice->invoice_status); ?>
-                                        value="3"><?php echo lang('cancelled'); ?></option>
-                            </select>
-                        </div>
+                            <div class="input-group col-sm-6 pull-right">
+                                <span class="input-group-addon"><?php echo lang('change_status'); ?>: </span>
+                                <select id="<?php echo $invoice->id; ?>" class="form-control invoice_change_status"
+                                        name="invoice_change_status">
+                                    <option <?php echo selected_option(1, $invoice->invoice_status); ?>
+                                            value="1"><?php echo lang('paid'); ?></option>
+                                    <option <?php echo selected_option(2, $invoice->invoice_status); ?>
+                                            value="2"><?php echo lang('due'); ?></option>
+                                    <option <?php echo selected_option(3, $invoice->invoice_status); ?>
+                                            value="3"><?php echo lang('cancelled'); ?></option>
+                                </select>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -112,13 +112,13 @@
                                                name="item_sub_total"
                                                value="<?php echo(($item->qty * $item->price)); ?>"/>
                                     </td>
-                                <?php if (!is('parent')): ?>
-                                    <td>
-                                        <a href="<?php echo site_url('invoice/' . $invoice->id . '/deleteItem/' . $item->id); ?>"
-                                           class="delete">
-                                            <span class="fa fa-trash-o text-danger cursor"></span>
-                                        </a>
-                                    </td>
+                                    <?php if (!is('parent')): ?>
+                                        <td>
+                                            <a href="<?php echo site_url('invoice/' . $invoice->id . '/deleteItem/' . $item->id); ?>"
+                                               class="delete">
+                                                <span class="fa fa-trash-o text-danger cursor"></span>
+                                            </a>
+                                        </td>
                                     <?php endif; ?>
                                 </tr>
                                 <?php
@@ -173,7 +173,7 @@
                 <div class="load"></div>
 
             </div>
-            <div class="panel-footer">
+            <div class="box-footer">
                 <h4><?php echo lang('invoice_terms'); ?></h4>
                 <?php echo $invoice->invoice_terms; ?>
             </div>

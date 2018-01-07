@@ -162,7 +162,6 @@ if ($send) {
             'to' => $parent->email,
             'subject' => sprintf(lang('invoice_email_subject'), $child->last_name),
             'message' => sprintf(lang('invoice_email_message'), $child->last_name),
-            'template'=>'general',
             'file' => $fileName
         );
         $this->mailer->send($data);
