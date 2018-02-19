@@ -66,6 +66,8 @@ class Health extends CI_Controller
      */
     function addAllergy()
     {
+        allow('admin,manager,staff');
+
         $this->form_validation->set_rules('allergy', 'Allergy Name', 'required|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             if ($this->health->addAllergy()) {
@@ -214,6 +216,43 @@ class Health extends CI_Controller
     {
         allow('admin,manager,staff');
         if ($this->db->where('id', $id)->delete('child_providers')) {
+            flash('success', lang('request_success'));
+        } else {
+            flash('danger', lang('request_danger'));
+        }
+        redirectPrev();
+    }
+
+
+    /*
+     * add allergy
+     * @return void
+     */
+    function addProblem()
+    {
+        allow('admin,manager,staff');
+
+        $this->form_validation->set_rules('name', lang('problem'), 'required|trim|xss_clean');
+        if ($this->form_validation->run() == TRUE) {
+            if ($this->health->addProblem()) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('warning', lang('request_error'));
+            }
+        } else {
+            flash('danger', lang('request_error'));
+        }
+
+        redirectPrev();
+    }
+
+    /**
+     * @param $id
+     */
+    function deleteProblem($id)
+    {
+        allow('admin,manager,staff');
+        if ($this->db->where('id', $id)->delete('child_problems')) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));

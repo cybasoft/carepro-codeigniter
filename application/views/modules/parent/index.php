@@ -46,7 +46,7 @@
                         </tr>
                         <tr>
                             <td><?php echo lang('gender'); ?>:</td>
-                            <td><?php echo $child->gender == 1 ? 'male' : 'female'; ?></td>
+                            <td><?php  echo lang($child->gender); ?></td>
                         </tr>
                         <tr>
                             <td><?php echo lang('blood_type'); ?>:</td>

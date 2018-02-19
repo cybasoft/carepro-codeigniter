@@ -27,13 +27,13 @@ $config['maintenance_mode']=FALSE;
 
 $config['demo_mode']=FALSE;
 
-
 /*
  * Email configuration
  *
  * https://www.codeigniter.com/user_guide/libraries/email.html
  *
  */
+$config['user_ci_mail'] = TRUE;
 
 $config['email_config'] = array(
     'protocol'=>'mail', //sendmain, smtp, mail
@@ -47,6 +47,7 @@ $config['email_config'] = array(
     'crlf' => "\r\n",
     'newline' => "\r\n"
 );
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL

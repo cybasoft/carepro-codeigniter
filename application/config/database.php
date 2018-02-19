@@ -74,11 +74,14 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => '192.168.10.10',
-	'username' => 'homestead',
-	'password' => 'secret',
-	'database' => 'daycarepro',
+	'hostname' => 'localhost',
+	'username' => '',
+	'password' => '',
+	'database' => '',
+
+	// Advanced database settings
+    // Leave defaults unless you know what you are doing
+    'dsn'	=> '',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

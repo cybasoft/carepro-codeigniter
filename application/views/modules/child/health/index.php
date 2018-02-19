@@ -35,6 +35,11 @@
                         <i class="fa fa-medkit"></i> <?php echo lang('healthcare_providers'); ?>
                     </a>
                 </li>
+                <li class="">
+                    <a href="#problem-list" data-toggle="tab">
+                        <i class="fa fa-exclamation-circle text-red"></i> <?php echo lang('problem_list'); ?>
+                    </a>
+                </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="meds">
@@ -51,6 +56,9 @@
                 </div>
                 <div class="tab-pane" id="providers">
                     <?php $this->load->view('modules/child/health/providers'); ?>
+                </div>
+                <div class="tab-pane" id="problem-list">
+                    <?php $this->load->view('modules/child/health/problems'); ?>
                 </div>
             </div>
         </div>

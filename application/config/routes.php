@@ -121,11 +121,14 @@ $route['child/addAllergy'] = 'child/health/addAllergy';
 $route['child/addFoodPref']='child/health/addFoodPref';
 $route['child/addContact']='child/health/addContact';
 $route['child/addProvider']='child/health/addProvider';
+$route['child/addProblem']='child/health/addProblem';
+
 $route['child/deleteAllergy/(:num)'] = 'child/health/deleteAllergy/$1';
 $route['child/deleteMedication/(:num)'] = 'child/health/deleteMedication/$1';
 $route['child/deleteFoodPref/(:num)']='child/health/deleteFoodPref/$1';
 $route['child/deleteContact/(:num)']='child/health/deleteContact/$1';
 $route['child/deleteProvider/(:num)']='child/health/deleteProvider/$1';
+$route['child/deleteProblem/(:num)']='child/health/deleteProblem/$1';
 
 $route['child/(:num)/notes'] = 'child/notes/index/$1';
 $route['child/(:num)/addNote'] = 'child/notes/addNote/$1';

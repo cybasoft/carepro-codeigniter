@@ -45,4 +45,7 @@ $lang['new_contact_message']='A new contact was recorded for one of your childre
 $lang['new_provider_subject']='New provider recorded for your child';
 $lang['new_provider_message']='A new provider was recorded for one of your children';
 
+$lang['new_problem_subject']='New health problem recorded';
+$lang['new_problem_message']='A new health problem has been recorded for your child';
+
 ?>

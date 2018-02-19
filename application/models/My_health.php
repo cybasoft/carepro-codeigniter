@@ -60,6 +60,27 @@ class my_health extends CI_Model
 
     }
 
+    function addProblem()
+    {
+        $data = array(
+            'child_id' => $this->input->post('child_id'),
+            'name' => $this->input->post('name'),
+            'notes'=>$this->input->post('notes'),
+            'created_at'=>date_stamp(),
+            'user_id'=>$this->user->uid()
+        );
+        $this->db->insert('child_problems', $data);
+        if ($this->db->affected_rows() > 0) {
+            //log event
+            logEvent("Added problem for {$this->input->post('child_id')}");
+            //notify parent
+            $this->parent->notifyParents($data['child_id'],lang('new_problem_subject'),lang('new_problem_message'));
+            return true;
+        }
+        return false;
+
+    }
+
     /**
      * @return bool
      */
