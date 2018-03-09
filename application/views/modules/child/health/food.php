@@ -46,7 +46,7 @@
                 </td>
                 <td>
             <?php if(!is('parent')): ?>
-                    <a class="delete" href="<?php echo site_url(); ?>child/deleteFoodPref/<?php echo $item->id; ?>">
+                    <a class="delete" href="<?php echo site_url('child/deleteFoodPref/'.$item->id); ?>">
                         <span class="fa fa-trash-o cursor"></span>
                         <?php endif; ?>
                 </td>
