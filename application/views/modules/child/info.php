@@ -1,5 +1,5 @@
-<?php if (!is('parent')): ?>
-    <?php echo form_open('child/' . $child->id); ?>
+<?php if(!is('parent')): ?>
+    <?php echo form_open('child/'.$child->id); ?>
     <?php echo form_hidden('child_id', $child->id); ?>
 <?php endif; ?>
 <table class="table">
@@ -71,7 +71,22 @@
             </select>
         </td>
     </tr>
-    <?php if (!is('parent')): ?>
+    <tr>
+        <td><?php echo lang('ethnicity'); ?></td>
+        <td><input class="form-control" id="ethnicity" required="" type="text" name="ethnicity"
+                   value="<?php echo $child->ethnicity; ?>"/></td>
+    </tr>
+    <tr>
+        <td><?php echo lang('religion'); ?></td>
+        <td><input class="form-control" id="religion" required="" type="text" name="religion"
+                   value="<?php echo $child->religion; ?>"/></td>
+    </tr>
+    <tr>
+        <td><?php echo lang('birthplace'); ?></td>
+        <td><input class="form-control" id="birthplace" required="" type="text" name="birthplace"
+                   value="<?php echo $child->birthplace; ?>"/></td>
+    </tr>
+    <?php if(!is('parent')): ?>
         <tr>
             <td></td>
             <td>
@@ -80,6 +95,6 @@
         </tr>
     <?php endif; ?>
 </table>
-<?php if (!is('parent')): ?>
+<?php if(!is('parent')): ?>
     <?php echo form_close(); ?>
 <?php endif; ?>

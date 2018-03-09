@@ -58,3 +58,6 @@ $lang['child_page_heading']='%s\'s Profile';
 
 $lang['problem_list']='Problem list';
 $lang['problem']='Problem';
+$lang['ethinicity']='Ethinicity';
+$lang['religion']='Religion';
+$lang['birthplace']='Place of birth';

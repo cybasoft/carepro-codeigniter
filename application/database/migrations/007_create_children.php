@@ -55,13 +55,13 @@ class Migration_create_children extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 100,
             ),
-            'created_at' => array(
-                'type' => 'DATETIME',
-            ),
             'user_id' => array(
                 'type' => 'INT',
                 'constraint' => '11',
                 'unsigned' => TRUE
+            ),
+            'created_at' => array(
+                'type' => 'DATETIME',
             ),
         ));
 

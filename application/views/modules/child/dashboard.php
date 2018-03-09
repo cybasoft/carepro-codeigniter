@@ -13,6 +13,9 @@
             </div>
         </div>
 
+
+    </div>
+    <div class="col-sm-6">
         <div class="box box-solid box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><?php echo lang('parents'); ?></h3>
@@ -29,8 +32,7 @@
                 <?php $this->load->view($this->module . 'parents'); ?>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6">
+
         <?php $this->load->view($this->module . 'pickup'); ?>
     </div>
 </div>

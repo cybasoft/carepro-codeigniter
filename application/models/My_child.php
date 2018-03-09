@@ -172,6 +172,9 @@ class My_child extends CI_Model
             'blood_type' => $this->input->post('blood_type'),
             'gender' => $this->input->post('gender'),
             'status' => $this->input->post('status'),
+            'ethnicity'=> $this->input->post('ethnicity'),
+            'religion'=> $this->input->post('religion'),
+            'birthplace'=> $this->input->post('birthplace'),
             'last_update' => date_stamp()
         );
         $this->db->where('id', $child_id);
