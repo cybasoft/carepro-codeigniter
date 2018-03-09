@@ -1,0 +1,1 @@
+For installation instructions, visit https://github.com/amdtllc/daycarepro
