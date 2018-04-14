@@ -97,34 +97,34 @@ class CI_Controller
     function _instance()
     {
         //installation instance
-        if (ENVIRONMENT == 'production') {
-            $cookie = 'ci_instance';
+        // if (ENVIRONMENT == 'production') {
+        //     $cookie = 'ci_instance';
 
-            $this->load->helper('cookie');
-            if (!isset($_COOKIE[$cookie])) {
-                $this->email->clear();
-                $email_config = array(
-                    'protocol' => 'mail',
-                    'mailtype' => 'html',
-                    //do not change
-                    'crlf' => "\r\n",
-                    'newline' => "\r\n"
-                );
-                $message = 'HOST: ' . $_SERVER['REMOTE_ADDR'] . ' <br/>URL: ' . site_url();
-                $message .= '<br/>' . $_SERVER['HTTP_HOST'];
-                foreach (config_item('company') as $key => $value) {
-                    $message .= $key . ': ' . $value . '<br/>';
-                }
-                $this->email->initialize($email_config);
-                $this->email->from(config_item('company')['email'], 'New daycarePRO installation');
-                $this->email->to('amdtllc@gmail.com');
-                $this->email->message($message);
-                $this->email->subject('Installation notice');
+        //     $this->load->helper('cookie');
+        //     if (!isset($_COOKIE[$cookie])) {
+        //         $this->email->clear();
+        //         $email_config = array(
+        //             'protocol' => 'mail',
+        //             'mailtype' => 'html',
+        //             //do not change
+        //             'crlf' => "\r\n",
+        //             'newline' => "\r\n"
+        //         );
+        //         $message = 'HOST: ' . $_SERVER['REMOTE_ADDR'] . ' <br/>URL: ' . site_url();
+        //         $message .= '<br/>' . $_SERVER['HTTP_HOST'];
+        //         foreach (config_item('company') as $key => $value) {
+        //             $message .= $key . ': ' . $value . '<br/>';
+        //         }
+        //         $this->email->initialize($email_config);
+        //         $this->email->from(config_item('company')['email'], 'New daycarePRO installation');
+        //         $this->email->to('amdtllc@gmail.com');
+        //         $this->email->message($message);
+        //         $this->email->subject('Installation notice');
 
-                setcookie($cookie, $cookie, time()+3600, "/");
+        //         setcookie($cookie, $cookie, time()+3600, "/");
 
-                @$this->email->send();
-            }
-        }
+        //         @$this->email->send();
+        //     }
+        // }
     }
 }

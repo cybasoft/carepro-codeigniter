@@ -29,7 +29,7 @@
 <div class="row">
     <div class="col-lg-12">
         <?php $problems = $this->db->where('child_id', $child->id)->get('child_problems'); ?>
-        <?php if ($problems->num_rows() > 0): ?>
+        <?php if ($problems !==false && $problems->num_rows() > 0): ?>
             <?php foreach ($problems->result() as $problem): ?>
                 <div class="box box-default box-solid">
                     <div class="box-header">
