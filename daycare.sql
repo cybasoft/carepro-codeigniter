@@ -925,11 +925,41 @@ CREATE INDEX user_id
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
-ALTER TABLE children ADD COLUMN ethnicity VARCHAR(100) NULL;
-ALTER TABLE children ADD COLUMN religion VARCHAR(100) NULL;
-ALTER TABLE children ADD COLUMN birthplace VARCHAR(100) NULL;
+ALTER TABLE children
+  ADD COLUMN ethnicity VARCHAR(100) NULL;
+ALTER TABLE children
+  ADD COLUMN religion VARCHAR(100) NULL;
+ALTER TABLE children
+  ADD COLUMN birthplace VARCHAR(100) NULL;
 
 -- version 2.0.8
-ALTER TABLE users ADD stripe_customer_id VARCHAR(100) NULL;
-CREATE UNIQUE INDEX users_stripe_customer_id_uindex ON users (stripe_customer_id);
-ALTER TABLE invoices MODIFY invoice_status VARCHAR(100) NOT NULL;
+ALTER TABLE users
+  ADD stripe_customer_id VARCHAR(100) NULL;
+CREATE UNIQUE INDEX users_stripe_customer_id_uindex
+  ON users (stripe_customer_id);
+ALTER TABLE invoices
+  MODIFY invoice_status VARCHAR(100) NOT NULL;
+
+CREATE TABLE photos
+(
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  child_id    INT          NOT NULL,
+  name        VARCHAR(100) NOT NULL,
+  caption     VARCHAR(100) NOT NULL,
+  uploaded_by INT          NOT NULL,
+  created_at  DATETIME     NOT NULL,
+  CONSTRAINT photos_ibfk_1
+  FOREIGN KEY (child_id) REFERENCES children (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT photos_ibfk_2
+  FOREIGN KEY (uploaded_by) REFERENCES users (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE INDEX child_id
+  ON photos (child_id);
+CREATE INDEX uploaded_by
+  ON photos (uploaded_by);
+
