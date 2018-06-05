@@ -928,3 +928,8 @@ CREATE INDEX user_id
 ALTER TABLE children ADD COLUMN ethnicity VARCHAR(100) NULL;
 ALTER TABLE children ADD COLUMN religion VARCHAR(100) NULL;
 ALTER TABLE children ADD COLUMN birthplace VARCHAR(100) NULL;
+
+-- version 2.0.8
+ALTER TABLE users ADD stripe_customer_id VARCHAR(100) NULL;
+CREATE UNIQUE INDEX users_stripe_customer_id_uindex ON users (stripe_customer_id);
+ALTER TABLE invoices MODIFY invoice_status VARCHAR(100) NOT NULL;

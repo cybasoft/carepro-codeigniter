@@ -23,14 +23,14 @@ function date_stamp()
  */
 function format_date($date, $time = true, $timestamp = false)
 {
-    if ($timestamp == true)
+    if($timestamp == true)
         $date = date('Y-m-d H:i:s', $date);
 
     $format = config_item('company')['date_format'];
-    if ($format == "")
+    if($format == "")
         return date('d M Y H:ia', strtotime($date));
 
-    if ($time == false)
+    if($time == false)
         return date('d M Y', strtotime($date));
     return date($format, strtotime($date));
 }
@@ -64,11 +64,11 @@ function flash($type = "", $msg = "")
             $icon = 'info';
             break;
     }
-    if ($type == "error")
+    if($type == "error")
         $type = "danger";
-    $ci = & get_instance();
-    if (validation_errors() == true) {
-        if ($msg == "") {
+    $ci = &get_instance();
+    if(validation_errors() == true) {
+        if($msg == "") {
             $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-warning"></span>', '</div>');
             $msg = $e;
             $type = 'error';
@@ -94,8 +94,8 @@ function flash($type = "", $msg = "")
  */
 function setRedirect()
 {
-    $ci = & get_instance();
-    if (isset($_SERVER['HTTP_REFERER'])) {
+    $ci = &get_instance();
+    if(isset($_SERVER['HTTP_REFERER'])) {
         $ci->session->set_userdata('last_page', $_SERVER['HTTP_REFERER']);
     } else {
         $ci->session->set_userdata('last_page', base_url());
@@ -107,8 +107,8 @@ function setRedirect()
  */
 function redirectPrev($msg = array())
 {
-    $ci = & get_instance();
-    if (!empty($msg)) {
+    $ci = &get_instance();
+    if(!empty($msg)) {
         flash('info', $msg);
     }
     redirect($ci->session->userdata('last_page'));
@@ -121,9 +121,9 @@ function redirectPrev($msg = array())
  */
 function is($group)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     auth(true);
-    if ($ci->ion_auth->in_group($group))
+    if($ci->ion_auth->in_group($group))
         return true;
     return false;
 }
@@ -134,7 +134,7 @@ function is($group)
  */
 function auth($redirect = false)
 {
-    if (logged_in() == true) {
+    if(logged_in() == true) {
         return true;
     } else {
         if($redirect)
@@ -151,7 +151,7 @@ function auth($redirect = false)
  */
 function in_group($id, $group)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     $query = $ci->db
         ->where('users_groups.user_id', $id)
         ->where('groups.name', $group)
@@ -159,7 +159,7 @@ function in_group($id, $group)
         ->from('groups')
         ->join('users_groups', 'users_groups.group_id=groups.id')
         ->get();
-    if ($query->num_rows > 0)
+    if($query->num_rows>0)
         return true;
     return false;
 }
@@ -171,7 +171,7 @@ function in_group($id, $group)
  */
 function selected_option($option, $value)
 {
-    if ($option == $value) {
+    if($option == $value) {
         return 'selected';
     }
     return false;
@@ -184,7 +184,7 @@ function selected_option($option, $value)
  */
 function checked_option($option, $value)
 {
-    if ($option == $value) {
+    if($option == $value) {
         return 'checked';
     }
     return false;
@@ -198,7 +198,7 @@ function checked_option($option, $value)
 */
 function encrypt($msg)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     $ci->conf->check_encrypt_key();
     return $ci->encryption->encrypt($msg);
 }
@@ -211,7 +211,7 @@ function encrypt($msg)
 */
 function decrypt($msg)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     $ci->conf->check_encrypt_key();
     return $ci->encryption->decrypt($msg);
 }
@@ -221,8 +221,8 @@ function decrypt($msg)
  */
 function logged_in()
 {
-    $ci = & get_instance();
-    if ($ci->ion_auth->logged_in() == true)
+    $ci = &get_instance();
+    if($ci->ion_auth->logged_in() == true)
         return true;
     return false;
 }
@@ -236,13 +236,13 @@ function logged_in()
 */
 function logEvent($event)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     $data = array(
         'user_id' => $ci->users->uid(),
         'date' => time(),
         'event' => $event
     );
-    if ($ci->db->insert('event_log', $data))
+    if($ci->db->insert('event_log', $data))
         return true;
     return false;
 }
@@ -254,17 +254,17 @@ function logEvent($event)
  */
 function allow($group)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     auth(true);
     $groups = explode(',', $group);
     $data = array();
-    for ($i = 0; $i < count($groups); $i++) {
-        if ($ci->ion_auth->in_group($groups[$i]) == true) {
+    for ($i = 0; $i<count($groups); $i++) {
+        if($ci->ion_auth->in_group($groups[$i]) == true) {
             $data = array('1' => 1);
             break;
         }
     }
-    if (empty($data)) {
+    if(empty($data)) {
         flash('danger', lang('access_denied'));
         redirectPrev();
         exit();
@@ -282,32 +282,43 @@ function allow($group)
 */
 function page($page, $data = array())
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     $data['page'] = $page;
-    $ci->load->view('inc/home', $data);
+    if(is('parent')) {
+        $ci->load->view('partials/parent-template', $data);
+    } else {
+        $ci->load->view('partials/admin-template', $data);
+    }
+}
+
+function parents_page($page, $data = array())
+{
+    $ci = &get_instance();
+    $data['page'] = $page;
+
 }
 
 function demo()
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
 
     $seg1 = $ci->uri->segment(1);
     $seg2 = $ci->uri->segment(2);
     $seg3 = $ci->uri->segment(3);
     $seg4 = $ci->uri->segment(4);
 
-    if ($ci->users->uid() > 0) {
-        if (config_item('demo_mode') == true) {
+    if($ci->users->uid()>0) {
+        if(config_item('demo_mode') == true) {
             $ci->load->helper('language');
 
             //prevent all post methods
-            if ($ci->input->server('REQUEST_METHOD') == 'POST' && $seg1 !== "child") {
+            if($ci->input->server('REQUEST_METHOD') == 'POST' && $seg1 !== "child") {
                 flash('danger', lang('feature_disabled_in_demo'));
                 redirectPrev();
             }
 
             //prevent delete
-            if (strstr($seg1, 'delete')
+            if(strstr($seg1, 'delete')
                 || strstr($seg2, 'delete')
                 || strstr($seg3, 'delete')
                 || strstr($seg4, 'delete')
@@ -327,12 +338,12 @@ function demo()
 */
 function maintenance()
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
 
-    if (config_item('maintenance_mode') == true) {
+    if(config_item('maintenance_mode') == true) {
         $ci->load->helper('language');
         die('<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
-            . lang('maintenance_mode') . '
+            .lang('maintenance_mode').'
 </div>');
     }
 }
@@ -350,11 +361,10 @@ function maintenance()
 function lang($text, $for = '', $attributes = array())
 {
     $line = get_instance()->lang->line($text);
-
-    if ($for !== '') {
-        $line = '<label for="' . $for . '"' . _stringify_attributes($attributes) . '>' . $line . '</label>';
+    if($for !== '') {
+        $line = '<label for="'.$for.'"'._stringify_attributes($attributes).'>'.$line.'</label>';
     }
-    if ($line == "") {
+    if($line == "") {
         $text = str_replace('_', ' ', $text);
         $text = ucwords($text);
         return $text;
@@ -380,7 +390,7 @@ function dd($array)
  */
 function uri_segment($num)
 {
-    $ci = & get_instance();
+    $ci = &get_instance();
     return $ci->uri->segment($num);
 }
 
@@ -391,12 +401,14 @@ function uri_segment($num)
 function set_active($page)
 {
     $uri = uri_string();
-    if (is_array($page)) {
+    if(is_array($page)) {
         $uri = uri_segment(1);
-        if (in_array($uri, $page))
+        if(in_array($uri, $page))
             return 'active';
     }
     return ($page == $uri) ? 'active' : '';
 }
-
+function moneyFormat($amount){
+    return config_item('company')['currency_symbol'].number_format($amount,2);
+}
 ?>

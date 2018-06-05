@@ -16,6 +16,5 @@
 		<div class="tab-pane" id="create-user">
 			<?php $this->load->view($this->module.'create_user'); ?>
 		</div>
-
 	</div>
 </div>

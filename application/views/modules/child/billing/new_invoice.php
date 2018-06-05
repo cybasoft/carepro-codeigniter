@@ -18,7 +18,7 @@
         </div>
         <label class="label label-default"><?php echo lang('due'); ?> </label>
         <div class="form-group input-group date col-lg-4 col-md-4 col-sm-4">
-            <input class="form-control" size="16" type="date" name="date_due" required=""/>
+            <input class="form-control" value="<?php echo date('Y-m-d',strtotime(date('Y-m-d'). ' + 15 days')); ?>" size="16" type="date" name="date_due" required=""/>
             <span class="input-group-addon add-on">
                 <i class="fa fa-calendar" style="display: inline"></i>
             </span>
@@ -35,7 +35,7 @@
                 <th><?php echo lang('total'); ?></th>
             </tr>
             </thead>
-
+            <tbody>
             <tr class="invoice-item">
                 <td>
                     <input type="text" name="item_name" id="itemName" class="form-control input-sm"/>
@@ -54,39 +54,28 @@
                            name="itemLineTotal"/>
                 </td>
             </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3" rowspan="3" class="text-right">
+                    <label><?php echo lang('invoice_terms'); ?></label>
+                    <textarea name="remarks" rows="4" class="form-control"></textarea>
+                </td>
+                <td class="text-right"><?php echo lang('sub_total'); ?>:</td>
+                <td>
+                    <input type="text" readonly value="0.00" class="subTotal"/>
+                </td>
+            </tr>
+            <tr style="display: none;">
+                <td class="text-right"><?php echo lang('tax'); ?>:</td>
+                <td><input type="hidden" class="tax" name="tax" value="0"/></td>
+            </tr>
+            <tr>
+                <td class="text-right"><?php echo lang('total'); ?>:</td>
+                <td><input type="text" readonly value="0.00" class="finalTotal"/></td>
+            </tr>
+            </tfoot>
         </table>
-
-        <!--        <div class="text-left">-->
-        <!--            <a href="#" class="add-row btn btn-block btn-default btn-xs">-->
-        <!--                <i class="fa fa-plus fa-2x"></i>-->
-        <!--            </a>-->
-        <!--        </div>-->
-
-        <div class="row">
-            <div class="col-sm-8">
-                <label><?php echo lang('invoice_terms'); ?></label>
-                <textarea name="remarks" rows="4" class="form-control"></textarea>
-            </div>
-            <div class="col-sm-4">
-                <table class="table table-bordered">
-                    <tr>
-                        <td colspan="4" class="text-right"><?php echo lang('sub_total'); ?>:</td>
-                        <td>
-                            <input type="text" readonly value="0.00" class="subTotal"/>
-                        </td>
-                    </tr>
-                    <tr style="display: none;">
-                        <td colspan="4" class="text-right"><?php echo lang('tax'); ?>:</td>
-                        <td><input type="hidden" class="tax" name="tax" value="0"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="text-right"><?php echo lang('total'); ?>:</td>
-                        <td><input type="text" readonly value="0.00" class="finalTotal"/></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
         <div class="text-right">
             <?php echo lang('invoice_save_text'); ?>
             <button class="btn btn-primary">

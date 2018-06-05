@@ -41,7 +41,7 @@ class notes extends CI_Controller
     {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('title', lang('title'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('note-content', lang('content'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('note-content', lang('content'), 'required|trim');
         if ($this->form_validation->run() == TRUE) {
             if ($this->child->createNote($child_id)) {
                 flash('success', lang('request_success'));

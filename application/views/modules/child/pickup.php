@@ -1,39 +1,37 @@
 <div class="box box-solid box-warning">
     <div class="box-header">
         <div class="box-title btn-block"><?php echo lang('authorized_pickup'); ?>
-            <a href="#" data-toggle="modal" data-target="#newPickupModal"><i class="fa fa-plus pull-right"></i></a>
+            <a href="#" data-toggle="modal" data-target="#newPickupModal">
+                <i class="fa fa-plus pull-right"></i>
+                <?php echo lang('register'); ?>
+            </a>
         </div>
     </div>
     <div class="box-body table-responsive">
-
         <table class="table table-bordered parent-info">
             <?php foreach ($pickups as $pickup) : ?>
                 <tr>
-                    <td style="width:132px;">
+                    <td class="col-sm-4">
                         <div data-toggle="modal" data-target="#new-pickup-photo">
-                            <?php if ($pickup->photo !== ""): ?>
+                            <?php if(is_file(APPPATH.'../assets/uploads/users/pickup/'.$pickup->photo)): ?>
                                 <img class="img-responsive img-thumbnail"
-                                     style="width:130px;height:130px;"
                                      src="<?php echo base_url(); ?>assets/uploads/users/pickup/<?php echo $pickup->photo; ?>"/>
                             <?php else: ?>
-                                <img class="img-circle img-responsive img-thumbnail"
-                                     style="width:130px;height:130px;"
-                                     src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
+                                <img class="img-responsive img-thumbnail" src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
                             <?php endif; ?>
-
                         </div>
                     </td>
                     <td>
-                        <h3 class=""><?php echo $pickup->last_name . ', ' . $pickup->first_name; ?>
-                            <?php if (!is('parent')): ?>
-                                <a href="<?php echo site_url('child/deletePickup/' . $pickup->id); ?>"
+                        <h3 class="">
+                            <?php echo $pickup->last_name.', '.$pickup->first_name; ?>
+                            <?php if(!is('parent')): ?>
+                                <a href="<?php echo site_url('child/deletePickup/'.$pickup->id); ?>"
                                    class="delete">
                                     <i class="fa fa-trash-o text-danger pull-right"></i>
                                 </a>
                             <?php endif; ?>
                         </h3>
                         <h4><?php echo $pickup->relation; ?></h4>
-
                         <table>
                             <tr>
                                 <td>
@@ -47,25 +45,17 @@
                                     <?php echo $pickup->other_phone; ?>
                                 </td>
                             </tr>
-
                         </table>
-
                         <table>
                             <tr>
                                 <td><span class="fa fa-envelope"> </span></td>
                                 <td>
-                                    <div class="parent-address">
-                                        <?php
-                                        echo $pickup->address;
-                                        ?>
-                                    </div>
+                                    <div class="parent-address"><?php echo $pickup->address; ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span class="fa fa-lock"></span></td>
-                                <td class="label label-danger">
-                                    <?php echo $pickup->pin; ?>
-                                </td>
+                                <td class="label label-danger"><?php echo $pickup->pin; ?></td>
                             </tr>
                         </table>
                     </td>
@@ -79,29 +69,37 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                <button type="button" class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel"><?php echo lang('authorized_pickup'); ?></h4>
             </div>
 
-            <?php echo form_open_multipart('child/' . $child->id . '/pickup') ?>
+            <?php echo form_open_multipart('child/'.$child->id.'/pickup') ?>
             <div class="modal-body">
                 <label><?php echo lang('first_name'); ?></label>
                 <input class="form-control" type="text" name="first_name"
                        placeholder="<?php echo lang('first_name'); ?>"
                        required=""/>
                 <label><?php echo lang('last_name'); ?></label>
-                <input class="form-control" type="text" name="last_name"
+                <input class="form-control"
+                       type="text"
+                       name="last_name"
                        placeholder="<?php echo lang('last_name'); ?>"
                        required=""/>
 
                 <label><?php echo lang('cellphone'); ?></label>
-                <input class="form-control" type="text" name="cell"
+                <input class="form-control"
+                       type="text"
+                       name="cell"
                        placeholder="<?php echo lang('cellphone'); ?>"
                        required=""/>
 
                 <label><?php echo lang('other_phone'); ?></label>
-                <input class="form-control" type="text" name="other_phone"
+                <input class="form-control"
+                       type="text"
+                       name="other_phone"
                        placeholder="<?php echo lang('other_phone'); ?>"/>
 
                 <label><?php echo lang('relation'); ?></label>
@@ -109,17 +107,24 @@
                        placeholder="<?php echo lang('relation'); ?>" required=""/>
 
                 <label><?php echo lang('pin'); ?></label>
-                <input class="form-control" type="text" name="pin" placeholder="<?php echo lang('pin'); ?>"
+                <input class="form-control"
+                       type="text"
+                       name="pin"
+                       placeholder="<?php echo lang('pin'); ?>"
                        required=""/>
 
                 <label><?php echo lang('address'); ?></label>
-                <textarea class="form-control" name="address" rows="3"
+                <textarea class="form-control"
+                          name="address"
+                          rows="3"
                           placeholder="<?php echo lang('address'); ?>"></textarea>
                 <label><?php echo lang('photo'); ?></label>
                 <input class="form-control" type="file" name="userfile" size="20">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close'); ?></button>
+                <button type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal"><?php echo lang('close'); ?></button>
                 <button class="btn btn-primary"><?php echo lang('submit'); ?></button>
             </div>
             <?php echo form_close(); ?>

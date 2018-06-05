@@ -37,9 +37,10 @@
             <th><?php echo lang('national_id'); ?></th>
             <th><?php echo lang('blood_type'); ?></th>
             <th><?php echo lang('enrolled_on'); ?></th>
+            <th><?php echo lang('status'); ?></th>
         </tr>
         <?php foreach ($children as $child) : ?>
-            <tr>
+            <tr <?php if($child->status==0){?> style="text-decoration: line-through;color:red" <?php } ?>>
                 <td>
                     <i class="fa fa-square-o" style="font-size:20px;"></i>
                 </td>
@@ -48,6 +49,7 @@
                 <td><?php echo decrypt($child->national_id); ?></td>
                 <td><?php echo $child->blood_type; ?></td>
                 <td><?php echo format_date($child->created_at, false); ?></td>
+                <td><?php echo ($child->status==0)?lang('inactive'):lang('active'); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

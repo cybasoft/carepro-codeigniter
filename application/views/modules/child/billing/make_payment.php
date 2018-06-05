@@ -34,7 +34,7 @@
                             <select name="method" class="form-control">
                                 <?php
                                 foreach ($this->db->get('payment_methods')->result() as $row) {
-                                    echo '<option value="' . $row->id . '">' . $row->title . '</option>';
+                                    echo '<option value="' . $row->title . '">' . $row->title . '</option>';
                                 }
                                 ?>
                             </select>

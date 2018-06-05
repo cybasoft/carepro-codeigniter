@@ -231,6 +231,7 @@ $lang['register_form_notice'] = 'Register here to be a parent in this daycare.';
 $lang['captcha_placeholder'] = 'Enter text in image above';
 $lang['invalid_captcha'] = 'Invalid captcha entered';
 $lang['user_already_assigned'] = 'The user selected is already assigned';
+$lang['assign']='Assign';
 
 $lang['file'] = 'File';
 $lang['filename'] = 'Filename';
@@ -299,7 +300,7 @@ $lang['food_item'] = 'Food item';
 $lang['allergies'] = 'Allergies';
 $lang['allergy'] = 'Allergy';
 $lang['medication'] = 'Medication';
-$lang['medications'] = 'Medications';
+$lang['medications'] = 'Meds';
 $lang['food_preference'] = 'Food prefs';
 $lang['reaction'] = 'Reaction';
 $lang['no_known_allergies'] = 'No known allergies';
@@ -405,3 +406,13 @@ $lang['admin_purge_warnng'] = ' Warning! This is an admin action. This will dele
     continue';
 $lang['purge']='Purge!';
 $lang['ip_address']='IP Address';
+$lang['lock']='Lock';
+
+//photos
+$lang['photos']='Photos';
+$lang['album']='Album';
+$lang['albums']='Albums';
+$lang['photo']='Photo';
+$lang['photo_album']='Photo albums';
+$lang['upload']='Upload';
+$lang['dropzone_message']='Drop photos or click to upload';

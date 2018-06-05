@@ -1,5 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+if(!function_exists('lang')){
+    function lang($text){
+        return $text;
+    }
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

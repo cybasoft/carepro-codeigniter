@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 class My_child extends CI_Model
 {
@@ -66,7 +66,7 @@ class My_child extends CI_Model
     function getData($db, $child_id)
     {
         $data = array();
-        if ($db == 'child_checkin') $this->db->order_by('id', 'DESC');
+        if($db == 'child_checkin') $this->db->order_by('id', 'DESC');
 
         $this->db->where('child_id', $child_id);
         return $this->db->get($db)->result();
@@ -75,11 +75,16 @@ class My_child extends CI_Model
     /**
      * @return mixed
      */
-    function getCount()
+    function getCount($active = true)
     {
-        if (is('parent')) {
+        if(is('parent')) {
             $query = $this->parent->getChildren($this->user->uid());
             return $query->num_rows();
+        }
+        if($active == true) {
+            $this->db->where('status', 1);
+        } else {
+            $this->db->where('status', 0);
         }
         return $this->children()->num_rows();
     }
@@ -105,7 +110,7 @@ class My_child extends CI_Model
         $this->db->where('child_id', $child_id);
         $this->db->where('user_id', $user_id);
         $query = $this->db->get('child_parents');
-        if ($query->num_rows() > 0) {
+        if($query->num_rows()>0) {
             return true;
         } else {
             return false;
@@ -129,19 +134,23 @@ class My_child extends CI_Model
             'last_update' => date_stamp(),
             'status' => 1,
             'created_at' => date_stamp(),
-            'user_id' => $this->user->uid()
+            'user_id' => $this->user->uid(),
+            'religion' => $this->input->post('religion'),
+            'ethnicity' => $this->input->post('ethnicity'),
+            'birthplace' => $this->input->post('birthplace'),
+            'blood_type' => $this->input->post('blood_type')
         );
         $this->db->insert('children', $data);
         $last_id = $this->db->insert_id();
 
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows()>0) {
             flash('success', lang('request_success'));
         } else {
             return false;
         }
 
         //assign child to user if this user is parent
-        if (is('parent')) {
+        if(is('parent')) {
             $data2 = array(
                 'child_id' => $last_id,
                 'user_id' => $this->user->uid()
@@ -152,7 +161,7 @@ class My_child extends CI_Model
         //log event
         logEvent("Add child {$data['first_name']} {$data['last_name']}");
 
-        if ($getID)
+        if($getID)
             return $last_id;
         return true;
     }
@@ -172,14 +181,14 @@ class My_child extends CI_Model
             'blood_type' => $this->input->post('blood_type'),
             'gender' => $this->input->post('gender'),
             'status' => $this->input->post('status'),
-            'ethnicity'=> $this->input->post('ethnicity'),
-            'religion'=> $this->input->post('religion'),
-            'birthplace'=> $this->input->post('birthplace'),
+            'ethnicity' => $this->input->post('ethnicity'),
+            'religion' => $this->input->post('religion'),
+            'birthplace' => $this->input->post('birthplace'),
             'last_update' => date_stamp()
         );
         $this->db->where('id', $child_id);
         $this->db->update('children', $data);
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows()>0) {
             //log event
             logEvent("Updated child {$data['first_name']} {$data['last_name']}");
 
@@ -210,10 +219,10 @@ class My_child extends CI_Model
 
         $this->db->insert('child_pickup', $data);
         $insert_id = $this->db->insert_id();
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows()>0) {
             //log event
             logEvent("Added pickup contact for child ID {$id}");
-            $this->parent->notifyParents($id,lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'),$data['first_name'].' '.$data['last_name']));
+            $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
             return false;
@@ -235,11 +244,11 @@ class My_child extends CI_Model
         );
 
         $this->db->insert('child_notes', $data);
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows()>0) {
             //log event
             logEvent("Added note for child ID: {$child_id}");
             //notify parents
-            $this->parent->notifyParents($child_id,lang('note_created_email_subject'),sprintf(lang('note_created_email_message'),$this->first($child_id)->first_name));
+            $this->parent->notifyParents($child_id, lang('note_created_email_subject'), sprintf(lang('note_created_email_message'), $this->first($child_id)->first_name));
 
             return true;
         }
@@ -252,7 +261,7 @@ class My_child extends CI_Model
      */
     function createIncident($child_id)
     {
-        $date_occurred = $this->input->post('date') . ' ' . $this->input->post('time');
+        $date_occurred = $this->input->post('date').' '.$this->input->post('time');
         $data = array(
             'child_id' => $child_id,
             'title' => $this->input->post('title'),
@@ -268,12 +277,12 @@ class My_child extends CI_Model
         );
 
         $this->db->insert('child_incident', $data);
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows()>0) {
             //log event
             logEvent("Added incident report for child ID: {$child_id}");
 
             //notify parents
-            $this->parent->notifyParents($child_id,lang('incident_email_subject'),sprintf(lang('incident_email_message'),$this->first($child_id)->first_name));
+            $this->parent->notifyParents($child_id, lang('incident_email_subject'), sprintf(lang('incident_email_message'), $this->first($child_id)->first_name));
             return true;
         }
         return false;
@@ -286,7 +295,7 @@ class My_child extends CI_Model
     function check_in($child_id)
     {
         //check if already checked in
-        if ($this->is_checked_in($child_id) == 1) {
+        if($this->is_checked_in($child_id) == 1) {
             flash('warning', lang('child_already_checked_in'));
             return false;
         }
@@ -297,9 +306,9 @@ class My_child extends CI_Model
             'time_in' => date_stamp(),
             'in_staff_id' => $this->user->uid()
         );
-        if ($this->db->insert('child_checkin', $data)) {
+        if($this->db->insert('child_checkin', $data)) {
             $child = $this->child($child_id);
-            $childName = $child->first_name . ' ' . $child->last_name;
+            $childName = $child->first_name.' '.$child->last_name;
             $message = sprintf(lang('child_checked_in_message'), $childName, date('d M Y @ H:i:A'), $this->input->post('in_guardian'));
             $subject = sprintf(lang('child_checked_in_subject'), $childName);
             $this->parent->notifyParents($child_id, $subject, $message);
@@ -316,7 +325,7 @@ class My_child extends CI_Model
     function check_out($child_id)
     {
         //check if already checked in
-        if ($this->is_checked_in($child_id) == false) {
+        if($this->is_checked_in($child_id) == false) {
             flash('warning', lang('child_is_already_checked_out'));
             return false;
         }
@@ -327,13 +336,13 @@ class My_child extends CI_Model
             'time_out' => date_stamp(),
             'out_staff_id' => $this->user->uid()
         );
-        if ($this->db
+        if($this->db
             ->where('child_id', $child_id)
             ->where('out_guardian', null)
             ->update('child_checkin', $data)) {
 
             $child = $this->child($child_id);
-            $childName = $child->first_name . ' ' . $child->last_name;
+            $childName = $child->first_name.' '.$child->last_name;
             $message = sprintf(lang('child_checked_out_message'), $childName, date('d M Y @ H:i:A'), $this->input->post('out_guardian'));
             $subject = sprintf(lang('child_checked_out_subject'), $childName);
             $this->parent->notifyParents($child_id, $subject, $message);
@@ -352,7 +361,7 @@ class My_child extends CI_Model
         $this->db->where('out_guardian', NULL);
         $this->db->where('child_id', $child_id);
         $query = $this->db->get('child_checkin')->row();
-        if (empty($query)) {//child is out
+        if(empty($query)) {//child is out
             return false;
         } else { //child is in
             return true;

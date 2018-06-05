@@ -4,7 +4,6 @@
         <?php $this->load->view('modules/child/sidebar'); ?>
     </div>
     <div class="col-sm-10 col-lg-10 col-md-10">
-        <span class="h3"><i class="fa fa-th"></i> <?php echo lang('contacts'); ?></span>
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active">
@@ -22,12 +21,12 @@
                 <li class="">
                     <a href="#food" data-toggle="tab">
                         <i class="fa fa-leaf"></i>
-                        <?php echo lang('food_pref_header'); ?>
+                        <?php echo lang('food'); ?>
                     </a>
                 </li>
                 <li class="">
                     <a href="#emergency_contacts" data-toggle="tab">
-                        <i class="fa fa-ambulance"></i> <?php echo lang('emergency_contacts'); ?>
+                        <i class="fa fa-ambulance"></i> <?php echo lang('contacts'); ?>
                     </a>
                 </li>
                 <li class="">

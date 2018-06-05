@@ -145,8 +145,10 @@ class MY_user extends CI_Model
      * @param string, int
      * @return string, int
      */
-    function get($id)
+    function get($id=null)
     {
+        if($id==null)
+            $id=$this->uid();
         return $this->db->where('id',$id)->get('users')->row();
     }
 

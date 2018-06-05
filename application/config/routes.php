@@ -1,55 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
-/*
-| -------------------------------------------------------------------------
-| URI ROUTING
-| -------------------------------------------------------------------------
-| This file lets you re-map URI requests to specific controller functions.
-|
-| Typically there is a one-to-one relationship between a URL string
-| and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
-|
-|	example.com/class/method/id/
-|
-| In some instances, however, you may want to remap this relationship
-| so that a different class/function is called than the one
-| corresponding to the URL.
-|
-| Please see the user guide for complete details:
-|
-|	https://codeigniter.com/user_guide/general/routing.html
-|
-| -------------------------------------------------------------------------
-| RESERVED ROUTES
-| -------------------------------------------------------------------------
-|
-| There are three reserved routes:
-|
-|	$route['default_controller'] = 'welcome';
-|
-| This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
-| would be loaded.
-|
-|	$route['404_override'] = 'errors/page_missing';
-|
-| This route will tell the Router which controller/method to use if those
-| provided in the URL cannot be matched to a valid route.
-|
-|	$route['translate_uri_dashes'] = FALSE;
-|
-| This is not exactly a route, but allows you to automatically route
-| controller and method names that contain dashes. '-' isn't a valid
-| class or method name character, so it requires translation.
-| When you set this option to TRUE, it will replace ALL dashes in the
-| controller and method URI segments.
-|
-| Examples:	my-controller/index	-> my_controller/index
-|		my-controller/my-method	-> my_controller/my_method
- */
-
 //generate migration tables (!)
 $route['migration/(:any)'] = 'migration/$1';
 
@@ -133,6 +83,7 @@ $route['child/(:num)/pickup']['post'] = 'child/pickup/store/$1';
 $route['child/deletePickup/(:num)'] = 'child/pickup/deletePickup/$1';
 $route['child/(:num)/attendance'] = 'child/child/attendance/$1';
 $route['invoice/:any'] = 'accounting/invoice/$1';
+$route['invoice/(:num)/pay'] = 'child/invoice/pay/$1';
 $route['child/(:num)/billing'] = 'child/invoice/index/$1';
 $route['child/(:num)/invoices/search'] = 'child/invoice/invoices/$1/all';
 $route['child/(:num)/invoices/(:any)'] = 'child/invoice/invoices/$1/$2';
@@ -148,6 +99,11 @@ $route['invoice/(:num)/download'] = 'child/invoice/pdf/$1/I';
 $route['invoice/(:num)/send'] = 'child/invoice/pdf/$1/F/1';
 $route['invoice/(:num)/updateStatus'] = 'child/invoice/updateStatus/$1';
 
+//child photos
+$route['child/(:num)/photos'] = 'child/photos/index';
+$route['child/(:num)/photos/(:any)'] = 'child/photos/index/$1';
+$route['child/(:num)/photos/(:any)/(:any)'] = 'child/photos/index/$1';
+
 //parents
 $route['parents/:any'] = 'child/parents/$1';
 $route['charges/:any'] = 'accounting/charges/$1';
@@ -161,3 +117,5 @@ $route['news/(:any)'] = 'news/$1';
 $route['parent/(:any)'] = "parent/$1";
 
 $route['lockscreen'] = 'dashboard/lockscreen';
+
+$route['invoice/(:num)/stripe-pay']='child/invoice/stripePayment/$1';

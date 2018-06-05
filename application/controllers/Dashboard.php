@@ -35,7 +35,6 @@ class Dashboard extends CI_Controller
         $this->form_validation->set_rules('pin', lang('pin'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == true) {
             $pin = $this->input->post('pin');
-
             $this->db->where('id', $this->user->uid());
             $this->db->where('pin', $pin);
             if ($this->db->get('users')->num_rows() > 0) {
@@ -44,7 +43,6 @@ class Dashboard extends CI_Controller
                 $this->setTimer($this->getTimer());
                 flash('danger', 'Invalid pin!');;
             }
-
         } else {
             validation_errors();
             flash('danger');

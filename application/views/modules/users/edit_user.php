@@ -37,13 +37,11 @@
                         </td>
                     </tr>
                     <tr>
-
                     </tr>
                     <?php if (is('admin') == true) : ?>
                         <tr>
                             <td><?php echo lang('edit_user_groups_heading'); ?></td>
                             <td>
-
                                 <?php foreach ($groups as $group) : ?>
                                     <label class="checkbox">
                                         <?php
@@ -126,9 +124,9 @@
                         <tr>
                             <td style="width:200px">
                                 <?php
-                                if ($this->user->user($user->id)->photo !== "") {
+                                if (is_file(APPPATH.'../assets/uploads/users/staff/'.$user->photo)) {
                                     echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/uploads/users/staff/' . $this->user->user($user->id)->photo . '"/>';
+         src="' . base_url() . 'assets/uploads/users/staff/' .$user->photo . '"/>';
                                 } else {
                                     echo '<img class="img-circle img-thumbnail"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';

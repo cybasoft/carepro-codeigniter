@@ -3,7 +3,7 @@
         <tr>
             <td class="col-sm-2">
                 <div>
-                    <?php if ($this->user->user($u->user_id)->photo !== "") : ?>
+                    <?php if (is_file(APPPATH.'../assets/uploads/users/staff/'.$this->user->user($u->user_id)->photo)) : ?>
                         <img class="img-circle img-responsive img-thumbnail"
                              src="<?php echo base_url() . 'assets/uploads/users/staff/' . $this->user->user($u->user_id)->photo; ?>"/>
                     <?php else : ?>

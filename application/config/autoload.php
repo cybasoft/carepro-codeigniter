@@ -104,7 +104,7 @@ $autoload['helper'] = array('url', 'form_helper', 'html', 'form','security','day
 | config files.  Otherwise, leave it blank.
 |
  */
-$autoload['config'] = array();
+$autoload['config'] = array('stripe');
 
 /*
 | -------------------------------------------------------------------
@@ -118,7 +118,7 @@ $autoload['config'] = array();
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
  */
-$autoload['language'] = array('auth', 'daycare','children','emails','parents');
+$autoload['language'] = array('auth', 'daycare','children','emails','parents','billing');
 /*
 | -------------------------------------------------------------------
 |  Auto-load Models

@@ -1,10 +1,10 @@
 <?php $this->load->view('modules/child/nav'); ?>
     <div class="row">
-        <div class="col-sm-2 col-lg-2 col-md-2 table-responsive">
-            <?php $this->load->view('modules/child/sidebar'); ?>
-        </div>
-        <div class="col-sm-10 col-lg-10 col-md-10">
-            <h2><?php echo lang('notes'); ?></h2>
+    <div class="col-sm-2 col-lg-2 col-md-2 table-responsive">
+        <?php $this->load->view('modules/child/sidebar'); ?>
+    </div>
+    <div class="col-sm-10 col-lg-10 col-md-10">
+        <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#notes" aria-controls="home" role="tab" data-toggle="tab">
@@ -18,19 +18,18 @@
                         <?php echo lang('incident_reports'); ?>
                     </a>
                 </li>
-                <?php if (isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
+                <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
                     <li role="presentation">
                         <a href="#view-notes" aria-controls="view-notes" role="tab" data-toggle="tab">
                             <i class="fa fa-eye"></i>
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if (!is('parent')): ?>
+                <?php if(!is('parent')): ?>
                     <li class="pull-right">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newNoteModal">
                             <i class="fa fa-plus"></i> <?php echo lang('new_note'); ?>
                         </button>
-
                         <button type="button" class="btn btn-danger" data-toggle="modal"
                                 data-target="#newIncidentModal">
                             <i class="fa fa-plus"></i> <?php echo lang('incident_report'); ?>
@@ -39,7 +38,6 @@
                 <?php endif; ?>
             </ul>
 
-            <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="notes">
                     <br/>
@@ -58,9 +56,9 @@
                                     <a style="color: #1974cc;"
                                        href="?viewNote=<?php echo $note->id; ?>#view-notes"><?php echo $note->title; ?></a sty>
                                 </div>
-                                <?php if (!is('parent')): ?>
+                                <?php if(!is('parent')): ?>
                                     <a class="pull-right delete "
-                                       href="<?php echo site_url('child/deleteNote/' . $note->id); ?>">
+                                       href="<?php echo site_url('child/deleteNote/'.$note->id); ?>">
                                         <i class="fa fa-trash-o text-danger"></i></a>
                                 <?php endif; ?>
                             </div>
@@ -88,9 +86,9 @@
                                        href="?viewIncident=<?php echo $incident->id; ?>#view-notes"
                                        class="text-info"> <?php echo $incident->title; ?></a>
                                 </div>
-                                <?php if (!is('parent')): ?>
+                                <?php if(!is('parent')): ?>
                                     <a class="pull-right delete "
-                                       href="<?php echo site_url('child/deleteIncident/' . $incident->id); ?>">
+                                       href="<?php echo site_url('child/deleteIncident/'.$incident->id); ?>">
                                         <i class="fa fa-trash-o text-danger"></i></a>
                                 <?php endif; ?>
                             </div>
@@ -101,12 +99,12 @@
                     <?php endforeach; ?>
                 </div>
 
-                <?php if (isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
+                <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
                     <div role="tabpanel" class="tab-pane fade" id="view-notes">
-                        <?php if (isset($_GET['viewNote'])) {
+                        <?php if(isset($_GET['viewNote'])) {
                             $this->load->view('modules/child/notes/view-note');
                         }
-                        if (isset($_GET['viewIncident'])) {
+                        if(isset($_GET['viewIncident'])) {
                             $this->load->view('modules/child/notes/view-incident');
                         }
                         ?>

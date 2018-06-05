@@ -4,9 +4,6 @@
         <?php $this->load->view('modules/child/sidebar'); ?>
     </div>
     <div class="col-sm-10 col-lg-10 col-md-10">
-
-        <h2><i class="fa fa-money"></i> <?php echo lang('invoices'); ?></h2>
-
         <div class="box box-solid box-primary">
             <div class="box-header">
                 <h3 class="box-title">
@@ -36,11 +33,11 @@
                     <input type="radio" name="sort_term" class="invoice_sort radio-inline" value="all"/>
                     <span class="label label-default"><?php echo lang('all'); ?></span> &nbsp;
                     <input type="radio" name="sort_term" class="invoice_sort radio-inline"
-                           value="paid"/><?php echo $this->invoice->status(1); ?>&nbsp;
+                           value="paid"/><?php echo lang("paid"); ?>&nbsp;
                     <input type="radio" checked name="sort_term" class="invoice_sort radio-inline"
-                           value="due"/><?php echo $this->invoice->status(2); ?>&nbsp;
+                           value="due"/><?php echo lang('due'); ?>&nbsp;
                     <input type="radio" name="sort_term" class="invoice_sort radio-inline"
-                           value="cancelled"/><?php echo $this->invoice->status(3); ?>&nbsp;
+                           value="cancelled"/><?php echo lang('cancelled'); ?>&nbsp;
                     <hr/>
                 </div>
                 <div id="results"></div>
@@ -51,7 +48,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#results').html('<span class="fa fa-spinner fa-spin fa-2x"></span>').load('<?php echo site_url('child/' . $child->id . '/invoices/2'); ?>');
+        $('#results').html('<span class="fa fa-spinner fa-spin fa-2x"></span>').load('<?php echo site_url('child/' . $child->id . '/invoices/due'); ?>');
 
         $('.invoice_sort').click(function () {
             var sort_id = $(this).val();

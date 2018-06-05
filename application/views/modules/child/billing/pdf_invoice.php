@@ -49,7 +49,7 @@ ob_start();
         <tr>
             <td>
                 <strong><?php echo lang('status'); ?></strong>
-                <?php echo $this->invoice->status($invoice->invoice_status); ?>
+                <?php echo lang($invoice->invoice_status); ?>
             </td>
         </tr>
         <tr>

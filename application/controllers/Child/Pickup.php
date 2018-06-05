@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class pickup extends CI_Controller
+class Pickup extends CI_Controller
 {
     function __construct()
     {

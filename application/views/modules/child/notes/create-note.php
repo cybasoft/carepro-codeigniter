@@ -11,7 +11,7 @@
                 <label><?php echo lang('title'); ?></label>
                 <input type="text" name="title" required class="form-control"/>
                 <label><?php echo lang('content'); ?></label>
-                <textarea class="form-control editor" rows="5"  name="note-content"></textarea>
+                <textarea class="form-control editor-media" rows="5"  name="note-content"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close'); ?></button>

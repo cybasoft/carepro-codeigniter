@@ -128,6 +128,19 @@ $(function () {
             ['insert', ['link', 'hr']]
         ],
     });
+    $('.editor-full').summernote();
+    $('.editor-media').summernote({
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            ['insert', ['link', 'hr']],
+            ['code',['video','picture','codeview']]
+        ],
+    });
 });
 
 /*!
