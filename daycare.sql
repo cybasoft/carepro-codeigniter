@@ -944,10 +944,13 @@ ALTER TABLE invoices
 -- version 2.1.0
 CREATE TABLE photos
 (
-  id          INT AUTO_INCREMENT PRIMARY KEY,
+  id          INT AUTO_INCREMENT
+    PRIMARY KEY,
   child_id    INT          NOT NULL,
   name        VARCHAR(100) NOT NULL,
   caption     VARCHAR(100) NOT NULL,
+  position    INT          NOT NULL,
+  category    VARCHAR(50)  NULL,
   uploaded_by INT          NOT NULL,
   created_at  DATETIME     NOT NULL,
   CONSTRAINT photos_ibfk_1
@@ -962,8 +965,21 @@ CREATE TABLE photos
 
 CREATE INDEX child_id
   ON photos (child_id);
+
 CREATE INDEX uploaded_by
   ON photos (uploaded_by);
 
 ALTER TABLE children
   ADD COLUMN nickname VARCHAR(100) NULL;
+
+ALTER TABLE child_incident_photos
+  ADD COLUMN incident_id INT UNSIGNED NOT NULL;
+
+ALTER TABLE child_incident_photos
+  ADD FOREIGN KEY (incident_id) REFERENCES child_incident (id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+CREATE INDEX incident_id
+  ON child_incident_photos (incident_id);
+

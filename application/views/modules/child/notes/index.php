@@ -18,29 +18,36 @@
                         <?php echo lang('incident_reports'); ?>
                     </a>
                 </li>
+                <?php if(!is('parent')): ?>
+                <li role="presentation">
+                    <a href="#new-incident" aria-controls="new-incident" role="tab" data-toggle="tab">
+                        <i class="fa fa-plus text-warning"></i>
+                        <?php echo lang('new incident'); ?>
+                    </a>
+                </li>
+                <?php endif; ?>
                 <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
                     <li role="presentation">
                         <a href="#view-notes" aria-controls="view-notes" role="tab" data-toggle="tab">
-                            <i class="fa fa-eye"></i>
+                            <i class="fa fa-folder-open-o"></i>
                         </a>
-                    </li>
-                <?php endif; ?>
-                <?php if(!is('parent')): ?>
-                    <li class="pull-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newNoteModal">
-                            <i class="fa fa-plus"></i> <?php echo lang('new_note'); ?>
-                        </button>
-                        <button type="button" class="btn btn-danger" data-toggle="modal"
-                                data-target="#newIncidentModal">
-                            <i class="fa fa-plus"></i> <?php echo lang('incident_report'); ?>
-                        </button>
                     </li>
                 <?php endif; ?>
             </ul>
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="notes">
-                    <br/>
+
+                    <div class="box box-default">   <div class="box-body">
+                    <?php if(!is('parent')): ?>
+                            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newNoteModal">
+                                <i class="fa fa-plus"></i> <?php echo lang('new_note'); ?>
+                            </button>
+
+                    <?php endif; ?>
+                    </div>
+                    </div>
+
                     <?php foreach ($notes as $note): ?>
                         <div class="box box-info">
                             <div class="box-header with-border">
@@ -98,7 +105,11 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
-
+                <?php if(!is('parent')): ?>
+                <div role="tabpanel" class="tab-pane" id="new-incident">
+                    <?php $this->load->view($this->module.'create-incident'); ?>
+                </div>
+                <?php endif; ?>
                 <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
                     <div role="tabpanel" class="tab-pane fade" id="view-notes">
                         <?php if(isset($_GET['viewNote'])) {
@@ -116,4 +127,3 @@
     </div>
 
 <?php $this->load->view('modules/child/notes/create-note'); ?>
-<?php $this->load->view('modules/child/notes/incident'); ?>

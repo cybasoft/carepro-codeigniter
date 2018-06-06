@@ -10,11 +10,11 @@
     <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/plugins/summernote/summernote.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/sweetalert.css" rel="stylesheet" type="text/css"/>
-
     <link href="<?php echo base_url(); ?>assets/css/fullcalendar.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/fullcalendar.print.css" rel="stylesheet" type="text/css"
           media='print'/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.css"/>
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/print.css" rel="stylesheet" type="text/css" media="print"/>
     <!--[if lt IE 9]>
@@ -39,7 +39,6 @@
     </script>
 </head>
 <body class="skin-blue">
-
 <header class="header">
     <a href="<?php echo site_url('dashboard'); ?>" class="logo" style="left:0px !important;">
         <?php if($this->config->item('logo', 'company') == "") : ?>
@@ -62,7 +61,6 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <?php if(!is('parent')): ?>
@@ -74,7 +72,6 @@
                         <ul class="dropdown-menu">
                             <li class="header"><?php echo lang('notifications'); ?></li>
                             <li>
-
                                 <ul class="menu">
                                     <li>
                                         <a href="<?php echo site_url('children'); ?>">
@@ -96,7 +93,6 @@
                         </ul>
                     </li>
                 <?php endif; ?>
-
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user"></i>
@@ -109,7 +105,6 @@
                             <p>
                             </p>
                         </li>
-
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="<?php echo site_url('profile'); ?>" class="btn btn-default btn-flat">
@@ -129,9 +124,7 @@
     </nav>
     <!--end nav-->
 </header>
-
 <div class="wrapper row-offcanvas row-offcanvas-left">
-
     <!--start sidebar-->
     <!-- Left side column. contains the logo and sidebar -->
     <aside class="left-side sidebar-offcanvas">
@@ -144,9 +137,7 @@
                 </div>
                 <div class="pull-left info">
                     <p><?php echo lang('hello'); ?>, <?php echo $this->user->thisUser('first_name'); ?></p>
-
                     <a href="#"><i class="fa fa-circle text-success"></i> </a>
-
                 </div>
                 <i title="lockscreen" class="pull-right fa fa-lock lock-screen cursor"></i>
             </div>
@@ -167,14 +158,12 @@
                         <i class="fa fa-dashboard"></i> <span><?php echo lang('dashboard'); ?></span>
                     </a>
                 </li>
-
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
                     <a href="<?php echo site_url('children'); ?>">
                         <i class="fa fa-users"></i> <span><?php echo lang('children'); ?>
                             <small class="badge pull-right bg-green"><?php echo $this->child->getCount(); ?></small>
                     </a>
                 </li>
-
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('users'); ?>">
                         <a href="<?php echo site_url('users'); ?>">
@@ -183,7 +172,6 @@
                         </a>
                     </li>
                 <?php endif; ?>
-
                 <li class="<?php echo set_active('calendar'); ?>">
                     <a href="<?php echo site_url('calendar'); ?>">
                         <i class="fa fa-calendar"></i> <span><?php echo lang('calendar'); ?></span>
@@ -196,7 +184,6 @@
                         <span><?php echo lang('news'); ?></span>
                     </a>
                 </li>
-
                 <?php if(is('admin')): ?>
                     <li class="<?php echo set_active('settings'); ?>">
                         <a href="<?php echo site_url('settings'); ?>">
@@ -204,13 +191,10 @@
                         </a>
                     </li>
                 <?php endif; ?>
-
             </ul>
         </section>
-
         <div class="footer text-center">
             <br/>
-
             <div style="font-size:11px;padding:5px;">
                 &copy; <?php echo date('Y'); ?>
                 <?php echo lang('copyright'); ?>
@@ -221,7 +205,6 @@
         </div>
     </aside>
     <!--end sidebar-->
-
     <aside class="right-side" style="">
         <?php if($this->uri->segment(1) !== 'child' && $this->uri->segment(1) !== 'invoice') : ?>
             <section class="content-header">
@@ -249,7 +232,6 @@
 
     </aside>
 </div>
-
 <!--start footer-->
 <script src="<?php echo base_url(); ?>assets/plugins/summernote/summernote.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/moment.min.js" type="text/javascript"></script>
@@ -257,15 +239,9 @@
 <script src="<?php echo base_url(); ?>assets/js/fullcalendar.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.js"></script>
+<script type="text/javascript"
+        src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.js"></script>
 <script type="text/javascript">
-    $('.lock-screen').click(function () {
-        location.href = "<?php echo site_url('lockscreen'); ?>";
-    });
-    setTimeout(function () {
-        location.href = "<?php echo site_url('lockscreen'); ?>";
-    }, 1800000);
-
     function confirmDelete(loc) {
         swal({
             title: '<?php echo lang('confirm_delete_title'); ?>',
@@ -303,13 +279,28 @@
         });
         e.preventDefault();
     });
-    $(document).ready( function () {
+    $(document).ready(function () {
         $('#attendance').DataTable({
             buttons: [
                 'pdf'
             ]
         });
-    } );
+    });
+    //lockscreen
+    $('.lock-screen').click(function () {
+        startLockscreen();
+    });
+    setTimeout(function () {
+        startLockscreen()
+    }, 900000);
+
+    function startLockscreen() {
+        $('body').load('<?php echo site_url('lockscreen'); ?>');
+        $('html').addClass('lockscreen');
+    }
 </script>
+<?php if($this->input->cookie('timer')>0): ?>
+    <script>startLockscreen()</script>
+<?php endif; ?>
 </body>
 </html>

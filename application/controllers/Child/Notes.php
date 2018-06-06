@@ -11,6 +11,7 @@ class notes extends CI_Controller
         //local variables
         $this->module = 'modules/child/notes/';
         $this->load->helper('text');
+        $this->load->model('My_photos','photos');
     }
 
     function index($id)
@@ -82,7 +83,7 @@ class notes extends CI_Controller
         $this->form_validation->set_rules('title', lang('title'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('location', lang('location'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('incident_type', lang('incident_type'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('description', lang('description'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('description', lang('description'), 'required|trim');
         $this->form_validation->set_rules('actions_taken', lang('actions_taken'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('witnesses', lang('witnesses'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('remarks', lang('remarks'), 'trim|xss_clean');
@@ -101,6 +102,10 @@ class notes extends CI_Controller
         redirect('child/' . $child_id . '/notes', 'refresh');
     }
 
+    function addIncidentPhotos(){
+        $chidID = $this->input->post('child_id');
+        echo $this->photos->incident($chidID);
+    }
 
     /*
      * delete incident
@@ -108,6 +113,15 @@ class notes extends CI_Controller
     function deleteIncident($id)
     {
         allow('admin,manager');
+        //delete photos
+        $photos = $this->db->where('incident_id',$id)->get('child_incident_photos');
+        if($photos->num_rows() >0){
+            foreach($photos->result() as $photo){
+                @unlink('./assets/uploads/photos/'.$photo->photo);
+            }
+            $this->db->where('incident_id',$id)->delete('child_incident_photos');
+        }
+        //delete incident
         $this->db->where('id', $id);
         $this->db->delete('child_incident');
         if ($this->db->affected_rows() > 0) {

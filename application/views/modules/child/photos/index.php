@@ -11,9 +11,6 @@
         <?php if(is('admin') || is('staff') || is('manager')): ?>
             <form action="<?php echo site_url('child/'.$child->id.'/photos/store'); ?>"
                   enctype="multipart/form-data" class="dropzone" id="image-upload" method="POST">
-                <div>
-                    <h3 class="text-center"><?php echo lang('dropzone_message'); ?></h3>
-                </div>
             </form>
         <?php endif; ?>
         <div class="flexbin flexbin-margin" id="lightgallery">
@@ -45,7 +42,8 @@
 <script type="text/javascript">
     Dropzone.options.imageUpload = {
         maxFilesize: 3,
-        acceptedFiles: ".jpeg,.jpg,.png,.gif"
+        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        dictDefaultMessage: "<?php echo lang('dropzone_message'); ?>"
         //previewsContainer: ".flexbin",
         //clickable: true
     };

@@ -36,6 +36,11 @@ class Migration_create_photos extends CI_Migration
                 'type'=>'INT',
                 'constraint'=>11
             ),
+            'category'=>array(
+                'type'=>'VARCHAR',
+                'constraint'=>50,
+                'null'=>TRUE
+            ),
             'uploaded_by'=>array(
                 'type'=>'INT',
                 'unsigned'=>TRUE,

@@ -421,3 +421,7 @@ $lang['Migration(s) done']='Migration(s) done';
 $lang['No new migrations to run']='No new migrations to runs';
 $lang['This migration has already been run']='This migration has already been run';
 $lang['Rolling back from migration %s to %s']='Rolling back from migration %s to %s';
+$lang['created']='Created';
+$lang['new incident']='New incident';
+$lang['incident photos']='Incident photos';
+$lang['incident date']='Incident date';
