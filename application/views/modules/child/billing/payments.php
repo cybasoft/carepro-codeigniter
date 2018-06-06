@@ -1,8 +1,6 @@
 <?php $this->load->view('modules/children/nav'); ?>
-
 <div class="row">
 	<?php $this->load->view('modules/children/accounting/invoice_nav'); ?>
-
 	<div class="col-lg-10 col-md-10 col-sm-10">
 		<div class="box box-solid box-info">
 			<div class="box-header">

@@ -425,3 +425,6 @@ $lang['created']='Created';
 $lang['new incident']='New incident';
 $lang['incident photos']='Incident photos';
 $lang['incident date']='Incident date';
+$lang['You have cancelled your PayPal transaction. We look forward to your business again!']='You have cancelled your PayPal transaction. We look forward to your business again!';
+$lang['We received your payment. Please wait few hours for the transaction reflect in your account']='We received your payment. Please wait few hours for the transaction reflect in your account';
+$lang['Thank you for your payment! We have sent you a confirmation email']='Thank you for your payment! We have sent you a confirmation email';

@@ -103,6 +103,13 @@ function setRedirect()
 }
 
 /**
+ * @return mixed
+ */
+function last_page(){
+    return $_SERVER['HTTP_REFERER'];
+}
+
+/**
  * redirect to previous page
  */
 function redirectPrev($msg = array())
