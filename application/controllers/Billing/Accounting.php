@@ -11,6 +11,4 @@ class accounting extends CI_Controller
         //local variables
         $this->module = 'admin/accounting/';
     }
-
-
 }

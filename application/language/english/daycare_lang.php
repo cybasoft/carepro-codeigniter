@@ -416,3 +416,8 @@ $lang['photo']='Photo';
 $lang['photo_album']='Photo albums';
 $lang['upload']='Upload';
 $lang['dropzone_message']='Drop photos or click to upload';
+
+$lang['Migration(s) done']='Migration(s) done';
+$lang['No new migrations to run']='No new migrations to runs';
+$lang['This migration has already been run']='This migration has already been run';
+$lang['Rolling back from migration %s to %s']='Rolling back from migration %s to %s';

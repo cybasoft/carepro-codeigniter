@@ -14,7 +14,7 @@
     <link href="<?php echo base_url(); ?>assets/css/fullcalendar.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/fullcalendar.print.css" rel="stylesheet" type="text/css"
           media='print'/>
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.css"/>
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/print.css" rel="stylesheet" type="text/css" media="print"/>
     <!--[if lt IE 9]>
@@ -257,7 +257,7 @@
 <script src="<?php echo base_url(); ?>assets/js/fullcalendar.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
-
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.js"></script>
 <script type="text/javascript">
     $('.lock-screen').click(function () {
         location.href = "<?php echo site_url('lockscreen'); ?>";
@@ -303,6 +303,13 @@
         });
         e.preventDefault();
     });
+    $(document).ready( function () {
+        $('#attendance').DataTable({
+            buttons: [
+                'pdf'
+            ]
+        });
+    } );
 </script>
 </body>
 </html>

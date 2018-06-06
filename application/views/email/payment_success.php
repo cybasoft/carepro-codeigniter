@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <td><?php echo lang('payment_method'); ?></td>
-        <td><?php echo moneyFormat($data['invoice']['method']); ?></td>
+        <td><?php echo $data['invoice']['method']; ?></td>
     </tr>
     <tr>
         <td><?php echo lang('remarks'); ?></td>

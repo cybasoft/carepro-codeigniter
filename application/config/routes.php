@@ -89,6 +89,7 @@ $route['child/(:num)/invoices/search'] = 'child/invoice/invoices/$1/all';
 $route['child/(:num)/invoices/(:any)'] = 'child/invoice/invoices/$1/$2';
 $route['child/(:num)/newInvoice'] = 'child/invoice/create/$1';
 $route['child/(:num)/createInvoice'] = 'child/invoice/store/$1';
+
 $route['invoice/(:num)/delete'] = 'child/invoice/delete/$1';
 $route['invoice/(:num)/view'] = 'child/invoice/view/$1';
 $route['invoice/(:num)/addItem'] = 'child/invoice/addItem/$1';
@@ -97,7 +98,13 @@ $route['invoice/(:num)/makePayment'] = 'child/invoice/makePayment/$1';
 $route['invoice/(:num)/preview'] = 'child/invoice/preview/$1';
 $route['invoice/(:num)/download'] = 'child/invoice/pdf/$1/I';
 $route['invoice/(:num)/send'] = 'child/invoice/pdf/$1/F/1';
+$route['invoice/(:num)/send'] = 'child/invoice/pdf/$1/F/1';
 $route['invoice/(:num)/updateStatus'] = 'child/invoice/updateStatus/$1';
+
+//paypal payment
+$route['invoice/(:num)/paypal'] = 'billing/paypal/pay/$1';
+$route['paypal/cancelled']='billing/paypal/cancelled';
+$route['paypal/success']='billing/paypal/success';
 
 //child photos
 $route['child/(:num)/photos'] = 'child/photos/index';

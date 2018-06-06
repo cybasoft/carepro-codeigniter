@@ -925,6 +925,7 @@ CREATE INDEX user_id
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
+-- version 2.0.8
 ALTER TABLE children
   ADD COLUMN ethnicity VARCHAR(100) NULL;
 ALTER TABLE children
@@ -932,7 +933,7 @@ ALTER TABLE children
 ALTER TABLE children
   ADD COLUMN birthplace VARCHAR(100) NULL;
 
--- version 2.0.8
+-- version 2.0.9
 ALTER TABLE users
   ADD stripe_customer_id VARCHAR(100) NULL;
 CREATE UNIQUE INDEX users_stripe_customer_id_uindex
@@ -940,6 +941,7 @@ CREATE UNIQUE INDEX users_stripe_customer_id_uindex
 ALTER TABLE invoices
   MODIFY invoice_status VARCHAR(100) NOT NULL;
 
+-- version 2.1.0
 CREATE TABLE photos
 (
   id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -963,3 +965,5 @@ CREATE INDEX child_id
 CREATE INDEX uploaded_by
   ON photos (uploaded_by);
 
+ALTER TABLE children
+  ADD COLUMN nickname VARCHAR(100) NULL;

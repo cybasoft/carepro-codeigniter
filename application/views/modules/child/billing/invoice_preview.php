@@ -37,8 +37,8 @@
                     <?php
                     echo $this->config->item('street', 'company');
                     echo "<br/>";
-                    echo $this->config->item('city', 'company') . '. ';
-                    echo $this->config->item('state', 'company') . ' ,';
+                    echo $this->config->item('city', 'company').'. ';
+                    echo $this->config->item('state', 'company').' ,';
                     echo $this->config->item('postal_code', 'company');
                     echo "<br/>";
                     echo $this->config->item('phone', 'company');
@@ -51,7 +51,7 @@
 
         <div class="col-sm-4 invoice-col">
             <div style="width:150px; left:50%;">
-                <?php echo $this->invoice->stamp($invoice->id); ?>
+                <?php echo $this->invoice->stamp($invoice->invoice_status); ?>
             </div>
         </div>
 
@@ -63,7 +63,7 @@
                 </tr>
                 <tr>
                     <td><?php echo lang('child'); ?>:</td>
-                    <td><?php echo $this->child->child($invoice->child_id)->first_name . ' ' . $this->child->child($invoice->child_id)->last_name; ?></td>
+                    <td><?php echo $this->child->child($invoice->child_id)->first_name.' '.$this->child->child($invoice->child_id)->last_name; ?></td>
                 </tr>
                 <tr>
                     <td><?php echo lang('date'); ?>:</td>
@@ -112,8 +112,6 @@
                     $subTotal = $this->invoice->invoice_subtotal($invoice->id);
                 }
                 ?>
-
-
                 <tr class="text-info">
                     <td colspan="3" rowspan="5" class="text-info">
                         <h4><?php echo lang('invoice_terms'); ?></h4>
@@ -132,7 +130,7 @@
                                 <td>
                                     $ <?php
                                     $totalPaid = $this->invoice->amount_paid($invoice->id);
-                                    echo($totalPaid > 0 ? number_format($totalPaid, 2) : "0.00"); ?>
+                                    echo($totalPaid>0 ? number_format($totalPaid, 2) : "0.00"); ?>
                                 </td>
                             </tr>
                             <tr class="text-right text-danger">
@@ -140,10 +138,11 @@
                                 <td>
                                     <?php
                                     $totalDue = $this->invoice->invoice_total_due($invoice->id);
-                                    if ($totalDue > 0) {
+                                    if($totalDue>0 || $totalDue==0) {
                                         echo $totalDue;
-                                    } else {
-                                        echo '<span class="label label-success">' . lang('refund') . '</span> ' . $totalDue;
+                                    }
+                                    if($totalDue<0){
+                                        echo '<span class="label label-success">'.lang('refund').'</span> '.$totalDue;
                                     }
                                     ?>
                                 </td>
@@ -155,18 +154,14 @@
             </table>
         </div>
     </div>
-
 </div>
 </body>
 </html>
-
 <script type="text/javascript">
-
     $(document).ready(function () {
         //change status
         $("select[name=invoice_change_status]").change(function () {
             var status = $(this).val();
-
             var fData = {invoice_status: status, invoice_id: '<?php echo $this->uri->segment(3); ?>'};
             $.ajax({
                 url: "<?php echo site_url('invoice/update_status'); ?>",
@@ -181,7 +176,6 @@
                 }
             });
         });
-
         //update terms
         $('#invoice_terms_btn').click(function () {
             var terms = $('textarea[name=invoice_terms]').val();

@@ -5,7 +5,7 @@
     </div>
     <div class="col-sm-10 col-lg-10 col-md-10">
         <h2><i class="fa fa-clipboard"></i> <?php echo lang('attendance_report'); ?></h2>
-        <table class="table table-stripped">
+        <table class="table table-stripped" id="attendance">
             <thead>
             <tr>
                 <th>#</th>
@@ -15,6 +15,7 @@
                 <th><?php echo lang('picked_up_by'); ?></th>
             </tr>
             </thead>
+            <tbody>
             <?php
             $cnt = 1;
             ?>
@@ -28,12 +29,12 @@
                         <?php echo $row->in_guardian; ?>
                     </td>
                     <td>
-                        <?php if ($row->time_out !== NULL) {
+                        <?php if($row->time_out !== NULL) {
                             echo format_date($row->time_out, true);
                         } ?>
                     </td>
                     <td>
-                        <?php if ($row->out_guardian == null): ?>
+                        <?php if($row->out_guardian == null): ?>
                             <span class="label label-danger"><?php echo lang('pending_pickup'); ?></span>
                         <?php else: ?>
                             <?php echo $row->out_guardian; ?>
@@ -42,6 +43,7 @@
 
                 </tr>
                 <?php $cnt++; endforeach; ?>
+            </tbody>
         </table>
 
     </div>

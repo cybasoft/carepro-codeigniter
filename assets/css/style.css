@@ -2319,9 +2319,14 @@ body > .header .logo .icon {
     padding: 10px;
     margin-top: -10px;
 }
+.child-nav span{
+    font-weight:bold;
+    color:#333;
+}
 
 .child-checked-in {
     background: #1aaf71;
+    color:#fff;
 }
 
 .child-checked-out {

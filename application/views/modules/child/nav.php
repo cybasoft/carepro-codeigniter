@@ -3,7 +3,7 @@
         <?php echo $child->last_name . ', ' . $child->first_name; ?>
     </div>
     <div class="col-sm-3">
-        <?php echo lang('status'); ?>:
+        <span><?php echo lang('status'); ?>:</span>
         <?php echo ($child->status == 1) ? lang('active') : lang('inactive'); ?>
     </div>
     <div class="col-sm-3">
@@ -11,7 +11,7 @@
         <?php echo format_date($child->bday, false) ?>
     </div>
     <div class="col-sm-3">
-        <span><?php echo lang('enrolled'); ?></span>
+        <span><?php echo lang('enrolled'); ?>:</span>
         <?php echo format_date($child->created_at); ?>
     </div>
 </div>

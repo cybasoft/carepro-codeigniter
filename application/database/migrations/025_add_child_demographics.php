@@ -48,7 +48,7 @@ class Migration_add_child_demographics extends CI_Migration
     public function down()
     {
         // Drop table child_allergy
-        $this->dbforge->drop_column($this->table, 'ethinicity');
+        $this->dbforge->drop_column($this->table, 'ethnicity');
         $this->dbforge->drop_column($this->table, 'religion');
         $this->dbforge->drop_column($this->table, 'birthplace');
     }
