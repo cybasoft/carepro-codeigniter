@@ -93,21 +93,23 @@ if(count($incident)>0):
     </div>
     <?php endif; ?>
 </div>
+<script src="<?php echo base_url('assets/plugins/dz/dropzone.min.js'); ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/plugins/lg/js/lightgallery.min.js'); ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/plugins/lg/js/lg-thumbnail.min.js'); ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/plugins/lg/js/lg-fullscreen.min.js'); ?>" type="text/javascript"></script>
+<script type="text/javascript">
+    $('a[href=#view-notes]').find('i').append(' <?php echo $incident->title; ?>');
+    Dropzone.options.imageUpload = {
+        maxFilesize: 3,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        dictDefaultMessage: "<?php echo lang('dropzone_message'); ?>"
+        //previewsContainer: ".flexbin",
+        //clickable: true
+    };
+    lightGallery(document.getElementById('lightgallery'));
+</script>
 <?php if(is('admin') || is('staff') || is('manager')): ?>
-    <script src="<?php echo base_url('assets/plugins/dz/dropzone.min.js'); ?>" type="text/javascript"></script>
-    <script src="<?php echo base_url('assets/plugins/lg/js/lightgallery.min.js'); ?>" type="text/javascript"></script>
-    <script src="<?php echo base_url('assets/plugins/lg/js/lg-thumbnail.min.js'); ?>" type="text/javascript"></script>
-    <script src="<?php echo base_url('assets/plugins/lg/js/lg-fullscreen.min.js'); ?>" type="text/javascript"></script>
     <script type="text/javascript">
-        $('a[href=#view-notes]').find('i').append(' <?php echo $incident->title; ?>');
-        Dropzone.options.imageUpload = {
-            maxFilesize: 3,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif",
-            dictDefaultMessage: "<?php echo lang('dropzone_message'); ?>"
-            //previewsContainer: ".flexbin",
-            //clickable: true
-        };
-        lightGallery(document.getElementById('lightgallery'));
         $('.deletePhoto').click(function () {
             var photo = $(this);
             swal({
