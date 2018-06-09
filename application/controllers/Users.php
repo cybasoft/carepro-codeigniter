@@ -76,7 +76,7 @@ class Users extends CI_Controller
     function update()
     {
         allow('admin,manager');
-        $id = $this->input->post('id');
+        $id = $this->input->post('user_id');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('edit_user_validation_first_name_label'), 'required|xss_clean');
         $this->form_validation->set_rules('last_name', lang('edit_user_validation_last_name_label'), 'required|xss_clean');

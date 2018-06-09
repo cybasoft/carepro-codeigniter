@@ -33,18 +33,18 @@ class Migration extends CI_Controller
     {
         $mig = $this->db->get('migrations')->row();
         $files = glob(APPPATH.'database/migrations/'.$version.'*.php');
-        $migration=false;
+        $migration = false;
 
         if(count($mig)>0) {
-            if($version==null){//migrate all
+            if($version == null) {//migrate all
                 $migration = $this->migration->latest();
-            }else{
+            } else {
                 if($version == $mig->version) { //same migration run twice
                     echo lang('This migration has already been run').PHP_EOL;
                     exit();
                 }
-                if($version < $mig->version){ //rollback
-                    echo sprintf(lang('Rolling back from migration %s to %s'),$mig->version,$version).PHP_EOL;
+                if($version<$mig->version) { //rollback
+                    echo sprintf(lang('Rolling back from migration %s to %s'), $mig->version, $version).PHP_EOL;
                 }
                 //check if migration files exist exist
                 if(count($files)>0) {
@@ -93,15 +93,53 @@ class Migration extends CI_Controller
 
     function seedUsers()
     {
-        $users[] = array(
-            'first_name' => 'Admin',
-            'last_name' => 'Admin',
-            'email' => 'admin@app.com',
-            'password' => password_hash('password', PASSWORD_DEFAULT),
-            'active' => 1,
-            'created_at' => date_stamp(),
-            'pin' => rand(1111, 9999)
-        );
+        $users = [
+            [
+                'first_name' => 'Super',
+                'last_name' => 'Super',
+                'email' => 'super@app.com',
+                'password' => password_hash('password', PASSWORD_DEFAULT),
+                'active' => 1,
+                'created_at' => date_stamp(),
+                'pin' => rand(1111, 9999)
+            ],
+            [
+                'first_name' => 'Admin',
+                'last_name' => 'Admin',
+                'email' => 'admin@app.com',
+                'password' => password_hash('password', PASSWORD_DEFAULT),
+                'active' => 1,
+                'created_at' => date_stamp(),
+                'pin' => rand(1111, 9999)
+            ],
+            [
+                'first_name' => 'Manager',
+                'last_name' => 'Manager',
+                'email' => 'manager@app.com',
+                'password' => password_hash('password', PASSWORD_DEFAULT),
+                'active' => 1,
+                'created_at' => date_stamp(),
+                'pin' => rand(1111, 9999)
+            ],
+            [
+                'first_name' => 'Staff',
+                'last_name' => 'Staff',
+                'email' => 'staff@app.com',
+                'password' => password_hash('password', PASSWORD_DEFAULT),
+                'active' => 1,
+                'created_at' => date_stamp(),
+                'pin' => rand(1111, 9999)
+            ],
+            [
+                'first_name' => 'Parent',
+                'last_name' => 'Parent',
+                'email' => 'parent@app.com',
+                'password' => password_hash('password', PASSWORD_DEFAULT),
+                'active' => 1,
+                'created_at' => date_stamp(),
+                'pin' => rand(1111, 9999)
+            ]
+        ];
         foreach ($users as $user) {
             $this->db->insert('users', $user);
             $id = $this->db->insert_id();
@@ -118,7 +156,7 @@ class Migration extends CI_Controller
     function seedGroups()
     {
         $groups = array(
-            'admin', 'manager', 'staff', 'parent'
+            'installer', 'admin', 'manager', 'staff', 'parent'
         );
         foreach ($groups as $group) {
             $this->db->insert('groups', array('name' => $group));

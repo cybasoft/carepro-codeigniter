@@ -540,12 +540,13 @@ class Ion_auth_model extends CI_Model
             'forgotten_password_time' => time()
         );
         $this->db->update($this->tables['users'], $update, array($this->identity_column => $identity));
-        $return = $this->db->affected_rows() == 1;
-        if ($return)
+        if ($this->db->affected_rows() >0){
             $this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_successful'));
-        else
+            return true;
+        } else {
             $this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_unsuccessful'));
-        return $return;
+            return true;
+        }
     }
 
     /**

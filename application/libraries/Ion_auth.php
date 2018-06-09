@@ -151,29 +151,24 @@ class Ion_auth
 					'identity' => $user->{$this->config->item('identity', 'ion_auth')},
 					'forgotten_password_code' => $user->forgotten_password_code
 				);
-
                 $message = $this->load->view($this->config->item('email_templates', 'ion_auth') . $this->config->item('email_forgot_password', 'ion_auth'), $data, true);
                 $this->email->clear();
-
                 $email_config = config_item('email_config');
                 if (isset($email_config) && is_array($email_config)) {
                     $this->email->initialize($email_config);
                 }
-
                 $this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
                 $this->email->to($user->email);
                 $this->email->subject($this->config->item('name', 'company') . ' - ' . $this->lang->line('email_forgotten_password_subject'));
                 $this->email->message($message);
+                $m = $this->email->send();
 
-                $mail = $this->email->send();
-                if ($mail) {
+                if ($m) {
                     $this->set_message('forgot_password_successful');
-
                     if(ENVIRONMENT !=='production'){
                         echo $this->email->print_debugger();
                         die();
                     }
-
                     return TRUE;
                 } else {
                     $this->set_error('forgot_password_unsuccessful');

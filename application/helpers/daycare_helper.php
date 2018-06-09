@@ -105,7 +105,8 @@ function setRedirect()
 /**
  * @return mixed
  */
-function last_page(){
+function last_page()
+{
     return $_SERVER['HTTP_REFERER'];
 }
 
@@ -319,11 +320,12 @@ function demo()
             $ci->load->helper('language');
 
             //prevent all post methods
-            if($ci->input->server('REQUEST_METHOD') == 'POST' && $seg1 !== "child") {
-                flash('danger', lang('feature_disabled_in_demo'));
-                redirectPrev();
+            if(!is('super')) {
+                if($ci->input->server('REQUEST_METHOD') == 'POST' && $seg1 !== "child") {
+                    flash('danger', lang('feature_disabled_in_demo'));
+                    redirectPrev();
+                }
             }
-
             //prevent delete
             if(strstr($seg1, 'delete')
                 || strstr($seg2, 'delete')
@@ -415,7 +417,10 @@ function set_active($page)
     }
     return ($page == $uri) ? 'active' : '';
 }
-function moneyFormat($amount){
-    return config_item('company')['currency_symbol'].number_format($amount,2);
+
+function moneyFormat($amount)
+{
+    return config_item('company')['currency_symbol'].number_format($amount, 2);
 }
+
 ?>

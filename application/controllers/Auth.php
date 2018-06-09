@@ -247,7 +247,6 @@ class Auth extends CI_Controller
             $this->data['identity_label'] = 'email';
             validation_errors();
             $this->page('forgot_password');
-
         } else {
             // get identity from username or email
             $identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
@@ -260,10 +259,10 @@ class Auth extends CI_Controller
             if ($forgotten) {
                 //if there were no errors
                 flash('success', lang('password_reset_link_sent'));
-                redirectPrev();
+                redirect('login');
             } else {
                 flash('danger', lang('request_error'));
-                redirectPrev();
+                redirect(site_url('password/forgot'));
             }
         }
     }

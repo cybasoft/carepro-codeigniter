@@ -11,6 +11,7 @@
             <div class="box-header"><h3 class="box-title"><?php echo lang('user_information'); ?></h3></div>
             <div class="box-body">
                 <?php echo form_open('user/' . $user->id); ?>
+                <?php echo form_hidden('user_id',$user->id); ?>
                 <table class="table">
                     <tr>
                         <td><?php echo lang('first_name'); ?></td>

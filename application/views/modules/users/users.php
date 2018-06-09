@@ -52,7 +52,7 @@
                             <div class="pull-left">
                                 <?php if(is_file(APPPATH.'../assets/uploads/users/staff/'.$user->photo)): ?>
                                     <img style="height:60px;width:60px;"
-                                         src="<?php echo site_url('assets/uploads/users/staff/'.$user->photo); ?>">
+                                         src="<?php echo base_url('assets/uploads/users/staff/'.$user->photo); ?>">
                                 <?php else: ?>
                                     <img style="height:60px;width:60px;"
                                          src="<?php echo base_url('assets/img/content/no-image.png'); ?>">

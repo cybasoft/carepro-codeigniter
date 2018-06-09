@@ -4,11 +4,11 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-    'dsn'	=> '',
+    'dsn' => '',
     'hostname' => 'localhost',
-    'username' => 'amdtcom_demo',
-    'password' => 'DJ-iRy9VJ&pl',
-    'database' => 'amdtcom_demo_daycarepro',
+    'username' => '',//fill this
+    'password' => '',//fill this
+    'database' => '',//fill this
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,

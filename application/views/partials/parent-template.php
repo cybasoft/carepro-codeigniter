@@ -72,12 +72,6 @@
                         <span class="hidden-xs hidden-sm"><?php echo lang('news'); ?></span>
                     </a>
                 </li>
-                <li class="lock-screen hidden-xs">
-                    <a href="#">
-                        <i title="lockscreen" class="fa fa-lock cursor"></i>
-                        <span class="hidden-sm"><?php echo lang('lock'); ?></span>
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="navbar-right">
@@ -196,13 +190,6 @@
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', '<?php echo $this->config->item('google_analytics', 'company'); ?>', 'auto');
     ga('send', 'pageview');
-
-    $('.lock-screen').click(function () {
-        location.href = "<?php echo site_url('lockscreen'); ?>";
-    });
-    setTimeout(function () {
-        location.href = "<?php echo site_url('lockscreen'); ?>";
-    }, 1800000);
 
     function confirmDelete(loc) {
         swal({
