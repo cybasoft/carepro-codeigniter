@@ -2,6 +2,7 @@
 
 application/config/development/
 application/config/production/
+application/temp/captcha/*
 application/config/testing/*
 !application/logs/index.html
 
