@@ -22,6 +22,11 @@ class Child extends CI_Controller
      */
     function index($id)
     {
+        if(!authorizedToChild($this->user->uid(),$id)){
+            flash('error',lang('You do not have permission to view this child\'s profile'));
+            redirectPrev();
+        }
+
         $this->session->set_userdata('view_child_id', $id);
         $child = $this->child->child($id);
 

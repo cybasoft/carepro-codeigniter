@@ -33,12 +33,12 @@
         </li>
         <li role="presentation">
             <a href="#register" aria-controls="register" role="tab" data-toggle="tab">
-               <i class="fa fa-plus"></i> <?php echo lang('register'); ?>
+                <i class="fa fa-plus"></i> <?php echo lang('register'); ?>
             </a>
         </li>
         <li role="presentation">
             <a href="#groups" aria-controls="groups" role="tab" data-toggle="tab">
-               <i class="fa fa-group"></i> <?php echo lang('Child groups'); ?>
+                <i class="fa fa-group"></i> <?php echo lang('Child groups'); ?>
             </a>
         </li>
     </ul>
@@ -97,6 +97,9 @@
                                                 <?php echo lang('check_in').' &nbsp; '; ?>
                                             </a>
                                         <?php endif; ?>
+                                        <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
+                                            <i class="fa fa-lock text-danger pull-right fa-2x"></i>
+                                       <?php endif; ?>
                                     </td>
                                 </tr>
                             </table>

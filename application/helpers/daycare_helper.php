@@ -433,4 +433,17 @@ function moneyFormat($amount)
     return config_item('company')['currency_symbol'].number_format($amount, 2);
 }
 
+function authorizedToChild($staff_id,$child_id){
+    $ci = &get_instance();
+    $res = $ci->db
+        ->from('child_group')
+        ->join('child_group_staff','child_group_staff.group_id=child_group.group_id')
+        ->where('user_id',$staff_id)
+        ->where('child_group.child_id',$child_id)
+        ->count_all_results();
+    if($res>0)
+        return 1;
+    return 0;
+}
+
 ?>

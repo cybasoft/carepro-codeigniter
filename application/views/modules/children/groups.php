@@ -1,5 +1,4 @@
 <?php $groups = $this->db->get('child_groups'); ?>
-
 <?php if(is('admin') || is('manager')): ?>
     <div class="box box-info">
         <div class="box-body">

@@ -55,7 +55,8 @@ class Children extends CI_Controller
             $this->db->insert('child_groups',
                 [
                     'name' => $this->input->post('name'),
-                    'description' => $this->input->post('description')
+                    'description' => $this->input->post('description'),
+                    'created_at' => date_stamp()
                 ]
             );
             if($this->db->affected_rows()>0) {
@@ -78,7 +79,11 @@ class Children extends CI_Controller
         if($this->form_validation->run() == true) {
             $this->db->where('group_id', $this->input->post('group_id'))->delete('child_group');
             foreach ($this->input->post('child_id') as $child) {
-                $this->db->insert('child_group', ['child_id' => $child, 'group_id' => $this->input->post('group_id')]);
+                $this->db->insert('child_group', [
+                    'child_id' => $child,
+                    'group_id' => $this->input->post('group_id'),
+                    'created_at' => date_stamp()
+                ]);
             }
             flash('success', lang('request_success'));
         } else {
@@ -96,7 +101,11 @@ class Children extends CI_Controller
         if($this->form_validation->run() == true) {
             $this->db->where('group_id', $this->input->post('group_id'))->delete('child_group_staff');
             foreach ($this->input->post('user_id') as $user) {
-                $this->db->insert('child_group_staff', ['user_id' => $user, 'group_id' => $this->input->post('group_id')]);
+                $this->db->insert('child_group_staff', [
+                    'user_id' => $user,
+                    'group_id' => $this->input->post('group_id'),
+                    'created_at'=>date_stamp()
+                ]);
             }
             flash('success', lang('request_success'));
         } else {

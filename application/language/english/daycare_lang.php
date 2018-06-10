@@ -439,3 +439,4 @@ $lang['assigned children']='Assigned children';
 $lang['select children to assign']='Select children to assign';
 $lang['select staff to assign']='Select staff to assign';
 $lang['assigned staff']='assigned staff';
+$lang['You do not have permission to view this child\'s profile']='You do not have permission to view this child\'s profile';
