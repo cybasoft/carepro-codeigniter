@@ -149,21 +149,6 @@
                                         <br/>
                                         <?php echo lang('birthday'); ?>:
                                         <?php echo format_date($row->bday, false); ?> <br/>
-
-                                        <hr/>
-                                        <?php if($this->child->is_checked_in($row->id) == 1) : ?>
-                                            <a id="<?php echo $row->id; ?>" href="#"
-                                               class="btn btn-danger btn-flat btn-sm child-check-out">
-                                                <span class="fa fa-new-window"></span>
-                                                <?php echo lang('check_out'); ?>
-                                            </a>
-                                        <?php else : ?>
-                                            <a id="<?php echo $row->id; ?>" href="#"
-                                               class="btn btn-primary btn-flat btn-sm child-check-in">
-                                                <span class="fa fa-check"></span>
-                                                <?php echo lang('check_in').' &nbsp; '; ?>
-                                            </a>
-                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             </table>

@@ -1,23 +1,27 @@
 <?php $groups = $this->db->get('child_groups'); ?>
-<div class="box box-info">
-    <div class="box-body">
-        <h3><?php echo lang('New children group'); ?></h3>
-        <div class="row">
-            <?php echo form_open('child-groups'); ?>
-            <div class="col-md-5">
-                <input type="text" name="name" class="form-control"
-                       placeholder="<?php echo lang('name'); ?>" required/>
-            </div>
-            <div class="col-md-5">
-                <input type="text" name="description" class="form-control"
-                       placeholder="<?php echo lang('description'); ?>"/>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-default"><?php echo lang('Submit'); ?></button>
-            </div>
-            <?php echo form_close(); ?></div>
+
+<?php if(is('admin') || is('manager')): ?>
+    <div class="box box-info">
+        <div class="box-body">
+            <h3><?php echo lang('New children group'); ?></h3>
+            <div class="row">
+                <?php echo form_open('child-groups'); ?>
+                <div class="col-md-5">
+                    <input type="text" name="name" class="form-control"
+                           placeholder="<?php echo lang('name'); ?>" required/>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" name="description" class="form-control"
+                           placeholder="<?php echo lang('description'); ?>"/>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default"><?php echo lang('Submit'); ?></button>
+                </div>
+                <?php echo form_close(); ?></div>
+        </div>
     </div>
-</div>
+<?php endif; ?>
+
 <div class="row">
     <div class="col-md-4">
         <div class="box box-info">
@@ -87,76 +91,79 @@
             </div>
         <?php endif; ?>
     <?php endif; ?>
-    <div class="col-md-4">
-        <div class="box box-warning">
-            <div class="box-body">
-                <h4><?php echo lang('select children to assign'); ?></h4>
-                <div style="max-height:400px;overflow-y: scroll;">
-                    <?php if(isset($_GET['group']) && $_GET['group'] !== ""): ?>
 
-                    <?php echo form_open('child-groups/add-children'); ?>
-                    <ul class="nav nav-pills nav-stacked list-unstyled">
-                        <?php
-                        $children = $this->db->get('children');
-                        foreach ($children->result() as $c): ?>
-                            <li>
-                                <input type="checkbox"
-                                       name="child_id[]"
-                                    <?php echo (related('child_group', 'child_id', $c->id, 'group_id', $_GET['group'])) ? 'checked' : ''; ?>
-                                       value="<?php echo $c->id; ?>"/>
-                                <input type="hidden"
-                                       name="group_id"
-                                       value="<?php echo $_GET['group']; ?>"/>
-                                <?php echo $c->first_name.' '.$c->last_name; ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+    <?php if(is('admin') || is('manager')): ?>
+        <div class="col-md-4">
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h4><?php echo lang('select children to assign'); ?></h4>
+                    <div style="max-height:400px;overflow-y: scroll;">
+                        <?php if(isset($_GET['group']) && $_GET['group'] !== ""): ?>
+
+                        <?php echo form_open('child-groups/add-children'); ?>
+                        <ul class="nav nav-pills nav-stacked list-unstyled">
+                            <?php
+                            $children = $this->db->get('children');
+                            foreach ($children->result() as $c): ?>
+                                <li>
+                                    <input type="checkbox"
+                                           name="child_id[]"
+                                        <?php echo (related('child_group', 'child_id', $c->id, 'group_id', $_GET['group'])) ? 'checked' : ''; ?>
+                                           value="<?php echo $c->id; ?>"/>
+                                    <input type="hidden"
+                                           name="group_id"
+                                           value="<?php echo $_GET['group']; ?>"/>
+                                    <?php echo $c->first_name.' '.$c->last_name; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <button class="btn btn-default"><?php echo lang('submit'); ?></button>
+                    <?php echo form_close(); ?>
+                    <?php else: ?>
+                        <i class="fa fa-chevron-left"></i>
+                        <?php echo lang('select a group from the list to update'); ?>
+                    <?php endif; ?>
                 </div>
-                <button class="btn btn-default"><?php echo lang('submit'); ?></button>
-                <?php echo form_close(); ?>
-                <?php else: ?>
-                    <i class="fa fa-chevron-left"></i>
-                    <?php echo lang('select a group from the list to update'); ?>
-                <?php endif; ?>
+            </div>
+
+            <div class="box box-warning">
+                <div class="box-body">
+                    <h4><?php echo lang('select staff to assign'); ?></h4>
+                    <div style="max-height:400px;overflow-y: scroll;">
+                        <?php if(isset($_GET['group']) && $_GET['group'] !== ""): ?>
+
+                        <?php echo form_open('child-groups/add-staff'); ?>
+                        <ul class="nav nav-pills nav-stacked list-unstyled">
+                            <?php
+                            $this->db->select('users.id,users.first_name,users.last_name,users_groups.group_id');
+                            $this->db->where('group_id', 3);
+                            $this->db->or_where('group_id', 1);
+                            $this->db->from('users');
+                            $this->db->join('users_groups', 'users_groups.user_id=users.id');
+                            $staff = $this->db->get();
+                            foreach ($staff->result() as $s): ?>
+                                <li>
+                                    <input type="checkbox"
+                                           name="user_id[]"
+                                        <?php echo (related('child_group_staff', 'user_id', $s->id, 'group_id', $_GET['group'])) ? 'checked' : ''; ?>
+                                           value="<?php echo $s->id; ?>"/>
+                                    <input type="hidden"
+                                           name="group_id"
+                                           value="<?php echo $_GET['group']; ?>"/>
+                                    <?php echo $s->first_name.' '.$s->last_name; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <button class="btn btn-default"><?php echo lang('submit'); ?></button>
+                    <?php echo form_close(); ?>
+                    <?php else: ?>
+                        <i class="fa fa-chevron-left"></i>
+                        <?php echo lang('select a group from the list to update'); ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-
-        <div class="box box-warning">
-            <div class="box-body">
-                <h4><?php echo lang('select staff to assign'); ?></h4>
-                <div style="max-height:400px;overflow-y: scroll;">
-                    <?php if(isset($_GET['group']) && $_GET['group'] !== ""): ?>
-
-                    <?php echo form_open('child-groups/add-staff'); ?>
-                    <ul class="nav nav-pills nav-stacked list-unstyled">
-                        <?php
-                        $this->db->select('users.id,users.first_name,users.last_name,users_groups.group_id');
-                        $this->db->where('group_id', 3);
-                        $this->db->or_where('group_id', 1);
-                        $this->db->from('users');
-                        $this->db->join('users_groups', 'users_groups.user_id=users.id');
-                        $staff = $this->db->get();
-                        foreach ($staff->result() as $s): ?>
-                            <li>
-                                <input type="checkbox"
-                                       name="user_id[]"
-                                    <?php echo (related('child_group_staff', 'user_id', $s->id, 'group_id', $_GET['group'])) ? 'checked' : ''; ?>
-                                       value="<?php echo $s->id; ?>"/>
-                                <input type="hidden"
-                                       name="group_id"
-                                       value="<?php echo $_GET['group']; ?>"/>
-                                <?php echo $s->first_name.' '.$s->last_name; ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-                <button class="btn btn-default"><?php echo lang('submit'); ?></button>
-                <?php echo form_close(); ?>
-                <?php else: ?>
-                    <i class="fa fa-chevron-left"></i>
-                    <?php echo lang('select a group from the list to update'); ?>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
+    <?php endif; ?>
 </div>

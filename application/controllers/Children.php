@@ -48,6 +48,7 @@ class Children extends CI_Controller
 
     function storeGroup()
     {
+        allow('admin');
         $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|trim|is_unique[child_groups.name]');
         $this->form_validation->set_rules('description', lang('description'), 'xss_clean|trim');
         if($this->form_validation->run() == true) {
@@ -57,10 +58,10 @@ class Children extends CI_Controller
                     'description' => $this->input->post('description')
                 ]
             );
-            if($this->db->affected_rows()>0){
-                flash('success',lang('Child group created! You can now assign children'));
-            }else{
-                flash('error',lang('request_error'));
+            if($this->db->affected_rows()>0) {
+                flash('success', lang('Child group created! You can now assign children'));
+            } else {
+                flash('error', lang('request_error'));
             }
         } else {
             validation_errors();
@@ -68,15 +69,18 @@ class Children extends CI_Controller
         }
         redirect('children#groups');
     }
-    function childrenToGroup(){
-        $this->form_validation->set_rules('child_id[]',lang('children'),'required|trim|xss_clean' );
-        $this->form_validation->set_rules('group_id',lang('group'),'required|trim|xss_clean' );
+
+    function childrenToGroup()
+    {
+        allow('admin');
+        $this->form_validation->set_rules('child_id[]', lang('children'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('group_id', lang('group'), 'required|trim|xss_clean');
         if($this->form_validation->run() == true) {
             $this->db->where('group_id', $this->input->post('group_id'))->delete('child_group');
-            foreach($this->input->post('child_id') as $child){
-                $this->db->insert('child_group',['child_id'=>$child,'group_id'=> $this->input->post('group_id')]);
+            foreach ($this->input->post('child_id') as $child) {
+                $this->db->insert('child_group', ['child_id' => $child, 'group_id' => $this->input->post('group_id')]);
             }
-            flash('success',lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
             validation_errors();
             flash('error');
@@ -84,15 +88,17 @@ class Children extends CI_Controller
         redirect('children?group='.$this->input->post('group_id').'#groups');
     }
 
-    function staffToGroup(){
-        $this->form_validation->set_rules('user_id[]',lang('children'),'required|trim|xss_clean' );
-        $this->form_validation->set_rules('group_id',lang('group'),'required|trim|xss_clean' );
+    function staffToGroup()
+    {
+        allow('admin');
+        $this->form_validation->set_rules('user_id[]', lang('children'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('group_id', lang('group'), 'required|trim|xss_clean');
         if($this->form_validation->run() == true) {
             $this->db->where('group_id', $this->input->post('group_id'))->delete('child_group_staff');
-            foreach($this->input->post('user_id') as $user){
-                $this->db->insert('child_group_staff',['user_id'=>$user,'group_id'=> $this->input->post('group_id')]);
+            foreach ($this->input->post('user_id') as $user) {
+                $this->db->insert('child_group_staff', ['user_id' => $user, 'group_id' => $this->input->post('group_id')]);
             }
-            flash('success',lang('request_success'));
+            flash('success', lang('request_success'));
         } else {
             validation_errors();
             flash('error');
