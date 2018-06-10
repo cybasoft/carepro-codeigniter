@@ -197,7 +197,17 @@ function checked_option($option, $value)
     }
     return false;
 }
+function related($db,$field1,$value1,$field2,$value2){
+    $ci = &get_instance();
+   $res= $ci->db->where($field1,$value1)
+        ->where($field2,$value2)
+        ->get($db)->result();
+    if(count($res)>0){
+        return true;
+    }
+    return false;
 
+}
 /*
 * encrypt
 * encrypt text

@@ -32,7 +32,6 @@ class Migration extends CI_Controller
     public function run($version = null)
     {
         $mig = $this->db->get('migrations')->row();
-        $files = glob(APPPATH.'database/migrations/'.$version.'*.php');
         $migration = false;
 
         if(count($mig)>0) {
@@ -45,7 +44,9 @@ class Migration extends CI_Controller
                 }
                 if($version<$mig->version) { //rollback
                     echo sprintf(lang('Rolling back from migration %s to %s'), $mig->version, $version).PHP_EOL;
+
                 }
+                $files = glob(APPPATH.'database/migrations/'.$version.'*.php');
                 //check if migration files exist exist
                 if(count($files)>0) {
                     $migration = $this->migration->version($version);

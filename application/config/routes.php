@@ -117,12 +117,12 @@ $route['charges/:any'] = 'accounting/charges/$1';
 
 $route['accounting/:any'] = 'accounting/accounting/$1';
 
-//news
 $route['news/(:any)'] = 'news/$1';
 
-//family
 $route['parent/(:any)'] = "parent/$1";
-
 $route['lockscreen'] = 'dashboard/lockscreen';
-
 $route['invoice/(:num)/stripe-pay']='child/invoice/stripePayment/$1';
+
+$route['child-groups']['post']='children/storeGroup';
+$route['child-groups/add-children']['post']='children/childrenToGroup';
+$route['child-groups/add-staff']['post']='children/staffToGroup';

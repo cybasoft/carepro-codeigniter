@@ -3472,3 +3472,17 @@ Photo albums
         margin: 2.5px;
     }
 }
+.active-group{
+    font-weight:bold;
+    color: #1974cc;
+}
+.arrow-right{
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 10px solid #90a4ae;
+    float: right;
+    margin-top: -40px;
+    margin-right: -10px;
+}

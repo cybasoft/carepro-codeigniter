@@ -237,7 +237,7 @@ $lang['file'] = 'File';
 $lang['filename'] = 'Filename';
 $lang['toggle_navigation'] = 'Toggle navigation';
 //forms
-$lang['submit'] = 'submit';
+$lang['submit'] = 'Submit';
 $lang['update'] = 'update';
 $lang['cancel'] = 'cancel';
 $lang['close'] = 'Close';
@@ -408,7 +408,7 @@ $lang['purge']='Purge!';
 $lang['ip_address']='IP Address';
 $lang['lock']='Lock';
 
-//photos
+//version 2.1.0
 $lang['photos']='Photos';
 $lang['album']='Album';
 $lang['albums']='Albums';
@@ -428,3 +428,14 @@ $lang['incident date']='Incident date';
 $lang['You have cancelled your PayPal transaction. We look forward to your business again!']='You have cancelled your PayPal transaction. We look forward to your business again!';
 $lang['We received your payment. Please wait few hours for the transaction reflect in your account']='We received your payment. Please wait few hours for the transaction reflect in your account';
 $lang['Thank you for your payment! We have sent you a confirmation email']='Thank you for your payment! We have sent you a confirmation email';
+
+//version 2.1.1
+$lang['Child groups']='Child groups';
+$lang['nickname']='Nickname';
+$lang['New children group']='New children group';
+$lang['Child group created! You can now assign children']='Child group created! You can now assign children';
+$lang['select a group from the list to update']='select a group from the list to update';
+$lang['assigned children']='Assigned children';
+$lang['select children to assign']='Select children to assign';
+$lang['select staff to assign']='Select staff to assign';
+$lang['assigned staff']='assigned staff';

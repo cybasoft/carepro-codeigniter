@@ -983,3 +983,61 @@ ALTER TABLE child_incident_photos
 CREATE INDEX incident_id
   ON child_incident_photos (incident_id);
 
+-- version 2.1.1
+CREATE TABLE child_groups
+(
+  id          INT AUTO_INCREMENT
+    PRIMARY KEY,
+  name        VARCHAR(100) NOT NULL,
+  description VARCHAR(100) NULL,
+  created_at  DATETIME     NOT NULL,
+  updated_at  DATETIME     NULL,
+  CONSTRAINT name
+  UNIQUE (name)
+);
+
+CREATE TABLE child_group
+(
+  child_id   INT      NOT NULL,
+  group_id   INT      NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NULL,
+  PRIMARY KEY (child_id, group_id),
+  CONSTRAINT child_group_ibfk_1
+  FOREIGN KEY (child_id) REFERENCES children (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT child_group_ibfk_2
+  FOREIGN KEY (group_id) REFERENCES child_groups (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE INDEX group_id
+  ON child_group (group_id);
+
+
+CREATE TABLE child_group_staff
+(
+  user_id    INT      NOT NULL,
+  group_id   INT      NOT NULL,
+  created_at DATETIME NOT NULL,
+  updated_at DATETIME NOT NULL,
+  PRIMARY KEY (user_id, group_id),
+  CONSTRAINT child_group_staff_ibfk_1
+  FOREIGN KEY (user_id) REFERENCES users (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT child_group_staff_ibfk_2
+  FOREIGN KEY (group_id) REFERENCES child_groups (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+
+CREATE INDEX group_id
+  ON child_group_staff (group_id);
+
+
+
+
+

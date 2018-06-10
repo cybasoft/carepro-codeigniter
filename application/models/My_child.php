@@ -126,6 +126,7 @@ class My_child extends CI_Model
     function register($getID = false)
     {
         $data = array(
+            'nickname'=> $this->input->post('nickname'),
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'national_id' => encrypt($this->input->post('national_id')),
@@ -174,6 +175,7 @@ class My_child extends CI_Model
     function update_child($child_id)
     {
         $data = array(
+            'nickname'=> $this->input->post('nickname'),
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'bday' => $this->input->post('bday'),

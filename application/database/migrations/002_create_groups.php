@@ -38,7 +38,6 @@ class Migration_create_groups extends CI_Migration
         $attributes = array(
             'ENGINE' => 'InnoDB',
         );
-
         // Create Table groups
         $this->dbforge->create_table("groups", TRUE, $attributes);
 

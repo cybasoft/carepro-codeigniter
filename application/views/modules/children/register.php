@@ -1,6 +1,16 @@
 <?php echo form_open('child/register'); ?>
     <div class="row">
         <div class="col-md-2">
+            <?php echo lang('nickname'); ?>
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" required="" type="text" name="nickname"
+                   value=""/>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-2">
             <?php echo lang('first_name'); ?>
         </div>
         <div class="col-md-4">

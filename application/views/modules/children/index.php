@@ -36,6 +36,11 @@
                <i class="fa fa-plus"></i> <?php echo lang('register'); ?>
             </a>
         </li>
+        <li role="presentation">
+            <a href="#groups" aria-controls="groups" role="tab" data-toggle="tab">
+               <i class="fa fa-group"></i> <?php echo lang('Child groups'); ?>
+            </a>
+        </li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -175,6 +180,9 @@
         </div>
         <div role="tabpanel" class="tab-pane fade" id="register">
             <?php $this->load->view('modules/children/register'); ?>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="groups">
+            <?php $this->load->view('modules/children/groups'); ?>
         </div>
     </div>
 </div>
