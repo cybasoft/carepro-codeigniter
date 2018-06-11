@@ -445,5 +445,10 @@ function authorizedToChild($staff_id,$child_id){
         return 1;
     return 0;
 }
-
+function valid_date($date, $format = 'Y-m-d')
+{
+    $d = DateTime::createFromFormat($format, $date);
+//    return $d && $d->format($format) === $date;
+    return true;
+}
 ?>

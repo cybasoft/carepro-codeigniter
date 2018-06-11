@@ -156,9 +156,9 @@ $lang['record_not_found'] = 'Record not found';
 $lang['file_not_found'] = 'File not found';
 $lang['contact_manager'] = 'Please contact manager to make changes';
 $lang['file_size_error'] = 'The file size is not valid';
-$lang['confirm_delete_title']='Please confirm';
-$lang['confirm_delete_warning']='You cannot undo this action!';
-$lang['confirm_delete_btn']='Yes, Do it!';
+$lang['confirm_delete_title'] = 'Please confirm';
+$lang['confirm_delete_warning'] = 'You cannot undo this action!';
+$lang['confirm_delete_btn'] = 'Yes, Do it!';
 $lang['confirm_delete_item'] = 'Are you sure you want to delete this item?';
 $lang['confirm_delete_user'] = 'Are you sure you want to delete this user? <br/>  This action cannot be reversed! Type <strong>DELETE</strong> to confirm.';
 $lang['feature_disabled_in_demo'] = 'Action/Feature disabled in demo mode';
@@ -180,7 +180,7 @@ $lang['user_activated'] = 'User activated';
 $lang['user_deactivated'] = 'User deactivated';
 $lang['action_cancelled'] = 'Action cancelled';
 $lang['item_deleted'] = 'Item deleted successfully!';
-$lang['enter_a_search_term']='Enter a search term';
+$lang['enter_a_search_term'] = 'Enter a search term';
 
 //registration
 $lang['enter_email'] = 'Enter your email address';
@@ -231,7 +231,7 @@ $lang['register_form_notice'] = 'Register here to be a parent in this daycare.';
 $lang['captcha_placeholder'] = 'Enter text in image above';
 $lang['invalid_captcha'] = 'Invalid captcha entered';
 $lang['user_already_assigned'] = 'The user selected is already assigned';
-$lang['assign']='Assign';
+$lang['assign'] = 'Assign';
 
 $lang['file'] = 'File';
 $lang['filename'] = 'Filename';
@@ -284,7 +284,7 @@ $lang['transferred'] = '<span class="label label-warning">Transferred</span>';
 $lang['enrolled'] = 'Enrolled';
 $lang['pending'] = '<span class="label label-info">Pending</span>';
 
-$lang['account_pending_approval']='<i class="fa fa-warning"></i> Your account is pending approval';
+$lang['account_pending_approval'] = '<i class="fa fa-warning"></i> Your account is pending approval';
 $lang['select'] = 'select';
 $lang['selected'] = 'selected';
 $lang['checked'] = 'checked';
@@ -328,8 +328,8 @@ $lang['invoice'] = 'Invoice';
 $lang['invoice_id'] = 'Invoice ID';
 $lang['generate_invoice'] = 'Generate invoice';
 $lang['new_invoice'] = 'New invoice';
-$lang['enter_invoice_id']='Enter invoice ID';
-$lang['invoice_email_subject']='Invoice for %s';
+$lang['enter_invoice_id'] = 'Enter invoice ID';
+$lang['invoice_email_subject'] = 'Invoice for %s';
 $lang['make_payment'] = 'Make payment';
 $lang['paid'] = 'Paid';
 $lang['unpaid'] = 'Unpaid';
@@ -404,39 +404,45 @@ $lang['maintenance_mode_notice'] = 'We are performing some scheduled maintenance
 
 $lang['admin_purge_warnng'] = ' Warning! This is an admin action. This will delete all records. Type "PURGE" to
     continue';
-$lang['purge']='Purge!';
-$lang['ip_address']='IP Address';
-$lang['lock']='Lock';
+$lang['purge'] = 'Purge!';
+$lang['ip_address'] = 'IP Address';
+$lang['lock'] = 'Lock';
 
 //version 2.1.0
-$lang['photos']='Photos';
-$lang['album']='Album';
-$lang['albums']='Albums';
-$lang['photo']='Photo';
-$lang['photo_album']='Photo albums';
-$lang['upload']='Upload';
-$lang['dropzone_message']='Drop photos or click to upload';
+$lang['photos'] = 'Photos';
+$lang['album'] = 'Album';
+$lang['albums'] = 'Albums';
+$lang['photo'] = 'Photo';
+$lang['photo_album'] = 'Photo albums';
+$lang['upload'] = 'Upload';
+$lang['dropzone_message'] = 'Drop photos or click to upload';
 
-$lang['Migration(s) done']='Migration(s) done';
-$lang['No new migrations to run']='No new migrations to runs';
-$lang['This migration has already been run']='This migration has already been run';
-$lang['Rolling back from migration %s to %s']='Rolling back from migration %s to %s';
-$lang['created']='Created';
-$lang['new incident']='New incident';
-$lang['incident photos']='Incident photos';
-$lang['incident date']='Incident date';
-$lang['You have cancelled your PayPal transaction. We look forward to your business again!']='You have cancelled your PayPal transaction. We look forward to your business again!';
-$lang['We received your payment. Please wait few hours for the transaction reflect in your account']='We received your payment. Please wait few hours for the transaction reflect in your account';
-$lang['Thank you for your payment! We have sent you a confirmation email']='Thank you for your payment! We have sent you a confirmation email';
+$lang['Migration(s) done'] = 'Migration(s) done';
+$lang['No new migrations to run'] = 'No new migrations to runs';
+$lang['This migration has already been run'] = 'This migration has already been run';
+$lang['Rolling back from migration %s to %s'] = 'Rolling back from migration %s to %s';
+$lang['created'] = 'Created';
+$lang['new incident'] = 'New incident';
+$lang['incident photos'] = 'Incident photos';
+$lang['incident date'] = 'Incident date';
+$lang['You have cancelled your PayPal transaction. We look forward to your business again!'] = 'You have cancelled your PayPal transaction. We look forward to your business again!';
+$lang['We received your payment. Please wait few hours for the transaction reflect in your account'] = 'We received your payment. Please wait few hours for the transaction reflect in your account';
+$lang['Thank you for your payment! We have sent you a confirmation email'] = 'Thank you for your payment! We have sent you a confirmation email';
 
 //version 2.1.1
-$lang['Child groups']='Child groups';
-$lang['nickname']='Nickname';
-$lang['New children group']='New children group';
-$lang['Child group created! You can now assign children']='Child group created! You can now assign children';
-$lang['select a group from the list to update']='select a group from the list to update';
-$lang['assigned children']='Assigned children';
-$lang['select children to assign']='Select children to assign';
-$lang['select staff to assign']='Select staff to assign';
-$lang['assigned staff']='assigned staff';
-$lang['You do not have permission to view this child\'s profile']='You do not have permission to view this child\'s profile';
+$lang['Child groups'] = 'Child groups';
+$lang['nickname'] = 'Nickname';
+$lang['New children group'] = 'New children group';
+$lang['Child group created! You can now assign children'] = 'Child group created! You can now assign children';
+$lang['select a group from the list to update'] = 'select a group from the list to update';
+$lang['assigned children'] = 'Assigned children';
+$lang['select children to assign'] = 'Select children to assign';
+$lang['select staff to assign'] = 'Select staff to assign';
+$lang['assigned staff'] = 'assigned staff';
+$lang['You do not have permission to view this child\'s profile'] = 'You do not have permission to view this child\'s profile';
+$lang['print all'] = 'Print all';
+$lang['print inactive'] = 'Print inactive';
+$lang['daily roster'] = 'Daily roster';
+$lang['present'] = 'Present';
+$lang['absent'] = 'Absent';
+$lang['invalid date']='Invalid date';

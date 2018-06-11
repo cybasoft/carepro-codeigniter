@@ -358,10 +358,19 @@ class My_child extends CI_Model
      * get parents
      */
 
-    function is_checked_in($child_id)
+    function is_checked_in($child_id,$date=false)
     {
+
         $this->db->where('out_guardian', NULL);
         $this->db->where('child_id', $child_id);
+        if($date !== false){
+            if(valid_date($date)) {
+                $d = new DateTime($date);
+                $today = $d->format('Y-m-d ');
+                $this->db->where('DATE(time_in)', $today);
+            }
+        }
+
         $query = $this->db->get('child_checkin')->row();
         if(empty($query)) {//child is out
             return false;

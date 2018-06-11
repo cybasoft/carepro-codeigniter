@@ -1,5 +1,7 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+
 <div class="row">
-    <div class="col-md-4 col-sm-6">
+    <div class="col-md-4">
         <?php echo form_open('children', 'class="input-group"'); ?>
         <input type="text" name="search" class="form-control" placeholder="<?php echo lang('search'); ?>..."/>
         <span class="input-group-btn">
@@ -9,10 +11,35 @@
         </span>
         <?php echo form_close(); ?>
     </div>
-    <div class="col-md-4 col-sm-6 text-right">
-        <a href="<?php echo site_url('children/roster'); ?>" target="_blank" class="btn btn-warning btn-flat">
+    <div class="col-md-3">
+
+        <div style="width:200px">
+            <div class="input-group date">
+                <input data-provide="datepicker" data-date="<?php echo date('m/d/Y'); ?>" type="text" class="form-control datepicker" value="<?php echo date('m/d/Y'); ?>">
+                <div class="input-group-addon">
+                    <a target="_blank" class="" onclick="getReport()">
+                        <span class="fa fa-print"></span>
+                        <?php echo lang('daily roster'); ?>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <a href="<?php echo site_url('children/roster?active'); ?>" target="_blank"
+           class="btn btn-success btn-flat btn-sm">
             <span class="fa fa-print"></span>
-            <?php echo lang('children_roster'); ?>
+            <?php echo lang('active'); ?>
+        </a>
+        <a href="<?php echo site_url('children/roster?inactive'); ?>" target="_blank"
+           class="btn btn-danger btn-flat btn-sm">
+            <span class="fa fa-print"></span>
+            <?php echo lang('inactive'); ?>
+        </a>
+        <a href="<?php echo site_url('children/roster?active'); ?>" target="_blank"
+           class="btn btn-warning btn-flat btn-sm">
+            <span class="fa fa-print"></span>
+            <?php echo lang('print all'); ?>
         </a>
     </div>
 </div>
@@ -99,7 +126,7 @@
                                         <?php endif; ?>
                                         <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
                                             <i class="fa fa-lock text-danger pull-right fa-2x"></i>
-                                       <?php endif; ?>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             </table>
@@ -187,5 +214,10 @@
         var child_id = $(this).attr('id');
         $('.my_modal').load('<?php echo site_url('child'); ?>/' + child_id + '/checkOut').modal();
     });
-
+    function getReport() {
+        var d = $(".datepicker").datepicker( 'getDate');
+        var datestring = d.getFullYear()  + "-" + (d.getMonth()+1) + "-" + (d.getDate());
+        window.open('<?php echo site_url('children/roster?daily&date='); ?>'+datestring);
+    }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
