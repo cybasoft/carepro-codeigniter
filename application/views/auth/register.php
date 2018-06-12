@@ -58,7 +58,7 @@ if ($this->ion_auth->logged_in()) {
         </div>
         <?php echo form_close(); ?>
         <div class="page-copyright">
-            <p><?php echo lang('copyright'); ?></p>
+            <p><?php echo lang('powered by'); ?> <?php echo lang('copyright'); ?></p>
         </div>
     </div>
 </div>

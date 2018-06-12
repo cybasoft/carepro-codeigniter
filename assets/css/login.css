@@ -190,7 +190,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-full {
-    width: 100%
+    width: 294px;
 }
 
 button,input,optgroup,select,textarea {
@@ -201,7 +201,7 @@ button,input,optgroup,select,textarea {
 }
 
 button,input {
-    overflow: visible
+    overflow: visible;
 }
 
 button,select {
@@ -251,14 +251,15 @@ legend {
 }
 
 .login-page .login-box {
-    color: #fff;
+    color: #020202;
     padding: 20px;
-    width: 100%;
-    max-width: 400px
+    width: 320px;
+    background: #fff;
 }
 
 .login-page .login-box .form-control {
-    margin-top: 20px
+    margin-top: 20px;
+    width: 294px;
 }
 
 .login-page .login-box .other-actions {

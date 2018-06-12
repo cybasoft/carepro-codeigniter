@@ -193,14 +193,15 @@
                 <?php endif; ?>
             </ul>
         </section>
-        <div class="footer text-center">
+        <div class="footer text-center" style="position:fixed;bottom:0">
             <br/>
-            <div style="font-size:11px;padding:5px;">
+            <div style="font-size:12px;padding:5px;">
                 &copy; <?php echo date('Y'); ?>
                 <?php echo lang('copyright'); ?>
                 <br/>
                 <br/>
                 <a href="//amdtllc.com/support" target="_blank">Open support ticket</a>
+                <br/>
             </div>
         </div>
     </aside>

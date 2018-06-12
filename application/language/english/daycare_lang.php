@@ -446,3 +446,4 @@ $lang['daily roster'] = 'Daily roster';
 $lang['present'] = 'Present';
 $lang['absent'] = 'Absent';
 $lang['invalid date']='Invalid date';
+$lang['powered by']='Powered by';

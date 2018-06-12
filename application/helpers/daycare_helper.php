@@ -432,8 +432,9 @@ function moneyFormat($amount)
 {
     return config_item('company')['currency_symbol'].number_format($amount, 2);
 }
-
 function authorizedToChild($staff_id,$child_id){
+    if(is('admin'))
+        return true;
     $ci = &get_instance();
     $res = $ci->db
         ->from('child_group')
@@ -442,8 +443,8 @@ function authorizedToChild($staff_id,$child_id){
         ->where('child_group.child_id',$child_id)
         ->count_all_results();
     if($res>0)
-        return 1;
-    return 0;
+        return true;
+    return false;
 }
 function valid_date($date, $format = 'Y-m-d')
 {

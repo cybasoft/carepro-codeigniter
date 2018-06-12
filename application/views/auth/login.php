@@ -26,7 +26,7 @@ $password = array(
         <div class="logo-main">
             <a href="<?php echo site_url(); ?>">
                 <img src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('logo', 'company'); ?>"
-                     alt="Laraspace Logo">
+                     alt="Logo">
             </a>
         </div>
 
@@ -58,7 +58,7 @@ $password = array(
             </div>
         </form>
         <div class="page-copyright">
-            <p><?php echo lang('copyright'); ?></p>
+            <p><?php echo lang('powered by'); ?> <?php echo lang('copyright'); ?></p>
         </div>
     </div>
 </div>
