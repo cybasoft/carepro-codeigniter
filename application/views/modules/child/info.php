@@ -4,7 +4,7 @@
         <div class="box-tools pull-right">
             <?php if(is('admin') || is('staff')): ?>
                 <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal"><span
-                            class="fa fa-pencil"></span>
+                            class="fa fa-pencil-alt"></span>
                 </a>
             <?php endif; ?>
         </div>

@@ -7,7 +7,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo base_url(); ?>assets/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/plugins/summernote/summernote.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/sweetalert.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/fullcalendar.css" rel="stylesheet" type="text/css"/>
@@ -187,7 +187,7 @@
                 <?php if(is('admin')): ?>
                     <li class="<?php echo set_active('settings'); ?>">
                         <a href="<?php echo site_url('settings'); ?>">
-                            <i class="fa fa-gears"></i> <span><?php echo lang('settings'); ?></span>
+                            <i class="fa fa-wrench"></i> <span><?php echo lang('settings'); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
@@ -240,8 +240,7 @@
 <script src="<?php echo base_url(); ?>assets/js/fullcalendar.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
-<script type="text/javascript"
-        src="//cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/plugins/datatables/datatables.min.js"></script>
 <script type="text/javascript">
     function confirmDelete(loc) {
         swal({
@@ -287,13 +286,15 @@
             ]
         });
     });
-    //lockscreen
-    $('.lock-screen').click(function () {
-        startLockscreen();
+    $('document').ready(function () {
+        //lockscreen
+        $('.lock-screen').click(function () {
+            startLockscreen();
+        });
+        setTimeout(function () {
+            startLockscreen()
+        }, 900000);
     });
-    setTimeout(function () {
-        startLockscreen()
-    }, 900000);
 
     function startLockscreen() {
         $('body').load('<?php echo site_url('lockscreen'); ?>');
@@ -301,7 +302,7 @@
     }
 </script>
 <?php if($this->input->cookie('timer')>0): ?>
-    <script>startLockscreen()</script>
+    <script>window.onload = startLockscreen()</script>
 <?php endif; ?>
 </body>
 </html>

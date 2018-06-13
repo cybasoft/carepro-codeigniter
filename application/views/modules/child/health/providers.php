@@ -22,7 +22,7 @@
             <td>
                 <?php if (!is('parent')): ?>
                     <a class="delete" href="<?php echo site_url('child/deleteProvider/' . $row->id); ?>">
-                        <i class="fa fa-trash-o"></i>
+                        <i class="fa fa-trash-alt"></i>
                     </a>
                 <?php endif; ?>
             </td>

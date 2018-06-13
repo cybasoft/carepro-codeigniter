@@ -30,7 +30,7 @@
                 <button class="btn btn-primary"><?php echo lang('update'); ?></button>
                 <button onclick="deleteArticle('<?php echo $article->id; ?>')" type="button"
                         class="btn btn-danger pull-right">
-                    <span class="fa fa-trash-o"></span>
+                    <span class="fa fa-trash-alt"></span>
                     <?php echo lang('delete'); ?>
                 </button>
             </div>

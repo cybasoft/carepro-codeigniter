@@ -10,7 +10,7 @@ class Reports extends CI_Controller
 		allow('super,admin');
         //variables
         $this->load->model('My_reports','reports');
-        $this->module= 'admin/backup/';
+        $this->module= 'modules/reports/';
     }
 
     public function index()
@@ -23,6 +23,39 @@ class Reports extends CI_Controller
         page($this->module.'index', $data);
     }
 
+    function roster()
+    {
+        if(isset($_GET['active']) || isset($_GET['daily'])){ //daily attendance
+            if(isset($_GET['date']))
+                $date = $_GET['date'];
+            else
+                redirectPrev(lang('Please enter a valid date'));
+//            $this->db->select('children.*,child_checkin.time_in,child_checkin.time_out,child_checkin.in_guardian,child_checkin.out_guardian');
+//
+//            $this->db->where('DATE(child_checkin.time_in)',$date);
+//            $this->db->from('children');
+//            $this->db->join('child_checkin','child_checkin.child_id=children.id');
+            $this->db->where('status',1);
+            $children=$this->db->get('children')->result();
+            $this->load->view($this->module.'daily_attendance',compact('children'));
+        }else {
+
+            if(isset($_GET['group']) && $_GET['group']>0) {
+                $this->db->select('*');
+                $this->db->where('child_group.group_id', $_GET['group']);
+                $this->db->from('children');
+                $this->db->join('child_group', 'child_group.child_id=children.id', 'left');
+                $children = $this->db->get()->result();
+            } else {
+                if(isset($_GET['inactive'])) {
+                    $this->db->where('status', 0);
+                }
+                $children = $this->db->get('children')->result();
+            }
+
+            $this->load->view($this->module.'roster', compact('children'));
+        }
+    }
     //todo
     function attendance($child_id){
 

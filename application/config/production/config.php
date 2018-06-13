@@ -39,7 +39,7 @@ $config['email_config'] = array(
     'newline' => "\r\n"
 );
 
-$config['base_url'] = 'http://amdtllc.com/demo/daycarepro';
+$config['base_url'] = 'https://amdtllc.com/demo/daycarepro';
 
 $config['index_page'] = 'index.php';
 

@@ -26,7 +26,7 @@
                     <span class="fa fa-trash "></span> <?php echo lang('delete'); ?>
                 </button>
                 <button class="btn btn-info edit-event-btn">
-                    <span class="fa fa-pencil"></span> <?php echo lang('edit'); ?>
+                    <span class="fa fa-pencil-alt"></span> <?php echo lang('edit'); ?>
                 </button>
             </div>
             <?php endif; ?>

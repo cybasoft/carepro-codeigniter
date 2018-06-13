@@ -1,8 +1,8 @@
 <div class="child-thumb" style="width:100%;position:relative">
     <?php if (!is('parent')): ?>
-        <span style="position:absolute;right:0" class="label label-default cursor" data-toggle="modal"
+        <span style="position:absolute;right:0" class="cursor" data-toggle="modal"
               data-target="#new-photo">
-       <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+       <i class="fa fa-pen-square fa-2x" aria-hidden="true"></i>
     </span>
     <?php endif; ?>
     <?php

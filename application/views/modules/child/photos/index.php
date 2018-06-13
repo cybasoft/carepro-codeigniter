@@ -20,7 +20,7 @@
                     <?php if(is('admin') || is('staff') || is('manager')): ?>
                         <span class="text-danger deletePhoto" id="<?php echo $photo->id; ?>"
                               style="position:absolute;right:0;padding:2px;background:#fff;">
-                        <i class="fa fa-trash-o"></i>
+                        <i class="fa fa-trash-alt"></i>
                     </span>
                     <?php endif; ?>
                     <img src="<?php echo base_url('assets/uploads/photos/'.$photo->name); ?>"/>

@@ -197,4 +197,16 @@ class MY_user extends CI_Model
             return base_url().'assets/img/content/no-image.png';
         }
     }
+
+    /**
+     * @param $id
+     * @return int
+     */
+    function groupCount($id){
+        $this->db->where('group_id',$id);
+        $res = $this->db->count_all_results('child_group_staff');
+        if(count($res)>0)
+            return $res;
+        return 0;
+    }
 }

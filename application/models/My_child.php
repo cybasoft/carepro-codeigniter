@@ -126,7 +126,7 @@ class My_child extends CI_Model
     function register($getID = false)
     {
         $data = array(
-            'nickname'=> $this->input->post('nickname'),
+            'nickname' => $this->input->post('nickname'),
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'national_id' => encrypt($this->input->post('national_id')),
@@ -175,7 +175,7 @@ class My_child extends CI_Model
     function update_child($child_id)
     {
         $data = array(
-            'nickname'=> $this->input->post('nickname'),
+            'nickname' => $this->input->post('nickname'),
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'bday' => $this->input->post('bday'),
@@ -297,7 +297,7 @@ class My_child extends CI_Model
     function check_in($child_id)
     {
         //check if already checked in
-        if($this->is_checked_in($child_id) == 1) {
+        if($this->checkedIn($child_id) == 1) {
             flash('warning', lang('child_already_checked_in'));
             return false;
         }
@@ -327,7 +327,7 @@ class My_child extends CI_Model
     function check_out($child_id)
     {
         //check if already checked in
-        if($this->is_checked_in($child_id) == false) {
+        if($this->checkedIn($child_id) == false) {
             flash('warning', lang('child_is_already_checked_out'));
             return false;
         }
@@ -354,38 +354,102 @@ class My_child extends CI_Model
         return false;
     }
 
-    /*
-     * get parents
+    /**
+     * Determine if child was checked in a given day
+     *
+     * @param $child_id
+     * @param bool $date
+     * @return bool
      */
-
-    function is_checked_in($child_id,$date=false)
+    function checkedIn($child_id, $date = false, $checkedOut = false)
     {
-
-        $this->db->where('out_guardian', NULL);
+        if($checkedOut == false)
+            $this->db->where('time_out', NULL);
         $this->db->where('child_id', $child_id);
-        if($date !== false){
+        if($date !== false) {
             if(valid_date($date)) {
                 $d = new DateTime($date);
-                $today = $d->format('Y-m-d ');
-                $this->db->where('DATE(time_in)', $today);
+                $date = $d->format('Y-m-d ');
+                $this->db->where('DATE(time_in)', $date);
             }
         }
-
-        $query = $this->db->get('child_checkin')->row();
+        $this->db->from('child_checkin');
+        $query = $this->db->count_all_results();
         if(empty($query)) {//child is out
             return false;
         } else { //child is in
             return true;
         }
     }
-    function countAllergies($id){
-        $this->db->where('child_id',$id);
+
+    /**
+     * @param $id
+     * @param null $date
+     * @return mixed
+     */
+    function attendance($id, $date = null)
+    {
+        $this->db->where('child_id', $id);
+        if($date !== null)
+            $this->db->where('DATE(time_in)', $date);
+        $this->db->order_by('time_in', 'DESC');
+        return $this->db->get('child_checkin');
+    }
+
+    /**
+     * @param $id
+     * @param null $date
+     * @return mixed
+     */
+    function checkinCounter($id, $date = null)
+    {
+        $count = '0.00';
+        if($date == null)
+            $date = date('Y-m-d');
+        $this->db->where('child_id', $id);
+        $this->db->where('DATE(time_in)', $date);
+        $this->db->where('time_out', null);
+        $res = $this->db->get('child_checkin');
+        if($res->num_rows()>0) {
+            $result = $res->row();
+            $count = checkinTimer($result->time_in, date('Y-m-d H:i:s'))->h.' '.lang('hrs').
+                ' '.checkinTimer($result->time_in, date('Y-m-d H:i:s'))->i.' '.lang('mins');
+        }
+        return $count;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function countAllergies($id)
+    {
+        $this->db->where('child_id', $id);
         $this->db->from('child_allergy');
         return $this->db->count_all_results();
     }
-    function countMeds($id){
-        $this->db->where('child_id',$id);
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function countMeds($id)
+    {
+        $this->db->where('child_id', $id);
         $this->db->from('child_meds');
         return $this->db->count_all_results();
+    }
+
+    /**
+     * @param $id
+     * @return int
+     */
+    function groupCount($id)
+    {
+        $this->db->where('group_id', $id);
+        $res = $this->db->count_all_results('child_group');
+        if(count($res)>0)
+            return $res;
+        return 0;
     }
 }

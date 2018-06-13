@@ -3483,7 +3483,7 @@ Photo albums
     height: 0;
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
-    border-left: 10px solid #90a4ae;
+    border-left: 10px solid #00a65a;
     float: right;
     margin-top: -40px;
     margin-right: -10px;
@@ -3656,16 +3656,32 @@ Photo albums
     color: #fff !important;
     bottom: 16px;
 }
-.i-check-name{
+
+.i-check-name {
     text-shadow: #fff 1px 1px
 }
-.i-check-icons{
+
+.i-check-icons {
     position: absolute;
     bottom: -65px;
 }
-.i-check-allergy{
-    left:0;
+
+.i-check-allergy {
+    left: 0;
 }
-.i-check-med{
-    left:20px;
+
+.i-check-med {
+    left: 20px;
+}
+
+.i-check-timer {
+    left: 25%;
+    top: 0;
+    -webkit-border-radius: 0 0 3px 3px !important;
+    -moz-border-radius: 0 0 3px 3px !important;;
+    border-radius: 0 0 3px 3px !important;;
+    text-transform: none;
+    background: #1974cc !important;
+    padding: 0px 2px !important;
+    color: #fff;
 }

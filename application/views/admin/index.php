@@ -22,7 +22,7 @@
                             </td>
                             <td>
                                 <a class="delete" href="<?php echo site_url('settings/deletePaymentMethod/' . $payMethod->id); ?>">
-                                    <i class="fa fa-trash-o text-danger"></i>
+                                    <i class="fa fa-trash-alt text-danger"></i>
                                 </a>
                             </td>
                         </tr>
@@ -40,10 +40,8 @@
         <hr/>
         <div class="callout callout-info">
             <h3>Thank you for supporting this project!</h3>
-
             <p>Your donation helps us keep working on this script and make it available at a
                 very affordable price and provide free support</p>
-
             <form action="https://www.paypal.com/cgi-bin/webscr" target="_blank" method="post">
                 <input type="hidden" name="cmd" value="_s-xclick">
                 <input type="hidden" name="hosted_button_id" value="Q3N6CNB3RRJBJ">

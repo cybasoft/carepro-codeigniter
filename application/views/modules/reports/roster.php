@@ -72,7 +72,7 @@
                         if(isset($_GET['date'])) {
                             $date = $_GET['date'];
                         }
-                        if($this->child->is_checked_in($child->id, $date)) {
+                        if($this->child->checkedIn($child->id, $date)) {
                             echo '<i class="fa fa-check text-success">'.lang('present').'</i>';
                         } else {
                             echo '<i class="fa fa-times text-danger">'.lang('absent').'</i>';

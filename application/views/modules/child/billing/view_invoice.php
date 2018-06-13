@@ -135,7 +135,7 @@
                                                     <td>
                                                         <a href="<?php echo site_url('invoice/'.$invoice->id.'/deleteItem/'.$item->id); ?>"
                                                            class="delete">
-                                                            <span class="fa fa-trash-o text-danger cursor"></span>
+                                                            <span class="fa fa-trash-alt text-danger cursor"></span>
                                                         </a>
                                                     </td>
                                                 <?php endif; ?>

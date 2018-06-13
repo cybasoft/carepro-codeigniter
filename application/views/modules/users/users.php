@@ -87,9 +87,9 @@
                                 .lang('index_inactive_link').'</span>'); ?>
                         </td>
                         <td>
-                            <?php echo anchor("user/".$user->id, '<i class="fa fa-pencil fa-2x"></i>'); ?>
+                            <?php echo anchor("user/".$user->id, '<i class="fa fa-pencil-alt fa-2x"></i>'); ?>
                             &nbsp;
-                            <?php echo anchor("user/".$user->id.'/delete', '<i class="fa fa-trash-o fa-2x"></i>'); ?>
+                            <?php echo anchor("user/".$user->id.'/delete', '<i class="fa fa-trash-alt fa-2x"></i>'); ?>
                         </td>
                     </tr>
                     <?php

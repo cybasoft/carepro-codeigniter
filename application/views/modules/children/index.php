@@ -27,24 +27,24 @@
         </div>
     </div>
     <div class="col-md-5">
-        <a href="<?php echo site_url('children/roster?active'); ?>" target="_blank"
+        <a href="<?php echo site_url('reports/roster?active'); ?>" target="_blank"
            class="btn btn-success btn-flat btn-sm">
             <span class="fa fa-print"></span>
             <?php echo lang('active'); ?>
         </a>
-        <a href="<?php echo site_url('children/roster?inactive'); ?>" target="_blank"
+        <a href="<?php echo site_url('reports/roster?inactive'); ?>" target="_blank"
            class="btn btn-danger btn-flat btn-sm">
             <span class="fa fa-print"></span>
             <?php echo lang('inactive'); ?>
         </a>
-        <a href="<?php echo site_url('children/roster?active'); ?>" target="_blank"
+        <a href="<?php echo site_url('reports/roster'); ?>" target="_blank"
            class="btn btn-warning btn-flat btn-sm">
             <span class="fa fa-print"></span>
             <?php echo lang('print all'); ?>
         </a>
     </div>
 </div>
-<hr/>
+<br/>
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li role="presentation" class="active">
@@ -66,13 +66,18 @@
         </li>
         <li role="presentation">
             <a href="#groups" aria-controls="groups" role="tab" data-toggle="tab">
-                <i class="fa fa-group"></i> <?php echo lang('Child groups'); ?>
+                <i class="fa fa-users"></i> <?php echo lang('Child groups'); ?>
             </a>
         </li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="active">
+            <i class="fa fa-allergies text-danger"></i>
+            <?php echo lang('allergy'); ?> &nbsp; | &nbsp;
+            <i class="fa fa-pills text-danger"></i>
+            <?php echo lang('meds'); ?>
+            <hr/>
             <?php
             $this->db->where('status', 1);
             if($this->input->post('search')) {
@@ -84,17 +89,18 @@
             <?php if(!empty($activeChildren)): ?>
                 <div class="clearfix">
                     <?php foreach ($activeChildren as $row): ?>
-                        <?php if($this->child->is_checked_in($row->id)) continue; ?>
+                        <?php if($this->child->checkedIn($row->id)) continue; ?>
                         <div class="children-thumbs cursor">
                             <div class="children-thumb"
                                  onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
                                  style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
                                 <?php if($this->child->countAllergies($row->id)>0): ?>
-                                    <i class="fa fa-heart text-danger i-check-icons i-check-allergy"></i>
+                                    <i class="fa fa-allergies text-danger i-check-icons i-check-allergy"></i>
                                 <?php endif; ?>
                                 <?php if($this->child->countMeds($row->id)>0): ?>
-                                    <i class="fa fa-medkit text-danger i-check-icons i-check-med"></i>
+                                    <i class="fa fa-pills text-danger i-check-icons i-check-med"></i>
                                 <?php endif; ?>
+
                                 <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
                                     <i class="fa fa-lock text-danger pull-right fa-2x"></i>
                                 <?php endif; ?>
@@ -107,7 +113,7 @@
                                     <?php echo $row->last_name.', '.$row->first_name; ?>
                                 </a>
                             </div>
-                            <?php if($this->child->is_checked_in($row->id) == 1) : ?>
+                            <?php if($this->child->checkedIn($row->id) == 1) : ?>
                                 <a id="<?php echo $row->id; ?>" href="#"
                                    class="btn btn-danger btn-flat btn-sm child-check-out">
                                     <span class="fa fa-new-window"></span>
@@ -125,16 +131,20 @@
                     <div class="clearfix"></div>
                     <hr/>
                     <?php foreach ($activeChildren as $row): ?>
-                        <?php if(!$this->child->is_checked_in($row->id)) continue; ?>
+                        <?php if(!$this->child->checkedIn($row->id)) continue; ?>
                         <div class="children-thumbs cursor">
                             <div class="children-thumb"
                                  onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
                                  style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
+                                <span class="i-check-timer">
+                                    <?php echo $this->child->checkinCounter($row->id); ?>
+                                </span>
+
                                 <?php if($this->child->countAllergies($row->id)>0): ?>
-                                    <i class="fa fa-heart text-danger i-check-icons i-check-allergy"></i>
+                                    <i class="fa fa-allergies text-danger i-check-icons i-check-allergy"></i>
                                 <?php endif; ?>
                                 <?php if($this->child->countMeds($row->id)>0): ?>
-                                    <i class="fa fa-medkit text-danger i-check-icons i-check-med"></i>
+                                    <i class="fa fa-pills text-danger i-check-icons i-check-med"></i>
                                 <?php endif; ?>
                                 <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
                                     <i class="fa fa-lock text-danger pull-right fa-2x"></i>
@@ -148,7 +158,7 @@
                                     <?php echo $row->last_name.', '.$row->first_name; ?>
                                 </a>
                             </div>
-                            <?php if($this->child->is_checked_in($row->id) == 1) : ?>
+                            <?php if($this->child->checkedIn($row->id) == 1) : ?>
                                 <a id="<?php echo $row->id; ?>" href="#"
                                    class="btn btn-danger btn-flat btn-sm child-check-out">
                                     <span class="fa fa-new-window"></span>
@@ -235,7 +245,11 @@
     function getReport() {
         var d = $(".datepicker").datepicker('getDate');
         var datestring = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate());
-        window.open('<?php echo site_url('children/roster?daily&date='); ?>' + datestring);
+        window.open('<?php echo site_url('reports/roster?daily&date='); ?>' + datestring);
     }
+    setTimeout(function () {
+        window.location.reload();
+    },60000)
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>

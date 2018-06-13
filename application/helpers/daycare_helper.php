@@ -452,4 +452,17 @@ function valid_date($date, $format = 'Y-m-d')
 //    return $d && $d->format($format) === $date;
     return true;
 }
+
+/**
+ * @param $in
+ * @param $out
+ * @return string
+ */
+function checkinTimer($in,$out){
+    $start      = new DateTime($in);
+    $end        = new DateTime($out);
+    $timeDiff   = $end->diff($start);
+//    $strDiff    = $timeDiff->h . " Hours, " . $timeDiff->i . " Minutes";
+    return $timeDiff;
+}
 ?>

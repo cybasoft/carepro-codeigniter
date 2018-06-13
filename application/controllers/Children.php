@@ -40,27 +40,6 @@ class Children extends CI_Controller
         page($this->module.'register');
     }
 
-    function roster()
-    {
-        if(isset($_GET['group']) && $_GET['group']>0){
-            $this->db->select('*');
-            $this->db->where('child_group.group_id',$_GET['group']);
-            $this->db->from('children');
-            $this->db->join('child_group','child_group.child_id=children.id','left');
-            $children=$this->db->get()->result();
-        }else{
-            if(isset($_GET['inactive'])){
-                $this->db->where('status',0);
-            }
-            if(isset($_GET['active']) || isset($_GET['daily'])){
-                $this->db->where('status',1);
-            }
-            $children = $this->db->get('children')->result();
-        }
-
-        $this->load->view($this->module.'roster', compact('children'));
-    }
-
     function storeGroup()
     {
         allow('admin');

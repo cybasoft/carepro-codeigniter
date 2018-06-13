@@ -85,5 +85,5 @@
             <input class="form-control" id="birthplace" required="" type="text" name="birthplace" value=""/>
         </div>
     </div>
-    <button class="btn btn-primary"><?php echo lang('update'); ?></button>
+    <button class="btn btn-primary"><?php echo lang('submit'); ?></button>
 <?php echo form_close(); ?>

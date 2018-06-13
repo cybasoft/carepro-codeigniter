@@ -8,61 +8,46 @@
         </div>
     </div>
     <div class="box-body table-responsive">
-        <table class="table table-bordered parent-info">
-            <?php foreach ($pickups as $pickup) : ?>
+        <?php foreach ($pickups as $pickup) : ?>
+            <table class="table-bordered" style="width:220px;float:left;margin-right:10px;">
                 <tr>
-                    <td class="col-sm-4">
-                        <div data-toggle="modal" data-target="#new-pickup-photo">
-                            <?php if(is_file(APPPATH.'../assets/uploads/users/pickup/'.$pickup->photo)): ?>
-                                <img class="img-responsive img-thumbnail"
-                                     src="<?php echo base_url(); ?>assets/uploads/users/pickup/<?php echo $pickup->photo; ?>"/>
-                            <?php else: ?>
-                                <img class="img-responsive img-thumbnail" src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
-                            <?php endif; ?>
-                        </div>
+                    <td valign="top" style="position: relative;">
+                        <?php if(is_file(APPPATH.'../assets/uploads/users/pickup/'.$pickup->photo)): ?>
+                            <img  style="width:100px;height:120px"
+                                 src="<?php echo base_url(); ?>assets/uploads/users/pickup/<?php echo $pickup->photo; ?>"/>
+                        <?php else: ?>
+                            <img  style="width:100px;height:120px"
+                                 src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
+                        <?php endif; ?>
+                        <span style="position: absolute;top:0;left:0;background:#cc4868;padding:0 2px;color:#fff;font-size:12px">
+                        <span class="fa fa-lock"></span>
+                        <?php echo $pickup->pin; ?></span>
                     </td>
-                    <td>
-                        <h3 class="">
+                    <td valign="top">
+                        <strong class="">
                             <?php echo $pickup->last_name.', '.$pickup->first_name; ?>
-                            <?php if(!is('parent')): ?>
+                            <?php if(is('admin') || is('manager')): ?>
                                 <a href="<?php echo site_url('child/deletePickup/'.$pickup->id); ?>"
                                    class="delete">
-                                    <i class="fa fa-trash-o text-danger pull-right"></i>
+                                    <i class="fa fa-trash-alt text-danger pull-right"></i>
                                 </a>
                             <?php endif; ?>
-                        </h3>
-                        <h4><?php echo $pickup->relation; ?></h4>
-                        <table>
-                            <tr>
-                                <td>
-                                    <span class="fa fa-phone"></span>
-                                    <?php echo $pickup->cell; ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <span class="fa fa-phone"></span>
-                                    <?php echo $pickup->other_phone; ?>
-                                </td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td><span class="fa fa-envelope"> </span></td>
-                                <td>
-                                    <div class="parent-address"><?php echo $pickup->address; ?></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="fa fa-lock"></span></td>
-                                <td class="label label-danger"><?php echo $pickup->pin; ?></td>
-                            </tr>
-                        </table>
+                        </strong>
+                        <br/>
+                        <i><?php echo $pickup->relation; ?></i>
+                        <br/>
+                        <span class="fa fa-phone"></span>
+                        <?php echo $pickup->cell; ?>
+                        <br/>
+                        <span class="fa fa-phone"></span>
+                        <?php echo $pickup->other_phone; ?>
+                        <br/>
+                        <span class="fa fa-envelope"></span>
+                        <?php echo $pickup->address; ?>
                     </td>
                 </tr>
-            <?php endforeach; ?>
-        </table>
-
+            </table>
+        <?php endforeach; ?>
     </div>
 </div>
 <div class="modal fade" id="newPickupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

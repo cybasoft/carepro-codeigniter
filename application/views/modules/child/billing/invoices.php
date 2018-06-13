@@ -60,7 +60,7 @@
                                 <a href="#"
                                    onclick="confirmDelete('<?php echo site_url("invoice/{$invoice->id}/delete"); ?>')"
                                    class="delete">
-                                    <i class="fa fa-trash-o text-danger"></i>
+                                    <i class="fa fa-trash-alt text-danger"></i>
                                     <?php echo lang('delete'); ?>
                                 </a>
                             </li>

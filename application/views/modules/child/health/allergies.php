@@ -50,7 +50,7 @@
                         <?php if (!is('parent')): ?>
                             <a href="<?php echo site_url('child/deleteAllergy/' . $allergy->id); ?>"
                                class="delete pull-right">
-                                <span class="fa fa-trash-o cursor"></span>
+                                <span class="fa fa-trash-alt cursor"></span>
                             </a>
                         <?php endif; ?>
                     </div>

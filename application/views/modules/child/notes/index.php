@@ -66,7 +66,7 @@
                                 <?php if(!is('parent')): ?>
                                     <a class="pull-right delete "
                                        href="<?php echo site_url('child/deleteNote/'.$note->id); ?>">
-                                        <i class="fa fa-trash-o text-danger"></i></a>
+                                        <i class="fa fa-trash-alt text-danger"></i></a>
                                 <?php endif; ?>
                             </div>
                             <div class="box-body">
@@ -96,7 +96,7 @@
                                 <?php if(!is('parent')): ?>
                                     <a class="pull-right delete "
                                        href="<?php echo site_url('child/deleteIncident/'.$incident->id); ?>">
-                                        <i class="fa fa-trash-o text-danger"></i></a>
+                                        <i class="fa fa-trash-alt text-danger"></i></a>
                                 <?php endif; ?>
                             </div>
                             <div class="box-body">

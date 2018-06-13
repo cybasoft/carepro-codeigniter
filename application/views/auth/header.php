@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <title><?php echo $this->config->item('name', 'company'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
+    <meta name="description" content="DaycarePRO - Daycare management system">
     <meta name="author" content="A&M Digital Technologies">
     <link href="<?php echo base_url(); ?>assets/css/login.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet">

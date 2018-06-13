@@ -1,4 +1,4 @@
-<div class="row no-print child-nav  <?php echo ($this->child->is_checked_in($child->id) == 1) ? 'child-checked-in' : 'child-checked-out'; ?> ">
+<div class="row no-print child-nav  <?php echo ($this->child->checkedIn($child->id) == 1) ? 'child-checked-in' : 'child-checked-out'; ?> ">
     <div class="col-sm-3" style="font-size:22px;font-weight:bold;color: #932ab6 ;">
         <?php echo $child->last_name . ', ' . $child->first_name; ?>
     </div>

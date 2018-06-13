@@ -3,9 +3,9 @@
         <tr>
             <td class="col-sm-2">
                 <div>
-                    <?php if (is_file(APPPATH.'../assets/uploads/users/staff/'.$this->user->user($u->user_id)->photo)) : ?>
+                    <?php if(is_file(APPPATH.'../assets/uploads/users/staff/'.$this->user->user($u->user_id)->photo)) : ?>
                         <img class="img-circle img-responsive img-thumbnail"
-                             src="<?php echo base_url() . 'assets/uploads/users/staff/' . $this->user->user($u->user_id)->photo; ?>"/>
+                             src="<?php echo base_url().'assets/uploads/users/staff/'.$this->user->user($u->user_id)->photo; ?>"/>
                     <?php else : ?>
                         <img class="img-circle img-responsive img-thumbnail"
                              src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
@@ -14,7 +14,9 @@
             </td>
             <td>
                 <span class="label-text parent-name">
-                    <?php echo $u->last_name; ?>, <?php echo $u->first_name; ?>
+                    <a href="<?php echo site_url('user/'.$u->id); ?>">
+                        <?php echo $u->last_name.' '.$u->first_name; ?>
+                    </a>
                 </span>
                 <hr/>
                 <table>
@@ -26,7 +28,7 @@
                     </tr>
                 </table>
                 <table>
-                    <?php if (!empty($this->user->user($u->user_id)->address)): ?>
+                    <?php if(!empty($this->user->user($u->user_id)->address)): ?>
                         <tr>
                             <td><span class="fa fa-envelope"> </span></td>
                             <td>
@@ -44,12 +46,12 @@
                     </tr>
                 </table>
                 <?php if(!is('parent')): ?>
-                <hr/>
-                <a href="<?php echo site_url('child/' . $child->id . '/' . $u->id); ?>/removeParent"
-                   class="btn btn-danger btn-sm pull-right delete">
-                    <span class="fa fa-trash-o"></span>
-                    <?php echo lang('remove'); ?>
-                </a>
+                    <hr/>
+                    <a href="<?php echo site_url('child/'.$child->id.'/'.$u->id); ?>/removeParent"
+                       class="btn btn-danger btn-sm pull-right delete">
+                        <span class="fa fa-trash-alt"></span>
+                        <?php echo lang('remove'); ?>
+                    </a>
                 <?php endif; ?>
             </td>
         </tr>
@@ -59,6 +61,6 @@
 <script type="text/javascript">
     $('.assign-user').hide();
     $('.assign-user-btn').click(function () {
-        $('.assign-user').toggle().load('<?php echo site_url('child/' . $child->id . '/assignParent'); ?>');
+        $('.assign-user').toggle().load('<?php echo site_url('child/'.$child->id.'/assignParent'); ?>');
     });
 </script>
