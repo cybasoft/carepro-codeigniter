@@ -433,7 +433,7 @@ function moneyFormat($amount)
     return config_item('company')['currency_symbol'].number_format($amount, 2);
 }
 function authorizedToChild($staff_id,$child_id){
-    if(is('admin'))
+    if(is('admin') || is('manager'))
         return true;
     $ci = &get_instance();
     $res = $ci->db

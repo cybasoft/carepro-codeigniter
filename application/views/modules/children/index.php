@@ -95,6 +95,9 @@
                                 <?php if($this->child->countMeds($row->id)>0): ?>
                                     <i class="fa fa-medkit text-danger i-check-icons i-check-med"></i>
                                 <?php endif; ?>
+                                <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
+                                    <i class="fa fa-lock text-danger pull-right fa-2x"></i>
+                                <?php endif; ?>
                                 <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
                                 <span class="child-id">ID:
                                     <?php echo decrypt($row->national_id); ?></span>
@@ -116,9 +119,6 @@
                                     <span class="fa fa-check"></span>
                                     <?php echo lang('check_in').' &nbsp; '; ?>
                                 </a>
-                            <?php endif; ?>
-                            <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
-                                <i class="fa fa-lock text-danger pull-right fa-2x"></i>
                             <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
@@ -136,7 +136,9 @@
                                 <?php if($this->child->countMeds($row->id)>0): ?>
                                     <i class="fa fa-medkit text-danger i-check-icons i-check-med"></i>
                                 <?php endif; ?>
-
+                                <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
+                                    <i class="fa fa-lock text-danger pull-right fa-2x"></i>
+                                <?php endif; ?>
                                 <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
                                 <span class="child-id">ID:
                                     <?php echo decrypt($row->national_id); ?></span>
@@ -159,10 +161,6 @@
                                     <?php echo lang('check_in').' &nbsp; '; ?>
                                 </a>
                             <?php endif; ?>
-                            <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
-                                <i class="fa fa-lock text-danger pull-right fa-2x"></i>
-                            <?php endif; ?>
-
                         </div>
                     <?php endforeach; ?>
 

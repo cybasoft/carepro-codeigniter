@@ -130,6 +130,10 @@ class MY_user extends CI_Model
         return $this->session->userdata('user_id');
     }
 
+    /**
+     * @param $item
+     * @return string
+     */
     function thisUser($item)
     {
         /*registered session data on login
@@ -137,7 +141,12 @@ class MY_user extends CI_Model
         - username
         - status
          */
-        return $this->session->userdata($item);
+        $this->db->select('id,first_name,last_name,email');
+        $this->db->where('id',$this->uid());
+        $res= $this->db->get('users')->row();
+        if(count($res)>0)
+            return $res->$item;
+        return "";
     }
 
     /*
