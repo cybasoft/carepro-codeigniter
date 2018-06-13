@@ -41,7 +41,9 @@
                             <img src="<?php echo base_url().'assets/img/'.$this->config->item('logo', 'company'); ?>"/>
                         <?php endif; ?>
                     </a>
-                    <img class="hidden-md hidden-lg pull-left" style="height:40px;width:40px;margin-top: 5px;margin-left: 5px;" src="<?php echo base_url().'assets/img/thumb.png'; ?>"/>
+                    <img class="hidden-md hidden-lg pull-left"
+                         style="height:40px;width:40px;margin-top: 5px;margin-left: 5px;"
+                         src="<?php echo base_url().'assets/img/thumb.png'; ?>"/>
                 </li>
 
                 <li class="<?php echo set_active('dashboard'); ?>">
@@ -109,13 +111,13 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <?php $this->user->getPhoto(NULL, 'style="width:20px" class="img-circle"'); ?>
+                        <img src="<?php echo $this->user->getPhoto(null); ?>" style="width:20px" class="img-circle"/>
                         <span class="hidden-xs hidden-sm"><?php echo $this->user->user()->last_name; ?>
                             <i class="caret"></i></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header bg-light-blue">
-                            <?php $this->user->getPhoto(NULL, 'class="img-circle"'); ?>
+                            <img src="<?php echo $this->user->getPhoto(NULL); ?>" class="img-circle"/>
                         </li>
 
                         <li class="user-footer">

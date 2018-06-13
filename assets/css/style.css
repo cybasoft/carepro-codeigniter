@@ -833,7 +833,6 @@ body > .header .navbar .nav > li > a:hover > .label {
 body > .header .logo {
     float: left;
     font-size: 20px;
-    line-height: 50px;
     text-align: center;
     padding: 0 10px;
     width: 220px;
@@ -2311,7 +2310,7 @@ body > .header .logo .icon {
 }
 
 .logo img {
-    max-width: 200px !important;
+    height: 100%;
 }
 
 .child-nav {
@@ -2319,14 +2318,15 @@ body > .header .logo .icon {
     padding: 10px;
     margin-top: -10px;
 }
-.child-nav span{
-    font-weight:bold;
-    color:#333;
+
+.child-nav span {
+    font-weight: bold;
+    color: #333;
 }
 
 .child-checked-in {
     background: #1aaf71;
-    color:#fff;
+    color: #fff;
 }
 
 .child-checked-out {
@@ -3472,11 +3472,13 @@ Photo albums
         margin: 2.5px;
     }
 }
-.active-group{
-    font-weight:bold;
+
+.active-group {
+    font-weight: bold;
     color: #1974cc;
 }
-.arrow-right{
+
+.arrow-right {
     width: 0;
     height: 0;
     border-top: 15px solid transparent;
@@ -3485,4 +3487,185 @@ Photo albums
     float: right;
     margin-top: -40px;
     margin-right: -10px;
+}
+
+.children-thumbs {
+    border: solid 1px #1974cc;
+    float: left;
+    margin-right: 5px;
+    /*padding: 2px;*/
+    position: relative;
+}
+
+.children-thumb {
+    width: 120px;
+    height: 120px;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+.children-thumbs h4 {
+    font-size: 14px;
+    margin-left: 2px;
+}
+
+.children-thumb span {
+    font-size: 11px;
+    background: #7d7d7d;
+    padding: 1px;
+    position: absolute;
+    opacity: 0.9;
+    border-radius: 0 3px 3px 0;
+}
+
+.children-thumb .child-id {
+    color: #fff !important;
+    bottom: 0;
+}
+
+.children-thumb .child-dob {
+    color: #CDDC39 !important;
+    bottom: 18px;
+}
+
+.children-thumbs .btn {
+    width: 100%;
+}
+
+.child-info a {
+    font-size: 14px;
+    margin-left: 2px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: #9C27B0;
+    font-family: cursive;
+    font-weight: bold
+}
+
+.i-check {
+    width: 100%;
+    text-align: center
+}
+
+.i-check h1 {
+    font-family: Dax, sans-serif;
+    color: #fff
+}
+
+.i-check input[type=radio] {
+    display: none
+}
+
+.i-check input[type=radio]:checked + .i-check-box {
+    background-color: #007e90
+}
+
+.i-check input[type=radio]:checked + .i-check-box span {
+    color: #cc4868;
+    transform: translateY(30px);
+    font-size: 12px;
+}
+
+.i-check input[type=radio]:checked + .i-check-box {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.i-check input[type=radio]:checked + .i-check-box span:before {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.i-check .i-check-box {
+    width: 140px;
+    height: 140px;
+    border: solid 1px #ccc;
+    background-color: #53cc8e;
+    transition: all 250ms ease;
+    will-change: transition;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    font-family: Dax, sans-serif;
+    font-weight: normal;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center;
+}
+
+.i-check .i-check-box:active {
+    /*transform: translateY(10px)*/
+
+}
+
+.i-check .i-check-box span {
+    position: absolute;
+    /*transform: translate(0, 60px);*/
+    left: 0;
+    right: 0;
+    transition: all 300ms ease;
+    font-size: 1.5em;
+    user-select: none;
+    color: #4f5559;
+}
+
+.i-check .box span:before {
+    font-size: 1.2em;
+    font-family: FontAwesome;
+    display: block;
+    transform: translateY(-80px);
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+    font-weight: normal;
+    color: #1974cc
+}
+
+.i-check .front-end span:before {
+    /*content: '\f217'*/
+}
+
+.i-check .back-end span:before {
+    /*content: '\f217'*/
+}
+
+.i-check p {
+    color: #fff;
+    font-weight: normal;
+}
+
+.i-check em {
+    font-size: 17px;
+    color: #ea8544
+}
+
+.i-check-phone {
+    bottom: 0;
+    background: #4f5559;
+    font-size: 10px !important;
+    color: #fff !important;
+}
+
+.i-check-pin {
+    background: #4f5559;
+    font-size: 10px !important;
+    color: #fff !important;
+    bottom: 16px;
+}
+.i-check-name{
+    text-shadow: #fff 1px 1px
+}
+.i-check-icons{
+    position: absolute;
+    bottom: -65px;
+}
+.i-check-allergy{
+    left:0;
+}
+.i-check-med{
+    left:20px;
 }

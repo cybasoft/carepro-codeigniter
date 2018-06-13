@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * User: John Muchiri
@@ -29,7 +29,7 @@ class MY_user extends CI_Model
         $this->load->model('ion_auth_model');
         $this->ion_auth->trigger_events('pre_register');
         $manual_activation = $this->config->item('manual_activation', 'ion_auth');
-        if ($this->ion_auth->email_check($email)) {
+        if($this->ion_auth->email_check($email)) {
             $this->ion_auth->set_error('account_creation_duplicate_email');
             return FALSE;
         }
@@ -54,7 +54,7 @@ class MY_user extends CI_Model
         $this->db->insert('users', $userData);
         $id = $this->db->insert_id();
 
-        if (!empty($groups)) {
+        if(!empty($groups)) {
             //add to groups
             foreach ($groups as $group) {
                 $this->ion_auth->add_to_group($group, $id);
@@ -62,7 +62,7 @@ class MY_user extends CI_Model
         }
         //add to default group if not already set
         $default_group = $this->ion_auth->where('name', $this->config->item('default_reg_group', 'ion_auth'))->group()->row();
-        if ((isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups))) {
+        if((isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups))) {
             $this->ion_auth->add_to_group($default_group->id, $id);
         }
         $this->ion_auth->trigger_events('post_register');
@@ -81,7 +81,7 @@ class MY_user extends CI_Model
             'phone2' => $this->input->post('phone2'),
             'address' => $this->input->post('address')
         );
-        if ($this->db->where('id', $id)->update('users', $data))
+        if($this->db->where('id', $id)->update('users', $data))
             return true;
         return false;
     }
@@ -95,13 +95,13 @@ class MY_user extends CI_Model
 
     function user($id = null)
     {
-        if ($id == null) {
+        if($id == null) {
             $uid = $this->uid();
         } else {
             $uid = $id;
         }
         $query = $this->db->where('id', $uid)->get('users');
-        if ($query->num_rows() > 0) {
+        if($query->num_rows()>0) {
             return $query->row();
         }
         return false;
@@ -120,7 +120,7 @@ class MY_user extends CI_Model
         $this->db->where('users_groups.user_id', $user);
         $this->db->from('users_groups');
         $this->db->join('groups', 'users_groups.group_id=groups.id');
-        if ($this->db->get()->num_rows() > 0)
+        if($this->db->get()->num_rows()>0)
             return true;
         return false;
     }
@@ -145,17 +145,17 @@ class MY_user extends CI_Model
      * @param string, int
      * @return string, int
      */
-    function get($id=null)
+    function get($id = null)
     {
-        if($id==null)
-            $id=$this->uid();
-        return $this->db->where('id',$id)->get('users')->row();
+        if($id == null)
+            $id = $this->uid();
+        return $this->db->where('id', $id)->get('users')->row();
     }
 
 
     function getUser($id = "", $item)
     {
-        if ($id !== "") {
+        if($id !== "") {
             $this->db->where('id', $id);
             $q = $this->db->get('users');
             foreach ($q->result() as $row) {
@@ -174,21 +174,18 @@ class MY_user extends CI_Model
     /*
      * get photo of user
      */
-    function getPhoto($uid = NULL, $attr = '')
+    function getPhoto($uid = NULL)
     {
-        if (empty($uid)) {
+        if(empty($uid)) {
             $id = $this->uid();
         } else {
             $id = $uid;
         }
         $user = $this->db->where('id', $id)->get('users')->row();
-        if (!empty($user->photo)) {
-            echo '<img ' . $attr . '
-         src="' . base_url() . 'assets/uploads/users/staff/' . $user->photo . '"/>';
+        if(!empty($user->photo)) {
+            return base_url().'assets/uploads/users/staff/'.$user->photo;
         } else {
-            echo '<img ' . $attr . '
-         src="' . base_url() . 'assets/img/content/no-image.png"/>';
+            return base_url().'assets/img/content/no-image.png';
         }
-
     }
 }

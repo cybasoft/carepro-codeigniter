@@ -3,10 +3,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only"><?php echo lang('close'); ?></span></button>
+                            class="sr-only"><?php echo lang('close'); ?></span></button>
                 <h2 class="modal-title" id="myModalLabel"><?php echo lang('check_out'); ?></h2>
             </div>
-            <?php echo form_open('child/' . $child_id . '/checkOut'); ?>
+            <?php echo form_open('child/'.$child_id.'/checkOut'); ?>
 
             <div class="modal-body">
                 <div class="alert alert-warning text-left"><?php echo lang('check_in_out_notice'); ?></div>
@@ -19,37 +19,42 @@
                     <?php endif; ?>
 
                     <?php foreach ($parents as $p): ?>
-                        <div class="col-sm-3 text-center" style="border-right:solid 1px #ccc;">
-                            <input type="radio" name="out_guardian"
-                                   value="<?php echo $p->first_name . ' ' . $p->last_name; ?>"
-                                   style="width:30px;height:30px"/>
-                            <br/>
-                            <?php $this->user->getPhoto($p->user_id, 'style="width:100px"'); ?>
-                            <br/>
-                            <?php echo $p->first_name . ' ' . $p->last_name; ?>
-                            <br/>
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <?php echo $p->phone; ?> <br/>
-                            <i class="fa fa-key" aria-hidden="true"></i>
-                            <?php echo $p->pin; ?>
+                        <div class="col-md-3">
+                            <div class=" i-check">
+                                <label for="check-<?php echo $p->id; ?>">
+                                    <input type="radio" id="check-<?php echo $p->id; ?>" name="out_guardian"
+                                           value="<?php echo $p->first_name.' '.$p->last_name; ?>"
+                                           data-keeper-edited="yes" data-keeper-should-not-overwrite="true">
+                                    <div class="front-end i-check-box"
+                                         style="background-image:url('<?php echo $this->user->getPhoto($p->user_id); ?>')">
+                                        <span class="i-check-name"><?php echo $p->first_name.' '.$p->last_name; ?></span>
+                                        <br/>
+                                        <span class="i-check-pin"><i class="fa fa-lock"></i> <?php echo $p->pin; ?></span>
+                                        <br/>
+                                        <span class="i-check-phone"><i class="fa fa-phone"></i> <?php echo $p->phone; ?></span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                     <?php endforeach; ?>
 
                     <?php foreach ($authPickups as $p): ?>
-                        <div class="col-sm-3 text-center" style="border-right:solid 1px #ccc;">
-                            <input type="radio" name="out_guardian"
-                                   value="<?php echo $p->first_name . ' ' . $p->last_name; ?>"
-                                   style="width:30px;height:30px"/>
-                            <br/>
-                            <img style="width:100px;"
-                                 src="<?php echo base_url() . 'assets/uploads/users/pickup/' . $p->photo; ?>"/>
-                            <br/>
-                            <?php echo $p->first_name . ' ' . $p->last_name; ?>
-                            <br/>
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <?php echo $p->cell; ?> <br/>
-                            <i class="fa fa-key" aria-hidden="true"></i>
-                            <?php echo $p->pin; ?>
+                        <div class="col-md-3">
+                            <div class="i-check">
+                                <label for="check-<?php echo $p->id; ?>">
+                                    <input type="radio" id="check-<?php echo $p->id; ?>" name="out_guardian"
+                                           value="<?php echo $p->first_name.' '.$p->last_name; ?>"
+                                           data-keeper-edited="yes" data-keeper-should-not-overwrite="true">
+                                    <div class="front-end i-check-box"
+                                         style="background-image: url('<?php echo base_url().'assets/uploads/users/pickup/'.$p->photo; ?>');">
+                                        <span class="i-check-name"><?php echo $p->first_name.' '.$p->last_name; ?></span>
+                                        <br/>
+                                        <span class="i-check-pin"><i class="fa fa-lock"></i> <?php echo $p->pin; ?></span>
+                                        <br/>
+                                        <span class="i-check-phone"><i class="fa fa-phone"></i> <?php echo $p->cell; ?></span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>

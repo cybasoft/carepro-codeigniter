@@ -378,4 +378,14 @@ class My_child extends CI_Model
             return true;
         }
     }
+    function countAllergies($id){
+        $this->db->where('child_id',$id);
+        $this->db->from('child_allergy');
+        return $this->db->count_all_results();
+    }
+    function countMeds($id){
+        $this->db->where('child_id',$id);
+        $this->db->from('child_meds');
+        return $this->db->count_all_results();
+    }
 }

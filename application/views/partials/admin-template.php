@@ -101,7 +101,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header bg-light-blue">
-                            <?php $this->user->getPhoto(NULL, 'class="img-circle"'); ?>
+                            <img src="<?php echo $this->user->getPhoto(NULL); ?>" class="img-circle"/>
                             <p>
                             </p>
                         </li>
@@ -133,7 +133,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <?php $this->user->getPhoto(NULL, 'class="img-circle"'); ?>
+                    <img src="<?php echo $this->user->getPhoto(NULL); ?>" class="img-circle"/>
                 </div>
                 <div class="pull-left info">
                     <p><?php echo lang('hello'); ?>, <?php echo $this->user->thisUser('first_name'); ?></p>

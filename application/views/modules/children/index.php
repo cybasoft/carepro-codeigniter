@@ -15,7 +15,8 @@
 
         <div style="width:200px">
             <div class="input-group date">
-                <input data-provide="datepicker" data-date="<?php echo date('m/d/Y'); ?>" type="text" class="form-control datepicker" value="<?php echo date('m/d/Y'); ?>">
+                <input data-provide="datepicker" data-date="<?php echo date('m/d/Y'); ?>" type="text"
+                       class="form-control datepicker" value="<?php echo date('m/d/Y'); ?>">
                 <div class="input-group-addon">
                     <a target="_blank" class="" onclick="getReport()">
                         <span class="fa fa-print"></span>
@@ -73,74 +74,109 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="active">
             <?php
+            $this->db->where('status', 1);
             if($this->input->post('search')) {
                 $this->db->like('last_name', $this->input->post('search'));
                 $this->db->or_like('first_name', $this->input->post('search'));
             }
-            $this->db->where('status', 1);
             $activeChildren = $this->db->get('children')->result();
             ?>
-            <div class="row">
-                <?php if(!empty($activeChildren)): ?>
+            <?php if(!empty($activeChildren)): ?>
+                <div class="clearfix">
                     <?php foreach ($activeChildren as $row): ?>
-                        <div class="col-sm-4">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td class="cursor"
-                                        onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'">
-                                        <?php
-                                        if($row->photo !== "") {
-                                            echo '<img class=""
-         src="'.base_url().'assets/uploads/users/children/'.$row->photo.'" style="width: 120px; height:120px"/>';
-                                        } else {
-                                            echo '<img class="img-circle"
-         src="'.base_url().'assets/img/content/no-image.png" style="width: 120px; height:120px"/>';
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            <a href="<?php echo site_url('/child/'.$row->id); ?>">
-                                                <?php echo $row->last_name.', '.$row->first_name; ?>
-                                            </a>
-                                        </h4>
-                                        ID:
-                                        <?php echo decrypt($row->national_id); ?>
-                                        <br/>
-                                        <?php echo lang('birthday'); ?>:
-                                        <?php echo format_date($row->bday, false); ?> <br/>
-
-                                        <hr/>
-                                        <?php if($this->child->is_checked_in($row->id) == 1) : ?>
-                                            <a id="<?php echo $row->id; ?>" href="#"
-                                               class="btn btn-danger btn-flat btn-sm child-check-out">
-                                                <span class="fa fa-new-window"></span>
-                                                <?php echo lang('check_out'); ?>
-                                            </a>
-                                        <?php else : ?>
-                                            <a id="<?php echo $row->id; ?>" href="#"
-                                               class="btn btn-primary btn-flat btn-sm child-check-in">
-                                                <span class="fa fa-check"></span>
-                                                <?php echo lang('check_in').' &nbsp; '; ?>
-                                            </a>
-                                        <?php endif; ?>
-                                        <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
-                                            <i class="fa fa-lock text-danger pull-right fa-2x"></i>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                            </table>
+                        <?php if($this->child->is_checked_in($row->id)) continue; ?>
+                        <div class="children-thumbs cursor">
+                            <div class="children-thumb"
+                                 onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
+                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
+                                <?php if($this->child->countAllergies($row->id)>0): ?>
+                                    <i class="fa fa-heart text-danger i-check-icons i-check-allergy"></i>
+                                <?php endif; ?>
+                                <?php if($this->child->countMeds($row->id)>0): ?>
+                                    <i class="fa fa-medkit text-danger i-check-icons i-check-med"></i>
+                                <?php endif; ?>
+                                <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
+                                <span class="child-id">ID:
+                                    <?php echo decrypt($row->national_id); ?></span>
+                            </div>
+                            <div class="child-info">
+                                <a href="<?php echo site_url('/child/'.$row->id); ?>">
+                                    <?php echo $row->last_name.', '.$row->first_name; ?>
+                                </a>
+                            </div>
+                            <?php if($this->child->is_checked_in($row->id) == 1) : ?>
+                                <a id="<?php echo $row->id; ?>" href="#"
+                                   class="btn btn-danger btn-flat btn-sm child-check-out">
+                                    <span class="fa fa-new-window"></span>
+                                    <?php echo lang('check_out'); ?>
+                                </a>
+                            <?php else : ?>
+                                <a id="<?php echo $row->id; ?>" href="#"
+                                   class="btn btn-primary btn-flat btn-sm child-check-in">
+                                    <span class="fa fa-check"></span>
+                                    <?php echo lang('check_in').' &nbsp; '; ?>
+                                </a>
+                            <?php endif; ?>
+                            <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
+                                <i class="fa fa-lock text-danger pull-right fa-2x"></i>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <a href="<?php echo site_url('children'); ?>" class="btn btn-primary"><i
-                                class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
+                    <div class="clearfix"></div>
                     <hr/>
-                    <div class="alert alert-danger">
-                        <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
-                <?php endif; ?>
-            </div>
+                    <?php foreach ($activeChildren as $row): ?>
+                        <?php if(!$this->child->is_checked_in($row->id)) continue; ?>
+                        <div class="children-thumbs cursor">
+                            <div class="children-thumb"
+                                 onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
+                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
+                                <?php if($this->child->countAllergies($row->id)>0): ?>
+                                    <i class="fa fa-heart text-danger i-check-icons i-check-allergy"></i>
+                                <?php endif; ?>
+                                <?php if($this->child->countMeds($row->id)>0): ?>
+                                    <i class="fa fa-medkit text-danger i-check-icons i-check-med"></i>
+                                <?php endif; ?>
+
+                                <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
+                                <span class="child-id">ID:
+                                    <?php echo decrypt($row->national_id); ?></span>
+                            </div>
+                            <div class="child-info">
+                                <a href="<?php echo site_url('/child/'.$row->id); ?>">
+                                    <?php echo $row->last_name.', '.$row->first_name; ?>
+                                </a>
+                            </div>
+                            <?php if($this->child->is_checked_in($row->id) == 1) : ?>
+                                <a id="<?php echo $row->id; ?>" href="#"
+                                   class="btn btn-danger btn-flat btn-sm child-check-out">
+                                    <span class="fa fa-new-window"></span>
+                                    <?php echo lang('check_out'); ?>
+                                </a>
+                            <?php else : ?>
+                                <a id="<?php echo $row->id; ?>" href="#"
+                                   class="btn btn-primary btn-flat btn-sm child-check-in">
+                                    <span class="fa fa-check"></span>
+                                    <?php echo lang('check_in').' &nbsp; '; ?>
+                                </a>
+                            <?php endif; ?>
+                            <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
+                                <i class="fa fa-lock text-danger pull-right fa-2x"></i>
+                            <?php endif; ?>
+
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
+            <?php else: ?>
+                <a href="<?php echo site_url('children'); ?>" class="btn btn-primary"><i
+                            class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
+                <hr/>
+                <div class="alert alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
+            <?php endif; ?>
+            <div class="clearfix"><br/></div>
         </div>
+
         <div role="tabpanel" class="tab-pane fade" id="inactive">
             <?php
             if($this->input->post('search')) {
@@ -150,48 +186,32 @@
             $this->db->where('status', 0);
             $inactiveChildren = $this->db->get('children')->result();
             ?>
-            <div class="row">
-                <?php if(!empty($inactiveChildren)): ?>
+            <?php if(!empty($inactiveChildren)): ?>
+                <div class="clearfix">
                     <?php foreach ($inactiveChildren as $row): ?>
-                        <div class="col-sm-4">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td class="cursor"
-                                        onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'">
-                                        <?php
-                                        if($row->photo !== "") {
-                                            echo '<img class=""
-         src="'.base_url().'assets/uploads/users/children/'.$row->photo.'" style="width: 120px; height:120px"/>';
-                                        } else {
-                                            echo '<img class="img-circle"
-         src="'.base_url().'assets/img/content/no-image.png" style="width: 120px; height:120px"/>';
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <h4>
-                                            <a href="<?php echo site_url('/child/'.$row->id); ?>">
-                                                <?php echo $row->last_name.', '.$row->first_name; ?>
-                                            </a>
-                                        </h4>
-                                        ID:
-                                        <?php echo decrypt($row->national_id); ?>
-                                        <br/>
-                                        <?php echo lang('birthday'); ?>:
-                                        <?php echo format_date($row->bday, false); ?> <br/>
-                                    </td>
-                                </tr>
-                            </table>
+                        <div class="children-thumbs cursor">
+                            <div class="children-thumb"
+                                 onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
+                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
+                                <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
+                                <span class="child-id">ID:
+                                    <?php echo decrypt($row->national_id); ?></span>
+                            </div>
+                            <div class="child-info">
+                                <a href="<?php echo site_url('/child/'.$row->id); ?>">
+                                    <?php echo $row->last_name.', '.$row->first_name; ?>
+                                </a>
+                            </div>
                         </div>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <a href="<?php echo site_url('children'); ?>" class="btn btn-primary"><i
-                                class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
-                    <hr/>
-                    <div class="alert alert-danger">
-                        <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php else: ?>
+                <a href="<?php echo site_url('children'); ?>" class="btn btn-primary"><i
+                            class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
+                <hr/>
+                <div class="alert alert-danger">
+                    <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
+            <?php endif; ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="register">
             <?php $this->load->view('modules/children/register'); ?>
@@ -201,7 +221,6 @@
         </div>
     </div>
 </div>
-<hr/>
 
 <div class="my_modal"></div>
 
@@ -214,10 +233,11 @@
         var child_id = $(this).attr('id');
         $('.my_modal').load('<?php echo site_url('child'); ?>/' + child_id + '/checkOut').modal();
     });
+
     function getReport() {
-        var d = $(".datepicker").datepicker( 'getDate');
-        var datestring = d.getFullYear()  + "-" + (d.getMonth()+1) + "-" + (d.getDate());
-        window.open('<?php echo site_url('children/roster?daily&date='); ?>'+datestring);
+        var d = $(".datepicker").datepicker('getDate');
+        var datestring = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate());
+        window.open('<?php echo site_url('children/roster?daily&date='); ?>' + datestring);
     }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
