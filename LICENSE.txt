@@ -1,0 +1,9 @@
+REGULAR LICENSE
+Regular License is to be used by you or one client, in a single
+end product which end users are not charged for.
+This license includes 6 months of support.
+
+EXTENDEND LICENSE
+For Extended License, please contact us. This license allows you to
+use the product for a single installation in an end product that you may charge the end users.
+This license includes 6 months of support.
