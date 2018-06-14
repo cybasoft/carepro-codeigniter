@@ -25,7 +25,7 @@ class Dashboard extends CI_Controller
 
     function lockscreen()
     {
-        $this->setTimer(1);
+        $this->conf->setTimer(1);
         if (auth(true)) {
             //check cookie
             $this->load->view('dashboard/lockscreen');
@@ -41,38 +41,22 @@ class Dashboard extends CI_Controller
             $this->db->where('id', $this->user->uid());
             $this->db->where('pin', $pin);
             if ($this->db->get('users')->num_rows() > 0) {
-                $msg = '';
+                $msg = lang('Welcome back');
                 $status='success';
-                $this->setTimer(0);
+                $this->conf->setTimer(0);
             } else {
-                $this->setTimer($this->getTimer());
+                $this->conf->setTimer(1);
                 $msg=lang('Invalid pin!');
                 $status='error';
             }
         } else {
-            validation_errors();
+
             $msg=strip_tags(trim(validation_errors()));
             $status='error';
         }
-        echo json_encode(['message'=>$msg,'status'=>$status]);
+        $status = strip_tags($status);
+        $msg = strip_tags($msg);
+       flash($status,$msg);
     }
 
-    //lockscreen timer
-    function setTimer($time = 1)
-    {
-        $cookie = array(
-            'name' => 'timer',
-            'value' => $time,
-            'expire' => '86500',
-            'path' => '/',
-            'secure' => TRUE
-        );
-        $this->input->set_cookie($cookie);
-
-    }
-
-    function getTimer()
-    {
-        $this->input->cookie('timer');
-    }
 }

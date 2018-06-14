@@ -82,4 +82,23 @@ class Conf extends CI_Model
         }
     }
 
+    //lockscreen timer
+    function setTimer($time = 1)
+    {
+        $cookie = array(
+            'name' => 'timer',
+            'value' => $time,
+            'expire' => '86500',
+            'path' => '/',
+            'secure' => TRUE
+        );
+        $this->input->set_cookie($cookie);
+
+    }
+
+    function getTimer()
+    {
+        $this->input->cookie('timer');
+    }
+
 }

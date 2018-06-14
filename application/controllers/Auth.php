@@ -13,6 +13,7 @@ class Auth extends CI_Controller
         $this->load->model('ion_auth_model', 'auth');
         $this->lang->load('auth');
         $this->load->helper('language');
+        $this->conf->setTimer(0);
     }
 
     function index()
@@ -374,7 +375,7 @@ class Auth extends CI_Controller
 
         //log the user out
         $this->ion_auth->logout();
-
+        $this->conf->setTimer(0);
         //redirect them to the login page
         redirect('login', 'refresh');
     }

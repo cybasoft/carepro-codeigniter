@@ -127,7 +127,7 @@ $lang['search_by'] = 'Search by';
 $lang['family'] = 'Family';
 
 //settings
-$lang['settings_notice'] = 'To change site settings, make changes to files in: <code>/application/config/config.php</code> 
+$lang['settings_notice'] = 'To change site settings, make changes to files in: <code>/application/config/config.php</code>
 ';
 $lang['settings'] = 'Settings';
 $lang['company'] = 'Company';
@@ -454,3 +454,5 @@ $lang['minutes']='Minues';
 $lang['hrs']='Hrs';
 $lang['mins']='Mins';
 $lang['now']='Now';
+$lang['Pin entered is incorrect']='Pin entered is incorrect';
+$lang['Welcome back']='Welcome back';

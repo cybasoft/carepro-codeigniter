@@ -286,15 +286,13 @@
             ]
         });
     });
-    $('document').ready(function () {
-        //lockscreen
-        $('.lock-screen').click(function () {
-            startLockscreen();
-        });
-        setTimeout(function () {
-            startLockscreen()
-        }, 900000);
+    //lockscreen
+    $('.lock-screen').click(function () {
+        startLockscreen();
     });
+    setTimeout(function () {
+        startLockscreen()
+    }, 900000);
 
     function startLockscreen() {
         $('body').load('<?php echo site_url('lockscreen'); ?>');
@@ -302,7 +300,7 @@
     }
 </script>
 <?php if($this->input->cookie('timer')>0): ?>
-    <script>window.onload = startLockscreen()</script>
+    <script>startLockscreen()</script>
 <?php endif; ?>
 </body>
 </html>

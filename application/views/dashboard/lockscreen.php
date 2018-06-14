@@ -15,7 +15,7 @@
             <img src="<?php echo $this->user->getPhoto(); ?>"/>
         </div>
         <div class="lockscreen-credentials">
-            <?php echo form_open('dashboard/login'); ?>
+            <?php echo form_open(uri_string()); ?>
             <div class="input-group">
                 <input type="password" class="form-control" name="pin" placeholder="pin"/>
                 <div class="input-group-btn">
@@ -41,21 +41,14 @@
         $('.lockscreen-credentials').find('form').on('submit', function (e) {
             e.preventDefault();
             $.ajax({
-                url: '<?php echo site_url('dashboard/login'); ?>',
+                url: 'dashboard/login',
+                type: 'post',
                 data: $(this).serialize(),
-                type: 'POST',
-                success: function (response) {
-                    var res = JSON.parse(response);
-                    swal({
-                        text:res.message,
-                        type:res.status
-                    })
-                    if(res.status==="success"){
-                        window.location.reload();
-                    }
+                success: function( res, textStatus, jQxhr ){
+                   window.location.reload();
                 },
-                error: function (error) {
-                    console.log(error);
+                error: function( jqXhr, textStatus, errorThrown ){
+                    window.location.href='<?php echo site_url('/logout'); ?>';
                 }
             });
         })
