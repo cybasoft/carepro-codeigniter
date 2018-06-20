@@ -101,18 +101,18 @@ define('PDF_PAGE_ORIENTATION', 'P');
  */
 define('PDF_CREATOR', 'TCPDF');
 
-define('PDF_AUTHOR', config_item('company')['name']);
+define('PDF_AUTHOR', get_option('company_name'));
 
-define('PDF_HEADER_TITLE', config_item('company')['name']);
+define('PDF_HEADER_TITLE', get_option('company_name'));
 
 define('PDF_HEADER_STRING',"\n"
-     .config_item('company')['name'] . "\n"
-    . config_item('company')['street'] . '. '
-    . config_item('company')['city'] . ' '
-    . config_item('company')['state'] . ' '
-    . config_item('company')['postal_code'] . ' | '
-    . config_item('company')['email'] . ' | '
-    . config_item('company')['phone']
+     .get_option('company_name') . "\n"
+    . get_option('street') . '. '
+    . get_option('city') . ' '
+    . get_option('state') . ' '
+    . get_option('postal_code') . ' | '
+    . get_option('email') . ' | '
+    . get_option('phone')
 );
 
 /**

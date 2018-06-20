@@ -24,11 +24,11 @@ class my_cron extends CI_Model
 
         $user = $this->user->user()->last_name;
 
-        $this->email->from($this->config->item('email', 'company'), $this->config->item('name', 'company'));
+        $this->email->from(get_option('email'), get_option('company_name'));
         $this->email->subject('Event alert!');
 
         $msg[] = 'User: ' . $user;
-        $msg[] = '<br>Company' . $this->config->item('name', 'company');
+        $msg[] = '<br>Company' . get_option('company_name');
         $msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
         $msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
         $msg[] = '<hr/>' . $event;
@@ -50,8 +50,8 @@ class my_cron extends CI_Model
      */
     function notifyNewRegistration($company, $email)
     {
-        $this->email->from($this->config->item('email', 'company'));
-        $this->email->to($this->config->item('email', 'company'));
+        $this->email->from(get_option('email'));
+        $this->email->to(get_option('email'));
         $this->email->subject('Registration! New user');
 
         $msg[] = "New user has registered <hr/>";
@@ -79,7 +79,7 @@ class my_cron extends CI_Model
         foreach ($parents as $row) {
             $this->email->to($row->email); //email parent
             //$this->email->cc('example@example.com');
-            $this->email->bcc($this->config->item('email', 'company')); //email admin to log
+            $this->email->bcc(get_option('email')); //email admin to log
 
 
             //echo $this->email->print_debugger();

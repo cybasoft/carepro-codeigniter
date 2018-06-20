@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $this->config->item('name', 'company'); ?></title>
+    <title><?php echo get_option('company_name'); ?></title>
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -17,6 +17,13 @@
           href="//cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.css"/>
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/print.css" rel="stylesheet" type="text/css" media="print"/>
+
+    <?php if(!empty(get_option('custom_css'))): ?>
+        <style type="text/css">
+            <?php echo get_option('custom_css'); ?>
+        </style>
+    <?php endif; ?>
+
     <!--[if lt IE 9]>
     <script src="<?php echo base_url(); ?>assets/js/html5shiv.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/respond.min.js"></script>
@@ -34,27 +41,29 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-        ga('create', '<?php echo $this->config->item('google_analytics', 'company'); ?>', 'auto');
+        ga('create', '<?php echo get_option('google_analytics'); ?>', 'auto');
         ga('send', 'pageview');
     </script>
 </head>
 <body class="skin-blue">
 <header class="header">
     <a href="<?php echo site_url('dashboard'); ?>" class="logo" style="left:0px !important;">
-        <?php if($this->config->item('logo', 'company') == "") : ?>
+        <?php if(get_option('logo') == "") : ?>
             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
-			<?php echo $this->config->item('name', 'company'); ?>
+			<?php echo get_option('company_name'); ?>
 				</span>
             <span class="" style="position: absolute; top:13px; left:50px;
 			z-index: 3000; font-size: 12px; color: #ffff00; font-family: monospace">
-			<?php echo $this->config->item('slogan', 'company'); ?>
+			<?php echo get_option('slogan'); ?>
 			</span>
         <?php else : ?>
-            <img src="<?php echo base_url().'assets/img/'.$this->config->item('logo', 'company'); ?>"/>
+            <img src="<?php echo base_url().'assets/img/'.get_option('logo'); ?>"/>
         <?php endif; ?>
     </a>
     <!--start nav-->
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav class="navbar navbar-static-top" role="navigation"
+         style="background-color:<?php echo get_option('top_nav_bg_color'); ?>"
+         >
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only"><?php echo lang('toggle_navigation'); ?></span>
             <span class="icon-bar"></span>
@@ -155,7 +164,7 @@
             <ul class="sidebar-menu">
                 <li class="<?php echo set_active('dashboard'); ?>">
                     <a href="<?php echo site_url('dashboard'); ?>">
-                        <i class="fa fa-dashboard"></i> <span><?php echo lang('dashboard'); ?></span>
+                        <i class="fa fa-home"></i> <span><?php echo lang('dashboard'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
@@ -220,10 +229,8 @@
         <?php endif; ?>
         <!-- Main content -->
         <section class="content">
-            <?php if($this->session->flashdata('message') !== "") : ?>
-                <div id="msg"
-                     class="msg alert alert-<?php echo $this->session->flashdata('type'); ?> alert-dismissable">
-                    <span class="fa fa-<?php echo $this->session->flashdata('icon'); ?>"></span>
+            <?php if(!empty($this->session->flashdata('type'))) : ?>
+                <div id="msg" class="msg">
                     <?php echo $this->session->flashdata('message'); ?>
                 </div>
             <?php endif; ?>

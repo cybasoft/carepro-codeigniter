@@ -766,8 +766,8 @@ class Ion_auth_model extends CI_Model
 
         //notify admin
         $email = array(
-            'to'=>config_item('company')['email'],
-            'from'=>config_item('company')['email'],
+            'to'=>get_option('email'),
+            'from'=>get_option('email'),
             'subject'=>lang('new_user_email_subject'),
             'message'=>lang('new_user_email_body'),
             'template'=>'new_user_notice',

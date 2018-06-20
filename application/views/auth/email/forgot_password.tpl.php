@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title><?php echo config_item('company')['name']; ?></title>
+    <title><?php echo get_option('company_name'); ?></title>
     <style>
         /* -------------------------------------
             GLOBAL RESETS
@@ -354,7 +354,7 @@
                 </span>
                 <table>
                     <tr>
-                        <td><img  src="<?php echo base_url('assets/img/'.config_item('company')['logo']); ?>" style="width:150px;"/> </td>
+                        <td><img  src="<?php echo base_url('assets/img/'.get_option('logo')); ?>" style="width:150px;"/> </td>
                     </tr>
                 </table>
                 <table class="main">
@@ -404,7 +404,7 @@
                         <tr>
                             <td class="content-block">
                                 <span class="apple-link">
-                                    <?php echo config_item('company')['name']; ?>
+                                    <?php echo get_option('company_name'); ?>
                                 </span>
                                 <br>
                             </td>

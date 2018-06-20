@@ -24,10 +24,10 @@
             <td>
                 <?php echo anchor('invoice/'.$invoice->id.'/view', ($invoice->id<10) ? '000'.$invoice->id : $invoice->id); ?></td>
             <td><?php echo lang($invoice->invoice_status); ?></td>
-            <td><?php echo $this->config->item('currency_symbol', 'company').$subTotal; ?></td>
-            <td><?php echo $this->config->item('currency_symbol', 'company').$this->invoice->amount_paid($invoice->id); ?></td>
+            <td><?php echo get_option('currency_symbol').$subTotal; ?></td>
+            <td><?php echo get_option('currency_symbol').$this->invoice->amount_paid($invoice->id); ?></td>
             <td>
-                <span class="text-danger"><?php echo $this->config->item('currency_symbol', 'company').$totalDue; ?></span>
+                <span class="text-danger"><?php echo get_option('currency_symbol').$totalDue; ?></span>
             </td>
             <td><?php echo format_date($invoice->date_due, false); ?></td>
             <td>

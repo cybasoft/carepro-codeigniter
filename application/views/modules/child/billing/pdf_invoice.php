@@ -108,7 +108,7 @@ ob_start();
         <tr class="invoice-items">
             <td colspan="4"><?php echo lang('sub_total'); ?> :</td>
             <td>
-                <?php echo $this->config->item('currency_symbol', 'company');
+                <?php echo get_option('currency_symbol');
                 echo number_format($subTotal, 2); ?>
             </td>
         </tr>
@@ -118,7 +118,7 @@ ob_start();
             </td>
             <td>
                 <?php
-                echo $this->config->item('currency_symbol', 'company');
+                echo get_option('currency_symbol');
                 $totalPaid = $this->invoice->amount_paid($invoice->id);
 
                 echo($totalPaid > 0 ? $totalPaid : "0.00"); ?>
@@ -133,9 +133,9 @@ ob_start();
 
                 $totalDue = (float)$subTotal - (float)$totalPaid;
                 if ($totalDue > 0) {
-                    echo $this->config->item('currency_symbol', 'company') . $totalDue;
+                    echo get_option('currency_symbol') . $totalDue;
                 } else {
-                    echo '<span class="label label-success">' . lang('refund') . '</span> ' . $this->config->item('currency_symbol', 'company') . $totalDue;
+                    echo '<span class="label label-success">' . lang('refund') . '</span> ' . get_option('currency_symbol') . $totalDue;
                 }
                 ?>
             </td>

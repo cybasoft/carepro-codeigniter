@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title><?php echo $this->config->item('name', 'company'); ?></title>
+    <title><?php echo get_option('company_name'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
     <meta name="description" content="DaycarePRO - Daycare management system">
@@ -28,7 +28,7 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', '<?php echo $this->config->item('google_analytics', 'company'); ?>', 'auto');
+        ga('create', '<?php echo get_option('google_analytics'); ?>', 'auto');
         ga('require', 'displayfeatures');
         ga('send', 'pageview');
     </script>

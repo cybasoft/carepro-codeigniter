@@ -12,7 +12,7 @@ $email = array(
     <div class="login-box  animation flipInX">
         <div class="logo-main">
             <a href="<?php echo site_url(); ?>">
-                <img src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('logo', 'company'); ?>"
+                <img src="<?php echo base_url(); ?>assets/img/<?php echo get_option('logo'); ?>"
                      alt="Laraspace Logo">
             </a>
         </div>

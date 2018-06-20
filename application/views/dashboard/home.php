@@ -3,15 +3,15 @@
         <div class="box box-info">
             <div class="box-body">
                 <div class="text-center">
-                    <h3><?php echo $this->config->item('name', 'company'); ?></h3>
-                    <em><?php echo $this->config->item('slogan', 'company'); ?></em>
+                    <h3><?php echo get_option('name'); ?></h3>
+                    <em><?php echo get_option('slogan'); ?></em>
                     <br/>
-                    <?php echo $this->config->item('street', 'company'); ?>
+                    <?php echo get_option('street'); ?>
                     <br/>
-                    <?php echo $this->config->item('city', 'company'); ?>
-                    <?php echo $this->config->item('state', 'company'); ?>,
-                    <?php echo $this->config->item('postal_code', 'company'); ?>
-                    <?php echo $this->config->item('country', 'company'); ?>
+                    <?php echo get_option('city'); ?>
+                    <?php echo get_option('state'); ?>,
+                    <?php echo get_option('postal_code'); ?>
+                    <?php echo get_option('country'); ?>
                 </div>
             </div>
         </div>
@@ -20,19 +20,19 @@
                 <table class="table">
                     <tr>
                         <td><?php echo lang('email'); ?></td>
-                        <td><?php echo config_item('company')['email'] ?></td>
+                        <td><?php echo get_option('email') ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('phone'); ?></td>
-                        <td><?php echo config_item('company')['phone'] ?></td>
+                        <td><?php echo get_option('phone') ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('fax'); ?>:</td>
-                        <td><?php echo config_item('company')['fax'] ?></td>
+                        <td><?php echo get_option('fax'); ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('timezone'); ?>:</td>
-                        <td><?php echo $this->config->item('timezone', 'company'); ?></td>
+                        <td><?php echo get_option('timezone'); ?></td>
                     </tr>
                 </table>
             </div>
@@ -49,7 +49,7 @@
                 </span>
 
                 <h2>
-                    <?php echo $this->config->item('currency_symbol') . $this->invoice->getTotalDue(); ?>
+                    <?php echo get_option('currency_symbol') . $this->invoice->getTotalDue(); ?>
 
                 </h2>
             </div>

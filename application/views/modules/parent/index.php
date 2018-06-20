@@ -9,9 +9,9 @@
                 <?php echo lang('no_children_notice'); ?>
             </h4>
 
-            <p class="text-bold"><?php echo lang('phone'); ?>: <?php echo config_item('company')['phone']; ?></p>
+            <p class="text-bold"><?php echo lang('phone'); ?>: <?php echo get_option('phone'); ?></p>
 
-            <p class="text-bold"><?php echo lang('email'); ?>: <?php echo config_item('company')['email']; ?></p>
+            <p class="text-bold"><?php echo lang('email'); ?>: <?php echo get_option('email'); ?></p>
         </div>
     <?php endif; ?>
     <?php foreach ($children->result() as $child): ?>

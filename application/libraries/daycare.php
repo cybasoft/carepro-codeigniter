@@ -24,12 +24,12 @@ class Daycare
     function paypal($item, $due, $invoice_id = "service")
     {
         $url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick';
-        $business = $this->config->item('email', 'company');
+        $business = get_option('email');
         $lc = "US";
         $item_name = $item;
         $item_number = 'DayCare_' . $invoice_id;
         $amount = $due;
-        $currency_code = $this->config->item('currency_abbr', 'company');
+        $currency_code = get_option('currency_abbreviation');
         $button_subtype = "services";
         $no_note = 0;
         $cn = "Add special remarks";
@@ -50,12 +50,12 @@ class Daycare
     {
         $ci = &get_instance();
         $url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick';
-        $business = $ci->config->item('email', 'company');
+        $business = get_option('email');
         $lc = "US";
         $item_name = $item;
         $item_number = 'DayCare_' . $invoice_id;
         $amount = $due;
-        $currency_code = $ci->config->item('currency', 'company');
+        $currency_code =get_option('currency_abbreviation');
         $button_subtype = "services";
         $no_note = 0;
         $cn = "Add special remarks";

@@ -8,7 +8,7 @@ class Conf extends CI_Model
         error_reporting(E_ALL);
         ini_set("display_errors", 1);
         ini_set("error_log", base_url() . 'php-error.log');
-        date_default_timezone_set(config_item('company')['timezone']);
+        date_default_timezone_set(get_option('timezone'));
 
         $this->load->model('My_child', 'child');
         $this->load->model('My_user', 'users');

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $this->config->item('name', 'company'); ?></title>
+    <title><?php echo get_option('company_name'); ?></title>
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -33,12 +33,12 @@
             <ul class="nav navbar-nav">
                 <li class="<?php echo set_active('dashboard'); ?>">
                     <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-sm" style="left:0px !important;">
-                        <?php if($this->config->item('logo', 'company') == "") : ?>
+                        <?php if(get_option('logo') == "") : ?>
                             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
-                                <?php echo $this->config->item('name', 'company'); ?>
+                                <?php echo get_option('company_name'); ?>
                             </span>
                         <?php else : ?>
-                            <img src="<?php echo base_url().'assets/img/'.$this->config->item('logo', 'company'); ?>"/>
+                            <img src="<?php echo base_url().'assets/img/'.get_option('logo'); ?>"/>
                         <?php endif; ?>
                     </a>
                     <img class="hidden-md hidden-lg pull-left"
@@ -190,7 +190,7 @@
         a.src = g;
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-    ga('create', '<?php echo $this->config->item('google_analytics', 'company'); ?>', 'auto');
+    ga('create', '<?php echo get_option('google_analytics'); ?>', 'auto');
     ga('send', 'pageview');
 
     function confirmDelete(loc) {

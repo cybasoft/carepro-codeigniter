@@ -102,8 +102,8 @@ if (!defined('K_PATH_IMAGES')) {
 
 if (!defined('PDF_HEADER_LOGO')) {
 	$tcpdf_header_logo = '';
-	if (@file_exists(base_url('assets/img/'.config_item('company')['logo']))) {
-		$tcpdf_header_logo = base_url('assets/img/'.config_item('company')['logo']);
+	if (@file_exists(base_url('assets/img/'.get_option('logo')))) {
+		$tcpdf_header_logo = base_url('assets/img/'.get_option('logo'));
 	}
 	define ('PDF_HEADER_LOGO', $tcpdf_header_logo);
 }

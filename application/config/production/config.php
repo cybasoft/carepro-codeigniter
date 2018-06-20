@@ -1,31 +1,5 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
-$config['company'] = array(
-    'name' => 'DaycarePRO',
-    'slogan' => 'Nice daycare',
-    'phone' => '123-345-4444',
-    'fax' => '211-222-3334',
-    'email' => 'alerts@amdtllc.com',
-    'street' => '123 State St',
-    'city' => 'New York',
-    'state' => 'NY',
-    'postal_code' => '13001',
-    'country' => 'USA',
-    'timezone' => 'America/New_York', //http://php.net/manual/en/timezones.america.php
-    'google_analytics' => 'UA-101249029-4',
-    'currency_symbol' => '$',
-    'currency_abbr' => 'USD',
-    'date_format' => 'd M, Y H:ia',
-    'logo' => 'logo.png', //logo must be in '/assets/img' directory
-    'invoice_logo' => 'logo.png' //logo must be in '/assets/img' directory
-);
-
-$config['allow_registration'] = TRUE;
-$config['allow_reset_password'] = TRUE;
-$config['enable_captcha'] = FALSE;
-$config['demo_mode'] = TRUE;
-$config['maintenance_mode'] = FALSE;
 
 $config['email_config'] = array(
     'protocol' => 'smtp', //sendmain, smtp, mail

@@ -1,53 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-//company settings
-$config['company'] = array(
-    'name' => 'DaycarePRO',
-    'slogan' => 'Nice daycare',
-    'phone' => '123456789',
-    'fax' => '33883888',
-    'email' => 'admin@app.com',
-    'street' => '1234 State st',
-    'city' => 'New york',
-    'state' => 'NY',
-    'postal_code' => '12345',
-    'country' => 'USA',
-    'timezone' => 'America/New_York', //http://php.net/manual/en/timezones.america.php
-    'google_analytics' => '1-3333',  //enter google analytics ID
-    'currency_symbol' => '$',
-    'currency_abbr' => 'USD',
-    'date_format' => 'd M, Y H:ia',
-    'logo' => 'logo.png', //logo must be in '/assets/img' directory
-    'invoice_logo' => 'logo.png' //logo must be in '/assets/img' directory
-);
-
-$config['allow_registration'] = TRUE;
-$config['allow_reset_password'] = TRUE;
-$config['enable_captcha']=FALSE;
-$config['maintenance_mode']=FALSE;
-
-$config['demo_mode']=FALSE;
-
-/*
- * Email configuration
- *
- * https://www.codeigniter.com/user_guide/libraries/email.html
- *
- */
-$config['user_ci_mail'] = TRUE;
-
-$config['email_config'] = array(
-    'protocol'=>'smtp', //sendmain, smtp, mail
-    'smtp_host'=>'',
-    'smtp_user'=>'',
-    'smtp_pass'=>'',
-    'smtp_port'=>'2525',
-    'mailtype' => 'html',
-
-    //do not change
-    'crlf' => "\r\n",
-    'newline' => "\r\n"
-);
 
 /*
 |--------------------------------------------------------------------------

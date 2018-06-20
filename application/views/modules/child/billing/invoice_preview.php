@@ -2,7 +2,7 @@
 <html moznomarginboxes mozdisallowselectionprint>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo config_item('company')['name']; ?></title>
+    <title><?php echo get_option('company_name'); ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -32,18 +32,19 @@
                 <div class="box-header bg-light-blue">
                 </div>
                 <div class="box-body">
-                    <img src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('invoice_logo', 'company'); ?>"/>
+                    <img src="<?php echo base_url(); ?>assets/img/<?php echo get_option('invoice_logo'); ?>"/>
                     <br/>
                     <?php
-                    echo $this->config->item('street', 'company');
+                    echo get_option('street').'<br/>';
+                    echo get_option('street2');
                     echo "<br/>";
-                    echo $this->config->item('city', 'company').'. ';
-                    echo $this->config->item('state', 'company').' ,';
-                    echo $this->config->item('postal_code', 'company');
+                    echo get_option('city').'. ';
+                    echo get_option('state').' ,';
+                    echo get_option('postal_code');
                     echo "<br/>";
-                    echo $this->config->item('phone', 'company');
+                    echo get_option('phone');
                     echo "<br/>";
-                    echo $this->config->item('email', 'company');
+                    echo get_option('email');
                     ?>
                 </div>
             </div>
@@ -138,10 +139,10 @@
                                 <td>
                                     <?php
                                     $totalDue = $this->invoice->invoice_total_due($invoice->id);
-                                    if($totalDue>0 || $totalDue==0) {
+                                    if($totalDue>0 || $totalDue == 0) {
                                         echo $totalDue;
                                     }
-                                    if($totalDue<0){
+                                    if($totalDue<0) {
                                         echo '<span class="label label-success">'.lang('refund').'</span> '.$totalDue;
                                     }
                                     ?>

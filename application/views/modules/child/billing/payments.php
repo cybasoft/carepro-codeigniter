@@ -19,7 +19,7 @@
 								<?php echo anchor('invoice/view/' . $row->invoice_id, $row->invoice_id); ?>
 							</td>
 							<td>
-								<?php echo $this->config->item('currency_symbol','company') . ' ' . $row->amount_paid; ?>
+								<?php echo get_option('currency_symbol') . ' ' . $row->amount_paid; ?>
 							</td>
 							<td>
 								<?php echo $row->date_paid; ?>

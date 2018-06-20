@@ -13,22 +13,22 @@ class My_mailer extends CI_Model
         $this->email->clear();
 
         $extras = $data;
-        $email_config = config_item('email_config');
+        $email_config = email_config();
         if (isset($email_config) && is_array($email_config)) {
             $this->email->initialize($email_config);
         }
 
         if (!isset($data['from']))
-            $data['from'] = $this->config->item('email', 'company');
+            $data['from'] = get_option('email');
 
         if (!isset($data['from_name']))
-            $data['from_name'] = $this->config->item('name', 'company');
+            $data['from_name'] = get_option('company_name');
 
         if (!isset($data['to']))
-            $data['to'] = $this->config->item('email', 'company');
+            $data['to'] = get_option('email');
 
         if (!isset($data['subject']))
-            $data['subject'] = 'Message from ' . $this->config->item('name', 'company');
+            $data['subject'] = 'Message from ' . get_option('company_name');
 
         if (isset($data['bcc']))
             $this->email->bcc($data['bcc']);

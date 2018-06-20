@@ -2,7 +2,7 @@
 <html moznomarginboxes mozdisallowselectionprint>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo config_item('company')['name']; ?></title>
+    <title><?php echo get_option('company_name'); ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -27,7 +27,7 @@
 <body>
 <div class="container">
     <img class="" style="width: 250px;"
-         src="<?php echo base_url(); ?>assets/img/<?php echo $this->config->item('invoice_logo', 'company'); ?>"/>
+         src="<?php echo base_url(); ?>assets/img/<?php echo get_option('invoice_logo'); ?>"/>
 
     <h3><?php echo lang('children_roster'); ?>
         <span style="font-size:12px">

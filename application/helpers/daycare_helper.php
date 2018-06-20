@@ -26,7 +26,7 @@ function format_date($date, $time = true, $timestamp = false)
     if($timestamp == true)
         $date = date('Y-m-d H:i:s', $date);
 
-    $format = config_item('company')['date_format'];
+    $format = get_option('date_format');
     if($format == "")
         return date('d M Y H:ia', strtotime($date));
 
@@ -69,11 +69,13 @@ function flash($type = "", $msg = "")
     $ci = &get_instance();
     if(validation_errors() == true) {
         if($msg == "") {
-            $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-warning"></span>', '</div>');
+            $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-exclamation-triangle"></span>', '</div>');
             $msg = $e;
             $type = 'error';
             $icon = 'danger';
         }
+    } else {
+        $msg = '<div class="alert alert-'.$type.' alert-dismissable"><span class="fa fa-info"></span>'.$msg.'</div>';
     }
 
     $ci->session->set_flashdata('message', $msg);
@@ -197,17 +199,20 @@ function checked_option($option, $value)
     }
     return false;
 }
-function related($db,$field1,$value1,$field2,$value2){
+
+function related($db, $field1, $value1, $field2, $value2)
+{
     $ci = &get_instance();
-   $res= $ci->db->where($field1,$value1)
-        ->where($field2,$value2)
+    $res = $ci->db->where($field1, $value1)
+        ->where($field2, $value2)
         ->get($db)->result();
-    if(count($res)>0){
+    if(count($res)>0) {
         return true;
     }
     return false;
 
 }
+
 /*
 * encrypt
 * encrypt text
@@ -430,22 +435,25 @@ function set_active($page)
 
 function moneyFormat($amount)
 {
-    return config_item('company')['currency_symbol'].number_format($amount, 2);
+    return get_option('currency_symbol').number_format($amount, 2);
 }
-function authorizedToChild($staff_id,$child_id){
+
+function authorizedToChild($staff_id, $child_id)
+{
     if(is('admin') || is('manager'))
         return true;
     $ci = &get_instance();
     $res = $ci->db
         ->from('child_group')
-        ->join('child_group_staff','child_group_staff.group_id=child_group.group_id')
-        ->where('user_id',$staff_id)
-        ->where('child_group.child_id',$child_id)
+        ->join('child_group_staff', 'child_group_staff.group_id=child_group.group_id')
+        ->where('user_id', $staff_id)
+        ->where('child_group.child_id', $child_id)
         ->count_all_results();
     if($res>0)
         return true;
     return false;
 }
+
 function valid_date($date, $format = 'Y-m-d')
 {
     $d = DateTime::createFromFormat($format, $date);
@@ -458,11 +466,156 @@ function valid_date($date, $format = 'Y-m-d')
  * @param $out
  * @return string
  */
-function checkinTimer($in,$out){
-    $start      = new DateTime($in);
-    $end        = new DateTime($out);
-    $timeDiff   = $end->diff($start);
+function checkinTimer($in, $out)
+{
+    $start = new DateTime($in);
+    $end = new DateTime($out);
+    $timeDiff = $end->diff($start);
 //    $strDiff    = $timeDiff->h . " Hours, " . $timeDiff->i . " Minutes";
     return $timeDiff;
 }
+
+function special_options()
+{
+    $options = array(
+        'company_name', 'slogan',
+        'email', 'phone', 'fax', 'street', 'street2', 'city', 'state', 'postal)code', 'country',
+        'timezone', 'google_analytics', 'currency_symbol', 'date_format',
+        'allow_registration', 'allow_reset_password', 'enable_captcha',
+        'demo_mode', 'maintenance_mode', 'use_smtp', 'smtp_user', 'smtp_pass', 'smtp_host', 'smtp_port'
+    );
+    return $options;
+}
+
+function protected_special_option($option)
+{
+    if(in_array($option, special_options())) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * retrieve option in options table
+ *
+ * @param $name
+ * @return string
+ */
+function get_option($name, $default = '')
+{
+    $ci = &get_instance();
+    $name = trim($name);
+    $res = $ci->db->where('option_name', $name)
+        ->limit(1)
+        ->get('options');
+    if($res->num_rows()>0) {
+        $value = $res->row()->option_value;
+
+        $data = @unserialize($value);
+        if($value === 'b:0;' || $data !== false) {
+            return unserialize($value);
+        } else {
+            return $value;
+        }
+    }
+    return $default;
+}
+
+/**
+ * sets an option in options table
+ *
+ * @param $name
+ * @param $value
+ * @return bool
+ */
+function add_option($name, $value, $special = false)
+{
+    if(empty($name))
+        return false;
+
+    if($special == false && protected_special_option($name)) {
+        flash('error', sprintf(lang('You are using a protected option'), $name));
+        return false;
+    }
+
+    if(is_object($value))
+        $value = clone $value;
+
+    if(is_array($value))
+        $value = serialize($value);
+
+    $ci = &get_instance();
+    $ci->db->insert('options', [
+        'option_name' => $name,
+        'option_value' => $value
+    ]);
+    if($ci->db->affected_rows()>0)
+        return true;
+    return false;
+}
+
+/**
+ * updates an option in options table
+ *
+ * @param $name
+ * @param $value
+ * @return bool
+ */
+function update_option($name, $value, $special = false)
+{
+    if(empty($name))
+        return false;
+
+    if(is_object($value))
+        $value = clone $value;
+
+    if(is_array($value))
+        $value = serialize($value);
+
+    $ci = &get_instance();
+    $test = $ci->db->where('option_name', $name)->from('options')->count_all_results();
+    if($test>0) {
+        $ci->db->where('option_name', $name);
+        $ci->db->update('options', ['option_value' => $value]);
+        if($ci->db->affected_rows()>0)
+            return true;
+    } else {
+        add_option($name, $value, $special);
+    }
+    return false;
+}
+
+/**
+ * @param $name
+ * @return bool
+ */
+function remove_option($name)
+{
+    if(empty($name))
+        return false;
+
+    if(protected_special_option($name)) {
+        flash('error', sprintf(lang('You are using a protected option'), $name));
+        return false;
+    }
+    $ci =& get_instance();
+    $ci->db->where('option_name', $name)->delete('options');
+    return true;
+}
+
+function email_config()
+{
+    return [
+        'protocol' => 'smtp', //sendmail, smtp, mail
+        'smtp_host' => get_option('smtp_host'),
+        'smtp_user' => get_option('smtp_user'),
+        'smtp_pass' => get_option('smtp_pass'),
+        'smtp_port' => get_option('smtp_port'),
+        'mailtype' => 'html',
+        //do not change
+        'crlf' => "\r\n",
+        'newline' => "\r\n"
+    ];
+}
+
 ?>

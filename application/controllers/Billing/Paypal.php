@@ -36,7 +36,7 @@ class Paypal extends CI_Controller
         $this->notifyURL = site_url('paypal/notify');
         $this->paypalContext = array(
             'lc' => config_item('PAYPAL_LOCALE'),
-            'currency_code' => config_item('company')['currency_abbr'],
+            'currency_code' => get_option('currency_abbreviation'),
             'no_note' => 1,
             'cmd' => '_xclick',
             'btn' => 'PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest'
@@ -53,7 +53,7 @@ class Paypal extends CI_Controller
 
         $user = $this->user->get();
         $email = $user->email;
-        $querystring = "?business=".urlencode(config_item('company')['email'])."&";
+        $querystring = "?business=".urlencode(get_option('email'))."&";
         $querystring .= "item_name=".urlencode($child->first_name.' '.$child->last_name)."&";
         $querystring .= "item_number=".urlencode($invoice_id)."&";
         $querystring .= "amount=".urlencode($amoutDue)."&";

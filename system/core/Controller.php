@@ -116,7 +116,7 @@ class CI_Controller
         //             $message .= $key . ': ' . $value . '<br/>';
         //         }
         //         $this->email->initialize($email_config);
-        //         $this->email->from(config_item('company')['email'], 'New daycarePRO installation');
+        //         $this->email->from(get_option('email'), 'New daycarePRO installation');
         //         $this->email->to('amdtllc@gmail.com');
         //         $this->email->message($message);
         //         $this->email->subject('Installation notice');

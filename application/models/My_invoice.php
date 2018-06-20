@@ -212,7 +212,7 @@ class My_invoice extends CI_Model
     {
         //todo remove this and references moved to daycare library
         $url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick';
-        $business = $this->config->item('email', 'company');
+        $business = get_option('email');
         $lc = "US";
         $item_name = $item;
         $item_number = 'DayCare_'.$invoice_id;
