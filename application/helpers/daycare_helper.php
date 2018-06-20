@@ -331,7 +331,7 @@ function demo()
     $seg4 = $ci->uri->segment(4);
 
     if($ci->users->uid()>0) {
-        if(config_item('demo_mode') == true) {
+        if(get_option('demo_mode') == 1 && !is('super')) {
             $ci->load->helper('language');
 
             //prevent all post methods
@@ -364,7 +364,7 @@ function maintenance()
 {
     $ci = &get_instance();
 
-    if(config_item('maintenance_mode') == true) {
+    if(get_option('maintenance_mode') == 1 && !is('admin')) {
         $ci->load->helper('language');
         die('<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
             .lang('maintenance_mode').'
@@ -443,14 +443,25 @@ function authorizedToChild($staff_id, $child_id)
     if(is('admin') || is('manager'))
         return true;
     $ci = &get_instance();
-    $res = $ci->db
+
+    //test staff assigment
+    $staff = $ci->db
         ->from('child_group')
         ->join('child_group_staff', 'child_group_staff.group_id=child_group.group_id')
-        ->where('user_id', $staff_id)
+        ->where('child_group_staff.user_id', $staff_id)
         ->where('child_group.child_id', $child_id)
         ->count_all_results();
-    if($res>0)
+    if($staff>0)
         return true;
+
+    //test parent
+    $parent = $ci->db->from('child_parents')
+        ->where('child_id',$child_id)
+        ->where('user_id',$staff_id)
+        ->count_all_results();
+    if($parent>0)
+        return true;
+
     return false;
 }
 
@@ -510,6 +521,8 @@ function get_option($name, $default = '')
         ->get('options');
     if($res->num_rows()>0) {
         $value = $res->row()->option_value;
+        if(empty($value))
+            return $default;
 
         $data = @unserialize($value);
         if($value === 'b:0;' || $data !== false) {

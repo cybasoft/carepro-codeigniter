@@ -28,11 +28,12 @@
 <header class="header container">
 
     <!--start nav-->
-    <nav class="navbar navbar-static-top" role="navigation" style="margin-left:0">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-left:0;background-color:<?php echo get_option('top_nav_bg_color','#03a9f4'); ?>">
         <div class="navbar-left">
             <ul class="nav navbar-nav">
                 <li class="<?php echo set_active('dashboard'); ?>">
-                    <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-sm" style="left:0px !important;">
+                    <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-sm"
+                       style="left:0 !important; background-color: <?php echo get_option('logo_bg_color','#ffeb3b'); ?>">
                         <?php if(get_option('logo') == "") : ?>
                             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
                                 <?php echo get_option('company_name'); ?>
@@ -47,14 +48,14 @@
                 </li>
 
                 <li class="<?php echo set_active('dashboard'); ?>">
-                    <a href="<?php echo site_url('dashboard'); ?>">
+                    <a href="<?php echo site_url('dashboard'); ?>" style="color:<?php echo get_option('top_nav_link_color','#fff'); ?>">
                         <i class="fa fa-dashboard"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('dashboard'); ?></span>
                     </a>
                 </li>
 
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
-                    <a href="<?php echo site_url('children'); ?>">
+                    <a href="<?php echo site_url('children'); ?>" style="color:<?php echo get_option('top_nav_link_color','#fff'); ?>">
                         <i class="fa fa-users"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('children'); ?>
                             <small class="badge pull-right bg-green">
@@ -63,13 +64,13 @@
                     </a>
                 </li>
                 <li class="<?php echo set_active('calendar'); ?>">
-                    <a href="<?php echo site_url('calendar'); ?>">
+                    <a href="<?php echo site_url('calendar'); ?>" style="color:<?php echo get_option('top_nav_link_color','#fff'); ?>">
                         <i class="fa fa-calendar"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('calendar'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(['news']); ?>">
-                    <a href="<?php echo site_url('news'); ?>">
+                    <a href="<?php echo site_url('news'); ?>" style="color:<?php echo get_option('top_nav_link_color','#fff'); ?>">
                         <i class="fa fa-clipboard"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('news'); ?></span>
                     </a>
@@ -156,10 +157,8 @@
         <?php endif; ?>
         <!-- Main content -->
         <section class="content">
-            <?php if($this->session->flashdata('message') !== "") : ?>
-                <div id="msg"
-                     class="msg alert alert-<?php echo $this->session->flashdata('type'); ?> alert-dismissable">
-                    <span class="fa fa-<?php echo $this->session->flashdata('icon'); ?>"></span>
+            <?php if(!empty($this->session->flashdata('type'))) : ?>
+                <div id="msg" class="msg">
                     <?php echo $this->session->flashdata('message'); ?>
                 </div>
             <?php endif; ?>

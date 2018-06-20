@@ -38,7 +38,7 @@ $password = array(
                 <?php echo form_input($data['password']); ?>
             </div>
 
-            <?php if (config_item('enable_captcha')): ?>
+            <?php if (get_option('enable_captcha')): ?>
                 <div class="form-group">
                     <?php echo $data['captcha_image']; ?>
                     <?php echo form_input($data['captcha']); ?>
@@ -50,7 +50,7 @@ $password = array(
 
                 <?php echo anchor('password/forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading')); ?>
 
-                <?php if(config_item('allow_registration')==TRUE): ?>
+                <?php if(get_option('allow_registration')==TRUE): ?>
                     <br/>
                     <br/>
                 <?php echo anchor('register', '<span class="fa fa-user"></span> ' . lang('register')); ?>

@@ -11,7 +11,6 @@ class Child extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        setRedirect();
         $this->load->model('My_invoice', 'invoice');
         $this->module = 'modules/child/';
     }

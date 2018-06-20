@@ -19,7 +19,7 @@
     $('.submit-pay').click(function () {
         $(this).remove()
     });
-    var stripe = Stripe("<?php  echo (ENVIRONMENT == 'production') ? config_item('stripe')['pk_live'] : $stripeKey = config_item('stripe')['pk_test']; ?>");
+    var stripe = Stripe("<?php  echo (ENVIRONMENT == 'production') ? get_option('stripe_pk_live') : $stripeKey = get_option('stripe_pk_test'); ?>");
     var elements = stripe.elements();
     var style = {
         base: {

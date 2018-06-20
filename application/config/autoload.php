@@ -104,7 +104,7 @@ $autoload['helper'] = array('url', 'form_helper', 'html', 'form','security','day
 | config files.  Otherwise, leave it blank.
 |
  */
-$autoload['config'] = array('stripe');
+$autoload['config'] = array();
 
 /*
 | -------------------------------------------------------------------

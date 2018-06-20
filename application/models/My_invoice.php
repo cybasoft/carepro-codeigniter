@@ -391,7 +391,7 @@ class My_invoice extends CI_Model
             $charge = \Stripe\Charge::create([
                 'source' => $token,
                 'amount' => str_replace('.', '', $data['amount']),
-                'currency' => config_item('stripe')['currency'],
+                'currency' => get_option('currency_abbreviation'),
                 'description' => $data['description'],
                 'metadata' => array(
                     'item_id' => $data['invoice_id']
@@ -430,7 +430,7 @@ class My_invoice extends CI_Model
             $charge = \Stripe\Charge::create(array(
                 'customer' => $data['stripe_id'],
                 'amount' => str_replace('.', '', $data['amount']),
-                'currency' => config_item('stripe')['currency'],
+                'currency' => get_option('currency_abbreviation'),
                 'description' => $data['description'],
                 'metadata' => array(
                     'item_id' => $data['invoice_id']

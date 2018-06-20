@@ -5,7 +5,6 @@ class Photos extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        setRedirect();
         allow('admin,manager,staff,parent');
         $this->module = 'modules/child/photos/';
         $this->my_child = array();
@@ -15,6 +14,11 @@ class Photos extends CI_Controller
     function index()
     {
         $child = $this->child->first($this->uri->segment(2));
+        if(!authorizedToChild($this->user->uid(),$child->id)){
+            flash('error',lang('You do not have permission to view this child\'s profile'));
+            redirectPrev();
+        }
+
         $this->my_child = $child;
         $photos = $this->photos->albums('photos',$child->id,'album');
         $method = $this->uri->segment(4);

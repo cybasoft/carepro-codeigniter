@@ -42,7 +42,7 @@ if ($this->ion_auth->logged_in()) {
             <?php echo form_input($data['phone']); ?>
         </div>
 
-        <?php if (config_item('enable_captcha')): ?>
+        <?php if (get_option('enable_captcha')): ?>
             <div class="form-group">
                 <?php echo $data['captcha_image']; ?>
                 <?php echo form_input($data['captcha']); ?>
@@ -52,7 +52,7 @@ if ($this->ion_auth->logged_in()) {
         <button class="btn btn-theme btn-full"><?php echo lang('register'); ?></button>
         <div class="other-actions" style="text-align:center">
 
-            <?php if (config_item('allow_registration') == TRUE): ?>
+            <?php if (get_option('allow_registration') == TRUE): ?>
                 <?php echo anchor('login', '<span class="fa fa-user"></span> ' . lang('login')); ?>
             <?php endif; ?>
         </div>

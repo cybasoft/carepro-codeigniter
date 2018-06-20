@@ -1,25 +1,38 @@
-<ul class="nav nav-pills nav-stacked col-md-2">
+<ul class="nav nav-pills nav-stacked col-md-2 col-xs-2 col-sm-2">
     <li class="active"><a href="#settings" data-toggle="pill"><i class="fa fa-cogs"></i>
-            <?php echo lang('settings'); ?></a></li>
-    <li><a href="#paymentMethods" data-toggle="tab"><i class="fa fa-credit-card"></i>
-            <?php echo lang('payment_method'); ?></a></li>
-    <li><a href="#logo" data-toggle="tab"><i class="fa fa-circle-notch"></i>
-            <?php echo lang('logo'); ?></a></li>
-    <li><a href="#theme" data-toggle="tab"><i class="fa fa-th"></i>
-            <?php echo lang('theme'); ?></a></li>
-    <li><a href="#support" data-toggle="tab"><i class="fa fa-hands-helping"></i>
-            <?php echo lang('support'); ?>
-        </a></li>
+            <span class="hidden-xs hidden-sm"><?php echo lang('settings'); ?></span>
+        </a>
+    </li>
+    <li>
+        <a href="#billing" data-toggle="tab"><i class="fa fa-credit-card"></i>
+            <span class="hidden-xs hidden-sm"><?php echo lang('billing'); ?></span>
+        </a>
+    </li>
+    <li>
+        <a href="#logo" data-toggle="tab"><i class="fa fa-circle-notch"></i>
+            <span class="hidden-xs hidden-sm"><?php echo lang('logo'); ?></span>
+        </a>
+    </li>
+    <li>
+        <a href="#theme" data-toggle="tab"><i class="fa fa-th"></i>
+            <span class="hidden-xs hidden-sm"><?php echo lang('theme'); ?></span>
+        </a>
+    </li>
+    <li>
+        <a href="#support" data-toggle="tab"><i class="fa fa-hands-helping"></i>
+            <span class="hidden-xs hidden-sm"><?php echo lang('support'); ?></span>
+        </a>
+    </li>
 </ul>
 
-<div class="tab-content col-md-10">
+<div class="tab-content col-md-10 col-xs-10 col-sm-10">
     <div class="tab-pane active" id="settings">
         <h3><?php echo lang('settings'); ?></h3>
         <?php echo form_open('settings/update'); ?>
         <div class="row">
             <div class="col-md-6">
                 <?php
-                echo form_hidden('page','settings');
+                echo form_hidden('page', 'settings');
                 echo form_label(lang('company_name'));
                 echo form_input('company_name', get_option('company_name'), ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('slogan'));
@@ -73,11 +86,6 @@
 
                 echo form_label(lang('google_analytics'));
                 echo form_input('google_analytics', get_option('google_analytics'), ['class' => 'form_control']);
-
-                echo form_label(lang('currency_abbreviation'));
-                echo form_input('currency_abbreviation', get_option('currency_abbreviation'), ['class' => 'form_control', 'required' => 'required']);
-                echo form_label(lang('currency_symbol'));
-                echo form_input('currency_symbol', get_option('currency_symbol'), ['class' => 'form_control', 'required' => 'required']);
 
                 echo form_label(lang('date_format'));
                 echo form_input('date_format', get_option('date_format'), ['class' => 'form_control', 'required' => 'required']);
@@ -156,38 +164,118 @@
 
         <?php echo form_close(); ?>
     </div>
-    <div class="tab-pane" id="paymentMethods">
-        <h3><?php echo lang('payment_method'); ?></h3>
-        <?php echo lang('Add a payment method'); ?>
+    <div class="tab-pane" id="billing">
+        <h3><?php echo lang('billing'); ?></h3>
+        <hr/>
         <div class="row">
-            <div class="col-sm-6">
-                <?php echo form_open('settings/paymentMethods'); ?>
-                <div class="input-group">
-                    <input type="text" name="title" class="form-control" required/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary"><i class="fa fa-plus"></i>
-                            <?php echo lang('add'); ?></button>
-                    </span>
+            <div class="col-md-6">
+                <div class="box box-default box-solid">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            <?php echo lang('payment_methods_heading'); ?>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <?php
+                        echo form_open('settings/update');
+                        echo form_hidden('page', 'billing');
+                        echo form_label(lang('currency_abbreviation'));
+                        echo form_input('currency_abbreviation', get_option('currency_abbreviation'), ['class' => 'form_control', 'required' => 'required']);
+                        echo form_label(lang('currency_symbol'));
+                        echo form_input('currency_symbol', get_option('currency_symbol'), ['class' => 'form_control', 'required' => 'required']);
+                        ?>
+                        <br/>
+                        <button class="btn btn-default"><?php echo lang('update'); ?></button>
+                        <?php echo form_close(); ?>
+                    </div>
                 </div>
-                <?php echo form_close(); ?>
-                <br/>
-                <table class="table table-bordered">
-                    <?php foreach ($payMethods as $payMethod): ?>
-                        <tr>
-                            <td>
-                                <?php echo $payMethod->title; ?>
-                            </td>
-                            <td>
-                                <a class="delete"
-                                   href="<?php echo site_url('settings/deletePaymentMethod/'.$payMethod->id); ?>">
-                                    <i class="fa fa-trash-alt text-danger"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
+                <div class="box box-default box-solid">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            <?php echo lang('Stripe'); ?>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <?php echo form_open('settings/update');
+                        echo form_hidden('page', 'billing');
+                        echo form_label(lang('Stripe test public key'));
+                        echo form_input('stripe_pk_test', get_option('stripe_pk_test'), ['class' => 'form_control']);
+                        echo form_label(lang('Stripe test secret key'));
+                        echo form_input('stripe_sk_test', get_option('stripe_sk_test'), ['class' => 'form_control']);
+                        echo "<br/>";
+                        echo form_label(lang('Stripe live public key'));
+                        echo form_input('stripe_pk_live', get_option('stripe_pk_live'), ['class' => 'form_control']);
+                        echo form_label(lang('Stripe live secret key'));
+                        echo form_input('stripe_sk_live', get_option('stripe_sk_live'), ['class' => 'form_control']);
+                        ?>
+                        <br/>
+                        <button class="btn btn-default"><?php echo lang('update'); ?></button>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="box box-default box-solid">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            <?php echo lang('PayPal'); ?>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <?php echo form_open('settings/update');
+                        echo form_hidden('page', 'billing');
+                        echo form_label(lang('PayPal locale'));
+                        echo form_input('paypal_locale', get_option('paypal_locale'), ['class' => 'form_control']);
+
+                        echo form_label(lang('PayPal  email'));
+                        echo form_input('paypal_email', get_option('paypal_email'), ['class' => 'form_control']);
+                        ?>
+                        <br/>
+                        <button class="btn btn-default"><?php echo lang('update'); ?></button>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+
+                <div class="box box-default box-solid">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            <?php echo lang('payment_methods_header'); ?>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <?php echo lang('Add a payment method'); ?>
+                        <?php echo form_open('settings/paymentMethods'); ?>
+                        <div class="input-group">
+                            <input type="text" name="title" class="form-control" required/>
+                            <span class="input-group-btn">
+                                        <button class="btn btn-primary">
+                                            <i class="fa fa-plus"></i><?php echo lang('add'); ?>
+                                        </button>
+                                    </span>
+                        </div>
+                        <?php echo form_close(); ?>
+                        <br/>
+                        <table class="table table-bordered">
+                            <?php foreach ($payMethods as $payMethod): ?>
+                                <tr>
+                                    <td class="col-md-11">
+                                        <?php echo $payMethod->title; ?>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <a class="delete"
+                                           href="<?php echo site_url('settings/deletePaymentMethod/'.$payMethod->id); ?>">
+                                            <i class="fa fa-trash-alt text-danger"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
+
     </div>
     <div class="tab-pane" id="logo">
         <div class="row">
@@ -234,21 +322,37 @@
     <div class="tab-pane" id="theme">
         <?php echo form_open('settings/update'); ?>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <?php
-                echo form_hidden('page','theme');
+                echo form_label(lang('Logo background color'));
+                echo form_input('logo_bg_color', get_option('logo_bg_color'), ['class' => 'form_control']);
+                ?>
+            </div>
+            <div class="col-md-3">
+                <?php
+                echo form_hidden('page', 'theme');
                 echo form_label(lang('Top navigation background color'));
                 echo form_input('top_nav_bg_color', get_option('top_nav_bg_color'), ['class' => 'form_control']);
                 ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <?php
-                echo form_label(lang('Left sidebar color'));
-                echo form_input('left_sidebar_color', get_option('left_sidebar_color'), ['class' => 'form_control']);
+                echo form_hidden('page', 'theme');
+                echo form_label(lang('Top navigation link color'));
+                echo form_input('top_nav_link_color', get_option('top_nav_link_color'), ['class' => 'form_control']);
                 ?>
             </div>
-            <div class="col-md-4">
-
+            <div class="col-md-3">
+                <?php
+                echo form_label(lang('Left sidebar color'));
+                echo form_input('left_sidebar_bg_color', get_option('left_sidebar_bg_color'), ['class' => 'form_control']);
+                ?>
+            </div>
+            <div class="col-md-3">
+                <?php
+                echo form_label(lang('Left sidebar link color'));
+                echo form_input('left_sidebar_link_color', get_option('left_sidebar_link_color'), ['class' => 'form_control']);
+                ?>
             </div>
         </div>
         <div class="row">
@@ -267,30 +371,52 @@
     </div>
     <div class="tab-pane" id="support">
         <h3><?php echo lang('support'); ?></h3>
-        <ul>
-            <li><a href="https://github.com/amdtllc/daycarepro/wiki">Wiki</a></li>
-            <li><a href="https://amdtcllc.com/support">Support tickets</a></li>
-            <li><a href="https://github.com/amdtllc/daycarepro/wiki/Change-log">Change log</a></li>
-            <li><a href="https://github.com/amdtllc/daycarepro/wiki/Configuration">Configuration</a></li>
-            <li><a href="https://github.com/amdtllc/daycarepro/issues">Known issues</a></li>
-            <li><a href="https://github.com/amdtllc/daycarepro/wiki/Licenses">Licenses</a></li>
-        </ul>
-        <div class="callout callout-info">
-            <h3>Thank you for supporting this project!</h3>
-            <p>Your donation helps us keep working on this script and make it available at a
-                very affordable price and provide free support</p>
-            <form action="https://www.paypal.com/cgi-bin/webscr" target="_blank" method="post">
-                <input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="hosted_button_id" value="Q3N6CNB3RRJBJ">
-                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0"
-                       name="submit" alt="PayPal - The safer, easier way to pay online!">
-                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-            </form>
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li><a href="https://github.com/amdtllc/daycarepro/wiki">Wiki</a></li>
+                    <li><a href="https://amdtcllc.com/support">Support tickets</a></li>
+                    <li><a href="https://github.com/amdtllc/daycarepro/wiki/Change-log">Change log</a></li>
+                    <li><a href="https://github.com/amdtllc/daycarepro/wiki/Configuration">Configuration</a></li>
+                    <li><a href="https://github.com/amdtllc/daycarepro/issues">Known issues</a></li>
+                    <li><a href="https://github.com/amdtllc/daycarepro/wiki/Licenses">Licenses</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <div class="callout callout-info">
+                    <h3>Thank you for supporting this project!</h3>
+                    <p>Your donation helps us keep working on this script and make it available at a
+                        very affordable price and provide free support</p>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" target="_blank" method="post">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="Q3N6CNB3RRJBJ">
+                        <input type="image"
+                               src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+                               name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1"
+                             height="1">
+                    </form>
+                </div>
+            </div>
         </div>
-
     </div>
-</div><!-- tab content -->
-
+</div>
 <script>
-
+    $('form').on('submit',function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            type: 'POST',
+            success: function (response) {
+                swal({type:'success','title':''})
+                setTimeout(function () {
+                    window.location.reload();
+                },2000)
+            },
+            error: function (error) {
+                swal({type:'error','title':''})
+            }
+        });
+    })
 </script>

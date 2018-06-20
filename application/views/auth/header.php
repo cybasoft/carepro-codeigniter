@@ -34,11 +34,9 @@
     </script>
 </head>
 <body class="login-page login-1">
-<?php if ($this->session->flashdata('message') !=="") : ?>
-    <div style="width:460px">
-        <div id="msg"
-             class="msg alert alert-<?php echo $this->session->flashdata('type'); ?> alert-dismissable">
-            <span class="fa fa-<?php echo $this->session->flashdata('icon'); ?>"></span>
+<?php if(!empty($this->session->flashdata('type'))) : ?>
+    <div style="width:460px;margin:0 auto">
+        <div id="msg" class="msg">
             <?php echo $this->session->flashdata('message'); ?>
         </div>
     </div>

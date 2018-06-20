@@ -47,7 +47,8 @@
 </head>
 <body class="skin-blue">
 <header class="header">
-    <a href="<?php echo site_url('dashboard'); ?>" class="logo" style="left:0px !important;">
+    <a href="<?php echo site_url('dashboard'); ?>" class="logo"
+       style="left:0 !important; background-color: <?php echo get_option('logo_bg_color','#ffeb3b'); ?>">
         <?php if(get_option('logo') == "") : ?>
             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
 			<?php echo get_option('company_name'); ?>
@@ -62,8 +63,7 @@
     </a>
     <!--start nav-->
     <nav class="navbar navbar-static-top" role="navigation"
-         style="background-color:<?php echo get_option('top_nav_bg_color'); ?>"
-         >
+         style="background-color:<?php echo get_option('top_nav_bg_color','#03a9f4'); ?>">
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only"><?php echo lang('toggle_navigation'); ?></span>
             <span class="icon-bar"></span>
@@ -136,7 +136,7 @@
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!--start sidebar-->
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas">
+    <aside class="left-side sidebar-offcanvas" style="background-color: <?php echo get_option('left_sidebar_bg_color','#f4f4f'); ?>">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
@@ -163,39 +163,39 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="<?php echo set_active('dashboard'); ?>">
-                    <a href="<?php echo site_url('dashboard'); ?>">
+                    <a href="<?php echo site_url('dashboard'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                         <i class="fa fa-home"></i> <span><?php echo lang('dashboard'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
-                    <a href="<?php echo site_url('children'); ?>">
+                    <a href="<?php echo site_url('children'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                         <i class="fa fa-users"></i> <span><?php echo lang('children'); ?>
                             <small class="badge pull-right bg-green"><?php echo $this->child->getCount(); ?></small>
                     </a>
                 </li>
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('users'); ?>">
-                        <a href="<?php echo site_url('users'); ?>">
+                        <a href="<?php echo site_url('users'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                             <i class="fa fa-user"></i> <span><?php echo lang('users'); ?></span>
                             <small class="badge pull-right bg-blue"><?php echo $this->user->getCount(); ?></small>
                         </a>
                     </li>
                 <?php endif; ?>
                 <li class="<?php echo set_active('calendar'); ?>">
-                    <a href="<?php echo site_url('calendar'); ?>">
+                    <a href="<?php echo site_url('calendar'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                         <i class="fa fa-calendar"></i> <span><?php echo lang('calendar'); ?></span>
                         <!--small class="badge pull-right bg-red">3</small-->
                     </a>
                 </li>
                 <li class="<?php echo set_active(['news']); ?>">
-                    <a href="<?php echo site_url('news'); ?>">
+                    <a href="<?php echo site_url('news'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                         <i class="fa fa-clipboard"></i>
                         <span><?php echo lang('news'); ?></span>
                     </a>
                 </li>
                 <?php if(is('admin')): ?>
                     <li class="<?php echo set_active('settings'); ?>">
-                        <a href="<?php echo site_url('settings'); ?>">
+                        <a href="<?php echo site_url('settings'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                             <i class="fa fa-wrench"></i> <span><?php echo lang('settings'); ?></span>
                         </a>
                     </li>
@@ -234,7 +234,6 @@
                     <?php echo $this->session->flashdata('message'); ?>
                 </div>
             <?php endif; ?>
-
             <?php $this->load->view($page); ?>
         </section>
 

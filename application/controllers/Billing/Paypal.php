@@ -35,7 +35,7 @@ class Paypal extends CI_Controller
         $this->cancelURL = site_url('paypal/cancelled');
         $this->notifyURL = site_url('paypal/notify');
         $this->paypalContext = array(
-            'lc' => config_item('PAYPAL_LOCALE'),
+            'lc' => get_option('paypal_locale'),
             'currency_code' => get_option('currency_abbreviation'),
             'no_note' => 1,
             'cmd' => '_xclick',
@@ -53,7 +53,7 @@ class Paypal extends CI_Controller
 
         $user = $this->user->get();
         $email = $user->email;
-        $querystring = "?business=".urlencode(get_option('email'))."&";
+        $querystring = "?business=".urlencode(get_option('paypal_email'))."&";
         $querystring .= "item_name=".urlencode($child->first_name.' '.$child->last_name)."&";
         $querystring .= "item_number=".urlencode($invoice_id)."&";
         $querystring .= "amount=".urlencode($amoutDue)."&";

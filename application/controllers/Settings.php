@@ -38,13 +38,14 @@ class Settings extends CI_Controller
                     $error++;
                 }
             }
-            flash('success', lang('request_success'));
+            flash('success', lang('Settings have been updated'));
         } else {
             validation_errors();
             flash('error');
+            echo 'error';
+            exit;
         }
-
-        redirect('settings#'.$_POST['page']);
+        echo 'success';
     }
 
     /*
@@ -100,7 +101,7 @@ class Settings extends CI_Controller
             $data = array('upload_data' => $upload_data);
             if($data) {
                 update_option('logo', 'logo.png', true);
-                flash('success', lang('request_success'));
+                flash('success', lang('Settings have been updated'));
             } else {
                 flash('danger', lang('request_error'));
             }
@@ -138,7 +139,7 @@ class Settings extends CI_Controller
             $data = array('upload_data' => $upload_data);
             if($data) {
                 update_option('invoice_logo', 'invoice_logo.png', true);
-                flash('success', lang('request_success'));
+                flash('success', lang('Settings have been updated'));
             } else {
                 flash('danger', lang('request_error'));
             }
@@ -154,7 +155,7 @@ class Settings extends CI_Controller
             $this->db->insert('payment_methods', array(
                 'title' => $this->input->post('title')
             ));
-            flash('success', lang('request_success'));
+            flash('success', lang('Settings have been updated'));
         } else {
             flash('error');
             validation_errors();
@@ -165,7 +166,7 @@ class Settings extends CI_Controller
     function deletePaymentMethod($id)
     {
         $this->db->delete('payment_methods', array('id' => $id));
-        flash('success', lang('request_success'));
+        flash('success', lang('Settings have been updated'));
         redirect('settings/#paymentMethods');
     }
 }

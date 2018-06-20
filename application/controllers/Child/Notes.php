@@ -5,8 +5,6 @@ class notes extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        //redirect session
-        setRedirect();
         auth(true);
         //local variables
         $this->module = 'modules/child/notes/';
@@ -17,6 +15,11 @@ class notes extends CI_Controller
     function index($id)
     {
         $child = $this->child->first($id);
+        if(!authorizedToChild($this->user->uid(),$id)){
+            flash('error',lang('You do not have permission to view this child\'s profile'));
+            redirectPrev();
+        }
+
         if (empty($child)) {
             flash('error', lang('request_error'));
             redirect('dashboard', 'refresh');

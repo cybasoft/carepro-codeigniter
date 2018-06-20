@@ -24,6 +24,11 @@ class Invoice extends CI_Controller
 
     function index($id)
     {
+        if(!authorizedToChild($this->user->uid(),$id)){
+            flash('error',lang('You do not have permission to view this child\'s profile'));
+            redirectPrev();
+        }
+
         $child = $this->child->first($id);
         $invoices = $this->db->where('child_id', $id)->get('invoices')->result();
         page($this->module.'index', compact('child', 'invoices'));
@@ -87,9 +92,9 @@ class Invoice extends CI_Controller
             $child = $this->child->first($invoice->child_id);
 
             if(ENVIRONMENT == 'production') {
-                $stripeKey = config_item('stripe')['sk_live'];
+                $stripeKey = get_option('stripe_sk_live');
             } else {
-                $stripeKey = config_item('stripe')['sk_test'];
+                $stripeKey = get_option('stripe_sk_test');
             }
             \Stripe\Stripe::setApiKey($stripeKey);
 

@@ -15,6 +15,11 @@ class Health extends CI_Controller
 
     function index($id)
     {
+        if(!authorizedToChild($this->user->uid(),$id)){
+            flash('error',lang('You do not have permission to view this child\'s profile'));
+            redirectPrev();
+        }
+
         $data['child'] = $this->child->first($id);
         if (empty($data['child'])) {
             flash('error', lang('request_error'));
