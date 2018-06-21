@@ -1,13 +1,13 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_create_child_group_staff extends CI_Migration
+class Migration_create_child_room_staff extends CI_Migration
 {
     /**
      * up (create table)
      *
      * @return void
      */
-    protected $table = 'child_group_staff';
+    protected $table = 'child_room_staff';
 
     public function up()
     {
@@ -19,7 +19,7 @@ class Migration_create_child_group_staff extends CI_Migration
                     'unsigned' => TRUE,
                     'null' => FALSE
                 ],
-                'group_id' => [
+                'room_id' => [
                     'type' => 'INT',
                     'constraint' => 11,
                     'unsigned' => TRUE,
@@ -34,14 +34,14 @@ class Migration_create_child_group_staff extends CI_Migration
             ]
         );
         $this->dbforge->add_key('user_id', TRUE);
-        $this->dbforge->add_key('group_id', TRUE);
+        $this->dbforge->add_key('room_id', TRUE);
         $attributes = array(
             'ENGINE' => 'InnoDB',
         );
         // Create Table users
         $this->dbforge->create_table($this->table, TRUE, $attributes);
         $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
-        $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`group_id`) REFERENCES child_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+        $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`room_id`) REFERENCES child_rooms(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 
     /**

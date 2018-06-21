@@ -17,7 +17,7 @@ class Charges extends CI_Controller
         $this->load->model('My_child', 'child');
         //variables
         $this->module = 'modules/children/';
-
+        $this->title = lang('billing');
     }
 
     /*

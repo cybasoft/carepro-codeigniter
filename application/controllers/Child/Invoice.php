@@ -20,6 +20,7 @@ class Invoice extends CI_Controller
         $this->payments_db = 'accnt_payments';
         $this->load->model('My_child', 'child');
         $this->load->model('My_invoice', 'invoice');
+        $this->title = lang('child').'-'.lang('invoice');
     }
 
     function index($id)

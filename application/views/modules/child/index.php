@@ -20,7 +20,7 @@
                             <?php echo lang('medications'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/'.$child->id.'/health#problem_list'); ?>">
+                           href="<?php echo site_url('child/'.$child->id.'/health#problem-list'); ?>">
                             <?php echo lang('problem_list'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
@@ -51,14 +51,16 @@
                     </div>
                 </div>
 
-                <h3><?php echo lang('groups'); ?></h3>
-                <?php $groups = $this->db->where('child_id', $child->id)
-                    ->from('child_groups')
-                    ->join('child_group', 'child_group.group_id=child_groups.id')
+                <h3><?php echo lang('rooms'); ?>
+                    <span class="text-sm"><?php echo anchor('children#rooms', lang('Assign to room')); ?></span>
+                </h3>
+                <?php $rooms = $this->db->where('child_id', $child->id)
+                    ->from('child_rooms')
+                    ->join('child_room', 'child_room.room_id=child_rooms.id')
                     ->get(); ?>
-                <?php foreach ($groups->result() as $group): ?>
-                    <a href="<?php echo site_url('children?group='.$group->id.'#groups'); ?>"
-                       class="label label-info"><?php echo $group->name; ?></a>
+                <?php foreach ($rooms->result() as $room): ?>
+                    <a href="<?php echo site_url('children?room='.$room->id.'#rooms'); ?>"
+                       class="label label-info"><?php echo $room->name; ?></a>
                 <?php endforeach; ?>
             </div>
             <div class="col-sm-6">
@@ -68,7 +70,7 @@
                         <?php if(!is('parent')): ?>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool  assign-user-btn">
-                                    <span class="fa fa-plus"></span>
+                                    <span class="fa fa-link"></span>
                                     <?php echo lang('assign'); ?>
                                 </button>
                             </div>

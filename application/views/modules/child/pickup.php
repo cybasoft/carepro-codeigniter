@@ -12,16 +12,16 @@
             <table class="table-bordered" style="width:220px;float:left;margin-right:10px;">
                 <tr>
                     <td valign="top" style="position: relative;">
-                        <?php if(is_file(APPPATH.'../assets/uploads/users/pickup/'.$pickup->photo)): ?>
-                            <img  style="width:100px;height:120px"
-                                 src="<?php echo base_url(); ?>assets/uploads/users/pickup/<?php echo $pickup->photo; ?>"/>
+                        <?php if(is_file(APPPATH.'../assets/uploads/pickup/'.$pickup->photo)): ?>
+                            <img style="width:100px;height:120px"
+                                 src="<?php echo base_url(); ?>assets/uploads/pickup/<?php echo $pickup->photo; ?>"/>
                         <?php else: ?>
-                            <img  style="width:100px;height:120px"
+                            <img style="width:100px;height:120px"
                                  src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
                         <?php endif; ?>
                         <span style="position: absolute;top:0;left:0;background:#cc4868;padding:0 2px;color:#fff;font-size:12px">
                         <span class="fa fa-lock"></span>
-                        <?php echo $pickup->pin; ?></span>
+                            <?php echo $pickup->pin; ?></span>
                     </td>
                     <td valign="top">
                         <strong class="">
@@ -63,48 +63,55 @@
 
             <?php echo form_open_multipart('child/'.$child->id.'/pickup') ?>
             <div class="modal-body">
-                <label><?php echo lang('first_name'); ?></label>
-                <input class="form-control" type="text" name="first_name"
-                       placeholder="<?php echo lang('first_name'); ?>"
-                       required=""/>
-                <label><?php echo lang('last_name'); ?></label>
-                <input class="form-control"
-                       type="text"
-                       name="last_name"
-                       placeholder="<?php echo lang('last_name'); ?>"
-                       required=""/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('first_name'));
+                        echo form_input('first_name', null, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('last_name'));
+                        echo form_input('last_name', null, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('cellphone'));
+                        echo form_input('cell', null, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('other_phone'));
+                        echo form_input('other_phone', null, ['class' => 'form-control']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('relation'));
+                        echo form_input('relation', null, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('pin'));
+                        echo form_input('pin', null, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('address'));
+                        echo form_textarea('address', null, ['class' => 'form-control','cols'=>3]);
+                        ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo form_label(lang('photo'));
+                        echo form_upload('phonto', null, ['class' => 'form-control',]);
+                        ?>
 
-                <label><?php echo lang('cellphone'); ?></label>
-                <input class="form-control"
-                       type="text"
-                       name="cell"
-                       placeholder="<?php echo lang('cellphone'); ?>"
-                       required=""/>
-
-                <label><?php echo lang('other_phone'); ?></label>
-                <input class="form-control"
-                       type="text"
-                       name="other_phone"
-                       placeholder="<?php echo lang('other_phone'); ?>"/>
-
-                <label><?php echo lang('relation'); ?></label>
-                <input class="form-control" type="text" name="relation"
-                       placeholder="<?php echo lang('relation'); ?>" required=""/>
-
-                <label><?php echo lang('pin'); ?></label>
-                <input class="form-control"
-                       type="text"
-                       name="pin"
-                       placeholder="<?php echo lang('pin'); ?>"
-                       required=""/>
-
-                <label><?php echo lang('address'); ?></label>
-                <textarea class="form-control"
-                          name="address"
-                          rows="3"
-                          placeholder="<?php echo lang('address'); ?>"></textarea>
-                <label><?php echo lang('photo'); ?></label>
-                <input class="form-control" type="file" name="userfile" size="20">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button"

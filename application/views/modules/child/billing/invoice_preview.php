@@ -32,7 +32,7 @@
                 <div class="box-header bg-light-blue">
                 </div>
                 <div class="box-body">
-                    <img src="<?php echo base_url(); ?>assets/img/<?php echo get_option('invoice_logo'); ?>"/>
+                    <img src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('invoice_logo'); ?>"/>
                     <br/>
                     <?php
                     echo get_option('street').'<br/>';

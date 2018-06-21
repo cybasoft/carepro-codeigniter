@@ -11,6 +11,7 @@ class Users extends CI_Controller
         setRedirect();
         allow('admin,manager,staff');
         $this->module = 'modules/users/';
+        $this->title = lang('users');
     }
 
     //redirect if needed, otherwise display the user list
@@ -19,12 +20,12 @@ class Users extends CI_Controller
         //set the flash data error message if there is one
         $message = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         //list the users
-       $users = $this->ion_auth->users()->result();
+        $users = $this->ion_auth->users()->result();
         foreach ($users as $k => $user) {
             $users[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
         }
-        $groups=$this->ion_auth->groups()->result_array();
-        page($this->module . 'index', compact('groups','users','message'));
+        $groups = $this->ion_auth->groups()->result_array();
+        page($this->module.'index', compact('groups', 'users', 'message'));
     }
 
     //create a new user
@@ -34,26 +35,27 @@ class Users extends CI_Controller
         //validate form input
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|xss_clean|min_length[2]');
-        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
-        $this->form_validation->set_rules('password', lang('password'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        $this->form_validation->set_rules('password', lang('password'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');
-        if ($this->form_validation->run() == true) {
+        if($this->form_validation->run() == true) {
             $additional_data = array(
-                'email'=>strtolower($this->input->post('email')),
-                'password'=>$this->input->post('password'),
+                'email' => strtolower($this->input->post('email')),
+                'password' => $this->input->post('password'),
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
                 'phone' => $this->input->post('phone'),
             );
             $groups = $this->input->post('groups');
-            if ($this->ion_auth->register($additional_data,$groups)) {
+            if($this->ion_auth->register($additional_data, $groups)) {
                 flash('success', lang('request_success'));
             }
         } else {
-            flash('danger', lang('request_error'));
+            validation_errors();
+            flash('danger');
         }
-        redirect('users', 'refresh');
+        redirectPrev();
     }
 
     function view($id)
@@ -69,7 +71,7 @@ class Users extends CI_Controller
             'groups' => $groups,
             'currentGroups' => $currentGroups
         );
-        page($this->module . 'edit_user', $myData);
+        page($this->module.'edit_user', $myData);
     }
 
     //edit a user
@@ -87,10 +89,10 @@ class Users extends CI_Controller
             'last_name' => $this->input->post('last_name'),
             'email' => $this->input->post('email'),
         );
-        if (is('admin')) : //only admin can assign roles
+        if(is('admin')) : //only admin can assign roles
             //Update the groups user belongs to
             $groupData = $this->input->post('groups');
-            if (isset($groupData) && !empty($groupData)) {
+            if(isset($groupData) && !empty($groupData)) {
                 $this->ion_auth->remove_from_group('', $id);
                 foreach ($groupData as $grp) {
                     $this->ion_auth->add_to_group($grp, $id);
@@ -99,14 +101,14 @@ class Users extends CI_Controller
         endif;
 
         //update the password if it was posted
-        if ($this->input->post('password')) {
-            $this->form_validation->set_rules('password', lang('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        if($this->input->post('password')) {
+            $this->form_validation->set_rules('password', lang('edit_user_validation_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[password_confirm]');
             $this->form_validation->set_rules('password_confirm', lang('edit_user_validation_password_confirm_label'), 'required');
 
             $data['password'] = $this->input->post('password');
         }
-        if ($this->form_validation->run() === TRUE) {
-            if ($this->ion_auth->update($id, $data)) {
+        if($this->form_validation->run() === TRUE) {
+            if($this->ion_auth->update($id, $data)) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -124,8 +126,8 @@ class Users extends CI_Controller
         //validate form input
         $this->form_validation->set_rules('pin', lang('pin'), 'required|xss_clean|trim|integer');
         $this->form_validation->set_rules('address', lang('address'), 'required|xss_clean|trim');
-        if ($this->form_validation->run() === TRUE) {
-            if ($this->user->update_user_data($id)) {
+        if($this->form_validation->run() === TRUE) {
+            if($this->user->update_user_data($id)) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -144,12 +146,12 @@ class Users extends CI_Controller
     {
         allow('admin');
 
-        if ($code !== false) {
+        if($code !== false) {
             $activation = $this->ion_auth->activate($id, $code);
         } else {
             $activation = $this->ion_auth->activate($id);
         }
-        if ($activation) {
+        if($activation) {
             //redirect them to the auth page
             flash('success', lang('user_activated'));
         } else {
@@ -169,12 +171,12 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('confirm', lang('deactivate_validation_confirm_label'), 'required');
         $this->form_validation->set_rules('id', lang('deactivate_validation_user_id_label'), 'required|alpha_numeric');
 
-        if ($this->form_validation->run() == FALSE) {
+        if($this->form_validation->run() == FALSE) {
 
             $data['user_id'] = $id;
-            page($this->module . 'deactivate_user', $data);
+            page($this->module.'deactivate_user', $data);
         } else {
-            if ($this->input->post('confirm') == 'yes') {
+            if($this->input->post('confirm') == 'yes') {
                 $this->ion_auth->deactivate($id);
                 flash('warning', lang('user_deactivated'));
             } else {
@@ -195,11 +197,11 @@ class Users extends CI_Controller
         $data['user_id'] = $id;
         page('modules/users/confirm_delete', $data);
 
-        if (isset($_POST['confirm'])) {
-            if ($_POST['confirm'] == 'DELETE') {
+        if(isset($_POST['confirm'])) {
+            if($_POST['confirm'] == 'DELETE') {
                 $this->db->where('id', $id);
                 $this->db->delete('users');
-                if ($this->db->affected_rows() > 0) {
+                if($this->db->affected_rows()>0) {
                     flash('success', lang('request_success'));
                     redirect('users', 'refresh');
                 } else {
@@ -226,9 +228,9 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('group_name', lang('create_group_validation_name_label'), 'required|alpha_dash|xss_clean');
         $this->form_validation->set_rules('description', lang('create_group_validation_desc_label'), 'xss_clean');
 
-        if ($this->form_validation->run() == TRUE) {
+        if($this->form_validation->run() == TRUE) {
             $new_group_id = $this->ion_auth->create_group($this->input->post('group_name'), $this->input->post('description'));
-            if ($new_group_id) {
+            if($new_group_id) {
                 // check to see if we are creating the group
                 // redirect them back to the admin page
                 flash('success', $this->ion_auth->messages());
@@ -246,15 +248,15 @@ class Users extends CI_Controller
     {
         allow('admin');
         // bail if no group id given
-        if (!$id || empty($id)) {
+        if(!$id || empty($id)) {
             redirect('auth', 'refresh');
         }
         //validate form input
         $this->form_validation->set_rules('group_name', lang('edit_group_validation_name_label'), 'required|alpha_dash|xss_clean');
         $this->form_validation->set_rules('group_description', lang('edit_group_validation_desc_label'), 'xss_clean');
-        if ($this->form_validation->run() === TRUE) {
+        if($this->form_validation->run() === TRUE) {
             $group_update = $this->ion_auth->update_group($id, $_POST['group_name'], $_POST['group_description']);
-            if ($group_update) {
+            if($group_update) {
                 flash('success', lang('edit_group_saved'));
             } else {
 
@@ -262,7 +264,7 @@ class Users extends CI_Controller
 
         } else {
             flash('danger', $this->ion_auth->errors());
-            redirect('users/edit_group/' . $id);
+            redirect('users/edit_group/'.$id);
         }
         redirect('users#groups', 'refresh');
 
@@ -277,7 +279,7 @@ class Users extends CI_Controller
         $group = $this->ion_auth->group($id)->row();
         //pass the user to the view
         $this->data['group'] = $group;
-        page($this->module . 'edit_group', $this->data);
+        page($this->module.'edit_group', $this->data);
     }
 
     /*
@@ -286,12 +288,12 @@ class Users extends CI_Controller
     function uploadPhoto($id = "")
     {
         allow('admin,manager');
-        $upload_path = './assets/uploads/users/staff';
+        $upload_path = './assets/uploads/users';
         $upload_db = 'users';
-        if (!file_exists($upload_path)) {
+        if(!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
         }
-        if ($id == "") { //make sure there are arguments
+        if($id == "") { //make sure there are arguments
             flash('danger', lang('request_error'));
             redirectPrev();
         }
@@ -304,14 +306,14 @@ class Users extends CI_Controller
             'encrypt_name' => true,
         );
         $this->load->library('upload', $config);
-        if (!$this->upload->do_upload()) {
+        if(!$this->upload->do_upload()) {
             flash('danger', lang('request_error'));
         } else {
             //delete if any exists
             $q = $this->db->where('id', $id)->get($upload_db);
             foreach ($q->result() as $r) {
-                if ($r->photo !== "") :
-                    @unlink($upload_path . '/' . $r->photo);
+                if($r->photo !== "") :
+                    @unlink($upload_path.'/'.$r->photo);
                     $data['photo'] = '';
                     $this->db->where('id', $id)->update($upload_db, $data);
                 endif;
@@ -323,7 +325,7 @@ class Users extends CI_Controller
             );
             $this->db->where('id', $id)->update($upload_db, $data_ary);
             $data = array('upload_data' => $upload_data);
-            if ($data) {
+            if($data) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));

@@ -444,10 +444,14 @@ class My_child extends CI_Model
      * @param $id
      * @return int
      */
-    function groupCount($id)
+    function roomCount($id, $type = 'children')
     {
-        $this->db->where('group_id', $id);
-        $res = $this->db->count_all_results('child_group');
+        $this->db->where('room_id', $id);
+        if($type == 'children') {
+            $res = $this->db->count_all_results('child_room');
+        } else {
+            $res = $this->db->count_all_results('child_room_staff');
+        }
         if(count($res)>0)
             return $res;
         return 0;

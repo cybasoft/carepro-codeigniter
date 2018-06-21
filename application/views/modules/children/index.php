@@ -12,8 +12,10 @@
         <?php echo form_close(); ?>
     </div>
     <div class="col-md-3">
+        <button type="button" data-html="true" class="btn btn-lg btn-danger reportsBtn" data-placement="bottom"
+                data-toggle="popover" title="<?php echo lang('reports'); ?>" data-content='
 
-        <div style="width:200px">
+<div style="width:200px">
             <div class="input-group date">
                 <input data-provide="datepicker" data-date="<?php echo date('m/d/Y'); ?>" type="text"
                        class="form-control datepicker" value="<?php echo date('m/d/Y'); ?>">
@@ -25,6 +27,10 @@
                 </div>
             </div>
         </div>
+
+
+'> <?php echo lang('reports'); ?></button>
+
     </div>
     <div class="col-md-5">
         <a href="<?php echo site_url('reports/roster?active'); ?>" target="_blank"
@@ -59,14 +65,10 @@
                 <?php echo lang('inactive_children'); ?>
             </a>
         </li>
+
         <li role="presentation">
-            <a href="#register" aria-controls="register" role="tab" data-toggle="tab">
-                <i class="fa fa-plus"></i> <?php echo lang('register'); ?>
-            </a>
-        </li>
-        <li role="presentation">
-            <a href="#groups" aria-controls="groups" role="tab" data-toggle="tab">
-                <i class="fa fa-users"></i> <?php echo lang('Child groups'); ?>
+            <a href="#rooms" aria-controls="rooms" role="tab" data-toggle="tab">
+                <i class="fa fa-building"></i> <?php echo lang('rooms'); ?>
             </a>
         </li>
     </ul>
@@ -93,7 +95,7 @@
                         <div class="children-thumbs cursor">
                             <div class="children-thumb"
                                  onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
-                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
+                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/children/'.$row->photo; ?>');">
                                 <?php if($this->child->countAllergies($row->id)>0): ?>
                                     <i class="fa fa-allergies text-danger i-check-icons i-check-allergy"></i>
                                 <?php endif; ?>
@@ -135,7 +137,7 @@
                         <div class="children-thumbs cursor">
                             <div class="children-thumb"
                                  onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
-                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
+                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/children/'.$row->photo; ?>');">
                                 <span class="i-check-timer">
                                     <?php echo $this->child->checkinCounter($row->id); ?>
                                 </span>
@@ -200,7 +202,7 @@
                         <div class="children-thumbs cursor">
                             <div class="children-thumb"
                                  onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
-                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/users/children/'.$row->photo; ?>');">
+                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/children/'.$row->photo; ?>');">
                                 <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
                                 <span class="child-id">ID:
                                     <?php echo decrypt($row->national_id); ?></span>
@@ -221,11 +223,8 @@
                     <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
             <?php endif; ?>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="register">
-            <?php $this->load->view('modules/children/register'); ?>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="groups">
-            <?php $this->load->view('modules/children/groups'); ?>
+        <div role="tabpanel" class="tab-pane fade" id="rooms">
+            <?php $this->load->view('modules/children/rooms'); ?>
         </div>
     </div>
 </div>
@@ -247,9 +246,5 @@
         var datestring = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate());
         window.open('<?php echo site_url('reports/roster?daily&date='); ?>' + datestring);
     }
-    setTimeout(function () {
-        window.location.reload();
-    },60000)
-
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>

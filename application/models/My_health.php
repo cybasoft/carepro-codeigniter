@@ -66,6 +66,8 @@ class my_health extends CI_Model
             'child_id' => $this->input->post('child_id'),
             'name' => $this->input->post('name'),
             'notes'=>$this->input->post('notes'),
+            'first_event'=> $this->input->post('first_event'),
+            'last_event'=> $this->input->post('last_event'),
             'created_at'=>date_stamp(),
             'user_id'=>$this->user->uid()
         );

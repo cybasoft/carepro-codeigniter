@@ -14,7 +14,7 @@ class Settings extends CI_Controller
         allow('admin,manager');
         //variables
         $this->module = 'admin/';
-
+        $this->title = lang('settings');
     }
 
     function index()
@@ -28,6 +28,7 @@ class Settings extends CI_Controller
      */
     function update()
     {
+        allow('admin');
         foreach ($_POST as $field => $value) {
             $this->form_validation->set_rules($field, lang($field), 'xss_clean|trim');
         }
@@ -72,31 +73,33 @@ class Settings extends CI_Controller
         page($this->module.'purge_child');
     }
 
+    /**
+     * upload logo
+     */
     function upload_logo()
     {
-        $upload_path = './assets/img/';
-
+        allow('admin');
+        $upload_path = './assets/uploads/content/';
+        if(!file_exists($upload_path)) {
+            mkdir($upload_path, 755, true);
+        }
+        $filename= $_FILES["logo"]["name"];
+        $file_ext = pathinfo($filename,PATHINFO_EXTENSION);
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'png',
+            'allowed_types' => 'png|jpg|jpeg',
             'max_size' => '2048',
             'max_width' => '500',
             'max_height' => '112',
             'encrypt_name' => false,
-            'file_name' => 'logo.png',
+            'file_name'=>'logo.'.$file_ext,
             'overwrite' => true
         );
         $this->load->library('upload', $config);
-
         if(!$this->upload->do_upload('logo')) {
             $errors['errors'] = $this->upload->display_errors();
             flash('danger', lang('request_error').implode('', $errors));
         } else {
-//            //delete current logo
-//            if (file_exists($upload_path . get_option('logo'))) {
-//                unlink($upload_path . get_option('logo'));
-//            }
-
             $upload_data = $this->upload->data();
             $data = array('upload_data' => $upload_data);
             if($data) {
@@ -110,31 +113,33 @@ class Settings extends CI_Controller
 
     }
 
+    /**
+     * upload invoice logo
+     */
     function upload_invoice_logo()
     {
-        $upload_path = './assets/img/';
-
+        allow('admin');
+        $upload_path = './assets/uploads/content/';
+        if(!file_exists($upload_path)) {
+            mkdir($upload_path, 755, true);
+        }
+        $filename= $_FILES["invoice_logo"]["name"];
+        $file_ext = pathinfo($filename,PATHINFO_EXTENSION);
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'png',
+            'allowed_types' => 'png|jpg|jpeg',
             'max_size' => '2048',
             'max_width' => '500',
             'max_height' => '112',
             'encrypt_name' => false,
-            'file_name' => 'invoice_logo.png',
+            'file_name' => 'invoice_logo.'.$file_ext,
             'overwrite' => true
         );
         $this->load->library('upload', $config);
-
         if(!$this->upload->do_upload('invoice_logo')) {
             $errors['errors'] = $this->upload->display_errors();
             flash('danger', lang('request_error').implode('', $errors));
         } else {
-//            //delete current logo
-//            if (file_exists($upload_path . get_option('logo'))) {
-//                unlink($upload_path . get_option('logo'));
-//            }
-
             $upload_data = $this->upload->data();
             $data = array('upload_data' => $upload_data);
             if($data) {
@@ -149,6 +154,7 @@ class Settings extends CI_Controller
 
     function paymentMethods()
     {
+        allow('admin');
         $this->form_validation->set_rules('title', lang('payment_method'), 'required|trim|xss_clean');
 
         if($this->form_validation->run() == TRUE) {
@@ -165,6 +171,7 @@ class Settings extends CI_Controller
 
     function deletePaymentMethod($id)
     {
+        allow('admin');
         $this->db->delete('payment_methods', array('id' => $id));
         flash('success', lang('Settings have been updated'));
         redirect('settings/#paymentMethods');

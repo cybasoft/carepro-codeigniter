@@ -5,7 +5,7 @@
     <title><?php echo get_option('company_name'); ?></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo base_url(); ?>assets/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
     <style>
         .container {
             width: 1170px;
@@ -27,7 +27,7 @@
 <body>
 <div class="container">
     <img class="" style="width: 250px;"
-         src="<?php echo base_url(); ?>assets/img/<?php echo get_option('invoice_logo'); ?>"/>
+         src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('invoice_logo'); ?>"/>
 
     <h3><?php echo lang('children_roster'); ?>
         <span style="font-size:12px">
@@ -58,7 +58,7 @@
         <?php foreach ($children as $child) : ?>
             <tr <?php if(!isset($_GET['inactive']) && $child->status == 0) { ?> style="text-decoration: line-through;color:red" <?php } ?>>
                 <td>
-                    <i class="fa fa-square-o" style="font-size:20px;"></i>
+                    <i class="far fa-square" style="font-size:20px;"></i>
                 </td>
                 <td><?php echo $child->first_name.' '.$child->last_name; ?></td>
                 <td><?php echo $child->bday; ?></td>

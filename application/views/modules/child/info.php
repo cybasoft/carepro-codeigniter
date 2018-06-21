@@ -3,7 +3,7 @@
         <h3 class="box-title"><?php echo sprintf(lang('child_page_heading'), $child->first_name.' '.$child->last_name); ?></h3>
         <div class="box-tools pull-right">
             <?php if(is('admin') || is('staff')): ?>
-                <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal"><span
+                <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateChildModal"><span
                             class="fa fa-pencil-alt"></span>
                 </a>
             <?php endif; ?>
@@ -61,7 +61,7 @@
     </div>
 </div>
 <?php if(is('admin') || is('staff')): ?>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="updateChildModal" tabindex="-1" role="dialog" aria-labelledby="updateChildModalLabel">
         <div class="modal-dialog" role="document">
             <?php echo form_open('child/'.$child->id); ?>
 
@@ -71,7 +71,7 @@
                                 aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title"
-                        id="myModalLabel"><?php echo $child->first_name.' '.$child->last_name; ?></h4>
+                        id="updateChildModalLabel"><?php echo $child->first_name.' '.$child->last_name; ?></h4>
                 </div>
                 <div class="modal-body">
                     <?php echo form_hidden('child_id', $child->id); ?>

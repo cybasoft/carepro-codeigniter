@@ -1,29 +1,23 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Parents extends CI_Controller
+class ParentController extends CI_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
 		setRedirect();
-		allow('admin,manager,staff');
+		allow('parent');
 		//resources
 		$this->load->library('table');
 		$this->load->model('My_parent', 'parent');
 		$this->load->model('My_invoice', 'invoice');
-        $this->title = lang('parents');
+
+		//variables
+		$this->module = "parent/";
+        $this->title = lang('parent');
 	}
-	function index(){
-	    $users = $this->db
-            ->where('groups.name','parent')
-            ->from('users')
-            ->join('users_groups','users_groups.user_id=users.id')
-            ->join('groups','groups.id=users_groups.group_id')
-            ->get()->result();
-        $groups=$this->ion_auth->groups()->result_array();
-	    page('modules/users/parents',compact('users','groups'));
-    }
+
 	function invoice($term = 0)
 	{
 		$this->db->where('child_id', $this->child->getChildId());

@@ -110,8 +110,8 @@ $route['child/(:num)/photos/(:any)'] = 'child/photos/index/$1';
 $route['child/(:num)/photos/(:any)/(:any)'] = 'child/photos/index/$1';
 
 //parents
-$route['parents/:any'] = 'child/parents/$1';
-$route['parent/(:any)'] = 'parent/$1';
+$route['parents/:any'] = 'parents/$1';
+$route['parent/(:any)'] = 'parentController/$1';
 
 $route['news/(:any)'] = 'news/$1';
 $route['lockscreen'] = 'dashboard/lockscreen';

@@ -1,17 +1,14 @@
 <div class="row">
-    <div class="col-lg-12">
-        <div class="callout callout-info">
-            <h3><?php echo $user->last_name; ?></h3>
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-lg-6">
         <div class="box box-solid box-primary">
-            <div class="box-header"><h3 class="box-title"><?php echo lang('user_information'); ?></h3></div>
+            <div class="box-header">
+                <h3 class="box-title">
+                    <?php echo $user->last_name; ?>
+                </h3>
+            </div>
             <div class="box-body">
-                <?php echo form_open('user/' . $user->id); ?>
-                <?php echo form_hidden('user_id',$user->id); ?>
+                <?php echo form_open('user/'.$user->id); ?>
+                <?php echo form_hidden('user_id', $user->id); ?>
                 <table class="table">
                     <tr>
                         <td><?php echo lang('first_name'); ?></td>
@@ -39,7 +36,7 @@
                     </tr>
                     <tr>
                     </tr>
-                    <?php if (is('admin') == true) : ?>
+                    <?php if(is('admin') == true) : ?>
                         <tr>
                             <td><?php echo lang('edit_user_groups_heading'); ?></td>
                             <td>
@@ -52,12 +49,12 @@
                                         $type = 'checkbox';
                                         $g_name = $group['name'];
                                         foreach ($currentGroups as $grp) {
-                                            if ($gID == $grp->id) {
+                                            if($gID == $grp->id) {
                                                 $checked = ' checked="checked"';
                                                 break;
                                             }
                                         }
-                                        if (in_group($this->user->uid(), 'admin') && $group['id'] == 1) {
+                                        if(in_group($this->user->uid(), 'admin') && $group['id'] == 1) {
                                             $type = 'disabled"';
                                         } else {
                                             $type = 'disabled"';
@@ -88,7 +85,7 @@
         <div class="box box-solid box-primary">
             <div class="box-header"><h3 class="box-title"><?php echo lang('address'); ?></h3></div>
             <div class="box-body">
-                <?php echo form_open('user/' . $user->id . '/updateUserData'); ?>
+                <?php echo form_open('user/'.$user->id.'/updateUserData'); ?>
                 <table class="table">
                     <tr>
                         <td><?php echo lang('pin'); ?></td>
@@ -125,17 +122,17 @@
                         <tr>
                             <td style="width:200px">
                                 <?php
-                                if (is_file(APPPATH.'../assets/uploads/users/staff/'.$user->photo)) {
+                                if(is_file(APPPATH.'../assets/uploads/users/'.$user->photo)) {
                                     echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/uploads/users/staff/' .$user->photo . '"/>';
+         src="'.base_url().'assets/uploads/users/'.$user->photo.'"/>';
                                 } else {
                                     echo '<img class="img-circle img-thumbnail"
-         src="' . base_url() . 'assets/img/content/no-image.png"/>';
+         src="'.base_url().'assets/img/content/no-image.png"/>';
                                 }
                                 ?>
                             </td>
                             <td>
-                                <?php echo form_open_multipart('users/uploadPhoto/' . $user->id, 'class="input-group"'); ?>
+                                <?php echo form_open_multipart('users/uploadPhoto/'.$user->id, 'class="input-group"'); ?>
                                 <input class="form-control" type="file" name="userfile" size="20"/>
                                 <span class="input-group-btn">
                             <button class="btn btn-info" type="submit"><?php echo lang('update'); ?></button>

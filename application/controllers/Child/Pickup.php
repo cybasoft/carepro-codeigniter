@@ -8,6 +8,7 @@ class Pickup extends CI_Controller
         setRedirect();
         allow('admin,manager,staff,parent');
         $this->module = 'modules/child/';
+        $this->title = lang('child').'-'.lang('pickup');
     }
 
     /*
@@ -42,7 +43,7 @@ class Pickup extends CI_Controller
     {
         allow('admin,manager,staff');
         //delete images
-        $upload_path = './assets/uploads/pickup';
+        $upload_path = './assets/pickup';
         $this->db->where('id', $id);
         $q = $this->db->get('child_pickup');
         foreach ($q->result() as $r) {
@@ -61,9 +62,13 @@ class Pickup extends CI_Controller
         redirectPrev();
     }
 
+    /**
+     * @param string $id
+     * @return bool
+     */
     function uploadPhoto($id = "")
     {
-        $upload_path = './assets/uploads/users/pickup';
+        $upload_path = './assets/uploads/pickup';
         $upload_db = 'child_pickup';
 
         if (!file_exists($upload_path)) {
@@ -80,7 +85,7 @@ class Pickup extends CI_Controller
         );
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {
-            flash('danger', lang('request_error'));
+            return false;
         } else {
             //delete if any exists
             $this->db->where('id', $id);
@@ -108,6 +113,6 @@ class Pickup extends CI_Controller
             }
         }
 
-        redirectPrev();
+        return  true;
     }
 }

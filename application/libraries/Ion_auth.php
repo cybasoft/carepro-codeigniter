@@ -58,7 +58,8 @@ class Ion_auth
     {
         //timezone settings
         //$this->load->model('conf');
-        date_default_timezone_set(get_option('timezone'));
+        if(get_option('timezone') !== "")
+            date_default_timezone_set(get_option('timezone'));
 
         $this->load->config('ion_auth', TRUE);
         $this->load->library('email');

@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Conf extends CI_Model
 {
@@ -7,8 +7,9 @@ class Conf extends CI_Model
         parent::__construct();
         error_reporting(E_ALL);
         ini_set("display_errors", 1);
-        ini_set("error_log", base_url() . 'php-error.log');
-        date_default_timezone_set(get_option('timezone'));
+        ini_set("error_log", base_url().'php-error.log');
+        if(get_option('timezone') !== "")
+            date_default_timezone_set(get_option('timezone'));
 
         $this->load->model('My_child', 'child');
         $this->load->model('My_user', 'users');
@@ -55,7 +56,7 @@ class Conf extends CI_Model
 
     function totalRecords($db, $data = array())
     {
-        if (!empty($data)) {
+        if(!empty($data)) {
             foreach ($data as $field => $key) {
                 $this->db->where($field, $key);
             }
@@ -63,7 +64,7 @@ class Conf extends CI_Model
         $query = $this->db->get($db);
         return $query->num_rows();
     }
-    
+
 
     /*
      * check_encrypt_key
@@ -74,8 +75,8 @@ class Conf extends CI_Model
     function check_encrypt_key()
     {
         $this->load->helper('language');
-        if (logged_in()) {
-            if (empty($this->config->item('encryption_key'))) {
+        if(logged_in()) {
+            if(empty($this->config->item('encryption_key'))) {
                 flash('danger', lang('encryption_key_warning'));
                 //redirect('admin#settings');
             }

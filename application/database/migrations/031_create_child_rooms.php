@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_create_child_groups extends CI_Migration
+class Migration_create_child_rooms extends CI_Migration
 {
 
     /**
@@ -8,16 +8,20 @@ class Migration_create_child_groups extends CI_Migration
      *
      * @return void
      */
-    protected $table1 = 'child_groups';
-    protected $table2 = 'child_group';
+    protected $table1 = 'child_rooms';
+    protected $table2 = 'child_room';
 
     public function up()
     {
-        $this->childGroups();
-        $this->childGroup();
+        $this->db->query('DROP TABLE IF EXISTS child_group_staff');
+        $this->db->query('DROP TABLE IF EXISTS child_group');
+        $this->db->query('DROP TABLE IF EXISTS child_groups');
+
+        $this->childrooms();
+        $this->childroom();
     }
 
-    function childGroups()
+    function childrooms()
     {
         $this->dbforge->add_field([
             'id' => [
@@ -52,7 +56,7 @@ class Migration_create_child_groups extends CI_Migration
         $this->dbforge->create_table($this->table1, TRUE, $attributes);
     }
 
-    function childGroup()
+    function childroom()
     {
         $this->dbforge->add_field([
             'child_id' => [
@@ -61,7 +65,7 @@ class Migration_create_child_groups extends CI_Migration
                 'unsigned' => TRUE,
                 'null'=>FALSE
             ],
-            'group_id' => [
+            'room_id' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => TRUE,
@@ -76,14 +80,14 @@ class Migration_create_child_groups extends CI_Migration
             ]
         ]);
         $this->dbforge->add_key('child_id',true);
-        $this->dbforge->add_key('group_id',true);
+        $this->dbforge->add_key('room_id',true);
         $attributes = array(
             'ENGINE' => 'InnoDB',
         );
         // Create Table users
         $this->dbforge->create_table($this->table2, TRUE, $attributes);
         $this->db->query('ALTER TABLE `'.$this->table2.'` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
-        $this->db->query('ALTER TABLE `'.$this->table2.'` ADD FOREIGN KEY (`group_id`) REFERENCES child_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+        $this->db->query('ALTER TABLE `'.$this->table2.'` ADD FOREIGN KEY (`room_id`) REFERENCES child_rooms(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 
     /**

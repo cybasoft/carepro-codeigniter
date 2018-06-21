@@ -2,7 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo get_option('company_name'); ?></title>
+    <title><?php echo get_option('company_name'); ?>
+        <?php if(isset($this->title)) {
+            echo ' - '.$this->title;
+        } ?>
+    </title>
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -14,7 +18,7 @@
     <link href="<?php echo base_url(); ?>assets/css/fullcalendar.print.css" rel="stylesheet" type="text/css"
           media='print'/>
     <link rel="stylesheet" type="text/css"
-          href="//cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/datatables.min.css"/>
+          href="<?php echo base_url(); ?>assets/css/datatables.min.css"/>
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 
@@ -48,7 +52,7 @@
 <body class="skin-blue">
 <header class="header">
     <a href="<?php echo site_url('dashboard'); ?>" class="logo"
-       style="left:0 !important; background-color: <?php echo get_option('logo_bg_color','#ffeb3b'); ?>">
+       style="left:0 !important; background-color: <?php echo get_option('logo_bg_color', '#ffeb3b'); ?>">
         <?php if(get_option('logo') == "") : ?>
             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
 			<?php echo get_option('company_name'); ?>
@@ -58,12 +62,12 @@
 			<?php echo get_option('slogan'); ?>
 			</span>
         <?php else : ?>
-            <img src="<?php echo base_url().'assets/img/'.get_option('logo'); ?>"/>
+            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('logo'); ?>"/>
         <?php endif; ?>
     </a>
     <!--start nav-->
     <nav class="navbar navbar-static-top" role="navigation"
-         style="background-color:<?php echo get_option('top_nav_bg_color','#03a9f4'); ?>">
+         style="background-color:<?php echo get_option('top_nav_bg_color', '#03a9f4'); ?>">
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only"><?php echo lang('toggle_navigation'); ?></span>
             <span class="icon-bar"></span>
@@ -72,6 +76,20 @@
         </a>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
+                <li>
+                    <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
+                       data-target="#registerChildModal">
+                        <i class="fa fa-user-plus"></i>
+                        <span class="hidden-xs"><?php echo lang('Register child'); ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
+                       data-target="#newUserModal">
+                        <i class="fa fa-user-plus"></i>
+                        <span class="hidden-xs"><?php echo lang('Register user'); ?></span>
+                    </a>
+                </li>
                 <?php if(!is('parent')): ?>
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -102,7 +120,7 @@
                         </ul>
                     </li>
                 <?php endif; ?>
-                <li class="dropdown user user-menu">
+                <li class="dropdown user user-menu hidden-xs">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user"></i>
                         <span><?php echo $this->user->user()->last_name; ?>
@@ -136,7 +154,8 @@
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!--start sidebar-->
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas" style="background-color: <?php echo get_option('left_sidebar_bg_color','#f4f4f'); ?>">
+    <aside class="left-side sidebar-offcanvas"
+           style="background-color: <?php echo get_option('left_sidebar_bg_color', '#f4f4f'); ?>">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
@@ -163,43 +182,63 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="<?php echo set_active('dashboard'); ?>">
-                    <a href="<?php echo site_url('dashboard'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
+                    <a href="<?php echo site_url('dashboard'); ?>"
+                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                         <i class="fa fa-home"></i> <span><?php echo lang('dashboard'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
-                    <a href="<?php echo site_url('children'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
+                    <a href="<?php echo site_url('children'); ?>"
+                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                         <i class="fa fa-users"></i> <span><?php echo lang('children'); ?>
                             <small class="badge pull-right bg-green"><?php echo $this->child->getCount(); ?></small>
                     </a>
                 </li>
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('users'); ?>">
-                        <a href="<?php echo site_url('users'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                            <i class="fa fa-user"></i> <span><?php echo lang('users'); ?></span>
+                        <a href="<?php echo site_url('users'); ?>"
+                           style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
+                            <i class="fa fa-users"></i> <span><?php echo lang('users'); ?></span>
                             <small class="badge pull-right bg-blue"><?php echo $this->user->getCount(); ?></small>
                         </a>
                     </li>
                 <?php endif; ?>
+                <?php if(is('admin') || is('manager')): ?>
+                    <li class="<?php echo set_active('parents'); ?>">
+                        <a href="<?php echo site_url('parents'); ?>"
+                           style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
+                            <i class="fa fa-users"></i> <span><?php echo lang('parents'); ?></span>
+                            <small class="badge pull-right bg-blue"><?php echo $this->users->getCount('parent'); ?></small>
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li class="<?php echo set_active('calendar'); ?>">
-                    <a href="<?php echo site_url('calendar'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                        <i class="fa fa-calendar"></i> <span><?php echo lang('calendar'); ?></span>
+                    <a href="<?php echo site_url('calendar'); ?>"
+                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
+                        <i class="fa fa-calendar-alt"></i> <span><?php echo lang('calendar'); ?></span>
                         <!--small class="badge pull-right bg-red">3</small-->
                     </a>
                 </li>
                 <li class="<?php echo set_active(['news']); ?>">
-                    <a href="<?php echo site_url('news'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
+                    <a href="<?php echo site_url('news'); ?>"
+                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                         <i class="fa fa-clipboard"></i>
                         <span><?php echo lang('news'); ?></span>
                     </a>
                 </li>
-                <?php if(is('admin')): ?>
+                <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('settings'); ?>">
-                        <a href="<?php echo site_url('settings'); ?>" style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
+                        <a href="<?php echo site_url('settings'); ?>"
+                           style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
                             <i class="fa fa-wrench"></i> <span><?php echo lang('settings'); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
+                <li>
+                    <a href="<?php echo site_url('logout'); ?>">
+                        <i class="fa fa-lock"></i> <?php echo lang('logout'); ?>
+                    </a>
+                </li>
             </ul>
         </section>
         <div class="footer text-center" style="position:fixed;bottom:0">
@@ -291,6 +330,16 @@
                 'pdf'
             ]
         });
+        $('#datatable').DataTable({
+            buttons: [
+                'pdf'
+            ]
+        });
+        $('#users').DataTable({
+            buttons: [
+                'pdf'
+            ]
+        });
     });
     //lockscreen
     $('.lock-screen').click(function () {
@@ -308,5 +357,8 @@
 <?php if($this->input->cookie('timer')>0): ?>
     <script>startLockscreen()</script>
 <?php endif; ?>
+
+<?php $this->load->view('modules/children/add_child'); ?>
+<?php $this->load->view('modules/users/add_user'); ?>
 </body>
 </html>

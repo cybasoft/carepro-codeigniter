@@ -39,7 +39,7 @@
                                 <?php echo get_option('company_name'); ?>
                             </span>
                         <?php else : ?>
-                            <img src="<?php echo base_url().'assets/img/'.get_option('logo'); ?>"/>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('logo'); ?>"/>
                         <?php endif; ?>
                     </a>
                     <img class="hidden-md hidden-lg pull-left"

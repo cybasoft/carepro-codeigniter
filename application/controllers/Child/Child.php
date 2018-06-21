@@ -13,6 +13,7 @@ class Child extends CI_Controller
         parent::__construct();
         $this->load->model('My_invoice', 'invoice');
         $this->module = 'modules/child/';
+        $this->title = lang('child');
     }
 
     /*
@@ -112,7 +113,7 @@ class Child extends CI_Controller
     function uploadPhoto($id = "")
     {
         allow('admin,manager,staff');
-        $upload_path = './assets/uploads/users/children';
+        $upload_path = './assets/uploads/children';
         $upload_db = 'children';
         if (!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);

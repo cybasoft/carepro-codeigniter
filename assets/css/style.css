@@ -1708,7 +1708,7 @@ body > .header .logo .icon {
 }
 
 .small-box {
-    border-radius: 2px;
+    border-radius: 5px;
     position: relative;
     display: block;
     margin-bottom: 20px;
@@ -1716,7 +1716,7 @@ body > .header .logo .icon {
 }
 
 .small-box > .inner {
-    padding: 10px
+    padding: 10px;
 }
 
 .small-box > .small-box-footer {
@@ -1759,16 +1759,20 @@ body > .header .logo .icon {
     z-index: 5
 }
 
+.small-box p {
+    margin-top: 10px;
+}
+
 .small-box .icon {
     -webkit-transition: all .3s linear;
     -o-transition: all .3s linear;
     transition: all .3s linear;
     position: absolute;
-    top: -10px;
+    top: 2px;
     right: 10px;
     z-index: 0;
-    font-size: 90px;
-    color: rgba(0, 0, 0, 0.15)
+    font-size: 50px;
+    color: rgba(0, 0, 0, 0.15);
 }
 
 .small-box:hover {
@@ -1777,7 +1781,7 @@ body > .header .logo .icon {
 }
 
 .small-box:hover .icon {
-    font-size: 95px
+    font-size: 60px
 }
 
 @media (max-width: 767px) {
@@ -3473,7 +3477,7 @@ Photo albums
     }
 }
 
-.active-group {
+.active-room {
     font-weight: bold;
     color: #1974cc;
 }
@@ -3682,6 +3686,6 @@ Photo albums
     border-radius: 0 0 3px 3px !important;;
     text-transform: none;
     background: #1974cc !important;
-    padding: 0px 2px !important;
+    padding: 0 2px !important;
     color: #fff;
 }

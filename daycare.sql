@@ -653,8 +653,12 @@ CREATE INDEX incident_id
   ON child_incident_photos (incident_id);
 
 -- version 2.1.1
+DROP TABLE IF EXISTS child_group_staff;
+DROP TABLE IF EXISTS child_group;
 DROP TABLE IF EXISTS child_groups;
-CREATE TABLE child_groups
+
+DROP TABLE IF EXISTS child_rooms;
+CREATE TABLE child_rooms
 (
   id          INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name        VARCHAR(100)     NOT NULL UNIQUE,
@@ -663,44 +667,60 @@ CREATE TABLE child_groups
   updated_at  DATETIME         NULL
 );
 
-DROP TABLE IF EXISTS child_group;
-CREATE TABLE child_group
+DROP TABLE IF EXISTS child_room;
+CREATE TABLE child_room
 (
   child_id   INT(11) UNSIGNED NOT NULL,
-  group_id   INT(11) UNSIGNED NOT NULL,
+  room_id   INT(11) UNSIGNED NOT NULL,
   created_at DATETIME         NOT NULL,
   updated_at DATETIME         NULL,
-  PRIMARY KEY (child_id, group_id),
-  CONSTRAINT child_group_ibfk_1
+  PRIMARY KEY (child_id, room_id),
+  CONSTRAINT child_room_ibfk_1
   FOREIGN KEY (child_id) REFERENCES children (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-  CONSTRAINT child_group_ibfk_2
-  FOREIGN KEY (group_id) REFERENCES child_groups (id)
+  CONSTRAINT child_room_ibfk_2
+  FOREIGN KEY (room_id) REFERENCES child_rooms (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
 
-CREATE INDEX group_id
-  ON child_group (group_id);
+CREATE INDEX room_id
+  ON child_room (room_id);
 
-DROP TABLE IF EXISTS child_group_staff;
-CREATE TABLE child_group_staff
+DROP TABLE IF EXISTS child_room_staff;
+CREATE TABLE child_room_staff
 (
   user_id    INT(11) UNSIGNED NOT NULL,
-  group_id   INT(11) UNSIGNED NOT NULL,
+  room_id   INT(11) UNSIGNED NOT NULL,
   created_at DATETIME         NOT NULL,
   updated_at DATETIME         NOT NULL,
-  PRIMARY KEY (user_id, group_id),
-  CONSTRAINT child_group_staff_ibfk_1
+  PRIMARY KEY (user_id, room_id),
+  CONSTRAINT child_room_staff_ibfk_1
   FOREIGN KEY (user_id) REFERENCES users (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-  CONSTRAINT child_group_staff_ibfk_2
-  FOREIGN KEY (group_id) REFERENCES child_groups (id)
+  CONSTRAINT child_room_staff_ibfk_2
+  FOREIGN KEY (room_id) REFERENCES child_rooms (id)
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
 
-CREATE INDEX group_id
-  ON child_group_staff (group_id);
+CREATE INDEX room_id
+  ON child_room_staff (room_id);
+
+-- version 2.1.2
+DROP TABLE IF EXISTS options;
+CREATE TABLE options
+(
+  id           BIGINT(11) UNSIGNED AUTO_INCREMENT
+    PRIMARY KEY,
+  option_name  VARCHAR(191) NOT NULL,
+  option_value LONGTEXT     NULL,
+  autoload     VARCHAR(20)  NULL,
+  CONSTRAINT option_name UNIQUE (option_name)
+);
+ALTER TABLE child_problems
+  ADD first_event DATE NULL;
+ALTER TABLE child_problems
+  ADD last_event DATE NULL;

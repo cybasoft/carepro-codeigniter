@@ -355,7 +355,7 @@
 
                 <table>
                     <tr>
-                        <td><img  src="<?php echo base_url('assets/img/'.get_option('logo')); ?>" style="width:150px;"/> </td>
+                        <td><img  src="<?php echo base_url('assets/uploads/content/'.get_option('logo')); ?>" style="width:150px;"/> </td>
                     </tr>
                 </table>
                 <table class="main">

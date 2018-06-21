@@ -18,6 +18,7 @@ class news extends CI_Controller
         $this->module = 'modules/news/';
         $this->load->model('My_user', 'user');
         $this->load->model('My_news', 'news');
+        $this->title = lang('news');
     }
 
     function index()

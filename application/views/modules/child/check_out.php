@@ -46,7 +46,7 @@
                                            value="<?php echo $p->first_name.' '.$p->last_name; ?>"
                                            data-keeper-edited="yes" data-keeper-should-not-overwrite="true">
                                     <div class="front-end i-check-box"
-                                         style="background-image: url('<?php echo base_url().'assets/uploads/users/pickup/'.$p->photo; ?>');">
+                                         style="background-image: url('<?php echo base_url().'assets/uploads/pickup/'.$p->photo; ?>');">
                                         <span class="i-check-name"><?php echo $p->first_name.' '.$p->last_name; ?></span>
                                         <br/>
                                         <span class="i-check-pin"><i class="fa fa-lock"></i> <?php echo $p->pin; ?></span>

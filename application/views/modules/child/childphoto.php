@@ -8,7 +8,7 @@
     <?php
     if (!empty($child->photo)) {
         echo '<img class="img-square img-responsive img-thumbnail"
-         src="' . base_url() . 'assets/uploads/users/children/' . $child->photo . '"/>';
+         src="' . base_url() . 'assets/uploads/children/' . $child->photo . '"/>';
     } else {
         echo '<img class="img-circle img-responsive img-thumbnail"
          src="' . base_url() . 'assets/img/content/no-image.png"/>';

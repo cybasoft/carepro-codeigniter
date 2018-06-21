@@ -1,10 +1,10 @@
-<?php $groups = $this->db->get('child_groups'); ?>
+<?php $rooms = $this->db->get('child_rooms'); ?>
 <?php if(is('admin') || is('manager')): ?>
     <div class="box box-info">
         <div class="box-body">
-            <h3><?php echo lang('New children group'); ?></h3>
+            <h3><?php echo lang('New children room'); ?></h3>
             <div class="row">
-                <?php echo form_open('children/sstoreGroup'); ?>
+                <?php echo form_open('children/storeRoom'); ?>
                 <div class="col-md-5">
                     <input type="text" name="name" class="form-control"
                            placeholder="<?php echo lang('name'); ?>" required/>
@@ -25,27 +25,27 @@
     <div class="col-md-4">
 
         <ul class="nav nav-pills nav-stacked">
-            <?php foreach ($groups->result() as $group): ?>
-                <li onclick="window.location.href='<?php echo site_url('children?group='.$group->id.'#groups'); ?>'"
-                    id="<?php echo $group->id; ?>"
-                    class="cursor <?php if(isset($_GET['group']) && $_GET['group'] == $group->id): ?>active-group<?php endif; ?>">
+            <?php foreach ($rooms->result() as $room): ?>
+                <li onclick="window.location.href='<?php echo site_url('children?room='.$room->id.'#rooms'); ?>'"
+                    id="<?php echo $room->id; ?>"
+                    class="cursor <?php if(isset($_GET['room']) && $_GET['room'] == $room->id): ?>active-room<?php endif; ?>">
                     <div class="box box-info">
                         <div class="box-body">
-                            <?php echo $group->name; ?>
-                            <p style="font-size:12px;color:#ccc"><?php echo $group->description; ?></p>
+                            <?php echo $room->name; ?>
+                            <p style="font-size:12px;color:#ccc"><?php echo $room->description; ?></p>
                         </div>
                         <div class="box-footer">
                             <div class="row text-sm">
                                 <div class="col-md-6">
-                                    <span class="label label-success"><?php echo $this->user->groupCount($group->id); ?></span>
+                                    <span class="label label-success"><?php echo $this->child->roomCount($room->id,'staff'); ?></span>
                                     <?php echo lang('staff'); ?>
                                 </div>
                                 <div class="col-md-6">
-                                    <i class="label label-success"><?php echo $this->child->groupCount($group->id); ?></i>
+                                    <i class="label label-success"><?php echo $this->child->roomCount($room->id,'children'); ?></i>
                                     <?php echo lang('children'); ?>
                                 </div>
                             </div>
-                            <?php if(isset($_GET['group']) && $_GET['group'] == $group->id): ?>
+                            <?php if(isset($_GET['room']) && $_GET['room'] == $room->id): ?>
                                 <span class="arrow-right"></span>
                             <?php endif; ?>
                         </div>
@@ -55,13 +55,13 @@
         </ul>
     </div>
 
-    <?php if(isset($_GET['group']) && $_GET['group'] !== ""): ?>
+    <?php if(isset($_GET['room']) && $_GET['room'] !== ""): ?>
         <?php
-        $cgs = $this->db->select('children.id as child_id,children.first_name,children.last_name,child_groups.name,child_groups.description,child_group.child_id,child_group.group_id')
+        $cgs = $this->db->select('children.id as child_id,children.first_name,children.last_name,child_rooms.name,child_rooms.description,child_room.child_id,child_room.room_id')
             ->from('children')
-            ->join('child_group', 'child_group.child_id=children.id')
-            ->join('child_groups', 'child_groups.id=child_group.group_id')
-            ->where('child_groups.id', $_GET['group'])
+            ->join('child_room', 'child_room.child_id=children.id')
+            ->join('child_rooms', 'child_rooms.id=child_room.room_id')
+            ->where('child_rooms.id', $_GET['room'])
             ->get();
         ?>
         <?php if(count($cgs->result())>0): ?>
@@ -92,8 +92,8 @@
                             <?php
                             $assignedStaff = $this->db->select('*')
                                 ->from('users')
-                                ->join('child_group_staff', 'child_group_staff.user_id=users.id')
-                                ->where('child_group_staff.group_id', $_GET['group'])
+                                ->join('child_room_staff', 'child_room_staff.user_id=users.id')
+                                ->where('child_room_staff.room_id', $_GET['room'])
                                 ->get();
                             foreach ($assignedStaff->result() as $as): ?>
                                 <li>
@@ -113,9 +113,9 @@
                 <div class="box-body">
                     <h4><?php echo lang('select children to assign'); ?></h4>
                     <div style="max-height:400px;overflow-y: scroll;">
-                        <?php if(isset($_GET['group']) && $_GET['group'] !== ""): ?>
+                        <?php if(isset($_GET['room']) && $_GET['room'] !== ""): ?>
 
-                        <?php echo form_open('children/childrenToGroup'); ?>
+                        <?php echo form_open('children/childrenToroom'); ?>
                         <ul class="nav nav-pills nav-stacked list-unstyled">
                             <?php
                             $children = $this->db->get('children');
@@ -123,11 +123,11 @@
                                 <li>
                                     <input type="checkbox"
                                            name="child_id[]"
-                                        <?php echo (related('child_group', 'child_id', $c->id, 'group_id', $_GET['group'])) ? 'checked' : ''; ?>
+                                        <?php echo (related('child_room', 'child_id', $c->id, 'room_id', $_GET['room'])) ? 'checked' : ''; ?>
                                            value="<?php echo $c->id; ?>"/>
                                     <input type="hidden"
-                                           name="group_id"
-                                           value="<?php echo $_GET['group']; ?>"/>
+                                           name="room_id"
+                                           value="<?php echo $_GET['room']; ?>"/>
                                     <?php echo $c->first_name.' '.$c->last_name; ?>
                                 </li>
                             <?php endforeach; ?>
@@ -137,7 +137,7 @@
                     <?php echo form_close(); ?>
                     <?php else: ?>
                         <i class="fa fa-chevron-left"></i>
-                        <?php echo lang('select a group from the list to update'); ?>
+                        <?php echo lang('select a room from the list to update'); ?>
                     <?php endif; ?>
                 </div>
             </div>
@@ -146,9 +146,9 @@
                 <div class="box-body">
                     <h4><?php echo lang('select staff to assign'); ?></h4>
                     <div style="max-height:400px;overflow-y: scroll;">
-                        <?php if(isset($_GET['group']) && $_GET['group'] !== ""): ?>
+                        <?php if(isset($_GET['room']) && $_GET['room'] !== ""): ?>
 
-                        <?php echo form_open('children/staffToGroup'); ?>
+                        <?php echo form_open('children/staffToroom'); ?>
                         <ul class="nav nav-pills nav-stacked list-unstyled">
                             <?php
                             $this->db->select('users.id,users.first_name,users.last_name,users_groups.group_id');
@@ -161,11 +161,11 @@
                                 <li>
                                     <input type="checkbox"
                                            name="user_id[]"
-                                        <?php echo (related('child_group_staff', 'user_id', $s->id, 'group_id', $_GET['group'])) ? 'checked' : ''; ?>
+                                        <?php echo (related('child_room_staff', 'user_id', $s->id, 'room_id', $_GET['room'])) ? 'checked' : ''; ?>
                                            value="<?php echo $s->id; ?>"/>
                                     <input type="hidden"
-                                           name="group_id"
-                                           value="<?php echo $_GET['group']; ?>"/>
+                                           name="room_id"
+                                           value="<?php echo $_GET['room']; ?>"/>
                                     <?php echo $s->first_name.' '.$s->last_name; ?>
                                 </li>
                             <?php endforeach; ?>
@@ -175,7 +175,7 @@
                     <?php echo form_close(); ?>
                     <?php else: ?>
                         <i class="fa fa-chevron-left"></i>
-                        <?php echo lang('select a group from the list to update'); ?>
+                        <?php echo lang('select a room from the list to update'); ?>
                     <?php endif; ?>
                 </div>
             </div>

@@ -26,9 +26,14 @@
 </ul>
 
 <div class="tab-content col-md-10 col-xs-10 col-sm-10">
+
     <div class="tab-pane active" id="settings">
         <h3><?php echo lang('settings'); ?></h3>
-        <?php echo form_open('settings/update'); ?>
+        <hr/>
+        <?php
+        if(get_option('demo_mode') == 0) {
+            echo form_open('settings/update', ['class' => 'settings']);
+        } ?>
         <div class="row">
             <div class="col-md-6">
                 <?php
@@ -139,17 +144,21 @@
                         <div class="smtp-settings hidden">
                             <hr/>
                             <?php
-                            echo form_label(lang('smtp_host'));
-                            echo form_input('smtp_host', get_option('smtp_host'), ['class' => 'form_control']);
+                            if(get_option('demo_mode') == 0) {
+                                echo form_label(lang('smtp_host'));
+                                echo form_input('smtp_host', get_option('smtp_host'), ['class' => 'form_control']);
 
-                            echo form_label(lang('smtp_user'));
-                            echo form_input('smtp_user', get_option('smtp_user'), ['class' => 'form_control']);
+                                echo form_label(lang('smtp_user'));
+                                echo form_input('smtp_user', get_option('smtp_user'), ['class' => 'form_control']);
 
-                            echo form_label(lang('smtp_pass'));
-                            echo form_password('smtp_pass', get_option('smtp_pass'), ['class' => 'form_control']);
+                                echo form_label(lang('smtp_pass'));
+                                echo form_password('smtp_pass', get_option('smtp_pass'), ['class' => 'form_control']);
 
-                            echo form_label(lang('smtp_port'));
-                            echo form_input('smtp_port', get_option('smtp_port'), ['class' => 'form_control']);
+                                echo form_label(lang('smtp_port'));
+                                echo form_input('smtp_port', get_option('smtp_port'), ['class' => 'form_control']);
+                            }else{
+                                echo '<div class="alert alert-danger">'.lang('feature_disabled_in_demo').'</div>';
+                            }
                             ?>
                         </div>
 
@@ -162,7 +171,10 @@
         </div>
         <hr/>
 
-        <?php echo form_close(); ?>
+        <?php
+        if(get_option('demo_mode') == 0) {
+            echo form_close();
+        } ?>
     </div>
     <div class="tab-pane" id="billing">
         <h3><?php echo lang('billing'); ?></h3>
@@ -177,7 +189,9 @@
                     </div>
                     <div class="box-body">
                         <?php
-                        echo form_open('settings/update');
+                        if(get_option('demo_mode') == 0) {
+                            form_open('settings/update', ['class' => 'settings']);
+                        }
                         echo form_hidden('page', 'billing');
                         echo form_label(lang('currency_abbreviation'));
                         echo form_input('currency_abbreviation', get_option('currency_abbreviation'), ['class' => 'form_control', 'required' => 'required']);
@@ -186,7 +200,10 @@
                         ?>
                         <br/>
                         <button class="btn btn-default"><?php echo lang('update'); ?></button>
-                        <?php echo form_close(); ?>
+                        <?php
+                        if(get_option('demo_mode') == 0) {
+                            echo form_close();
+                        } ?>
                     </div>
                 </div>
                 <div class="box box-default box-solid">
@@ -196,21 +213,28 @@
                         </h4>
                     </div>
                     <div class="box-body">
-                        <?php echo form_open('settings/update');
-                        echo form_hidden('page', 'billing');
-                        echo form_label(lang('Stripe test public key'));
-                        echo form_input('stripe_pk_test', get_option('stripe_pk_test'), ['class' => 'form_control']);
-                        echo form_label(lang('Stripe test secret key'));
-                        echo form_input('stripe_sk_test', get_option('stripe_sk_test'), ['class' => 'form_control']);
-                        echo "<br/>";
-                        echo form_label(lang('Stripe live public key'));
-                        echo form_input('stripe_pk_live', get_option('stripe_pk_live'), ['class' => 'form_control']);
-                        echo form_label(lang('Stripe live secret key'));
-                        echo form_input('stripe_sk_live', get_option('stripe_sk_live'), ['class' => 'form_control']);
-                        ?>
-                        <br/>
-                        <button class="btn btn-default"><?php echo lang('update'); ?></button>
-                        <?php echo form_close(); ?>
+                        <?php
+                        if(get_option('demo_mode') == 0) {
+                            echo form_open('settings/update', ['class' => 'settings']);
+
+                            echo form_hidden('page', 'billing');
+                            echo form_label(lang('Stripe test public key'));
+                            echo form_input('stripe_pk_test', get_option('stripe_pk_test'), ['class' => 'form_control']);
+                            echo form_label(lang('Stripe test secret key'));
+                            echo form_password('stripe_sk_test', get_option('stripe_sk_test'), ['class' => 'form_control']);
+                            echo "<br/>";
+                            echo form_label(lang('Stripe live public key'));
+                            echo form_input('stripe_pk_live', get_option('stripe_pk_live'), ['class' => 'form_control']);
+                            echo form_label(lang('Stripe live secret key'));
+                            echo form_password('stripe_sk_live', get_option('stripe_sk_live'), ['class' => 'form_control']);
+                            ?>
+                            <br/>
+                            <button class="btn btn-default"><?php echo lang('update'); ?></button>
+                            <?php
+                            echo form_close();
+                        }else{
+                            echo '<div class="alert alert-danger">'.lang('feature_disabled_in_demo').'</div>';
+                        } ?>
                     </div>
                 </div>
             </div>
@@ -222,7 +246,10 @@
                         </h4>
                     </div>
                     <div class="box-body">
-                        <?php echo form_open('settings/update');
+                        <?php
+                        if(get_option('demo_mode') == 0) {
+                            echo form_open('settings/update', ['class' => 'settings']);
+                        }
                         echo form_hidden('page', 'billing');
                         echo form_label(lang('PayPal locale'));
                         echo form_input('paypal_locale', get_option('paypal_locale'), ['class' => 'form_control']);
@@ -232,7 +259,10 @@
                         ?>
                         <br/>
                         <button class="btn btn-default"><?php echo lang('update'); ?></button>
-                        <?php echo form_close(); ?>
+                        <?php
+                        if(get_option('demo_mode') == 0) {
+                            echo form_close();
+                        } ?>
                     </div>
                 </div>
 
@@ -244,7 +274,10 @@
                     </div>
                     <div class="box-body">
                         <?php echo lang('Add a payment method'); ?>
-                        <?php echo form_open('settings/paymentMethods'); ?>
+                        <?php
+                        if(get_option('demo_mode') == 0) {
+                            echo form_open('settings/paymentMethods', ['class' => 'settings']);
+                        } ?>
                         <div class="input-group">
                             <input type="text" name="title" class="form-control" required/>
                             <span class="input-group-btn">
@@ -253,7 +286,9 @@
                                         </button>
                                     </span>
                         </div>
-                        <?php echo form_close(); ?>
+                        <?php
+                        if(get_option('demo_mode') == 0)
+                            echo form_close(); ?>
                         <br/>
                         <table class="table table-bordered">
                             <?php foreach ($payMethods as $payMethod): ?>
@@ -278,13 +313,15 @@
 
     </div>
     <div class="tab-pane" id="logo">
+        <h3><?php echo lang('logo'); ?></h3>
+        <hr/>
         <div class="row">
             <div class="col-md-6">
-                <div class="box box-primary">
+                <div class="box box-default">
                     <div class="box-body">
                         <h3><?php echo lang('company_logo'); ?></h3>
-                        <?php if(is_file(APPPATH.'../assets/img/'.get_option('logo'))): ?>
-                            <img src="<?php echo base_url().'assets/img/'.get_option('logo'); ?>"/>
+                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.get_option('logo'))): ?>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('logo'); ?>"/>
                         <?php endif; ?>
                         <hr/>
                         <div class="alert alert-warning">
@@ -301,18 +338,20 @@
             </div>
 
             <div class="col-md-6">
-                <div class="box box-primary">
+                <div class="box box-default">
                     <div class="box-body">
                         <h3><?php echo lang('invoice logo'); ?></h3>
-                        <?php if(is_file(APPPATH.'../assets/img/'.get_option('invoice_logo'))): ?>
-                            <img src="<?php echo base_url().'assets/img/'.get_option('invoice_logo'); ?>"/>
+                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.get_option('invoice_logo'))): ?>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('invoice_logo'); ?>"/>
                         <?php endif; ?>
                         <hr/>
                         <?php echo form_open_multipart('settings/upload_invoice_logo', 'class="input-group"'); ?>
                         <input class="form-control" type="file" required name="invoice_logo"/>
                         <span class="input-group-btn"><button
                                     class="btn btn-default"><?php echo lang('update'); ?></button></span>
-                        <?php echo form_close(); ?>
+                        <?php
+                        if(get_option('demo_mode') == 0)
+                            echo form_close(); ?>
                     </div>
                 </div>
             </div>
@@ -320,41 +359,46 @@
 
     </div>
     <div class="tab-pane" id="theme">
-        <?php echo form_open('settings/update'); ?>
+        <h3><?php echo lang('theme'); ?></h3>
+        <hr/>
+        <?php
+        if(get_option('demo_mode') == 0)
+            echo form_open('settings/update', ['class' => 'settings']); ?>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <?php
                 echo form_label(lang('Logo background color'));
                 echo form_input('logo_bg_color', get_option('logo_bg_color'), ['class' => 'form_control']);
                 ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <?php
                 echo form_hidden('page', 'theme');
                 echo form_label(lang('Top navigation background color'));
                 echo form_input('top_nav_bg_color', get_option('top_nav_bg_color'), ['class' => 'form_control']);
                 ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <?php
                 echo form_hidden('page', 'theme');
                 echo form_label(lang('Top navigation link color'));
                 echo form_input('top_nav_link_color', get_option('top_nav_link_color'), ['class' => 'form_control']);
                 ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <?php
                 echo form_label(lang('Left sidebar color'));
                 echo form_input('left_sidebar_bg_color', get_option('left_sidebar_bg_color'), ['class' => 'form_control']);
                 ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <?php
                 echo form_label(lang('Left sidebar link color'));
                 echo form_input('left_sidebar_link_color', get_option('left_sidebar_link_color'), ['class' => 'form_control']);
                 ?>
             </div>
         </div>
+        <hr/>
         <div class="row">
             <div class="col-md-12">
                 <?php
@@ -366,11 +410,13 @@
         <br/>
         <button class="btn btn-default"><?php echo lang('update'); ?></button>
         <?php
-        echo form_close();
+        if(get_option('demo_mode') == 0)
+            echo form_close();
         ?>
     </div>
     <div class="tab-pane" id="support">
         <h3><?php echo lang('support'); ?></h3>
+        <hr/>
         <div class="row">
             <div class="col-md-6">
                 <ul>
@@ -402,20 +448,20 @@
     </div>
 </div>
 <script>
-    $('form').on('submit',function (e) {
+    $('.settings').on('submit', function (e) {
         e.preventDefault();
         $.ajax({
             url: $(this).attr('action'),
             data: $(this).serialize(),
             type: 'POST',
             success: function (response) {
-                swal({type:'success','title':''})
+                swal({type: 'success', 'title': ''})
                 setTimeout(function () {
                     window.location.reload();
-                },2000)
+                }, 2000)
             },
             error: function (error) {
-                swal({type:'error','title':''})
+                swal({type: 'error', 'title': ''})
             }
         });
     })

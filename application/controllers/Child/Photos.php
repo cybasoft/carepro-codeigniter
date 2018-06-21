@@ -9,6 +9,7 @@ class Photos extends CI_Controller
         $this->module = 'modules/child/photos/';
         $this->my_child = array();
         $this->load->model('My_photos', 'photos');
+        $this->title = lang('child').'-'.lang('photos');
     }
 
     function index()

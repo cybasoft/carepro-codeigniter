@@ -11,6 +11,7 @@ class Health extends CI_Controller
         $this->load->model('My_child', 'child');
         $this->load->model('My_health', 'health');
         $this->module = 'modules/child/health/';
+        $this->title = lang('child').'-'.lang('health');
     }
 
     function index($id)
@@ -238,6 +239,9 @@ class Health extends CI_Controller
         allow('admin,manager,staff');
 
         $this->form_validation->set_rules('name', lang('problem'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('first_event', lang('problem'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('last_event', lang('problem'), 'trim|xss_clean');
+        $this->form_validation->set_rules('notes', lang('problem'), 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             if ($this->health->addProblem()) {
                 flash('success', lang('request_success'));

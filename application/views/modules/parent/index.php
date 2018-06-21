@@ -1,19 +1,14 @@
-<div class="box-footer bg-aqua">
-    <?php echo lang('update_child_notice'); ?>
-</div>
-
+<div class="box-footer bg-aqua"><?php echo lang('update_child_notice'); ?></div>
 <div class="row">
+
     <?php if (count($children) == 0): ?>
         <div class="callout callout-danger">
-            <h4>
-                <?php echo lang('no_children_notice'); ?>
-            </h4>
-
+            <h4><?php echo lang('no_children_notice'); ?></h4>
             <p class="text-bold"><?php echo lang('phone'); ?>: <?php echo get_option('phone'); ?></p>
-
             <p class="text-bold"><?php echo lang('email'); ?>: <?php echo get_option('email'); ?></p>
         </div>
     <?php endif; ?>
+
     <?php foreach ($children->result() as $child): ?>
         <div class="col-lg-4 col-md-4 col-xs-12">
             <br/>

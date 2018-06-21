@@ -165,11 +165,10 @@ function in_group($id, $group)
     $query = $ci->db
         ->where('users_groups.user_id', $id)
         ->where('groups.name', $group)
-        ->select('*')
         ->from('groups')
         ->join('users_groups', 'users_groups.group_id=groups.id')
-        ->get();
-    if($query->num_rows>0)
+        ->count_all_results();
+    if($query>0)
         return true;
     return false;
 }
@@ -331,7 +330,7 @@ function demo()
     $seg4 = $ci->uri->segment(4);
 
     if($ci->users->uid()>0) {
-        if(get_option('demo_mode') == 1 && !is('super')) {
+        if(get_option('demo_mode') == 1) {
             $ci->load->helper('language');
 
             //prevent all post methods
@@ -446,18 +445,18 @@ function authorizedToChild($staff_id, $child_id)
 
     //test staff assigment
     $staff = $ci->db
-        ->from('child_group')
-        ->join('child_group_staff', 'child_group_staff.group_id=child_group.group_id')
-        ->where('child_group_staff.user_id', $staff_id)
-        ->where('child_group.child_id', $child_id)
+        ->from('child_room')
+        ->join('child_room_staff', 'child_room_staff.room_id=child_room.room_id')
+        ->where('child_room_staff.user_id', $staff_id)
+        ->where('child_room.child_id', $child_id)
         ->count_all_results();
     if($staff>0)
         return true;
 
     //test parent
     $parent = $ci->db->from('child_parents')
-        ->where('child_id',$child_id)
-        ->where('user_id',$staff_id)
+        ->where('child_id', $child_id)
+        ->where('user_id', $staff_id)
         ->count_all_results();
     if($parent>0)
         return true;
@@ -490,10 +489,12 @@ function special_options()
 {
     $options = array(
         'company_name', 'slogan',
-        'email', 'phone', 'fax', 'street', 'street2', 'city', 'state', 'postal)code', 'country',
+        'email', 'phone', 'fax', 'street', 'street2', 'city', 'state', 'postal_code', 'country',
         'timezone', 'google_analytics', 'currency_symbol', 'date_format',
         'allow_registration', 'allow_reset_password', 'enable_captcha',
-        'demo_mode', 'maintenance_mode', 'use_smtp', 'smtp_user', 'smtp_pass', 'smtp_host', 'smtp_port'
+        'demo_mode', 'maintenance_mode', 'use_smtp', 'smtp_user', 'smtp_pass', 'smtp_host', 'smtp_port',
+        'logo', 'invoice_logo',
+        'stripe_pk_live', 'stripe_sk_live', 'stripe_pk_test', 'stripe_sk_test', 'paypal_email', 'paypal_locale'
     );
     return $options;
 }
@@ -516,9 +517,13 @@ function get_option($name, $default = '')
 {
     $ci = &get_instance();
     $name = trim($name);
-    $res = $ci->db->where('option_name', $name)
-        ->limit(1)
-        ->get('options');
+    if($ci->db->table_exists('options')) {
+        $res = $ci->db->where('option_name', $name)
+            ->limit(1)
+            ->get('options');
+    } else {
+        return '';
+    }
     if($res->num_rows()>0) {
         $value = $res->row()->option_value;
         if(empty($value))
@@ -618,17 +623,41 @@ function remove_option($name)
 
 function email_config()
 {
-    return [
-        'protocol' => 'smtp', //sendmail, smtp, mail
-        'smtp_host' => get_option('smtp_host'),
-        'smtp_user' => get_option('smtp_user'),
-        'smtp_pass' => get_option('smtp_pass'),
-        'smtp_port' => get_option('smtp_port'),
-        'mailtype' => 'html',
-        //do not change
-        'crlf' => "\r\n",
-        'newline' => "\r\n"
-    ];
+    if(get_option('use_smtp')==1) {
+        $config['protocol'] = 'smtp'; //sendmail, smtp, mail
+        $config['smtp_host'] = get_option('smtp_host');
+        $config['smtp_user'] = get_option('smtp_user');
+        $config['smtp_pass'] = get_option('smtp_pass');
+        $config['smtp_port'] = get_option('smtp_port');
+    }else{
+        $config['protocol'] = 'mail';
+    }
+    $config['mailtype'] = 'html';
+    //do not change
+    $config['crlf'] = "\r\n";
+    $config['newline'] = "\r\n";
+    return $config;
+}
+
+function g_decor($name)
+{
+    switch ($name) {
+        case 'admin':
+            return 'danger';
+            break;
+        case 'manager':
+            return 'success';
+            break;
+        case 'staff':
+            return 'primary';
+            break;
+        case 'parent':
+            return 'default';
+            break;
+        default:
+            return 'warning';
+            break;
+    }
 }
 
 ?>

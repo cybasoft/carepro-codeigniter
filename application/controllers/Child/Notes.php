@@ -10,6 +10,7 @@ class notes extends CI_Controller
         $this->module = 'modules/child/notes/';
         $this->load->helper('text');
         $this->load->model('My_photos','photos');
+        $this->title = lang('child').'-'.lang('notes');
     }
 
     function index($id)

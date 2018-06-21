@@ -430,11 +430,8 @@ $lang['We received your payment. Please wait few hours for the transaction refle
 $lang['Thank you for your payment! We have sent you a confirmation email'] = 'Thank you for your payment! We have sent you a confirmation email';
 
 //version 2.1.1
-$lang['Child groups'] = 'Child groups';
 $lang['nickname'] = 'Nickname';
-$lang['New children group'] = 'New children group';
-$lang['Child group created! You can now assign children'] = 'Child group created! You can now assign children';
-$lang['select a group from the list to update'] = 'select a group from the list to update';
+$lang['select a room from the list to update'] = 'select a group room from the list to update';
 $lang['assigned children'] = 'Assigned children';
 $lang['select children to assign'] = 'Select children to assign';
 $lang['select staff to assign'] = 'Select staff to assign';
@@ -481,3 +478,24 @@ $lang['Custom CSS'] = 'Custom CSS';
 $lang['Settings have been updated'] = 'Settings have been updated';
 $lang['Registration successful'] = 'Registration successful';
 $lang['Paypal email'] = 'Paypal email';
+$lang['Register child'] = 'Register child';
+$lang['Register user'] = 'Register user';
+$lang['admin'] = 'Admin';
+$lang['manager'] = 'Manager';
+$lang['parent'] = 'Parent';
+$lang['staff'] = 'Staff';
+$lang['roles'] = 'Roles';
+$lang['demo'] = 'Role';
+$lang['Add a problem'] = 'Add a problem';
+$lang['Problem name'] = 'Problem name';
+$lang['Date last occurred'] = 'Date last occurred';
+$lang['Date first occurred'] = 'Date first occurred';
+$lang['room'] = 'Room';
+$lang['rooms'] = 'Rooms';
+$lang['Room name'] = 'Room name';
+$lang['New room'] = 'New room';
+$lang['Assign to room'] = 'Assign to room';
+$lang['New children room'] = 'New children room';
+$lang['Child room created! You can now assign children'] = 'Child room created! You can now assign children';
+$lang['Children rooms'] = 'Children rooms';
+

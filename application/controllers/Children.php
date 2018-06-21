@@ -14,6 +14,7 @@ class Children extends CI_Controller
         allow('admin,manager,staff,parent');
         $this->load->model('My_invoice', 'invoice');
         $this->module = 'modules/children/';
+        $this->title = lang('children');
     }
 
     /*
@@ -40,13 +41,13 @@ class Children extends CI_Controller
         page($this->module.'register');
     }
 
-    function storeGroup()
+    function storeRoom()
     {
         allow('admin');
-        $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|trim|is_unique[child_groups.name]');
+        $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|trim|is_unique[child_rooms.name]');
         $this->form_validation->set_rules('description', lang('description'), 'xss_clean|trim');
         if($this->form_validation->run() == true) {
-            $this->db->insert('child_groups',
+            $this->db->insert('child_rooms',
                 [
                     'name' => $this->input->post('name'),
                     'description' => $this->input->post('description'),
@@ -54,7 +55,7 @@ class Children extends CI_Controller
                 ]
             );
             if($this->db->affected_rows()>0) {
-                flash('success', lang('Child group created! You can now assign children'));
+                flash('success', lang('Child room created! You can now assign children'));
             } else {
                 flash('error', lang('request_error'));
             }
@@ -62,20 +63,20 @@ class Children extends CI_Controller
             validation_errors();
             flash('error');
         }
-        redirect('children#groups');
+        redirect('children#rooms');
     }
 
-    function childrenToGroup()
+    function childrenToRoom()
     {
         allow('admin');
         $this->form_validation->set_rules('child_id[]', lang('children'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('group_id', lang('group'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('room_id', lang('room'), 'required|trim|xss_clean');
         if($this->form_validation->run() == true) {
-            $this->db->where('group_id', $this->input->post('group_id'))->delete('child_group');
+            $this->db->where('room_id', $this->input->post('room_id'))->delete('child_room');
             foreach ($this->input->post('child_id') as $child) {
-                $this->db->insert('child_group', [
+                $this->db->insert('child_room', [
                     'child_id' => $child,
-                    'group_id' => $this->input->post('group_id'),
+                    'room_id' => $this->input->post('room_id'),
                     'created_at' => date_stamp()
                 ]);
             }
@@ -84,20 +85,20 @@ class Children extends CI_Controller
             validation_errors();
             flash('error');
         }
-        redirect('children?group='.$this->input->post('group_id').'#groups');
+        redirect('children?room='.$this->input->post('room_id').'#rooms');
     }
 
-    function staffToGroup()
+    function staffToRoom()
     {
         allow('admin');
         $this->form_validation->set_rules('user_id[]', lang('children'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('group_id', lang('group'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('room_id', lang('room'), 'required|trim|xss_clean');
         if($this->form_validation->run() == true) {
-            $this->db->where('group_id', $this->input->post('group_id'))->delete('child_group_staff');
+            $this->db->where('room_id', $this->input->post('room_id'))->delete('child_room_staff');
             foreach ($this->input->post('user_id') as $user) {
-                $this->db->insert('child_group_staff', [
+                $this->db->insert('child_room_staff', [
                     'user_id' => $user,
-                    'group_id' => $this->input->post('group_id'),
+                    'room_id' => $this->input->post('room_id'),
                     'created_at'=>date_stamp()
                 ]);
             }
@@ -106,6 +107,6 @@ class Children extends CI_Controller
             validation_errors();
             flash('error');
         }
-        redirect('children?group='.$this->input->post('group_id').'#groups');
+        redirect('children?room='.$this->input->post('room_id').'#rooms');
     }
 }

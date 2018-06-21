@@ -142,8 +142,8 @@ class MY_user extends CI_Model
         - status
          */
         $this->db->select('id,first_name,last_name,email');
-        $this->db->where('id',$this->uid());
-        $res= $this->db->get('users')->row();
+        $this->db->where('id', $this->uid());
+        $res = $this->db->get('users')->row();
         if(count($res)>0)
             return $res->$item;
         return "";
@@ -175,8 +175,15 @@ class MY_user extends CI_Model
     }
 
 
-    function getCount()
+    function getCount($group = null)
     {
+        if($group !== null)
+            return $this->db->where('groups.name', $group)
+                ->from('users')
+                ->join('users_groups', 'users_groups.user_id=users.id')
+                ->join('groups', 'groups.id=users_groups.group_id')
+                ->count_all_results();
+
         return $this->users()->num_rows();
     }
 
@@ -192,7 +199,7 @@ class MY_user extends CI_Model
         }
         $user = $this->db->where('id', $id)->get('users')->row();
         if(!empty($user->photo)) {
-            return base_url().'assets/uploads/users/staff/'.$user->photo;
+            return base_url().'assets/uploads/users/'.$user->photo;
         } else {
             return base_url().'assets/img/content/no-image.png';
         }
@@ -202,11 +209,21 @@ class MY_user extends CI_Model
      * @param $id
      * @return int
      */
-    function groupCount($id){
-        $this->db->where('group_id',$id);
-        $res = $this->db->count_all_results('child_group_staff');
+    function groupCount($id)
+    {
+        $this->db->where('group_id', $id);
+        $res = $this->db->count_all_results('users_groups');
         if(count($res)>0)
             return $res;
         return 0;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function getGroups($id)
+    {
+        return $this->ion_auth->get_users_groups($id)->result();
     }
 }

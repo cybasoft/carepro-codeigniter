@@ -11,17 +11,14 @@ class Profile extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-
 		//redirect session
 		setRedirect();
-
 		//authenticate
 		auth(true);
-
 		$this->load->model('My_profile', 'profile');
-
 		//local variables
 		$this->module = 'modules/profile/';
+        $this->title = lang('profile');
 
 	}
 
@@ -182,7 +179,7 @@ class Profile extends CI_Controller
 
     function uploadPhoto($id = "")
     {
-        $upload_path = './assets/uploads/users/staff';
+        $upload_path = './assets/uploads/users';
         $upload_db = 'children';
 
         if ($id == "") { //make sure there are arguments

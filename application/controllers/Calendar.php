@@ -27,6 +27,7 @@ class Calendar extends CI_Controller
      */
     function index()
     {
+        $this->title = lang('calendar');
         if (is('parent') && is('staff') == false) :
             page($this->module.'parent_view');
         else :

@@ -25,7 +25,7 @@ $password = array(
     <div class="login-box  animation flipInX">
         <div class="logo-main">
             <a href="<?php echo site_url(); ?>">
-                <img src="<?php echo base_url(); ?>assets/img/<?php echo get_option('logo'); ?>"
+                <img src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
                      alt="Logo">
             </a>
         </div>

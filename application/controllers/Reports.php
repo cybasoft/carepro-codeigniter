@@ -11,6 +11,7 @@ class Reports extends CI_Controller
         //variables
         $this->load->model('My_reports','reports');
         $this->module= 'modules/reports/';
+        $this->title = lang('reports');
     }
 
     public function index()

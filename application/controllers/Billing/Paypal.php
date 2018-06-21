@@ -42,6 +42,7 @@ class Paypal extends CI_Controller
             'btn' => 'PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest'
         );
         $this->module='modules/child/billing/';
+        $this->title = lang('billing');
     }
 
     function pay($invoice_id)
