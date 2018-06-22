@@ -78,8 +78,11 @@
                     .lang('index_inactive_link').'</span>'); ?>
             </td>
             <td>
-                <?php echo anchor("user/".$user->id, '<span class="btn btn-default btn-xs"><i class="fa fa-pencil-alt"></i></span>'); ?>
-                <?php echo anchor("user/".$user->id.'/delete', '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>'); ?>
+                <a id="<?php echo $user->id; ?>" class="editUserBtn" href="#">
+                    <span class="btn btn-default btn-xs">
+                        <i class="fa fa-pencil-alt"></i></span>
+                </a>
+                <?php echo anchor("users/delete/".$user->id.'/delete', '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>'); ?>
             </td>
         </tr>
         <?php

@@ -359,12 +359,13 @@
                     </tr>
                 </table>
                 <table class="main">
-
                     <tr>
                         <td class="wrapper">
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
+                                        <?php echo $data['salute']; ?>
+                                        <br/>
                                         <?php $this->load->view('email/'.$data['template'],$data); ?>
                                     </td>
                                 </tr>

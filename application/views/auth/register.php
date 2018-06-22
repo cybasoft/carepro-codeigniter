@@ -53,7 +53,7 @@ if ($this->ion_auth->logged_in()) {
         <div class="other-actions" style="text-align:center">
 
             <?php if (get_option('allow_registration') == TRUE): ?>
-                <?php echo anchor('login', '<span class="fa fa-user"></span> ' . lang('login')); ?>
+                <?php echo anchor('auth/login', '<span class="fa fa-user"></span> ' . lang('login')); ?>
             <?php endif; ?>
         </div>
         <?php echo form_close(); ?>

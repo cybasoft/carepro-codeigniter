@@ -29,7 +29,7 @@ class Users extends CI_Controller
     }
 
     //create a new user
-    function store()
+    function create()
     {
         $tables = $this->config->item('tables', 'ion_auth');
         //validate form input
@@ -71,7 +71,7 @@ class Users extends CI_Controller
             'groups' => $groups,
             'currentGroups' => $currentGroups
         );
-        page($this->module.'edit_user', $myData);
+        $this->load->view($this->module.'edit_user', $myData);
     }
 
     //edit a user
@@ -84,10 +84,16 @@ class Users extends CI_Controller
         $this->form_validation->set_rules('last_name', lang('edit_user_validation_last_name_label'), 'required|xss_clean');
         $this->form_validation->set_rules('email', lang('email'), 'required|xss_clean|valid_email');
         $this->form_validation->set_rules('groups', lang('edit_user_validation_groups_label'), 'xss_clean');
+        $this->form_validation->set_rules('pin', lang('pin'), 'required|xss_clean|trim|integer');
+        $this->form_validation->set_rules('address', lang('address'), 'xss_clean|trim');
         $data = array(
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'email' => $this->input->post('email'),
+            'pin' => $this->input->post('pin'),
+            'phone' => $this->input->post('phone'),
+            'phone2' => $this->input->post('phone2'),
+            'address' => $this->input->post('address')
         );
         if(is('admin')) : //only admin can assign roles
             //Update the groups user belongs to
@@ -109,6 +115,9 @@ class Users extends CI_Controller
         }
         if($this->form_validation->run() === TRUE) {
             if($this->ion_auth->update($id, $data)) {
+                //update photo if available
+                $this->uploadPhoto($id);
+
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -118,34 +127,12 @@ class Users extends CI_Controller
             flash('danger');
         }
         redirectPrev();
-
-    }
-
-    function updateUserData($id)
-    {
-        //validate form input
-        $this->form_validation->set_rules('pin', lang('pin'), 'required|xss_clean|trim|integer');
-        $this->form_validation->set_rules('address', lang('address'), 'required|xss_clean|trim');
-        if($this->form_validation->run() === TRUE) {
-            if($this->user->update_user_data($id)) {
-                flash('success', lang('request_success'));
-            } else {
-                flash('danger', lang('request_error'));
-            }
-        } else {
-            validation_errors();
-            flash('success', '');
-
-        }
-        redirectPrev();
-
     }
 
     //activate the user
     function activate($id, $code = false)
     {
         allow('admin');
-
         if($code !== false) {
             $activation = $this->ion_auth->activate($id, $code);
         } else {
@@ -162,19 +149,18 @@ class Users extends CI_Controller
     }
 
     //deactivate the user
-    function deactivate($id = NULL)
+    function deactivate($id)
     {
         allow('admin');
         $id = (int)$id;
-
         $this->load->library('form_validation');
         $this->form_validation->set_rules('confirm', lang('deactivate_validation_confirm_label'), 'required');
-        $this->form_validation->set_rules('id', lang('deactivate_validation_user_id_label'), 'required|alpha_numeric');
-
         if($this->form_validation->run() == FALSE) {
-
-            $data['user_id'] = $id;
-            page($this->module.'deactivate_user', $data);
+            if($this->input->post('confirm')) {
+                validation_errors();
+                flash('danger');
+            }
+            page($this->module.'deactivate_user', compact('id'));
         } else {
             if($this->input->post('confirm') == 'yes') {
                 $this->ion_auth->deactivate($id);
@@ -193,7 +179,6 @@ class Users extends CI_Controller
     function delete($id)
     {
         allow('admin');
-
         $data['user_id'] = $id;
         page('modules/users/confirm_delete', $data);
 
@@ -221,9 +206,7 @@ class Users extends CI_Controller
     function create_group()
     {
         $this->data['title'] = lang('create_group_title');
-
         allow('admin');
-
         //validate form input
         $this->form_validation->set_rules('group_name', lang('create_group_validation_name_label'), 'required|alpha_dash|xss_clean');
         $this->form_validation->set_rules('description', lang('create_group_validation_desc_label'), 'xss_clean');
@@ -247,7 +230,6 @@ class Users extends CI_Controller
     function update_group($id)
     {
         allow('admin');
-        // bail if no group id given
         if(!$id || empty($id)) {
             redirect('auth', 'refresh');
         }
@@ -259,7 +241,7 @@ class Users extends CI_Controller
             if($group_update) {
                 flash('success', lang('edit_group_saved'));
             } else {
-
+                flash('error',lang('request_error'));
             }
 
         } else {
@@ -287,7 +269,6 @@ class Users extends CI_Controller
      */
     function uploadPhoto($id = "")
     {
-        allow('admin,manager');
         $upload_path = './assets/uploads/users';
         $upload_db = 'users';
         if(!file_exists($upload_path)) {
@@ -331,7 +312,6 @@ class Users extends CI_Controller
                 flash('danger', lang('request_error'));
             }
         }
-        redirectPrev();
     }
 
 }

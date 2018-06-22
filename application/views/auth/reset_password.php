@@ -9,7 +9,7 @@
 
         <h3 class="text-center"><?php echo lang('reset_password_heading'); ?></h3>
         <hr/>
-        <?php echo form_open('password/reset/' . $code, ['id' => 'loginForm']); ?>
+        <?php echo form_open('auth/reset/' . $code, ['id' => 'loginForm']); ?>
         <div class="form-group">
             <?php echo sprintf(lang('reset_password_new_password_label'), $min_password_length); ?>
             <?php echo form_input($new_password); ?>

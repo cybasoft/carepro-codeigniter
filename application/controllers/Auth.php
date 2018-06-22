@@ -18,7 +18,7 @@ class Auth extends CI_Controller
 
     function index()
     {
-        redirect('login');
+        redirect('auth/login');
     }
 
     function login()
@@ -245,13 +245,14 @@ class Auth extends CI_Controller
 
     //log the user out
 
-    function forgotPassword()
+    function forgot()
     {
         if(!empty($this->input->post('email'))) {
             $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');
             if($this->form_validation->run() == false) {
                 $this->data['identity_label'] = 'email';
                 validation_errors();
+                flash('danger');
             } else {
                 // get identity from username or email
                 $identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
@@ -264,10 +265,10 @@ class Auth extends CI_Controller
                 if($forgotten) {
                     //if there were no errors
                     flash('success', lang('password_reset_link_sent'));
-                    redirect('login');
+                    redirect('auth/login');
                 } else {
                     flash('danger', lang('request_error'));
-                    redirect(site_url('password/forgot'));
+                    redirect('auth/forgot');
                 }
             }
         }
@@ -276,79 +277,78 @@ class Auth extends CI_Controller
 
     //forgot password
 
-    public function resetPassword($code = NULL)
+    public function reset($code = NULL)
     {
         if(!$code) {
             flash('error', lang('invalid_request'));
-            redirect('password/forgot');
+            redirect('auth/forgot');
         }
 
         $user = $this->ion_auth->forgotten_password_check($code);
         if($user) {
-            $this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[new_confirm]');
-            $this->form_validation->set_rules('new_confirm', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
+                $this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[new_confirm]');
+                $this->form_validation->set_rules('new_confirm', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
 
-            if($this->form_validation->run() == false) {
+                if($this->form_validation->run() == false) {
 
-                $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+                    if($this->input->post('new')) {
+                        validation_errors();
+                        flash('danger');
+                    }
 
-                $this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
-                $this->data['new_password'] = array(
-                    'name' => 'new',
-                    'id' => 'new',
-                    'type' => 'password',
-                    'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
-                );
-                $this->data['new_password_confirm'] = array(
-                    'name' => 'new_confirm',
-                    'id' => 'new_confirm',
-                    'type' => 'password',
-                    'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
-                );
-                $this->data['user_id'] = array(
-                    'name' => 'user_id',
-                    'id' => 'user_id',
-                    'type' => 'hidden',
-                    'value' => $user->id,
-                );
-                $this->data['csrf'] = $this->_get_csrf_nonce();
-                $this->data['code'] = $code;
+                    $this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
+                    $this->data['new_password'] = array(
+                        'name' => 'new',
+                        'id' => 'new',
+                        'type' => 'password',
+                        'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+                    );
+                    $this->data['new_password_confirm'] = array(
+                        'name' => 'new_confirm',
+                        'id' => 'new_confirm',
+                        'type' => 'password',
+                        'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+                    );
+                    $this->data['user_id'] = array(
+                        'name' => 'user_id',
+                        'id' => 'user_id',
+                        'type' => 'hidden',
+                        'value' => $user->id,
+                    );
+                    $this->data['csrf'] = $this->_get_csrf_nonce();
+                    $this->data['code'] = $code;
 
-                //render
-                $this->page('reset_password', $this->data);
-            } else {
-                // do we have a valid request?
-                if($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
-
-                    //something fishy might be up
-                    $this->ion_auth->clear_forgotten_password_code($code);
-
-                    show_error($this->lang->line('error_csrf'));
+                    //render
+                    $this->page('reset_password', $this->data);
 
                 } else {
-                    // finally change the password
-                    $identity = $user->{$this->config->item('identity', 'ion_auth')};
-
-                    $change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
-
-                    if($change) {
-                        //if the password was successfully changed
-                        flash('success', $this->ion_auth->messages());
-                        if($this->ion_auth->login($identity, $this->input->post('new'))) {
-                            redirect('dashboard', 'refresh');
-                        } else {
-                            flash('error', 'Username or password is incorrect');
-                            redirect('login', 'refresh');
-                        }
+                    if($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
+                        //something fishy might be up
+                        $this->ion_auth->clear_forgotten_password_code($code);
+                        show_error($this->lang->line('error_csrf'));
                     } else {
-                        flash('danger', $this->ion_auth->errors());
-                        redirectPrev();
+                        // finally change the password
+                        $identity = $user->{$this->config->item('identity', 'ion_auth')};
+                        $change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
+                        if($change) {
+                            //Login if the password was successfully changed
+                            flash('success', $this->ion_auth->messages());
+                            if($this->ion_auth->login($identity, $this->input->post('new'))) {
+                                redirect('dashboard', 'refresh');
+                            } else {
+                                flash('error', 'Username or password is incorrect');
+                                redirect('auth/login', 'refresh');
+                            }
+                        } else {
+                            flash('danger', $this->ion_auth->errors());
+                            redirectPrev();
+                        }
                     }
-                }
             }
+
         } else {
             flash('danger', $this->ion_auth->errors());
-            redirect("password/forgot", 'refresh');
+            redirect("auth/forgot", 'refresh');
         }
     }
 
@@ -383,7 +383,7 @@ class Auth extends CI_Controller
         $this->ion_auth->logout();
         $this->conf->setTimer(0);
         //redirect them to the login page
-        redirect('login', 'refresh');
+        redirect('auth/login', 'refresh');
     }
     /*
      *

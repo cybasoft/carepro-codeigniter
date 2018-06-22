@@ -48,12 +48,12 @@ $password = array(
             <button class="btn btn-theme btn-full"><?php echo lang('login'); ?></button>
             <div class="other-actions" style="text-align:center">
 
-                <?php echo anchor('password/forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading')); ?>
+                <?php echo anchor('auth/forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading')); ?>
 
                 <?php if(get_option('allow_registration')==TRUE): ?>
                     <br/>
                     <br/>
-                <?php echo anchor('register', '<span class="fa fa-user"></span> ' . lang('register')); ?>
+                <?php echo anchor('auth/register', '<span class="fa fa-user"></span> ' . lang('register')); ?>
                 <?php endif; ?>
             </div>
         </form>

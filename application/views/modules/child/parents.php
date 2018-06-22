@@ -14,7 +14,7 @@
                     </td>
                     <td style="position: relative;">
                         <span class="label-text parent-name">
-                            <a href="<?php echo site_url('user/'.$u->id); ?>">
+                            <a class="editUserBtn" id="<?php echo $u->id; ?>" href="#">
                                 <?php echo $u->last_name.' '.$u->first_name; ?>
                             </a>
                         </span>

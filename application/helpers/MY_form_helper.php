@@ -71,5 +71,23 @@ function form_date($data = '', $value = '', $extra = '')
 
     return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
 }
+/**
+ * Time Input Field
+ *
+ * @param	mixed
+ * @param	string
+ * @param	mixed
+ * @return	string
+ */
+function form_time($data = '', $value = '', $extra = '')
+{
+    $defaults = array(
+        'type' => 'time',
+        'name' => is_array($data) ? '' : $data,
+        'value' => $value
+    );
+
+    return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";
+}
 
 ?>

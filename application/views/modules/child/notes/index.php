@@ -1,5 +1,5 @@
 <?php $this->load->view('modules/child/nav'); ?>
-    <div class="row">
+<div class="row">
     <div class="col-sm-2 col-lg-2 col-md-2 table-responsive">
         <?php $this->load->view('modules/child/sidebar'); ?>
     </div>
@@ -9,44 +9,40 @@
                 <li role="presentation" class="active">
                     <a href="#notes" aria-controls="home" role="tab" data-toggle="tab">
                         <i class="fa fa-clipboard"></i>
-                        <?php echo lang('notes'); ?>
+                        <span class="hidden-xs"><?php echo lang('notes'); ?></span>
                     </a>
                 </li>
                 <li role="presentation">
                     <a href="#incidents" aria-controls="incidents" role="tab" data-toggle="tab">
                         <i class="fa fa-exclamation-triangle text-warning"></i>
-                        <?php echo lang('incident_reports'); ?>
+                        <span class="hidden-xs"><?php echo lang('incident_reports'); ?></span>
                     </a>
                 </li>
-                <?php if(!is('parent')): ?>
-                <li role="presentation">
-                    <a href="#new-incident" aria-controls="new-incident" role="tab" data-toggle="tab">
-                        <i class="fa fa-plus text-warning"></i>
-                        <?php echo lang('new incident'); ?>
-                    </a>
-                </li>
-                <?php endif; ?>
                 <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
                     <li role="presentation">
                         <a href="#view-notes" aria-controls="view-notes" role="tab" data-toggle="tab">
-                            <i class="fa fa-folder-open-o"></i>
+                            <i class="fa fa-folder-open"></i>
                         </a>
+                    </li>
+                <?php endif; ?>
+                <?php if(!is('parent')): ?>
+                    <li class="">
+                        <button type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="modal"
+                                data-target="#newIncidentModal">
+                            <i class="fa fa-plus"></i>
+                            <span class="hidden-xs"><?php echo lang('new incident'); ?></span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="modal"
+                                data-target="#newNoteModal">
+                            <i class="fa fa-plus"></i>
+                            <span class="hidden-xs"><?php echo lang('new_note'); ?> </span>
+                        </button>
                     </li>
                 <?php endif; ?>
             </ul>
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="notes">
-
-                    <div class="box box-default">   <div class="box-body">
-                    <?php if(!is('parent')): ?>
-                            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newNoteModal">
-                                <i class="fa fa-plus"></i> <?php echo lang('new_note'); ?>
-                            </button>
-
-                    <?php endif; ?>
-                    </div>
-                    </div>
 
                     <?php foreach ($notes as $note): ?>
                         <div class="box box-info">
@@ -106,9 +102,6 @@
                     <?php endforeach; ?>
                 </div>
                 <?php if(!is('parent')): ?>
-                <div role="tabpanel" class="tab-pane" id="new-incident">
-                    <?php $this->load->view($this->module.'create-incident'); ?>
-                </div>
                 <?php endif; ?>
                 <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
                     <div role="tabpanel" class="tab-pane fade" id="view-notes">
@@ -125,5 +118,7 @@
 
         </div>
     </div>
+</div>
 
 <?php $this->load->view('modules/child/notes/create-note'); ?>
+<?php $this->load->view($this->module.'create-incident'); ?>

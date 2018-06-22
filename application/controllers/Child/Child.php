@@ -46,7 +46,11 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('blood_type', lang('birthday'), 'trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('ethnicity', lang('ethnicity'), 'trim|xss_clean');
+        $this->form_validation->set_rules('religion', lang('religion'), 'trim|xss_clean');
+        $this->form_validation->set_rules('birthplace', lang('birthplace'), 'trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             $register = $this->child->register(true);
             if ($register !== false) {
@@ -76,7 +80,7 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('blood_type', lang('birthday'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('blood_type', lang('birthday'), 'trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('status', lang('status'), 'required|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {

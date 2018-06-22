@@ -8,16 +8,7 @@ $route['404_override'] = 'landing/error404';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['dashboard'] = 'dashboard/index';
-//auth
-$route['login'] = 'auth/login';
-$route['logout'] = 'auth/logout';
-$route['password/forgot']['get'] = 'auth/forgotPassword';
-$route['password/forgot']['post'] = 'auth/forgotPassword';
-$route['password/reset/(:any)']['get'] = 'auth/resetPassword/$1';
-$route['password/reset/(:any)']['post'] = 'auth/resetPassword/$1';
-$route['register']['get'] = 'auth/register';
-$route['register']['post'] = 'auth/register';
-
+$route['auth/(:any)'] = 'auth/$1';
 //accounting
 $route['new_invoice'] = 'invoice/create_invoice';
 
@@ -25,22 +16,17 @@ $route['groups/:num'] = 'users/edit_group/$1';
 $route['settings/(:any)'] = 'settings/$1';
 
 //users
-$route['users'] = 'users';
-$route['users/create'] = 'users/store';
-$route['users/:any'] = 'users/$1';
-$route['user/(:num)']['get'] = 'users/view/$1';
-$route['user/(:num)']['post'] = 'users/update/$1';
-$route['user/(:num)/delete'] = 'users/delete/$1';
-$route['user/(:num)/updateUserData'] = 'users/updateUserData/$1';
-$route['user/:any'] = 'users/$1';
+//$route['users'] = 'users';
+//$route['users/create'] = 'users/store';
+//$route['users/:any'] = 'users/$1';
+//$route['user/(:num)']['get'] = 'users/view/$1';
+//$route['user/(:num)']['post'] = 'users/update/$1';
+//$route['user/(:num)/delete'] = 'users/delete/$1';
+//$route['user/(:num)/updateUserData'] = 'users/updateUserData/$1';
+$route['users/(:any)'] = 'users/$1';
 
 //calendar
-$route['calendar'] = 'calendar';
-$route['calendar/addEvent'] = 'calendar/addEvent';
-$route['calendar/events'] = 'calendar/events';
-$route['calendar/updateEvent'] = 'calendar/updateEvent';
-$route['calendar/deleteEvent'] = 'calendar/deleteEvent';
-$route['calendar/:any'] = 'calendar/$1';
+$route['calendar/(:any)'] = 'calendar/$1';
 
 //children
 $route['children/(:any)'] = 'children/$1';

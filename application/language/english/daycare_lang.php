@@ -499,3 +499,4 @@ $lang['New children room'] = 'New children room';
 $lang['Child room created! You can now assign children'] = 'Child room created! You can now assign children';
 $lang['Children rooms'] = 'Children rooms';
 $lang['Total hours'] = 'Total hours';
+$lang['If the above link doesn\'t work, copy and paste this to your browser'] = 'If the above link doesn\'t work, copy and paste this to your browser';

@@ -69,23 +69,6 @@ class MY_user extends CI_Model
         return (isset($id)) ? $id : FALSE;
     }
 
-    /**
-     * @param $id
-     * @return bool
-     */
-    function update_user_data($id)
-    {
-        $data = array(
-            'pin' => $this->input->post('pin'),
-            'phone' => $this->input->post('phone'),
-            'phone2' => $this->input->post('phone2'),
-            'address' => $this->input->post('address')
-        );
-        if($this->db->where('id', $id)->update('users', $data))
-            return true;
-        return false;
-    }
-
     function users()
     {
         $this->db->select('*');

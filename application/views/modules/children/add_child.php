@@ -10,93 +10,41 @@
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-2">
-                        <?php echo lang('nickname'); ?>
+                    <div class="col-sm-6">
+                        <?php echo form_label(lang('nickname'));
+                        echo form_input('nickname', '', ['class' => 'form-control' ]);
+                        echo form_label(lang('first_name'));
+                        echo form_input('first_name','', ['class' => 'form-control','required'=>'']);
+                        echo form_label(lang('last_name'));
+                        echo form_input('last_name','', ['class' => 'form-control', 'required'=>'']);
+                        echo form_label(lang('birthday'));
+                        echo form_date('bday', date('Y-m-d'), ['class' => 'form-control']);
+                        echo form_label(lang('gender'));
+                        echo form_dropdown('gender', ['male'=>lang('male'),'female'=>lang('female'),'other'=>lang('other')],'', ['class' => 'form-control']);
+                        echo form_label(lang('ID'));
+                        echo form_input('national_id','', ['class' => 'form-control','required'=>'' ]);
+                        ?>
                     </div>
-                    <div class="col-md-4">
-                        <input class="form-control" type="text" name="nickname" value=""/>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-2">
-                        <?php echo lang('first_name'); ?>
-                    </div>
-                    <div class="col-md-4">
-                        <input class="form-control" required="" type="text" name="first_name" value=""/>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo lang('last_name'); ?>
-                    </div>
-                    <div class="col-md-4">
-                        <input class="form-control" required="" type="text" name="last_name" value=""/>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-2"><?php echo lang('birthday'); ?></div>
-                    <div class="col-md-4">
-                        <input class="form-control" id="bday" required="" type="date" name="bday"
-                               value="<?php echo date('Y-m-d'); ?>"/>
-                    </div>
-                    <div class="col-md-2"><?php echo lang('gender'); ?></div>
-                    <div class="col-md-4"><select required class="form-control" name="gender">
-                            <option value="">--<?php echo lang('select'); ?>--</option>
-                            <option value="male"><?php echo lang('male'); ?></option>
-                            <option value="female"><?php echo lang('female'); ?></option>
-                            <option value="other"><?php echo lang('other'); ?></option>
-                        </select>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-2"><?php echo lang('ID'); ?></div>
-                    <div class="col-md-4">
-                        <input type="text" name="national_id" required value="" class="form-control"/>
-                    </div>
-                    <div class="col-md-2"><?php echo lang('blood_type'); ?></div>
-                    <div class="col-md-4">
-                        <select name="blood_type" required="" class="form-control">
-                            <option value="unknown">--<?php echo lang('select'); ?>--</option>
-                            <option value="A-">A-</option>
-                            <option value="A+">A+</option>
-                            <option value="B-">B-</option>
-                            <option value="B+">B+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="O-">O-</option>
-                            <option value="O+">O+</option>
-                        </select>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-2"><?php echo lang('status'); ?></div>
-                    <div class="col-md-4">
-                        <select class="form-control" name="status" required>
-                            <option value="1"><?php echo lang('active'); ?></option>
-                            <option value="0"><?php echo lang('inactive'); ?></option>
-                        </select>
-                    </div>
-                    <div class="col-md-2"><?php echo lang('ethnicity'); ?></div>
-                    <div class="col-md-4">
-                        <input class="form-control" id="ethnicity" required="" type="text" name="ethnicity" value=""/>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-2"><?php echo lang('religion'); ?></div>
-                    <div class="col-md-4">
-                        <input class="form-control" id="religion" required="" type="text" name="religion" value=""/>
-                    </div>
-                    <div class="col-md-2"><?php echo lang('birthplace'); ?></div>
-                    <div class="col-md-4">
-                        <input class="form-control" id="birthplace" required="" type="text" name="birthplace" value=""/>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('blood_type'));
+                        echo form_dropdown('blood_type', blood_types(),'', ['class' => 'form-control', ]);
+                        echo form_label(lang('status'));
+                        echo form_dropdown('status', [1=>lang('active'),0=>lang('inactive')],'', ['class' => 'form-control', ]);
+                        echo form_label(lang('ethnicity'));
+                        echo form_input('ethnicity', '', ['class' => 'form-control', ]);
+                        echo form_label(lang('religion'));
+                        echo form_input('religion', '', ['class' => 'form-control', ]);
+                        echo form_label(lang('birthplace'));
+                        echo form_input('birthplace','', ['class' => 'form-control', ]);
+                        ?>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close'); ?></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <?php echo lang('close'); ?>
+                </button>
                 <button class="btn btn-primary"><?php echo lang('submit'); ?></button>
             </div>
             <?php echo form_close(); ?>

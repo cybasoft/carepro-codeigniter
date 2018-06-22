@@ -70,7 +70,7 @@
                     if(isset($_GET['daily'])) {
                         $date = date('y-m-d');
                         if(isset($_GET['date'])) {
-                            $date = date('Y-m-d',$_GET['date']);
+                            $date = date('Y-m-d',strtotime($_GET['date']));
                         }
                         if($this->child->checkedIn($child->id, $date)) {
                             echo '<i class="fa fa-check text-success">'.lang('present').'</i>';

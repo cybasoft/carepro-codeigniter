@@ -128,7 +128,7 @@
                                 </a>
                             </div>
                             <div class="pull-right">
-                                <a href="<?php echo site_url('logout'); ?>" class="btn btn-default btn-flat">
+                                <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-default btn-flat">
                                     <?php echo lang('logout'); ?>
                                 </a>
                             </div>

@@ -12,12 +12,19 @@ body {
 
 .msg {
     z-index: 3000;
-    width: 500px;
+    max-width: 500px;
     position: absolute !important;
-    bottom: 0;
+    top: 15px;
     right: 0
 }
-
+.msg .alert{
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+    padding-left: 30px;
+    margin-left: 0;
+    position: relative;
+}
 .cursor {
     cursor: pointer;
 }
@@ -1348,9 +1355,9 @@ body > .header .logo .icon {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0;
-    padding: 1px 0 0 0;
+    /* padding: 1px 0 0 0; */
     border-top-width: 0;
-    width: 280px;
+    /* width: 280px; */
 }
 
 .navbar-nav > .user-menu > .dropdown-menu:after {

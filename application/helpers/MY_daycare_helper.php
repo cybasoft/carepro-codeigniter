@@ -148,7 +148,7 @@ function auth($redirect = false)
         return true;
     } else {
         if($redirect)
-            redirect('login', 'refresh');
+            redirect('auth/login', 'refresh');
         return false;
     }
 }
@@ -288,7 +288,10 @@ function allow($group)
     }
     if(empty($data)) {
         flash('danger', lang('access_denied'));
-        redirectPrev();
+        if ($ci->input->is_ajax_request()) {
+           return 'error';
+        }
+        redirectPrev('ajax');
         exit();
     } else {
         return true;
@@ -660,4 +663,14 @@ function g_decor($name)
     }
 }
 
+function blood_types(){
+    $types= [
+        'A-','A+','B-','B+','AB-','AB+','O-','O+'
+    ];
+    $res=array();
+    foreach($types as $type){
+        $res[$type]=$type;
+    }
+    return $res;
+}
 ?>

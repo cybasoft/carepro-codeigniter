@@ -1,7 +1,6 @@
 <h1><?php echo lang('change_password_heading');?></h1>
 
-<?php echo form_open("auth/change_password");?>
-
+<?php echo form_open("auth/changePassword");?>
       <p>
             <?php echo lang('change_password_old_password_label', 'old_password');?> <br />
             <?php echo form_input($old_password);?>

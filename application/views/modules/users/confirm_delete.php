@@ -1,7 +1,6 @@
 <div class="row">
 	<div class="col-sm-6 col-md-6 col-sm-6 text-center">
 		<?php echo form_open('users/delete/'.$user_id); ?>
-
 		<?php if($user_id == $this->user->uid()): ?>
 				<?php echo lang('user_is_self_warning'); ?>
 		<?php else: ?>
@@ -19,7 +18,6 @@
 			</span>
 			</div>
 		<?php endif; ?>
-
 		<?php echo form_close(); ?>
 	</div>
 </div>

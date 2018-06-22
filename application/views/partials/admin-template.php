@@ -18,7 +18,7 @@
     <link href="<?php echo base_url(); ?>assets/css/fullcalendar.print.css" rel="stylesheet" type="text/css"
           media='print'/>
     <link rel="stylesheet" type="text/css"
-          href="<?php echo base_url(); ?>assets/css/datatables.min.css"/>
+          href="<?php echo base_url(); ?>assets/plugins/datatables/datatables.min.css"/>
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 
@@ -50,6 +50,7 @@
     </script>
 </head>
 <body class="skin-blue">
+<div class="modals-loader"></div>
 <header class="header">
     <a href="<?php echo site_url('dashboard'); ?>" class="logo"
        style="left:0 !important; background-color: <?php echo get_option('logo_bg_color', '#ffeb3b'); ?>">
@@ -76,8 +77,9 @@
         </a>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
+                <?php if(is('manager') || is('admin')): ?>
                 <li>
-                    <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
+                    <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
                        data-target="#registerChildModal">
                         <i class="fa fa-user-plus"></i>
                         <span class="hidden-xs"><?php echo lang('Register child'); ?></span>
@@ -90,60 +92,16 @@
                         <span class="hidden-xs"><?php echo lang('Register user'); ?></span>
                     </a>
                 </li>
-                <?php if(!is('parent')): ?>
-                    <li class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-warning"></i>
-                            <!--span class="label label-warning">10</span-->
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header"><?php echo lang('notifications'); ?></li>
-                            <li>
-                                <ul class="menu">
-                                    <li>
-                                        <a href="<?php echo site_url('children'); ?>">
-                                            <i class="fa fa-users warning"></i>
-                                            <small class="badge bg-default"><?php echo $this->child->getCount(); ?></small>
-                                            <?php echo lang('enrolled_children'); ?>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo site_url('users'); ?>">
-                                            <i class="fa fa-group success"></i>
-                                            <small class="badge bg-default"><?php echo $this->user->getCount(); ?></small>
-                                            <?php echo lang('registered_users'); ?>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!--li class="footer"><a href="#">View all</a></li-->
-                        </ul>
-                    </li>
                 <?php endif; ?>
-                <li class="dropdown user user-menu hidden-xs">
+                <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-user"></i>
                         <span><?php echo $this->user->user()->last_name; ?>
                             <i class="caret"></i></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="user-header bg-light-blue">
-                            <img src="<?php echo $this->user->getPhoto(NULL); ?>" class="img-circle"/>
-                            <p>
-                            </p>
-                        </li>
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="<?php echo site_url('profile'); ?>" class="btn btn-default btn-flat">
-                                    <?php echo lang('profile'); ?>
-                                </a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="<?php echo site_url('logout'); ?>" class="btn btn-default btn-flat">
-                                    <?php echo lang('logout'); ?>
-                                </a>
-                            </div>
-                        </li>
+                        <li><a href="<?php echo site_url('profile'); ?>"><i class="fa fa-user"></i> <?php echo lang('profile'); ?></a></li>
+                        <li><a href="<?php echo site_url('auth/logout'); ?>"><i class="fa fa-lock"></i> <?php echo lang('logout'); ?></a></li>
                     </ul>
                 </li>
             </ul>
@@ -235,7 +193,7 @@
                     </li>
                 <?php endif; ?>
                 <li>
-                    <a href="<?php echo site_url('logout'); ?>">
+                    <a href="<?php echo site_url('auth/logout'); ?>">
                         <i class="fa fa-lock"></i> <?php echo lang('logout'); ?>
                     </a>
                 </li>
@@ -363,6 +321,11 @@
             content: function () {
                 return $('#daily-report').html();
             }
+        });
+        $('.editUserBtn').click(function () {
+            $('.modals-loader').load('<?php echo site_url('users/view'); ?>/' + $(this).attr('id'),function () {
+                $('#editUserModal').modal('show')
+            })
         })
     })
 </script>
@@ -373,5 +336,6 @@
 <?php $this->load->view('modules/children/add_child'); ?>
 <?php $this->load->view('modules/users/add_user'); ?>
 <?php $this->load->view('modules/reports/report-form-popover'); ?>
+
 </body>
 </html>

@@ -14,7 +14,7 @@
                 </li>
                 <li>
                     <a href="#allergies" data-toggle="tab">
-                        <i class="fa fa-heart-o"></i>
+                        <i class="fa fa-heartbeat"></i>
                         <?php echo lang('allergies'); ?>
                     </a>
                 </li>
