@@ -35,7 +35,7 @@
 </head>
 <body class="login-page login-1">
 <?php if(!empty($this->session->flashdata('type'))) : ?>
-    <div style="width:460px;margin:0 auto">
+    <div style="max-width:460px;margin:0 auto">
         <div id="msg" class="msg">
             <?php echo $this->session->flashdata('message'); ?>
         </div>

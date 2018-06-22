@@ -12,25 +12,8 @@
         <?php echo form_close(); ?>
     </div>
     <div class="col-md-3">
-        <button type="button" data-html="true" class="btn btn-lg btn-danger reportsBtn" data-placement="bottom"
-                data-toggle="popover" title="<?php echo lang('reports'); ?>" data-content='
-
-<div style="width:200px">
-            <div class="input-group date">
-                <input data-provide="datepicker" data-date="<?php echo date('m/d/Y'); ?>" type="text"
-                       class="form-control datepicker" value="<?php echo date('m/d/Y'); ?>">
-                <div class="input-group-addon">
-                    <a target="_blank" class="" onclick="getReport()">
-                        <span class="fa fa-print"></span>
-                        <?php echo lang('daily roster'); ?>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-
-'> <?php echo lang('reports'); ?></button>
-
+        <button type="button" data-toggle="popover" class="popover-toggle btn btn-lg btn-danger btn-sm btn-flat reportsBtn">
+            <i class="fa fa-clipboard-list"></i> <?php echo lang('reports'); ?></button>
     </div>
     <div class="col-md-5">
         <a href="<?php echo site_url('reports/roster?active'); ?>" target="_blank"
@@ -240,11 +223,4 @@
         var child_id = $(this).attr('id');
         $('.my_modal').load('<?php echo site_url('child'); ?>/' + child_id + '/checkOut').modal();
     });
-
-    function getReport() {
-        var d = $(".datepicker").datepicker('getDate');
-        var datestring = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate());
-        window.open('<?php echo site_url('reports/roster?daily&date='); ?>' + datestring);
-    }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>

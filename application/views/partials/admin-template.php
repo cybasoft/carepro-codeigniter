@@ -354,11 +354,24 @@
         $('html').addClass('lockscreen');
     }
 </script>
+<script>
+    $(document).ready(function () {
+        $('.reportsBtn').popover({
+            title: '<?php echo lang('reports'); ?>',
+            html: true,
+            placement: 'bottom',
+            content: function () {
+                return $('#daily-report').html();
+            }
+        })
+    })
+</script>
 <?php if($this->input->cookie('timer')>0): ?>
     <script>startLockscreen()</script>
 <?php endif; ?>
 
 <?php $this->load->view('modules/children/add_child'); ?>
 <?php $this->load->view('modules/users/add_user'); ?>
+<?php $this->load->view('modules/reports/report-form-popover'); ?>
 </body>
 </html>

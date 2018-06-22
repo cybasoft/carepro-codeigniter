@@ -116,7 +116,7 @@ $(document).ready(function () {
 });
 $(function () {
     "use strict";
-    $('[data-toggle="popover"]').popover();
+    // $('[data-toggle="popover"]').popover();
     //Editors
     $('.editor').summernote({
         toolbar: [

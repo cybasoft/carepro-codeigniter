@@ -498,4 +498,4 @@ $lang['Assign to room'] = 'Assign to room';
 $lang['New children room'] = 'New children room';
 $lang['Child room created! You can now assign children'] = 'Child room created! You can now assign children';
 $lang['Children rooms'] = 'Children rooms';
-
+$lang['Total hours'] = 'Total hours';

@@ -7,7 +7,7 @@ class Reports extends CI_Controller
         parent::__construct();
         //redirect session
         setRedirect();
-		allow('super,admin');
+		allow('admin,manager');
         //variables
         $this->load->model('My_reports','reports');
         $this->module= 'modules/reports/';
@@ -173,6 +173,9 @@ class Reports extends CI_Controller
             flash('danger',lang('request_error'));
         }
        redirect('reports#backup_db');
+    }
+    function reportForm(){
+        $this->load->view($this->module.'report-form-popover');
     }
 }
 
