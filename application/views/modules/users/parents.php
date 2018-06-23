@@ -11,7 +11,7 @@
     <?php
     $start = 1;
     foreach ($users as $user):
-        if(in_group($this->user->uid(), 'admin') == false && in_group($user->id, 'admin') == true):
+        if(in_group($this->user->uid(), 'admin') == false && in_group($user->user_id, 'admin') == true):
             continue;
         else:
             ?>
@@ -29,21 +29,24 @@
                     <div class="visible-xs pull-left" style="padding-left:15px;">
                         <?php echo $user->first_name.' '.$user->last_name; ?><br/>
                         <?php echo $user->email; ?><br/>
-                        <?php echo ($user->active) ? anchor("users/deactivate/".$user->id, '<span class="label label-info">'
-                            .lang('index_active_link').'</span>') : anchor("users/activate/".$user->id, '<span class="label label-danger">'
+                        <?php echo ($user->active) ? anchor("users/deactivate/".$user->user_id, '<span class="label label-info">'
+                            .lang('index_active_link').'</span>') : anchor("users/activate/".$user->user_id, '<span class="label label-danger">'
                             .lang('index_inactive_link').'</span>'); ?>
                     </div>
                 </td>
                 <td class="hidden-xs"><?php echo $user->first_name.' '.$user->last_name; ?></td>
                 <td class="hidden-xs"><?php echo $user->email; ?></td>
                 <td align="center" valign="top" class="hidden-xs">
-                    <?php echo ($user->active) ? anchor("users/deactivate/".$user->id, '<span class="text-primary">'
-                        .lang('index_active_link').'</span>') : anchor("users/activate/".$user->id, '<span class="text-danger">'
+                    <?php echo ($user->active) ? anchor("users/deactivate/".$user->user_id, '<span class="text-primary">'
+                        .lang('index_active_link').'</span>') : anchor("users/activate/".$user->user_id, '<span class="text-danger">'
                         .lang('index_inactive_link').'</span>'); ?>
                 </td>
                 <td>
-                    <?php echo anchor("user/".$user->id, '<span class="btn btn-default btn-xs"><i class="fa fa-pencil-alt"></i></span>'); ?>
-                    <?php echo anchor("user/".$user->id.'/delete', '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>'); ?>
+                <a id="<?php echo $user->user_id; ?>" class="editUserBtn" href="#">
+                    <span class="btn btn-default btn-xs">
+                        <i class="fa fa-pencil-alt"></i></span>
+                </a>
+                    <?php echo anchor("user/".$user->user_id.'/delete', '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>'); ?>
                 </td>
             </tr>
             <?php

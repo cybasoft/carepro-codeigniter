@@ -27,9 +27,9 @@
                         <strong class="">
                             <?php echo $pickup->last_name.', '.$pickup->first_name; ?>
                             <?php if(is('admin') || is('manager')): ?>
-                                <a href="<?php echo site_url('child/deletePickup/'.$pickup->id); ?>"
+                                <a class="btn btn-danger btn-xs pull-right" href="<?php echo site_url('child/deletePickup/'.$pickup->id); ?>"
                                    class="delete">
-                                    <i class="fa fa-trash-alt text-danger pull-right"></i>
+                                    <i class="fa fa-trash-alt"></i>
                                 </a>
                             <?php endif; ?>
                         </strong>
@@ -107,7 +107,7 @@
                     </div>
                     <div class="col-md-6">
                         <?php echo form_label(lang('photo'));
-                        echo form_upload('phonto', null, ['class' => 'form-control',]);
+                        echo form_upload('photo', null, ['class' => 'form-control',]);
                         ?>
 
                     </div>

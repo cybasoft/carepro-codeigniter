@@ -32,8 +32,7 @@
                         <?php if(!is('parent')): ?>
                             <a href="<?php echo site_url('child/'.$child->id.'/'.$u->id); ?>/removeParent"
                                class="btn btn-danger btn-xs delete" style="position:absolute;top:0;right:0">
-                                <span class="fa fa-trash-alt"></span>
-                                <span class="hidden-sm"><?php echo lang('remove'); ?></span>
+                                <span class="fa fa-unlink"></span>
                             </a>
                         <?php endif; ?>
                     </td>

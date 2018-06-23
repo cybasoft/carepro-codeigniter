@@ -23,9 +23,10 @@ class Pickup extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $pickup = $this->child->createPickup($id);
             if ($pickup > 0) {
+                
+                flash('success', lang('request_success'));
                 //upload photo
                 $this->uploadPhoto($pickup);
-                flash('success', lang('request_success'));
             } else {
                 flash('warning', lang('request_error'));
             }
@@ -43,12 +44,12 @@ class Pickup extends CI_Controller
     {
         allow('admin,manager,staff');
         //delete images
-        $upload_path = './assets/pickup';
+        $upload_path = './assets/uploads/pickup';
         $this->db->where('id', $id);
         $q = $this->db->get('child_pickup');
         foreach ($q->result() as $r) {
             if ($r->photo !== "") :
-                unlink($upload_path . '/' . $r->photo);
+                @unlink($upload_path . '/' . $r->photo);
             endif;
         }
 
@@ -68,23 +69,24 @@ class Pickup extends CI_Controller
      */
     function uploadPhoto($id = "")
     {
-        $upload_path = './assets/uploads/pickup';
+        $upload_path = APPPATH.'../assets/uploads/pickup/';
         $upload_db = 'child_pickup';
 
-        if (!file_exists($upload_path)) {
+        if (!is_dir($upload_path)) {
             mkdir($upload_path, 755, true);
         }
 
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'gif|jpg|png|jpeg',
+            'allowed_types' => 'jpg|png|jpeg',
             //'max_size'      => '100',
             'max_width' => '1240',
             'max_height' => '1240',
             'encrypt_name' => true,
         );
         $this->load->library('upload', $config);
-        if (!$this->upload->do_upload()) {
+        if (!$this->upload->do_upload('photo')) {
+             flash('error', $this->upload->display_errors());
             return false;
         } else {
             //delete if any exists
@@ -92,7 +94,7 @@ class Pickup extends CI_Controller
             $q = $this->db->get($upload_db);
             foreach ($q->result() as $r) {
                 if ($r->photo !== "") :
-                    unlink($upload_path . '/' . $r->photo);
+                    @unlink($upload_path . '/' . $r->photo);
                     $data['photo'] = '';
                     $this->db->where('id', $id);
                     $this->db->update($upload_db, $data);
@@ -109,6 +111,7 @@ class Pickup extends CI_Controller
             if ($data) {
                 return true;
             } else {
+                flash('error','Error');
                 return false;
             }
         }

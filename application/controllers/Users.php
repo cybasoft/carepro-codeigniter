@@ -61,6 +61,9 @@ class Users extends CI_Controller
     function view($id)
     {
         allow('admin,manager');
+        if(empty($id)){
+            exit();
+        }
         //user vars
         $user = $this->ion_auth->user($id)->row();
         $groups = $this->ion_auth->groups()->result_array();
@@ -116,9 +119,8 @@ class Users extends CI_Controller
         if($this->form_validation->run() === TRUE) {
             if($this->ion_auth->update($id, $data)) {
                 //update photo if available
-                $this->uploadPhoto($id);
-
                 flash('success', lang('request_success'));
+                $this->uploadPhoto($id);
             } else {
                 flash('danger', lang('request_error'));
             }
@@ -269,7 +271,7 @@ class Users extends CI_Controller
      */
     function uploadPhoto($id = "")
     {
-        $upload_path = './assets/uploads/users';
+        $upload_path = APPPATH.'../assets/uploads/users';
         $upload_db = 'users';
         if(!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
@@ -288,7 +290,8 @@ class Users extends CI_Controller
         );
         $this->load->library('upload', $config);
         if(!$this->upload->do_upload()) {
-            flash('danger', lang('request_error'));
+            flash('error', $this->upload->display_errors());
+            return false;
         } else {
             //delete if any exists
             $q = $this->db->where('id', $id)->get($upload_db);
