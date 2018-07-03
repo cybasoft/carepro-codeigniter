@@ -190,7 +190,7 @@
                     <div class="box-body">
                         <?php
                         if(get_option('demo_mode') == 0) {
-                            form_open('settings/update', ['class' => 'settings']);
+                            echo form_open('settings/update', ['class' => 'settings']);
                         }
                         echo form_hidden('page', 'billing');
                         echo form_label(lang('currency_abbreviation'));

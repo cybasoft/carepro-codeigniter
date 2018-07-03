@@ -1,7 +1,6 @@
 .DS_Store
 
 application/config/development/
-application/temp/captcha/*
 application/config/testing/*
 !application/logs/index.html
 
