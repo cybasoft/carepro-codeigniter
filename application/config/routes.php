@@ -8,7 +8,14 @@ $route['404_override'] = 'landing/error404';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['dashboard'] = 'dashboard/index';
+
 $route['auth/(:any)'] = 'auth/$1';
+$route['login']='auth/login';
+$route['register']='auth/register';
+$route['logout']='auth/logout';
+$route['forgot']='auth/forgot';
+$route['reset/(:any)']='auth/reset/$1';
+
 //accounting
 $route['new_invoice'] = 'invoice/create_invoice';
 

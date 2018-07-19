@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="lockscreen-link">
-        <a class="lockscreen-name label label-success" href="<?php echo site_url('logout'); ?>">
+        <a class="lockscreen-name label label-success" href="<?php echo site_url('auth/logout'); ?>">
             <?php echo lang('switch_user'); ?>
         </a>
     </div>
@@ -48,7 +48,7 @@
                    window.location.reload();
                 },
                 error: function( jqXhr, textStatus, errorThrown ){
-                    window.location.href='<?php echo site_url('/logout'); ?>';
+                    window.location.href='<?php echo site_url('/auth/logout'); ?>';
                 }
             });
         })
