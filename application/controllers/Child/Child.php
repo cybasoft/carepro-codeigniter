@@ -295,7 +295,7 @@ class Child extends CI_Controller
         $this->db->where('child_id', $this->child_id);
         $query = $this->db->get('child_parents');
 
-        if (count($query->row())) {
+        if (count((array)$query->row())) {
             $this->form_validation->set_message('user_not_assigned', lang('user_already_assigned'));
             flash('danger', lang('request_error'));
             return false;

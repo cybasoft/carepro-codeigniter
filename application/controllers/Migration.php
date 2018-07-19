@@ -34,7 +34,7 @@ class Migration extends CI_Controller
         $mig = $this->db->get('migrations')->row();
         $migration = false;
 
-        if(count($mig)>0) {
+        if(sizeof($mig)>0) {
             if($version == null) {//migrate all
                 $migration = $this->migration->latest();
             } else {
@@ -157,7 +157,7 @@ class Migration extends CI_Controller
     function seedGroups()
     {
         $groups = array(
-            'installer', 'admin', 'manager', 'staff', 'parent'
+            'admin', 'manager', 'staff', 'parent'
         );
         foreach ($groups as $group) {
             $this->db->insert('groups', array('name' => $group));

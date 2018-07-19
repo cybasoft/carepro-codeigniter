@@ -2,7 +2,7 @@
 <link type="text/css" rel="stylesheet" href="<?php echo base_url('assets/plugins/lg/css/lightgallery.min.css'); ?>"/>
 <?php $incident = $this->db->where('id', $_GET['viewIncident'])->get('child_incident')->row();
 $photos = $this->photos->albums('child_incident_photos', $child->id, null, base_url('child/1/notes?viewIncident=4#view-notes'));
-if(count($incident)>0):
+if(sizeof($incident)>0):
 ?>
 <div class="row">
     <div class="col-md-8">

@@ -133,7 +133,17 @@ function is($group)
 {
     $ci = &get_instance();
     auth(true);
-    if($ci->ion_auth->in_group($group))
+
+    $group = $ci->db->where('name', $group)->get('groups')->row();
+    if(count((array)$group) == 0)
+        return false;
+
+    $userGroups = $ci->db
+        ->where('user_id', $ci->users->uid())
+        ->where('group_id', $group->id)
+        ->get('users_groups')->row();
+
+    if(count((array)$userGroups)>0)
         return true;
     return false;
 }
@@ -205,7 +215,7 @@ function related($db, $field1, $value1, $field2, $value2)
     $res = $ci->db->where($field1, $value1)
         ->where($field2, $value2)
         ->get($db)->result();
-    if(count($res)>0) {
+    if(count((array)$res)>0) {
         return true;
     }
     return false;
@@ -288,8 +298,8 @@ function allow($group)
     }
     if(empty($data)) {
         flash('danger', lang('access_denied'));
-        if ($ci->input->is_ajax_request()) {
-           return 'error';
+        if($ci->input->is_ajax_request()) {
+            return 'error';
         }
         redirectPrev('ajax');
         exit();
@@ -626,13 +636,13 @@ function remove_option($name)
 
 function email_config()
 {
-    if(get_option('use_smtp')==1) {
+    if(get_option('use_smtp') == 1) {
         $config['protocol'] = 'smtp'; //sendmail, smtp, mail
         $config['smtp_host'] = get_option('smtp_host');
         $config['smtp_user'] = get_option('smtp_user');
         $config['smtp_pass'] = get_option('smtp_pass');
         $config['smtp_port'] = get_option('smtp_port');
-    }else{
+    } else {
         $config['protocol'] = 'mail';
     }
     $config['mailtype'] = 'html';
@@ -663,14 +673,16 @@ function g_decor($name)
     }
 }
 
-function blood_types(){
-    $types= [
-        'A-','A+','B-','B+','AB-','AB+','O-','O+'
+function blood_types()
+{
+    $types = [
+        'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+'
     ];
-    $res=array();
-    foreach($types as $type){
-        $res[$type]=$type;
+    $res = array();
+    foreach ($types as $type) {
+        $res[$type] = $type;
     }
     return $res;
 }
+
 ?>

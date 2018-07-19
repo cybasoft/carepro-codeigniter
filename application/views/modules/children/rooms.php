@@ -64,7 +64,7 @@
             ->where('child_rooms.id', $_GET['room'])
             ->get();
         ?>
-        <?php if(count($cgs->result())>0): ?>
+        <?php if(sizeof($cgs->result())>0): ?>
             <div class="col-md-4">
                 <div class="box box-default">
                     <div class="box-body">

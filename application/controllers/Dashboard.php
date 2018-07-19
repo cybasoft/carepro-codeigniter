@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller
     function index()
     {
         $this->load->model('my_invoice', 'invoice');
-        if (is('admin') || is('manager') || is('staff')) {
+        if (is('super') || is('admin') || is('manager') || is('staff')) {
             page('dashboard/home');
         } elseif (is('parent')) {
             $children = $this->parent->getChildren();

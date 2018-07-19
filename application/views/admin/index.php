@@ -320,10 +320,12 @@
                 <div class="box box-default">
                     <div class="box-body">
                         <h3><?php echo lang('company_logo'); ?></h3>
+
                         <?php if(is_file(APPPATH.'../assets/uploads/content/'.get_option('logo'))): ?>
                             <img src="<?php echo base_url().'assets/uploads/content/'.get_option('logo'); ?>"/>
                         <?php endif; ?>
                         <hr/>
+
                         <div class="alert alert-warning">
                             <?php echo lang('logo_instructions'); ?>
                         </div>
