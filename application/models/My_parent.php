@@ -124,7 +124,7 @@ class My_parent extends CI_Model
         //get parents info
         $parents = $this->child->getParents($child_id)->result();
 
-        if (sizeof($parents) == 0)
+        if (count((array)$parents) == 0)
             return false;
 
         $sent = 0;

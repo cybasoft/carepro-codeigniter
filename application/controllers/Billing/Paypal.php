@@ -79,7 +79,7 @@ class Paypal extends CI_Controller
         $invoice_id = $this->input->post('item_number');
         $invoice = $this->invoice->first($invoice_id);
         $child = $this->child->first($invoice->child_id);
-        if(sizeof($invoice) == 0) {
+        if(count((array)$invoice) == 0) {
             flash('info', lang('We received your payment. Please wait few hours for the transaction reflect in your account'));
         }
         if($this->input->post('amt'))

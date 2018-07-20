@@ -1,7 +1,7 @@
 <div class="box-footer bg-aqua"><?php echo lang('update_child_notice'); ?></div>
 <div class="row">
 
-    <?php if (sizeof($children) == 0): ?>
+    <?php if (count((array)$children) == 0): ?>
         <div class="callout callout-danger">
             <h4><?php echo lang('no_children_notice'); ?></h4>
             <p class="text-bold"><?php echo lang('phone'); ?>: <?php echo get_option('phone'); ?></p>

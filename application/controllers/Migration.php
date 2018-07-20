@@ -34,7 +34,7 @@ class Migration extends CI_Controller
         $mig = $this->db->get('migrations')->row();
         $migration = false;
 
-        if(sizeof($mig)>0) {
+        if(count((array)$mig)>0) {
             if($version == null) {//migrate all
                 $migration = $this->migration->latest();
             } else {

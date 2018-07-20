@@ -24,10 +24,6 @@ class Migration_create_news extends CI_Migration
                 'constraint' => 11,
                 'unsigned'=>TRUE
             ),
-            'order' => array(
-                'type' => 'INT',
-                'constraint' => '5',
-            ),
             'article_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '50',

@@ -127,7 +127,7 @@ class MY_user extends CI_Model
         $this->db->select('id,first_name,last_name,email');
         $this->db->where('id', $this->uid());
         $res = $this->db->get('users')->row();
-        if(sizeof((array)$res)>0)
+        if(count((array)$res)>0)
             return $res->$item;
         return "";
     }
@@ -196,7 +196,7 @@ class MY_user extends CI_Model
     {
         $this->db->where('group_id', $id);
         $res = $this->db->count_all_results('users_groups');
-        if(sizeof($res)>0)
+        if(count((array)$res)>0)
             return $res;
         return 0;
     }

@@ -36,6 +36,7 @@ class My_news extends CI_Model
 		$data = array(
 			'article_name' => $this->input->post('article_name'),
 			'article_body' => $this->input->post('article_body'),
+			'list_order'=>1,
 			'user_id' => $this->user->uid(),
 			'publish_date' => date_stamp()
 		);
@@ -47,7 +48,7 @@ class My_news extends CI_Model
 	function update($id)
 	{
 		$data = array(
-			'order' => $this->input->post('article_order'),
+			'list_order' => $this->input->post('article_order'),
 			'article_name' => $this->input->post('article_name'),
 			'article_body' => $this->input->post('article_body')
 		);

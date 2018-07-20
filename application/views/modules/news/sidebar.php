@@ -9,7 +9,7 @@
 
     <?php
     //list articles
-    $this->db->order_by('order', 'asc');
+    $this->db->order_by('list_order', 'asc');
     foreach ($this->db->get('news')->result() as $row): ?>
         <li>
             <a href="<?php echo site_url('news/view/' . $row->id); ?>">

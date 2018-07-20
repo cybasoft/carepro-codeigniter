@@ -452,7 +452,7 @@ class My_child extends CI_Model
         } else {
             $res = $this->db->count_all_results('child_room_staff');
         }
-        if(sizeof($res)>0)
+        if(count((array)$res)>0)
             return $res;
         return 0;
     }

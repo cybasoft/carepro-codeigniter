@@ -124,7 +124,7 @@ DROP TABLE IF EXISTS news;
 CREATE TABLE news (
   id           INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id      INT(11) UNSIGNED NOT NULL,
-  order        INT(5)           NOT NULL,
+  `order`        INT(5)           NOT NULL,
   article_name VARCHAR(50)      NOT NULL,
   article_body TEXT             NOT NULL,
   publish_date DATETIME         NOT NULL,
@@ -649,7 +649,7 @@ ALTER TABLE child_incident_photos
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
-CREATE INDEX incident_id
+CREATE INDEX incident_id_u
   ON child_incident_photos (incident_id);
 
 -- version 2.1.1
@@ -671,7 +671,7 @@ DROP TABLE IF EXISTS child_room;
 CREATE TABLE child_room
 (
   child_id   INT(11) UNSIGNED NOT NULL,
-  room_id   INT(11) UNSIGNED NOT NULL,
+  room_id    INT(11) UNSIGNED NOT NULL,
   created_at DATETIME         NOT NULL,
   updated_at DATETIME         NULL,
   PRIMARY KEY (child_id, room_id),
@@ -692,7 +692,7 @@ DROP TABLE IF EXISTS child_room_staff;
 CREATE TABLE child_room_staff
 (
   user_id    INT(11) UNSIGNED NOT NULL,
-  room_id   INT(11) UNSIGNED NOT NULL,
+  room_id    INT(11) UNSIGNED NOT NULL,
   created_at DATETIME         NOT NULL,
   updated_at DATETIME         NOT NULL,
   PRIMARY KEY (user_id, room_id),
@@ -768,3 +768,6 @@ INSERT INTO options (id, option_name, option_value, autoload) VALUES
   (39, 'left_sidebar_bg_color', '', NULL),
   (40, 'left_sidebar_link_color', '', NULL),
   (41, 'custom_css', '', NULL);
+
+-- version 2.1.4
+ALTER TABLE news CHANGE `order` list_order INT(5);

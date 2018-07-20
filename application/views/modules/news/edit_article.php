@@ -20,7 +20,7 @@
                        placeholder="<?php echo lang('title'); ?>" value="<?php echo $article->article_name; ?>"/>
                 <br/>
                 <input type="text" name="article_order" class="form-control" required=""
-                       placeholder="<?php echo lang('list_order'); ?>" value="<?php echo $article->order; ?>"/>
+                       placeholder="<?php echo lang('list_order'); ?>" value="<?php echo $article->list_order; ?>"/>
             </div>
             <div class="box-body">
 				<textarea name="article_body" class="form-control editor" id="editor" required=""
