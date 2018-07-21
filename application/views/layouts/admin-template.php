@@ -75,23 +75,28 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
+        <div class="navbar-left">
+            <ul class="nav navbar-nav">
+                <li class="lock-screen"><a href="#"><i class="fa fa-lock cursor"></i></a> </li>
+            </ul>
+        </div>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <?php if(is('manager') || is('admin')): ?>
-                <li>
-                    <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
-                       data-target="#registerChildModal">
-                        <i class="fa fa-user-plus"></i>
-                        <span class="hidden-xs"><?php echo lang('Register child'); ?></span>
-                    </a>
-                </li>
-                <li>
-                    <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
-                       data-target="#newUserModal">
-                        <i class="fa fa-user-plus"></i>
-                        <span class="hidden-xs"><?php echo lang('Register user'); ?></span>
-                    </a>
-                </li>
+                    <li class="btn-info">
+                        <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
+                           data-target="#registerChildModal">
+                            <i class="fa fa-user-plus"></i>
+                            <span class="hidden-xs"><?php echo lang('Register child'); ?></span>
+                        </a>
+                    </li>
+                    <li class="btn-warning">
+                        <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
+                           data-target="#newUserModal">
+                            <i class="fa fa-user-plus"></i>
+                            <span class="hidden-xs"><?php echo lang('Register user'); ?></span>
+                        </a>
+                    </li>
                 <?php endif; ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -100,8 +105,10 @@
                             <i class="caret"></i></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo site_url('profile'); ?>"><i class="fa fa-user"></i> <?php echo lang('profile'); ?></a></li>
-                        <li><a href="<?php echo site_url('auth/logout'); ?>"><i class="fa fa-lock"></i> <?php echo lang('logout'); ?></a></li>
+                        <li><a href="<?php echo site_url('profile'); ?>"><i
+                                        class="fa fa-user"></i> <?php echo lang('profile'); ?></a></li>
+                        <li><a href="<?php echo site_url('auth/logout'); ?>"><i
+                                        class="fa fa-lock"></i> <?php echo lang('logout'); ?></a></li>
                     </ul>
                 </li>
             </ul>
@@ -112,20 +119,18 @@
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!--start sidebar-->
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side sidebar-offcanvas"
+    <aside class="left-side animate sidebar-offcanvas"
            style="background-color: <?php echo get_option('left_sidebar_bg_color', '#f4f4f'); ?>">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="<?php echo $this->user->getPhoto(NULL); ?>" class="img-circle"/>
+                <div class="text-center image">
+                    <img src="<?php echo $this->user->photo(user_id()); ?>" class="img-circle"/>
                 </div>
-                <div class="pull-left info">
-                    <p><?php echo lang('hello'); ?>, <?php echo $this->user->thisUser('first_name'); ?></p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> </a>
+                <div class="text-center">
+                    <p><span><?php echo lang('hello'); ?></span> <?php echo $this->user->thisUser('first_name'); ?></p>
                 </div>
-                <i title="lockscreen" class="pull-right fa fa-lock lock-screen cursor"></i>
             </div>
             <!-- search form -->
             <!--form action="#" method="get" class="sidebar-form">
@@ -141,65 +146,86 @@
             <ul class="sidebar-menu">
                 <li class="<?php echo set_active('dashboard'); ?>">
                     <a href="<?php echo site_url('dashboard'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                        <i class="fa fa-home"></i> <span><?php echo lang('dashboard'); ?></span>
+                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                        <img class="icon" src="<?php echo assets('img/content/dash.svg'); ?>"/>
+                        <span><?php echo lang('dashboard'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
                     <a href="<?php echo site_url('children'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                        <i class="fa fa-users"></i> <span><?php echo lang('children'); ?>
-                            <small class="badge pull-right bg-green"><?php echo $this->child->getCount(); ?></small>
+                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                        <img class="icon" src="<?php echo assets('img/content/children.svg'); ?>"/>
+                        <span><?php echo lang('children'); ?></span>
+                        <small class="badge pull-right bg-green">
+                            <?php echo $this->child->getCount(); ?>
+                        </small>
+                    </a>
+                </li>
+                <li class="<?php echo set_active(array('rooms', 'room')); ?>">
+                    <a href="<?php echo site_url('rooms'); ?>"
+                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                        <img class="icon" src="<?php echo assets('img/content/groups.svg'); ?>"/>
+                        <span><?php echo lang('rooms'); ?></span>
+                        <small class="badge pull-right bg-green">
+                            <?php echo $this->rooms->getCount(); ?>
+                        </small>
                     </a>
                 </li>
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('users'); ?>">
                         <a href="<?php echo site_url('users'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                            <i class="fa fa-users"></i> <span><?php echo lang('users'); ?></span>
-                            <small class="badge pull-right bg-blue"><?php echo $this->user->getCount(); ?></small>
+                           style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                            <img class="icon" src="<?php echo assets('img/content/users.svg'); ?>"/>
+                            <span><?php echo lang('users'); ?></span>
+                            <small class="badge pull-right bg-blue">
+                                <?php echo $this->user->getCount(); ?>
+                            </small>
                         </a>
                     </li>
                 <?php endif; ?>
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('parents'); ?>">
                         <a href="<?php echo site_url('parents'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                            <i class="fa fa-users"></i> <span><?php echo lang('parents'); ?></span>
+                           style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                            <img class="icon" src="<?php echo assets('img/content/parents.svg'); ?>"/>
+                            <span><?php echo lang('parents'); ?></span>
                             <small class="badge pull-right bg-blue"><?php echo $this->users->getCount('parent'); ?></small>
                         </a>
                     </li>
                 <?php endif; ?>
                 <li class="<?php echo set_active('calendar'); ?>">
                     <a href="<?php echo site_url('calendar'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                        <i class="fa fa-calendar-alt"></i> <span><?php echo lang('calendar'); ?></span>
-                        <!--small class="badge pull-right bg-red">3</small-->
+                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                        <img class="icon" src="<?php echo assets('img/content/calendar.svg'); ?>"/>
+                        <span><?php echo lang('calendar'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(['news']); ?>">
                     <a href="<?php echo site_url('news'); ?>"
                        style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                        <i class="fa fa-clipboard"></i>
+                        <img class="icon" src="<?php echo assets('img/content/news.svg'); ?>"/>
                         <span><?php echo lang('news'); ?></span>
                     </a>
                 </li>
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('settings'); ?>">
                         <a href="<?php echo site_url('settings'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                            <i class="fa fa-wrench"></i> <span><?php echo lang('settings'); ?></span>
+                           style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                            <img class="icon" src="<?php echo assets('img/content/settings.svg'); ?>"/>
+                            <span><?php echo lang('settings'); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
                 <li>
-                    <a href="<?php echo site_url('auth/logout'); ?>">
-                        <i class="fa fa-lock"></i> <?php echo lang('logout'); ?>
+                    <a href="<?php echo site_url('auth/logout'); ?>"
+                       style="color:<?php echo get_option('left_sidebar_link_color','red'); ?>">
+                        <img class="icon" src="<?php echo assets('img/content/exit.svg'); ?>"/>
+                        <span><?php echo lang('logout'); ?></span>
                     </a>
                 </li>
             </ul>
         </section>
-        <div class="footer text-center" style="position:fixed;bottom:0">
+        <div class="footer text-center" style="">
             <br/>
             <div style="font-size:12px;padding:5px;">
                 &copy; <?php echo date('Y'); ?>
@@ -212,11 +238,11 @@
         </div>
     </aside>
     <!--end sidebar-->
-    <aside class="right-side" style="">
+    <aside class="right-side animate" style="">
         <?php if($this->uri->segment(1) !== 'child' && $this->uri->segment(1) !== 'invoice') : ?>
             <section class="content-header">
                 <h1>
-                    <?php echo strtoupper($this->uri->segment(1)); ?>
+                    <?php echo isset($this->title) ? $this->title : strtoupper($this->uri->segment(1)); ?>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo lang('home'); ?></a></li>
@@ -288,11 +314,7 @@
                 'pdf'
             ]
         });
-        $('#datatable').DataTable({
-            buttons: [
-                'pdf'
-            ]
-        });
+        $('#datatable').DataTable();
         $('#users').DataTable({
             buttons: [
                 'pdf'
@@ -323,10 +345,10 @@
             }
         });
         $('.editUserBtn').click(function () {
-            $('.modals-loader').load('<?php echo site_url('users/view'); ?>/' + $(this).attr('id'),function () {
+            $('.modals-loader').load('<?php echo site_url('users/view'); ?>/' + $(this).attr('id'), function () {
                 $('#editUserModal').modal('show')
             })
-        })
+        });
     })
 </script>
 <?php if($this->input->cookie('timer')>0): ?>

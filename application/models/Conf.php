@@ -16,6 +16,7 @@ class Conf extends CI_Model
         $this->load->model('My_user', 'user');
         $this->load->model('My_cron', 'cron');
         $this->load->model('My_mailer', 'mailer');
+        $this->load->model('My_rooms', 'rooms');
 
         //disable changes to db in demo mode
         demo();

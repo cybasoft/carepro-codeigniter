@@ -8,6 +8,7 @@ body {
     -webkit-font-smoothing: antialiased;
     min-height: 100%;
     background: #f9f9f9;
+    color:#607D8B;
 }
 
 .msg {
@@ -17,7 +18,8 @@ body {
     top: 15px;
     right: 0
 }
-.msg .alert{
+
+.msg .alert {
     -webkit-border-radius: 0 !important;
     -moz-border-radius: 0 !important;
     border-radius: 0 !important;
@@ -25,6 +27,7 @@ body {
     margin-left: 0;
     position: relative;
 }
+
 .cursor {
     cursor: pointer;
 }
@@ -97,16 +100,52 @@ body > .header {
 
     /*Right side strech mode*/
     .right-side.strech {
-        margin-left: 0;
+        margin-left: 66px;
     }
 
     .right-side.strech > .content-header {
         margin-top: 0;
     }
 
+    .animate {
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
     /* Left side collapse */
     .left-side.collapse-left {
-        left: -220px;
+        /* left: -160px; */
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        width: 65px;
+    }
+
+    .collapse-left li a {
+        position: relative;
+    }
+
+    .left-side.collapse-left .badge {
+        position: absolute;
+        top: 0;
+        right: -5px
+    }
+
+    .left-side.collapse-left .footer {
+        display: none;
+    }
+
+    .collapse-left li img {
+        margin-left: 5px
+    }
+
+    .collapse-left .user-pane div:nth-child(2) {
+        display: none;
     }
 }
 
@@ -623,6 +662,10 @@ img {
     background: rgba(0, 0, 0, 0.2)
 }
 
+.info-box-light {
+    background: rgba(226, 222, 222, 0.2);
+}
+
 .info-box-icon > img {
     max-width: 100%
 }
@@ -992,7 +1035,8 @@ body > .header .logo .icon {
 .sidebar .sidebar-menu > li > a > .fa,
 .sidebar .sidebar-menu > li > a > .glyphicon,
 .sidebar .sidebar-menu > li > a > .ion {
-    width: 20px;
+    /* width: 20px; */
+    font-size: 20px;
 }
 
 .sidebar .sidebar-menu .treeview-menu {
@@ -1015,8 +1059,19 @@ body > .header .logo .icon {
 
 .sidebar .sidebar-menu .treeview-menu > li > a > .fa,
 .sidebar .sidebar-menu .treeview-menu > li > a > .glyphicon,
-.sidebar .sidebar-menu .treeview-menu > li > a > .ion {
+.sidebar .sidebar-menu .treeview-menu > li > a > .icon {
     width: 20px;
+    font-size: 20px !important;
+}
+
+.sidebar .icon {
+    width: 20px;
+    /*     height: 24px; */
+}
+
+.sidebar li div:nth-child(1) {
+    width: 25px;
+    float: left;
 }
 
 .user-panel {
@@ -3506,16 +3561,18 @@ Photo albums
     margin-right: 5px;
     /*padding: 2px;*/
     position: relative;
+    border-radius: 5px;
 }
 
 .children-thumb {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 130px;
     -webkit-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     position: relative;
+    border-radius: 5px;
 }
 
 .children-thumbs h4 {
@@ -3559,6 +3616,15 @@ Photo albums
 .i-check {
     width: 100%;
     text-align: center
+}
+
+.health-icons {
+    height: 24px;
+    padding: 3px;
+}
+
+.health-icons .fa {
+    margin-right: 10px;
 }
 
 .i-check h1 {
@@ -3673,8 +3739,7 @@ Photo albums
 }
 
 .i-check-icons {
-    position: absolute;
-    bottom: -65px;
+    /* position: absolute; */
 }
 
 .i-check-allergy {
@@ -3695,4 +3760,7 @@ Photo albums
     background: #1974cc !important;
     padding: 0 2px !important;
     color: #fff;
+}
+.modal-body{
+    color:#607D8B;
 }

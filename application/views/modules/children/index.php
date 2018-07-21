@@ -12,7 +12,8 @@
         <?php echo form_close(); ?>
     </div>
     <div class="col-md-3">
-        <button type="button" data-toggle="popover" class="popover-toggle btn btn-lg btn-danger btn-sm btn-flat reportsBtn">
+        <button type="button" data-toggle="popover"
+                class="popover-toggle btn btn-lg btn-danger btn-sm btn-flat reportsBtn">
             <i class="fa fa-clipboard-list"></i> <?php echo lang('reports'); ?></button>
     </div>
     <div class="col-md-5">
@@ -48,12 +49,6 @@
                 <?php echo lang('inactive_children'); ?>
             </a>
         </li>
-
-        <li role="presentation">
-            <a href="#rooms" aria-controls="rooms" role="tab" data-toggle="tab">
-                <i class="fa fa-building"></i> <?php echo lang('rooms'); ?>
-            </a>
-        </li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -72,100 +67,118 @@
             $activeChildren = $this->db->get('children')->result();
             ?>
             <?php if(!empty($activeChildren)): ?>
-                <div class="clearfix">
-                    <?php foreach ($activeChildren as $row): ?>
-                        <?php if($this->child->checkedIn($row->id)) continue; ?>
-                        <div class="children-thumbs cursor">
-                            <div class="children-thumb"
-                                 onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
-                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/children/'.$row->photo; ?>');">
-                                <?php if($this->child->countAllergies($row->id)>0): ?>
-                                    <i class="fa fa-allergies text-danger i-check-icons i-check-allergy"></i>
-                                <?php endif; ?>
-                                <?php if($this->child->countMeds($row->id)>0): ?>
-                                    <i class="fa fa-pills text-danger i-check-icons i-check-med"></i>
-                                <?php endif; ?>
+                <?php foreach ($activeChildren as $row): ?>
+                    <?php if(!$this->child->checkedIn($row->id)) continue; ?>
 
-                                <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
-                                    <i class="fa fa-lock text-danger pull-right fa-2x"></i>
-                                <?php endif; ?>
-                                <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
-                                <span class="child-id">ID:
-                                    <?php echo decrypt($row->national_id); ?></span>
-                            </div>
-                            <div class="child-info">
-                                <a href="<?php echo site_url('/child/'.$row->id); ?>">
-                                    <?php echo $row->last_name.', '.$row->first_name; ?>
-                                </a>
-                            </div>
-                            <?php if($this->child->checkedIn($row->id) == 1) : ?>
-                                <a id="<?php echo $row->id; ?>" href="#"
-                                   class="btn btn-danger btn-flat btn-sm child-check-out">
-                                    <span class="fa fa-new-window"></span>
-                                    <?php echo lang('check_out'); ?>
-                                </a>
-                            <?php else : ?>
-                                <a id="<?php echo $row->id; ?>" href="#"
-                                   class="btn btn-primary btn-flat btn-sm child-check-in">
-                                    <span class="fa fa-check"></span>
-                                    <?php echo lang('check_in').' &nbsp; '; ?>
-                                </a>
+                    <div class="children-thumbs cursor">
+                        <div class="children-thumb"
+                             onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
+                             style="background-image: url('<?php echo $this->child->photo($row->photo); ?>');">
+
+                            <span class="i-check-timer">
+                                <?php echo $this->child->checkinCounter($row->id); ?>
+                            </span>
+
+                            <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
+                                <i class="fa fa-lock text-danger pull-right fa-2x"></i>
+                            <?php endif; ?>
+
+                            <span class="child-dob"> <?php echo lang('DOB').': '.format_date($row->bday, false); ?></span>
+                            <span class="child-id">ID:<?php echo decrypt($row->national_id); ?></span>
+
+                        </div>
+
+                        <div class="child-info">
+                            <a href="<?php echo site_url('/child/'.$row->id); ?>">
+                                <?php echo $row->last_name.', '.$row->first_name; ?>
+                            </a>
+                        </div>
+
+                        <?php if($this->child->checkedIn($row->id) == 1) : ?>
+                            <a id="<?php echo $row->id; ?>" href="#"
+                               class="btn btn-danger btn-flat btn-sm child-check-out">
+                                <span class="fa fa-new-window"></span>
+                                <?php echo lang('check_out'); ?>
+                            </a>
+                        <?php else : ?>
+                            <a id="<?php echo $row->id; ?>" href="#"
+                               class="btn btn-primary btn-flat btn-sm child-check-in">
+                                <span class="fa fa-check"></span>
+                                <?php echo lang('check_in').' &nbsp; '; ?>
+                            </a>
+                        <?php endif; ?>
+
+                        <div class="health-icons">
+                            <?php if($this->child->countAllergies($row->id)>0): ?>
+                                <i class="fa fa-allergies text-danger i-check-icons i-check-allergy"></i>
+                            <?php endif; ?>
+                            <?php if($this->child->countMeds($row->id)>0): ?>
+                                <i class="fa fa-pills text-danger i-check-icons i-check-med"></i>
                             <?php endif; ?>
                         </div>
-                    <?php endforeach; ?>
-                    <div class="clearfix"></div>
-                    <hr/>
-                    <?php foreach ($activeChildren as $row): ?>
-                        <?php if(!$this->child->checkedIn($row->id)) continue; ?>
-                        <div class="children-thumbs cursor">
-                            <div class="children-thumb"
-                                 onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
-                                 style="background-image: url('<?php echo $row->photo == "" ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/children/'.$row->photo; ?>');">
-                                <span class="i-check-timer">
-                                    <?php echo $this->child->checkinCounter($row->id); ?>
-                                </span>
+                    </div>
+                <?php endforeach; ?>
 
-                                <?php if($this->child->countAllergies($row->id)>0): ?>
-                                    <i class="fa fa-allergies text-danger i-check-icons i-check-allergy"></i>
-                                <?php endif; ?>
-                                <?php if($this->child->countMeds($row->id)>0): ?>
-                                    <i class="fa fa-pills text-danger i-check-icons i-check-med"></i>
-                                <?php endif; ?>
-                                <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
-                                    <i class="fa fa-lock text-danger pull-right fa-2x"></i>
-                                <?php endif; ?>
-                                <span class="child-dob"> <?php echo format_date($row->bday, false); ?></span>
-                                <span class="child-id">ID:
-                                    <?php echo decrypt($row->national_id); ?></span>
-                            </div>
-                            <div class="child-info">
-                                <a href="<?php echo site_url('/child/'.$row->id); ?>">
-                                    <?php echo $row->last_name.', '.$row->first_name; ?>
-                                </a>
-                            </div>
-                            <?php if($this->child->checkedIn($row->id) == 1) : ?>
-                                <a id="<?php echo $row->id; ?>" href="#"
-                                   class="btn btn-danger btn-flat btn-sm child-check-out">
-                                    <span class="fa fa-new-window"></span>
-                                    <?php echo lang('check_out'); ?>
-                                </a>
-                            <?php else : ?>
-                                <a id="<?php echo $row->id; ?>" href="#"
-                                   class="btn btn-primary btn-flat btn-sm child-check-in">
-                                    <span class="fa fa-check"></span>
-                                    <?php echo lang('check_in').' &nbsp; '; ?>
-                                </a>
+                <div class="clearfix"></div>
+                <hr/>
+
+                <?php foreach ($activeChildren as $row): ?>
+                    <?php if($this->child->checkedIn($row->id)) continue; ?>
+                    <div class="children-thumbs cursor">
+                        <div class="children-thumb"
+                             onclick="window.location.href='<?php echo site_url('child/'.$row->id); ?>'"
+                             style="background-image: url('<?php echo $this->child->photo($row->photo); ?>');">
+
+                            <?php if(!authorizedToChild($this->user->uid(), $row->id)): ?>
+                                <i class="fa fa-lock text-danger pull-right fa-2x"></i>
+                            <?php endif; ?>
+
+                            <span class="child-dob"> <?php echo lang('DOB').': '.format_date($row->bday, false); ?></span>
+                            <span class="child-id">ID:<?php echo decrypt($row->national_id); ?></span>
+
+                        </div>
+
+                        <div class="child-info">
+                            <a href="<?php echo site_url('/child/'.$row->id); ?>">
+                                <?php echo $row->last_name.', '.$row->first_name; ?>
+                            </a>
+                        </div>
+
+                        <?php if($this->child->checkedIn($row->id) == 1) : ?>
+                            <a id="<?php echo $row->id; ?>" href="#"
+                               class="btn btn-danger btn-flat btn-sm child-check-out">
+                                <span class="fa fa-new-window"></span>
+                                <?php echo lang('check_out'); ?>
+                            </a>
+                        <?php else : ?>
+                            <a id="<?php echo $row->id; ?>" href="#"
+                               class="btn btn-primary btn-flat btn-sm child-check-in">
+                                <span class="fa fa-check"></span>
+                                <?php echo lang('check_in').' &nbsp; '; ?>
+                            </a>
+                        <?php endif; ?>
+
+                        <div class="health-icons">
+                            <?php if($this->child->countAllergies($row->id)>0): ?>
+                                <i class="fa fa-allergies text-danger i-check-icons i-check-allergy"></i>
+                            <?php endif; ?>
+                            <?php if($this->child->countMeds($row->id)>0): ?>
+                                <i class="fa fa-pills text-danger i-check-icons i-check-med"></i>
                             <?php endif; ?>
                         </div>
-                    <?php endforeach; ?>
+                    </div>
+                <?php endforeach; ?>
 
-                </div>
             <?php else: ?>
-                <a href="<?php echo site_url('children'); ?>" class="btn btn-primary"><i
-                            class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
+
+                <a href="<?php echo site_url('children'); ?>" class="btn btn-primary">
+                    <i class="fa fa-chevron-left"></i> <?php echo lang('back'); ?>
+                </a>
                 <hr/>
                 <div class="alert alert-danger">
-                    <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
+                    <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?>
+                </div>
+
             <?php endif; ?>
             <div class="clearfix"><br/></div>
         </div>
@@ -199,16 +212,12 @@
                     <?php endforeach; ?>
                 </div>
             <?php else: ?>
-                <a href="<?php echo site_url('children'); ?>" class="btn btn-primary"><i
-                            class="fa fa-chevron-left"></i> <?php echo lang('back'); ?></a>
-                <hr/>
-                <div class="alert alert-danger">
-                    <i class="fa fa-exclamation-triangle"></i> <?php echo lang('no_results_found'); ?></div>
+
+                <div class="callout callout-warning">
+                    <?php echo lang('no_results_found'); ?></div>
             <?php endif; ?>
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="rooms">
-            <?php $this->load->view('modules/children/rooms'); ?>
-        </div>
+
     </div>
 </div>
 

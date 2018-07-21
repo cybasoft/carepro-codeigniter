@@ -12,7 +12,7 @@
     </div>
     <div class="lockscreen-item">
         <div class="lockscreen-image">
-            <img src="<?php echo $this->user->getPhoto(); ?>"/>
+            <img src="<?php echo $this->user->photo(user_id()); ?>"/>
         </div>
         <div class="lockscreen-credentials">
             <?php echo form_open(uri_string()); ?>

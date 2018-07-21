@@ -115,3 +115,6 @@ $route['child/reports'] = 'reports/index';
 $route['child/(:num)/reports'] = 'reports/attendance/$1';
 $route['reports/(:any)'] = 'reports/$1';
 
+$route['rooms'] = 'roomsController/index';
+$route['rooms/(:any)']='roomsController/$1';
+$route['rooms/(:any)/:num']='roomsController/$1/$id';

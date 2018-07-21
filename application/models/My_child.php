@@ -456,4 +456,21 @@ class My_child extends CI_Model
             return $res;
         return 0;
     }
+
+    /**
+     * @param $photo
+     * @return string
+     */
+    function photo($photo){
+        if(is_numeric($photo)){
+            $child=$this->db->select('id,photo')->limit(1)->where('id',$photo)->get('children')->row();
+            $photo = $child->photo;
+        }
+        if(!empty($photo))
+            $photo = 'assets/uploads/children/'.$photo;
+        else
+            $photo = "assets/img/content/no-image.png";
+        return base_url().$photo;
+    }
+
 }

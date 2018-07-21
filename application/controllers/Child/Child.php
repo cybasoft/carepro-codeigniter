@@ -41,6 +41,7 @@ class Child extends CI_Controller
     function store()
     {
         allow('admin,manager,staff');
+
         $this->form_validation->set_rules('nickname', lang('nickname'), 'trim|xss_clean');
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');

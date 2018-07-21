@@ -500,3 +500,15 @@ $lang['Child room created! You can now assign children'] = 'Child room created! 
 $lang['Children rooms'] = 'Children rooms';
 $lang['Total hours'] = 'Total hours';
 $lang['If the above link doesn\'t work, copy and paste this to your browser'] = 'If the above link doesn\'t work, copy and paste this to your browser';
+
+//version 2.1.5
+$lang['New medication']='New medication';
+$lang['Administer']='Administer';
+$lang['View history']='View history';
+$lang['Print history']='Print history';
+$lang['Edit room']='Edit room';
+$lang['Room has been updated']='Room has been updated!';
+$lang['Name must be unique']='Name must be unique';
+$lang['Assign children']='Assign children';
+$lang['Assign staff']='Assign staff';
+$lang['Room has been deleted']='Room has been deleted';

@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <h3><?php echo lang('rooms'); ?>
+                <h3><?php echo lang('RoomsController'); ?>
                     <span class="text-sm"><?php echo anchor('children#rooms', lang('Assign to room')); ?></span>
                 </h3>
                 <?php $rooms = $this->db->where('child_id', $child->id)

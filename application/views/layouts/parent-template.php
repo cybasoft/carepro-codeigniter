@@ -112,13 +112,13 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?php echo $this->user->getPhoto(null); ?>" style="width:20px" class="img-circle"/>
+                        <img src="<?php echo $this->user->photo(user_id()); ?>" style="width:20px" class="img-circle"/>
                         <span class="hidden-xs hidden-sm"><?php echo $this->user->user()->last_name; ?>
                             <i class="caret"></i></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header bg-light-blue">
-                            <img src="<?php echo $this->user->getPhoto(NULL); ?>" class="img-circle"/>
+                            <img src="<?php echo $this->user->photo(user_id()); ?>" class="img-circle"/>
                         </li>
 
                         <li class="user-footer">

@@ -13,7 +13,8 @@ $(document).ready(function () {
             $('.row-offcanvas').toggleClass("relative");
         } else {
             //Else, enable content streching
-            $('.left-side').toggleClass("collapse-left");
+            $('.left-side').toggleClass("collapse-left").toggleClass('animate');
+            $('.left-side span').toggleClass("hidden");
             $(".right-side").toggleClass("strech");
         }
     });

@@ -134,16 +134,7 @@ function is($group)
     $ci = &get_instance();
     auth(true);
 
-    $group = $ci->db->where('name', $group)->get('groups')->row();
-    if(count((array)$group) == 0)
-        return false;
-
-    $userGroups = $ci->db
-        ->where('user_id', $ci->users->uid())
-        ->where('group_id', $group->id)
-        ->get('users_groups')->row();
-
-    if(count((array)$userGroups)>0)
+    if($ci->ion_auth->in_group($group))
         return true;
     return false;
 }
@@ -320,9 +311,9 @@ function page($page, $data = array())
     $ci = &get_instance();
     $data['page'] = $page;
     if(is('parent')) {
-        $ci->load->view('partials/parent-template', $data);
+        $ci->load->view('layouts/parent-template', $data);
     } else {
-        $ci->load->view('partials/admin-template', $data);
+        $ci->load->view('layouts/admin-template', $data);
     }
 }
 
@@ -685,4 +676,15 @@ function blood_types()
     return $res;
 }
 
+if(!function_exists('assets()')) {
+    function assets($item = '')
+    {
+        return base_url().'assets/'.$item;
+    }
+}
+
+function user_id(){
+    $ci = &get_instance();
+    return $ci->session->userdata('user_id');
+}
 ?>

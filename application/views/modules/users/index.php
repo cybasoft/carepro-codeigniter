@@ -42,13 +42,8 @@
         <tr>
             <td>
                 <div class="pull-left">
-                    <?php if(is_file(APPPATH.'../assets/uploads/users/'.$user->photo)): ?>
-                        <img class="img-circle" style="height:50px;width:50px;"
-                             src="<?php echo base_url('assets/uploads/users/'.$user->photo); ?>">
-                    <?php else: ?>
-                        <img class="img-circle" style="height:50px;width:50px;"
-                             src="<?php echo base_url('assets/img/content/no-image.png'); ?>">
-                    <?php endif; ?>
+                    <img class="img-circle" style="height:50px;width:50px;"
+                         src="<?php echo $this->user->photo($user->id); ?>">
                 </div>
                 <div class="visible-xs pull-left" style="padding-left:15px;">
                     <?php echo $user->first_name.' '.$user->last_name; ?><br/>

@@ -173,19 +173,18 @@ class MY_user extends CI_Model
     /*
      * get photo of user
      */
-    function getPhoto($uid = NULL)
+    function photo($photo = NULL)
     {
-        if(empty($uid)) {
-            $id = $this->uid();
-        } else {
-            $id = $uid;
+        $defaultPhoto = 'assets/img/content/no-image.png';
+        if(is_numeric($photo)) {
+            $user = $this->db->where('id', $photo)->get('users')->row();
+            if(count((array)$user)>0 && !empty($user->photo))
+                $defaultPhoto = 'assets/uploads/users/'.$user->photo;
         }
-        $user = $this->db->where('id', $id)->get('users')->row();
-        if(!empty($user->photo)) {
-            return base_url().'assets/uploads/users/'.$user->photo;
-        } else {
-            return base_url().'assets/img/content/no-image.png';
-        }
+
+        $photo = $defaultPhoto;
+
+        return base_url().$photo;
     }
 
     /**
@@ -208,5 +207,21 @@ class MY_user extends CI_Model
     function getGroups($id)
     {
         return $this->ion_auth->get_users_groups($id)->result();
+    }
+
+    /**
+     * @return mixed
+     */
+    function staff()
+    {
+        $staff = $this->db->select('users.id,users.first_name,users.last_name,users_groups.group_id')
+            ->where('group_id', 1)
+            ->or_where('group_id', 2)
+            ->or_where('group_id', 3)
+            ->or_where('group_id', 4)
+            ->from('users')
+            ->join('users_groups', 'users_groups.user_id=users.id')
+            ->get()->result();
+        return $staff;
     }
 }
