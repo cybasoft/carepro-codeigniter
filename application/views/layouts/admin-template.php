@@ -83,14 +83,14 @@
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <?php if(is('manager') || is('admin')): ?>
-                    <li class="btn-info">
+                    <li class="btn-warning">
                         <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
                            data-target="#registerChildModal">
                             <i class="fa fa-user-plus"></i>
                             <span class="hidden-xs"><?php echo lang('Register child'); ?></span>
                         </a>
                     </li>
-                    <li class="btn-warning">
+                    <li class="btn-info">
                         <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
                            data-target="#newUserModal">
                             <i class="fa fa-user-plus"></i>

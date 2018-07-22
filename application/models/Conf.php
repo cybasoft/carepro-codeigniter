@@ -23,7 +23,7 @@ class Conf extends CI_Model
         //check if site in in maintenance
         maintenance();
         //enforce encryption
-        $this->check_encrypt_key();
+        //$this->check_encrypt_key();
         setRedirect(); //remember current page
     }
 

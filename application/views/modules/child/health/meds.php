@@ -104,6 +104,31 @@
                 <h4 class="modal-title" id="myModalLabel"><?php echo lang('Medication images'); ?></h4>
             </div>
             <div class="modal-body">
+            <div class="callout callout-info">
+            <?php
+                echo form_open_multipart('health/addMedicationPhoto'); ?>
+                <div class="row">
+                <div class="col-xs-5">
+                  <?php
+                  echo form_input('med_name',null,['class'=>'form-control','placeholder'=>lang('Medication name')]);
+                ?>
+                </div>
+                <div class="col-xs-5">
+                 <?php
+                echo form_upload('photo',null,['class'=>'form-control','required'=>'required']);
+                ?>
+                </div>
+                <div class="col-xs-2">
+                  <?php
+                echo form_button(['type'=>'submit'],lang('Submit'),['class'=>'btn btn-primary']);
+                ?>
+                </div>
+                </div>
+
+             <?php
+                echo form_close();
+                 ?>
+                 </div>
                 <div class="row">
                     <?php foreach ($this->db->get('med_photos')->result() as $medImg): ?>
                         <div class="col-xs-2 text-center">

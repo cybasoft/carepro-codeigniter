@@ -1,5 +1,5 @@
 <?php
-if ($this->ion_auth->logged_in()) {
+if($this->ion_auth->logged_in()) {
     redirect('dashboard', 'refresh');
 }
 
@@ -38,7 +38,7 @@ $password = array(
                 <?php echo form_input($data['password']); ?>
             </div>
 
-            <?php if (get_option('enable_captcha')): ?>
+            <?php if(get_option('enable_captcha')): ?>
                 <div class="form-group">
                     <?php echo $data['captcha_image']; ?>
                     <?php echo form_input($data['captcha']); ?>
@@ -48,17 +48,17 @@ $password = array(
             <button class="btn btn-theme btn-full"><?php echo lang('login'); ?></button>
             <div class="other-actions" style="text-align:center">
 
-                <?php echo anchor('auth/forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading')); ?>
+                <?php echo anchor('auth/forgot', '<span class="fa fa-key"></span> '.lang('forgot_password_heading')); ?>
 
-                <?php if(get_option('allow_registration')==TRUE): ?>
+                <?php if(get_option('allow_registration') == TRUE): ?>
                     <br/>
                     <br/>
-                <?php echo anchor('auth/register', '<span class="fa fa-user"></span> ' . lang('register')); ?>
+                    <?php echo anchor('auth/register', '<span class="fa fa-user"></span> '.lang('register')); ?>
                 <?php endif; ?>
             </div>
         </form>
         <div class="page-copyright">
-            <p><?php echo lang('powered by'); ?> <?php echo lang('copyright'); ?></p>
+            <p><?php echo lang('powered by'); ?><?php echo lang('copyright'); ?></p>
         </div>
     </div>
 </div>

@@ -515,3 +515,4 @@ $lang['Room has been deleted']='Room has been deleted';
 $lang['New note']='New note';
 $lang['Medication images']='Medication images';
 $lang['Record allergy']='Record allergy';
+$lang['Medication name']='Medication name';
