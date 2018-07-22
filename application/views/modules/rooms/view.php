@@ -10,6 +10,28 @@
 <?php if(count((array)$children)>0): ?>
     <div class="row">
         <div class="col-sm-6">
+
+            <div class="box box-warning box-solid">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo lang('assigned staff'); ?></h3>
+                    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#staffModal">
+                        <i class="fa fa-user-plus"></i>
+                        <?php echo lang('Assign staff'); ?>
+                    </button>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <?php foreach ($staff as $as): ?>
+                            <div class="col-xs-3">
+                                <img class="img-thumbnail" style="height:100px;"
+                                     src="<?php echo $this->user->photo($as->user_id); ?>"/>
+                                <h4> <?php echo $as->first_name.' '.$as->last_name; ?></h4>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+
             <div class="box box-primary box-solid">
                 <div class="box-header">
                     <h3 class="box-title"><?php echo lang('assigned children'); ?></h3>
@@ -24,7 +46,7 @@
 
                         <?php foreach ($children as $cg): ?>
                             <div class="col-xs-3">
-                                <img class="thumbnail img-circle" style="height:100px;"
+                                <img class="img-thumbnail" style="width:100px;height:100px;"
                                      src="<?php echo $this->child->photo($cg->child_id); ?>"/>
                                 <h4><?php echo anchor('child/'.$cg->child_id, $cg->first_name.' '.$cg->last_name); ?></h4>
                             </div>
@@ -32,29 +54,11 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="col-sm-6">
-            <div class="box box-warning box-solid">
-                <div class="box-header">
-                    <h3 class="box-title"><?php echo lang('assigned staff'); ?></h3>
-                    <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#staffModal">
-                        <i class="fa fa-user-plus"></i>
-                        <?php echo lang('Assing staff'); ?>
-                    </button>
-                </div>
-                <div class="box-body">
-                    <div class="row">
-                        <?php foreach ($staff as $as): ?>
-                            <div class="col-xs-3">
-                                <img class="thumbnail img-circle" style="height:100px;"
-                                     src="<?php echo $this->user->photo($as->user_id); ?>"/>
-                                <h4> <?php echo anchor('user/'.$as->id, $as->first_name.' '.$as->last_name); ?></h4>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
+            <?php $this->load->view($this->module.'notes'); ?>
         </div>
 
     </div>

@@ -12,11 +12,6 @@ class MY_user extends CI_Model
         parent::__construct();
     }
 
-    function first($id)
-    {
-        return $this->get($id);
-    }
-
     /**
      * @param $password
      * @param $email
@@ -76,6 +71,19 @@ class MY_user extends CI_Model
         return $this->db->get();
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
+    function first($id)
+    {
+        return $this->user($id);
+    }
+
+    /**
+     * @param null $id
+     * @return bool
+     */
     function user($id = null)
     {
         if($id == null) {
@@ -92,6 +100,23 @@ class MY_user extends CI_Model
     }
 
     /**
+     * @param $id
+     * @param $item
+     * @return string
+     */
+    function get($id,$item){
+        $user=$this->user($id);
+        if($user !==false && !empty($item)){
+            if($item =='name')
+                return $user->first_name.' '.$user->last_name;
+
+            $user = (array)$user;
+            return $user[$item];
+        }
+        return '';
+    }
+
+    /**
      * @param $user
      * @param $group
      * @return bool
@@ -103,8 +128,10 @@ class MY_user extends CI_Model
         $this->db->where('users_groups.user_id', $user);
         $this->db->from('users_groups');
         $this->db->join('groups', 'users_groups.group_id=groups.id');
+
         if($this->db->get()->num_rows()>0)
             return true;
+
         return false;
     }
 
@@ -130,18 +157,6 @@ class MY_user extends CI_Model
         if(count((array)$res)>0)
             return $res->$item;
         return "";
-    }
-
-    /*
-     * get details of current logged in user
-     * @param string, int
-     * @return string, int
-     */
-    function get($id = null)
-    {
-        if($id == null)
-            $id = $this->uid();
-        return $this->db->where('id', $id)->get('users')->row();
     }
 
 

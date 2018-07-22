@@ -124,7 +124,7 @@ DROP TABLE IF EXISTS news;
 CREATE TABLE news (
   id           INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id      INT(11) UNSIGNED NOT NULL,
-  `order`        INT(5)           NOT NULL,
+  `order`      INT(5)           NOT NULL,
   article_name VARCHAR(50)      NOT NULL,
   article_body TEXT             NOT NULL,
   publish_date DATETIME         NOT NULL,
@@ -770,4 +770,25 @@ INSERT INTO options (id, option_name, option_value, autoload) VALUES
   (41, 'custom_css', '', NULL);
 
 -- version 2.1.4
-ALTER TABLE news CHANGE `order` list_order INT(5);
+ALTER TABLE news
+  CHANGE `order` list_order INT(5);
+
+-- version 2.1.5
+CREATE TABLE child_room_notes
+(
+  id         BIGINT(11) UNSIGNED AUTO_INCREMENT
+    PRIMARY KEY,
+  user_id    INT      NOT NULL,
+  room_id    INT      NOT NULL,
+  content      LONGTEXT NULL,
+  created_at DATETIME NOT NULL,
+  CONSTRAINT child_room_notes_ibfk_1
+  FOREIGN KEY (user_id) REFERENCES users (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  CONSTRAINT child_room_notes_ibfk_2
+  FOREIGN KEY (room_id) REFERENCES child_rooms (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+

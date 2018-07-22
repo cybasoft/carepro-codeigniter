@@ -61,22 +61,24 @@ class My_rooms extends CI_Model
      * @param $id
      * @return mixed
      */
-    function children($id){
-       $children= $this->db->select('children.id as child_id,children.first_name,children.last_name,child_rooms.name,child_rooms.description,child_room.child_id,child_room.room_id')
+    function children($id)
+    {
+        $children = $this->db->select('children.id as child_id,children.first_name,children.last_name,child_rooms.name,child_rooms.description,child_room.child_id,child_room.room_id')
             ->from('children')
             ->join('child_room', 'child_room.child_id=children.id')
             ->join('child_rooms', 'child_rooms.id=child_room.room_id')
             ->where('child_rooms.id', $id)
             ->get()
             ->result();
-       return $children;
+        return $children;
     }
 
     /**
      * @param $id
      * @return mixed
      */
-    function staff($id){
+    function staff($id)
+    {
         $staff = $this->db->select('*')
             ->from('users')
             ->join('child_room_staff', 'child_room_staff.user_id=users.id')
@@ -86,11 +88,48 @@ class My_rooms extends CI_Model
         return $staff;
     }
 
-    function check_unique_name($id='',$name){
+    /**
+     * @param string $id
+     * @param $name
+     * @return mixed
+     */
+    function check_unique_name($id = '', $name)
+    {
         $this->db->where('name', $name);
         if($id) {
             $this->db->where_not_in('id', $id);
         }
         return $this->db->get('child_rooms')->num_rows();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    function notes($id)
+    {
+        return $this->db->where('room_id', $id)
+            ->order_by('created_at', 'desc')
+            ->get('child_room_notes')
+            ->result();
+    }
+
+    /**
+     * @return bool
+     */
+    function addNote()
+    {
+        $data = [
+            'user_id' => $this->user->uid(),
+            'room_id' => $this->input->post('room_id'),
+            'content' => $this->input->post('notes'),
+            'created_at' => date_stamp()
+        ];
+        $this->db->insert('child_room_notes', $data);
+
+        if($this->db->affected_rows()>0)
+            return true;
+
+        return false;
     }
 }

@@ -44,7 +44,9 @@ class RoomsController extends CI_Controller
 
         $allChildren = $this->child->children()->result();
 
-        page($this->module.'view', compact('room', 'children', 'staff', 'allStaff', 'allChildren'));
+        $notes = $this->rooms->notes($id);
+
+        page($this->module.'view', compact('room', 'children', 'staff', 'allStaff', 'allChildren','notes'));
     }
 
     function store()
@@ -193,4 +195,38 @@ class RoomsController extends CI_Controller
     {
     }
 
+    function notes(){
+        allow('admin,manager,staff');
+    }
+
+    function addNote(){
+        allow('admin,manager,staff');
+
+        $this->form_validation->set_rules('notes',lang('Notes') ,'required|xss_clean|trim' );
+
+        if($this->form_validation->run() == true) {
+
+            if($this->rooms->addNote())
+                flash('success',lang('request_success'));
+            else
+                flash('error',lang('request_error'));
+
+        } else {
+
+            validation_errors();
+            flash('error');
+        }
+
+        redirectPrev();
+    }
+
+    function deleteNote(){
+        allow('admin,manager,staff');
+
+        $this->db->where('id',$this->uri->segment(3))->delete('child_room_notes');
+
+        flash('success',lang('request_success'));
+
+        redirectPrev();
+    }
 }
