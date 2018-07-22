@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller
 {
@@ -14,11 +14,17 @@ class Dashboard extends CI_Controller
     function index()
     {
         $this->load->model('my_invoice', 'invoice');
-        if (is('super') || is('admin') || is('manager') || is('staff')) {
+
+        if(is('super') || is('admin') || is('manager')) {
             page('dashboard/home');
-        } elseif (is('parent')) {
+
+        } elseif(is('parent')) {
             $children = $this->parent->getChildren();
             page('modules/parent/index', compact('children'));
+
+        } elseif(is('staff')) {
+            redirect('rooms');
+
         } else {
             page('dashboard/pending');
         }
@@ -27,37 +33,38 @@ class Dashboard extends CI_Controller
     function lockscreen()
     {
         $this->conf->setTimer(1);
-        if (auth(true)) {
+        if(auth(true)) {
             //check cookie
             $this->load->view('dashboard/lockscreen');
         }
     }
-    //todo suspend the previous session and create new using pin
-    //todo encrypt pin
+
+//todo suspend the previous session and create new using pin
+//todo encrypt pin
     function login()
     {
         $this->form_validation->set_rules('pin', lang('pin'), 'required|trim|xss_clean');
-        if ($this->form_validation->run() == true) {
+        if($this->form_validation->run() == true) {
             $pin = $this->input->post('pin');
             $this->db->where('id', $this->user->uid());
             $this->db->where('pin', $pin);
-            if ($this->db->get('users')->num_rows() > 0) {
+            if($this->db->get('users')->num_rows()>0) {
                 $msg = lang('Welcome back');
-                $status='success';
+                $status = 'success';
                 $this->conf->setTimer(0);
             } else {
                 $this->conf->setTimer(1);
-                $msg=lang('Invalid pin!');
-                $status='error';
+                $msg = lang('Invalid pin!');
+                $status = 'error';
             }
         } else {
 
-            $msg=strip_tags(trim(validation_errors()));
-            $status='error';
+            $msg = strip_tags(trim(validation_errors()));
+            $status = 'error';
         }
         $status = strip_tags($status);
         $msg = strip_tags($msg);
-       flash($status,$msg);
+        flash($status, $msg);
     }
 
 }

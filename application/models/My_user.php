@@ -239,4 +239,18 @@ class MY_user extends CI_Model
             ->get()->result();
         return $staff;
     }
+
+    /**
+     * Get all rooms user is assigned
+     * @param $id
+     * @return mixed
+     */
+    function rooms($id){
+        return $this->db->select('child_rooms.*')
+            ->from('child_rooms')
+            ->join('child_room_staff','child_room_staff.user_id=child_rooms.id')
+            ->where('child_room_staff.user_id',$id)
+            ->get()
+            ->result();
+    }
 }

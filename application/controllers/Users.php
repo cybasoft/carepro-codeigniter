@@ -317,4 +317,22 @@ class Users extends CI_Controller
         }
     }
 
+
+    /**
+     * Get all rooms a user is assigned to
+     *
+     * @param $staff_id
+     * @return mixed
+     */
+    function rooms($staff_id)
+    {
+        $result = $this->db->select('child_rooms.*', 'child_room_staff.room_id', 'child_room_staff.created_at as staff_add_data')
+            ->from('child_rooms')
+            ->join('child_room_staff', 'child_room_staff.room_id=child_rooms.id')
+            ->where('child_room_staff.staff_id', $staff_id)
+            ->get()
+            ->result();
+        return $result;
+    }
+
 }

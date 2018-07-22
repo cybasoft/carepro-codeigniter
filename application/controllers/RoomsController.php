@@ -20,8 +20,13 @@ class RoomsController extends CI_Controller
     {
         allow('admin,manager,staff');
 
+        if(is('staff'))
+            $rooms = $this->user->rooms(user_id());
+        else
+            $rooms = $this->rooms->all();
+
         $this->title = lang('rooms');
-        page($this->module.'index');
+        page($this->module.'index',compact('rooms'));
     }
 
     function view()

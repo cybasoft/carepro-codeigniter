@@ -11,6 +11,15 @@ class My_rooms extends CI_Model
     }
 
     /**
+     * retrieve all rooms
+     * @return mixed
+     */
+    function all()
+    {
+        return $this->db->get($this->table)->result();
+    }
+
+    /**
      * @return mixed
      */
     function getCount()
@@ -23,7 +32,7 @@ class My_rooms extends CI_Model
      */
     function store()
     {
-        $this->db->insert('child_rooms',
+        $this->db->insert($this->table,
             [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
@@ -42,7 +51,7 @@ class My_rooms extends CI_Model
      */
     function update()
     {
-        $this->db->update('child_rooms',
+        $this->db->update($this->table,
             [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
@@ -63,17 +72,19 @@ class My_rooms extends CI_Model
      */
     function children($id)
     {
-        $children = $this->db->select('children.id as child_id,children.first_name,children.last_name,child_rooms.name,child_rooms.description,child_room.child_id,child_room.room_id')
+        $children = $this->db->select('children.id as child_id,children.first_name,children.last_name,'.$this->table.'.name,'.$this->table.'.description,child_room.child_id,child_room.room_id')
             ->from('children')
             ->join('child_room', 'child_room.child_id=children.id')
-            ->join('child_rooms', 'child_rooms.id=child_room.room_id')
-            ->where('child_rooms.id', $id)
+            ->join($this->table, $this->table.'.id=child_room.room_id')
+            ->where($this->table.'.id', $id)
             ->get()
             ->result();
         return $children;
     }
 
     /**
+     * Get all users assinged to a room
+     *
      * @param $id
      * @return mixed
      */
@@ -99,7 +110,7 @@ class My_rooms extends CI_Model
         if($id) {
             $this->db->where_not_in('id', $id);
         }
-        return $this->db->get('child_rooms')->num_rows();
+        return $this->db->get($this->table)->num_rows();
     }
 
     /**

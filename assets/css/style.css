@@ -3762,7 +3762,6 @@ Photo albums
 .i-check-med {
     left: 20px;
 }
-
 .i-check-timer {
     left: 25%;
     top: 0;
@@ -3774,6 +3773,7 @@ Photo albums
     padding: 0 2px !important;
     color: #fff;
 }
+
 .modal-body{
     color:#607D8B;
 }

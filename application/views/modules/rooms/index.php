@@ -1,4 +1,3 @@
-<?php $rooms = $this->db->get('child_rooms'); ?>
 <?php if(is('admin') || is('manager')): ?>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRoomModal">
         <i class="fa fa-plus-circle"></i> <?php echo lang('Create new'); ?>
@@ -45,7 +44,7 @@
 
 <div class="row">
 
-    <?php foreach ($rooms->result() as $room): ?>
+    <?php foreach ($rooms as $room): ?>
 
         <div class="col-md-3 cursor"
              onclick="window.location.href='<?php echo site_url('rooms/view/'.$room->id); ?>'"
