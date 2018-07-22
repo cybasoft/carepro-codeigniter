@@ -118,3 +118,6 @@ $route['reports/(:any)'] = 'reports/$1';
 $route['rooms'] = 'roomsController/index';
 $route['rooms/(:any)']='roomsController/$1';
 $route['rooms/(:any)/:num']='roomsController/$1/$id';
+
+$route['health/(:any)']='child/health/$1';
+$route['health/(:any)/:num']='child/health/$1';

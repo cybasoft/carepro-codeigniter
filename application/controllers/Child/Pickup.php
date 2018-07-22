@@ -78,7 +78,7 @@ class Pickup extends CI_Controller
 
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'jpg|png|jpeg',
+            'allowed_types' => 'jpg|png|jpeg|svg',
             //'max_size'      => '100',
             'max_width' => '1240',
             'max_height' => '1240',

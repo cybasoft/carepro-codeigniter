@@ -56,6 +56,7 @@ class Migration_create_photos extends CI_Migration
         );
         // Create Table users
         $this->dbforge->create_table($this->table, TRUE, $attributes);
+
         $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`uploaded_by`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }

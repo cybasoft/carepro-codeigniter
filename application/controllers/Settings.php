@@ -87,7 +87,7 @@ class Settings extends CI_Controller
         $file_ext = pathinfo($filename,PATHINFO_EXTENSION);
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'png|jpg|jpeg',
+            'allowed_types' => 'png|jpg|jpeg|png|svg',
             'max_size' => '2048',
             'max_width' => '500',
             'max_height' => '112',
@@ -127,7 +127,7 @@ class Settings extends CI_Controller
         $file_ext = pathinfo($filename,PATHINFO_EXTENSION);
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'png|jpg|jpeg',
+            'allowed_types' => 'png|jpg|jpeg|svg',
             'max_size' => '2048',
             'max_width' => '500',
             'max_height' => '112',

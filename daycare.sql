@@ -718,7 +718,7 @@ ALTER TABLE child_problems
 DROP TABLE IF EXISTS options;
 CREATE TABLE options
 (
-  id           BIGINT(11) UNSIGNED AUTO_INCREMENT
+  id           INT(11) UNSIGNED AUTO_INCREMENT
     PRIMARY KEY,
   option_name  VARCHAR(191) NOT NULL,
   option_value LONGTEXT     NULL,
@@ -776,12 +776,12 @@ ALTER TABLE news
 -- version 2.1.5
 CREATE TABLE child_room_notes
 (
-  id         BIGINT(11) UNSIGNED AUTO_INCREMENT
+  id         INT(11) UNSIGNED AUTO_INCREMENT
     PRIMARY KEY,
-  user_id    INT      NOT NULL,
-  room_id    INT      NOT NULL,
-  content      LONGTEXT NULL,
-  created_at DATETIME NOT NULL,
+  user_id    INT(11) UNSIGNED NOT NULL,
+  room_id    INT(11) UNSIGNED NOT NULL,
+  content    LONGTEXT         NULL,
+  created_at DATETIME         NOT NULL,
   CONSTRAINT child_room_notes_ibfk_1
   FOREIGN KEY (user_id) REFERENCES users (id)
     ON UPDATE CASCADE
@@ -792,3 +792,14 @@ CREATE TABLE child_room_notes
     ON DELETE CASCADE
 );
 
+CREATE TABLE med_photos
+(
+  id         INT(11) UNSIGNED AUTO_INCREMENT
+    PRIMARY KEY,
+  name       VARCHAR(255) NOT NULL,
+  photo      VARCHAR(255) NOT NULL,
+  created_at DATETIME     NOT NULL
+);
+
+ALTER TABLE child_meds
+  ADD COLUMN `photo_id` INT(11) UNSIGNED;

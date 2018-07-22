@@ -513,3 +513,4 @@ $lang['Assign children']='Assign children';
 $lang['Assign staff']='Assign staff';
 $lang['Room has been deleted']='Room has been deleted';
 $lang['New note']='New note';
+$lang['Medication images']='Medication images';

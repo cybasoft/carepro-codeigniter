@@ -282,7 +282,7 @@ class Users extends CI_Controller
         }
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'gif|jpg|png|jpeg',
+            'allowed_types' => 'gif|jpg|png|jpeg|svg',
             'max_size' => '2048',
             'max_width' => '1240',
             'max_height' => '1240',

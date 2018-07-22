@@ -189,7 +189,7 @@ class Profile extends CI_Controller
 
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'gif|jpg|png|jpeg',
+            'allowed_types' => 'gif|jpg|png|jpeg|svg',
             //'max_size'      => '100',
             'max_width' => '1240',
             'max_height' => '1240',

@@ -88,7 +88,7 @@ class My_photos extends CI_Model
         }
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'gif|jpg|png|jpeg',
+            'allowed_types' => 'gif|jpg|png|jpeg|svg',
             'max_size' => '3048',
             'encrypt_name' => true,
         );
@@ -130,7 +130,7 @@ class My_photos extends CI_Model
         }
         $config = array(
             'upload_path' => $upload_path,
-            'allowed_types' => 'gif|jpg|png|jpeg',
+            'allowed_types' => 'gif|jpg|png|jpeg|svg',
             'max_size' => '3048',
             'encrypt_name' => true,
         );

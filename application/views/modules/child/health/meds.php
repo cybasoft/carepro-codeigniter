@@ -3,6 +3,10 @@
         <span class="fa fa-plus"></span>
         <?php echo lang('add'); ?>
     </button>
+    <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#medImagesModal">
+        <span class="fa fa-plus"></span>
+        <?php echo lang('Medication images'); ?>
+    </button>
 </h2>
 
 <hr/>
@@ -17,8 +21,9 @@
             <?php foreach ($meds->result() as $med) {
                 ?>
                 <div class="info-box">
-                    <div class="info-box-icon">
-
+                    <div class="info-box-icon"
+                         style="background:#fff url('<?php echo $this->health->medPhoto($med->photo_id); ?>');background-size: 64px;
+                                 background-repeat: no-repeat;">
                     </div>
                     <div class="info-box-content">
                         <span class="info-box-text text-warning"><?php echo $med->med_name; ?></span>
@@ -29,11 +34,11 @@
                                 <span class="fa fa-trash-alt cursor"></span>
                             </a>
                         <?php endif; ?>
-                        <div class="info-box-more">
+                        <!--div class="info-box-more">
                             <a href="#"><?php echo lang('Administer'); ?></a> |
                             <a href="#"><?php echo lang('View history'); ?></a> |
                             <a href="#"><?php echo lang('Print history'); ?></a>
-                        </div>
+                        </div-->
                     </div>
                 </div>
                 <?php
@@ -54,14 +59,22 @@
                 </button>
                 <h4 class="modal-title" id="newMedModalLabel"><?php echo lang('New medication'); ?></h4>
             </div>
-            <?php echo form_open('child/addMedication'); ?>
+            <?php echo form_open_multipart('child/addMedication'); ?>
             <div class="modal-body">
                 <?php echo form_hidden('child_id', $child->id);
                 echo form_label(lang('medication'), 'med_name');
                 echo form_input('med_name', null, ['class' => 'form-control']);
                 echo form_label(lang('notes'), 'med_notes');
                 echo form_input('med_notes', null, ['class' => 'form-control']);
+                echo form_label(lang('Medication photo'), 'photo');
+
                 ?>
+                <select name="photo_id" class="form-control">
+                    <option><?php echo lang('select'); ?></option>
+                    <?php foreach ($this->db->get('med_photos')->result() as $photo): ?>
+                        <option value="<?php echo $photo->id; ?>"><?php echo $photo->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="modal-footer">
                 <?php
@@ -78,6 +91,35 @@
                 ?>
             </div>
             <?php echo form_close(); ?>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="medImagesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel"><?php echo lang('Medication images'); ?></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <?php foreach ($this->db->get('med_photos')->result() as $medImg): ?>
+                        <div class="col-xs-2 text-center">
+                            <img src="<?php echo base_url('assets/uploads/meds/'.$medImg->photo); ?>"/>
+                            <br/>
+                            <?php echo $medImg->name; ?>
+                            <a class="delete" href="/health/deleteMedicationPhoto/<?php echo $medImg->id; ?>"><i
+                                        class="fa fa-trash-alt text-danger"></i> </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
         </div>
     </div>
 </div>
