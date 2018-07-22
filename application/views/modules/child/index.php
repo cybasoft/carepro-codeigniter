@@ -51,15 +51,18 @@
                     </div>
                 </div>
 
-                <h3><?php echo lang('RoomsController'); ?>
-                    <span class="text-sm"><?php echo anchor('children#rooms', lang('Assign to room')); ?></span>
+                <hr/>
+
+                <h3><?php echo lang('Rooms'); ?>
+                    <span class="text-sm"><?php echo anchor('rooms', lang('Assign to room')); ?></span>
                 </h3>
+
                 <?php $rooms = $this->db->where('child_id', $child->id)
                     ->from('child_rooms')
                     ->join('child_room', 'child_room.room_id=child_rooms.id')
                     ->get(); ?>
                 <?php foreach ($rooms->result() as $room): ?>
-                    <a href="<?php echo site_url('children?room='.$room->id.'#rooms'); ?>"
+                    <a href="<?php echo site_url('rooms/view/'.$room->id); ?>"
                        class="label label-info"><?php echo $room->name; ?></a>
                 <?php endforeach; ?>
             </div>
