@@ -175,7 +175,7 @@
                                             <h4>PayPal</h4>
                                             <a href="<?php echo site_url('invoice/'.$invoice->id.'/paypal'); ?>"
                                                class="btn btn-primary">
-                                                <i class="fa fa-paypal" aria-hidden="true"></i>
+                                                <img src="<?php echo assets('img/content/paypal.svg'); ?>" style="width:16px;"/>
                                                 <?php echo sprintf(lang('pay_with'), 'PayPal'); ?></a>
                                         </div>
                                     <?php endif; ?>

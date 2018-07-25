@@ -516,3 +516,31 @@ $lang['New note']='New note';
 $lang['Medication images']='Medication images';
 $lang['Record allergy']='Record allergy';
 $lang['Medication name']='Medication name';
+$lang['New food preference']='New food preference';
+$lang['Food name']='Food name';
+$lang['Meal time']='Meal time';
+$lang['Medication administration']='Medication administration';
+$lang['Record added']='Record added';
+$lang['Staff only']='Staff only';
+$lang['Medication history for']='Medication history for %s';
+$lang['Actions taken']='Actions taken';
+$lang['General']='General';
+$lang['Cognitive'] = 'Cognitive';
+$lang['Fine Motor'] = 'Fine Motor';
+$lang['Language'] = 'Language';
+$lang['Math'] = 'Math';
+$lang['Science'] = 'Science';
+$lang['Social'] = 'Social';
+$lang['Academics'] = 'Academics';
+$lang['Arts & Crafts'] = 'Arts & Crafts';
+$lang['Circle Time'] = 'Circle Time';
+$lang['Physical Fitness'] = 'Physical Fitness';
+$lang['Play Time'] = 'Play Time';
+$lang['Quiet Time'] = 'Quiet Time';
+$lang['Sensory Learning'] = 'Sensory Learning';
+$lang['Tags'] = 'Tags';
+$lang['Category'] = 'Category';
+$lang['Categories'] = 'Categories';
+
+
+

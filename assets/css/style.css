@@ -15,8 +15,8 @@ body {
     z-index: 3000;
     max-width: 500px;
     position: absolute !important;
-    top: 15px;
-    right: 0
+    bottom: 0;
+    right: 0;
 }
 
 .msg .alert {
@@ -684,7 +684,7 @@ img {
     padding: 5px 10px;
     margin-left: 90px
 }
-.info-box-notes{ 
+.info-box-notes{
     padding: 5px 10px;
 }
 
@@ -1176,7 +1176,7 @@ body > .header .logo .icon {
     }
 }
 
-/* 
+/*
     Dropdown menus
 ----------------------------
 */
@@ -1615,7 +1615,7 @@ body > .header .logo .icon {
     }
 }
 
-/* 
+/*
    All form elements including input, select, textarea etc.
 -----------------------------------------------------------------
 */
@@ -1676,7 +1676,7 @@ body > .header .logo .icon {
     padding-left: 0;
 }
 
-/* 
+/*
     Compenent: Progress bars
 --------------------------------
 */
@@ -2826,7 +2826,7 @@ body > .header .logo .icon {
     text-align: center;
 }
 
-/* 
+/*
     Page: register and login
 */
 .form-box {
@@ -2899,7 +2899,7 @@ body > .header .logo .icon {
     }
 }
 
-/* 
+/*
     Page: 404 and 500 error pages
 ------------------------------------
 */
@@ -2959,7 +2959,7 @@ body > .header .logo .icon {
     clear: both;
 }
 
-/* 
+/*
     Page: Invoice
 */
 .invoice {
@@ -2998,12 +2998,12 @@ body > .header .logo .icon {
     }
 }
 
-/* 
+/*
     Skins
     -----
 */
-/* 
-    Skin Blue 
+/*
+    Skin Blue
     ---------
 */
 /* skin-blue navbar */
@@ -3780,3 +3780,98 @@ Photo albums
 .modal-dialog{
     margin-top:0 !important;
 }
+
+/** CHECKBOXES */
+.options {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    padding-right: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight:normal;
+    float: left;
+    border: solid 1px #2196f3;
+    margin: 5px 10px 10px 0;
+    /* margin-bottom: 12px; */
+    /* width: 118px; */
+    height: 30px;
+    border-radius: 5px;
+}
+
+.options input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    margin: 1px;
+    border-radius: 3px;
+}
+.radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    margin: 1px;
+    border-radius: 50%;
+}
+
+.options:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.options input:checked ~ .checkmark,.options input:checked ~ .radio  {
+    background-color: #2196F3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.options input:checked ~ .checkmark:after,  .options input:checked ~ .radio:after{
+    display: block;
+}
+
+.options .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 7px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.options .radio:after {
+     top: 9px;
+     left: 9px;
+     width: 8px;
+     height: 8px;
+     border-radius: 50%;
+     background: white;
+ }
+
+

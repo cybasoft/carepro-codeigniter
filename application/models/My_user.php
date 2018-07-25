@@ -13,10 +13,11 @@ class MY_user extends CI_Model
     }
 
     /**
-     * @param $password
-     * @param $email
+     * @param       $password
+     * @param       $email
      * @param array $additional_data
      * @param array $groups
+     *
      * @return bool
      */
     public function reg($password, $email, $additional_data = array(), $groups = array())
@@ -73,6 +74,7 @@ class MY_user extends CI_Model
 
     /**
      * @param $id
+     *
      * @return bool
      */
     function first($id)
@@ -82,6 +84,7 @@ class MY_user extends CI_Model
 
     /**
      * @param null $id
+     *
      * @return bool
      */
     function user($id = null)
@@ -92,7 +95,7 @@ class MY_user extends CI_Model
             $uid = $id;
         }
         $query = $this->db->where('id', $uid)->get('users');
-        if($query->num_rows()>0) {
+        if($query->num_rows() > 0) {
             return $query->row();
         }
         return false;
@@ -102,16 +105,27 @@ class MY_user extends CI_Model
     /**
      * @param $id
      * @param $item
+     *
      * @return string
      */
-    function get($id,$item){
-        $user=$this->user($id);
-        if($user !==false && !empty($item)){
-            if($item =='name')
-                return $user->first_name.' '.$user->last_name;
+    function get($id, $item = '')
+    {
+        $user = $this->user($id);
+        if($user !== false && !empty($item)) {
+            if(is_array($item)) {
+                $u = '';
+                foreach ($item as $i) {
+                    $u .= $user->$i;
+                }
+                return $u;
+            } else {
+                if($item == 'name')
+                    return $user->first_name.' '.$user->last_name;
 
-            $user = (array)$user;
-            return $user[$item];
+                $user = (array)$user;
+                return $user[$item];
+            }
+
         }
         return '';
     }
@@ -119,6 +133,7 @@ class MY_user extends CI_Model
     /**
      * @param $user
      * @param $group
+     *
      * @return bool
      */
     function in_group($user, $group)
@@ -129,7 +144,7 @@ class MY_user extends CI_Model
         $this->db->from('users_groups');
         $this->db->join('groups', 'users_groups.group_id=groups.id');
 
-        if($this->db->get()->num_rows()>0)
+        if($this->db->get()->num_rows() > 0)
             return true;
 
         return false;
@@ -142,6 +157,7 @@ class MY_user extends CI_Model
 
     /**
      * @param $item
+     *
      * @return string
      */
     function thisUser($item)
@@ -154,7 +170,7 @@ class MY_user extends CI_Model
         $this->db->select('id,first_name,last_name,email');
         $this->db->where('id', $this->uid());
         $res = $this->db->get('users')->row();
-        if(count((array)$res)>0)
+        if(count((array)$res) > 0)
             return $res->$item;
         return "";
     }
@@ -193,7 +209,7 @@ class MY_user extends CI_Model
         $defaultPhoto = 'assets/img/content/no-image.png';
         if(is_numeric($photo)) {
             $user = $this->db->where('id', $photo)->get('users')->row();
-            if(count((array)$user)>0 && !empty($user->photo))
+            if(count((array)$user) > 0 && !empty($user->photo))
                 $defaultPhoto = 'assets/uploads/users/'.$user->photo;
         }
 
@@ -204,19 +220,21 @@ class MY_user extends CI_Model
 
     /**
      * @param $id
+     *
      * @return int
      */
     function groupCount($id)
     {
         $this->db->where('group_id', $id);
         $res = $this->db->count_all_results('users_groups');
-        if(count((array)$res)>0)
+        if(count((array)$res) > 0)
             return $res;
         return 0;
     }
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     function getGroups($id)
@@ -242,14 +260,17 @@ class MY_user extends CI_Model
 
     /**
      * Get all rooms user is assigned
+     *
      * @param $id
+     *
      * @return mixed
      */
-    function rooms($id){
+    function rooms($id)
+    {
         return $this->db->select('child_rooms.*')
             ->from('child_rooms')
-            ->join('child_room_staff','child_room_staff.user_id=child_rooms.id')
-            ->where('child_room_staff.user_id',$id)
+            ->join('child_room_staff', 'child_room_staff.user_id=child_rooms.id')
+            ->where('child_room_staff.user_id', $id)
             ->get()
             ->result();
     }

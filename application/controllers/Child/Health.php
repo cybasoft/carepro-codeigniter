@@ -30,56 +30,6 @@ class Health extends CI_Controller
     }
 
     /*
-     * add medication
-     * @return void
-     */
-    function addMedication()
-    {
-        $this->form_validation->set_rules('med_name', lang('medication'), 'required|trim|xss_clean');
-        if($this->form_validation->run() == TRUE) {
-            if($this->health->addMedication()) {
-                flash('success', lang('request_success'));
-            } else {
-                flash('danger', lang('request_error'));
-            }
-        } else {
-            flash('danger', lang('request_error'));
-        }
-        redirectPrev();
-    }
-
-    /*
-     * delete medication
-     * @return void
-     */
-    function deleteMedication($id)
-    {
-        allow('admin,manager,staff');
-
-        if($this->health->deleteMedication($id)){
-            flash('success', lang('request_success'));
-        } else {
-            flash('danger', lang('request_error'));
-        }
-        //go back
-        redirectPrev();
-    }
-
-    function addMedicationPhoto(){
-        if($this->health->uploadMedPhoto($this->input->post('med_name')))
-            flash('success',lang('request_success'));
-
-        redirectPrev();
-    }
-
-    function deleteMedicationPhoto(){
-        if($this->health->deleteMedicationPhoto($this->uri->segment(3)))
-            flash('success',lang('request_success'));
-
-        redirectPrev();
-    }
-
-    /*
      * add allergy
      * @return void
      */
@@ -88,17 +38,26 @@ class Health extends CI_Controller
         allow('admin,manager,staff');
 
         $this->form_validation->set_rules('allergy', 'Allergy Name', 'required|trim|xss_clean');
+
         if($this->form_validation->run() == TRUE) {
+
             if($this->health->addAllergy()) {
+
                 flash('success', lang('request_success'));
+
             } else {
+
                 flash('warning', lang('no_change_to_db'));
+
             }
+
         } else {
+
             flash('danger', lang('request_error'));
+
         }
 
-        redirectPrev();
+        redirectPrev(null, 'allergies');
     }
 
     /*
@@ -109,12 +68,12 @@ class Health extends CI_Controller
         allow('admin,manager,staff');
         $this->db->where('id', $id);
         $this->db->delete('child_allergy');
-        if($this->db->affected_rows()>0) {
+        if($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
         }
-        redirectPrev();
+        redirectPrev(null, 'allergies');
     }
 
 
@@ -138,7 +97,7 @@ class Health extends CI_Controller
             flash('danger');
             validation_errors();
         }
-        redirectPrev();
+        redirectPrev(null, 'food');
 
     }
 
@@ -155,7 +114,7 @@ class Health extends CI_Controller
             if(is('staff') == true || is('admin') || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
                 $this->db->where('id', $id);
                 $this->db->delete('child_foodpref');
-                if($this->db->affected_rows()>0) {
+                if($this->db->affected_rows() > 0) {
                     flash('success', lang('request_success'));
                 } else {
                     flash('danger', lang('request_error'));
@@ -165,7 +124,7 @@ class Health extends CI_Controller
             }
 
         }
-        redirectPrev();
+        redirectPrev(null, 'food');
     }
 
     /**
@@ -187,7 +146,7 @@ class Health extends CI_Controller
             flash('danger');
             validation_errors();
         }
-        redirectPrev();
+        redirectPrev(null, 'emergency_contacts');
     }
 
     /**
@@ -201,7 +160,7 @@ class Health extends CI_Controller
         } else {
             flash('danger', lang('request_danger'));
         }
-        redirectPrev();
+        redirectPrev(null, 'contacts');
     }
 
 
@@ -225,7 +184,7 @@ class Health extends CI_Controller
             flash('danger');
             validation_errors();
         }
-        redirectPrev();
+        redirectPrev(null, 'providers');
     }
 
     /**
@@ -239,7 +198,7 @@ class Health extends CI_Controller
         } else {
             flash('danger', lang('request_danger'));
         }
-        redirectPrev();
+        redirectPrev(null, 'providers');
     }
 
 
@@ -265,7 +224,7 @@ class Health extends CI_Controller
             flash('danger', lang('request_error'));
         }
 
-        redirectPrev();
+        redirectPrev(null, 'problem-list');
     }
 
     /**
@@ -279,6 +238,6 @@ class Health extends CI_Controller
         } else {
             flash('danger', lang('request_danger'));
         }
-        redirectPrev();
+        redirectPrev(null, 'problem-list');
     }
 }

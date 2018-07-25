@@ -1,7 +1,7 @@
 <h2><?php echo lang('allergies'); ?>
 
-    <button type="button" class="btn btn-warning btn-sm pull-right" data-toggle="modal" data-target="#allergyModal">
-      <i class="fa fa-plus-circle"></i>  <?php echo lang('Record allergy'); ?>
+    <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#allergyModal">
+      <i class="fa fa-plus-circle"></i>  <?php echo lang('Add new'); ?>
     </button>
 </h2>
 

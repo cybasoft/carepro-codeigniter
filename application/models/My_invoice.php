@@ -151,7 +151,7 @@ class My_invoice extends CI_Model
         );
         if($this->db->insert('invoice_items', $data2)) {
             $this->parent->notifyParents($id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $this->child->first($id)->first_name));
-            return true;
+            return $invoice_id;
         }
         return false;
     }

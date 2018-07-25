@@ -20,7 +20,7 @@ class my_health extends CI_Model
     /***
      * @return bool
      */
-    function addMedication()
+    function addMedicationToChild()
     {
         $data = array(
             'child_id' => $this->input->post('child_id'),
@@ -113,6 +113,27 @@ class my_health extends CI_Model
     {
         $this->db->where('id', $id)->delete('child_meds');
 
+        if($this->db->affected_rows()>0)
+            return true;
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    function administerMed(){
+        $date = $this->input->post('date').' '.$this->input->post('time');
+        $this->db->insert('meds_admin',
+            [
+                'given_at'=>$date,
+                'user_id'=>user_id(),
+                'med_id'=> $this->input->post('med_id'),
+                'child_id'=> $this->input->post('child_id'),
+                'remarks'=> $this->input->post('remarks'),
+                'staff_only'=> $this->input->post('staff_only') || 0,
+                'created_at'=>date_stamp()
+            ]
+        );
         if($this->db->affected_rows()>0)
             return true;
         return false;

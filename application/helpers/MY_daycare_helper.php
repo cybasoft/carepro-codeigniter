@@ -67,7 +67,7 @@ function flash($type = "", $msg = "")
     if($type == "error")
         $type = "danger";
     $ci = &get_instance();
-    if(validation_errors() == true) {
+    if(validation_errors()) {
         if($msg == "") {
             $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-exclamation-triangle"></span>', '</div>');
             $msg = $e;
@@ -115,13 +115,16 @@ function last_page()
 /**
  * redirect to previous page
  */
-function redirectPrev($msg = array())
+function redirectPrev($msg = array(),$tab ='')
 {
     $ci = &get_instance();
     if(!empty($msg)) {
         flash('info', $msg);
     }
-    redirect($ci->session->userdata('last_page'));
+    if(!empty($tab))
+        $tab = '#'.$tab;
+
+    redirect($ci->session->userdata('last_page').$tab);
 }
 
 /**

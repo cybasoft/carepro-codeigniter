@@ -1,6 +1,6 @@
 <h2><?php echo lang('problem_list'); ?>
-    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newProblemModal">
-        <i class="fa fa-plus"></i> <?php echo lang('Add a problem'); ?>
+    <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#newProblemModal">
+        <i class="fa fa-plus-circle"></i> <?php echo lang('Add new'); ?>
     </button>
 </h2>
 <hr/>

@@ -19,7 +19,7 @@ class Migration_version_212 extends CI_Migration
         $this->dbforge->add_field(
             [
                 'id' => [
-                    'type' => 'BIGINT',
+                    'type' => 'INT',
                     'constraint' => 11,
                     'unsigned' => TRUE,
                     'auto_increment' => TRUE

@@ -1,7 +1,7 @@
 <h2>
     <?php echo lang('emergency_contacts'); ?>
-    <button data-toggle="modal" data-target="#newContact" class="btn btn-primary pull-right">
-        <i class="fa fa-plus"></i> <?php echo lang('new'); ?>
+    <button data-toggle="modal" data-target="#newContact" class="btn btn-success btn-sm pull-right">
+        <i class="fa fa-plus-circle"></i> <?php echo lang('Add new'); ?>
     </button>
 </h2>
 <table class="table table-responsive">
@@ -18,12 +18,12 @@
             <td><?php echo $row->phone; ?></td>
             <td><?php echo $row->address; ?></td>
             <td>
-                <?php if (!is('parent')): ?>
-                    <a class="delete" href="<?php echo site_url('child/deleteContact/' . $row->id); ?>">
+                <?php if(!is('parent')): ?>
+                    <a class="delete" href="<?php echo site_url('child/deleteContact/'.$row->id); ?>">
                         <i class="fa fa-trash-alt"></i>
                     </a>
                 <?php endif; ?>
-            </td >
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>
@@ -41,25 +41,37 @@
             </div>
             <?php echo form_open('child/addContact'); ?>
             <div class="modal-body">
-                <?php echo form_hidden('child_id', $child->id); ?>
-                <input type="text" name="name" class="form-control" required placeholder="<?php echo lang('name'); ?>"/>
-                <br/>
-                <input type="text" name="relation" class="form-control" required
-                       placeholder="<?php echo lang('relation'); ?>"/>
-                <br/>
-                <input type="text" name="phone" class="form-control" required
-                       placeholder="<?php echo lang('phone'); ?>"/>
-                <br/>
-                <input type="text" name="address" class="form-control" required
-                       placeholder="<?php echo lang('address'); ?>"/>
+                <?php
+
+                echo form_hidden('child_id', $child->id);
+
+                echo form_label(lang('name'));
+                echo form_input('name', null, ['class' => 'form-control', 'required' => '']);
+
+                echo form_label(lang('Relation'));
+                echo form_input('relation', null, ['class' => 'form-control', 'required' => '']);
+
+                echo form_label(lang('Phone'));
+                echo form_input('phone', null, ['class' => 'form-control', 'required' => '']);
+
+                echo form_label(lang('Address'));
+                echo form_textarea('address', null, ['class' => 'form-control']);
+                ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <?php echo lang('close'); ?>
-                </button>
-                <button class="btn btn-primary">
-                    <?php echo lang('submit'); ?>
-                </button>
+                <?php
+
+                echo form_button(
+                    [
+                        'type' => 'submit',
+                        'class' => 'btn btn-primary'
+                    ], lang('submit'));
+                echo form_button(
+                    [
+                        'data-dismiss' => 'modal',
+                        'class' => 'btn btn-default'
+                    ], lang('close'));
+                ?>
             </div>
             <?php echo form_close(); ?>
         </div>

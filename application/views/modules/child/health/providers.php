@@ -1,7 +1,7 @@
 <h2>
     <?php echo lang('healthcare_providers'); ?>
-    <button data-toggle="modal" data-target="#newProvider" class="btn btn-success pull-right">
-        <i class="fa fa-plus"></i> <?php echo lang('new'); ?>
+    <button data-toggle="modal" data-target="#newProvider" class="btn btn-success btn-sm pull-right">
+        <i class="fa fa-plus-circle"></i> <?php echo lang('Add new'); ?>
     </button>
 </h2>
 <table class="table table-responsive">

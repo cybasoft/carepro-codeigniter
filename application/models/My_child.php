@@ -13,6 +13,33 @@ class My_child extends CI_Model
     {
         return $this->db->where('id', $id)->get('children')->row();
     }
+
+    /**
+     * @param        $id
+     * @param string $field
+     *
+     * @return string
+     */
+    function get($id, $field = '')
+    {
+
+        if($field == 'name')
+            $field = ['first_name', 'last_name'];
+
+        $this->db->where('id', $id);
+        $child = $this->db->get('children')->row();
+
+        if(is_array($field)) {
+            $res = '';
+            foreach ($field as $item) {
+                $res .= $child->$item.' ';
+            }
+        } else {
+            $res = $child->$field;
+        }
+
+        return $res;
+    }
     /*
      * set child id session to be used in this instance
      * @params none
@@ -26,6 +53,11 @@ class My_child extends CI_Model
         return $this->db->get('children');
     }
 
+    /**
+     * @param null $id
+     *
+     * @return mixed
+     */
     function child($id = null)
     {
         return $this->db->where('id', $id)->get('children')->row();
@@ -34,6 +66,7 @@ class My_child extends CI_Model
 
     /**
      * @param $child_id
+     *
      * @return mixed|object
      */
     function getParents($child_id)
@@ -47,6 +80,7 @@ class My_child extends CI_Model
 
     /**
      * @param null $id
+     *
      * @return mixed
      */
     function getParent($id = null)
@@ -61,6 +95,7 @@ class My_child extends CI_Model
 
     /**
      * @param $db
+     *
      * @return mixed
      */
     function getData($db, $child_id)
@@ -92,6 +127,7 @@ class My_child extends CI_Model
     /**
      * @param $db
      * @param $child_id
+     *
      * @return int|string
      */
     function totalRecords($db, $child_id)
@@ -103,6 +139,7 @@ class My_child extends CI_Model
     /**
      * @param $user_id
      * @param $child_id
+     *
      * @return bool
      */
     function belongsTo($user_id, $child_id)
@@ -110,7 +147,7 @@ class My_child extends CI_Model
         $this->db->where('child_id', $child_id);
         $this->db->where('user_id', $user_id);
         $query = $this->db->get('child_parents');
-        if($query->num_rows()>0) {
+        if($query->num_rows() > 0) {
             return true;
         } else {
             return false;
@@ -144,7 +181,7 @@ class My_child extends CI_Model
         $this->db->insert('children', $data);
         $last_id = $this->db->insert_id();
 
-        if($this->db->affected_rows()>0) {
+        if($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
             return false;
@@ -190,7 +227,7 @@ class My_child extends CI_Model
         );
         $this->db->where('id', $child_id);
         $this->db->update('children', $data);
-        if($this->db->affected_rows()>0) {
+        if($this->db->affected_rows() > 0) {
             //log event
             logEvent("Updated child {$data['first_name']} {$data['last_name']}");
 
@@ -221,7 +258,7 @@ class My_child extends CI_Model
 
         $this->db->insert('child_pickup', $data);
         $insert_id = $this->db->insert_id();
-        if($this->db->affected_rows()>0) {
+        if($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added pickup contact for child ID {$id}");
             $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
@@ -231,67 +268,10 @@ class My_child extends CI_Model
         }
     }
 
-    /*
-     * add pickup contact info
-     */
-
-    function createNote($child_id)
-    {
-        $data = array(
-            'child_id' => $child_id,
-            'title' => $this->input->post('title'),
-            'content' => $this->input->post('note-content'),
-            'user_id' => $this->user->uid(),
-            'created_at' => date_stamp()
-        );
-
-        $this->db->insert('child_notes', $data);
-        if($this->db->affected_rows()>0) {
-            //log event
-            logEvent("Added note for child ID: {$child_id}");
-            //notify parents
-            $this->parent->notifyParents($child_id, lang('note_created_email_subject'), sprintf(lang('note_created_email_message'), $this->first($child_id)->first_name));
-
-            return true;
-        }
-        return false;
-    }
 
     /**
      * @param $child_id
-     * @return bool
-     */
-    function createIncident($child_id)
-    {
-        $date_occurred = $this->input->post('date').' '.$this->input->post('time');
-        $data = array(
-            'child_id' => $child_id,
-            'title' => $this->input->post('title'),
-            'location' => $this->input->post('location'),
-            'incident_type' => $this->input->post('incident_type'),
-            'description' => $this->input->post('description'),
-            'actions_taken' => $this->input->post('actions_taken'),
-            'witnesses' => $this->input->post('witnesses'),
-            'remarks' => $this->input->post('remarks'),
-            'date_occurred' => $date_occurred,
-            'user_id' => $this->user->uid(),
-            'created_at' => date_stamp()
-        );
-
-        $this->db->insert('child_incident', $data);
-        if($this->db->affected_rows()>0) {
-            //log event
-            logEvent("Added incident report for child ID: {$child_id}");
-
-            //notify parents
-            $this->parent->notifyParents($child_id, lang('incident_email_subject'), sprintf(lang('incident_email_message'), $this->first($child_id)->first_name));
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param $child_id
+     *
      * @return bool
      */
     function check_in($child_id)
@@ -322,6 +302,7 @@ class My_child extends CI_Model
 
     /**
      * @param $child_id
+     *
      * @return bool
      */
     function check_out($child_id)
@@ -357,8 +338,9 @@ class My_child extends CI_Model
     /**
      * Determine if child was checked in a given day
      *
-     * @param $child_id
+     * @param      $child_id
      * @param bool $date
+     *
      * @return bool
      */
     function checkedIn($child_id, $date = false, $checkedOut = false)
@@ -383,8 +365,9 @@ class My_child extends CI_Model
     }
 
     /**
-     * @param $id
+     * @param      $id
      * @param null $date
+     *
      * @return mixed
      */
     function attendance($id, $date = null)
@@ -397,8 +380,9 @@ class My_child extends CI_Model
     }
 
     /**
-     * @param $id
+     * @param      $id
      * @param null $date
+     *
      * @return mixed
      */
     function checkinCounter($id, $date = null)
@@ -410,7 +394,7 @@ class My_child extends CI_Model
         $this->db->where('DATE(time_in)', $date);
         $this->db->where('time_out', null);
         $res = $this->db->get('child_checkin');
-        if($res->num_rows()>0) {
+        if($res->num_rows() > 0) {
             $result = $res->row();
             $count = checkinTimer($result->time_in, date('Y-m-d H:i:s'))->h.' '.lang('hrs').
                 ' '.checkinTimer($result->time_in, date('Y-m-d H:i:s'))->i.' '.lang('mins');
@@ -420,6 +404,7 @@ class My_child extends CI_Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     function countAllergies($id)
@@ -431,6 +416,7 @@ class My_child extends CI_Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     function countMeds($id)
@@ -442,6 +428,7 @@ class My_child extends CI_Model
 
     /**
      * @param $id
+     *
      * @return int
      */
     function roomCount($id, $type = 'children')
@@ -452,18 +439,20 @@ class My_child extends CI_Model
         } else {
             $res = $this->db->count_all_results('child_room_staff');
         }
-        if(count((array)$res)>0)
+        if(count((array)$res) > 0)
             return $res;
         return 0;
     }
 
     /**
      * @param $photo
+     *
      * @return string
      */
-    function photo($photo){
-        if(is_numeric($photo)){
-            $child=$this->db->select('id,photo')->limit(1)->where('id',$photo)->get('children')->row();
+    function photo($photo)
+    {
+        if(is_numeric($photo)) {
+            $child = $this->db->select('id,photo')->limit(1)->where('id', $photo)->get('children')->row();
             $photo = $child->photo;
         }
         if(!empty($photo))

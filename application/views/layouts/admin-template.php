@@ -326,7 +326,7 @@
         startLockscreen();
     });
     setTimeout(function () {
-        startLockscreen()
+      //  startLockscreen()
     }, 900000);
 
     function startLockscreen() {

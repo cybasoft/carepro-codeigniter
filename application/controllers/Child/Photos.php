@@ -59,13 +59,4 @@ class Photos extends CI_Controller
         }
         echo 'error';
     }
-    function destroyIncidentPhotos(){
-        $photo = $this->db->where('id', $this->input->post('id'))->get('child_incident_photos')->row();
-        @unlink('./assets/uploads/photos/'.$photo->photo);
-        if($this->db->where('id', $this->input->post('id'))->delete('child_incident_photos')) {
-            echo 'success';
-            return;
-        }
-        echo 'error';
-    }
 }

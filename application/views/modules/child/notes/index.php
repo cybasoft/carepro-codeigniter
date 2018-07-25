@@ -26,15 +26,15 @@
                     </li>
                 <?php endif; ?>
                 <?php if(!is('parent')): ?>
-                    <li class="">
-                        <button type="button" class="btn btn-warning btn-flat btn-xs" data-toggle="modal"
+                    <li class="pull-right">
+                        <button type="button" class="btn btn-warning btn-flat btn-sm" data-toggle="modal"
                                 data-target="#newIncidentModal">
-                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-plus-circle"></i>
                             <span class="hidden-xs"><?php echo lang('new incident'); ?></span>
                         </button>
-                        <button type="button" class="btn btn-primary btn-flat btn-xs" data-toggle="modal"
+                        <button type="button" class="btn btn-primary btn-flat btn-sm" data-toggle="modal"
                                 data-target="#newNoteModal">
-                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-plus-circle"></i>
                             <span class="hidden-xs"><?php echo lang('new_note'); ?> </span>
                         </button>
                     </li>
@@ -45,33 +45,39 @@
                 <div role="tabpanel" class="tab-pane fade in active" id="notes">
 
                     <?php foreach ($notes as $note): ?>
-                        <div class="box box-info">
+                        <div class="box box-default box-solid">
                             <div class="box-header with-border">
-                                <div class="box-title">
-                                    <em class="text-olive small">
-                                        <?php echo format_date($note->created_at); ?>
-
-                                        <?php echo lang('by'); ?>
-                                        <?php echo $this->user->user($note->user_id)->first_name; ?>
-                                        <?php echo $this->user->user($note->user_id)->last_name; ?>
-                                    </em>
-                                    <br/>
+                                <h4 class="box-title">
                                     <a style="color: #1974cc;"
-                                       href="?viewNote=<?php echo $note->id; ?>#view-notes"><?php echo $note->title; ?></a sty>
-                                </div>
+                                       id="<?php echo $note->id; ?>"
+                                       class="viewNote"
+                                       href="#">
+                                        <?php echo $note->title; ?>
+                                    </a>
+                                </h4>
+
                                 <?php if(!is('parent')): ?>
                                     <a class="pull-right delete "
-                                       href="<?php echo site_url('child/deleteNote/'.$note->id); ?>">
+                                       href="<?php echo site_url('notes/destroy/'.$note->id); ?>">
                                         <i class="fa fa-trash-alt text-danger"></i></a>
                                 <?php endif; ?>
                             </div>
                             <div class="box-body">
-
-                                <?php echo word_limiter($note->content); ?>
+                                <?php echo word_limiter(htmlspecialchars_decode($note->content)); ?>
+                            </div>
+                            <div class="box-footer">
+                                <?php echo format_date($note->created_at); ?>
+                                |
+                                <?php echo $this->user->user($note->user_id)->first_name; ?>
+                                <?php echo $this->user->user($note->user_id)->last_name; ?>
+                                |
+                                <strong><?php echo lang('Category'); ?>:</strong>
+                                <?php echo $this->notes->category($note->category_id); ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
+
                 <div role="tabpanel" class="tab-pane fade" id="incidents">
                     <br/>
                     <?php foreach ($incidents as $incident): ?>
@@ -91,7 +97,7 @@
                                 </div>
                                 <?php if(!is('parent')): ?>
                                     <a class="pull-right delete "
-                                       href="<?php echo site_url('child/deleteIncident/'.$incident->id); ?>">
+                                       href="<?php echo site_url('notes/deleteIncident/'.$incident->id); ?>">
                                         <i class="fa fa-trash-alt text-danger"></i></a>
                                 <?php endif; ?>
                             </div>
@@ -101,12 +107,13 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
+
                 <?php if(!is('parent')): ?>
                 <?php endif; ?>
                 <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>
                     <div role="tabpanel" class="tab-pane fade" id="view-notes">
                         <?php if(isset($_GET['viewNote'])) {
-                            $this->load->view('modules/child/notes/view-note');
+
                         }
                         if(isset($_GET['viewIncident'])) {
                             $this->load->view('modules/child/notes/view-incident');
@@ -120,5 +127,31 @@
     </div>
 </div>
 
-<?php $this->load->view('modules/child/notes/create-note'); ?>
-<?php $this->load->view($this->module.'create-incident'); ?>
+<?php $this->load->view('modules/child/notes/create-note-modal'); ?>
+<?php $this->load->view($this->module.'create-incident-modal'); ?>
+<?php $this->load->view('modules/child/notes/view-note-modal'); ?>
+<script>
+
+    $('.viewNote').click(function () {
+        var modal = $('#noteViewModal');
+        var note_id = $(this).attr('id');
+        $.ajax({
+            url: '<?php echo site_url('notes/view'); ?>',
+            data: {note_id: note_id},
+            type: 'POST',
+            success: function (response) {
+                res = JSON.parse(response);
+                modal.find('.modal-title').html(res.title);
+                modal.find('.note-content').html(decodeHtml(res.content));
+                modal.find('.note-user').html(res.user);
+                modal.find('.note-date').html(res.created_at);
+                modal.find('.note-cat').html(res.category);
+                modal.find('.note-tags').html(res.tags);
+                modal.modal('show')
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    })
+</script>

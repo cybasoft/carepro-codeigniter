@@ -67,7 +67,7 @@ if(count((array)$incident)>0):
     <div class="col-md-4">
         <strong class="text-danger"><?php echo lang('incident photos'); ?></strong>
         <?php if(is('admin') || is('staff') || is('manager')): ?>
-            <form action="<?php echo site_url('child/'.$child->id.'/photos/incident'); ?>"
+            <form action="<?php echo site_url('notes/addIncidentPhotos/'.$child->id); ?>"
                   enctype="multipart/form-data" class="dropzone" id="image-upload" method="POST">
                 <input type="hidden" name="incident_id" value="<?php echo $incident->id; ?>">
             </form>
@@ -125,7 +125,7 @@ if(count((array)$incident)>0):
             }, function () {
                 swal({type: 'success', text: '<?php echo lang('request_success'); ?>'});
                 $.ajax({
-                    url: '<?php echo base_url('/child/'.$child->id.'/photos/destroyIncidentPhotos'); ?>',
+                    url: '<?php echo base_url('/notes/destroyIncidentPhotos/'.$child->id); ?>',
                     data: {id: photo.attr('id')}, //$('form').serialize(),
                     type: 'POST',
                     success: function (response) {

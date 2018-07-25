@@ -191,7 +191,8 @@ class Invoice extends CI_Controller
         $this->form_validation->set_rules('invoice_terms', lang('invoice_terms'), 'xss_clean');
 
         if($this->form_validation->run() == TRUE) {
-            if($this->invoice->createInvoice($id)) {
+            $invoice = $this->invoice->createInvoice($id);
+            if($invoice>0) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -202,7 +203,7 @@ class Invoice extends CI_Controller
             flash('danger');
             redirectPrev();
         }
-        redirect('child/'.$id.'/billing');
+        redirect('invoice/'.$invoice.'/view');
     }
 
     function is_money($money)

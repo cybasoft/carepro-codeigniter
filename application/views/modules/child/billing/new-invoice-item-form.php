@@ -18,7 +18,6 @@
                 <input type="number" name="qty" class="form-control" required/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close'); ?></button>
                 <button class="btn btn-primary"><?php echo lang('submit'); ?></button>
             </div>
             <?php echo form_close(); ?>

@@ -12,7 +12,7 @@
     </div>
     <br/>
     <button class="btn btn-info submit-pay">
-        <i class="fa fa-cc-stripe"></i> <?php echo sprintf(lang('pay_with'), 'Stripe'); ?>
+        <img src="<?php echo assets('img/content/stripe.svg'); ?>" style="width:16px;"/> <?php echo sprintf(lang('pay_with'), 'Stripe'); ?>
     </button>
 </form>
 <script>

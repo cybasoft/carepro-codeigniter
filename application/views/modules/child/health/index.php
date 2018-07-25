@@ -42,10 +42,10 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="meds">
-                    <?php $this->load->view('modules/child/health/meds'); ?>
+                    <?php $this->load->view('modules/child/health/meds/meds'); ?>
                 </div>
                 <div class="tab-pane" id="allergies">
-                    <?php $this->load->view('modules/child/health/allergies', ['child' => $child]); ?>
+                    <?php $this->load->view('modules/child/health/allergies'); ?>
                 </div>
                 <div class="tab-pane" id="food">
                     <?php $this->load->view('modules/child/health/food'); ?>
