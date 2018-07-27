@@ -21,6 +21,13 @@ if ($this->ion_auth->logged_in()) {
         </div>
         <?php echo form_open('auth/register', ['id' => 'loginForm']); ?>
         <div class="form-group">
+            <?php echo form_input($data['first_name']); ?>
+        </div>
+        <div class="form-group">
+            <?php echo form_input($data['last_name']); ?>
+        </div>
+
+        <div class="form-group">
             <?php echo form_input($data['email']); ?>
         </div>
         <div class="form-group">
@@ -30,16 +37,11 @@ if ($this->ion_auth->logged_in()) {
             <?php echo form_input($data['password_confirm']); ?>
         </div>
         <div class="form-group">
-            <?php echo form_input($data['first_name']); ?>
+            <?php echo form_input($data['phone']); ?>
         </div>
-        <div class="form-group">
-            <?php echo form_input($data['last_name']); ?>
-        </div>
+
         <div class="form-group">
             <?php echo form_textarea($data['address']); ?>
-        </div>
-        <div class="form-group">
-            <?php echo form_input($data['phone']); ?>
         </div>
 
         <?php if (get_option('enable_captcha')): ?>
@@ -58,7 +60,7 @@ if ($this->ion_auth->logged_in()) {
         </div>
         <?php echo form_close(); ?>
         <div class="page-copyright">
-            <p><?php echo lang('powered by'); ?> <?php echo lang('copyright'); ?></p>
+            <p><?php echo lang('powered by'); ?>    <?php echo lang('copyright'); ?></p>
         </div>
     </div>
 </div>

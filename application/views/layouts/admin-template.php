@@ -77,7 +77,7 @@
         </a>
         <div class="navbar-left">
             <ul class="nav navbar-nav">
-                <li class="lock-screen"><a href="#"><i class="fa fa-lock cursor"></i></a> </li>
+                <li class="lock-screen"><a href="#"><i class="fa fa-lock cursor"></i></a></li>
             </ul>
         </div>
         <div class="navbar-right">
@@ -146,14 +146,14 @@
             <ul class="sidebar-menu">
                 <li class="<?php echo set_active('dashboard'); ?>">
                     <a href="<?php echo site_url('dashboard'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                         <img class="icon" src="<?php echo assets('img/content/dash.svg'); ?>"/>
                         <span><?php echo lang('dashboard'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
                     <a href="<?php echo site_url('children'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                         <img class="icon" src="<?php echo assets('img/content/children.svg'); ?>"/>
                         <span><?php echo lang('children'); ?></span>
                         <small class="badge pull-right bg-green">
@@ -163,7 +163,7 @@
                 </li>
                 <li class="<?php echo set_active(array('rooms', 'room')); ?>">
                     <a href="<?php echo site_url('rooms'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                         <img class="icon" src="<?php echo assets('img/content/groups.svg'); ?>"/>
                         <span><?php echo lang('rooms'); ?></span>
                         <small class="badge pull-right bg-green">
@@ -174,7 +174,7 @@
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('users'); ?>">
                         <a href="<?php echo site_url('users'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                           style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                             <img class="icon" src="<?php echo assets('img/content/users.svg'); ?>"/>
                             <span><?php echo lang('users'); ?></span>
                             <small class="badge pull-right bg-blue">
@@ -186,7 +186,7 @@
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('parents'); ?>">
                         <a href="<?php echo site_url('parents'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                           style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                             <img class="icon" src="<?php echo assets('img/content/parents.svg'); ?>"/>
                             <span><?php echo lang('parents'); ?></span>
                             <small class="badge pull-right bg-blue"><?php echo $this->users->getCount('parent'); ?></small>
@@ -195,7 +195,7 @@
                 <?php endif; ?>
                 <li class="<?php echo set_active('calendar'); ?>">
                     <a href="<?php echo site_url('calendar'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                         <img class="icon" src="<?php echo assets('img/content/calendar.svg'); ?>"/>
                         <span><?php echo lang('calendar'); ?></span>
                     </a>
@@ -210,7 +210,7 @@
                 <?php if(is('admin') || is('manager')): ?>
                     <li class="<?php echo set_active('settings'); ?>">
                         <a href="<?php echo site_url('settings'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color','#333'); ?>">
+                           style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                             <img class="icon" src="<?php echo assets('img/content/settings.svg'); ?>"/>
                             <span><?php echo lang('settings'); ?></span>
                         </a>
@@ -218,7 +218,7 @@
                 <?php endif; ?>
                 <li>
                     <a href="<?php echo site_url('auth/logout'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color','red'); ?>">
+                       style="color:<?php echo get_option('left_sidebar_link_color', 'red'); ?>">
                         <img class="icon" src="<?php echo assets('img/content/exit.svg'); ?>"/>
                         <span><?php echo lang('logout'); ?></span>
                     </a>
@@ -322,12 +322,22 @@
         });
     });
     //lockscreen
+    var timerMins = '<?php echo get_option('lockscreen_timer'); ?>';
+
+    if (timerMins === undefined || timerMins === "")
+        timerMins = 5;
+
+    var lockTimer = 1320000 * timerMins;
+
+    console.log(lockTimer);
+
     $('.lock-screen').click(function () {
         startLockscreen();
     });
+
     setTimeout(function () {
-      //  startLockscreen()
-    }, 900000);
+        startLockscreen()
+    }, lockTimer);
 
     function startLockscreen() {
         $('body').load('<?php echo site_url('lockscreen'); ?>');
@@ -351,7 +361,7 @@
         });
     })
 </script>
-<?php if($this->input->cookie('timer')>0): ?>
+<?php if($this->input->cookie('timer') > 0): ?>
     <script>startLockscreen()</script>
 <?php endif; ?>
 

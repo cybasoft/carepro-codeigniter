@@ -103,4 +103,9 @@ class Conf extends CI_Model
         $this->input->cookie('timer');
     }
 
+    function stripImage($text){
+        $text = preg_replace("/<img[^>]+./"," ",$text);
+        $text = str_replace(']]>',']]>',$text);
+        return $text;
+    }
 }

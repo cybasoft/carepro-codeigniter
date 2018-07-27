@@ -1882,7 +1882,11 @@ body > .header .logo .icon {
     width: 100%;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
 }
-
+.box-flat{
+    -webkit-border-radius: 0!important;
+    -moz-border-radius: 0!important;
+    border-radius: 0!important;
+}
 .box.box-primary {
     border-top-color: #3c8dbc
 }

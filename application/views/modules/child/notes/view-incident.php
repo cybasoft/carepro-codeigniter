@@ -2,7 +2,7 @@
 <link type="text/css" rel="stylesheet" href="<?php echo base_url('assets/plugins/lg/css/lightgallery.min.css'); ?>"/>
 <?php $incident = $this->db->where('id', $_GET['viewIncident'])->get('child_incident')->row();
 $photos = $this->photos->albums('child_incident_photos', $child->id, null, base_url('child/1/notes?viewIncident=4#view-notes'));
-if(count((array)$incident)>0):
+if(count((array)$incident) > 0):
 ?>
 <div class="row">
     <div class="col-md-8">
@@ -67,21 +67,16 @@ if(count((array)$incident)>0):
     <div class="col-md-4">
         <strong class="text-danger"><?php echo lang('incident photos'); ?></strong>
         <?php if(is('admin') || is('staff') || is('manager')): ?>
-            <form action="<?php echo site_url('notes/addIncidentPhotos/'.$child->id); ?>"
+            <form action="<?php echo site_url('notes/storeIncidentPhotos'); ?>"
                   enctype="multipart/form-data" class="dropzone" id="image-upload" method="POST">
-                <input type="hidden" name="incident_id" value="<?php echo $incident->id; ?>">
+                <?php echo form_hidden('child_id', $child->id); ?>
+                <?php echo form_hidden('incident_id',$incident->id); ?>
             </form>
         <?php endif; ?>
         <div class="flexbin flexbin-margin" id="lightgallery">
-            <?php if(count($photos['results'])>0): ?>
+            <?php if(count($photos['results']) > 0): ?>
             <?php foreach ($photos['results'] as $photo): ?>
-                <a href="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>">
-                    <?php if(is('admin') || is('staff') || is('manager')): ?>
-                        <span class="text-danger deletePhoto" id="<?php echo $photo->id; ?>"
-                              style="position:absolute;right:0;padding:2px;background:#fff;">
-                        <i class="fa fa-trash-alt"></i>
-                    </span>
-                    <?php endif; ?>
+                <a data-src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>?id=<?php echo $photo->id; ?>&route=/notes/deleteIncidentPhoto">
                     <img src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>"/>
                 </a>
             <?php endforeach; ?>
@@ -108,38 +103,3 @@ if(count((array)$incident)>0):
     };
     lightGallery(document.getElementById('lightgallery'));
 </script>
-<?php if(is('admin') || is('staff') || is('manager')): ?>
-    <script type="text/javascript">
-        $('.deletePhoto').click(function () {
-            var photo = $(this);
-            swal({
-                title: '<?php echo lang('confirm_delete_title'); ?>',
-                text: '<?php echo lang('confirm_delete_warning'); ?>',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: '<?php echo lang('confirm_delete_btn'); ?>',
-                closeOnConfirm: false,
-                backdrop: false,
-                allowOutsideClick: false
-            }, function () {
-                swal({type: 'success', text: '<?php echo lang('request_success'); ?>'});
-                $.ajax({
-                    url: '<?php echo base_url('/notes/destroyIncidentPhotos/'.$child->id); ?>',
-                    data: {id: photo.attr('id')}, //$('form').serialize(),
-                    type: 'POST',
-                    success: function (response) {
-                        if (response === "success") {
-                            photo.parent('a').remove();
-                        } else {
-                            swal({type: 'error', text: '<?php echo lang('request_error'); ?>'})
-                        }
-                    },
-                    error: function (error) {
-                        swal({type: 'error', text: '<?php echo lang('request_error'); ?>'})
-                    }
-                });
-            })
-        })
-    </script>
-<?php endif; ?>

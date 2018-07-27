@@ -11,7 +11,7 @@
                     <?php echo form_open_multipart('meds/uploadMedPhoto'); ?>
                     <div class="row">
                         <div class="col-xs-5">
-                            <?php echo form_input('med_name', null, ['class' => 'form-control', 'placeholder' => lang('Medication name')]); ?>
+                            <?php echo form_input('med_name', null, ['class' => 'form-control', 'placeholder' => lang('Medication name'),'required'=>'']); ?>
                         </div>
                         <div class="col-xs-5">
                             <?php echo form_upload('photo', null, ['class' => 'form-control', 'required' => 'required']); ?>

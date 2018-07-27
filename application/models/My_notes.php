@@ -16,13 +16,13 @@ class My_notes extends CI_Model
     function store()
     {
         $child_id = $this->input->post('child_id');
-       
+
         $data = array(
             'child_id' => $child_id,
             'title' => $this->input->post('title'),
             'content' => htmlspecialchars($this->input->post('note-content')),
-            'category_id'=> $this->input->post('category_id'),
-            'tags'=>implode(',', $this->input->post('tags')),
+            'category_id' => $this->input->post('category_id'),
+            'tags' => implode(',', $this->input->post('tags')),
             'user_id' => $this->user->uid(),
             'created_at' => date_stamp()
         );
@@ -56,9 +56,10 @@ class My_notes extends CI_Model
      *
      * @return string
      */
-    function category($id){
-        $cat = $this->db->where('id',$id)->get('notes_categories')->row();
-        if(count((array)$cat)>0)
+    function category($id)
+    {
+        $cat = $this->db->where('id', $id)->get('notes_categories')->row();
+        if(count((array)$cat) > 0)
             return $cat->name;
         return '';
     }
@@ -86,43 +87,14 @@ class My_notes extends CI_Model
             'created_at' => date_stamp()
         );
         $this->db->insert('child_incident', $data);
-        if($this->db->affected_rows() > 0) {
+        $noteID = $this->db->insert_id();
 
+        if($this->db->affected_rows() > 0) {
             logEvent("Added incident report for child ID: {$child_id}");
             $this->parent->notifyParents($child_id, lang('incident_email_subject'), sprintf(lang('incident_email_message'), $this->child->get($child_id, 'name')));
-            return $this->db->insert_id();
+            return $noteID;
         }
         return false;
-    }
-
-    function getNote(){
-        $noteId= $this->input->post('note_id');
-        $note = $this->db->where('id', $noteId)->get('child_notes')->row();
-        $data = [
-            'title'=>$note->title,
-            'content'=>htmlspecialchars_decode($note->content),
-            'user'=>$this->user->get($note->user_id,'name'),
-            'created_at'=>format_date($note->created_at),
-            'category'=>$this->notes->category($note->category_id),
-            'tags'=>$this->getTags($note->tags)
-        ];
-
-        return $data;
-    }
-
-    /**
-     * @param $tags
-     *
-     * @return string
-     */
-    function getTags($tags){
-        $tags = explode(',',$tags);
-
-        $str = '';
-        foreach($tags as $tag){
-            $str .='<span class="label label-default">'.$tag.'</span>';
-        }
-        return $str;
     }
 
     /**
@@ -151,13 +123,89 @@ class My_notes extends CI_Model
 
     }
 
-    function destroyIncidentPhotos()
+    /**
+     * @param $childID
+     * @return string
+     */
+    function storeIncidentPhotos($childID)
+    {
+        $table = 'child_incident_photos';
+        $upload_path = './assets/uploads/photos';
+        if(!file_exists($upload_path)) {
+            mkdir($upload_path, 755, true);
+        }
+        $config = array(
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|png|jpeg|svg',
+            'max_size' => '3048',
+            'encrypt_name' => true,
+        );
+        $this->load->library('upload', $config);
+        if(!$this->upload->do_upload('file')) {
+            $msg = lang('request_error');
+            $type = 'error';
+        } else {
+            $upload_data = $this->upload->data();
+            $this->db->insert($table, [
+                'incident_id' => $this->input->post('incident_id'),
+                'photo' => $upload_data['file_name'],
+                'child_id' => $childID,
+                'user_id' => $this->user->uid(),
+                'created_at' => date_stamp()
+            ]);
+            if($upload_data) {
+                $msg = lang('request_success');
+                $type = 'success';
+            } else {
+                $msg = lang('request_error');
+                $type = 'error';
+            }
+        }
+        return json_encode($msg, $type);
+    }
+
+    function deleteIncidentPhoto()
     {
         $photo = $this->db->where('id', $this->input->post('id'))->get('child_incident_photos')->row();
         @unlink('./assets/uploads/photos/'.$photo->photo);
         if($this->db->where('id', $this->input->post('id'))->delete('child_incident_photos'))
             return true;
         return false;
+    }
+
+    /**
+     * @return array
+     */
+    function getNote()
+    {
+        $noteId = $this->input->post('note_id');
+        $note = $this->db->where('id', $noteId)->get('child_notes')->row();
+        $data = [
+            'title' => $note->title,
+            'content' => htmlspecialchars_decode($note->content),
+            'user' => '<strong>'.lang('Staff').':</strong> '.$this->user->get($note->user_id, 'name'),
+            'created_at' => format_date($note->created_at),
+            'category' => '<strong>'.lang('Category').':</strong> '.$this->notes->category($note->category_id),
+            'tags' => '<strong>'.lang('Tags').':</strong> '.$this->getTags($note->tags)
+        ];
+
+        return $data;
+    }
+
+    /**
+     * @param $tags
+     *
+     * @return string
+     */
+    function getTags($tags)
+    {
+        $tags = explode(',', $tags);
+
+        $str = '';
+        foreach ($tags as $tag) {
+            $str .= '<span class="label label-default">'.$tag.'</span> ';
+        }
+        return $str;
     }
 }
 

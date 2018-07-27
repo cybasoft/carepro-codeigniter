@@ -93,8 +93,9 @@ $route['accounting/:any'] = 'accounting/accounting/$1';
 
 //child photos
 $route['child/(:num)/photos'] = 'child/photos/index';
-$route['child/(:num)/photos/(:any)'] = 'child/photos/index/$1';
-$route['child/(:num)/photos/(:any)/(:any)'] = 'child/photos/index/$1';
+
+$route['photos/(:any)']='child/photos/$1';
+$route['photos/(:any)/:num']='child/photos/$1';
 
 //parents
 $route['parents/:any'] = 'parents/$1';

@@ -11,38 +11,38 @@
             <div class="modal-body">
                 <?php
                 echo form_label(lang('title'));
-                echo form_input('title', null, ['class' => 'form-control', 'required' => '']);
+                echo form_input('title', set_value('title'), ['class' => 'form-control', 'required' => '']);
                 //
                 echo '<div class="row">';
                 echo '<div class="col-md-6">';
                 echo form_label(lang('date'));
-                echo form_date('date', date('Y-m-d'), ['class' => 'form-control', 'required' => '']);
+                echo form_date('date', set_value('date',date('Y-m-d')), ['class' => 'form-control', 'required' => '']);
                 echo '</div>';
                 echo '<div class="col-md-6">';
                 echo form_label(lang('time'));
-                echo form_time('time', date('H:i'), ['class' => 'form-control', 'required' => '']);
+                echo form_time('time', set_value('time',date('H:i')), ['class' => 'form-control', 'required' => '']);
                 echo '</div>';
                 echo '</div>';
                 //
                 echo '<div class="row">';
                 echo '<div class="col-md-6">';
                 echo form_label(lang('location'));
-                echo form_input('location', '', ['class' => 'form-control', 'required' => '']);
+                echo form_input('location', set_value('location'), ['class' => 'form-control', 'required' => '']);
                 echo '</div>';
                 echo '<div class="col-md-6">';
                 echo form_label(lang('incident_type'));
-                echo form_input('incident_type', '', ['class' => 'form-control', 'required' => '']);
+                echo form_input('incident_type', set_value('incident_type'), ['class' => 'form-control', 'required' => '']);
                 echo '</div>';
                 echo '</div>';
                 //
                 echo form_label(lang('Actions taken'));
-                echo form_textarea('actions_taken', null, ['class' => 'form-control']);
+                echo form_textarea('actions_taken', set_value('actions_taken'), ['class' => 'form-control']);
                 echo form_label(lang('Description'));
-                echo form_textarea('description', null, ['class' => 'form-control editor-media']);
+                echo form_textarea('description', htmlspecialchars_decode(set_value('description')), ['class' => 'form-control editor']);
                 echo form_label(lang('Witntesses'));
-                echo form_textarea('witnesses', null, ['class' => 'form-control']);
+                echo form_textarea('witnesses', set_value('witnesses'), ['class' => 'form-control','required'=>'']);
                 echo form_label(lang('Remarks'));
-                echo form_input('remarks', null, ['class' => 'form-control']);
+                echo form_input('remarks', set_value('remarks'), ['class' => 'form-control']);
                 ?>
             </div>
             <div class="modal-footer">

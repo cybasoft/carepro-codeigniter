@@ -1,5 +1,5 @@
 <ul class="nav nav-pills nav-stacked col-md-2 col-xs-2 col-sm-2">
-    <li class="active"><a href="#settings" data-toggle="pill"><i class="fa fa-cogs"></i>
+    <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-cogs"></i>
             <span class="hidden-xs hidden-sm"><?php echo lang('settings'); ?></span>
         </a>
     </li>
@@ -27,7 +27,7 @@
 
 <div class="tab-content col-md-10 col-xs-10 col-sm-10">
 
-    <div class="tab-pane active" id="settings">
+    <div class="tab-pane active" id="home">
         <h3><?php echo lang('settings'); ?></h3>
         <hr/>
         <?php
@@ -94,6 +94,9 @@
 
                 echo form_label(lang('date_format'));
                 echo form_input('date_format', get_option('date_format'), ['class' => 'form_control', 'required' => 'required']);
+
+                echo form_label(lang('Lockscreen timer (mins)'));
+                echo form_input(['type' => 'number', 'step' => 'any', 'name' => 'lockscreen_timer'], get_option('lockscreen_timer'), ['class' => 'form-control']);
                 ?>
                 <hr/>
                 <div class="row">
@@ -156,7 +159,7 @@
 
                                 echo form_label(lang('smtp_port'));
                                 echo form_input('smtp_port', get_option('smtp_port'), ['class' => 'form_control']);
-                            }else{
+                            } else {
                                 echo '<div class="alert alert-danger">'.lang('feature_disabled_in_demo').'</div>';
                             }
                             ?>
@@ -232,7 +235,7 @@
                             <button class="btn btn-default"><?php echo lang('update'); ?></button>
                             <?php
                             echo form_close();
-                        }else{
+                        } else {
                             echo '<div class="alert alert-danger">'.lang('feature_disabled_in_demo').'</div>';
                         } ?>
                     </div>

@@ -10,28 +10,28 @@
 class My_photos extends CI_Model
 {
 
-    function albums($table, $child_id = null, $category = null,$base_url=null)
+    function albums($table, $child_id = null, $category = null, $base_url = null)
     {
-        if($base_url==null)
+        if($base_url == null)
             base_url('child/'.$child_id.'/photos');
 
         $data = array();
         $data['results'] = array();
         $limit_per_page = 50;
-        $start_index = (isset($_GET['per_page']) && $_GET['per_page']>0) ? $_GET['per_page'] : 0;
+        $start_index = (isset($_GET['per_page']) && $_GET['per_page'] > 0) ? $_GET['per_page'] : 0;
         if($child_id == null) {
             $total_records = $this->db->count_all($table);
         } else {
             $total_records = $this->db->where('child_id', $child_id)->count_all($table);
         }
-        if($total_records>0) {
+        if($total_records > 0) {
             $this->db->limit($limit_per_page, $start_index);
             if($category !== null)
                 $this->db->where('category', $category);
             if($child_id !== null)
                 $this->db->where('child_id', $child_id);
             $query = $this->db->get($table);
-            if($query->num_rows()>0) {
+            if($query->num_rows() > 0) {
                 foreach ($query->result() as $row) {
                     $photos[] = $row;
                 }
@@ -46,6 +46,7 @@ class My_photos extends CI_Model
      * @param $total_records
      * @param $limit_per_page
      * @param $base_url
+     *
      * @return mixed
      */
     function pagination($total_records, $limit_per_page, $base_url)
@@ -78,9 +79,10 @@ class My_photos extends CI_Model
 
     /**
      * @param $childID
+     *
      * @return string
      */
-    function store($childID, $category = 'album')
+    function store($category = 'album')
     {
         $upload_path = './assets/uploads/photos';
         if(!file_exists($upload_path)) {
@@ -100,51 +102,10 @@ class My_photos extends CI_Model
             $upload_data = $this->upload->data();
             $this->db->insert('photos', [
                 'name' => $upload_data['file_name'],
-                'child_id' => $childID,
+                'child_id' => $this->input->post('child_id'),
                 'uploaded_by' => $this->user->uid(),
                 'caption' => '',
                 'category' => $category,
-                'created_at' => date_stamp()
-            ]);
-            if($upload_data) {
-                $msg = lang('request_success');
-                $type = 'success';
-            } else {
-                $msg = lang('request_error');
-                $type = 'error';
-            }
-        }
-        return json_encode($msg, $type);
-    }
-
-    /**
-     * @param $childID
-     * @return string
-     */
-    function storeIncidentPhotos($childID)
-    {
-        $table = 'child_incident_photos';
-        $upload_path = './assets/uploads/photos';
-        if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
-        }
-        $config = array(
-            'upload_path' => $upload_path,
-            'allowed_types' => 'gif|jpg|png|jpeg|svg',
-            'max_size' => '3048',
-            'encrypt_name' => true,
-        );
-        $this->load->library('upload', $config);
-        if(!$this->upload->do_upload('file')) {
-            $msg = lang('request_error');
-            $type = 'error';
-        } else {
-            $upload_data = $this->upload->data();
-            $this->db->insert($table, [
-                'incident_id' => $this->input->post('incident_id'),
-                'photo' => $upload_data['file_name'],
-                'child_id' => $childID,
-                'user_id' => $this->user->uid(),
                 'created_at' => date_stamp()
             ]);
             if($upload_data) {

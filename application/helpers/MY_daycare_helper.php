@@ -9,6 +9,7 @@
 /**
  * easy date stamp for database entry
  * return date time stamp
+ *
  * @return false|string
  */
 function date_stamp()
@@ -18,7 +19,9 @@ function date_stamp()
 
 /**
  * format date based on config settings
+ *
  * @param $date
+ *
  * @return false|string
  */
 function format_date($date, $time = true, $timestamp = false)
@@ -42,6 +45,7 @@ function format_time($time, $timestamp = false)
 
 /**
  * set flash messages for next page load
+ *
  * @param string $type
  * @param string $msg
  */
@@ -82,7 +86,6 @@ function flash($type = "", $msg = "")
     $ci->session->set_flashdata('type', $type);
     $ci->session->set_flashdata('icon', $icon);
 
-
 //        $tempdata = array(
 //            'message' => $msg,
 //            'type' =>$type,
@@ -115,7 +118,7 @@ function last_page()
 /**
  * redirect to previous page
  */
-function redirectPrev($msg = array(),$tab ='')
+function redirectPrev($msg = array(), $tab = '')
 {
     $ci = &get_instance();
     if(!empty($msg)) {
@@ -129,7 +132,9 @@ function redirectPrev($msg = array(),$tab ='')
 
 /**
  * Check if user is in a group
+ *
  * @param $group
+ *
  * @return bool
  */
 function is($group)
@@ -144,6 +149,7 @@ function is($group)
 
 /**
  * check if authenticated or send to login
+ *
  * @return bool
  */
 function auth($redirect = false)
@@ -159,8 +165,10 @@ function auth($redirect = false)
 
 /**
  * check if you is in requested group
+ *
  * @param $id
  * @param $group
+ *
  * @return bool
  */
 function in_group($id, $group)
@@ -172,7 +180,7 @@ function in_group($id, $group)
         ->from('groups')
         ->join('users_groups', 'users_groups.group_id=groups.id')
         ->count_all_results();
-    if($query>0)
+    if($query > 0)
         return true;
     return false;
 }
@@ -180,6 +188,7 @@ function in_group($id, $group)
 /**
  * @param $option
  * @param $value
+ *
  * @return bool|string
  */
 function selected_option($option, $value)
@@ -193,6 +202,7 @@ function selected_option($option, $value)
 /**
  * @param $option
  * @param $value
+ *
  * @return bool|string
  */
 function checked_option($option, $value)
@@ -209,7 +219,7 @@ function related($db, $field1, $value1, $field2, $value2)
     $res = $ci->db->where($field1, $value1)
         ->where($field2, $value2)
         ->get($db)->result();
-    if(count((array)$res)>0) {
+    if(count((array)$res) > 0) {
         return true;
     }
     return false;
@@ -253,7 +263,6 @@ function logged_in()
     return false;
 }
 
-
 /*
 * log events to database
 * logs changes made by users
@@ -275,7 +284,9 @@ function logEvent($event)
 
 /**
  * Allow specific group to access
+ *
  * @param $g
+ *
  * @return bool
  */
 function allow($group)
@@ -284,7 +295,7 @@ function allow($group)
     auth(true);
     $groups = explode(',', $group);
     $data = array();
-    for ($i = 0; $i<count($groups); $i++) {
+    for ($i = 0; $i < count($groups); $i++) {
         if($ci->ion_auth->in_group($groups[$i]) == true) {
             $data = array('1' => 1);
             break;
@@ -302,7 +313,6 @@ function allow($group)
     }
 
 }
-
 
 /*
 * msg()
@@ -336,7 +346,7 @@ function demo()
     $seg3 = $ci->uri->segment(3);
     $seg4 = $ci->uri->segment(4);
 
-    if($ci->users->uid()>0) {
+    if($ci->users->uid() > 0) {
         if(get_option('demo_mode') == 1) {
             $ci->load->helper('language');
 
@@ -383,9 +393,10 @@ function maintenance()
  *
  * Fetches a language variable and optionally outputs a form label
  *
- * @param    string $text The language line
- * @param    string $for The "for" value (id of the form element)
- * @param    array $attributes Any additional HTML attributes
+ * @param    string $text       The language line
+ * @param    string $for        The "for" value (id of the form element)
+ * @param    array  $attributes Any additional HTML attributes
+ *
  * @return    string
  */
 function lang($text, $for = '', $attributes = array())
@@ -416,6 +427,7 @@ function dd($array)
 
 /**
  * @param $num
+ *
  * @return mixed
  */
 function uri_segment($num)
@@ -426,6 +438,7 @@ function uri_segment($num)
 
 /**
  * @param $page
+ *
  * @return string
  */
 function set_active($page)
@@ -457,7 +470,7 @@ function authorizedToChild($staff_id, $child_id)
         ->where('child_room_staff.user_id', $staff_id)
         ->where('child_room.child_id', $child_id)
         ->count_all_results();
-    if($staff>0)
+    if($staff > 0)
         return true;
 
     //test parent
@@ -465,7 +478,7 @@ function authorizedToChild($staff_id, $child_id)
         ->where('child_id', $child_id)
         ->where('user_id', $staff_id)
         ->count_all_results();
-    if($parent>0)
+    if($parent > 0)
         return true;
 
     return false;
@@ -481,6 +494,7 @@ function valid_date($date, $format = 'Y-m-d')
 /**
  * @param $in
  * @param $out
+ *
  * @return string
  */
 function checkinTimer($in, $out)
@@ -495,13 +509,25 @@ function checkinTimer($in, $out)
 function special_options()
 {
     $options = array(
-        'company_name', 'slogan',
-        'email', 'phone', 'fax', 'street', 'street2', 'city', 'state', 'postal_code', 'country',
-        'timezone', 'google_analytics', 'currency_symbol', 'date_format',
+        'company_name',
+        'slogan',
+        'email',
+        'phone', 'fax',
+        'street',
+        'street2', 'city', 'state', 'postal_code', 'country',
+        'timezone',
+        'google_analytics',
+        'currency_symbol', 'currency_abbreviation',
+        'date_format',
         'allow_registration', 'allow_reset_password', 'enable_captcha',
-        'demo_mode', 'maintenance_mode', 'use_smtp', 'smtp_user', 'smtp_pass', 'smtp_host', 'smtp_port',
+        'demo_mode',
+
+        'maintenance_mode', 'use_smtp', 'smtp_user', 'smtp_pass', 'smtp_host', 'smtp_port',
         'logo', 'invoice_logo',
-        'stripe_pk_live', 'stripe_sk_live', 'stripe_pk_test', 'stripe_sk_test', 'paypal_email', 'paypal_locale'
+        'stripe_pk_live', 'stripe_sk_live', 'stripe_pk_test', 'stripe_sk_test',
+        'paypal_email', 'paypal_locale',
+        'page',
+        'logo_bg_color', 'top_nav_bg_color', 'top_nav_link_color', 'left_sidebar_bg_color', 'left_sidebar_link_color', 'custom_css', 'lockscreen_timer'
     );
     return $options;
 }
@@ -518,6 +544,7 @@ function protected_special_option($option)
  * retrieve option in options table
  *
  * @param $name
+ *
  * @return string
  */
 function get_option($name, $default = '')
@@ -531,7 +558,7 @@ function get_option($name, $default = '')
     } else {
         return '';
     }
-    if($res->num_rows()>0) {
+    if($res->num_rows() > 0) {
         $value = $res->row()->option_value;
         if(empty($value))
             return $default;
@@ -551,6 +578,7 @@ function get_option($name, $default = '')
  *
  * @param $name
  * @param $value
+ *
  * @return bool
  */
 function add_option($name, $value, $special = false)
@@ -574,7 +602,7 @@ function add_option($name, $value, $special = false)
         'option_name' => $name,
         'option_value' => $value
     ]);
-    if($ci->db->affected_rows()>0)
+    if($ci->db->affected_rows() > 0)
         return true;
     return false;
 }
@@ -584,6 +612,7 @@ function add_option($name, $value, $special = false)
  *
  * @param $name
  * @param $value
+ *
  * @return bool
  */
 function update_option($name, $value, $special = false)
@@ -599,12 +628,15 @@ function update_option($name, $value, $special = false)
 
     $ci = &get_instance();
     $test = $ci->db->where('option_name', $name)->from('options')->count_all_results();
-    if($test>0) {
-        $ci->db->where('option_name', $name);
-        $ci->db->update('options', ['option_value' => $value]);
-        if($ci->db->affected_rows()>0)
+
+    if($test > 0) {
+        $ci->db->where('option_name', $name)->update('options', ['option_value' => $value]);
+
+        if($ci->db->affected_rows() > 0)
             return true;
+
     } else {
+
         add_option($name, $value, $special);
     }
     return false;
@@ -612,6 +644,7 @@ function update_option($name, $value, $special = false)
 
 /**
  * @param $name
+ *
  * @return bool
  */
 function remove_option($name)
@@ -686,8 +719,23 @@ if(!function_exists('assets()')) {
     }
 }
 
-function user_id(){
+function user_id()
+{
     $ci = &get_instance();
     return $ci->session->userdata('user_id');
 }
+
+function set_flash($fields)
+{
+    $ci = &get_instance();
+
+    if(is_array($fields)) {
+        foreach ($fields as $field) {
+            $ci->session->set_flashdata($field, $ci->input->post($field));
+        }
+    } else {
+        $ci->session->set_flashdata($fields, $ci->input->post($fields));
+    }
+}
+
 ?>

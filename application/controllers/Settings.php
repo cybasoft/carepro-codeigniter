@@ -20,7 +20,7 @@ class Settings extends CI_Controller
     function index()
     {
         $payMethods = $this->db->get('payment_methods')->result();
-        page($this->module.'index', compact('payMethods'));
+        page($this->module.'settings', compact('payMethods'));
     }
 
     /**
@@ -109,7 +109,7 @@ class Settings extends CI_Controller
                 flash('danger', lang('request_error'));
             }
         }
-        redirect('settings/#logo');
+        redirectPrev('','#logo');
 
     }
 
@@ -149,7 +149,7 @@ class Settings extends CI_Controller
                 flash('danger', lang('request_error'));
             }
         }
-        redirect('settings/#logo');
+        redirectPrev('','#logo');
     }
 
     function paymentMethods()
@@ -166,7 +166,7 @@ class Settings extends CI_Controller
             flash('error');
             validation_errors();
         }
-        redirect('settings/#paymentMethods');
+        redirectPrev('','#paymentMethods');
     }
 
     function deletePaymentMethod($id)
@@ -174,6 +174,6 @@ class Settings extends CI_Controller
         allow('admin');
         $this->db->delete('payment_methods', array('id' => $id));
         flash('success', lang('Settings have been updated'));
-        redirect('settings/#paymentMethods');
+        redirectPrev('','#paymentMethods');
     }
 }

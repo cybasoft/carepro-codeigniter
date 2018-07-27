@@ -63,38 +63,36 @@
                                 <?php endif; ?>
                             </div>
                             <div class="box-body">
-                                <?php echo word_limiter(htmlspecialchars_decode($note->content)); ?>
+                                <?php echo word_limiter($this->conf->stripImage(htmlspecialchars_decode($note->content))); ?>
                             </div>
                             <div class="box-footer">
-                                <?php echo format_date($note->created_at); ?>
-                                |
-                                <?php echo $this->user->user($note->user_id)->first_name; ?>
-                                <?php echo $this->user->user($note->user_id)->last_name; ?>
+                                <?php
+                                echo format_date($note->created_at)
+                                    .' '
+                                    .lang('by')
+                                    .' '
+                                    .$this->user->get($note->user_id, 'name');
+                                ?>
                                 |
                                 <strong><?php echo lang('Category'); ?>:</strong>
                                 <?php echo $this->notes->category($note->category_id); ?>
+                                |
+                                <strong><?php echo lang('Tags'); ?></strong>
+                                <?php echo $note->tags; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
 
                 <div role="tabpanel" class="tab-pane fade" id="incidents">
-                    <br/>
                     <?php foreach ($incidents as $incident): ?>
-                        <div class="box  box-info">
+                        <div class="box box-default box-solid">
                             <div class="box-header with-border">
-                                <div class="box-title">
-                                    <em class="text-olive small">
-                                        <?php echo format_date($incident->date_occurred); ?>
-                                        <?php echo lang('by'); ?>
-                                        <?php echo $this->user->user($incident->user_id)->first_name; ?>
-                                        <?php echo $this->user->user($incident->user_id)->last_name; ?>
-                                    </em>
-                                    <br/>
+                                <h4 class="box-title">
                                     <a style="color: #1974cc;"
                                        href="?viewIncident=<?php echo $incident->id; ?>#view-notes"
                                        class="text-info"> <?php echo $incident->title; ?></a>
-                                </div>
+                                </h4>
                                 <?php if(!is('parent')): ?>
                                     <a class="pull-right delete "
                                        href="<?php echo site_url('notes/deleteIncident/'.$incident->id); ?>">
@@ -103,6 +101,12 @@
                             </div>
                             <div class="box-body">
                                 <?php echo word_limiter($incident->description); ?>
+                            </div>
+                            <div class="box-footer">
+                                <?php echo format_date($incident->date_occurred); ?>
+                                <?php echo lang('by'); ?>
+                                <?php echo $this->user->user($incident->user_id)->first_name; ?>
+                                <?php echo $this->user->user($incident->user_id)->last_name; ?>
                             </div>
                         </div>
                     <?php endforeach; ?>

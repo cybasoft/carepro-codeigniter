@@ -541,6 +541,9 @@ $lang['Sensory Learning'] = 'Sensory Learning';
 $lang['Tags'] = 'Tags';
 $lang['Category'] = 'Category';
 $lang['Categories'] = 'Categories';
+$lang['Checkin in'] = 'Checkin in';
+$lang['Not checked in'] = 'Not checked in';
+$lang['Lockscreen timer (mins)'] = 'Lockscreen timer (mins)';
 
 
 

@@ -7,14 +7,14 @@
                 <h4 class="modal-title" id="noteViewLabel"></h4>
             </div>
             <div class="modal-body" style="max-height:700px">
-                <table class="table table-responsive">
-                    <tr class="h4">
-                        <td class="note-cat"></td>
-                        <td class="note-user"></td>
-                        <td class="note-date"></td>
-                    </tr>
-                </table>
+                <div class="row h4 text-purple">
+                    <div class="col-xs-4 note-cat"></div>
+                    <div class="col-xs-4 note-user"></div>
+                    <div class="col-xs-4 note-date"></div>
+                </div>
+                <hr/>
                 <div class="note-tags"></div>
+                <hr/>
                 <div class="note-content"></div>
             </div>
             <div class="modal-footer">

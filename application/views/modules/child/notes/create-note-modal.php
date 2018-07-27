@@ -12,7 +12,7 @@
                 <?php
 
                 echo form_label(lang('Title'));
-                echo form_input('title', null, ['class' => 'form-control', 'required' => '']);
+                echo form_input('title', set_value('title'), ['class' => 'form-control', 'required' => '']);
 
                 echo form_label(lang('Category'));
 
@@ -20,7 +20,7 @@
                 foreach ($this->db->get('notes_categories')->result() as $cat) {
                     echo '<label class="options">';
                     echo '<span>'.lang($cat->name).'</span>';
-                    echo form_radio('category_id', lang($cat->id));
+                    echo form_radio('category_id', lang($cat->id), $cat->id == 1 ? TRUE : FALSE);
                     echo '<span class="radio"></span>';
                     echo '</label>';
                 }
@@ -31,7 +31,7 @@
                 foreach ($this->db->get('notes_tags')->result() as $tag) {
                     echo '<label class="options">';
                     echo '<span>'.lang($tag->name).'</span>';
-                    echo form_checkbox('tags[]', lang($tag->name));
+                    echo form_checkbox('tags[]', lang($tag->name), $tag->id == 1 ? TRUE : FALSE);
                     echo '<span class="checkmark"></span>';
                     echo '</label>';
                 }
@@ -39,7 +39,7 @@
                 echo '<div class="clearfix"></div>';
 
                 echo form_label(lang('Notes'));
-                echo form_textarea('note-content', null, ['class' => 'form-control editor-media']);
+                echo form_textarea('note-content', htmlspecialchars_decode(set_value('note-content')), ['class' => 'form-control editor']);
 
                 ?>
             </div>

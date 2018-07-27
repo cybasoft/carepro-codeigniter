@@ -64,8 +64,14 @@ class Meds extends CI_Controller
 
     function uploadMedPhoto()
     {
-        if($this->health->uploadMedPhoto($this->input->post('med_name')))
-            flash('success', lang('request_success'));
+        $this->form_validation->set_rules('med_name', lang('Medication name'), 'required|trim|xss_clean');
+        if($this->form_validation->run() == true) {
+            if($this->health->uploadMedPhoto($this->input->post('med_name')))
+                flash('success', lang('request_success'));
+        } else {
+            validation_errors();
+            flash('error');
+        }
 
         redirectPrev();
     }
