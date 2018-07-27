@@ -544,6 +544,12 @@ $lang['Categories'] = 'Categories';
 $lang['Checkin in'] = 'Checkin in';
 $lang['Not checked in'] = 'Not checked in';
 $lang['Lockscreen timer (mins)'] = 'Lockscreen timer (mins)';
+$lang['Guardian'] = 'Guardian';
+$lang['Last checked out'] = 'Last checked out';
+$lang['No record found'] = 'No record found';
+
+
+
 
 
 

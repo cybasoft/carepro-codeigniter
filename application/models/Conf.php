@@ -2,14 +2,18 @@
 
 class Conf extends CI_Model
 {
+
     function __construct()
     {
         parent::__construct();
         error_reporting(E_ALL);
         ini_set("display_errors", 1);
         ini_set("error_log", base_url().'php-error.log');
+
         if(get_option('timezone') !== "")
             date_default_timezone_set(get_option('timezone'));
+        else
+            date_default_timezone_set('America/New_York');
 
         $this->load->model('My_child', 'child');
         $this->load->model('My_user', 'users');
@@ -43,6 +47,7 @@ class Conf extends CI_Model
      * @param $db
      * @param $id
      * @param $item
+     *
      * @return string
      */
     function db_read($db, $id, $item)
@@ -103,9 +108,10 @@ class Conf extends CI_Model
         $this->input->cookie('timer');
     }
 
-    function stripImage($text){
-        $text = preg_replace("/<img[^>]+./"," ",$text);
-        $text = str_replace(']]>',']]>',$text);
+    function stripImage($text)
+    {
+        $text = preg_replace("/<img[^>]+./", " ", $text);
+        $text = str_replace(']]>', ']]>', $text);
         return $text;
     }
 }

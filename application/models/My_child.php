@@ -2,6 +2,7 @@
 
 class My_child extends CI_Model
 {
+
     function __construct()
     {
         parent::__construct();
@@ -338,16 +339,16 @@ class My_child extends CI_Model
     /**
      * Determine if child was checked in a given day
      *
-     * @param      $child_id
+     * @param      $id
      * @param bool $date
      *
      * @return bool
      */
-    function checkedIn($child_id, $date = false, $checkedOut = false)
+    function checkedIn($id, $date = false, $checkedOut = false)
     {
         if($checkedOut == false)
             $this->db->where('time_out', NULL);
-        $this->db->where('child_id', $child_id);
+
         if($date !== false) {
             if(valid_date($date)) {
                 $d = new DateTime($date);
@@ -355,6 +356,7 @@ class My_child extends CI_Model
                 $this->db->where('DATE(time_in)', $date);
             }
         }
+        $this->db->where('child_id', $id);
         $this->db->from('child_checkin');
         $query = $this->db->count_all_results();
         if(empty($query)) {//child is out
@@ -362,6 +364,60 @@ class My_child extends CI_Model
         } else { //child is in
             return true;
         }
+    }
+
+
+    /**
+     * Checkin status info for a child
+     *
+     * @param      $id
+     * @param      $item
+     * @param bool $date
+     *
+     * @return array|mixed
+     */
+    function checkedInLog($id, $item, $date = false)
+    {
+        if($date !== false) {
+            if(valid_date($date)) {
+                $d = new DateTime($date);
+                $date = $d->format('Y-m-d ');
+                $this->db->where('DATE(time_in)', $date);
+            }
+        }
+
+        $this->db->where('time_out', null);
+        $this->db->where('child_id', $id);
+        $row = $this->db->get('child_checkin')->row();
+
+        if(count((array)$row) > 0) {
+            $data = [
+                'in_guardian' => $row->in_guardian,
+                'time_in' => format_time($row->time_in),
+                'timer' => $this->checkinCounter($id)
+            ];
+            return $data[$item];
+        }
+        return array();
+    }
+
+    /**
+     * returns last time child was checked out
+     * @param $id
+     *
+     * @return false|mixed|string
+     */
+    function lastCheckedOut($id)
+    {
+        $this->db->limit(1);
+        $this->db->select('child_id,time_out');
+        $this->db->where('child_id',$id);
+        $this->db->where('time_out IS NOT NULL',NULL, false);
+        $this->db->order_by('time_out','DESC');
+        $row = $this->db->get('child_checkin')->row();
+        if(count((array)$row)>0)
+            return format_date($row->time_out);
+        return lang('No record found');
     }
 
     /**

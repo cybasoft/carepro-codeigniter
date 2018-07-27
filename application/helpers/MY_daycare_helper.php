@@ -40,7 +40,10 @@ function format_date($date, $time = true, $timestamp = false)
 
 function format_time($time, $timestamp = false)
 {
-    return date('H:i:s', $time);
+    if($timestamp == false)
+        $time = strtotime($time);
+
+    return date('h:ia', $time);
 }
 
 /**
@@ -735,6 +738,32 @@ function set_flash($fields)
         }
     } else {
         $ci->session->set_flashdata($fields, $ci->input->post($fields));
+    }
+}
+
+function is_checked_in($id, $date = false, $checkedOut = false)
+{
+    $ci = &get_instance();
+
+    if($checkedOut == false)
+        $ci->db->where('time_out', NULL);
+
+    if($date !== false) {
+
+        if(valid_date($date)) {
+            $d = new DateTime($date);
+            $date = $d->format('Y-m-d ');
+            $ci->db->where('DATE(time_in)', $date);
+        }
+    }
+
+    $ci->db->where('child_id', $id);
+    $ci->db->from('child_checkin');
+    $query = $ci->db->count_all_results();
+    if(empty($query)) {//child is out
+        return false;
+    } else { //child is in
+        return true;
     }
 }
 

@@ -1,16 +1,38 @@
+<?php if(is_checked_in($child->id)): ?>
+    <div class="callout callout-success">
+        <h3>
+            <?php echo lang('Checked in'); ?>
+            <button id="<?php echo $child->id; ?>" class="btn btn-danger btn-sm pull-right checkout-btn">
+                <img src="<?php echo assets('img/content/right.svg'); ?>" style="width:20px;"/>
+                <?php echo lang('Check out'); ?>
+            </button>
+        </h3>
+        <?php
+        echo '<strong>'.lang('Time in').'</strong>: '
+            .$this->child->checkedInLog($child->id, 'time_in')
+            .' | '
+            .$this->child->checkedInLog($child->id, 'timer')
+            .' | '
+            .'<strong>'.lang('By').'</strong>: '
+            .$this->child->checkedInLog($child->id, 'in_guardian');
+        ?>
+    </div>
+<?php else: ?>
+    <div class="callout callout-info">
+        <h3>
+            <?php echo lang('Not checked in'); ?>
+            <button id="<?php echo $child->id; ?>" class="btn btn-success btn-sm pull-right checkin-btn">
+                <img src="<?php echo assets('img/content/left.svg'); ?>" style="width:21px;"/>
+                <?php echo lang('Check in'); ?>
+            </button>
+        </h3>
+        <?php
+        echo '<strong>'.lang('Last checked out').':</strong> '
+            .$this->child->lastCheckedOut($child->id);
+        ?>
 
-<div class="callout callout-success">
-    <h3>
-        <?php echo lang('Checked in'); ?>
-    </h3>
-    10:00 AM | 6hrs ago | expected checkout at 5pm
-</div>
-
-<div class="callout callout-info">
-    <h3>
-        <?php echo lang('Not checked in'); ?>
-    </h3>
-</div>
+    </div>
+<?php endif; ?>
 
 <div class="box box-info box-solid">
     <div class="box-header">
@@ -75,6 +97,18 @@
     </div>
 </div>
 
-<?php if(is('admin') || is('staff')): ?>
-   <?php $this->load->view($this->module.'update_child_modal'); ?>
+<?php if(is('admin') || is('manager') || is('staff')): ?>
+    <?php $this->load->view($this->module.'update_child_modal'); ?>
 <?php endif; ?>
+
+<div class="my_modal"></div>
+<script>
+    $('.checkin-btn').click(function () {
+        var child_id = $(this).attr('id');
+        $('.my_modal').load('<?php echo site_url('child'); ?>/' + child_id + '/checkIn').modal();
+    });
+    $('.checkout-btn').click(function () {
+        var child_id = $(this).attr('id');
+        $('.my_modal').load('<?php echo site_url('child'); ?>/' + child_id + '/checkOut').modal();
+    });
+</script>
