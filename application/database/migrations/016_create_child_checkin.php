@@ -60,14 +60,10 @@ class Migration_create_child_checkin extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table child_checkin
-        $this->dbforge->create_table("child_checkin", TRUE, $attributes);
+        $this->dbforge->create_table("child_checkin", TRUE);
 
         $this->db->query('ALTER TABLE `child_checkin` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_checkin` ADD FOREIGN KEY (`in_staff_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');

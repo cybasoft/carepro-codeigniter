@@ -16,7 +16,7 @@ class Migration_create_event_log extends CI_Migration
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'auto_increment'=>TRUE
+                'auto_increment' => TRUE
             ),
             'user_id' => array(
                 'type' => 'INT',
@@ -34,14 +34,8 @@ class Migration_create_event_log extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
-
         // Create Table event_log
-        $this->dbforge->create_table("event_log", TRUE, $attributes);
+        $this->dbforge->create_table("event_log", TRUE);
 
     }
 

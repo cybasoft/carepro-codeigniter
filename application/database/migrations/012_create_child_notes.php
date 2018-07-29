@@ -45,14 +45,10 @@ class Migration_create_child_notes extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table child_notes
-        $this->dbforge->create_table("child_notes", TRUE, $attributes);
+        $this->dbforge->create_table("child_notes", TRUE);
         $this->db->query('ALTER TABLE `child_notes` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_notes` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
     }

@@ -39,7 +39,7 @@ class Migration_create_child_room_staff extends CI_Migration
             'ENGINE' => 'InnoDB',
         );
         // Create Table users
-        $this->dbforge->create_table($this->table, TRUE, $attributes);
+        $this->dbforge->create_table($this->table, TRUE);
         $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`room_id`) REFERENCES child_rooms(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }

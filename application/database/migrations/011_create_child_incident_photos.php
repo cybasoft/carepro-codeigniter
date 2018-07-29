@@ -16,13 +16,13 @@ class Migration_create_child_incident_photos extends CI_Migration
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE,
-                'auto_increment'=>TRUE
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
             ),
             'child_id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE
+                'unsigned' => TRUE
             ),
             'photo' => array(
                 'type' => 'VARCHAR',
@@ -31,7 +31,7 @@ class Migration_create_child_incident_photos extends CI_Migration
             'user_id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE
+                'unsigned' => TRUE
             ),
             'created_at' => array(
                 'type' => 'DATETIME',
@@ -41,14 +41,8 @@ class Migration_create_child_incident_photos extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
-
         // Create Table child_incident_photos
-        $this->dbforge->create_table("child_incident_photos", TRUE, $attributes);
+        $this->dbforge->create_table("child_incident_photos", TRUE);
         $this->db->query('ALTER TABLE `child_incident_photos` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_incident_photos` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }

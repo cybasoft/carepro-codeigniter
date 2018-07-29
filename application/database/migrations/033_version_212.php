@@ -45,8 +45,8 @@ class Migration_version_212 extends CI_Migration
         $this->dbforge->create_table('options', TRUE);
 
         //initiatialize fields
-        foreach (special_options() as $option) {
-            $this->db->insert('options', ['option_name' => $option, 'option_value' => '']);
+        foreach (special_options() as $option=>$value) {
+            $this->db->insert('options', ['option_name' => $option, 'option_value' =>$value]);
         }
 
         //add dates to child problems

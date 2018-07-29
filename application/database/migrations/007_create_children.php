@@ -68,14 +68,10 @@ class Migration_create_children extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table children
-        $this->dbforge->create_table("children", TRUE, $attributes);
+        $this->dbforge->create_table("children", TRUE);
         $this->db->query('ALTER TABLE `children` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 

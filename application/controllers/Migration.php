@@ -2,6 +2,7 @@
 
 class Migration extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
@@ -11,11 +12,6 @@ class Migration extends CI_Controller
         //prevent direct access
         if(!$this->input->is_cli_request()) {
             show_error("CLI only! Direct calls denied.");
-        }
-
-        //prevent migrations in production mode
-        if(ENVIRONMENT == 'production') {
-            show_error('Set application config to development mode first');
         }
     }
 
@@ -31,10 +27,14 @@ class Migration extends CI_Controller
 
     public function run($version = null)
     {
+        //prevent migrations in production mode
+        if(ENVIRONMENT == "production" && $this->uri->segment(3) !=="force")
+            show_error("\nSet application config to development mode first \n or use \n'php index.php migration run force'");
+
         $mig = $this->db->get('migrations')->row();
         $migration = false;
 
-        if(count((array)$mig)>0) {
+        if(count((array)$mig) > 0) {
             if($version == null) {//migrate all
                 $migration = $this->migration->latest();
             } else {
@@ -42,13 +42,13 @@ class Migration extends CI_Controller
                     echo lang('This migration has already been run').PHP_EOL;
                     exit();
                 }
-                if($version<$mig->version) { //rollback
+                if($version < $mig->version) { //rollback
                     echo sprintf(lang('Rolling back from migration %s to %s'), $mig->version, $version).PHP_EOL;
 
                 }
                 $files = glob(APPPATH.'database/migrations/'.$version.'*.php');
                 //check if migration files exist exist
-                if(count($files)>0) {
+                if(count($files) > 0) {
                     $migration = $this->migration->version($version);
                 } else {
                     echo lang('No new migrations to run').PHP_EOL;

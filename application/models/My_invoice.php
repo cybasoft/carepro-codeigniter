@@ -243,6 +243,9 @@ class My_invoice extends CI_Model
         if($due<0) {
             $this->update_status($invoice_id, "paid");//mark as paid
         }
+        $due = str_replace(',','',$due);
+        $due = str_replace(' ','',$due);
+        $due = str_replace(get_option('currency_symbol'),'',$due);
         return number_format($due, 2);
     }
 

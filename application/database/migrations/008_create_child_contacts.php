@@ -55,14 +55,10 @@ class Migration_create_child_contacts extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table child_contacts
-        $this->dbforge->create_table("child_contacts", TRUE, $attributes);
+        $this->dbforge->create_table("child_contacts", TRUE);
 
         $this->db->query('ALTER TABLE `child_contacts` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
 

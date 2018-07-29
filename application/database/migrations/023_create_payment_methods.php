@@ -30,14 +30,10 @@ class Migration_create_payment_methods extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table news
-        $this->dbforge->create_table("payment_methods", TRUE, $attributes);
+        $this->dbforge->create_table("payment_methods", TRUE);
 
     }
 

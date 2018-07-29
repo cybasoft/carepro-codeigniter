@@ -16,8 +16,8 @@ class Migration_create_calendar extends CI_Migration
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE,
-                'auto_increment'=>TRUE
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
             ),
             'title' => array(
                 'type' => 'VARCHAR',
@@ -43,27 +43,21 @@ class Migration_create_calendar extends CI_Migration
                 'type' => 'TINYINT',
                 'default' => 0,
             ),
-            'user_id'=>array(
-                'type'=>'INT',
-                'constraint'=>11,
-                'unsigned'=>TRUE
+            'user_id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned' => TRUE
             ),
-            'created_at'=>array(
-                'type'=>'DATETIME'
+            'created_at' => array(
+                'type' => 'DATETIME'
             )
         ));
 
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
-
         // Create Table calendar
-        $this->dbforge->create_table("calendar", TRUE, $attributes);
+        $this->dbforge->create_table("calendar", TRUE);
 
     }
 

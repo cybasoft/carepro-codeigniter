@@ -70,14 +70,10 @@ class Migration_create_child_incident extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table child_incident
-        $this->dbforge->create_table("child_incident", TRUE, $attributes);
+        $this->dbforge->create_table("child_incident", TRUE);
         $this->db->query('ALTER TABLE `child_incident` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_incident` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }

@@ -322,7 +322,7 @@ class My_child extends CI_Model
         );
         if($this->db
             ->where('child_id', $child_id)
-            ->where('out_guardian', null)
+            ->where('time_out', null)
             ->update('child_checkin', $data)) {
 
             $child = $this->child($child_id);
@@ -368,6 +368,34 @@ class My_child extends CI_Model
 
 
     /**
+     * @param      $id
+     * @param null $date
+     *
+     * @return mixed
+     */
+    function checkinCounter($id, $date = null)
+    {
+        $count = '0.00';
+        if($date == null || $date == "today")
+            $date = date('Y-m-d');
+
+        //limit checkin count to daily only
+        if(get_option('daily_checkin')==1){
+            $this->db->where('DATE(time_in)', $date);
+        }
+
+        $this->db->where('child_id', $id);
+        $this->db->where('time_out', null);
+        $res = $this->db->get('child_checkin');
+        if($res->num_rows() > 0) {
+            $result = $res->row();
+            $count = checkinTimer($result->time_in, date('Y-m-d H:i:s'))->h.' '.lang('hrs').
+                ' '.checkinTimer($result->time_in, date('Y-m-d H:i:s'))->i.' '.lang('mins');
+        }
+        return $count;
+    }
+
+    /**
      * Checkin status info for a child
      *
      * @param      $id
@@ -393,6 +421,7 @@ class My_child extends CI_Model
         if(count((array)$row) > 0) {
             $data = [
                 'in_guardian' => $row->in_guardian,
+                'date_in' => format_date($row->time_in, false),
                 'time_in' => format_time($row->time_in),
                 'timer' => $this->checkinCounter($id)
             ];
@@ -403,6 +432,7 @@ class My_child extends CI_Model
 
     /**
      * returns last time child was checked out
+     *
      * @param $id
      *
      * @return false|mixed|string
@@ -411,11 +441,11 @@ class My_child extends CI_Model
     {
         $this->db->limit(1);
         $this->db->select('child_id,time_out');
-        $this->db->where('child_id',$id);
-        $this->db->where('time_out IS NOT NULL',NULL, false);
-        $this->db->order_by('time_out','DESC');
+        $this->db->where('child_id', $id);
+        $this->db->where('time_out IS NOT NULL', NULL, false);
+        $this->db->order_by('time_out', 'DESC');
         $row = $this->db->get('child_checkin')->row();
-        if(count((array)$row)>0)
+        if(count((array)$row) > 0)
             return format_date($row->time_out);
         return lang('No record found');
     }
@@ -433,29 +463,6 @@ class My_child extends CI_Model
             $this->db->where('DATE(time_in)', $date);
         $this->db->order_by('time_in', 'DESC');
         return $this->db->get('child_checkin');
-    }
-
-    /**
-     * @param      $id
-     * @param null $date
-     *
-     * @return mixed
-     */
-    function checkinCounter($id, $date = null)
-    {
-        $count = '0.00';
-        if($date == null)
-            $date = date('Y-m-d');
-        $this->db->where('child_id', $id);
-        $this->db->where('DATE(time_in)', $date);
-        $this->db->where('time_out', null);
-        $res = $this->db->get('child_checkin');
-        if($res->num_rows() > 0) {
-            $result = $res->row();
-            $count = checkinTimer($result->time_in, date('Y-m-d H:i:s'))->h.' '.lang('hrs').
-                ' '.checkinTimer($result->time_in, date('Y-m-d H:i:s'))->i.' '.lang('mins');
-        }
-        return $count;
     }
 
     /**

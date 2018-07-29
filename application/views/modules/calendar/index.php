@@ -1,18 +1,4 @@
-<div class="box box-solid box-info">
-    <div class="box-header ui-sortable-handle">
-        <i class="fa fa-calendar"></i>
-        <h3 class="box-title"><?php echo lang('calendar'); ?></h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body no-padding">
-        <!--The calendar -->
-        <div id="calendar"></div>
-    </div>
-    <!-- /.box-body -->
-    <div class="box-footer text-black">
-
-    </div>
-</div>
+<div id="calendar"></div>
 
 <script type="text/javascript">
     $(function () {

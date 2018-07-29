@@ -19,6 +19,11 @@
         </a>
     </li>
     <li>
+        <a href="#integrations" data-toggle="tab"><i class="fa fa-link"></i>
+            <span class="hidden-xs hidden-sm"><?php echo lang('Integrations'); ?></span>
+        </a>
+    </li>
+    <li>
         <a href="#support" data-toggle="tab"><i class="fa fa-hands-helping"></i>
             <span class="hidden-xs hidden-sm"><?php echo lang('support'); ?></span>
         </a>
@@ -30,14 +35,10 @@
     <div class="tab-pane active" id="home">
         <h3><?php echo lang('settings'); ?></h3>
         <hr/>
-        <?php
-        if(get_option('demo_mode') == 0) {
-            echo form_open('settings/update', ['class' => 'settings']);
-        } ?>
+        <?php echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]); ?>
         <div class="row">
             <div class="col-md-6">
                 <?php
-                echo form_hidden('page', 'settings');
                 echo form_label(lang('company_name'));
                 echo form_input('company_name', get_option('company_name'), ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('slogan'));
@@ -99,6 +100,17 @@
                 echo form_input(['type' => 'number', 'step' => 'any', 'name' => 'lockscreen_timer'], get_option('lockscreen_timer'), ['class' => 'form-control']);
                 ?>
                 <hr/>
+                <div class="row">
+                    <div class="col-md-1">
+                        <?php echo form_hidden('daily_checkin', 0); ?>
+                        <?php echo form_checkbox('daily_checkin', 1, get_option('daily_checkin')); ?>
+                    </div>
+                    <div class="col-md-10"><?php echo lang('Restrict to daily checkin'); ?>
+                        <i class="fa fa-question-circle text-warning show-tip"
+                           data-toggle="tooltip"
+                           title="<?php echo lang('Uncheck to calculate time accross days instead of just daily'); ?>"></i>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('allow_registration', 0); ?>
@@ -174,10 +186,7 @@
         </div>
         <hr/>
 
-        <?php
-        if(get_option('demo_mode') == 0) {
-            echo form_close();
-        } ?>
+        <?php echo form_close('demo'); ?>
     </div>
     <div class="tab-pane" id="billing">
         <h3><?php echo lang('billing'); ?></h3>
@@ -192,21 +201,15 @@
                     </div>
                     <div class="box-body">
                         <?php
-                        if(get_option('demo_mode') == 0) {
-                            echo form_open('settings/update', ['class' => 'settings']);
-                        }
-                        echo form_hidden('page', 'billing');
+                        echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
                         echo form_label(lang('currency_abbreviation'));
                         echo form_input('currency_abbreviation', get_option('currency_abbreviation'), ['class' => 'form_control', 'required' => 'required']);
                         echo form_label(lang('currency_symbol'));
                         echo form_input('currency_symbol', get_option('currency_symbol'), ['class' => 'form_control', 'required' => 'required']);
+                        echo '<br/>';
+                        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
+                        echo form_close('demo');
                         ?>
-                        <br/>
-                        <button class="btn btn-default"><?php echo lang('update'); ?></button>
-                        <?php
-                        if(get_option('demo_mode') == 0) {
-                            echo form_close();
-                        } ?>
                     </div>
                 </div>
                 <div class="box box-default box-solid">
@@ -219,8 +222,6 @@
                         <?php
                         if(get_option('demo_mode') == 0) {
                             echo form_open('settings/update', ['class' => 'settings']);
-
-                            echo form_hidden('page', 'billing');
                             echo form_label(lang('Stripe test public key'));
                             echo form_input('stripe_pk_test', get_option('stripe_pk_test'), ['class' => 'form_control']);
                             echo form_label(lang('Stripe test secret key'));
@@ -230,11 +231,9 @@
                             echo form_input('stripe_pk_live', get_option('stripe_pk_live'), ['class' => 'form_control']);
                             echo form_label(lang('Stripe live secret key'));
                             echo form_password('stripe_sk_live', get_option('stripe_sk_live'), ['class' => 'form_control']);
-                            ?>
-                            <br/>
-                            <button class="btn btn-default"><?php echo lang('update'); ?></button>
-                            <?php
-                            echo form_close();
+                            echo '<br/>';
+                            echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
+                            echo form_close('demo');
                         } else {
                             echo '<div class="alert alert-danger">'.lang('feature_disabled_in_demo').'</div>';
                         } ?>
@@ -250,22 +249,14 @@
                     </div>
                     <div class="box-body">
                         <?php
-                        if(get_option('demo_mode') == 0) {
-                            echo form_open('settings/update', ['class' => 'settings']);
-                        }
-                        echo form_hidden('page', 'billing');
+                        echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
                         echo form_label(lang('PayPal locale'));
                         echo form_input('paypal_locale', get_option('paypal_locale'), ['class' => 'form_control']);
-
                         echo form_label(lang('PayPal  email'));
                         echo form_input('paypal_email', get_option('paypal_email'), ['class' => 'form_control']);
-                        ?>
-                        <br/>
-                        <button class="btn btn-default"><?php echo lang('update'); ?></button>
-                        <?php
-                        if(get_option('demo_mode') == 0) {
-                            echo form_close();
-                        } ?>
+                        echo '<br/>';
+                        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
+                        echo form_close('demo'); ?>
                     </div>
                 </div>
 
@@ -277,21 +268,13 @@
                     </div>
                     <div class="box-body">
                         <?php echo lang('Add a payment method'); ?>
-                        <?php
-                        if(get_option('demo_mode') == 0) {
-                            echo form_open('settings/paymentMethods', ['class' => 'settings']);
-                        } ?>
-                        <div class="input-group">
-                            <input type="text" name="title" class="form-control" required/>
-                            <span class="input-group-btn">
-                                        <button class="btn btn-primary">
-                                            <i class="fa fa-plus"></i><?php echo lang('add'); ?>
-                                        </button>
-                                    </span>
-                        </div>
-                        <?php
-                        if(get_option('demo_mode') == 0)
-                            echo form_close(); ?>
+                        <?php echo form_open('settings/paymentMethods', ['class' => 'settings', 'demo' => 1]);
+                        echo '<div class="input-group">';
+                        echo form_input('title', null, ['class' => 'form-control', 'required' => '']);
+                        echo '<span class="input-group-btn">';
+                        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], '<i class="fa fa-plus"></i> '.lang('Add'));
+                        echo '</span></div>';
+                        echo form_close('demo'); ?>
                         <br/>
                         <table class="table table-bordered">
                             <?php foreach ($payMethods as $payMethod): ?>
@@ -335,8 +318,11 @@
 
                         <?php echo form_open_multipart('settings/upload_logo', 'class="input-group"'); ?>
                         <input class="form-control" type="file" required name="logo"/>
-                        <span class="input-group-btn"><button
-                                    class="btn btn-default"><?php echo lang('update'); ?></button></span>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default">
+                                <?php echo lang('update'); ?>
+                            </button>
+                        </span>
                         <?php echo form_close(); ?>
                     </div>
                 </div>
@@ -348,15 +334,15 @@
                         <h3><?php echo lang('invoice logo'); ?></h3>
                         <?php if(is_file(APPPATH.'../assets/uploads/content/'.get_option('invoice_logo'))): ?>
                             <img src="<?php echo base_url().'assets/uploads/content/'.get_option('invoice_logo'); ?>"/>
-                        <?php endif; ?>
-                        <hr/>
-                        <?php echo form_open_multipart('settings/upload_invoice_logo', 'class="input-group"'); ?>
-                        <input class="form-control" type="file" required name="invoice_logo"/>
-                        <span class="input-group-btn"><button
-                                    class="btn btn-default"><?php echo lang('update'); ?></button></span>
-                        <?php
-                        if(get_option('demo_mode') == 0)
-                            echo form_close(); ?>
+                        <?php endif;
+                        echo '<hr/>';
+                        echo form_open_multipart('settings/upload_invoice_logo', 'class="input-group"');
+                        echo form_input(['type' => 'file', 'name' => 'invoice_logo', 'required' => '', 'class' => 'form-control']);
+                        echo '<span class="input-group-btn">';
+                        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
+                        echo '</span>';
+                        echo form_close();
+                        ?>
                     </div>
                 </div>
             </div>
@@ -366,57 +352,67 @@
     <div class="tab-pane" id="theme">
         <h3><?php echo lang('theme'); ?></h3>
         <hr/>
-        <?php
-        if(get_option('demo_mode') == 0)
-            echo form_open('settings/update', ['class' => 'settings']); ?>
         <div class="row">
-            <div class="col-md-6">
-                <?php
-                echo form_label(lang('Logo background color'));
-                echo form_input('logo_bg_color', get_option('logo_bg_color'), ['class' => 'form_control']);
-                ?>
-            </div>
-            <div class="col-md-6">
-                <?php
-                echo form_hidden('page', 'theme');
-                echo form_label(lang('Top navigation background color'));
-                echo form_input('top_nav_bg_color', get_option('top_nav_bg_color'), ['class' => 'form_control']);
-                ?>
-            </div>
-            <div class="col-md-6">
-                <?php
-                echo form_hidden('page', 'theme');
-                echo form_label(lang('Top navigation link color'));
-                echo form_input('top_nav_link_color', get_option('top_nav_link_color'), ['class' => 'form_control']);
-                ?>
-            </div>
-            <div class="col-md-6">
-                <?php
-                echo form_label(lang('Left sidebar color'));
-                echo form_input('left_sidebar_bg_color', get_option('left_sidebar_bg_color'), ['class' => 'form_control']);
-                ?>
-            </div>
-            <div class="col-md-6">
-                <?php
-                echo form_label(lang('Left sidebar link color'));
-                echo form_input('left_sidebar_link_color', get_option('left_sidebar_link_color'), ['class' => 'form_control']);
+            <?php
+            echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
+
+            echo '<div class="col-md-6">';
+            echo form_label(lang('Logo background color'));
+            echo form_input('logo_bg_color', get_option('logo_bg_color'), ['class' => 'form_control']);
+            echo '</div>';
+
+            echo '<div class="col-md-6">';
+            echo form_label(lang('Top navigation background color'));
+            echo form_input('top_nav_bg_color', get_option('top_nav_bg_color'), ['class' => 'form_control']);
+            echo '</div>';
+
+            echo '<div class="col-md-6">';
+            echo form_label(lang('Top navigation link color'));
+            echo form_input('top_nav_link_color', get_option('top_nav_link_color'), ['class' => 'form_control']);
+            echo '</div>';
+
+            echo '<div class="col-md-6">';
+            echo form_label(lang('Left sidebar color'));
+            echo form_input('left_sidebar_bg_color', get_option('left_sidebar_bg_color'), ['class' => 'form_control']);
+            echo '</div>';
+
+            echo '<div class="col-md-6">';
+            echo form_label(lang('Left sidebar link color'));
+            echo form_input('left_sidebar_link_color', get_option('left_sidebar_link_color'), ['class' => 'form_control']);
+            echo '</div>';
+            ?>
+        </div>
+
+        <div class="row">
+            <?php
+            echo '<div class="col-md-12">';
+            echo form_label(lang('Custom CSS'));
+            echo form_textarea('custom_css', get_option('custom_css'), ['class' => 'form-control code']);
+            echo '</div>';
+            ?>
+        </div>
+        <?php
+        echo '<br/>';
+        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
+        echo form_close('demo');
+        ?>
+    </div>
+
+    <div class="tab-pane" id="integrations">
+        <div class="row">
+            <?php echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]); ?>
+            <div class="col-sm-6">
+                <?php echo form_label('Tawk.to '.lang('Embed URL'));
+                echo anchor('https://dashboard.tawk.to/#/admin', ' '.lang('get link'), ['target' => '_blank']);
+                echo form_input('tawkto_embed_url', get_option('tawkto_embed_url'), ['class' => 'form_control',
+                    'placeholder' => 'https://embed.tawk.to/xxxxx/xxxxxx']);
+                echo '<br/>';
                 ?>
             </div>
         </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                echo form_label(lang('Custom CSS'));
-                echo form_textarea('custom_css', get_option('custom_css'), ['class' => 'form-control code'])
-                ?>
-            </div>
-        </div>
-        <br/>
-        <button class="btn btn-default"><?php echo lang('update'); ?></button>
         <?php
-        if(get_option('demo_mode') == 0)
-            echo form_close();
+        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
+        echo form_close('demo');
         ?>
     </div>
     <div class="tab-pane" id="support">

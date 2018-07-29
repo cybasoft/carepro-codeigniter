@@ -48,14 +48,10 @@ class Migration_create_child_allergy extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table child_allergy
-        $this->dbforge->create_table("child_allergy", TRUE, $attributes);
+        $this->dbforge->create_table("child_allergy", TRUE);
         $this->db->query('ALTER TABLE `child_allergy` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_allergy` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
     }

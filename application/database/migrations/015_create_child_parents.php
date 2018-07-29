@@ -26,16 +26,10 @@ class Migration_create_child_parents extends CI_Migration
         ));
 
         // Add Primary Key.
-        $this->dbforge->add_key(array('child_id','user_id'),TRUE);
-
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
+        $this->dbforge->add_key(array('child_id', 'user_id'), TRUE);
 
         // Create Table child_parents
-        $this->dbforge->create_table("child_parents", TRUE, $attributes);
+        $this->dbforge->create_table("child_parents", TRUE);
         $this->db->query('ALTER TABLE `child_parents` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_parents` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
     }

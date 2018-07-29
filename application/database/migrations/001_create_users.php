@@ -99,14 +99,8 @@ class Migration_create_users extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
-
         // Create Table users
-        $this->dbforge->create_table("users", TRUE, $attributes);
+        $this->dbforge->create_table("users", TRUE);
 
     }
 

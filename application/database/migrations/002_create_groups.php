@@ -33,13 +33,8 @@ class Migration_create_groups extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
         // Create Table groups
-        $this->dbforge->create_table("groups", TRUE, $attributes);
+        $this->dbforge->create_table("groups", TRUE);
 
     }
 

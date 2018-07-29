@@ -53,7 +53,7 @@ class Migration_create_child_rooms extends CI_Migration
             'ENGINE' => 'InnoDB',
         );
         // Create Table users
-        $this->dbforge->create_table($this->table1, TRUE, $attributes);
+        $this->dbforge->create_table($this->table1, TRUE);
     }
 
     function childroom()
@@ -85,7 +85,7 @@ class Migration_create_child_rooms extends CI_Migration
             'ENGINE' => 'InnoDB',
         );
         // Create Table users
-        $this->dbforge->create_table($this->table2, TRUE, $attributes);
+        $this->dbforge->create_table($this->table2, TRUE);
         $this->db->query('ALTER TABLE `'.$this->table2.'` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `'.$this->table2.'` ADD FOREIGN KEY (`room_id`) REFERENCES child_rooms(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }

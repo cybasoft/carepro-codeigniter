@@ -15,17 +15,14 @@
                 </div>
                 <div class="info-box-text">
                     <a href="#"><?php echo $this->user->get($note->user_id, 'name'); ?></a>
-                    <span class="small pull-right"><?php echo format_date($note->created_at, true); ?></span>
-                </div>
-                <div class="info-box-notes">
-
-                    <?php echo $note->content; ?>
-
-                    <div class="info-box-more">
-                        <a class="pull-right delete" href="/rooms/deleteNote/<?php echo $note->id; ?>">
+                    <span class="small pull-right"><?php echo format_date($note->created_at, true); ?>
+                        <a class=" delete" href="/rooms/deleteNote/<?php echo $note->id; ?>">
                             <i class="fa fa-trash-alt text-danger"></i>
                         </a>
-                    </div>
+                    </span>
+                </div>
+                <div class="info-box-notes">
+                    <?php echo $note->content; ?>
                 </div>
             </div>
         <?php endforeach; ?>

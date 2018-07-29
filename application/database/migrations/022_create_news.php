@@ -39,14 +39,10 @@ class Migration_create_news extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table news
-        $this->dbforge->create_table("news", TRUE, $attributes);
+        $this->dbforge->create_table("news", TRUE);
         $this->db->query('ALTER TABLE `news` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 

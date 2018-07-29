@@ -547,9 +547,8 @@ $lang['Lockscreen timer (mins)'] = 'Lockscreen timer (mins)';
 $lang['Guardian'] = 'Guardian';
 $lang['Last checked out'] = 'Last checked out';
 $lang['No record found'] = 'No record found';
-
-
-
-
-
+$lang['Restrict to daily checkin'] = 'Restrict to daily checkin';
+$lang['Uncheck to calculate time accross days instead of just daily'] = 'Uncheck to calculate time accross days instead of just daily';
+$lang['Embed URL'] = 'Embed URL';
+$lang['get link'] = 'get link';
 

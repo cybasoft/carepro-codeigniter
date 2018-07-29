@@ -2,6 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 //generate migration tables (!)
 $route['migration/(:any)'] = 'migration/$1';
+//$route['migration/(:any)/(:any)'] = 'migration/$1';
 
 $route['default_controller'] = 'auth';
 $route['404_override'] = 'landing/error404';

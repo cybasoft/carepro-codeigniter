@@ -48,14 +48,10 @@ class Migration_create_invoices extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
 
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
 
         // Create Table invoices
-        $this->dbforge->create_table("invoices", TRUE, $attributes);
+        $this->dbforge->create_table("invoices", TRUE);
         $this->db->query('ALTER TABLE `invoices` ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `invoices` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
 

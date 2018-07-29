@@ -504,33 +504,39 @@ function checkinTimer($in, $out)
 {
     $start = new DateTime($in);
     $end = new DateTime($out);
+
     $timeDiff = $end->diff($start);
 //    $strDiff    = $timeDiff->h . " Hours, " . $timeDiff->i . " Minutes";
+
+    if($timeDiff->d > 0)
+        $timeDiff->h = $timeDiff->h + (2 * 24);
+
     return $timeDiff;
 }
 
 function special_options()
 {
     $options = array(
-        'company_name',
-        'slogan',
-        'email',
-        'phone', 'fax',
-        'street',
-        'street2', 'city', 'state', 'postal_code', 'country',
-        'timezone',
-        'google_analytics',
-        'currency_symbol', 'currency_abbreviation',
-        'date_format',
-        'allow_registration', 'allow_reset_password', 'enable_captcha',
-        'demo_mode',
-
-        'maintenance_mode', 'use_smtp', 'smtp_user', 'smtp_pass', 'smtp_host', 'smtp_port',
-        'logo', 'invoice_logo',
-        'stripe_pk_live', 'stripe_sk_live', 'stripe_pk_test', 'stripe_sk_test',
-        'paypal_email', 'paypal_locale',
-        'page',
-        'logo_bg_color', 'top_nav_bg_color', 'top_nav_link_color', 'left_sidebar_bg_color', 'left_sidebar_link_color', 'custom_css', 'lockscreen_timer'
+        'company_name' => 'DaycarePRO',
+        'slogan' => 'daycare management',
+        'email' => 'app@admin.com',
+        'phone' => '', 'fax' => '',
+        'street' => '', 'street2' => '', 'city' => '', 'state' => '', 'postal_code' => '', 'country' => 'USA',
+        'timezone' => 'America/New_York',
+        'google_analytics' => '',
+        'currency_symbol' => '$', 'currency_abbreviation' => 'USD',
+        'date_format' => 'm/d/Y h:ia',
+        'allow_registration' => 0, 'allow_reset_password' => 1, 'enable_captcha' => 1,
+        'demo_mode' => 0, 'maintenance_mode' => 0,
+        'use_smtp' => 0, 'smtp_user' => '', 'smtp_pass' => '', 'smtp_host' => '', 'smtp_port' => '',
+        'logo' => 'logo.png', 'invoice_logo' => 'invoice_logo.png',
+        'stripe_pk_live' => '', 'stripe_sk_live' => '', 'stripe_pk_test' => '', 'stripe_sk_test' => '',
+        'paypal_email' => '', 'paypal_locale' => 'US',
+        'page' => 'settings',
+        'logo_bg_color' => '', 'top_nav_bg_color' => '', 'top_nav_link_color' => '',
+        'left_sidebar_bg_color' => '', 'left_sidebar_link_color' => '',
+        'custom_css' => '', 'lockscreen_timer' => '',
+        'daily_checkin' => 1
     );
     return $options;
 }

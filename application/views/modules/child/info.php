@@ -8,12 +8,14 @@
             </button>
         </h3>
         <?php
-        echo '<strong>'.lang('Time in').'</strong>: '
+        echo '<strong class="text-info">'.lang('Date in').'</strong>: '
+            .$this->child->checkedInLog($child->id,'date_in')
+            .' <strong class="text-info">'.lang('Time in').'</strong>: '
             .$this->child->checkedInLog($child->id, 'time_in')
             .' | '
             .$this->child->checkedInLog($child->id, 'timer')
             .' | '
-            .'<strong>'.lang('By').'</strong>: '
+            .'<strong class="text-info">'.lang('By').'</strong>: '
             .$this->child->checkedInLog($child->id, 'in_guardian');
         ?>
     </div>

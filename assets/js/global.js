@@ -80,7 +80,7 @@ $(document).ready(function () {
     $('input[type=text],input[type=password]').addClass('form-control');
     $('input[type=submit]').addClass('btn btn-primary');
     //tooltips
-    $('.send-mail,.show-pin').tooltip();
+    $('.send-mail,.show-pin,.show-tip').tooltip();
 
     //  /*
     // * Manipulate tabs for redirection history

@@ -16,13 +16,13 @@ class Migration_create_child_foodpref extends CI_Migration
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE,
-                'auto_increment'=>TRUE
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
             ),
             'child_id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE
+                'unsigned' => TRUE
             ),
             'food' => array(
                 'type' => 'VARCHAR',
@@ -48,14 +48,8 @@ class Migration_create_child_foodpref extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
-
         // Create Table child_foodpref
-        $this->dbforge->create_table("child_foodpref", TRUE, $attributes);
+        $this->dbforge->create_table("child_foodpref", TRUE);
         $this->db->query('ALTER TABLE `child_foodpref` ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `child_foodpref` ADD FOREIGN KEY (`child_Id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
 

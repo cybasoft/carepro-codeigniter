@@ -38,14 +38,8 @@ class Migration_create_login_attempts extends CI_Migration
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-        // Table attributes.
-
-        $attributes = array(
-            'ENGINE' => 'InnoDB',
-        );
-
         // Create Table login_attempts
-        $this->dbforge->create_table("login_attempts", TRUE, $attributes);
+        $this->dbforge->create_table("login_attempts", TRUE);
 
     }
 
