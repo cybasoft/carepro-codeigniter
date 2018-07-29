@@ -551,4 +551,12 @@ $lang['Restrict to daily checkin'] = 'Restrict to daily checkin';
 $lang['Uncheck to calculate time accross days instead of just daily'] = 'Uncheck to calculate time accross days instead of just daily';
 $lang['Embed URL'] = 'Embed URL';
 $lang['get link'] = 'get link';
+$lang['Password is required'] = 'Password is required';
+$lang['Valid email is required'] = 'Valid email is required';
+$lang['This field is required'] = 'This field is required';
+$lang['Login background image'] = 'Login background image';
+$lang['Login background notice'] = 'To add new photos, simply drop them in "/assets/uploads/content/login" directory';
+
+
+
 

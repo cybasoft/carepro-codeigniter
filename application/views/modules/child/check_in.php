@@ -20,7 +20,7 @@
                 <div class="row">
                     <?php foreach ($parents as $p): ?>
                         <div class="col-md-3">
-                            <div class=" i-check">
+                            <div class="i-check">
                                 <label for="check-<?php echo $p->id; ?>">
                                     <input type="radio" id="check-<?php echo $p->id; ?>" name="in_guardian"
                                            value="<?php echo $p->first_name.' '.$p->last_name; ?>"

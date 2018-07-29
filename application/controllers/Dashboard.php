@@ -20,7 +20,7 @@ class Dashboard extends CI_Controller
 
         } elseif(is('parent')) {
             $children = $this->parent->getChildren();
-            page('modules/parent/index', compact('children'));
+            page('modules/parent/parent_dashboard', compact('children'));
 
         } elseif(is('staff')) {
             redirect('rooms');

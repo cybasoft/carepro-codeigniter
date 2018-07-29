@@ -1,39 +1,44 @@
-<div id="app" class="login-wrapper">
-    <div class="login-box  animation flipInX">
-        <div class="logo-main">
-            <a href="<?php echo site_url(); ?>">
-                <img src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
-                     alt="Laraspace Logo">
-            </a>
-        </div>
+<?php echo form_open('auth/reset/'.$code, ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
+    <div class="text-center" style="position:absolute;top:0;right:150px">
+        <a href="<?php echo site_url(); ?>">
+            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
+                 alt="Logo">
+        </a>
+    </div>
 
-        <h3 class="text-center"><?php echo lang('reset_password_heading'); ?></h3>
-        <hr/>
-        <?php echo form_open('auth/reset/' . $code, ['id' => 'loginForm']); ?>
-        <div class="form-group">
-            <?php echo sprintf(lang('reset_password_new_password_label'), $min_password_length); ?>
-            <?php echo form_input($new_password); ?>
-        </div>
-        <div class="form-group">
-            <?php echo lang('reset_password_new_password_confirm_label', 'new_password_confirm'); ?>
-            <?php echo form_input($new_password_confirm); ?>
-        </div>
-        <div class="form-group">
-            <?php echo form_input($user_id); ?>
-            <?php echo form_hidden($csrf); ?>
-        </div>
 
-        <button class="btn btn-theme btn-full">
+    <span class="login100-form-title p-b-43"><?php echo lang('reset_password_heading'); ?></span>
+
+    <div class="wrap-input100 validate-input" data-validate="<?php echo lang('This field is required'); ?>">
+        <?php echo sprintf(lang('reset_password_new_password_label'), $min_password_length); ?>
+        <?php echo form_input($new_password); ?>
+
+        <span class="focus-input100"></span>
+        <span class="label-input100"><?php echo lang('reset_password_new_password_label'); ?></span>
+    </div>
+
+    <div class="wrap-input100 validate-input" data-validate="<?php echo lang('This field is required'); ?>">
+        <?php echo lang('reset_password_new_password_confirm_label', 'new_password_confirm'); ?>
+        <?php echo form_input($new_password_confirm); ?>
+
+        <span class="focus-input100"></span>
+        <span class="label-input100"><?php echo lang('reset_password_new_password_confirm_label'); ?></span>
+    </div>
+
+<?php echo form_input($user_id); ?>
+<?php echo form_hidden($csrf); ?>
+
+    <div class="container-login100-form-btn">
+        <button class="login100-form-btn">
             <?php echo lang('reset_password_submit_btn'); ?>
         </button>
-        <div class="other-actions row">
-            <div class="col-6">
-                <?php echo anchor('login', '<span class="fa fa-key"></span> ' . lang('login')); ?>
-            </div>
-        </div>
-        <?php echo form_close(); ?>
-        <div class="page-copyright">
-            <p><?php echo lang('powered by'); ?>  <?php echo lang('copyright'); ?></p>
-        </div>
     </div>
-</div>
+
+<?php if(get_option('allow_registration') == TRUE): ?>
+    <div class="text-center p-t-46 p-b-20">
+        <?php echo anchor('auth/login', '<span class="fa fa-user"></span> '.lang('Login'), ['class' => 'txt2']); ?>
+    </div>
+
+<?php endif; ?>
+
+<?php echo form_close(); ?>

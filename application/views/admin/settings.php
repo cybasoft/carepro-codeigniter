@@ -391,6 +391,38 @@
             echo '</div>';
             ?>
         </div>
+
+        <label><?php echo lang('Login background image'); ?></label>
+        <i class="fa fa-question-circle show-tip" data-toggle="tooltip"
+           title="<?php echo lang('Login background notice'); ?>"></i>
+        <div class="row">
+            <div class="col-sm-6">
+               <div class="row">
+                   <?php
+                   $files = scandir(APPPATH.'../assets/uploads/content/login');
+                   $pcount = 1;
+                   foreach ($files as $file => $value): if(!in_array($value, array(".", ".."))): ?>
+                       <div class="col-xs-3">
+                           <div class="i-check">
+                               <label for="check-<?php echo $pcount; ?>">
+                                   <input type="radio" id="check-<?php echo $pcount; ?>" name="login_bg_image"
+                                          value="<?php echo $value; ?>"
+                                          data-keeper-edited="yes" data-keeper-should-not-overwrite="true">
+                                   <div class="front-end i-check-box"
+                                        style="background-image:url('<?php echo assets('uploads/content/login/'.$value); ?>')">
+                                   </div>
+                               </label>
+                           </div>
+                       </div>
+                       <?php $pcount++; endif; endforeach; ?>
+               </div>
+            </div>
+            <div class="col-sm-6">
+                    <img class="currentLoginImg img-responsive" style="width:100%"
+                         src="<?php echo assets('uploads/content/login/'.get_option('login_bg_image','login-bg-02.jpg')); ?>"/>
+            </div>
+        </div>
+
         <?php
         echo '<br/>';
         echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
@@ -465,5 +497,9 @@
                 swal({type: 'error', 'title': ''})
             }
         });
+    });
+    $("input[name=login_bg_image]").click(function () {
+        var img = $(this).val();
+        $('.currentLoginImg').attr('src', '<?php echo base_url(); ?>' + 'assets/uploads/content/login/' + img)
     })
 </script>

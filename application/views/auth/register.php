@@ -1,66 +1,81 @@
-<?php
-if ($this->ion_auth->logged_in()) {
-    redirect('dashboard', 'refresh');
-}
+<?php echo form_open('auth/register', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
+<div class="text-center" style="position:absolute;top:0;right:150px">
+    <a href="<?php echo site_url(); ?>">
+        <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
+             alt="Logo">
+    </a>
+</div>
 
-?>
-<div id="app" class="login-wrapper">
-    <div class="login-box  animation flipInX">
-        <div class="logo-main">
-            <a href="<?php echo site_url(); ?>">
-                <img src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
-                     alt="Laraspace Logo">
-            </a>
-        </div>
-        <h3 class="text-center">
-            <?php echo lang('register_form_header'); ?>
-        </h3>
 
-        <div class="text-center">
-            <?php echo lang('register_form_notice'); ?>
-        </div>
-        <?php echo form_open('auth/register', ['id' => 'loginForm']); ?>
-        <div class="form-group">
-            <?php echo form_input($data['first_name']); ?>
-        </div>
-        <div class="form-group">
-            <?php echo form_input($data['last_name']); ?>
-        </div>
+<span class="login100-form-title p-b-43"><?php echo lang('register_form_header'); ?></span>
+<?php echo lang('register_form_notice'); ?>
 
-        <div class="form-group">
-            <?php echo form_input($data['email']); ?>
-        </div>
-        <div class="form-group">
-            <?php echo form_input($data['password']); ?>
-        </div>
-        <div class="form-group">
-            <?php echo form_input($data['password_confirm']); ?>
-        </div>
-        <div class="form-group">
-            <?php echo form_input($data['phone']); ?>
-        </div>
+<?php if(!empty($this->session->flashdata('type'))) : ?>
+    <div style="">
+        <?php echo $this->session->flashdata('message'); ?>
+    </div>
+<?php endif; ?>
 
-        <div class="form-group">
-            <?php echo form_textarea($data['address']); ?>
-        </div>
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
+    <?php echo form_input($data['first_name']); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('Firstname'); ?></span>
+</div>
 
-        <?php if (get_option('enable_captcha')): ?>
-            <div class="form-group">
-                <?php echo $data['captcha_image']; ?>
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
+    <?php echo form_input($data['last_name']); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('Lastname'); ?></span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Valid email is required'); ?>: ex@abc.xyz">
+    <?php echo form_input($data['email']); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('Email'); ?></span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
+    <?php echo form_input($data['password']); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('Password'); ?></span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
+    <?php echo form_input($data['password_confirm']); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('confirm_password'); ?></span>
+</div>
+
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
+    <?php echo form_textarea($data['address']); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('Address'); ?></span>
+</div>
+
+<?php if(get_option('enable_captcha')): ?>
+    <div class="flex-sb-m w-full p-t-3 p-b-32">
+        <div class="contact100-form-checkbox">
+            <?php echo $data['captcha_image']; ?>
+        </div>
+        <?php if(get_option('allow_reset_password')): ?>
+            <div>
                 <?php echo form_input($data['captcha']); ?>
             </div>
         <?php endif; ?>
-
-        <button class="btn btn-theme btn-full"><?php echo lang('register'); ?></button>
-        <div class="other-actions" style="text-align:center">
-
-            <?php if (get_option('allow_registration') == TRUE): ?>
-                <?php echo anchor('auth/login', '<span class="fa fa-user"></span> ' . lang('login')); ?>
-            <?php endif; ?>
-        </div>
-        <?php echo form_close(); ?>
-        <div class="page-copyright">
-            <p><?php echo lang('powered by'); ?>    <?php echo lang('copyright'); ?></p>
-        </div>
     </div>
+<?php endif; ?>
+
+<div class="container-login100-form-btn">
+    <button class="login100-form-btn">
+        <?php echo lang('Register'); ?>
+    </button>
 </div>
+
+<?php if(get_option('allow_registration') == TRUE): ?>
+    <div class="text-center p-t-46 p-b-20">
+        <?php echo anchor('auth/login', '<span class="fa fa-user"></span> '.lang('Login'), ['class' => 'txt2']); ?>
+    </div>
+
+<?php endif; ?>
+
+<?php echo form_close(); ?>

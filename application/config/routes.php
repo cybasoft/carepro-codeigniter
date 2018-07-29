@@ -100,6 +100,8 @@ $route['photos/(:any)/:num']='child/photos/$1';
 
 //parents
 $route['parents/:any'] = 'parents/$1';
+
+//parent
 $route['parent/(:any)'] = 'parentController/$1';
 
 $route['news/(:any)'] = 'news/$1';

@@ -1,33 +1,43 @@
-<?php
-$email = array(
-    'name' => 'email',
-    'id' => 'email',
-    'class' => 'form-control',
-    'placeholder' => lang('email'),
-    'required' => 'required'
-);
-?>
-
-<div id="app" class="login-wrapper">
-    <div class="login-box  animation flipInX">
-        <div class="logo-main">
-            <a href="<?php echo site_url(); ?>">
-                <img src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>" alt="Logo">
-            </a>
-        </div>
-        <?php echo form_open("auth/forgot", ['id' => 'loginForm']); ?>
-        <div class="form-group">
-            <?php echo form_input($email); ?>
-        </div>
-        <button class="btn btn-theme btn-full"><?php echo lang('submit'); ?></button>
-        <div class="other-actions row">
-            <div class="col-6">
-                <?php echo anchor('auth/login', '<span class="fa fa-key"></span> '.lang('login')); ?>
-            </div>
-        </div>
-        <?php echo form_close(); ?>
-        <div class="page-copyright">
-            <p><?php echo lang('powered by'); ?> <?php echo lang('copyright'); ?></p>
-        </div>
-    </div>
+<?php echo form_open("auth/forgot", ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
+<div class="text-center" style="position:absolute;top:0;right:150px">
+    <a href="<?php echo site_url(); ?>">
+        <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
+             alt="Logo">
+    </a>
 </div>
+
+
+<span class="login100-form-title p-b-43"><?php echo lang('reset_password_heading'); ?></span>
+<?php if(!empty($this->session->flashdata('type'))) : ?>
+    <div style="">
+        <?php echo $this->session->flashdata('message'); ?>
+    </div>
+<?php endif; ?>
+
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Valid email is required'); ?>: ex@abc.xyz">
+    <?php echo form_input(
+        [
+            'name' => 'email',
+            'id' => 'email',
+            'class' => 'input100',
+            'required' => 'required'
+        ]
+    ); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('Email'); ?></span>
+</div>
+
+<div class="container-login100-form-btn">
+    <button class="login100-form-btn">
+        <?php echo lang('reset_password_submit_btn'); ?>
+    </button>
+</div>
+
+<?php if(get_option('allow_registration') == TRUE): ?>
+    <div class="text-center p-t-46 p-b-20">
+        <?php echo anchor('auth/login', '<span class="fa fa-user"></span> '.lang('Login'), ['class' => 'txt2']); ?>
+    </div>
+
+<?php endif; ?>
+
+<?php echo form_close(); ?>

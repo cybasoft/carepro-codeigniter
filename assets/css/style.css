@@ -16,7 +16,7 @@ body {
     max-width: 500px;
     position: absolute !important;
     bottom: 0;
-    right: 0;
+    left: 28px;
 }
 
 .msg .alert {

@@ -25,7 +25,7 @@ class Children extends CI_Controller
     {
         if(is('parent')) {
             $children = $this->parent->getChildren();
-            page('modules/parent/index', compact('children'));
+            page('modules/parent/parent_dashboard', compact('children'));
         } else {
             page($this->module.'index');
         }

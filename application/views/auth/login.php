@@ -1,64 +1,80 @@
-<?php
-if($this->ion_auth->logged_in()) {
-    redirect('dashboard', 'refresh');
-}
+<form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
 
-$identity = array(
-    'name' => 'identity',
-    'id' => 'identity',
-    'type' => 'text',
-    'value' => '',
-    'class' => 'form-control form-control-danger',
-    'placeholder' => lang('enter_email'),
-    'required' => 'required'
-);
-$password = array(
-    'name' => 'password',
-    'id' => 'password',
-    'type' => 'password',
-    'class' => 'form-control form-control-danger',
-    'placeholder' => lang('password'),
-    'required' => 'required'
-);
-?>
-<div id="app" class="login-wrapper">
-    <div class="login-box  animation flipInX">
-        <div class="logo-main">
-            <a href="<?php echo site_url(); ?>">
-                <img src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
-                     alt="Logo">
-            </a>
+    <div class="text-center" style="position:absolute;top:0;right:150px">
+        <a href="<?php echo site_url(); ?>">
+            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
+                 alt="Logo">
+        </a>
+    </div>
+
+    <span class="login100-form-title p-b-43"><?php echo lang('Login'); ?></span>
+
+    <?php if(!empty($this->session->flashdata('type'))) : ?>
+        <div style="">
+            <?php echo $this->session->flashdata('message'); ?>
         </div>
+    <?php endif; ?>
 
-        <form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post">
-            <div class="form-group">
-                <?php echo form_input($data['email']); ?>
-            </div>
-            <div class="form-group">
-                <?php echo form_input($data['password']); ?>
-            </div>
+    <div class="wrap-input100 validate-input"
+         data-validate="<?php echo lang('Valid email is required'); ?>: ex@abc.xyz">
+        <?php echo form_input([
+            'name' => 'email',
+            'type' => 'email',
+            'class' => 'input100',
+            'required' => 'required'
+        ]); ?>
+        <span class="focus-input100"></span>
+        <span class="label-input100"><?php echo lang('Email'); ?></span>
+    </div>
 
-            <?php if(get_option('enable_captcha')): ?>
-                <div class="form-group">
-                    <?php echo $data['captcha_image']; ?>
+
+    <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Password is required'); ?>">
+        <?php echo form_input([
+            'name' => 'password',
+            'type' => 'password',
+            'class' => 'input100',
+            'required' => 'required'
+        ]); ?>
+        <span class="focus-input100"></span>
+        <span class="label-input100"><?php echo lang('Password'); ?></span>
+    </div>
+
+    <?php if(get_option('enable_captcha')): ?>
+        <div class="flex-sb-m w-full p-t-3 p-b-32">
+            <div class="contact100-form-checkbox">
+                <?php echo $data['captcha_image']; ?>
+            </div>
+            <?php if(get_option('allow_reset_password')): ?>
+                <div>
                     <?php echo form_input($data['captcha']); ?>
                 </div>
             <?php endif; ?>
-
-            <button class="btn btn-theme btn-full"><?php echo lang('login'); ?></button>
-            <div class="other-actions" style="text-align:center">
-
-                <?php echo anchor('auth/forgot', '<span class="fa fa-key"></span> '.lang('forgot_password_heading')); ?>
-
-                <?php if(get_option('allow_registration') == TRUE): ?>
-                    <br/>
-                    <br/>
-                    <?php echo anchor('auth/register', '<span class="fa fa-user"></span> '.lang('register')); ?>
-                <?php endif; ?>
-            </div>
-        </form>
-        <div class="page-copyright">
-            <p><?php echo lang('powered by'); ?><?php echo lang('copyright'); ?></p>
         </div>
+    <?php endif; ?>
+
+    <div class="flex-sb-m w-full p-t-3 p-b-32">
+        <div class="contact100-form-checkbox">
+
+        </div>
+        <?php if(get_option('allow_reset_password')): ?>
+            <div>
+                <?php echo anchor('auth/forgot', '<span class="fa fa-key"></span> '.lang('forgot_password_heading'), ['class' => 'txt1']); ?>
+            </div>
+        <?php endif; ?>
     </div>
-</div>
+
+
+    <div class="container-login100-form-btn">
+        <button class="login100-form-btn">
+            <?php echo lang('Login'); ?>
+        </button>
+    </div>
+
+    <?php if(get_option('allow_registration') == TRUE): ?>
+        <div class="text-center p-t-46 p-b-20">
+            <?php echo anchor('auth/register', '<span class="fa fa-user"></span> '.lang('register'), ['class' => 'txt2']); ?>
+        </div>
+
+    <?php endif; ?>
+
+</form>

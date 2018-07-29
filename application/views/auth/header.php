@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
     <title><?php echo get_option('company_name'); ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="DaycarePRO - Daycare management system">
     <meta name="author" content="A&M Digital Technologies">
-    <link href="<?php echo base_url(); ?>assets/css/login.min.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/css/login.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+    <link rel="icon" type="image/png" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
+    <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo base_url(); ?>assets/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo assets('css/login.css'); ?>"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo assets('css/login-utils.css'); ?>"/>
+
     <!--google analytic code-->
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -33,12 +31,9 @@
         ga('send', 'pageview');
     </script>
 </head>
-<body class="login-page login-1">
-<?php if(!empty($this->session->flashdata('type'))) : ?>
-    <div style="max-width:460px;margin:0 auto">
-        <div id="msg" class="msg">
-            <?php echo $this->session->flashdata('message'); ?>
-        </div>
-    </div>
-<?php endif; ?>
 
+<body style="background-color: #666666;">
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">

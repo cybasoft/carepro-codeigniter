@@ -32,7 +32,7 @@
         <div class="navbar-left">
             <ul class="nav navbar-nav">
                 <li class="<?php echo set_active('dashboard'); ?>">
-                    <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-sm"
+                    <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-xs"
                        style="left:0 !important; background-color: <?php echo get_option('logo_bg_color','#ffeb3b'); ?>">
                         <?php if(get_option('logo') == "") : ?>
                             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">

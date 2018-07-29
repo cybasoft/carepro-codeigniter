@@ -536,7 +536,9 @@ function special_options()
         'logo_bg_color' => '', 'top_nav_bg_color' => '', 'top_nav_link_color' => '',
         'left_sidebar_bg_color' => '', 'left_sidebar_link_color' => '',
         'custom_css' => '', 'lockscreen_timer' => '',
-        'daily_checkin' => 1
+        'daily_checkin' => 1,
+        'tawkto_embed_url' => '',
+        'login_bg_image' => 'login-bg-02.jpg'
     );
     return $options;
 }

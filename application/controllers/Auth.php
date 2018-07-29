@@ -18,11 +18,14 @@ class Auth extends CI_Controller
 
     function index()
     {
-        redirect('auth/login');
+        $this->login();
     }
 
     function login()
     {
+        if($this->ion_auth->logged_in())
+            redirect('dashboard', 'refresh');
+
         $this->refreshCaptcha();
 
         if(!empty($this->input->post('email'))) {
@@ -45,27 +48,14 @@ class Auth extends CI_Controller
             }
         }
 
-        $data['email'] = array(
-            'name' => 'email',
-            'type' => 'email',
-            'value' => set_value('email'),
-            'class' => 'form-control',
-            'placeholder' => 'Email',
-            'required' => 'required'
-        );
-        $data['password'] = array(
-            'name' => 'password',
-            'type' => 'password',
-            'class' => 'form-control',
-            'placeholder' => 'Password',
-            'required' => 'required'
-        );
         $captcha = $this->captcha();
         $data['captcha'] = array(
+            'type'=>'text',
             'name' => 'captcha',
-            'class' => 'form-control',
+            'class' => 'form-control input100',
             'required' => 'required',
-            'placeholder' => lang('captcha_placeholder')
+            'style'=>'border:solid 1px #ccc',
+            'placeholder'=>'Captcha'
         );
         $data['captcha_image'] = $captcha['image'];
         $this->page('login', compact('data'));
@@ -73,7 +63,10 @@ class Auth extends CI_Controller
 
     function register()
     {
+        if($this->ion_auth->logged_in()) redirect('dashboard', 'refresh');
+
         $this->refreshCaptcha();
+
         if(!empty($this->input->post('email'))) {
             $this->form_validation->set_rules('email', lang('email'), 'required|is_unique[users.email]');
             $this->form_validation->set_rules('password', lang('password'), 'required|callback_validate_password');
@@ -81,10 +74,13 @@ class Auth extends CI_Controller
             $this->form_validation->set_rules('first_name', lang('first_name'), 'required');
             $this->form_validation->set_rules('last_name', lang('last_name'), 'required');
             $this->form_validation->set_rules('phone', lang('phone'), 'required');
+
             if(get_option('enable_captcha') == 1)
                 $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
+
             if($this->form_validation->run() == true) {
                 $groups = array(4);
+
                 $data = array(
                     'first_name' => $this->input->post('first_name'),
                     'last_name' => $this->input->post('last_name'),
@@ -92,8 +88,10 @@ class Auth extends CI_Controller
                     'activation_code' => time() + rand(111, 999),
                     'address' => $this->input->post('address')
                 );
+
                 if($this->auth->register($data, $groups)) {
                     flash('success', lang('Registration successful'));
+
                     if($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
                         redirect('dashboard', 'refresh');
                     }
@@ -111,62 +109,56 @@ class Auth extends CI_Controller
             'name' => 'email',
             'type' => 'email',
             'value' => set_value('email'),
-            'class' => 'form-control',
-            'placeholder' => 'Email',
+            'class' => 'input100',
             'required' => 'required'
         );
         $data['first_name'] = array(
             'name' => 'first_name',
             'type' => 'text',
             'value' => set_value('first_name'),
-            'class' => 'form-control',
-            'placeholder' => lang('first_name'),
+            'class' => 'input100',
             'required' => 'required'
         );
         $data['last_name'] = array(
             'name' => 'last_name',
             'type' => 'text',
             'value' => set_value('last_name'),
-            'class' => 'form-control',
-            'placeholder' => lang('last_name'),
+            'class' => 'input100',
             'required' => 'required'
         );
         $data['phone'] = array(
             'name' => 'phone',
             'type' => 'text',
             'value' => set_value('phone'),
-            'class' => 'form-control',
-            'placeholder' => lang('phone'),
+            'class' => 'input100',
             'required' => 'required'
         );
         $data['address'] = array(
             'name' => 'address',
             'value' => set_value('address'),
-            'class' => 'form-control',
-            'placeholder' => lang('address'),
+            'class' => 'input100',
             'required' => 'required',
             'rows' => 3
         );
         $data['password'] = array(
             'name' => 'password',
             'type' => 'password',
-            'class' => 'form-control',
-            'placeholder' => lang('password'),
+            'class' => 'input100',
             'required' => 'required'
         );
         $data['password_confirm'] = array(
             'name' => 'password_confirm',
             'type' => 'password',
-            'class' => 'form-control',
-            'placeholder' => lang('password_confirmation'),
+            'class' => 'input100',
             'required' => 'required'
         );
         $captcha = $this->captcha();
         $data['captcha'] = array(
             'name' => 'captcha',
-            'class' => 'form-control',
             'required' => 'required',
-            'placeholder' => lang('captcha_placeholder')
+            'class' => 'form-control input100',
+            'style'=>'border:solid 1px #ccc',
+            'placeholder'=>'Captcha'
         );
         $data['captcha_image'] = $captcha['image'];
         $this->page('register', compact('data'));
@@ -195,9 +187,17 @@ class Auth extends CI_Controller
             'img_path' => './application/temp/captcha/',
             'img_url' => base_url().'application/temp/captcha/',
             'font_path' => base_url().'system/fonts/texb.ttf',
-            'img_width' => '200',
-            'img_height' => 50,
-            'expiration' => 3600
+            'img_width' => '150',
+            'show_grid'=>FALSE,
+            'img_height' => 28,
+            'expiration' => 3600,
+            'font_size'=>30,
+            'colors' => array(
+                'background' => array(247,247,247),
+                'border' => array(247,247,247),
+                'text' => array(102, 117, 223),
+                'grid' => array(255, 255, 255)
+            )
         );
         $this->session->set_flashdata('captcha', $data['word']);
         return create_captcha($data);
@@ -212,7 +212,7 @@ class Auth extends CI_Controller
             if(!$fileinfo->isDot()) {
                 $image = explode('.', $fileinfo->getFilename());
                 $captcha = $image[0];
-                if($captcha<$expiration)
+                if($captcha < $expiration)
                     @unlink($path.$fileinfo->getFilename());
             }
         }
@@ -235,7 +235,7 @@ class Auth extends CI_Controller
     function page($page, $data = array())
     {
         $this->load->view('auth/header');
-        if(get_option('maintenance_mode')==1) {
+        if(get_option('maintenance_mode') == 1) {
             $this->load->view('errors/maintenance');
         } else {
             $this->load->view('auth/'.$page, $data);
@@ -286,64 +286,64 @@ class Auth extends CI_Controller
 
         $user = $this->ion_auth->forgotten_password_check($code);
         if($user) {
-                $this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[new_confirm]');
-                $this->form_validation->set_rules('new_confirm', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
+            $this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[new_confirm]');
+            $this->form_validation->set_rules('new_confirm', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
 
-                if($this->form_validation->run() == false) {
+            if($this->form_validation->run() == false) {
 
-                    if($this->input->post('new')) {
-                        validation_errors();
-                        flash('danger');
-                    }
+                if($this->input->post('new')) {
+                    validation_errors();
+                    flash('danger');
+                }
 
-                    $this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
-                    $this->data['new_password'] = array(
-                        'name' => 'new',
-                        'id' => 'new',
-                        'type' => 'password',
-                        'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
-                    );
-                    $this->data['new_password_confirm'] = array(
-                        'name' => 'new_confirm',
-                        'id' => 'new_confirm',
-                        'type' => 'password',
-                        'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
-                    );
-                    $this->data['user_id'] = array(
-                        'name' => 'user_id',
-                        'id' => 'user_id',
-                        'type' => 'hidden',
-                        'value' => $user->id,
-                    );
-                    $this->data['csrf'] = $this->_get_csrf_nonce();
-                    $this->data['code'] = $code;
+                $this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
+                $this->data['new_password'] = array(
+                    'name' => 'new',
+                    'id' => 'new',
+                    'type' => 'password',
+                    'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+                );
+                $this->data['new_password_confirm'] = array(
+                    'name' => 'new_confirm',
+                    'id' => 'new_confirm',
+                    'type' => 'password',
+                    'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+                );
+                $this->data['user_id'] = array(
+                    'name' => 'user_id',
+                    'id' => 'user_id',
+                    'type' => 'hidden',
+                    'value' => $user->id,
+                );
+                $this->data['csrf'] = $this->_get_csrf_nonce();
+                $this->data['code'] = $code;
 
-                    //render
-                    $this->page('reset_password', $this->data);
+                //render
+                $this->page('reset_password', $this->data);
 
+            } else {
+                if($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
+                    //something fishy might be up
+                    $this->ion_auth->clear_forgotten_password_code($code);
+                    show_error($this->lang->line('error_csrf'));
                 } else {
-                    if($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
-                        //something fishy might be up
-                        $this->ion_auth->clear_forgotten_password_code($code);
-                        show_error($this->lang->line('error_csrf'));
-                    } else {
-                        // finally change the password
-                        $identity = $user->{$this->config->item('identity', 'ion_auth')};
-                        $change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
-                        if($change) {
-                            //Login if the password was successfully changed
-                            flash('success', $this->ion_auth->messages());
-                            if($this->ion_auth->login($identity, $this->input->post('new'))) {
-                                redirect('dashboard', 'refresh');
-                            } else {
-                                flash('error', 'Username or password is incorrect');
-                                redirect('auth/login', 'refresh');
-                            }
+                    // finally change the password
+                    $identity = $user->{$this->config->item('identity', 'ion_auth')};
+                    $change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
+                    if($change) {
+                        //Login if the password was successfully changed
+                        flash('success', $this->ion_auth->messages());
+                        if($this->ion_auth->login($identity, $this->input->post('new'))) {
+                            redirect('dashboard', 'refresh');
                         } else {
-                            flash('danger', $this->ion_auth->errors());
-                            redirectPrev();
+                            flash('error', 'Username or password is incorrect');
+                            redirect('auth/login', 'refresh');
                         }
+                    } else {
+                        flash('danger', $this->ion_auth->errors());
+                        redirectPrev();
                     }
+                }
             }
 
         } else {
