@@ -26,7 +26,7 @@
                     <td valign="top">
                         <strong class="">
                             <?php echo $pickup->last_name.', '.$pickup->first_name; ?>
-                            <?php if(is('admin') || is('manager')): ?>
+                            <?php if(is(['admin','manager'])): ?>
                                 <a class="btn btn-danger btn-xs pull-right" href="<?php echo site_url('child/deletePickup/'.$pickup->id); ?>"
                                    class="delete">
                                     <i class="fa fa-trash-alt"></i>

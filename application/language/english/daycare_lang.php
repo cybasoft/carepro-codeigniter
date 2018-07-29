@@ -556,7 +556,5 @@ $lang['Valid email is required'] = 'Valid email is required';
 $lang['This field is required'] = 'This field is required';
 $lang['Login background image'] = 'Login background image';
 $lang['Login background notice'] = 'To add new photos, simply drop them in "/assets/uploads/content/login" directory';
-
-
-
-
+$lang['Leave fields blank to deactivate'] = 'Leave fields blank to deactivate';
+$lang['Payment methods'] = 'Payment methods';

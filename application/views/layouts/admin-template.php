@@ -82,7 +82,7 @@
         </div>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                <?php if(is('manager') || is('admin')): ?>
+                <?php if(is(['manager','admin'])): ?>
                     <li class="btn-warning">
                         <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
                            data-target="#registerChildModal">
@@ -171,7 +171,7 @@
                         </small>
                     </a>
                 </li>
-                <?php if(is('admin') || is('manager')): ?>
+                <?php if(is(['admin','manager'])): ?>
                     <li class="<?php echo set_active('users'); ?>">
                         <a href="<?php echo site_url('users'); ?>"
                            style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
@@ -183,7 +183,7 @@
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if(is('admin') || is('manager')): ?>
+                <?php if(is(['admin','manager'])): ?>
                     <li class="<?php echo set_active('parents'); ?>">
                         <a href="<?php echo site_url('parents'); ?>"
                            style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
@@ -207,7 +207,7 @@
                         <span><?php echo lang('news'); ?></span>
                     </a>
                 </li>
-                <?php if(is('admin') || is('manager')): ?>
+                <?php if(is(['admin','manager'])): ?>
                     <li class="<?php echo set_active('settings'); ?>">
                         <a href="<?php echo site_url('settings'); ?>"
                            style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">

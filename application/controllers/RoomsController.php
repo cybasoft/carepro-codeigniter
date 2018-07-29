@@ -18,7 +18,7 @@ class RoomsController extends CI_Controller
      */
     function index()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         if(is('staff'))
             $rooms = $this->user->rooms(user_id());
@@ -31,7 +31,7 @@ class RoomsController extends CI_Controller
 
     function view()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $id = $this->uri->segment(3);
 
@@ -56,7 +56,7 @@ class RoomsController extends CI_Controller
 
     function store()
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
 
         $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|trim|is_unique[child_rooms.name]');
         $this->form_validation->set_rules('description', lang('description'), 'xss_clean|trim');
@@ -79,7 +79,7 @@ class RoomsController extends CI_Controller
 
     function update()
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
 
         $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|trim|callback_check_room_name');
         $this->form_validation->set_rules('description', lang('description'), 'xss_clean|trim');
@@ -201,11 +201,11 @@ class RoomsController extends CI_Controller
     }
 
     function notes(){
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
     }
 
     function addNote(){
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->form_validation->set_rules('notes',lang('Notes') ,'required|xss_clean|trim' );
 
@@ -226,7 +226,7 @@ class RoomsController extends CI_Controller
     }
 
     function deleteNote(){
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->db->where('id',$this->uri->segment(3))->delete('child_room_notes');
 

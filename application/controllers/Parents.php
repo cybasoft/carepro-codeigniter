@@ -7,7 +7,7 @@ class Parents extends CI_Controller
 	{
 		parent::__construct();
 		setRedirect();
-		allow('admin,manager,staff');
+		allow(['admin','manager','staff']);
 		//resources
 		$this->load->library('table');
 		$this->load->model('My_parent', 'parent');

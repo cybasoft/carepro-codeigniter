@@ -51,7 +51,7 @@ class Meds extends CI_Controller
      */
     function destroy()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         if($this->health->deleteMedication($this->uri->segment(3))) {
             flash('success', lang('request_success'));

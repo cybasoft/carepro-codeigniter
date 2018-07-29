@@ -296,23 +296,16 @@ function allow($group)
 {
     $ci = &get_instance();
     auth(true);
-    $groups = explode(',', $group);
-    $data = array();
-    for ($i = 0; $i < count($groups); $i++) {
-        if($ci->ion_auth->in_group($groups[$i]) == true) {
-            $data = array('1' => 1);
-            break;
-        }
-    }
-    if(empty($data)) {
+
+    if($ci->ion_auth->in_group($group)) {
+        return true;
+    } else {
         flash('danger', lang('access_denied'));
         if($ci->input->is_ajax_request()) {
             return 'error';
         }
-        redirectPrev('ajax');
+        redirectPrev();
         exit();
-    } else {
-        return true;
     }
 
 }
@@ -462,7 +455,7 @@ function moneyFormat($amount)
 
 function authorizedToChild($staff_id, $child_id)
 {
-    if(is('admin') || is('manager'))
+    if(is(['admin', 'manager']))
         return true;
     $ci = &get_instance();
 
@@ -538,7 +531,8 @@ function special_options()
         'custom_css' => '', 'lockscreen_timer' => '',
         'daily_checkin' => 1,
         'tawkto_embed_url' => '',
-        'login_bg_image' => 'login-bg-02.jpg'
+        'login_bg_image' => 'login-bg-02.jpg',
+        'invoice_terms'=>'Invoice due on receipt. Thank you for your business'
     );
     return $options;
 }
@@ -773,6 +767,21 @@ function is_checked_in($id, $date = false, $checkedOut = false)
     } else { //child is in
         return true;
     }
+}
+
+/**
+ * @return array
+ */
+function default_payment_methods()
+{
+    return [
+        'Cash',
+        'Check',
+        'Debit',
+        'Money order',
+        'PayPal',
+        'Stripe'
+    ];
 }
 
 ?>

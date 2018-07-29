@@ -11,7 +11,7 @@ class Settings extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        allow('admin,manager');
+        allow(['admin','manager']);
         //variables
         $this->module = 'admin/';
         $this->title = lang('settings');

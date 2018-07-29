@@ -1,5 +1,5 @@
 <ul class="nav news-sidebar">
-    <?php if (is('manager') == true || is('admin') == true): ?>
+    <?php if (is(['manager','admin'])): ?>
         <a href="<?php echo site_url('news/create'); ?>" class="btn btn-primary">
             <i class="fa fa-plus"></i>
             <?php echo lang('new_article'); ?>

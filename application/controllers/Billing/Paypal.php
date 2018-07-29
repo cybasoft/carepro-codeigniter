@@ -18,7 +18,7 @@ class Paypal extends CI_Controller
         parent::__construct();
 
         setRedirect();
-        allow('admin,manager,staff,parents');
+        auth(true);
         //resources
         $this->load->model('My_child', 'child');
         $this->load->model('My_invoice', 'invoice');

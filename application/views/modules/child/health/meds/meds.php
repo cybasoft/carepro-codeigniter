@@ -3,10 +3,12 @@
         <span class="fa fa-plus-circle"></span>
         <?php echo lang('Add new'); ?>
     </button>
+    <?php if(is(['admin','manager','staff'])): ?>
     <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#medImagesModal">
         <span class="fa fa-plus-circle"></span>
         <?php echo lang('Medication images'); ?>
     </button>
+    <?php endif; ?>
 </h2>
 
 <hr/>

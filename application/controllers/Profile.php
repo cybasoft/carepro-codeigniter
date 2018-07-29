@@ -17,7 +17,7 @@ class Profile extends CI_Controller
 		auth(true);
 		$this->load->model('My_profile', 'profile');
 		//local variables
-		$this->module = 'modules/profile/';
+		$this->module = 'modules/account/';
         $this->title = lang('profile');
 
 	}
@@ -27,7 +27,7 @@ class Profile extends CI_Controller
 		$data = array(
 			'user' => $this->user->user()
 		);
-		page($this->module . 'index', $data);
+		page($this->module . 'profile', $data);
 
 	}
 

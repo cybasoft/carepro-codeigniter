@@ -83,7 +83,7 @@ class notes extends CI_Controller
      */
     function destroy()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if($this->notes->destroy()) {
             flash('success', lang('request_success'));
         } else {
@@ -94,7 +94,7 @@ class notes extends CI_Controller
 
     function createIncident()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         $child_id = $this->input->post('child_id');
 
         $this->load->library('form_validation');
@@ -153,7 +153,7 @@ class notes extends CI_Controller
      */
     function deleteIncident()
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
         //delete incident
         if($this->notes->deleteIncident($this->uri->segment(3))) {
             flash('success', lang('request_success'));
@@ -167,7 +167,7 @@ class notes extends CI_Controller
 
     function deleteIncidentPhoto()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         if($this->notes->deleteIncidentPhoto()) {
             echo 'success';

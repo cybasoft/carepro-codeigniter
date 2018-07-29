@@ -9,7 +9,7 @@
         </h3>
         <?php
         echo '<strong class="text-info">'.lang('Date in').'</strong>: '
-            .$this->child->checkedInLog($child->id,'date_in')
+            .$this->child->checkedInLog($child->id, 'date_in')
             .' <strong class="text-info">'.lang('Time in').'</strong>: '
             .$this->child->checkedInLog($child->id, 'time_in')
             .' | '
@@ -21,13 +21,16 @@
     </div>
 <?php else: ?>
     <div class="callout callout-info">
-        <h3>
-            <?php echo lang('Not checked in'); ?>
-            <button id="<?php echo $child->id; ?>" class="btn btn-success btn-sm pull-right checkin-btn">
-                <img src="<?php echo assets('img/content/left.svg'); ?>" style="width:21px;"/>
-                <?php echo lang('Check in'); ?>
-            </button>
-        </h3>
+        <?php if(!is('parent')): ?>
+            <h3>
+                <?php echo lang('Not checked in'); ?>
+                <button id="<?php echo $child->id; ?>" class="btn btn-success btn-sm pull-right checkin-btn">
+                    <img src="<?php echo assets('img/content/left.svg'); ?>" style="width:21px;"/>
+                    <?php echo lang('Check in'); ?>
+                </button>
+            </h3>
+        <?php endif; ?>
+
         <?php
         echo '<strong>'.lang('Last checked out').':</strong> '
             .$this->child->lastCheckedOut($child->id);
@@ -40,7 +43,7 @@
     <div class="box-header">
         <h3 class="box-title"><?php echo sprintf(lang('child_page_heading'), $child->first_name.' '.$child->last_name); ?></h3>
         <div class="box-tools pull-right">
-            <?php if(is('admin') || is('staff')): ?>
+            <?php if(!is('parent')): ?>
                 <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#updateChildModal"><span
                             class="fa fa-pencil-alt"></span>
                 </a>
@@ -99,7 +102,7 @@
     </div>
 </div>
 
-<?php if(is('admin') || is('manager') || is('staff')): ?>
+<?php if(!('parent')): ?>
     <?php $this->load->view($this->module.'update_child_modal'); ?>
 <?php endif; ?>
 

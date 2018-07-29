@@ -7,7 +7,7 @@ class Reports extends CI_Controller
         parent::__construct();
         //redirect session
         setRedirect();
-        allow('admin,manager');
+        allow(['admin','manager']);
         //variables
         $this->load->model('My_reports', 'reports');
         $this->module = 'modules/reports/';

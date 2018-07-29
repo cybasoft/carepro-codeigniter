@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="pull-right box-tools">
-                    <?php if (is('manager') == true || is('admin') == true): ?>
+                    <?php if (is(['manager','admin'])): ?>
                         <a href="<?php echo site_url('news/editor/' . $article->id); ?>" class="btn btn-success btn-sm">
                             <span class="fa fa-edit"></span>
                         </a>

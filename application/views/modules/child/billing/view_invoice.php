@@ -131,7 +131,7 @@
                                                            name="item_sub_total"
                                                            value="<?php echo moneyFormat($item->qty * $item->price); ?>"/>
                                                 </td>
-                                                <?php if(!is('parent') && (int)$totalDue>0): ?>
+                                                <?php if(!is('parent') && (int)$totalDue > 0): ?>
                                                     <td>
                                                         <a href="<?php echo site_url('invoice/'.$invoice->id.'/deleteItem/'.$item->id); ?>"
                                                            class="delete">
@@ -149,12 +149,12 @@
                                         </tr>
                                         <tr class="text-right text-success">
                                             <td colspan="4" class="no-border"><?php echo lang('amount_paid'); ?> :</td>
-                                            <td><?php echo moneyFormat((int)$totalPaid>0 ? $totalPaid : "0.00") ?></td>
+                                            <td><?php echo moneyFormat((int)$totalPaid > 0 ? $totalPaid : "0.00") ?></td>
                                         </tr>
                                         <tr class="text-right text-danger">
                                             <td colspan="4" class="no-border "> <?php echo lang('amount_due'); ?> :</td>
                                             <td>
-                                                <?php if((int)$totalDue<0): ?>
+                                                <?php if((int)$totalDue < 0): ?>
                                                     <span class="label label-success"><?php echo lang('refund'); ?></span>
                                                 <?php endif; ?>
                                                 <?php echo moneyFormat($totalDue); ?>
@@ -168,16 +168,22 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12">
 
-                                    <?php if((int)$totalDue>0): ?>
-                                        <?php $this->load->view('modules/child/billing/stripe-form'); ?>
-                                        <hr/>
+                                    <?php if((int)$totalDue > 0):
+                                        if(!empty(get_option('stripe_sk_live') || !empty(get_option('stripe_sk_test')))): ?>
+                                            <?php $this->load->view('modules/child/billing/stripe-form'); ?>
+                                            <hr/>
+                                        <?php endif; ?>
+
+                                        <?php if(!empty(get_option('paypal_email'))): ?>
                                         <div style="border:solid 1px #CCCCCC;padding:10px">
                                             <h4>PayPal</h4>
                                             <a href="<?php echo site_url('invoice/'.$invoice->id.'/paypal'); ?>"
                                                class="btn btn-primary">
-                                                <img src="<?php echo assets('img/content/paypal.svg'); ?>" style="width:16px;"/>
+                                                <img src="<?php echo assets('img/content/paypal.svg'); ?>"
+                                                     style="width:16px;"/>
                                                 <?php echo sprintf(lang('pay_with'), 'PayPal'); ?></a>
                                         </div>
+                                    <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>

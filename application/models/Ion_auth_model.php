@@ -746,7 +746,7 @@ class Ion_auth_model extends CI_Model
         $id = $this->db->insert_id();
 
         //if this user is logged in we assume they can register and they are not parents
-        if (auth() && !is('parent')) {
+        if (is('parent')) {
             if (!empty($groups)) {
                 //add to groups
                 foreach ($groups as $group) {

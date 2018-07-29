@@ -12,7 +12,7 @@ class Charges extends CI_Controller
         parent::__construct();
 
         setRedirect();
-        allow('admin,manager,staff,parents');
+        auth(true);
         //resources
         $this->load->model('My_child', 'child');
         //variables
@@ -27,7 +27,7 @@ class Charges extends CI_Controller
      */
     function addCharge($child_id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         $this->form_validation->set_rules('item', 'Item name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('charge_desc', 'Description', 'required|trim|xss_clean');
         $this->form_validation->set_rules('amount', 'Amount', 'required|trim|xss_clean');

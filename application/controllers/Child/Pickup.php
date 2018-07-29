@@ -6,7 +6,6 @@ class Pickup extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        allow('admin,manager,staff,parent');
         $this->module = 'modules/child/';
         $this->title = lang('child').'-'.lang('pickup');
     }
@@ -42,7 +41,7 @@ class Pickup extends CI_Controller
      */
     function deletePickup($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         //delete images
         $upload_path = './assets/uploads/pickup';
         $this->db->where('id', $id);

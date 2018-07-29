@@ -16,24 +16,27 @@ class Migration_create_payment_methods extends CI_Migration
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE,
-                'auto_increment'=>TRUE
+                'unsigned' => TRUE,
+                'auto_increment' => TRUE
             ),
             'title' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
-                'null'=>FALSE,
-                'unique'=>TRUE
+                'null' => FALSE,
+                'unique' => TRUE
             )
         ));
 
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
-
-
-        // Create Table news
         $this->dbforge->create_table("payment_methods", TRUE);
+
+        foreach (default_payment_methods() as $method) {
+            $this->db->insert('payment_methods', [
+                'title' => $method
+            ]);
+        }
 
     }
 

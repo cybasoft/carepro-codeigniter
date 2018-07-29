@@ -32,7 +32,7 @@ class news extends CI_Controller
 
     function create()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->form_validation->set_rules('article_order', lang('order'), 'required|trim|xss_clean|integer');
         $this->form_validation->set_rules('article_name', lang('title'), 'required|trim|xss_clean');
@@ -64,7 +64,7 @@ class news extends CI_Controller
      */
     function editor($article = 0)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if ($article >= 0 && is_numeric($article)) {
             $this->session->set_userdata('news_article_id', $article);
             redirect('news/edit');
@@ -77,7 +77,7 @@ class news extends CI_Controller
      */
     function edit()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         $article = $this->session->userdata('news_article_id');
         if ($article <= 0 && !is_numeric($article)) { //double check an article has been selected
             redirect('news/edit', 'refresh');
@@ -105,7 +105,7 @@ class news extends CI_Controller
      */
     function delete($id)
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
         if ($this->news->delete($id) == true) { //successful
             flash('success', lang('request_success'));
             redirect('news', 'refresh');

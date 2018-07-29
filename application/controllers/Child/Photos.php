@@ -6,7 +6,8 @@ class Photos extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        allow('admin,manager,staff,parent');
+        auth(true);
+
         $this->module = 'modules/child/photos/';
         $this->my_child = array();
         $this->load->model('My_photos', 'photos');
@@ -53,7 +54,7 @@ class Photos extends CI_Controller
 
     function destroy()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $photo = $this->db->where('id', $this->input->post('id'))->get('photos')->row();
 

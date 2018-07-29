@@ -93,8 +93,8 @@
 
 <?php
 $this->load->view('modules/calendar/view_event');
-if (is('admin') || is('manager') || is('staff'))
+if (is(['admin','manager','staff']))
     $this->load->view('modules/calendar/new_event');
-if (is('admin') || is('manager') || is('staff'))
+if (is(['admin','manager','staff']))
     $this->load->view('modules/calendar/edit_event');
 ?>

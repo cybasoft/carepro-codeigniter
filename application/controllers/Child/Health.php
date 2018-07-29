@@ -35,7 +35,7 @@ class Health extends CI_Controller
      */
     function addAllergy()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->form_validation->set_rules('allergy', 'Allergy Name', 'required|trim|xss_clean');
 
@@ -65,7 +65,7 @@ class Health extends CI_Controller
      */
     function deleteAllergy($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         $this->db->where('id', $id);
         $this->db->delete('child_allergy');
         if($this->db->affected_rows() > 0) {
@@ -106,12 +106,12 @@ class Health extends CI_Controller
      */
     function deleteFoodPref($id = "")
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         if($id !== "" & is_numeric($id)) {
             //make sure its the parent authorized or admin
             $childID = $this->db->where('id', $id)->get('child_foodpref')->row();
-            if(is('staff') == true || is('admin') || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
+            if(is(['staff','admin']) || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
                 $this->db->where('id', $id);
                 $this->db->delete('child_foodpref');
                 if($this->db->affected_rows() > 0) {
@@ -154,7 +154,7 @@ class Health extends CI_Controller
      */
     function deleteContact($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if($this->db->where('id', $id)->delete('child_contacts')) {
             flash('success', lang('request_success'));
         } else {
@@ -192,7 +192,7 @@ class Health extends CI_Controller
      */
     function deleteProvider($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if($this->db->where('id', $id)->delete('child_providers')) {
             flash('success', lang('request_success'));
         } else {
@@ -208,7 +208,7 @@ class Health extends CI_Controller
      */
     function addProblem()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->form_validation->set_rules('name', lang('problem'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('first_event', lang('problem'), 'required|trim|xss_clean');
@@ -232,7 +232,7 @@ class Health extends CI_Controller
      */
     function deleteProblem($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if($this->db->where('id', $id)->delete('child_problems')) {
             flash('success', lang('request_success'));
         } else {

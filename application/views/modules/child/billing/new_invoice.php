@@ -59,7 +59,7 @@
             <tr>
                 <td colspan="3" rowspan="3" class="text-right">
                     <label><?php echo lang('invoice_terms'); ?></label>
-                    <textarea name="remarks" rows="4" class="form-control"></textarea>
+                    <textarea name="invoice_terms" rows="4" class="form-control"><?php echo get_option('invoice_terms'); ?></textarea>
                 </td>
                 <td class="text-right"><?php echo lang('sub_total'); ?>:</td>
                 <td>

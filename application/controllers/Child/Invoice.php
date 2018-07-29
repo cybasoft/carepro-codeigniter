@@ -13,7 +13,7 @@ class Invoice extends CI_Controller
         parent::__construct();
         //redirect session
         setRedirect();
-        allow('admin,manager,staff,parent');
+        auth(true);
         //local variables
         $this->module = 'modules/child/billing/';
         $this->invoice_db = 'invoices';
@@ -176,14 +176,14 @@ class Invoice extends CI_Controller
      */
     function create($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         $child = $this->child->first($id);
         page($this->module.'new_invoice', compact('child'));
     }
 
     function store($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('description'), 'required|xss_clean');
@@ -273,7 +273,7 @@ class Invoice extends CI_Controller
 
     function delete($invoice_id)
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
         //delete items
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
@@ -294,7 +294,7 @@ class Invoice extends CI_Controller
 
     function deleteItem($invoice_id, $item_id)
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
 
         $this->db->where('id', $item_id);
         $this->db->where('invoice_id', $invoice_id);
@@ -311,7 +311,7 @@ class Invoice extends CI_Controller
 //update status
     function updateStatus($id)
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if($_POST) {
             $data = array(
                 'invoice_status' => $this->input->post("invoice_status")
@@ -328,7 +328,7 @@ class Invoice extends CI_Controller
     //update terms
     function updateTerms()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if($_POST) {
             $data = array(
                 'invoice_terms' => $this->input->post("invoice_terms")

@@ -66,7 +66,7 @@ if(count((array)$incident) > 0):
     </div>
     <div class="col-md-4">
         <strong class="text-danger"><?php echo lang('incident photos'); ?></strong>
-        <?php if(is('admin') || is('staff') || is('manager')): ?>
+        <?php if(is(['admin','staff','manager'])): ?>
             <form action="<?php echo site_url('notes/storeIncidentPhotos'); ?>"
                   enctype="multipart/form-data" class="dropzone" id="image-upload" method="POST">
                 <?php echo form_hidden('child_id', $child->id); ?>

@@ -28,7 +28,7 @@ class Calendar extends CI_Controller
     function index()
     {
         $this->title = lang('calendar');
-        if (is('parent') && is('staff') == false) :
+        if (is('parent')) :
             page('modules/parent/calendar');
         else :
             page($this->module . 'index');
@@ -48,7 +48,7 @@ class Calendar extends CI_Controller
      */
     function addEvent()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->form_validation->set_rules('title', lang('title'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('start', lang('start_date'), 'required|trim|xss_clean');
@@ -69,7 +69,7 @@ class Calendar extends CI_Controller
      */
     function updateEvent()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
 
         $this->form_validation->set_rules('title', lang('title'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('start', lang('start_date'), 'required|trim|xss_clean');
@@ -90,7 +90,7 @@ class Calendar extends CI_Controller
      */
     function deleteEvent()
     {
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         if ($this->calendar->delete_event()) {
             flash('success', lang('request_success'));
         } else {

@@ -9,7 +9,7 @@ class Users extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        allow('admin,manager,staff');
+        allow(['admin','manager','staff']);
         $this->module = 'modules/users/';
         $this->title = lang('users');
     }
@@ -60,7 +60,7 @@ class Users extends CI_Controller
 
     function view($id)
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
         if(empty($id)){
             exit();
         }
@@ -80,7 +80,7 @@ class Users extends CI_Controller
     //edit a user
     function update()
     {
-        allow('admin,manager');
+        allow(['admin','manager']);
         $id = $this->input->post('user_id');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('edit_user_validation_first_name_label'), 'required|xss_clean');

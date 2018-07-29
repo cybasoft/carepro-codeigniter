@@ -196,7 +196,7 @@
                 <div class="box box-default box-solid">
                     <div class="box-header">
                         <h4 class="box-title">
-                            <?php echo lang('payment_methods_heading'); ?>
+                            <?php echo lang('Currency'); ?>
                         </h4>
                     </div>
                     <div class="box-body">
@@ -212,10 +212,36 @@
                         ?>
                     </div>
                 </div>
+
+                <div class="box box-default box-solid">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            <?php echo lang('PayPal'); ?>
+
+                            <i class="fa fa-question-circle show-tip" data-toggle="tooltip"
+                               title="<?php echo lang('Leave fields blank to deactivate'); ?>"></i>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <?php
+                        echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
+                        echo form_label(lang('PayPal locale'));
+                        echo form_input('paypal_locale', get_option('paypal_locale'), ['class' => 'form_control']);
+                        echo form_label(lang('PayPal  email'));
+                        echo form_input('paypal_email', get_option('paypal_email'), ['class' => 'form_control']);
+                        echo '<br/>';
+                        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
+                        echo form_close('demo'); ?>
+                    </div>
+                </div>
+
                 <div class="box box-default box-solid">
                     <div class="box-header">
                         <h4 class="box-title">
                             <?php echo lang('Stripe'); ?>
+
+                            <i class="fa fa-question-circle show-tip" data-toggle="tooltip"
+                               title="<?php echo lang('Leave fields blank to deactivate'); ?>"></i>
                         </h4>
                     </div>
                     <div class="box-body">
@@ -241,29 +267,11 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="box box-default box-solid">
-                    <div class="box-header">
-                        <h4 class="box-title">
-                            <?php echo lang('PayPal'); ?>
-                        </h4>
-                    </div>
-                    <div class="box-body">
-                        <?php
-                        echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
-                        echo form_label(lang('PayPal locale'));
-                        echo form_input('paypal_locale', get_option('paypal_locale'), ['class' => 'form_control']);
-                        echo form_label(lang('PayPal  email'));
-                        echo form_input('paypal_email', get_option('paypal_email'), ['class' => 'form_control']);
-                        echo '<br/>';
-                        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
-                        echo form_close('demo'); ?>
-                    </div>
-                </div>
 
                 <div class="box box-default box-solid">
                     <div class="box-header">
                         <h4 class="box-title">
-                            <?php echo lang('payment_methods_header'); ?>
+                            <?php echo lang('Payment methods'); ?>
                         </h4>
                     </div>
                     <div class="box-body">
@@ -291,6 +299,25 @@
                                 </tr>
                             <?php endforeach; ?>
                         </table>
+                    </div>
+                </div>
+
+                <div class="box box-default box-solid">
+                    <div class="box-header">
+                        <h4 class="box-title">
+                            <?php echo lang('Invoice'); ?>
+                        </h4>
+                    </div>
+                    <div class="box-body">
+                        <?php
+                        echo form_open('settings/update', ['class' => 'settings']);
+                        echo form_label(lang('Invoice terms'), 'invoice_terms');
+                        echo form_textarea('invoice_terms', get_option('invoice_terms'), ['class' => 'form-control']);
+//                        echo form_label(lang('Invoice notes'), 'invoice_notes');
+//                        echo form_textarea('invoice_notes', get_option('invoice_notes'), ['class' => 'form-control']);
+                        echo '<br/>';
+                        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit'));
+                        echo form_close(); ?>
                     </div>
                 </div>
 
@@ -397,29 +424,29 @@
            title="<?php echo lang('Login background notice'); ?>"></i>
         <div class="row">
             <div class="col-sm-6">
-               <div class="row">
-                   <?php
-                   $files = scandir(APPPATH.'../assets/uploads/content/login');
-                   $pcount = 1;
-                   foreach ($files as $file => $value): if(!in_array($value, array(".", ".."))): ?>
-                       <div class="col-xs-3">
-                           <div class="i-check">
-                               <label for="check-<?php echo $pcount; ?>">
-                                   <input type="radio" id="check-<?php echo $pcount; ?>" name="login_bg_image"
-                                          value="<?php echo $value; ?>"
-                                          data-keeper-edited="yes" data-keeper-should-not-overwrite="true">
-                                   <div class="front-end i-check-box"
-                                        style="background-image:url('<?php echo assets('uploads/content/login/'.$value); ?>')">
-                                   </div>
-                               </label>
-                           </div>
-                       </div>
-                       <?php $pcount++; endif; endforeach; ?>
-               </div>
+                <div class="row">
+                    <?php
+                    $files = scandir(APPPATH.'../assets/uploads/content/login');
+                    $pcount = 1;
+                    foreach ($files as $file => $value): if(!in_array($value, array(".", ".."))): ?>
+                        <div class="col-xs-3">
+                            <div class="i-check">
+                                <label for="check-<?php echo $pcount; ?>">
+                                    <input type="radio" id="check-<?php echo $pcount; ?>" name="login_bg_image"
+                                           value="<?php echo $value; ?>"
+                                           data-keeper-edited="yes" data-keeper-should-not-overwrite="true">
+                                    <div class="front-end i-check-box"
+                                         style="background-image:url('<?php echo assets('uploads/content/login/'.$value); ?>')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <?php $pcount++; endif; endforeach; ?>
+                </div>
             </div>
             <div class="col-sm-6">
-                    <img class="currentLoginImg img-responsive" style="width:100%"
-                         src="<?php echo assets('uploads/content/login/'.get_option('login_bg_image','login-bg-02.jpg')); ?>"/>
+                <img class="currentLoginImg img-responsive" style="width:100%"
+                     src="<?php echo assets('uploads/content/login/'.get_option('login_bg_image', 'login-bg-02.jpg')); ?>"/>
             </div>
         </div>
 

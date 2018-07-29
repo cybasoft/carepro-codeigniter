@@ -11,10 +11,10 @@ class Children extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        allow('admin,manager,staff,parent');
         $this->load->model('My_invoice', 'invoice');
         $this->module = 'modules/children/';
         $this->title = lang('children');
+        auth(true);
     }
 
     /*

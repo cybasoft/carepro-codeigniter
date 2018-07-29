@@ -115,6 +115,10 @@ ALTER TABLE payment_methods
   DISABLE KEYS;
 INSERT INTO payment_methods (title) VALUES ('Check');
 INSERT INTO payment_methods (title) VALUES ('Credit');
+INSERT INTO payment_methods (title) VALUES ('Cash');
+INSERT INTO payment_methods (title) VALUES ('PayPal');
+INSERT INTO payment_methods (title) VALUES ('Stripe');
+INSERT INTO payment_methods (title) VALUES ('Money order');
 ALTER TABLE payment_methods
   ENABLE KEYS;
 UNLOCK TABLES;
@@ -771,8 +775,8 @@ INSERT INTO options (option_name, option_value, autoload) VALUES
   ('lockscreen_timer', 5, 1),
   ('daily_checkin', 1, 1),
   ('tawkto_embed_url', '', 1),
-  ('login_bg_image', 'login-bg-02', 1)
-;
+  ('login_bg_image', 'login-bg-02', 1),
+  ('invoice_terms', 'Invoice due on receipt. Thank you for your business',1);
 
 -- version 2.1.4
 ALTER TABLE news
