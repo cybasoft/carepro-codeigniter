@@ -30,16 +30,18 @@ class My_child extends CI_Model
         $this->db->where('id', $id);
         $child = $this->db->get('children')->row();
 
-        if(is_array($field)) {
+        if(is_array($field) && !empty($field)) {
             $res = '';
             foreach ($field as $item) {
                 $res .= $child->$item.' ';
             }
-        } else {
-            $res = $child->$field;
+            return $res;
         }
 
-        return $res;
+        if($field !=='')
+            return  $child->$field;
+
+        return $child;
     }
     /*
      * set child id session to be used in this instance

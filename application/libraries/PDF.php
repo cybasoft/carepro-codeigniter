@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once dirname(__FILE__) . '/tcpdf/tcpdf.php';
+require_once APPPATH. 'third_party/dompdf/lib/html5lib/Parser.php';
+require_once APPPATH. 'third_party/dompdf/lib/php-font-lib/src/FontLib/Autoloader.php';
+require_once APPPATH. 'third_party/dompdf/lib/php-svg-lib/src/autoload.php';
+require_once APPPATH. 'third_party/dompdf/src/Autoloader.php';
 
-class PDF extends TCPDF
+Dompdf\Autoloader::register();
+
+class PDF
 {
-    function __construct()
-    {
-        parent::__construct();
-    }
+
 }

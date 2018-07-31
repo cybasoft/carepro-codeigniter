@@ -1,4 +1,7 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php use Dompdf\Dompdf;
+use Dompdf\Options;
+
+if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @file      : invoice
@@ -8,6 +11,7 @@
  */
 class Invoice extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
@@ -25,44 +29,57 @@ class Invoice extends CI_Controller
 
     function index($id)
     {
-        if(!authorizedToChild($this->user->uid(),$id)){
-            flash('error',lang('You do not have permission to view this child\'s profile'));
+        if(!authorizedToChild($this->user->uid(), $id)) {
+            flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
 
         $child = $this->child->first($id);
-        $invoices = $this->db->where('child_id', $id)->get('invoices')->result();
+        $invoices = $this->invoice->all(null, $id);
         page($this->module.'index', compact('child', 'invoices'));
     }
 
     function invoices($id, $status)
     {
         $child = $this->child->first($id);
+
         if($status !== "all") {
             $this->db->where('invoice_status', $status);
         }
         if(isset($_GET['search'])) {
             $this->db->where('id', $_GET['search']);
         }
-        $this->db->where('child_id', $child->id);
-        $invoices = $this->invoice->getInvoices();
+        $invoices = $this->invoice->childInvoices($child->id);
 
         $this->load->view($this->module.'invoices', compact('child', 'invoices'));
     }
 
-    /*
-     * view
-     */
-    function view($invoice_id)
+
+    function view($id)
+    {
+        $invoice = $this->invoice->all($id);
+
+        if(empty($invoice))
+            show_404();
+
+        $child = $this->child->get($invoice[0]->child_id);
+
+        $subTotal = $this->invoice->subTotal($invoice[0]->id);
+        $amountPaid = $this->invoice->amountPaid($invoice[0]->id);
+        $amountDue = $this->invoice->amountDue($invoice[0]->id);
+        page($this->module.'invoice_view', compact('invoice', 'child', 'subTotal', 'amountPaid', 'amountDue'));
+    }
+
+    function views($invoice_id)
     {
         $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row();
         $invoice_items = $this->invoice->getInvoiceItems($invoice_id);
         $child = $this->child->first($invoice->child_id);
-        $subTotal = $this->invoice->invoice_subtotal($invoice_id);
-        $totalPaid = $this->invoice->amount_paid($invoice->id);
+        $subTotal = $this->invoice->subTotal($invoice_id);
+        $totalPaid = $this->invoice->amountPaid($invoice->id);
         $totalDue = (float)$subTotal - (float)$totalPaid;
         $totalTax = 0;
-        page($this->module.'view_invoice',
+        page($this->module.'invoice_view',
             compact(
                 'invoice',
                 'child',
@@ -88,8 +105,8 @@ class Invoice extends CI_Controller
             $email = $user->email;
 
             //invoice
-            $invoice = $this->invoice->first($invoice_id);
-            $amoutDue = $this->invoice->invoice_total_due($invoice_id);
+            $invoice = $this->invoice->get($invoice_id);
+            $amoutDue = $this->invoice->amountDue($invoice_id);
             $child = $this->child->first($invoice->child_id);
 
             if(ENVIRONMENT == 'production') {
@@ -176,14 +193,14 @@ class Invoice extends CI_Controller
      */
     function create($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         $child = $this->child->first($id);
-        page($this->module.'new_invoice', compact('child'));
+        page($this->module.'create_invoice', compact('child'));
     }
 
     function store($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
 
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('description'), 'required|xss_clean');
@@ -192,7 +209,7 @@ class Invoice extends CI_Controller
 
         if($this->form_validation->run() == TRUE) {
             $invoice = $this->invoice->createInvoice($id);
-            if($invoice>0) {
+            if($invoice > 0) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -247,33 +264,74 @@ class Invoice extends CI_Controller
         redirectPrev();
     }
 
-    function preview($invoice_id)
+    function preview()
     {
+        $invoice_id = $this->uri->segment(2);
         $data = array(
             'invoice' => $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row(),
             'invoice_items' => $this->invoice->getInvoiceItems($invoice_id)
         );
-        $this->load->view($this->module.'invoice_preview', $data);
+        $this->load->view($this->module.'invoice_print', $data);
     }
 
-
     /**
-     * @param $id
+     * @param        $id
      * @param string $action
-     * @param int $send
+     * @param int    $send
      */
     function pdf($id, $action = 'I', $send = 0)
     {
-        $this->load->library('PDF');
+        //get child data
         $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
         $invoice_items = $this->invoice->getInvoiceItems($id);
         $child = $this->child->first($invoice->child_id);
-        $this->load->view($this->module.'pdf_invoice', compact('invoice', 'invoice_items', 'child', 'action', 'send'));
+
+        //format pdf
+        $this->load->library('PDF');
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', TRUE);
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('defaultFont', 'Courier');
+
+        $dompdf = new Dompdf($options);
+        $dompdf->setPaper('A4', 'portrait');
+
+        $html = $this->load->view($this->module.'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'action', 'send'), true);
+
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        // $dompdf->stream();
+        $output = $dompdf->output();
+
+        $fileName = 'application/temp/invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf';
+        file_put_contents($fileName, $output);
+
+        $this->sendInvoice($child, $fileName);
+
+    }
+
+    function sendInvoice($child, $fileName)
+    {
+        $parents = $this->child->getParents($child->id);
+        foreach ($parents->result() as $parent) {
+            $data = array(
+                'to' => $parent->email,
+                'subject' => sprintf(lang('invoice_email_subject'), $child->last_name),
+                'message' => sprintf(lang('invoice_email_message'), $child->last_name),
+                'file' => $fileName
+            );
+            $this->mailer->send($data);
+        }
+
+        //       @unlink($fileName);
+        flash('success', lang('request_success'));
+        redirectPrev();
     }
 
     function delete($invoice_id)
     {
-        allow(['admin','manager']);
+        allow(['admin', 'manager']);
         //delete items
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
@@ -282,24 +340,24 @@ class Invoice extends CI_Controller
         $this->db->where('id', $invoice_id);
         $this->db->delete($this->invoice_db);
 
-        if($this->db->affected_rows()>0) {
+        if($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
         }
 
         redirectPrev();
-
     }
 
     function deleteItem($invoice_id, $item_id)
     {
-        allow(['admin','manager']);
+        allow(['admin', 'manager']);
 
         $this->db->where('id', $item_id);
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
-        if($this->db->affected_rows()>0) {
+
+        if($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -311,7 +369,8 @@ class Invoice extends CI_Controller
 //update status
     function updateStatus($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
+
         if($_POST) {
             $data = array(
                 'invoice_status' => $this->input->post("invoice_status")
@@ -328,12 +387,14 @@ class Invoice extends CI_Controller
     //update terms
     function updateTerms()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         if($_POST) {
             $data = array(
                 'invoice_terms' => $this->input->post("invoice_terms")
             );
+
             $this->db->where('id', $this->input->post('invoice_id'));
+
             if($this->db->update($this->invoice_db, $data)) {
                 flash('success', lang('request_success'));
             } else {
@@ -362,11 +423,13 @@ class Invoice extends CI_Controller
         $this->form_validation->set_rules('remarks', lang('notes'), 'xss_clean');
 
         if($this->form_validation->run() == TRUE) {
+
             if($this->invoice->makePayment($invoice_id)) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
             }
+
         } else {
             validation_errors();
             flash('danger');

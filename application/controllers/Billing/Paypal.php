@@ -48,8 +48,8 @@ class Paypal extends CI_Controller
     function pay($invoice_id)
     {
         //invoice
-        $invoice = $this->invoice->first($invoice_id);
-        $amoutDue = $this->invoice->invoice_total_due($invoice_id);
+        $invoice = $this->invoice->get($invoice_id);
+        $amoutDue = $this->invoice->amountDue($invoice_id);
         $child = $this->child->first($invoice->child_id);
 
         $user = $this->user->get();
@@ -77,7 +77,7 @@ class Paypal extends CI_Controller
     function success()
     {
         $invoice_id = $this->input->post('item_number');
-        $invoice = $this->invoice->first($invoice_id);
+        $invoice = $this->invoice->get($invoice_id);
         $child = $this->child->first($invoice->child_id);
         if(count((array)$invoice) == 0) {
             flash('info', lang('We received your payment. Please wait few hours for the transaction reflect in your account'));
@@ -131,6 +131,6 @@ class Paypal extends CI_Controller
     {
         flash('error',lang('You have cancelled your PayPal transaction. We look forward to your business again!'));
         redirect($this->session->userdata('exit_page'));
-        //$this->load->view($this->module.'paypal-cancelled');
+        //$this->load->view($this->module.'paypal_cancelled');
     }
 }

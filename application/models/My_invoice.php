@@ -25,22 +25,63 @@ class My_invoice extends CI_Model
 
     }
 
-    function first($id)
+    /**
+     * Return single invoice or invoice column
+     *
+     * @param        $id
+     * @param bool   $items
+     *
+     * @return mixed
+     */
+    function get($id, $items = false)
     {
-        return $this->db->where('id', $id)->get('invoices')->row();
+
+        if($items == true)
+            return $this->all($id);
+
+        return $this->db->where('id', $id)->get('invoices')->row();;
+
     }
 
     /**
-     * @param $id
+     * Get all invoices with their items
+     *
+     * @param string $id
+     * @param string $childID
+     *
+     * @return mixed
      */
-    function invoice($id)
+    function all($id = '', $childID = '')
     {
-        $this->db->where('invoices.id', $id);
+
+        $this->db->select('invoices.*,invoice_items.item_name,invoice_items.description,invoice_items.price,invoice_items.qty,invoice_items.discount');
         $this->db->from('invoices');
+        $this->db->join('invoice_items', 'invoice_items.invoice_id=invoices.id', 'left');
+
+        if($id > 0)
+            $this->db->where('invoices.id', $id);
+
+        if($childID > 0)
+            $this->db->where('invoices.child_id', $childID);
+
+        $result = $this->db->get()->result();
+
+        return $result;
+
+    }
+
+    function childInvoices($id)
+    {
+        $this->db->from('invoices');
+        $this->db->where('invoices.child_id', $id);
+
+        $result = $this->db->get()->result();
+        return $result;
     }
 
     /**
      * @param $cid
+     *
      * @return mixed
      */
     function payments($cid = null, $invoice = null)
@@ -53,27 +94,6 @@ class My_invoice extends CI_Model
         $this->db->from('invoice_payments');
         $this->db->join('invoices', 'invoices.id=invoice_payments.invoice_id');
         return $this->db->get();
-    }
-
-    /**
-     * @param $id
-     * @param $item
-     * @return bool
-     */
-    function invoice_items($id, $item)
-    {
-        $this->db->where('invoices.id', $id);
-        $this->db->select('*');
-        $this->db->from('invoices');
-        $this->db->limit(1);
-        $this->db->join('invoice_items', 'invoices_items.invoice_id = invoices.id');
-        $this->db->join('accnt_invoice_payment', 'accnt_invoice_payment.invoice_id = invoices.id');
-
-        $query = $this->db->get()->result();
-        foreach ($query as $row) {
-            return $row->$item;
-        }
-        return false;
     }
 
     /**
@@ -102,6 +122,7 @@ class My_invoice extends CI_Model
 
     /**
      * @param $status
+     *
      * @return string
      */
     function status($status)
@@ -158,6 +179,7 @@ class My_invoice extends CI_Model
 
     /**
      * @param $invoice_id
+     *
      * @return bool
      */
     function makePayment($invoice_id)
@@ -172,7 +194,7 @@ class My_invoice extends CI_Model
             'created_at' => date_stamp()
         );
         if($this->db->insert('invoice_payments', $data)) {
-            $invoice = $this->first($invoice_id);
+            $invoice = $this->get($invoice_id);
             $child = $this->child->first($invoice->child_id);
             $this->parent->notifyParents($child->id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $child->first_name));
             return true;
@@ -183,6 +205,7 @@ class My_invoice extends CI_Model
 
     /**
      * @param int $method
+     *
      * @return array|bool
      */
     function paymentMethods($method = 0)
@@ -206,6 +229,7 @@ class My_invoice extends CI_Model
     /**
      * @param $invoice_id
      * @param $item
+     *
      * @return string
      */
     function paypal($invoice_id, $item)
@@ -216,7 +240,7 @@ class My_invoice extends CI_Model
         $lc = "US";
         $item_name = $item;
         $item_number = 'DayCare_'.$invoice_id;
-        $amount = $this->invoice_total_due($invoice_id);
+        $amount = $this->amountDue($invoice_id);
         $currency_code = "USD";
         $button_subtype = "services";
         $no_note = 0;
@@ -235,65 +259,68 @@ class My_invoice extends CI_Model
 
     /**
      * @param $invoice_id
+     *
      * @return string
      */
-    function invoice_total_due($invoice_id)
+    function amountDue($invoice_id)
     {
-        $due = $this->invoice_subtotal($invoice_id) - $this->amount_paid($invoice_id);
-        if($due<0) {
-            $this->update_status($invoice_id, "paid");//mark as paid
+        $due = $this->subTotal($invoice_id) - $this->amountPaid($invoice_id);
+        if($due < 0) {
+            $this->updateStatus($invoice_id, "paid");//mark as paid
         }
-        $due = str_replace(',','',$due);
-        $due = str_replace(' ','',$due);
-        $due = str_replace(get_option('currency_symbol'),'',$due);
-        return number_format($due, 2);
+        $due = str_replace(',', '', $due);
+        $due = str_replace(' ', '', $due);
+        $due = str_replace(get_option('currency_symbol'), '', $due);
+
+        return $due;
     }
 
     /**
      * @param $invoice_id
+     *
      * @return string
      */
-    function invoice_subtotal($invoice_id)
+    function subTotal($invoice_id)
     {
-
         $this->db->where('invoice_id', $invoice_id);
         $query = $this->db->get('invoice_items');
         $totalPrice = 0;
-        if($query->num_rows()>0) {
+        if($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
                 $totalPrice = ($row->price * $row->qty) + $totalPrice;
             }
-            return number_format($totalPrice, 2);
+            return $totalPrice;
         } else {
-            return "0.00";
+            return 0.00;
         }
 
     }
 
-
     /**
      * @param $invoice_id
+     *
      * @return string
      */
-    function amount_paid($invoice_id)
+    function amountPaid($invoice_id)
     {
         $this->db->where('invoice_id', $invoice_id);
         $this->db->select_sum('amount');
         $query = $this->db->get('invoice_payments');
-        if($query->num_rows()>0) {
+        if($query->num_rows() > 0) {
             $row = $query->row();
-            return number_format($row->amount, 2);
+            return $row->amount;
         } else {
-            return "0.00";
+            return 0.00;
         }
     }
 
     /**
      * @param $invoice_id
      * @param $status
+     *
      * @return bool
      */
-    function update_status($invoice_id, $status)
+    function updateStatus($invoice_id, $status)
     {
         $data = array(
             'invoice_status' => $status
@@ -313,25 +340,25 @@ class My_invoice extends CI_Model
     {
         $invoices = $this->db->where('invoice_status', "due")->get('invoices');
         $total = 0;
-        if($invoices->num_rows()>0) {
+        if($invoices->num_rows() > 0) {
             foreach ($invoices->result() as $inv) {
-                $due = $this->invoice_total_due($inv->id);
+                $due = $this->amountDue($inv->id);
                 $total = (float)$total + (float)$due;
             }
         }
-        return number_format($total, 2);
+
+        return $total;
 
     }
 
-    //pay with paypal
-
     function stamp($status)
     {
-        return '<img src="'.base_url().'assets/img/content/'.$status.'_stamp.png" class="stamp"/>';
+        return '<img style="width:200px" src="'.base_url().'assets/img/content/'.$status.'_stamp.png" class="stamp"/>';
     }
 
     /**
      * @param $invoice_id
+     *
      * @return array
      */
     function getInvoice($invoice_id)
@@ -348,6 +375,7 @@ class My_invoice extends CI_Model
     /**
      * @param $email
      * @param $token
+     *
      * @return bool|\Stripe\ApiResource
      */
     function createStripeCustomer($email, $token)
@@ -383,6 +411,7 @@ class My_invoice extends CI_Model
     /**
      * @param $token
      * @param $data
+     *
      * @return bool|\Stripe\ApiResource
      */
     function createStripeCharge($token, $data)
@@ -424,6 +453,7 @@ class My_invoice extends CI_Model
 
     /**
      * @param $data
+     *
      * @return bool|\Stripe\ApiResource
      */
     function createStripeSubscription($data)

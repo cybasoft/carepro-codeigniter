@@ -50,14 +50,14 @@ class Parents extends CI_Controller
 		foreach ($query as $row) {
 			$preview = anchor('invoice/invoice_preview/' . $row->id, '<span class="btn btn-xs btn-info" ><i class="fa fa-print"></i></span>');
 
-			$subTotal = $this->invoice->invoice_subtotal($row->id);
-			$totalDue = number_format($subTotal - $this->invoice->amount_paid($row->id), 2);
+			$subTotal = $this->invoice->subTotal($row->id);
+			$totalDue = number_format($subTotal - $this->invoice->amountPaid($row->id), 2);
 			if ($totalDue < 0) {
 				$totalDue = $totalDue . ' <span class="label label-success">' . lang('refund') . ' </span>';
-				$this->invoice->update_status($row->id, 1); //invoice is paid
+				$this->invoice->updateStatus($row->id, 1); //invoice is paid
 			}
 
-			$amount_paid = $this->invoice->amount_paid($row->id) > 0 ? $this->invoice->amount_paid($row->id) : '0.00';
+			$amount_paid = $this->invoice->amountPaid($row->id) > 0 ? $this->invoice->amountPaid($row->id) : '0.00';
 
 			$this->table->add_row(
 				anchor('invoice/invoice_preview/' . $row->id, $row->id),

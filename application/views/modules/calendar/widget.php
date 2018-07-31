@@ -1,9 +1,5 @@
-<div class="box box-solid box-info">
-    <div class="box-header with-border ui-sortable-handle">
-        <i class="fa fa-calendar"></i>
-        <h3 class="box-title"><?php echo lang('calendar'); ?></h3>
-    </div>
-    <div class="box-body no-padding">
+<div class="box box-solid box-default">
+    <div class="box-body">
         <div id="calendar"></div>
     </div>
     <div class="box-footer text-black"></div>

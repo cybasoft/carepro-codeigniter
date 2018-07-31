@@ -558,3 +558,7 @@ $lang['Login background image'] = 'Login background image';
 $lang['Login background notice'] = 'To add new photos, simply drop them in "/assets/uploads/content/login" directory';
 $lang['Leave fields blank to deactivate'] = 'Leave fields blank to deactivate';
 $lang['Payment methods'] = 'Payment methods';
+$lang['Facility ID'] = 'Facility ID';
+$lang['Tax ID'] = 'Tax ID';
+$lang['Invoice for'] = 'Invoice for %s';
+$lang['Parents of'] = 'Parents of';

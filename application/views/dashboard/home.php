@@ -19,20 +19,24 @@
             <div class="box-body">
                 <table class="table">
                     <tr>
-                        <td><?php echo lang('email'); ?></td>
+                        <td><?php echo lang('Facility ID'); ?>:</td>
+                        <td><?php echo get_option('facility_id'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo lang('Tax ID'); ?>:</td>
+                        <td><?php echo get_option('tax_id'); ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo lang('email'); ?>:</td>
                         <td><?php echo get_option('email') ?></td>
                     </tr>
                     <tr>
-                        <td><?php echo lang('phone'); ?></td>
+                        <td><?php echo lang('phone'); ?>:</td>
                         <td><?php echo get_option('phone') ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('fax'); ?>:</td>
                         <td><?php echo get_option('fax'); ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo lang('timezone'); ?>:</td>
-                        <td><?php echo get_option('timezone'); ?></td>
                     </tr>
                 </table>
             </div>
@@ -113,7 +117,7 @@
                 <div class="small-box bg-gray cursor" onclick="location.href='<?php echo site_url('news'); ?>'">
                     <div class="inner">
                         <h3><?php echo $this->db->select('id')->get('news')->num_rows(); ?></h3>
-                        <p><?php echo lang('articles'); ?></p>
+                        <p><?php echo lang('News'); ?></p>
                     </div>
                     <div class="icon"><i class="fa fa-clipboard" aria-hidden="true"></i></div>
                 </div>

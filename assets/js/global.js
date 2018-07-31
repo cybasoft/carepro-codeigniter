@@ -76,9 +76,6 @@ $(document).ready(function () {
             window.location.href = '../news/delete/' + article_id;
         }
     });
-    //all form inputs have this class
-    $('input[type=text],input[type=password]').addClass('form-control');
-    $('input[type=submit]').addClass('btn btn-primary');
     //tooltips
     $('.send-mail,.show-pin,.show-tip').tooltip();
 

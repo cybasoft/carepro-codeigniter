@@ -776,7 +776,9 @@ INSERT INTO options (option_name, option_value, autoload) VALUES
   ('daily_checkin', 1, 1),
   ('tawkto_embed_url', '', 1),
   ('login_bg_image', 'login-bg-02', 1),
-  ('invoice_terms', 'Invoice due on receipt. Thank you for your business',1);
+  ('invoice_terms', 'Invoice due on receipt. Thank you for your business', 1),
+  ('facility_id', '', 1),
+  ('tax_id', '', 1);
 
 -- version 2.1.4
 ALTER TABLE news
