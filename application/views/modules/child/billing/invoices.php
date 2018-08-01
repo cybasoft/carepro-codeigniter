@@ -42,11 +42,11 @@
                    href="<?php echo site_url('invoice/'.$invoice->id.'/preview'); ?>">
                     <i class="fa fa-print"></i>
                 </a>
-                <a href="<?php echo site_url('invoice/'.$invoice->id.'/download'); ?>"
+                <a href="<?php echo site_url('invoice/'.$invoice->id.'/download?dl'); ?>"
                    class="btn btn-default btn-sm"
                    title="<?php echo lang('Download'); ?>"><i class="fa fa-file-pdf text-danger"></i>
                 </a>
-                <a href="<?php echo site_url('invoice/'.$invoice->id.'/send'); ?>"
+                <a href="<?php echo site_url('invoice/'.$invoice->id.'/download?send'); ?>"
                    class="btn btn-info btn-sm show-tip" data-toggle="tooltip" title="<?php echo lang('send_to_parent'); ?>">
                     <i class="fa fa-envelope"></i>
                 </a>

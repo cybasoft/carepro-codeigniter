@@ -562,3 +562,4 @@ $lang['Facility ID'] = 'Facility ID';
 $lang['Tax ID'] = 'Tax ID';
 $lang['Invoice for'] = 'Invoice for %s';
 $lang['Parents of'] = 'Parents of';
+$lang['Invoice has been send to parents of'] = 'Invoice has been send to parents of %s';

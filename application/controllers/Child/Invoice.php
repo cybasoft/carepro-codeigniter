@@ -279,7 +279,7 @@ class Invoice extends CI_Controller
      * @param string $action
      * @param int    $send
      */
-    function pdf($id, $action = 'I', $send = 0)
+    function pdf($id)
     {
         //get child data
         $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
@@ -301,32 +301,42 @@ class Invoice extends CI_Controller
 
         $dompdf->loadHtml($html);
         $dompdf->render();
-        // $dompdf->stream();
-        $output = $dompdf->output();
 
-        $fileName = 'application/temp/invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf';
-        file_put_contents($fileName, $output);
+        if(isset($_GET['dl']))
+            $dompdf->stream();
 
-        $this->sendInvoice($child, $fileName);
+        if(isset($_GET['send'])) {
+            $output = $dompdf->output();
 
+            $fileName = 'application/temp/invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf';
+            file_put_contents($fileName, $output);
+
+            $this->sendInvoice($child, $fileName);
+            flash('success', sprintf(lang('Invoice has been send to parents of'), $child->first_name));
+        }
+
+        redirectPrev();
     }
 
     function sendInvoice($child, $fileName)
     {
         $parents = $this->child->getParents($child->id);
+
         foreach ($parents->result() as $parent) {
-            $data = array(
+
+            $data = [
                 'to' => $parent->email,
                 'subject' => sprintf(lang('invoice_email_subject'), $child->last_name),
                 'message' => sprintf(lang('invoice_email_message'), $child->last_name),
                 'file' => $fileName
-            );
+            ];
+
             $this->mailer->send($data);
         }
 
-        //       @unlink($fileName);
-        flash('success', lang('request_success'));
-        redirectPrev();
+        @unlink($fileName);
+
+        return true;
     }
 
     function delete($invoice_id)

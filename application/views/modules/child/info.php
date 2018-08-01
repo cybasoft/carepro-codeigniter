@@ -2,10 +2,13 @@
     <div class="callout callout-success">
         <h3>
             <?php echo lang('Checked in'); ?>
-            <button id="<?php echo $child->id; ?>" class="btn btn-danger btn-sm pull-right checkout-btn">
-                <img src="<?php echo assets('img/content/right.svg'); ?>" style="width:20px;"/>
-                <?php echo lang('Check out'); ?>
-            </button>
+
+            <?php if(!is('parent')): ?>
+                <button id="<?php echo $child->id; ?>" class="btn btn-danger btn-sm pull-right checkout-btn">
+                    <img src="<?php echo assets('img/content/right.svg'); ?>" style="width:20px;"/>
+                    <?php echo lang('Check out'); ?>
+                </button>
+            <?php endif; ?>
         </h3>
         <?php
         echo '<strong class="text-info">'.lang('Date in').'</strong>: '
@@ -24,10 +27,14 @@
         <?php if(!is('parent')): ?>
             <h3>
                 <?php echo lang('Not checked in'); ?>
-                <button id="<?php echo $child->id; ?>" class="btn btn-success btn-sm pull-right checkin-btn">
-                    <img src="<?php echo assets('img/content/left.svg'); ?>" style="width:21px;"/>
-                    <?php echo lang('Check in'); ?>
-                </button>
+
+                <?php if(!is('parent')): ?>
+                    <button id="<?php echo $child->id; ?>" class="btn btn-success btn-sm pull-right checkin-btn">
+                        <img src="<?php echo assets('img/content/left.svg'); ?>" style="width:21px;"/>
+                        <?php echo lang('Check in'); ?>
+                    </button>
+                <?php endif; ?>
+
             </h3>
         <?php endif; ?>
 
