@@ -130,3 +130,7 @@ $route['meds/(:any)/:num']='child/meds/$1';
 $route['child/:num/notes']='child/notes/index';
 $route['notes/(:any)']='child/notes/$1';
 $route['notes/(:any)/:num']='child/notes/$1';
+
+//files
+$route['files']='files/index';
+$route['files/(:any)']='files/$1';

@@ -200,6 +200,13 @@
                         <span><?php echo lang('calendar'); ?></span>
                     </a>
                 </li>
+                <li class="<?php echo set_active('files'); ?>">
+                    <a href="<?php echo site_url('files'); ?>"
+                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
+                        <img class="icon" src="<?php echo assets('img/content/folder.svg'); ?>"/>
+                        <span><?php echo lang('files'); ?></span>
+                    </a>
+                </li>
                 <li class="<?php echo set_active(['news']); ?>">
                     <a href="<?php echo site_url('news'); ?>"
                        style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
