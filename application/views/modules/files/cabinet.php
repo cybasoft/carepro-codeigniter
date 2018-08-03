@@ -471,7 +471,7 @@ $folders = array();
 $files = array();
 if(is_array($objects)) {
     foreach ($objects as $file) {
-        if($file == '.' || $file == '..' && in_array($file, $GLOBALS['exclude_folders'])) {
+        if($file == '.' || $file == '..' && in_array($file, $GLOBALS['exclude_folders']) || substr($file, 0, 1)==".") {
             continue;
         }
         if(!FM_SHOW_HIDDEN && substr($file, 0, 1) === '.') {
@@ -480,7 +480,7 @@ if(is_array($objects)) {
         $new_path = $path.'/'.$file;
         if(is_file($new_path)) {
             $files[] = $file;
-        } elseif(is_dir($new_path) && $file != '.' && $file != '..' && !in_array($file, $GLOBALS['exclude_folders'])) {
+        } elseif(is_dir($new_path) && $file != '.' && $file != '..' && !in_array($file, $GLOBALS['exclude_folders']) || substr($file, 0, 1)==".") {
             $folders[] = $file;
         }
     }
@@ -493,7 +493,7 @@ if(!empty($folders)) {
     natcasesort($folders);
 }
 
-$this->load->view($this->module.'upload');
+$this->load->view($this->module.'upload',['path'=>$path]);
 $this->load->view($this->module.'copy',['parent'=>$parent,'folders'=>$folders]);
 
 // file viewer
