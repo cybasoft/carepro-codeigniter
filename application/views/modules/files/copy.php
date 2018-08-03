@@ -58,8 +58,8 @@ if(isset($_GET['copy']) && !isset($_GET['finish']) && !FM_READONLY) {
     <div class="path">
         <p><b><?php echo lang('Copying'); ?></b></p>
         <p class="break-word">
-            <?php echo lang('Source path'); ?>: <?php echo fm_enc(fm_convert_win(FM_ROOT_PATH.'/'.$copy)) ?><br>
-            <?php echo lang('Destination folder'); ?>: <?php echo fm_enc(fm_convert_win(FM_ROOT_PATH.'/'.FM_PATH)) ?>
+            <?php echo lang('Source path'); ?>: <?php echo fm_enc(fm_convert_win('/'.$copy)) ?><br>
+            <?php echo lang('Destination folder'); ?>: <?php echo fm_enc(fm_convert_win('/'.FM_PATH)) ?>
         </p>
         <p>
             <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;copy=<?php echo urlencode($copy) ?>&amp;finish=1"><i

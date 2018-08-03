@@ -34,7 +34,10 @@ function invert_all() {
 function showSearch(e) {
     var t = new XMLHttpRequest, n = "path=" + e + "&type=search&ajax=true";
     t.open("POST", "", !0), t.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), t.onreadystatechange = function () {
-        4 == t.readyState && 200 == t.status && (window.searchObj = t.responseText, document.getElementById("searchresultWrapper").innerHTML = "", window.location.hash = "#searchResult")
+        4 === t.readyState
+        && 200 === t.status
+        && (window.searchObj = t.responseText, document.getElementById("searchresultWrapper")
+            .innerHTML = "", window.location.hash = "#searchResult")
     }, t.send(n)
 }
 
@@ -53,7 +56,7 @@ function checkbox_toggle() {
 function backup(e, t) {
     var n = new XMLHttpRequest, a = "path=" + e + "&file=" + t + "&type=backup&ajax=true";
     return n.open("POST", "", !0), n.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), n.onreadystatechange = function () {
-        4 == n.readyState && 200 == n.status && alert(n.responseText)
+        4 === n.readyState && 200 ===  n.status && alert(n.responseText)
     }, n.send(a), !1
 }
 
@@ -81,7 +84,8 @@ var searchEl = document.querySelector("input[type=search]"), timeout = null;
 searchEl.onkeyup = function (e) {
     clearTimeout(timeout);
     console.log(window.searchObj);
-    var t = JSON.parse(window.searchObj), n = document.querySelector("input[type=search]").value;
+    var t = JSON.parse(window.searchObj);
+    var n = document.querySelector("input[type=search]").value;
     timeout = setTimeout(function () {
         if (n.length >= 2) {
             var e = getSearchResult(t, n), a = "", o = "";

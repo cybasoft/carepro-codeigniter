@@ -1,4 +1,5 @@
 <?php
+// upload form
 if(isset($_GET['upload']) && !FM_READONLY) {
     fm_show_header(); // HEADER
     fm_show_nav_path(FM_PATH); // current path
@@ -8,7 +9,7 @@ if(isset($_GET['upload']) && !FM_READONLY) {
 
     <div class="path">
         <p class="break-word label label-default"><?php echo lang('Uploading to').' '.fm_enc(fm_convert_win('/'.FM_PATH)) ?></p>
-        <form action="<?php echo site_url('files/upload/?p='.fm_enc(FM_PATH)); ?>" class="dropzone"
+        <form action="<?php echo site_url('files/upload').'?p='.fm_enc(FM_PATH) ?>" class="dropzone"
               id="fileuploader" enctype="multipart/form-data">
             <input type="hidden" name="p" value="<?php echo fm_enc(FM_PATH) ?>">
             <div class="fallback">
@@ -21,4 +22,3 @@ if(isset($_GET['upload']) && !FM_READONLY) {
     fm_show_footer();
     exit;
 }
-?>

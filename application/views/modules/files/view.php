@@ -1,5 +1,6 @@
 <?php
-// file viewer
+if(isset($_GET['view'])) {
+
     $file = $_GET['view'];
     $file = fm_clean_path($file);
     $file = str_replace('/', '', $file);
@@ -11,7 +12,7 @@
     fm_show_header(); // HEADER
     fm_show_nav_path(FM_PATH); // current path
 
-    $file_url = FM_ROOT_URL.fm_convert_win((FM_PATH != '' ? '/'.FM_PATH : '').'/'.$file);
+    $file_url = FM_PATH.$file;
     $file_path = $path.'/'.$file;
 
     $ext = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
@@ -50,7 +51,6 @@
     <div class="path">
         <p class="break-word"><b><?php echo $view_title ?> "<?php echo fm_enc(fm_convert_win($file)) ?>"</b></p>
         <p class="break-word">
-            Full path: <?php echo fm_enc(fm_convert_win($file_path)) ?><br>
             File
             size: <?php echo fm_get_filesize($filesize) ?><?php if($filesize >= 1000): ?> (<?php echo sprintf('%s bytes', $filesize) ?>)<?php endif; ?>
             <br>
@@ -93,30 +93,34 @@
             ?>
         </p>
         <p>
-            <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;dl=<?php echo urlencode($file) ?>"><i
-                            class="fa fa-cloud-download"></i> <?php echo lang('Download'); ?></a></b> &nbsp;
-            <strong>
-                <a href="<?php echo fm_enc($file_url) ?>" target="_blank"><i class="fa fa-external-link-square"></i>
-                    <?php echo lang('Open'); ?></a>
-            </strong>
-            &nbsp;
+            <a href="?p=<?php echo urlencode(FM_PATH) ?>" class="btn btn-default btn-xs">
+                <i class="fa fa-chevron-circle-left"></i>
+                <?php echo lang('Back'); ?>
+            </a>
+            <a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;dl=<?php echo urlencode($file) ?>"
+               class="btn btn-default btn-xs">
+                <i class="fa fa-download"></i>
+                <?php echo lang('Download'); ?>
+            </a>
+
             <?php
-            // ZIP actions
             if(!FM_READONLY && $is_zip && $filenames !== false) {
                 $zip_name = pathinfo($file_path, PATHINFO_FILENAME);
                 ?>
-                <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;unzip=<?php echo urlencode($file) ?>"><i
-                                class="fa fa-check-circle"></i> UnZip</a></b> &nbsp;
-                <b><a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;unzip=<?php echo urlencode($file) ?>&amp;tofolder=1"
-                      title="UnZip to <?php echo fm_enc($zip_name) ?>"><i class="fa fa-check-circle"></i>
-                        <?php echo lang('UnZip to folder'); ?></a></b> &nbsp;
+                <b>
+                    <a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;unzip=<?php echo urlencode($file) ?>"><i
+                                class="fa fa-check-circle"></i> UnZip</a>
+                </b>
+                <b>
+                    <a href="?p=<?php echo urlencode(FM_PATH) ?>&amp;unzip=<?php echo urlencode($file) ?>&amp;tofolder=1"
+                      title="UnZip to <?php echo fm_enc($zip_name) ?>">
+                        <i class="fa fa-check-circle"></i>
+                        <?php echo lang('UnZip to folder'); ?></a>
+                </b>
                 <?php
             }
             ?>
 
-            <strong><a href="?p=<?php echo urlencode(FM_PATH) ?>"><i class="fa fa-chevron-circle-left"></i>
-                    <?php echo lang('Back'); ?></a>
-            </strong>
         </p>
         <?php
         if($is_zip) {
@@ -173,4 +177,4 @@
     <?php
     fm_show_footer();
     exit;
-?>
+}

@@ -836,11 +836,10 @@ function fm_show_nav_path($path)
 
         <div class="float-right">
             <?php if(!FM_READONLY): ?>
-                <a title="Search" href="javascript:showSearch('<?php echo urlencode(FM_PATH) ?>')"><i
-                        class="fa fa-search"></i></a>
                 <a title="Upload files" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;upload"><i
                         class="fa fa-cloud-upload-alt" aria-hidden="true"></i></a>
-                <a title="New folder" href="#createNewItem"><i class="fa fa-plus-square"></i></a>
+                <a title="New folder" data-toggle="modal" data-target="#createNewItem">
+                    <i class="fa fa-plus-square"></i></a>
             <?php endif; ?>
         </div>
     </div>
@@ -862,38 +861,41 @@ header("Pragma: no-cache");
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/<?php echo FM_HIGHLIGHTJS_STYLE ?>.min.css">
 <?php endif; ?>
 
-<div id="wrapper">
-    <div id="createNewItem" class="modalDialog">
-        <div class="model-wrapper"><a href="#close" title="Close" class="close">X</a>
-            <h2><?php echo lang('Create New Item'); ?></h2>
-            <p>
-                <label for="newfile"><?php echo lang('Item Type'); ?>:</label>
-                <input type="radio" name="newfile" id="newfile" value="file"><?php echo lang('File'); ?>
-                <input type="radio" name="newfile" value="folder" checked><?php echo lang('Folder'); ?><br>
-                <label for="newfilename"><?php echo lang('Item Name'); ?>:</label>
-                <input type="text" name="newfilename" id="newfilename" value=""><br>
-                <input type="submit" name="submit" class="group-btn" value="<?php echo lang('Submit'); ?>"
-                       onclick="newfolder('<?php echo fm_enc(FM_PATH) ?>');return false;">
-            </p>
-        </div>
-    </div>
-    <div id="searchResult" class="modalDialog">
-        <div class="model-wrapper"><a href="#close" title="Close" class="close">X</a>
-            <input type="search" name="search" value="" placeholder="Find a item in current folder...">
-            <h2><?php echo lang('Search Results'); ?></h2>
-            <div id="searchresultWrapper"></div>
+    <div class="modal fade" id="createNewItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo lang('Create New Item'); ?></h4>
+                </div>
+                <div class="modal-body">
+                    <label for="newfile"><?php echo lang('Item Type'); ?></label>
+                    <br/>
+                    <input type="radio" class="radio-inline" name="newfile" id="newfile" value="file"><?php echo lang('File'); ?>
+                    <input type="radio" name="newfile" class="radio-inline" value="folder" checked><?php echo lang('Folder'); ?><br>
+                    <br/>
+                    <label for="newfilename"><?php echo lang('Item Name'); ?></label>
+                    <input type="text" name="newfilename" class="form-control" id="newfilename" value=""><br>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="newfolder('<?php echo fm_enc(FM_PATH) ?>');return false;">
+                        <?php echo lang('Submit'); ?>
+                    </button>
+                    <?php
+                    echo form_button(['data-dismiss' => 'modal', 'class' => 'btn btn-default'], lang('close'));
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
     <?php
     }
 
-    /**
-     * Show page footer
-     */
     function fm_show_footer()
     {
     ?>
-</div>
+
     <script src="<?php echo assets('js/files.js'); ?>"></script>
 <?php if(isset($_GET['view']) && FM_USE_HIGHLIGHTJS): ?>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>

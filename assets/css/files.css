@@ -65,9 +65,7 @@ code, pre {
     overflow: auto
 }
 
-.hidden, .modal {
-    display: none
-}
+
 pre.with-hljs {
     padding: 0
 }
@@ -215,35 +213,10 @@ code.maxheight, pre.maxheight {
     margin-right: 4px
 }
 
-.modal {
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: #000;
-    background-color: rgba(0, 0, 0, .4)
-}
 
 #editor, .edit-file-actions {
     position: absolute;
     right: 30px
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%
-}
-
-.close:focus, .close:hover {
-    color: #000;
-    cursor: pointer
 }
 
 #editor {
@@ -312,56 +285,6 @@ input[type=search] {
     border: 1px solid #ccc
 }
 
-.modalDialog {
-    position: fixed;
-    font-family: Arial, Helvetica, sans-serif;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, .8);
-    z-index: 99999;
-    opacity: 0;
-    -webkit-transition: opacity .4s ease-in;
-    -moz-transition: opacity .4s ease-in;
-    transition: opacity .4s ease-in;
-    pointer-events: none
-}
-
-.modalDialog:target {
-    opacity: 1;
-    pointer-events: auto
-}
-
-.modalDialog > .model-wrapper {
-    max-width: 400px;
-    position: relative;
-    margin: 10% auto;
-    padding: 15px;
-    border-radius: 2px;
-    background: #fff
-}
-
-.close {
-    float: right;
-    background: #fff;
-    color: #000;
-    line-height: 25px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 24px;
-    border-radius: 0 5px 0 0;
-    font-size: 18px
-}
-
-.close:hover {
-    background: #e4e4e4
-}
-
-.modalDialog p {
-    line-height: 30px
-}
 
 div#searchresultWrapper {
     max-height: 320px;
@@ -377,127 +300,6 @@ li.file:before, li.folder:before {
     font: normal normal normal 14px/1 FontAwesome;
     content: "\f016";
     margin-right: 5px
-}
-
-li.folder:before {
-    content: "\f114"
-}
-
-i.fa.fa-folder-o {
-    color: #eeaf4b
-}
-
-i.fa.fa-picture-o {
-    color: #26b99a
-}
-
-i.fa.fa-file-archive-o {
-    color: #da7d7d
-}
-
-.footer-links i.fa.fa-file-archive-o {
-    color: #296ea3
-}
-
-i.fa.fa-css3 {
-    color: #f36fa0
-}
-
-i.fa.fa-file-code-o {
-    color: #ec6630
-}
-
-i.fa.fa-code {
-    color: #cc4b4c
-}
-
-i.fa.fa-file-text-o {
-    color: #0096e6
-}
-
-i.fa.fa-html5 {
-    color: #d75e72
-}
-
-i.fa.fa-file-excel-o {
-    color: #09c55d
-}
-
-i.fa.fa-file-powerpoint-o {
-    color: #f6712e
-}
-
-.file-tree-view {
-    width: 24%;
-    float: left;
-    overflow: auto;
-    border: 1px solid #ddd;
-    border-right: 0;
-    background: #fff
-}
-
-.file-tree-view .tree-title {
-    background: #eee;
-    padding: 9px 2px 9px 10px;
-    font-weight: 700
-}
-
-.file-tree-view ul {
-    margin-left: 15px;
-    margin-bottom: 0
-}
-
-.file-tree-view i {
-    padding-right: 3px
-}
-
-.php-file-tree {
-    font-size: 100%;
-    letter-spacing: 1px;
-    line-height: 1.5;
-    margin-left: 5px !important
-}
-
-.php-file-tree a {
-    color: #296ea3
-}
-
-.php-file-tree A:hover {
-    color: #b00
-}
-
-.php-file-tree .open {
-    font-style: italic;
-    color: #2183ce
-}
-
-.php-file-tree .closed {
-    font-style: normal
-}
-
-#file-tree-view::-webkit-scrollbar {
-    width: 10px;
-    background-color: #F5F5F5
-}
-
-#file-tree-view::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: rgba(0, 0, 0, .1);
-    border: 1px solid #ccc
-}
-
-#file-tree-view::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: linear-gradient(left, #fff, #e4e4e4);
-    border: 1px solid #aaa
-}
-
-#file-tree-view::-webkit-scrollbar-thumb:hover {
-    background: #fff
-}
-
-#file-tree-view::-webkit-scrollbar-thumb:active {
-    background: linear-gradient(left, #22ADD4, #1E98BA)
 }
 
 .path .float-left li:first-child>a{

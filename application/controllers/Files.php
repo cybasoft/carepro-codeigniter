@@ -21,34 +21,41 @@ class Files extends CI_Controller{
     }
 
     function upload(){
+        // get path
+        $upload_path = './assets/uploads/files';
+        $p = isset($_GET['p']) ? $_GET['p'] : (isset($_POST['p']) ? $_POST['p'] : '');
+        $p = fm_clean_path($p);
+        $path=$upload_path;
 
-// Upload
-        if(!empty($_FILES) && !FM_READONLY) {
-            $f = $_FILES;
-            $path = FM_ROOT_PATH;
-            if(FM_PATH != '') {
-                $path .= '/'.FM_PATH;
-            }
-
-            $errors = 0;
-            $uploads = 0;
-            $total = count($f['file']['name']);
-            $allowed = (FM_EXTENSION) ? explode(',', FM_EXTENSION) : false;
-
-            $filename = $f['file']['name'];
-            $tmp_name = $f['file']['tmp_name'];
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            $isFileAllowed = ($allowed) ? in_array($ext, $allowed) : true;
-
-            if(empty($f['file']['error']) && !empty($tmp_name) && $tmp_name != 'none' && $isFileAllowed) {
-                if(move_uploaded_file($tmp_name, $path.'/'.$f['file']['name'])) {
-                    die('Successfully uploaded');
-                } else {
-                    die(sprintf('Error while uploading files. Uploaded files: %s', $uploads));
-                }
-            }
-            exit();
+        if($p != '') {
+            $path .= '/'.$p;
         }
+
+        if(!file_exists($path)) {
+            mkdir($path, 755, true);
+        }
+        $config = array(
+            'upload_path' => $path,
+            'allowed_types' => 'png|txt|gif|jpg|jpeg|pdf|doc|docx|xls|xlsx|ppt|pptx|ogg|mp3|mov|mp4',
+            'max_size' => '3048',
+            'encrypt_name' => false,
+        );
+        $this->load->library('upload', $config);
+        if(!$this->upload->do_upload('file')) {
+            $msg = lang('request_error');
+            $type = 'error';
+        } else {
+            $upload_data = $this->upload->data();
+
+            if($upload_data) {
+                $msg = lang('request_success');
+                $type = 'success';
+            } else {
+                $msg = lang('request_error');
+                $type = 'error';
+            }
+        }
+        return json_encode($msg, $type);
     }
 }
 ?>
