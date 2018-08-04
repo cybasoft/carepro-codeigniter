@@ -5,9 +5,6 @@ $readonly_users = array(
     'staff'
 );
 
-// allowed upload file extensions
-$upload_extensions = 'png,txt,gif,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,pptx,ogg,mp3,mov,mp4'; // 'gif,png,jpg'
-
 // Show or hide files and folders that starts with a dot
 $show_hidden_files = true;
 
@@ -17,14 +14,11 @@ $use_highlightjs = true;
 // highlight.js style
 $highlightjs_style = 'vs';
 
-// Send files though mail
-$toMailId = ""; //yourmailid@mail.com
-
 // Default timezone for date() and time() - http://php.net/manual/en/timezones.php
-$default_timezone = 'Etc/UTC'; // UTC
+$default_timezone = get_option('time_zone');// UTC
 
 // Root path for file manager
-$root_path =APPPATH.'/../assets/uploads/files';
+$root_path = APPPATH.'/../assets/uploads/files';
 
 // Root url for links in file manager.Relative to $http_host. Variants: '', 'path/to/subfolder'
 // Will not working if $root_path will be outside of server document root
@@ -35,13 +29,10 @@ $http_host = $_SERVER['HTTP_HOST'];
 
 // input encoding for iconv
 $iconv_input_encoding = 'UTF-8';
-
-// date() format for file modification date
-$datetime_format = 'd.m.y H:i';
+$datetime_format = get_option('date_format');
 
 //Array of folders excluded from listing
 $GLOBALS['exclude_folders'] = array();
-
 
 $current_user = $this->user->getGroups(user_id())[0]->name;
 
@@ -471,7 +462,7 @@ $folders = array();
 $files = array();
 if(is_array($objects)) {
     foreach ($objects as $file) {
-        if($file == '.' || $file == '..' && in_array($file, $GLOBALS['exclude_folders']) || substr($file, 0, 1)==".") {
+        if($file == '.' || $file == '..' && in_array($file, $GLOBALS['exclude_folders']) || substr($file, 0, 1) == ".") {
             continue;
         }
         if(!FM_SHOW_HIDDEN && substr($file, 0, 1) === '.') {
@@ -480,7 +471,7 @@ if(is_array($objects)) {
         $new_path = $path.'/'.$file;
         if(is_file($new_path)) {
             $files[] = $file;
-        } elseif(is_dir($new_path) && $file != '.' && $file != '..' && !in_array($file, $GLOBALS['exclude_folders']) || substr($file, 0, 1)==".") {
+        } elseif(is_dir($new_path) && $file != '.' && $file != '..' && !in_array($file, $GLOBALS['exclude_folders']) || substr($file, 0, 1) == ".") {
             $folders[] = $file;
         }
     }
@@ -493,8 +484,8 @@ if(!empty($folders)) {
     natcasesort($folders);
 }
 
-$this->load->view($this->module.'upload',['path'=>$path]);
-$this->load->view($this->module.'copy',['parent'=>$parent,'folders'=>$folders]);
+$this->load->view($this->module.'upload', ['path' => $path]);
+$this->load->view($this->module.'copy', ['parent' => $parent, 'folders' => $folders]);
 
 // file viewer
 
@@ -656,22 +647,26 @@ $all_files_size = 0;
         ?>
     </table>
     <?php if(!FM_READONLY): ?>
-    <p class="path footer-links"><a href="#/select-all" class="btn btn-info btn-xs" onclick="select_all();return false;"><i
+    <p class="path footer-links"><a href="#/select-all" class="btn btn-info btn-xs"
+                                    onclick="select_all();return false;"><i
                     class="fa fa-check-square"></i> <?php echo lang('Select all'); ?></a> &nbsp;
         <a href="#/unselect-all" class="btn btn-info btn-xs" onclick="unselect_all();return false;"><i
                     class="fa fa-window-close"></i> <?php echo lang('Unselect all'); ?></a> &nbsp;
-        <a href="#/invert-all" class="btn btn-info btn-xs" onclick="invert_all();return false;"><i class="fa fa-th-list"></i>
+        <a href="#/invert-all" class="btn btn-info btn-xs" onclick="invert_all();return false;"><i
+                    class="fa fa-th-list"></i>
             <?php echo lang('Invert selection'); ?></a> &nbsp;
         <input type="submit" class="hidden" name="delete" id="a-delete" value="Delete"
                onclick="return confirm('Delete selected files and folders?')">
-        <a href="javascript:document.getElementById('a-delete').click();" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i>
+        <a href="javascript:document.getElementById('a-delete').click();" class="btn btn-danger btn-xs"><i
+                    class="fa fa-trash"></i>
             <?php echo lang('Delete'); ?> </a> &nbsp;
         <input type="submit" class="hidden" name="zip" id="a-zip" value="Zip"
                onclick="return confirm('Create archive?')">
         <a href="javascript:document.getElementById('a-zip').click();" class="btn btn-warning btn-xs"><i
                     class="fa fa-file-archive"></i> <?php echo lang('Zip'); ?> </a> &nbsp;
         <input type="submit" class="hidden" name="copy" id="a-copy" value="Copy">
-        <a href="javascript:document.getElementById('a-copy').click();" class="btn btn-info btn-xs"><i class="fa fa-copy"></i>
+        <a href="javascript:document.getElementById('a-copy').click();" class="btn btn-info btn-xs"><i
+                    class="fa fa-copy"></i>
             <?php echo lang('Copy'); ?> </a>
         <?php endif; ?>
 </form>

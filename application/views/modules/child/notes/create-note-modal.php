@@ -32,7 +32,7 @@
                     echo '<label class="options">';
                     echo '<span>'.lang($tag->name).'</span>';
                     echo form_checkbox('tags[]', lang($tag->name), $tag->id == 1 ? TRUE : FALSE);
-                    echo '<span class="checkmark"></span>';
+                    echo '<span class="checkbox"></span>';
                     echo '</label>';
                 }
                 echo '</div>';

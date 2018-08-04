@@ -2,12 +2,13 @@
 
 class Reports extends CI_Controller
 {
+
     public function __construct()
     {
         parent::__construct();
         //redirect session
         setRedirect();
-        allow(['admin','manager']);
+        allow(['admin', 'manager']);
         //variables
         $this->load->model('My_reports', 'reports');
         $this->module = 'modules/reports/';
@@ -31,7 +32,7 @@ class Reports extends CI_Controller
             $children = $this->db->get('children')->result();
             $this->load->view($this->module.'roster', compact('children'));
         } else {
-            if(isset($_GET['group']) && $_GET['group']>0) {
+            if(isset($_GET['group']) && $_GET['group'] > 0) {
                 $this->db->select('*');
                 $this->db->where('child_group.group_id', $_GET['group']);
                 $this->db->from('children');
@@ -167,6 +168,15 @@ class Reports extends CI_Controller
     function reportForm()
     {
         $this->load->view($this->module.'report-form-popover');
+    }
+
+    function attendance()
+    {
+        if(isset($_POST['date'])) {
+            $this->load->view('modules/child/reports/attendance_meals');
+        }else{
+            $this->load->view('modules/child/reports/attendance_date');
+        }
     }
 }
 

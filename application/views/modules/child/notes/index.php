@@ -26,6 +26,12 @@
                     </li>
                 <?php endif; ?>
                 <?php if(!is('parent')): ?>
+                    <li role="presentation">
+                        <a href="#note-categories" aria-controls="note-categories" role="tab" data-toggle="tab">
+                            <i class="fa fa-th"></i>
+                            <span class="hidden-xs"><?php echo lang('Notes categories'); ?></span>
+                        </a>
+                    </li>
                     <li class="pull-right">
                         <button type="button" class="btn btn-warning btn-flat btn-sm" data-toggle="modal"
                                 data-target="#newIncidentModal">
@@ -111,7 +117,9 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
-
+                <div role="tabpanel" class="tab-pane fade" id="note-categories">
+                    <?php if(is(['manager', 'admin'])) $this->load->view($this->module.'categories'); ?>
+                </div>
                 <?php if(!is('parent')): ?>
                 <?php endif; ?>
                 <?php if(isset($_GET['viewNote']) || isset($_GET['viewIncident'])): ?>

@@ -384,31 +384,6 @@ function maintenance()
     }
 }
 
-/**
- * Lang override default and return text even if not translation found
- *
- * Fetches a language variable and optionally outputs a form label
- *
- * @param    string $text       The language line
- * @param    string $for        The "for" value (id of the form element)
- * @param    array  $attributes Any additional HTML attributes
- *
- * @return    string
- */
-function lang($text, $for = '', $attributes = array())
-{
-    $line = get_instance()->lang->line($text);
-    if($for !== '') {
-        $line = '<label for="'.$for.'"'._stringify_attributes($attributes).'>'.$line.'</label>';
-    }
-    if($line == "") {
-        $text = str_replace('_', ' ', $text);
-        $text = ucwords($text);
-        return $text;
-    }
-
-    return $line;
-}
 
 /**
  * dump and die

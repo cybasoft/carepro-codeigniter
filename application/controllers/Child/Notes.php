@@ -63,7 +63,7 @@ class notes extends CI_Controller
             }
 
         } else {
-            set_flash(['title','note-content']);
+            set_flash(['title', 'note-content']);
 
             flash('danger');
             validation_errors();
@@ -83,7 +83,7 @@ class notes extends CI_Controller
      */
     function destroy()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         if($this->notes->destroy()) {
             flash('success', lang('request_success'));
         } else {
@@ -94,7 +94,7 @@ class notes extends CI_Controller
 
     function createIncident()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         $child_id = $this->input->post('child_id');
 
         $this->load->library('form_validation');
@@ -153,7 +153,7 @@ class notes extends CI_Controller
      */
     function deleteIncident()
     {
-        allow(['admin','manager']);
+        allow(['admin', 'manager']);
         //delete incident
         if($this->notes->deleteIncident($this->uri->segment(3))) {
             flash('success', lang('request_success'));
@@ -167,12 +167,68 @@ class notes extends CI_Controller
 
     function deleteIncidentPhoto()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
 
         if($this->notes->deleteIncidentPhoto()) {
             echo 'success';
             return;
         }
         echo 'error';
+    }
+
+    function storeCategory()
+    {
+        allow(['admin', 'manager']);
+
+        $this->form_validation->set_rules('name', lang('Name'), 'required|xss_clean|trim');
+        if($this->form_validation->run() == true) {
+            $this->db->insert('notes_categories', ['name' => $this->input->post('name')]);
+            if($this->db->affected_rows() > 0) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('error', lang('request_error'));
+            }
+        } else {
+            validation_errors();
+            flash('error');
+        }
+        redirectPrev('', 'note-categories');
+    }
+
+    function destroyCategory()
+    {
+        allow(['admin', 'manager']);
+
+        $this->db->where('id', $this->uri->segment(3))->delete('notes_categories');
+        flash('success', lang('request_success'));
+        redirectPrev('', 'note-categories');
+    }
+
+    function storeTag()
+    {
+        allow(['admin', 'manager']);
+
+        $this->form_validation->set_rules('name', lang('Name'), 'required|xss_clean|trim');
+        if($this->form_validation->run() == true) {
+            $this->db->insert('notes_tags', ['name' => $this->input->post('name')]);
+            if($this->db->affected_rows() > 0) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('error', lang('request_error'));
+            }
+        } else {
+            validation_errors();
+            flash('error');
+        }
+        redirectPrev('', 'note-categories');
+    }
+
+    function destroyTag()
+    {
+        allow(['admin', 'manager']);
+
+        $this->db->where('id', $this->uri->segment(3))->delete('notes_tags');
+        flash('success', lang('request_success'));
+        redirectPrev('', 'note-categories');
     }
 }

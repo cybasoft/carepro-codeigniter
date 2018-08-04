@@ -10,6 +10,7 @@ class Health extends CI_Controller
         auth(true);
         $this->load->model('My_child', 'child');
         $this->load->model('My_health', 'health');
+        $this->load->model('My_food', 'food');
         $this->module = 'modules/child/health/';
         $this->title = lang('child').'-'.lang('health');
     }

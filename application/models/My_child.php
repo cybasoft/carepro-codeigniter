@@ -527,4 +527,13 @@ class My_child extends CI_Model
         return base_url().$photo;
     }
 
+    /**
+     * find if child was present on a  day
+     * @param $childID
+     * @param $day
+     */
+    function present($childID,$day){
+        //todo
+    }
+
 }

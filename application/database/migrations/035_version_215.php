@@ -9,7 +9,6 @@ class Migration_version_215 extends CI_Migration
      * @return void
      */
 
-    protected $table = 'child_room_notes';
 
     public function up()
     {
@@ -17,6 +16,7 @@ class Migration_version_215 extends CI_Migration
         $this->medPhotos();
         $this->medAdmin();
         $this->notesGroups();
+        $this->childFoodIntake();
     }
 
 
@@ -27,6 +27,7 @@ class Migration_version_215 extends CI_Migration
      */
     public function down()
     {
+        $this->dbforge->drop_table('child_food_intake', TRUE);
         $this->dbforge->drop_table('notes_categories', TRUE);
         $this->dbforge->drop_column('child_notes', 'category_id');
         $this->dbforge->drop_column('child_notes', 'tags');
@@ -34,6 +35,55 @@ class Migration_version_215 extends CI_Migration
         $this->dbforge->drop_table('child_room_notes', TRUE);
         $this->dbforge->drop_column('child_meds', 'photo_id');
         $this->dbforge->drop_table('med_photos', TRUE);
+    }
+
+    function childFoodIntake()
+    {
+        $table = 'child_food_intake';
+
+        $this->dbforge->add_field(
+            [
+                'id' => [
+                    'type' => 'INT',
+                    'constraint' => 11,
+                    'unsigned' => TRUE,
+                    'auto_increment' => TRUE
+                ],
+                'user_id' => [
+                    'type' => 'INT',
+                    'constraint' => 11,
+                    'unsigned' => TRUE,
+                ],
+                'child_id' => [
+                    'type' => 'INT',
+                    'constraint' => 11,
+                    'unsigned' => TRUE,
+                ],
+                'meal_time'=>[
+                    'type'=>'VARCHAR',
+                    'constraint'=>50,
+                    'null'=>false
+                ],
+                'quantity'=>[
+                    'type'=>'VARCHAR',
+                    'constraint'=>50,
+                    'null'=>false
+                ],
+                'remarks'=>[
+                    'type'=>'VARCHAR',
+                    'constraint'=>255,
+                    'null'=>true
+                ],
+                'taken_at' => [
+                    'type' => 'DATETIME'
+                ],
+            ]);
+        $this->dbforge->add_key("id", TRUE);
+        $this->dbforge->create_table($table, TRUE);
+
+        $this->db->query('ALTER TABLE '.$table.' ADD FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+        $this->db->query('ALTER TABLE '.$table.' ADD FOREIGN KEY (`child_id`) REFERENCES children(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+
     }
 
     function notesGroups()
@@ -84,8 +134,8 @@ class Migration_version_215 extends CI_Migration
 
         $defaultTags = ['General', 'Cognitive', 'Fine Motor', 'Language', 'Math', 'Science', 'Social'];
 
-        foreach($defaultTags as $tag){
-            $this->db->insert('notes_tags',['name',$tag]);
+        foreach ($defaultTags as $tag) {
+            $this->db->insert('notes_tags', ['name', $tag]);
         }
 
         //add relation to child_notes
