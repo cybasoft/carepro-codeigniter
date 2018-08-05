@@ -33,8 +33,10 @@
                         <?php
                         echo form_label(lang('edit_user_groups_heading'));
                         foreach ($groups as $group) : ?>
-                            <label class="checkbox">
+
+                            <label class="check">
                                 <?php
+                                echo $group['name'];
                                 $gID = $group['id'];
                                 $checked = null;
                                 $item = null;
@@ -54,7 +56,7 @@
                                 ?>
                                 <input type="radio" <?php echo $type; ?> name="groups[]"
                                        value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
-                                <?php echo $g_name; ?>
+                                <span class="checkmark"></span>
                             </label>
                         <?php endforeach; ?>
                         <?php

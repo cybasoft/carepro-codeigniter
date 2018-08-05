@@ -30,9 +30,9 @@
                         <div class="col-lg-6">
                             <?php echo form_label(lang('roles')); ?>
                             <?php foreach ($this->db->get('groups')->result() as $group) : ?>
-                                <label class="checkbox">
+                                <label class="check"><?php echo lang($group->name); ?>
                                     <input type="radio" name="groups[]" value="<?php echo $group->id; ?>">
-                                    <?php echo lang($group->name); ?>
+                                    <span class="checkmark"></span>
                                 </label>
                             <?php endforeach ?>
                         </div>

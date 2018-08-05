@@ -11,6 +11,7 @@
                 <?php echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit')); ?>
             </span>
         </div>
+        <?php echo form_close(); ?>
 
         <?php foreach ($this->db->get('notes_categories')->result() as $row): ?>
             <hr/>
@@ -29,6 +30,7 @@
                 <?php echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit')); ?>
             </span>
         </div>
+        <?php echo form_close(); ?>
 
         <?php foreach ($this->db->get('notes_tags')->result() as $row): ?>
             <hr/>

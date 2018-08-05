@@ -17,6 +17,7 @@ class Migration_version_215 extends CI_Migration
         $this->medAdmin();
         $this->notesGroups();
         $this->childFoodIntake();
+        $this->dbBackup();
     }
 
 
@@ -27,6 +28,7 @@ class Migration_version_215 extends CI_Migration
      */
     public function down()
     {
+        $this->dbforge->drop_table('db_backup', TRUE);
         $this->dbforge->drop_table('child_food_intake', TRUE);
         $this->dbforge->drop_table('notes_categories', TRUE);
         $this->dbforge->drop_column('child_notes', 'category_id');
@@ -37,6 +39,31 @@ class Migration_version_215 extends CI_Migration
         $this->dbforge->drop_table('med_photos', TRUE);
     }
 
+    function dbBackup(){
+
+        $table = 'db_backup';
+
+        $this->dbforge->add_field(
+            [
+                'id' => [
+                    'type' => 'INT',
+                    'constraint' => 11,
+                    'unsigned' => TRUE,
+                    'auto_increment' => TRUE
+                ],
+                'name'=>[
+                    'type'=>'VARCHAR',
+                    'constraint'=>255,
+                    'null'=>false
+                ],
+                'created_at' => [
+                    'type' => 'DATETIME'
+                ],
+            ]);
+        $this->dbforge->add_key("id", TRUE);
+        $this->dbforge->create_table($table, TRUE);
+
+    }
     function childFoodIntake()
     {
         $table = 'child_food_intake';

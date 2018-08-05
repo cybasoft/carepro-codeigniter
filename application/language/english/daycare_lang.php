@@ -116,7 +116,6 @@ $lang['table'] = 'Table';
 $lang['tables'] = 'Tables';
 $lang['table_name'] = 'Table name';
 $lang['generate_csv'] = 'Generate CSV';
-$lang['create_backup'] = 'Create backup';
 
 $lang['enrolled_on'] = 'Enrolled on';
 $lang['record'] = 'Record';
@@ -600,3 +599,5 @@ $lang['Food intake recorded'] = 'Food intake recorded';
 $lang['Food record'] = 'Food record';
 $lang['Intake history'] = 'Intake history';
 $lang['Notes categories'] = 'Notes categories';
+$lang['Create database backup'] = 'Create database backup';
+$lang['Database backups'] = 'Database backups';

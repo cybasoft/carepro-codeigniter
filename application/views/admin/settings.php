@@ -24,10 +24,16 @@
         </a>
     </li>
     <li>
+        <a href="#backup" data-toggle="tab"><i class="fa fa-database"></i>
+            <span class="hidden-xs hidden-sm"><?php echo lang('Backup'); ?></span>
+        </a>
+    </li>
+    <li>
         <a href="#support" data-toggle="tab"><i class="fa fa-hands-helping"></i>
             <span class="hidden-xs hidden-sm"><?php echo lang('support'); ?></span>
         </a>
     </li>
+
 </ul>
 
 <div class="tab-content col-md-10 col-xs-10 col-sm-10">
@@ -457,7 +463,6 @@
         echo form_close('demo');
         ?>
     </div>
-
     <div class="tab-pane" id="integrations">
         <div class="row">
             <?php echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]); ?>
@@ -474,6 +479,9 @@
         echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
         echo form_close('demo');
         ?>
+    </div>
+    <div class="tab-pane" id="backup">
+        <?php $this->load->view($this->module.'backup'); ?>
     </div>
     <div class="tab-pane" id="support">
         <h3><?php echo lang('support'); ?></h3>

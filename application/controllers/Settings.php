@@ -7,11 +7,12 @@
  */
 class Settings extends CI_Controller
 {
+
     public function __construct()
     {
         parent::__construct();
         setRedirect();
-        allow(['admin','manager']);
+        allow(['admin', 'manager']);
         //variables
         $this->module = 'admin/';
         $this->title = lang('settings');
@@ -19,6 +20,8 @@ class Settings extends CI_Controller
 
     function index()
     {
+        $this->load->model('My_backup','backup');
+
         $payMethods = $this->db->get('payment_methods')->result();
         page($this->module.'settings', compact('payMethods'));
     }
@@ -83,8 +86,8 @@ class Settings extends CI_Controller
         if(!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
         }
-        $filename= $_FILES["logo"]["name"];
-        $file_ext = pathinfo($filename,PATHINFO_EXTENSION);
+        $filename = $_FILES["logo"]["name"];
+        $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
         $config = array(
             'upload_path' => $upload_path,
             'allowed_types' => 'png|jpg|jpeg|png|svg',
@@ -92,7 +95,7 @@ class Settings extends CI_Controller
             'max_width' => '500',
             'max_height' => '112',
             'encrypt_name' => false,
-            'file_name'=>'logo.'.$file_ext,
+            'file_name' => 'logo.'.$file_ext,
             'overwrite' => true
         );
         $this->load->library('upload', $config);
@@ -109,7 +112,7 @@ class Settings extends CI_Controller
                 flash('danger', lang('request_error'));
             }
         }
-        redirectPrev('','#logo');
+        redirectPrev('', '#logo');
 
     }
 
@@ -123,8 +126,8 @@ class Settings extends CI_Controller
         if(!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
         }
-        $filename= $_FILES["invoice_logo"]["name"];
-        $file_ext = pathinfo($filename,PATHINFO_EXTENSION);
+        $filename = $_FILES["invoice_logo"]["name"];
+        $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
         $config = array(
             'upload_path' => $upload_path,
             'allowed_types' => 'png|jpg|jpeg|svg',
@@ -149,7 +152,7 @@ class Settings extends CI_Controller
                 flash('danger', lang('request_error'));
             }
         }
-        redirectPrev('','#logo');
+        redirectPrev('', '#logo');
     }
 
     function paymentMethods()
@@ -166,7 +169,7 @@ class Settings extends CI_Controller
             flash('error');
             validation_errors();
         }
-        redirectPrev('','#paymentMethods');
+        redirectPrev('', '#paymentMethods');
     }
 
     function deletePaymentMethod($id)
@@ -174,6 +177,7 @@ class Settings extends CI_Controller
         allow('admin');
         $this->db->delete('payment_methods', array('id' => $id));
         flash('success', lang('Settings have been updated'));
-        redirectPrev('','#paymentMethods');
+        redirectPrev('', '#paymentMethods');
     }
+
 }

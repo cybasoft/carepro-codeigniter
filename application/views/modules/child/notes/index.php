@@ -33,16 +33,18 @@
                         </a>
                     </li>
                     <li class="pull-right">
-                        <button type="button" class="btn btn-warning btn-flat btn-sm" data-toggle="modal"
-                                data-target="#newIncidentModal">
-                            <i class="fa fa-plus-circle"></i>
-                            <span class="hidden-xs"><?php echo lang('new incident'); ?></span>
-                        </button>
                         <button type="button" class="btn btn-primary btn-flat btn-sm" data-toggle="modal"
                                 data-target="#newNoteModal">
                             <i class="fa fa-plus-circle"></i>
                             <span class="hidden-xs"><?php echo lang('new_note'); ?> </span>
                         </button>
+
+                        <button type="button" class="btn btn-warning btn-flat btn-sm" data-toggle="modal"
+                                data-target="#newIncidentModal">
+                            <i class="fa fa-plus-circle"></i>
+                            <span class="hidden-xs"><?php echo lang('new incident'); ?></span>
+                        </button>
+
                     </li>
                 <?php endif; ?>
             </ul>

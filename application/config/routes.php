@@ -140,3 +140,7 @@ $route['child/addFoodPref'] = 'child/health/addFoodPref';
 
 $route['food/(:any)']='child/food/$1';
 $route['food/(:any)/:num']='child/food/$1';
+
+//backup
+$route['admin/backup/(:any)']='admin/backupController/$1';
+$route['admin/backup/(:any)/(:any)']='admin/backupController/$1';
