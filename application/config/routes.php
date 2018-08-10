@@ -109,7 +109,7 @@ $route['invoice/(:num)/stripe-pay'] = 'child/invoice/stripePayment/$1';
 
 //reports
 $route['child/reports'] = 'reports/index';
-$route['child/(:num)/reports'] = 'reports/attendance/$1';
+$route['child/(:num)/reports'] = 'child/child/reports/$1';
 $route['reports/(:any)'] = 'reports/$1';
 
 //rooms

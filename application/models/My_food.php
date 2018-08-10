@@ -46,10 +46,74 @@ class My_food extends CI_Model
                 'remarks' => $this->input->post('remarks')
             ]);
 
-        if($this->db->affected_rows() > 0)
+        if($this->db->affected_rows() > 0) {
+            //update attendance
+            $data = [
+                'child_id' => $this->input->post('child_id'),
+                'meal_time' => $this->input->post('meal_time'),
+                'created_at' => $date
+            ];
+            $this->updateFoodReport($data);
+
             return true;
+        }
 
         return false;
+    }
+
+    function updateFoodReport($data)
+    {
+
+        $res = $this->db
+            ->where('child_id', $data['child_id'])
+            ->where('created_at', date('Y-m-d', strtotime($data['created_at'])))
+            ->get('form_ny_attendance')->row();
+
+        if(count((array)$res) > 0) { //record exists then update
+
+            if(!is_array($res->food)) {
+                $res->food = [];
+                foreach ($this->mealTimes() as $time) {
+                    $res->food[$time] = false;
+                }
+
+                $res->food = serialize($res->food);
+            }
+
+            $arr = unserialize($res->food);
+
+            if(array_key_exists($data['meal_time'], $arr)) {
+                $arr[$data['meal_time']] = true;
+            }
+
+            $data['food'] = serialize($arr);
+            unset($data['meal_time']);
+            $data['updated_at'] = date_stamp();
+
+            $this->db
+                ->where('child_id', $data['child_id'])
+                ->where('created_at', date('Y-m-d'))
+                ->update('form_ny_attendance', $data);
+        } else {
+
+            $mealTimes = $this->mealTimes();
+            $times = [];
+            foreach ($mealTimes as $time) {
+                $times[$time] = false;
+                if($data['food'] == $time)
+                    $times[$time] = true;
+            }
+
+            $data['food'] = serialize($times);
+            $data['created_at'] = date('Y-m-d');
+            $data['updated_at'] = date_stamp();
+            $this->db->insert('form_ny_attendance', $data);
+        }
+    }
+
+    function mealTimes()
+    {
+        return ['B', 'AM', 'L', 'PM', 'S', 'EV'];
     }
 
     function mealTime($time)

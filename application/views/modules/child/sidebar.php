@@ -13,7 +13,7 @@
     <li <?php echo ($this->uri->segment(3) == 'billing') ? 'class="active"' : ""; ?>>
         <?php echo anchor('child/'.$child->id.'/billing', '<i class="fa text-info fa-credit-card"></i>'.lang('billing')); ?>
     </li>
-    <li <?php echo ($this->uri->segment(3) == 'attendance') ? 'class="active"' : ""; ?>>
-        <?php echo anchor('child/'.$child->id.'/attendance', '<i class="fa text-danger fa-clipboard"></i>'.lang('attendance')); ?>
+    <li <?php echo ($this->uri->segment(3) == 'reports') ? 'class="active"' : ""; ?>>
+        <?php echo anchor('child/'.$child->id.'/reports', '<i class="fa text-primary fa-clipboard"></i>'.lang('Reports')); ?>
     </li>
 </ul>

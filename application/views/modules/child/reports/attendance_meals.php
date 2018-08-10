@@ -291,11 +291,9 @@
         }
 
     </style>
-
 </head>
 <body>
 
-    <br/>
     <table id="content" width="0">
         <tbody>
         <tr id="topRow">
@@ -310,6 +308,8 @@
 
         <tr id="headerRow">
             <?php
+            $food = unserialize($nyForm->food);
+
             $start_date = new DateTime(date('Y-m-d H:i:s'));
             for ($i = 0; $i < 5; $i++):
                 $start_date->modify('+'.$i.' day');
@@ -325,27 +325,27 @@
             <?php for ($i = 0; $i < 5; $i++): ?>
                 <td rowspan="4" <?php echo $i == 2 ? 'colspan="2"' : ''; ?> class="checkFood">
                     <label class="check">B
-                        <input type="checkbox">
+                        <input type="checkbox" <?php echo ($food['B']==1) ? 'checked':''; ?>>
                         <span class="checkmark"></span>
                     </label>
                     <label class="check">AM
-                        <input type="checkbox">
+                        <input type="checkbox" <?php echo ($food['AM']==1) ? 'checked':''; ?>>
                         <span class="checkmark"></span>
                     </label>
                     <label class="check">L
-                        <input type="checkbox">
+                        <input type="checkbox"  <?php echo ($food['L']==1) ? 'checked':''; ?>>
                         <span class="checkmark"></span>
                     </label>
                     <label class="check">PM
-                        <input type="checkbox">
+                        <input type="checkbox" <?php echo ($food['PM']==1) ? 'checked':''; ?>>
                         <span class="checkmark"></span>
                     </label>
                     <label class="check">S
-                        <input type="checkbox">
+                        <input type="checkbox"  <?php echo ($food['S']==1) ? 'checked':''; ?>>
                         <span class="checkmark"></span>
                     </label>
                     <label class="check">EV
-                        <input type="checkbox">
+                        <input type="checkbox"  <?php echo ($food['EV']==1) ? 'checked':''; ?>>
                         <span class="checkmark"></span>
                     </label>
                 </td>
