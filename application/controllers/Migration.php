@@ -23,6 +23,7 @@ class Migration extends CI_Controller
 //        echo "php index.php migrate create [table1, table2] \tGenerate migration for an array of tables".PHP_EOL;
 //        echo "php index.php migrate create 'table1, table2' \tGenerate migration for a list of tables".PHP_EOL;
         echo "php index.php migration version <version number> \tPerform migration for a specific version".PHP_EOL;
+        echo "php index.php refresh \tReload all tables. All data will be lost";
     }
 
     public function run($version = null)
@@ -30,6 +31,9 @@ class Migration extends CI_Controller
         //prevent migrations in production mode
         if(ENVIRONMENT == "production" && $this->uri->segment(3) !=="force")
             show_error("\nSet application config to development mode first \n or use \n'php index.php migration run force'");
+
+        if(ENVIRONMENT =="production" && $verion ==null)
+            show_error("\nIn production mode, you must  enter version number");
 
         $mig = $this->db->get('migrations')->row();
         $migration = false;
@@ -63,6 +67,9 @@ class Migration extends CI_Controller
         }
     }
 
+    /**
+     * Generate migration file for a table
+     */
     function create($tables = "*")
     {
         $this->load->library('Migrations');
@@ -71,6 +78,9 @@ class Migration extends CI_Controller
 
     }
 
+    /**
+     * Seed default data
+     */
     function seed($table = "*")
     {
         echo 'Seeding table(s) '.$table.' '.PHP_EOL;
@@ -92,6 +102,52 @@ class Migration extends CI_Controller
         echo "Seeding completed ".PHP_EOL;
     }
 
+    /**
+     * Clean up all migrations and reload
+     */
+    function refresh(){
+        if(ENVIRONMENT=="development")
+            show_error('You must be in development environment to run this command');
+
+        echo "Are you sure you want to do this?  Type 'yes' to continue: ";
+
+        $handle = fopen ("php://stdin","r");
+        $line = fgets($handle);
+        if(trim($line) != 'yes'){
+            echo "ABORTING!\n";
+            exit;
+        }
+        fclose($handle);
+        echo "\n";
+        echo "Thank you, reloading migrations...\n";
+
+        $tables = $this->db->list_tables();
+
+        foreach ($tables as $table)
+        {
+            $this->db->query('SET FOREIGN_KEY_CHECKS=0;');
+
+            if($table =="migrations"){
+                $this->db->query('TRUNCATE table migrations');
+                $this->db->insert('migrations',['version'=>0]);
+                continue;
+            }
+            echo "Migrating {$table}\t....................";
+            $this->dbforge->drop_table($table,TRUE);
+            echo "Done!\n";
+
+            $this->db->query('SET FOREIGN_KEY_CHECKS=1;');
+        }
+        echo "All tables have been dropped!\nLoading new tables\t....................";
+
+        $this->migration->latest();
+
+        echo "Done!\n";
+
+        echo "Seeding\t....................";
+        $this->seed();
+        echo "Done!";
+    }
     function seedUsers()
     {
         $users = [
