@@ -11,7 +11,8 @@ class Migration_version_214 extends CI_Migration
     public function up()
     {
         //change news order column to comply with reserved keywords
-        $this->db->query('ALTER TABLE news CHANGE `order` list_order INT(5);');
+        if ($this->db->field_exists('order', 'news'))
+            $this->db->query('ALTER TABLE news CHANGE `order` list_order INT(5);');
     }
 
     /**
@@ -23,7 +24,8 @@ class Migration_version_214 extends CI_Migration
     {
 
         //restore old column 'order'
-        $this->db->query('ALTER TABLE news CHANGE `list_order` `order` INT(5) NOT NULL;');
+        if ($this->db->field_exists('list_order', 'news'))
+            $this->db->query('ALTER TABLE news CHANGE `list_order` `order` INT(5) NOT NULL;');
     }
 
 }

@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_ny_attendance extends CI_Migration
+class Migration_version_216 extends CI_Migration
 {
     /**
      * up (create table)
@@ -153,7 +153,7 @@ class Migration_ny_attendance extends CI_Migration
         $defaultTags = ['General', 'Cognitive', 'Fine Motor', 'Language', 'Math', 'Science', 'Social'];
 
         foreach ($defaultTags as $tag) {
-            $this->db->insert('notes_tags', ['name', $tag]);
+            $this->db->insert('notes_tags', ['name'=>$tag]);
         }
 
         //add relation to child_notes

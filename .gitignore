@@ -24,3 +24,4 @@ composer.lock
 /tests/tests/
 /tests/results/
 /artisan
+.vscode
