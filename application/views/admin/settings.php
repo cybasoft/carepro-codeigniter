@@ -516,6 +516,7 @@
         </div>
     </div>
 </div>
+
 <script>
     $('.settings').on('submit', function (e) {
         e.preventDefault();

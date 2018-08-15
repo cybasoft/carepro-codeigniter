@@ -170,7 +170,6 @@ class Migration_version_216 extends CI_Migration
                 ]
             ]
         );
-        $this->db->query('ALTER TABLE `child_notes` ADD FOREIGN KEY (`category_id`) REFERENCES notes_categories(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
 
     }
 }

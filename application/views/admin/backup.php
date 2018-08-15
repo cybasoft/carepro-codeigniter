@@ -38,17 +38,21 @@
     <div class="col-lg-4">
         <div class="box box-solid box-primary">
             <div class="box-body text-center">
-                <?php echo anchor('admin/backup/backup_db','<i class="fa fa-database"></i> '. lang('Create database backup'), 'class="btn btn-danger"'); ?>
+                <?php echo anchor('admin/backup/backup_db', '<i class="fa fa-database"></i> '.lang('Create database backup'), 'class="btn btn-danger"'); ?>
                 <hr/>
-                <?php echo form_open('admin/backup/create_csv', 'class="form-group"'); ?>
+                <?php echo form_open('admin/backup/create_csv', ['class' => 'form-group', 'demo' => 1]); ?>
                 <table>
                     <tr>
                         <td>
                             <select class="form-control" name="tablename">
                                 <option value="">--<?php echo lang('select'); ?>--</option>
                                 <?php
-                                foreach ($this->backup->tablesList() as $table) {
-                                    echo ' <option value="'.$table.'">'.$table.'</option>';
+                                if(get_option('demo_mode') == 1) {
+                                    echo '<option>No available in demo</option>';
+                                } else {
+                                    foreach ($this->backup->tablesList() as $table) {
+                                        echo ' <option value="'.$table.'">'.$table.'</option>';
+                                    }
                                 }
                                 ?>
                             </select>
@@ -59,7 +63,7 @@
 
                     </tr>
                 </table>
-                <?php echo form_close(); ?>
+                <?php echo form_close('demo'); ?>
 
             </div>
         </div>

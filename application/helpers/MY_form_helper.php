@@ -140,12 +140,13 @@ function set_value($field, $default = '', $html_escape = TRUE)
 function form_open($action = '', $attributes = array(), $hidden = array())
 {
 
-    if(is_array($attributes)
-        && !empty($attributes)
-        && get_option('demo_mode') == 1
-        && array_key_exists('demo', $attributes))
-        return ''; //disable form in demo
-
+    if(!is('admin')) {
+        if(is_array($attributes)
+            && !empty($attributes)
+            && get_option('demo_mode') == 1
+            && array_key_exists('demo', $attributes))
+            return ''; //disable form in demo
+    }
     $CI =& get_instance();
 
     // If no action is provided then set to the current url
@@ -216,7 +217,7 @@ function form_close($extra = '')
 {
     if($extra == "demo") {
         $extra = '';
-        if(get_option('demo_mode') == 1)
+        if(get_option('demo_mode') == 1 &&  !is('admin'))
             return ''; //disable form in demo mode
     }
 

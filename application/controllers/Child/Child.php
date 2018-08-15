@@ -12,6 +12,7 @@ class Child extends CI_Controller
     {
         parent::__construct();
         $this->load->model('My_invoice', 'invoice');
+        $this->load->model('My_food','food');
         $this->module = 'modules/child/';
         $this->title = lang('child');
     }
