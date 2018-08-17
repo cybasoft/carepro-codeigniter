@@ -22,7 +22,7 @@ class Pickup extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $pickup = $this->child->createPickup($id);
             if ($pickup > 0) {
-                
+
                 flash('success', lang('request_success'));
                 //upload photo
                 $this->uploadPhoto($pickup);
