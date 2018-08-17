@@ -1,5 +1,6 @@
 <?php
 if(isset($_GET['new']) && isset($_GET['type']) && !FM_READONLY) {
+    allow(['admin','manager','staff']);
     $new = strip_tags($_GET['new']);
     $type = $_GET['type'];
     $new = fm_clean_path($new);

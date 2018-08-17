@@ -120,6 +120,8 @@ class RoomsController extends CI_Controller
 
     function destroy()
     {
+        allow(['admin','manager']);
+
         $id = $this->uri->segment(3);
 
         $this->db->where('room_id',$id)->delete('child_room');

@@ -33,25 +33,28 @@ function lang($text, $for = '', $attributes = array())
         $l = explode(' ', $text);
         if(count($l) > 1) {
             //test lowercase
-            $line = strtolower($text); //foo bar
-            $line = $ci->lang->line($line);
+            $line = $ci->lang->line(strtolower($text));//foo bar
 
-            if($line == "") { //test uppercase
-                $line = strtoupper($text); //FOO BAR
-                $line = $ci->lang->line($line);
+            if($line == "") {
+                $line = $ci->lang->line(strtoupper($text)); //FOO BAR
 
-                if($line == "") {//test ucwords
-                    $line = ucwords($text); //Foo Bar
-                    $line = $ci->lang->line($line);
+                if($line == "") {
+                    $line = $ci->lang->line(ucwords($text));//Foo Bar
 
                     if($line == "") { //test ucfirst
-                        $line = ucfirst($l[0]).' '.strtolower($l[1]); //Foo bar
+                        $line = ucfirst($l[0]); //Foo bar
+
+                        for ($i = 1; $i < count($l); $i++) {
+                            $line .= ' '.strtolower($l[$i]);
+                        }
                         $line = $ci->lang->line($line);
                     }
                 }
             }
 
-        } else {//return same string
+        }
+
+        if($line == "") {//return same string
             $text = str_replace('_', ' ', $text);
             $text = ucwords($text);
             return $text;

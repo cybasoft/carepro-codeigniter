@@ -109,7 +109,7 @@
     </div>
 </div>
 
-<?php if(!('parent')): ?>
+<?php if(!is('parent')): ?>
     <?php $this->load->view($this->module.'update_child_modal'); ?>
 <?php endif; ?>
 

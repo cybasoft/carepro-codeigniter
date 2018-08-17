@@ -124,13 +124,21 @@ function last_page()
 function redirectPrev($msg = array(), $tab = '')
 {
     $ci = &get_instance();
+
     if(!empty($msg)) {
         flash('info', $msg);
     }
-    if(!empty($tab))
-        $tab = '#'.$tab;
 
-    redirect($ci->session->userdata('last_page').$tab);
+    //dont redirect if json
+    if($ci->input->is_ajax_request()) {
+        die();
+
+    } else {
+        if(!empty($tab))
+            $tab = '#'.$tab;
+
+        redirect($ci->session->userdata('last_page').$tab);
+    }
 }
 
 /**
@@ -335,6 +343,13 @@ function parents_page($page, $data = array())
 
 function demo()
 {
+    $allowed_demo_routes = [
+        'child',
+        'children',
+        'rooms',
+        'calendar'
+    ];
+
     $ci = &get_instance();
 
     $seg1 = $ci->uri->segment(1);
@@ -342,27 +357,45 @@ function demo()
     $seg3 = $ci->uri->segment(3);
     $seg4 = $ci->uri->segment(4);
 
+    $deleteLinks = [
+        $seg1,
+        $seg2,
+        $seg3,
+        $seg4
+    ];
+
     if($ci->users->uid() > 0) {
         if(get_option('demo_mode') == 1) {
             $ci->load->helper('language');
 
             //prevent all post methods
             if(!is('super')) {
-                if($ci->input->server('REQUEST_METHOD') == 'POST' && $seg1 !== "child") {
+                if($ci->input->server('REQUEST_METHOD') == 'POST') {
+
+                    if(in_array($seg1, $allowed_demo_routes)) {
+                        //good
+                    } else {
+                        flash('danger', lang('feature_disabled_in_demo'));
+                        redirectPrev();
+                    }
+                }
+
+                //prevent delete
+                if(in_array('delete', $deleteLinks)) {
+                    flash('danger', lang('feature_disabled_in_demo'));
+                    redirectPrev();
+                }
+                if(strstr($seg1, 'delete')
+                    || strstr($seg2, 'delete')
+                    || strstr($seg3, 'delete')
+                    || strstr($seg4, 'delete')
+                    || strstr($seg4, 'remove')
+                ) {
                     flash('danger', lang('feature_disabled_in_demo'));
                     redirectPrev();
                 }
             }
-            //prevent delete
-            if(strstr($seg1, 'delete')
-                || strstr($seg2, 'delete')
-                || strstr($seg3, 'delete')
-                || strstr($seg4, 'delete')
-                || strstr($seg4, 'remove')
-            ) {
-                flash('danger', lang('feature_disabled_in_demo'));
-                redirectPrev();
-            }
+
         }
     }
 }
@@ -383,7 +416,6 @@ function maintenance()
 </div>');
     }
 }
-
 
 /**
  * dump and die
@@ -427,7 +459,7 @@ function moneyFormat($amount, $symbol = false)
 {
     $amount = str_replace(',', '', $amount);
     $amount = str_replace(get_option('currency_symbol'), '', $amount);
-    
+
     if($symbol == true)
         return get_option('currency_symbol').number_format((float)$amount, 2);
 
@@ -500,7 +532,7 @@ function special_options()
         'google_analytics' => '',
         'currency_symbol' => '$', 'currency_abbreviation' => 'USD',
         'date_format' => 'm/d/Y h:ia',
-        'allow_registration' => 0, 'allow_reset_password' => 1, 'enable_captcha' => 1,
+        'allow_registration' => 0, 'allow_reset_password' => 1, 'enable_captcha' => 0,
         'demo_mode' => 0, 'maintenance_mode' => 0,
         'use_smtp' => 0, 'smtp_user' => '', 'smtp_pass' => '', 'smtp_host' => '', 'smtp_port' => '',
         'logo' => 'logo.png', 'invoice_logo' => 'invoice_logo.png',

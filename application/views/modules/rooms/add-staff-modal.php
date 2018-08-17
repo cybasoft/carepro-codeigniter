@@ -1,5 +1,3 @@
-
-
 <div class="modal fade" id="staffModal" tabindex="-1" role="dialog" aria-labelledby="staffModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

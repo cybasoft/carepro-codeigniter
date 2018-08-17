@@ -394,10 +394,9 @@ function php_file_tree($directory)
  * @param string $msg
  * @param string $status
  */
-function fm_set_msg($msg, $status = 'ok')
+function fm_set_msg($msg, $status = 'success')
 {
-    $_SESSION['message'] = $msg;
-    $_SESSION['status'] = $status;
+   flash($status,$msg);
 }
 
 /**

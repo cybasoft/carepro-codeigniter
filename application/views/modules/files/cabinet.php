@@ -494,13 +494,6 @@ $this->load->view($this->module.'view', ['path' => $path]);
 fm_show_header(); // HEADER
 fm_show_nav_path(FM_PATH); // current path
 
-// messages
-if(isset($_SESSION['message'])) {
-    $class = isset($_SESSION['status']) ? $_SESSION['status'] : 'ok';
-    echo '<p class="message '.$class.'">'.$_SESSION['message'].'</p>';
-    unset($_SESSION['message']);
-    unset($_SESSION['status']);
-}
 
 $num_files = count($files);
 $num_folders = count($folders);
