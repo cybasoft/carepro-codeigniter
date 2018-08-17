@@ -1,9 +1,4 @@
-# This is a sample build configuration for PHP.
-# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
-image: php:7.1.7
+image: samueldebruyn/debian-git
 
 pipelines:
   default:
@@ -11,5 +6,7 @@ pipelines:
         name: Deploy to test
         deployment: test   # can be test, staging or production
         script:
-          - apt-get update && apt-get install -y unzip
+          - apt-get update
+          - apt-get -qq install git-ftp
+          - git ftp init --user $FTP_USERNAME --passwd $FTP_PASSWORD ftp://amdtllc.com/daycarepro/test/
           - echo "Deploying to test environment"
