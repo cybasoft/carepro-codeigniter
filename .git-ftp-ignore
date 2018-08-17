@@ -1,1 +1,3 @@
 bitbucket-pipelines.yml
+index.php
+application/config/production/
