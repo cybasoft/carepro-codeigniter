@@ -12,11 +12,6 @@
 class my_health extends CI_Model
 {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
     /***
      * @return bool
      */

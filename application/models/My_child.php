@@ -3,13 +3,6 @@
 class My_child extends CI_Model
 {
 
-    function __construct()
-    {
-        parent::__construct();
-        $this->load->model('My_parent', 'parent');
-
-    }
-
     function first($id)
     {
         return $this->db->where('id', $id)->get('children')->row();

@@ -25,10 +25,11 @@ class Migration_version_215 extends CI_Migration
      */
     public function down()
     {
-
-        $this->dbforge->drop_table('child_room_notes', TRUE);
         $this->dbforge->drop_column('child_meds', 'photo_id');
+
+        $this->dbforge->drop_table('med_admin', TRUE);
         $this->dbforge->drop_table('med_photos', TRUE);
+        $this->dbforge->drop_table('child_room_notes', TRUE);
     }
 
 

@@ -50,12 +50,12 @@ class Auth extends CI_Controller
 
         $captcha = $this->captcha();
         $data['captcha'] = array(
-            'type'=>'text',
+            'type' => 'text',
             'name' => 'captcha',
             'class' => 'form-control input100',
             'required' => 'required',
-            'style'=>'border:solid 1px #ccc',
-            'placeholder'=>'Captcha'
+            'style' => 'border:solid 1px #ccc',
+            'placeholder' => 'Captcha'
         );
         $data['captcha_image'] = $captcha['image'];
         $this->page('login', compact('data'));
@@ -67,101 +67,101 @@ class Auth extends CI_Controller
 
         $this->refreshCaptcha();
 
-        if(!empty($this->input->post('email'))) {
-            $this->form_validation->set_rules('email', lang('email'), 'required|is_unique[users.email]');
-            $this->form_validation->set_rules('password', lang('password'), 'required|callback_validate_password');
-            $this->form_validation->set_rules('password_confirm', lang('password_confirmation'), 'required');
-            $this->form_validation->set_rules('first_name', lang('first_name'), 'required');
-            $this->form_validation->set_rules('last_name', lang('last_name'), 'required');
-            $this->form_validation->set_rules('phone', lang('phone'), 'required');
+        $this->form_validation->set_rules('email', lang('email'), 'required|is_unique[users.email]');
+        $this->form_validation->set_rules('password', lang('password'), 'required|callback_validate_password');
+        $this->form_validation->set_rules('password_confirm', lang('password_confirmation'), 'required');
+        $this->form_validation->set_rules('first_name', lang('first_name'), 'required');
+        $this->form_validation->set_rules('last_name', lang('last_name'), 'required');
+        $this->form_validation->set_rules('phone', lang('phone'), 'required');
 
-            if(get_option('enable_captcha') == 1)
-                $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
+        if(get_option('enable_captcha') == 1)
+            $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
 
-            if($this->form_validation->run() == true) {
-                $groups = array(4);
+        if($this->form_validation->run() == true) {
 
-                $data = array(
-                    'first_name' => $this->input->post('first_name'),
-                    'last_name' => $this->input->post('last_name'),
-                    'phone' => $this->input->post('phone'),
-                    'activation_code' => time() + rand(111, 999),
-                    'address' => $this->input->post('address')
-                );
+            $data = array(
+                'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'phone' => $this->input->post('phone'),
+                'activation_code' => time() + rand(111, 999),
+                'address' => $this->input->post('address')
+            );
 
-                if($this->auth->register($data, $groups)) {
-                    flash('success', lang('Registration successful'));
+            if($this->auth->register($data, 'parent')) {
+                flash('success', lang('Registration successful'));
 
-                    if($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
-                        redirect('dashboard', 'refresh');
-                    }
-                } else {
-                    flash('error', lang('request_error'));
-                    redirectPrev();
+                if($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
+                    redirect('dashboard', 'refresh');
                 }
             } else {
-                //the user is not logging in so display the login page
+                flash('error', lang('request_error'));
+                redirectPrev();
+            }
+        } else {
+            //the user is not logging in so display the login page
+            if(!empty($this->input->post('email'))) {
                 validation_errors();
                 flash('danger');
             }
+
+            $data['email'] = array(
+                'name' => 'email',
+                'type' => 'email',
+                'value' => set_value('email'),
+                'class' => 'input100',
+                'required' => 'required'
+            );
+            $data['first_name'] = array(
+                'name' => 'first_name',
+                'type' => 'text',
+                'value' => set_value('first_name'),
+                'class' => 'input100',
+                'required' => 'required'
+            );
+            $data['last_name'] = array(
+                'name' => 'last_name',
+                'type' => 'text',
+                'value' => set_value('last_name'),
+                'class' => 'input100',
+                'required' => 'required'
+            );
+            $data['phone'] = array(
+                'name' => 'phone',
+                'type' => 'text',
+                'value' => set_value('phone'),
+                'class' => 'input100',
+                'required' => 'required'
+            );
+            $data['address'] = array(
+                'name' => 'address',
+                'value' => set_value('address'),
+                'class' => 'input100',
+                'required' => 'required',
+                'rows' => 3
+            );
+            $data['password'] = array(
+                'name' => 'password',
+                'type' => 'password',
+                'class' => 'input100',
+                'required' => 'required'
+            );
+            $data['password_confirm'] = array(
+                'name' => 'password_confirm',
+                'type' => 'password',
+                'class' => 'input100',
+                'required' => 'required'
+            );
+            $captcha = $this->captcha();
+            $data['captcha'] = array(
+                'name' => 'captcha',
+                'required' => 'required',
+                'class' => 'form-control input100',
+                'style' => 'border:solid 1px #ccc',
+                'placeholder' => 'Captcha'
+            );
+            $data['captcha_image'] = $captcha['image'];
+            $this->page('register', compact('data'));
         }
-        $data['email'] = array(
-            'name' => 'email',
-            'type' => 'email',
-            'value' => set_value('email'),
-            'class' => 'input100',
-            'required' => 'required'
-        );
-        $data['first_name'] = array(
-            'name' => 'first_name',
-            'type' => 'text',
-            'value' => set_value('first_name'),
-            'class' => 'input100',
-            'required' => 'required'
-        );
-        $data['last_name'] = array(
-            'name' => 'last_name',
-            'type' => 'text',
-            'value' => set_value('last_name'),
-            'class' => 'input100',
-            'required' => 'required'
-        );
-        $data['phone'] = array(
-            'name' => 'phone',
-            'type' => 'text',
-            'value' => set_value('phone'),
-            'class' => 'input100',
-            'required' => 'required'
-        );
-        $data['address'] = array(
-            'name' => 'address',
-            'value' => set_value('address'),
-            'class' => 'input100',
-            'required' => 'required',
-            'rows' => 3
-        );
-        $data['password'] = array(
-            'name' => 'password',
-            'type' => 'password',
-            'class' => 'input100',
-            'required' => 'required'
-        );
-        $data['password_confirm'] = array(
-            'name' => 'password_confirm',
-            'type' => 'password',
-            'class' => 'input100',
-            'required' => 'required'
-        );
-        $captcha = $this->captcha();
-        $data['captcha'] = array(
-            'name' => 'captcha',
-            'required' => 'required',
-            'class' => 'form-control input100',
-            'style'=>'border:solid 1px #ccc',
-            'placeholder'=>'Captcha'
-        );
-        $data['captcha_image'] = $captcha['image'];
-        $this->page('register', compact('data'));
     }
 
     public function validate_captcha($captcha)
@@ -188,13 +188,13 @@ class Auth extends CI_Controller
             'img_url' => base_url().'application/temp/captcha/',
             'font_path' => base_url().'system/fonts/texb.ttf',
             'img_width' => '150',
-            'show_grid'=>FALSE,
+            'show_grid' => FALSE,
             'img_height' => 28,
             'expiration' => 3600,
-            'font_size'=>30,
+            'font_size' => 30,
             'colors' => array(
-                'background' => array(247,247,247),
-                'border' => array(247,247,247),
+                'background' => array(247, 247, 247),
+                'border' => array(247, 247, 247),
                 'text' => array(102, 117, 223),
                 'grid' => array(255, 255, 255)
             )

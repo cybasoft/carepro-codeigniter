@@ -20,18 +20,14 @@ $route['reset/(:any)']='auth/reset/$1';
 //accounting
 $route['new_invoice'] = 'invoice/create_invoice';
 
-$route['groups/:num'] = 'users/edit_group/$1';
 $route['settings/(:any)'] = 'settings/$1';
 
 //users
-//$route['users'] = 'users';
-//$route['users/create'] = 'users/store';
-//$route['users/:any'] = 'users/$1';
-//$route['user/(:num)']['get'] = 'users/view/$1';
-//$route['user/(:num)']['post'] = 'users/update/$1';
-//$route['user/(:num)/delete'] = 'users/delete/$1';
-//$route['user/(:num)/updateUserData'] = 'users/updateUserData/$1';
-$route['users/(:any)'] = 'users/$1';
+$route['users'] = 'userController/index';
+$route['users/(:any)'] = 'userController/$1';
+$route['users/(:any)/:num'] = 'userController/$1';
+
+$route['groups/:num'] = 'userController/edit_group/$1';
 
 //calendar
 $route['calendar/(:any)'] = 'calendar/$1';

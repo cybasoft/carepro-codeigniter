@@ -23,12 +23,12 @@ class Migration_version_216 extends CI_Migration
      */
     public function down()
     {
+        $this->dbforge->drop_column('child_notes', 'category_id');
+        $this->dbforge->drop_column('child_notes', 'tags');
+
         $this->dbforge->drop_table('db_backup', TRUE);
         $this->dbforge->drop_table('child_food_intake', TRUE);
         $this->dbforge->drop_table('notes_categories', TRUE);
-        $this->dbforge->drop_column('child_notes', 'category_id');
-        $this->dbforge->drop_column('child_notes', 'tags');
-        $this->dbforge->drop_table('med_admin', TRUE);
     }
 
     function dbBackup(){

@@ -5,35 +5,20 @@
     <div class="col-sm-9 col-md-9 col-lg-9">
         <h2>
             <i class="fa fa-clipboard" aria-hidden="true"></i> <?php echo lang('new_article'); ?></h2>
-        <?php echo form_open('news/create'); ?>
+        <?php echo form_open('news/create');
 
-        <label><?php echo lang('title'); ?></label>
-        <input type="text"
-               name="article_name"
-               class="form-control"
-               required="" placeholder="<?php echo lang('title'); ?>"
-               value=""/>
-        <br/>
+        echo form_label(lang('Title'), 'title');
+        echo form_input('title', null, ['class' => 'form-control', 'required' => 'required']);
 
-        <label><?php echo lang('list_order'); ?></label>
-        <input
-                type="text"
-                name="article_order"
-                class="form-control"
-                required="" placeholder=""
-                value="0"/>
+        echo form_label(lang('list_order'), 'list_order');
+        echo form_input('list_order', set_value('list_order', 0), ['class' => 'form-control', 'required' => 'required']);
 
-        <div class="box-body">
-            <label>  <?php echo lang('content'); ?></label>
-            <textarea name="article_body"
-                      class="editor"
-                      rows="40"
-                      style="height:300px"></textarea>
-        </div>
-        <div class="box-footer">
-            <button class="btn btn-primary"><?php echo lang('submit'); ?></button>
-        </div>
-        <?php echo form_close(); ?>
+        echo form_label(lang('Content'), 'article_body');
+        echo form_input('article_body', null, ['class' => 'form-control', 'rows' => 10]);
+        echo '<br/>';
+
+        echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit'));
+        echo form_close(); ?>
     </div>
 
 </div>

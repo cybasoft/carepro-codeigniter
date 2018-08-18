@@ -1,22 +1,22 @@
 <div class="row">
     <div class="col-sm-2 col-xs-6">
-        <span class="label label-success"><?php echo $this->users->getCount(); ?></span>
+        <span class="label label-success"><?php echo $this->user->getCount(); ?></span>
         <span class=""><?php echo lang('users'); ?></span>
     </div>
     <div class="col-sm-2 col-xs-6">
-        <span class="label label-info"><?php echo $this->users->getCount('admin'); ?></span>
+        <span class="label label-info"><?php echo $this->user->getCount('admin'); ?></span>
         <span class=""><?php echo lang('admin'); ?></span>
     </div>
     <div class="col-sm-2 col-xs-6">
-        <span class="label label-info"><?php echo $this->users->getCount('manager'); ?></span>
+        <span class="label label-info"><?php echo $this->user->getCount('manager'); ?></span>
         <span class=""><?php echo lang('staff'); ?></span>
     </div>
     <div class="col-sm-2 col-xs-6">
-        <span class="label label-info"><?php echo $this->users->getCount('staff'); ?></span>
+        <span class="label label-info"><?php echo $this->user->getCount('staff'); ?></span>
         <span class=""><?php echo lang('staff'); ?></span>
     </div>
     <div class="col-sm-2 col-xs-6">
-        <span class="label label-info"><?php echo $this->users->getCount('parent'); ?></span>
+        <span class="label label-info"><?php echo $this->user->getCount('parent'); ?></span>
         <span class=""><?php echo lang('parents'); ?></span>
     </div>
 </div>
@@ -73,7 +73,7 @@
                     .lang('index_inactive_link').'</span>'); ?>
             </td>
             <td>
-                <a id="<?php echo $user->id; ?>" class="editUserBtn" href="#">
+                <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
                     <span class="btn btn-default btn-xs">
                         <i class="fa fa-pencil-alt"></i></span>
                 </a>

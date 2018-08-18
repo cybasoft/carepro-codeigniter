@@ -12,10 +12,6 @@
 class My_food extends CI_Model
 {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @param $childID

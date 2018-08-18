@@ -61,7 +61,7 @@ $platforms = array(
 $browsers = array(
 	'OPR'			=> 'Opera',
 	'Flock'			=> 'Flock',
-	'Edge'			=> 'Spartan',
+	'Edge'			=> 'Edge',
 	'Chrome'		=> 'Chrome',
 	// Opera 10+ always reports Opera/9.80 and appends Version/<real version> to the user agent string
 	'Opera.*?Version'	=> 'Opera',
@@ -87,7 +87,8 @@ $browsers = array(
 	'amaya'			=> 'Amaya',
 	'IBrowse'		=> 'IBrowse',
 	'Maxthon'		=> 'Maxthon',
-	'Ubuntu'		=> 'Ubuntu Web Browser'
+	'Ubuntu'		=> 'Ubuntu Web Browser',
+	'Vivaldi'		=> 'Vivaldi'
 );
 
 $mobiles = array(
@@ -212,4 +213,3 @@ $robots = array(
 	'MJ12bot'		=> 'Majestic-12',
 	'Uptimebot'		=> 'Uptimebot'
 );
-

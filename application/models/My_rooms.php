@@ -5,11 +5,6 @@ class My_rooms extends CI_Model
 
     protected $table = 'child_rooms';
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * retrieve all rooms
      * @return mixed

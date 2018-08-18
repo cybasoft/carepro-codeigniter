@@ -13,8 +13,6 @@ class My_invoice extends CI_Model
 
     function __construct()
     {
-        parent::__construct();
-
         //dbs
         $this->invoice_db = 'invoices';
         $this->invoice_items_db = 'invoice_items';

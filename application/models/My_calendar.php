@@ -10,10 +10,6 @@
  */
 class My_calendar extends CI_Model
 {
-	function __construct()
-	{
-		parent::__construct();
-	}
 
 	function  getEvents($id=null){
 		if($id !==null){

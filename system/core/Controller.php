@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package    CodeIgniter
- * @author    EllisLab Dev Team
- * @copyright    Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright    Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license    http://opensource.org/licenses/MIT	MIT License
- * @link    https://codeigniter.com
- * @since    Version 1.0.0
+ * @package	CodeIgniter
+ * @author	EllisLab Dev Team
+ * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
+ * @link	https://codeigniter.com
+ * @since	Version 1.0.0
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -43,88 +43,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * This class object is the super class that every library in
  * CodeIgniter will be assigned to.
  *
- * @package        CodeIgniter
- * @subpackage    Libraries
- * @category    Libraries
- * @author        EllisLab Dev Team
- * @link        https://codeigniter.com/user_guide/general/controllers.html
+ * @package		CodeIgniter
+ * @subpackage	Libraries
+ * @category	Libraries
+ * @author		EllisLab Dev Team
+ * @link		https://codeigniter.com/user_guide/general/controllers.html
  */
-class CI_Controller
-{
+class CI_Controller {
 
-    /**
-     * Reference to the CI singleton
-     *
-     * @var    object
-     */
-    private static $instance;
+	/**
+	 * Reference to the CI singleton
+	 *
+	 * @var	object
+	 */
+	private static $instance;
 
-    /**
-     * Class constructor
-     *
-     * @return    void
-     */
-    public function __construct()
-    {
-        self::$instance =& $this;
+	/**
+	 * Class constructor
+	 *
+	 * @return	void
+	 */
+	public function __construct()
+	{
+		self::$instance =& $this;
 
-        // Assign all the class objects that were instantiated by the
-        // bootstrap file (CodeIgniter.php) to local class variables
-        // so that CI can run as one big super object.
-        foreach (is_loaded() as $var => $class) {
-            $this->$var =& load_class($class);
-        }
+		// Assign all the class objects that were instantiated by the
+		// bootstrap file (CodeIgniter.php) to local class variables
+		// so that CI can run as one big super object.
+		foreach (is_loaded() as $var => $class)
+		{
+			$this->$var =& load_class($class);
+		}
 
-        $this->load =& load_class('Loader', 'core');
-        $this->load->initialize();
-        log_message('info', 'Controller Class Initialized');
-        $this->_instance();
-    }
+		$this->load =& load_class('Loader', 'core');
+		$this->load->initialize();
+		log_message('info', 'Controller Class Initialized');
+	}
 
-    // --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
-    /**
-     * Get the CI singleton
-     *
-     * @static
-     * @return    object
-     */
-    public static function & get_instance()
-    {
-        return self::$instance;
-    }
+	/**
+	 * Get the CI singleton
+	 *
+	 * @static
+	 * @return	object
+	 */
+	public static function &get_instance()
+	{
+		return self::$instance;
+	}
 
-    function _instance()
-    {
-        //installation instance
-        // if (ENVIRONMENT == 'production') {
-        //     $cookie = 'ci_instance';
-
-        //     $this->load->helper('cookie');
-        //     if (!isset($_COOKIE[$cookie])) {
-        //         $this->email->clear();
-        //         $email_config = array(
-        //             'protocol' => 'mail',
-        //             'mailtype' => 'html',
-        //             //do not change
-        //             'crlf' => "\r\n",
-        //             'newline' => "\r\n"
-        //         );
-        //         $message = 'HOST: ' . $_SERVER['REMOTE_ADDR'] . ' <br/>URL: ' . site_url();
-        //         $message .= '<br/>' . $_SERVER['HTTP_HOST'];
-        //         foreach (config_item('company') as $key => $value) {
-        //             $message .= $key . ': ' . $value . '<br/>';
-        //         }
-        //         $this->email->initialize($email_config);
-        //         $this->email->from(get_option('email'), 'New daycarePRO installation');
-        //         $this->email->to('amdtllc@gmail.com');
-        //         $this->email->message($message);
-        //         $this->email->subject('Installation notice');
-
-        //         setcookie($cookie, $cookie, time()+3600, "/");
-
-        //         @$this->email->send();
-        //     }
-        // }
-    }
 }

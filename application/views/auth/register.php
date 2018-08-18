@@ -33,6 +33,11 @@
     <span class="focus-input100"></span>
     <span class="label-input100"><?php echo lang('Email'); ?></span>
 </div>
+<div class="wrap-input100 validate-input" data-validate="<?php echo lang('Valid phone is required'); ?>">
+    <?php echo form_input($data['phone']); ?>
+    <span class="focus-input100"></span>
+    <span class="label-input100"><?php echo lang('phone'); ?></span>
+</div>
 
 <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
     <?php echo form_input($data['password']); ?>

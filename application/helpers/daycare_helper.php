@@ -151,10 +151,11 @@ function redirectPrev($msg = array(), $tab = '')
 function is($group)
 {
     $ci = &get_instance();
-    auth(true);
 
-    if($ci->ion_auth->in_group($group))
-        return true;
+    if(logged_in())
+        if($ci->ion_auth->in_group($group))
+            return true;
+
     return false;
 }
 
@@ -284,7 +285,7 @@ function logEvent($event)
 {
     $ci = &get_instance();
     $data = array(
-        'user_id' => $ci->users->uid(),
+        'user_id' => $ci->user->uid(),
         'date' => time(),
         'event' => $event
     );
@@ -364,7 +365,7 @@ function demo()
         $seg4
     ];
 
-    if($ci->users->uid() > 0) {
+    if($ci->user->uid() > 0) {
         if(get_option('demo_mode') == 1) {
             $ci->load->helper('language');
 
@@ -783,6 +784,17 @@ function is_checked_in($id, $date = false, $checkedOut = false)
     }
 }
 
+if(!function_exists('session'))
+{
+    function session($item){
+        $ci  = &get_instance();
+        if(is_array($item)){
+            $ci->session->set_userdata($item);
+            return true;
+        }
+        return $ci->session->userdata($item);
+    }
+}
 /**
  * @return array
  */

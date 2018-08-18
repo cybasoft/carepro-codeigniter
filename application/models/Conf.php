@@ -5,7 +5,6 @@ class Conf extends CI_Model
 
     function __construct()
     {
-        parent::__construct();
         error_reporting(E_ALL);
         ini_set("display_errors", 1);
         ini_set("error_log", base_url().'php-error.log');
@@ -16,11 +15,11 @@ class Conf extends CI_Model
             date_default_timezone_set('America/New_York');
 
         $this->load->model('My_child', 'child');
-        $this->load->model('My_user', 'users');
         $this->load->model('My_user', 'user');
         $this->load->model('My_cron', 'cron');
         $this->load->model('My_mailer', 'mailer');
         $this->load->model('My_rooms', 'rooms');
+        $this->load->model('My_parent', 'parent');
 
         //disable changes to db in demo mode
         demo();

@@ -45,7 +45,7 @@ class RoomsController extends CI_Controller
 
         $staff = $this->rooms->staff($id);
 
-        $allStaff = $this->users->staff();
+        $allStaff = $this->user->staff();
 
         $allChildren = $this->child->children()->result();
 

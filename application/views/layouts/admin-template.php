@@ -82,7 +82,7 @@
         </div>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                <?php if(is(['manager','admin'])): ?>
+                <?php if(is(['manager', 'admin'])): ?>
                     <li class="btn-warning">
                         <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
                            data-target="#registerChildModal">
@@ -171,7 +171,7 @@
                         </small>
                     </a>
                 </li>
-                <?php if(is(['admin','manager'])): ?>
+                <?php if(is(['admin', 'manager'])): ?>
                     <li class="<?php echo set_active('users'); ?>">
                         <a href="<?php echo site_url('users'); ?>"
                            style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
@@ -183,13 +183,13 @@
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if(is(['admin','manager'])): ?>
+                <?php if(is(['admin', 'manager'])): ?>
                     <li class="<?php echo set_active('parents'); ?>">
                         <a href="<?php echo site_url('parents'); ?>"
                            style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
                             <img class="icon" src="<?php echo assets('img/content/parents.svg'); ?>"/>
                             <span><?php echo lang('parents'); ?></span>
-                            <small class="badge pull-right bg-blue"><?php echo $this->users->getCount('parent'); ?></small>
+                            <small class="badge pull-right bg-blue"><?php echo $this->user->getCount('parent'); ?></small>
                         </a>
                     </li>
                 <?php endif; ?>
@@ -214,7 +214,7 @@
                         <span><?php echo lang('news'); ?></span>
                     </a>
                 </li>
-                <?php if(is(['admin','manager'])): ?>
+                <?php if(is(['admin', 'manager'])): ?>
                     <li class="<?php echo set_active('settings'); ?>">
                         <a href="<?php echo site_url('settings'); ?>"
                            style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
@@ -359,28 +359,29 @@
                 return $('#daily-report').html();
             }
         });
-        $('.editUserBtn').click(function () {
-            $('.modals-loader').load('<?php echo site_url('users/view'); ?>/' + $(this).attr('id'), function () {
-                $('#editUserModal').modal('show')
-            })
-        });
     })
+
+    function editUser(id) {
+        $('.modals-loader').load('<?php echo site_url('users/view'); ?>/' + id, function () {
+            $('#editUserModal').modal('show')
+        })
+    }
 </script>
 
 <?php if(!empty(get_option('tawkto_embed_url'))): ?>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='<?php echo get_option('tawkto_embed_url'); ?>';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-    })();
-</script>
-<!--End of Tawk.to Script-->
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = '<?php echo get_option('tawkto_embed_url'); ?>';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 <?php endif; ?>
 
 <?php if($this->input->cookie('timer') > 0): ?>

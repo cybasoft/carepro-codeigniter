@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2018, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,8 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
- * @license	http://opensource.org/licenses/MIT	MIT License
+ * @copyright	Copyright (c) 2014 - 2018, British Columbia Institute of Technology (https://bcit.ca/)
+ * @license	https://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.3.0
  * @filesource
@@ -213,6 +213,13 @@ class CI_DB_mysqli_driver extends CI_DB {
 				return ($this->db_debug) ? $this->display_error($message, '', TRUE) : FALSE;
 			}
 
+			if ( ! $this->_mysqli->set_charset($this->char_set))
+			{
+				log_message('error', "Database: Unable to set the configured connection charset ('{$this->char_set}').");
+				$this->_mysqli->close();
+				return ($this->db->db_debug) ? $this->display_error('db_unable_to_set_charset', $this->char_set) : FALSE;
+			}
+
 			return $this->_mysqli;
 		}
 
@@ -260,19 +267,6 @@ class CI_DB_mysqli_driver extends CI_DB {
 		}
 
 		return FALSE;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Set client character set
-	 *
-	 * @param	string	$charset
-	 * @return	bool
-	 */
-	protected function _db_set_charset($charset)
-	{
-		return $this->conn_id->set_charset($charset);
 	}
 
 	// --------------------------------------------------------------------

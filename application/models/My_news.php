@@ -13,11 +13,6 @@
 class My_news extends CI_Model
 {
 
-	function __construct()
-	{
-		parent::__construct();
-	}
-
 	function articles()
 	{
 		$query = $this->db->get('news');

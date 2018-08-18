@@ -6,12 +6,6 @@
  */
 class MY_user extends CI_Model
 {
-
-    function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * @param       $password
      * @param       $email
@@ -108,8 +102,11 @@ class MY_user extends CI_Model
      *
      * @return string
      */
-    function get($id, $item = '')
+    function get($id=null, $item = '')
     {
+        if($id==null)
+            $id= $this->uid();
+
         $user = $this->user($id);
         if($user !== false && !empty($item)) {
             if(is_array($item)) {

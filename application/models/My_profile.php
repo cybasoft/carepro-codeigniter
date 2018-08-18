@@ -2,12 +2,6 @@
 
 class MY_profile extends CI_Model
 {
-
-	function __construct()
-	{
-		parent::__construct();
-	}
-
 	function change_pin()
 	{
 		$data = array(

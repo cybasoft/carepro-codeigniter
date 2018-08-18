@@ -3,10 +3,6 @@
 class My_mailer extends CI_Model
 {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
 
     function send($data)
     {

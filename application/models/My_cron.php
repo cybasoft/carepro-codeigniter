@@ -12,17 +12,12 @@
 class my_cron extends CI_Model
 {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
     /*Notify admin of event*/
     function notify($event)
     {
         $this->load->library('email');
 
-        $user = $this->user->user()->last_name;
+        $user = $this->user->get(null,'last_name');
 
         $this->email->from(get_option('email'), get_option('company_name'));
         $this->email->subject('Event alert!');
