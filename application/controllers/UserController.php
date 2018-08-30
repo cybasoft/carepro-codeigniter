@@ -5,11 +5,12 @@
  */
 class UserController extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
         setRedirect();
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         $this->module = 'modules/users/';
         $this->title = lang('users');
     }
@@ -39,7 +40,7 @@ class UserController extends CI_Controller
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
         $this->form_validation->set_rules('password', lang('password'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');
-        $this->form_validation->set_rules('group', '','trim');
+        $this->form_validation->set_rules('group', '', 'trim');
 
         if($this->form_validation->run() == true) {
             $additional_data = array(
@@ -54,7 +55,7 @@ class UserController extends CI_Controller
                 flash('success', lang('request_success'));
             }
         } else {
-            set_flash(['email','first_name','last_name','phone','group']);
+            set_flash(['email', 'first_name', 'last_name', 'phone', 'group']);
             validation_errors();
             flash('danger');
         }
@@ -63,11 +64,11 @@ class UserController extends CI_Controller
 
     function view()
     {
-        allow(['admin','manager']);
+        allow(['admin', 'manager']);
 
         $id = $this->uri->segment(3);
 
-        if(empty($id) || !is_numeric($id)){
+        if(empty($id) || !is_numeric($id)) {
             show_404();
         }
         //user vars
@@ -86,7 +87,7 @@ class UserController extends CI_Controller
     //edit a user
     function update()
     {
-        allow(['admin','manager']);
+        allow(['admin', 'manager']);
         $id = $this->input->post('user_id');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('edit_user_validation_first_name_label'), 'required|xss_clean');
@@ -126,7 +127,9 @@ class UserController extends CI_Controller
             if($this->ion_auth->update($id, $data)) {
                 //update photo if available
                 flash('success', lang('request_success'));
-                $this->uploadPhoto($id);
+                if (!empty($_FILES['userfile']['name'])) {
+                    $this->uploadPhoto($id);
+                }
             } else {
                 flash('danger', lang('request_error'));
             }
@@ -184,29 +187,18 @@ class UserController extends CI_Controller
      * ensure all tables exist
      */
 
-    function delete($id)
+    function delete()
     {
         allow('admin');
-        $data['user_id'] = $id;
-        page('modules/users/confirm_delete', $data);
 
-        if(isset($_POST['confirm'])) {
-            if($_POST['confirm'] == 'DELETE') {
-                $this->db->where('id', $id);
-                $this->db->delete('users');
-                if($this->db->affected_rows()>0) {
-                    flash('success', lang('request_success'));
-                    redirect('users', 'refresh');
-                } else {
-                    flash('danger', lang('request_error'));
-                    redirectPrev();
-                }
-            } else {
-                flash('danger', lang('request_error'));
-                redirectPrev();
-            }
-        }
+        $this->db->where('id', $this->uri->segment(3));
+        $this->db->delete('users');
+        if($this->db->affected_rows() > 0)
+            flash('success', lang('request_success'));
+        else
+            flash('danger', lang('request_error'));
 
+        redirect('users', 'refresh');
     }
 
     // create a new group
@@ -249,7 +241,7 @@ class UserController extends CI_Controller
             if($group_update) {
                 flash('success', lang('edit_group_saved'));
             } else {
-                flash('error',lang('request_error'));
+                flash('error', lang('request_error'));
             }
 
         } else {
@@ -328,6 +320,7 @@ class UserController extends CI_Controller
      * Get all rooms a user is assigned to
      *
      * @param $staff_id
+     *
      * @return mixed
      */
     function rooms($staff_id)

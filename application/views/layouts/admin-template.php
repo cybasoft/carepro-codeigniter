@@ -291,8 +291,11 @@
             allowOutsideClick: false
         }, function () {
             swal('processing...');
-            if (loc != undefined)
+            if (loc === undefined || loc === 'undefined'){
+            swal({type:'warning',title:'Error'})
+            }else {
                 window.location.href = loc;
+            }
         });
     }
 
@@ -310,8 +313,11 @@
             allowOutsideClick: false
         }, function () {
             swal('processing...');
-            if (loc != undefined)
+            if (loc === undefined || loc === 'undefined'){
+                swal({type:'warning',title:'Error'})
+            }else {
                 window.location.href = loc;
+            }
         });
         e.preventDefault();
     });

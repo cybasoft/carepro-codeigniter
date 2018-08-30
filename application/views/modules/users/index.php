@@ -77,7 +77,7 @@
                     <span class="btn btn-default btn-xs">
                         <i class="fa fa-pencil-alt"></i></span>
                 </a>
-                <?php echo anchor("users/delete/".$user->id.'/delete', '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>'); ?>
+                <?php echo anchor("users/delete/".$user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>','class="delete"'); ?>
             </td>
         </tr>
         <?php
