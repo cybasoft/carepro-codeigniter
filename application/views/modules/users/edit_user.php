@@ -7,31 +7,66 @@
                 <h4 class="modal-title" id="myModalLabel"><?php echo $user->last_name; ?></h4>
             </div>
             <?php echo form_open_multipart('users/update/'.$user->id); ?>
+
+            <?php echo form_hidden('user_id', $user->id); ?>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <?php echo form_hidden('user_id', $user->id); ?>
+                    <div class="col-sm-6">
                         <?php
                         echo form_label(lang('first_name'));
                         echo form_input('first_name', $user->first_name, ['class' => 'form-control', 'required' => '']);
-                        echo form_label(lang('last_name'));
-                        echo form_input('last_name', $user->last_name, ['class' => 'form-control', 'required' => '']);
-                        echo form_label(lang('email'));
-                        echo form_input('email', $user->email, ['class' => 'form-control', 'required' => '']);
-                        echo form_label(lang('pin'));
-                        echo form_input('pin', $user->pin, ['class' => 'form-control', 'required' => '']);
-                        echo form_label(lang('address'));
-                        echo form_textarea('address', $user->address, ['class' => 'form-control']);
-                        echo '<hr/>';
-                        echo form_label(lang('new_password'));
-                        echo form_password('password', null, ['class' => 'form-control']);
-                        echo form_label(lang('confirm_password'));
-                        echo form_password('password_confirm', null, ['class' => 'form-control']);
                         ?>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('edit_user_groups_heading'));
+                        echo form_label(lang('last_name'));
+                        echo form_input('last_name', $user->last_name, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('email'));
+                        echo form_input('email', $user->email, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('Phone'), 'phone');
+                        echo form_input('phone', $user->phone, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('Alt. Phone'), 'phone2');
+                        echo form_input('phone2', $user->phone2, ['class' => 'form-control']);
+                        ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('pin'));
+                        echo form_input('pin', $user->pin, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('address'));
+                        echo form_textarea('address', $user->address, ['class' => 'form-control']);
+                        ?>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3>
+                            <?php echo lang('Role'); ?>
+                        </h3>
+                        <?php
                         foreach ($groups as $group) : ?>
 
                             <label class="check">
@@ -59,17 +94,37 @@
                                 <span class="checkmark"></span>
                             </label>
                         <?php endforeach; ?>
-                        <?php
-                        if(is_file(APPPATH.'../assets/uploads/users/'.$user->photo)) {
-                            echo '<img class="" style="height:200px"
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 class="text-center"><?php echo lang('Update photo'); ?></h3>
+                        <div class="text-center">
+                            <?php
+                            if(is_file(APPPATH.'../assets/uploads/users/'.$user->photo)) {
+                                echo '<img class="img-circle" style="height:100px"
                                    src="'.base_url().'assets/uploads/users/'.$user->photo.'"/>';
-                        } else {
-                            echo '<img class="" style="height:200px"
-                                   src="'.base_url().'assets/img/content/no-image.png"/>';
-                        }
-                        ?>
-                        <br/>
+                            }
+                            ?>
+                        </div>
                         <input class="form-control" type="file" name="userfile" size="20"/>
+
+                    </div>
+                </div>
+
+                <hr/>
+
+                <h3><?php echo lang('Change password'); ?></h3>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('new_password'));
+                        echo form_password('password', null, ['class' => 'form-control']);
+                        ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('confirm_password'));
+                        echo form_password('password_confirm', null, ['class' => 'form-control']);
+                        ?>
                     </div>
                 </div>
             </div>

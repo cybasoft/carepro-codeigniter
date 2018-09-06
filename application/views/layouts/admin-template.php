@@ -28,11 +28,20 @@
         </style>
     <?php endif; ?>
 
+
+    <meta id="site_url" content="<?php echo site_url(); ?>">
+    <meta id="base_url" content="<?php echo base_url(); ?>">
+    <meta id="lockScreenTimer" content="<?php echo get_option('lockscreen_timer'); ?>">
+    <script>
+        var lang = <?php echo json_encode($this->lang->language); ?>
+    </script>
+
     <!--[if lt IE 9]>
     <script src="<?php echo base_url(); ?>assets/js/html5shiv.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/respond.min.js"></script>
     <![endif]-->
     <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
@@ -48,6 +57,7 @@
         ga('create', '<?php echo get_option('google_analytics'); ?>', 'auto');
         ga('send', 'pageview');
     </script>
+
 </head>
 <body class="skin-blue">
 <div class="modals-loader"></div>
@@ -67,183 +77,12 @@
         <?php endif; ?>
     </a>
     <!--start nav-->
-    <nav class="navbar navbar-static-top" role="navigation"
-         style="background-color:<?php echo get_option('top_nav_bg_color', '#03a9f4'); ?>">
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only"><?php echo lang('toggle_navigation'); ?></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
-        <div class="navbar-left">
-            <ul class="nav navbar-nav">
-                <li class="lock-screen"><a href="#"><i class="fa fa-lock cursor"></i></a></li>
-            </ul>
-        </div>
-        <div class="navbar-right">
-            <ul class="nav navbar-nav">
-                <?php if(is(['manager', 'admin'])): ?>
-                    <li class="btn-warning">
-                        <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
-                           data-target="#registerChildModal">
-                            <i class="fa fa-user-plus"></i>
-                            <span class="hidden-xs"><?php echo lang('Register child'); ?></span>
-                        </a>
-                    </li>
-                    <li class="btn-info">
-                        <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
-                           data-target="#newUserModal">
-                            <i class="fa fa-user-plus"></i>
-                            <span class="hidden-xs"><?php echo lang('Register user'); ?></span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user"></i>
-                        <span><?php echo $this->user->user()->last_name; ?>
-                            <i class="caret"></i></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="<?php echo site_url('profile'); ?>"><i
-                                        class="fa fa-user"></i> <?php echo lang('profile'); ?></a></li>
-                        <li><a href="<?php echo site_url('auth/logout'); ?>"><i
-                                        class="fa fa-lock"></i> <?php echo lang('logout'); ?></a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
+   <?php $this->load->view('layouts/navigation'); ?>
     <!--end nav-->
 </header>
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <!--start sidebar-->
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="left-side animate sidebar-offcanvas"
-           style="background-color: <?php echo get_option('left_sidebar_bg_color', '#f4f4f'); ?>">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="text-center image">
-                    <img src="<?php echo $this->user->photo(user_id()); ?>" class="img-circle"/>
-                </div>
-                <div class="text-center">
-                    <p><span><?php echo lang('hello'); ?></span> <?php echo $this->user->thisUser('first_name'); ?></p>
-                </div>
-            </div>
-            <!-- search form -->
-            <!--form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                                <span class="input-group-btn">
-                                    <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                                </span>
-                </div>
-            </form-->
-            <!-- /.search form -->
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
-                <li class="<?php echo set_active('dashboard'); ?>">
-                    <a href="<?php echo site_url('dashboard'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                        <img class="icon" src="<?php echo assets('img/content/dash.svg'); ?>"/>
-                        <span><?php echo lang('dashboard'); ?></span>
-                    </a>
-                </li>
-                <li class="<?php echo set_active(array('children', 'child')); ?>">
-                    <a href="<?php echo site_url('children'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                        <img class="icon" src="<?php echo assets('img/content/children.svg'); ?>"/>
-                        <span><?php echo lang('children'); ?></span>
-                        <small class="badge pull-right bg-green">
-                            <?php echo $this->child->getCount(); ?>
-                        </small>
-                    </a>
-                </li>
-                <li class="<?php echo set_active(array('rooms', 'room')); ?>">
-                    <a href="<?php echo site_url('rooms'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                        <img class="icon" src="<?php echo assets('img/content/groups.svg'); ?>"/>
-                        <span><?php echo lang('rooms'); ?></span>
-                        <small class="badge pull-right bg-green">
-                            <?php echo $this->rooms->getCount(); ?>
-                        </small>
-                    </a>
-                </li>
-                <?php if(is(['admin', 'manager'])): ?>
-                    <li class="<?php echo set_active('users'); ?>">
-                        <a href="<?php echo site_url('users'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                            <img class="icon" src="<?php echo assets('img/content/users.svg'); ?>"/>
-                            <span><?php echo lang('users'); ?></span>
-                            <small class="badge pull-right bg-blue">
-                                <?php echo $this->user->getCount(); ?>
-                            </small>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if(is(['admin', 'manager'])): ?>
-                    <li class="<?php echo set_active('parents'); ?>">
-                        <a href="<?php echo site_url('parents'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                            <img class="icon" src="<?php echo assets('img/content/parents.svg'); ?>"/>
-                            <span><?php echo lang('parents'); ?></span>
-                            <small class="badge pull-right bg-blue"><?php echo $this->user->getCount('parent'); ?></small>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <li class="<?php echo set_active('calendar'); ?>">
-                    <a href="<?php echo site_url('calendar'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                        <img class="icon" src="<?php echo assets('img/content/calendar.svg'); ?>"/>
-                        <span><?php echo lang('calendar'); ?></span>
-                    </a>
-                </li>
-                <li class="<?php echo set_active('files'); ?>">
-                    <a href="<?php echo site_url('files'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                        <img class="icon" src="<?php echo assets('img/content/folder.svg'); ?>"/>
-                        <span><?php echo lang('files'); ?></span>
-                    </a>
-                </li>
-                <li class="<?php echo set_active(['news']); ?>">
-                    <a href="<?php echo site_url('news'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color'); ?>">
-                        <img class="icon" src="<?php echo assets('img/content/news.svg'); ?>"/>
-                        <span><?php echo lang('news'); ?></span>
-                    </a>
-                </li>
-                <?php if(is(['admin', 'manager'])): ?>
-                    <li class="<?php echo set_active('settings'); ?>">
-                        <a href="<?php echo site_url('settings'); ?>"
-                           style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
-                            <img class="icon" src="<?php echo assets('img/content/settings.svg'); ?>"/>
-                            <span><?php echo lang('settings'); ?></span>
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <li>
-                    <a href="<?php echo site_url('auth/logout'); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color', 'red'); ?>">
-                        <img class="icon" src="<?php echo assets('img/content/exit.svg'); ?>"/>
-                        <span><?php echo lang('logout'); ?></span>
-                    </a>
-                </li>
-            </ul>
-        </section>
-        <div class="footer text-center" style="">
-            <br/>
-            <div style="font-size:12px;padding:5px;">
-                &copy; <?php echo date('Y'); ?>
-                <?php echo lang('copyright'); ?>
-                <br/>
-                <br/>
-                <a href="//amdtllc.com/support" target="_blank">Open support ticket</a>
-                <br/>
-            </div>
-        </div>
-    </aside>
+    <?php $this->load->view('layouts/sidebar'); ?>
     <!--end sidebar-->
     <aside class="right-side animate" style="">
         <?php if($this->uri->segment(1) !== 'child' && $this->uri->segment(1) !== 'invoice') : ?>
@@ -275,103 +114,12 @@
 <script src="<?php echo base_url(); ?>assets/js/sweetalert2.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/fullcalendar.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/plugins/datatables/datatables.min.js"></script>
-<script type="text/javascript">
-    function confirmDelete(loc) {
-        swal({
-            title: '<?php echo lang('confirm_delete_title'); ?>',
-            text: '<?php echo lang('confirm_delete_warning'); ?>',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: '<?php echo lang('confirm_delete_btn'); ?>',
-            closeOnConfirm: false,
-            backdrop: false,
-            allowOutsideClick: false
-        }, function () {
-            swal('processing...');
-            if (loc === undefined || loc === 'undefined'){
-            swal({type:'warning',title:'Error'})
-            }else {
-                window.location.href = loc;
-            }
-        });
-    }
-
-    $('.delete').click(function (e) {
-        var loc = $(this).attr('href');
-        swal({
-            title: '<?php echo lang('confirm_delete_title'); ?>',
-            text: '<?php echo lang('confirm_delete_warning'); ?>',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: '<?php echo lang('confirm_delete_btn'); ?>',
-            closeOnConfirm: false,
-            backdrop: false,
-            allowOutsideClick: false
-        }, function () {
-            swal('processing...');
-            if (loc === undefined || loc === 'undefined'){
-                swal({type:'warning',title:'Error'})
-            }else {
-                window.location.href = loc;
-            }
-        });
-        e.preventDefault();
-    });
-    $(document).ready(function () {
-        $('#attendance').DataTable({
-            buttons: [
-                'pdf'
-            ]
-        });
-        $('#datatable').DataTable();
-        $('#users').DataTable({
-            buttons: [
-                'pdf'
-            ]
-        });
-    });
-    //lockscreen
-    var timerMins = '<?php echo get_option('lockscreen_timer'); ?>';
-
-    if (timerMins === undefined || timerMins === "")
-        timerMins = 5;
-
-    var lockTimer = 1320000 * timerMins;
-
-    $('.lock-screen').click(function () {
-        startLockscreen();
-    });
-
-    setTimeout(function () {
-        startLockscreen()
-    }, lockTimer);
-
-    function startLockscreen() {
-        $('body').load('<?php echo site_url('lockscreen'); ?>');
-        $('html').addClass('lockscreen');
-    }
-</script>
+<script src="<?php echo base_url(); ?>assets/js/cookie.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/functions.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
 <script>
-    $(document).ready(function () {
-        $('.reportsBtn').popover({
-            title: '<?php echo lang('reports'); ?>',
-            html: true,
-            placement: 'bottom',
-            content: function () {
-                return $('#daily-report').html();
-            }
-        });
-    })
 
-    function editUser(id) {
-        $('.modals-loader').load('<?php echo site_url('users/view'); ?>/' + id, function () {
-            $('#editUserModal').modal('show')
-        })
-    }
 </script>
 
 <?php if(!empty(get_option('tawkto_embed_url'))): ?>
@@ -391,7 +139,7 @@
 <?php endif; ?>
 
 <?php if($this->input->cookie('timer') > 0): ?>
-    <script>startLockscreen()</script>
+<!--    <script>startLockscreen()</script>-->
 <?php endif; ?>
 
 <?php $this->load->view('modules/children/add_child'); ?>

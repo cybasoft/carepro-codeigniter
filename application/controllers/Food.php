@@ -16,6 +16,55 @@ class Food extends CI_Controller
         $this->load->model('My_food', 'food');
     }
 
+    /*
+    * add food pref
+    */
+    function newPref()
+    {
+        $this->form_validation->set_rules('food', lang('food'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('food_time', lang('time'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('comment', lang('comment'), 'trim|xss_clean');
+
+        if($this->form_validation->run() == TRUE) {
+
+            if($this->food->newPref()) {
+                flash('success', lang('request_success'));
+            } else {
+                flash('danger', lang('request_error'));
+            }
+        } else {
+            flash('danger');
+            validation_errors();
+        }
+        redirectPrev(null, 'food');
+
+    }
+
+
+    /*
+     * delete food pref
+     */
+    function deletePref()
+    {
+        $id = $this->uri->segment(3);
+
+        if($id !== "" & is_numeric($id)) {
+            //make sure its the parent authorized or admin
+            $childID = $this->db->where('id', $id)->get('child_foodpref')->row();
+            if(is(['staff', 'admin','manager']) || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
+                if($this->db->where('id', $id)->delete('child_foodpref')) {
+                    flash('success', lang('request_success'));
+                } else {
+                    flash('danger', lang('request_error'));
+                }
+            } else {
+                flash('danger', lang('record_not_found'));
+            }
+
+        }
+        redirectPrev(null, 'food');
+    }
+
     function recordIntake()
     {
         $this->form_validation->set_rules('date', lang('Date'), 'required|xss_clean|trim');
@@ -36,4 +85,17 @@ class Food extends CI_Controller
     }
 
 
+    function deleteIntake(){
+        allow(['admin','manager','staff']);
+
+        $id = $this->uri->segment(3);
+
+        if($this->db->where('id',$id)->delete('child_food_intake')){
+            flash('success',lang('request_success'));
+        }else{
+            flash('error',lang('request_error'));
+        }
+
+        redirectPrev('','food');
+    }
 }

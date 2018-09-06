@@ -131,9 +131,6 @@ $route['files']='files/index';
 $route['files/(:any)']='files/$1';
 
 //food
-$route['child/deleteFoodPref/(:num)'] = 'health/deleteFoodPref/$1';
-$route['child/addFoodPref'] = 'health/addFoodPref';
-
 $route['food/(:any)']='food/$1';
 $route['food/(:any)/:num']='food/$1';
 

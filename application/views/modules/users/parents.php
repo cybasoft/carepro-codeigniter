@@ -1,57 +1,40 @@
-<table class="table table-bordered table-hover table-striped" id="users">
-    <thead>
-    <tr align="center">
-        <th></th>
-        <th class="col-lg-2 hidden-xs"><?php echo lang('name'); ?></th>
-        <th class="hidden-xs"><?php echo lang('index_email_th'); ?></th>
-        <th class="hidden-xs"><?php echo lang('index_status_th'); ?></th>
-        <th><?php echo lang('index_action_th'); ?></th>
-    </tr>
-    </thead>
-    <?php
-    $start = 1;
-    foreach ($users as $user):
-        if(in_group($this->user->uid(), 'admin') == false && in_group($user->user_id, 'admin') == true):
-            continue;
-        else:
-            ?>
-            <tr>
-                <td>
-                    <div class="pull-left">
-                        <?php if(is_file(APPPATH.'../assets/uploads/users/'.$user->photo)): ?>
-                            <img class="img-circle" style="height:50px;width:50px;"
-                                 src="<?php echo base_url('assets/uploads/users/'.$user->photo); ?>">
-                        <?php else: ?>
-                            <img class="img-circle" style="height:50px;width:50px;"
-                                 src="<?php echo base_url('assets/img/content/no-image.png'); ?>">
-                        <?php endif; ?>
-                    </div>
-                    <div class="visible-xs pull-left" style="padding-left:15px;">
-                        <?php echo $user->first_name.' '.$user->last_name; ?><br/>
-                        <?php echo $user->email; ?><br/>
-                        <?php echo ($user->active) ? anchor("users/deactivate/".$user->user_id, '<span class="label label-info">'
-                            .lang('index_active_link').'</span>') : anchor("users/activate/".$user->user_id, '<span class="label label-danger">'
-                            .lang('index_inactive_link').'</span>'); ?>
-                    </div>
-                </td>
-                <td class="hidden-xs"><?php echo $user->first_name.' '.$user->last_name; ?></td>
-                <td class="hidden-xs"><?php echo $user->email; ?></td>
-                <td align="center" valign="top" class="hidden-xs">
-                    <?php echo ($user->active) ? anchor("users/deactivate/".$user->user_id, '<span class="text-primary">'
-                        .lang('index_active_link').'</span>') : anchor("users/activate/".$user->user_id, '<span class="text-danger">'
-                        .lang('index_inactive_link').'</span>'); ?>
-                </td>
-                <td>
-                <a id="<?php echo $user->user_id; ?>" class="editUserBtn" href="#">
+<?php foreach ($users as $user): ?>
+    <div class="info-box" style="border-right:solid 1px #ccc">
+        <div class="info-box-img">
+            <img class="img-circle" style="height:80px;width:80px;"
+                 src="<?php echo is_file(APPPATH.'../assets/uploads/users/'.$user['photo']) ? base_url('assets/uploads/users/'.$user['photo']) : base_url('assets/img/content/no-image.png'); ?>">
+            <div class="text-center">
+                <br/>
+                <?php echo ($user['active']) ? anchor("users/deactivate/".$user['id'], '<span class="label label-info">'
+                    .lang('index_active_link').'</span>') : anchor("users/activate/".$user['id'], '<span class="label label-danger">'
+                    .lang('index_inactive_link').'</span>'); ?>
+            </div>
+        </div>
+        <div class="info-box-content">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h3><?php echo $user['first_name'].' '.$user['last_name']; ?></h3>
+                    <i class="fa fa-envelope"></i> <?php echo $user['email']; ?><br/>
+                    <i class="fa fa-phone"></i> <?php echo $user['phone']; ?><br/>
+                </div>
+                <div class="col-sm-4">
+                    <h4><?php echo lang('Children'); ?></h4>
+                    <ul class="list-links" style="display:grid">
+                        <?php foreach ($user['children'] as $child): ?>
+                            <li><?php echo anchor('child/'.$child['id'], $child['first_name'].' '.$child['last_name']); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+
+            </div>
+            <hr/>
+            <div class="info-box-more">
+                <a id="<?php echo $user['id']; ?>" onclick="editUser('<?php echo $user['id']; ?>')" class="cursor">
                     <span class="btn btn-default btn-xs">
                         <i class="fa fa-pencil-alt"></i></span>
                 </a>
-                    <?php echo anchor("user/".$user->user_id.'/delete', '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>'); ?>
-                </td>
-            </tr>
-            <?php
-            $start++;
-        endif;
-    endforeach;
-    ?>
-</table>
+                <?php echo anchor("user/".$user['id'].'/delete', '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>'); ?>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>

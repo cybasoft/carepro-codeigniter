@@ -12,6 +12,28 @@
 class My_food extends CI_Model
 {
 
+    /**
+     * @return bool
+     */
+    function newPref()
+    {
+        $data = array(
+            'child_id' => $this->input->post('child_id'),
+            'food' => $this->input->post('food'),
+            'food_time' => $this->input->post('food_time'),
+            'comment' => $this->input->post('comment'),
+            'created_at' => date_stamp(),
+            'user_id' => $this->user->uid()
+        );
+        if($this->db->insert('child_foodpref', $data)) {
+            //log
+            logEvent("Added food pref for child ID: {$this->input->post('child_id')}");
+            //notify parent
+            $this->parent->notifyParents($data['child_id'], lang('new_foodpref_subject'), lang('new_foodpref_message'));
+            return true;
+        }
+        return false;
+    }
 
     /**
      * @param $childID
@@ -94,11 +116,13 @@ class My_food extends CI_Model
 
             $mealTimes = $this->mealTimes();
             $times = [];
+
             foreach ($mealTimes as $time) {
                 $times[$time] = false;
-                if($data['food'] == $time)
+                if($data['meal_time'] == $time)
                     $times[$time] = true;
             }
+            unset($data['meal_time']);
 
             $data['food'] = serialize($times);
             $data['created_at'] = date('Y-m-d');

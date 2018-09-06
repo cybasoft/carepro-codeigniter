@@ -3,50 +3,57 @@
         <div class="box-title btn-block"><?php echo lang('authorized_pickup'); ?>
             <a href="#" data-toggle="modal" data-target="#newPickupModal">
                 <i class="fa fa-plus pull-right"></i>
-                <?php echo lang('register'); ?>
             </a>
         </div>
     </div>
-    <div class="box-body table-responsive">
+    <div class="box-body">
         <?php foreach ($pickups as $pickup) : ?>
-            <table class="table-bordered" style="width:220px;float:left;margin-right:10px;">
-                <tr>
-                    <td valign="top" style="position: relative;">
-                        <?php if(is_file(APPPATH.'../assets/uploads/pickup/'.$pickup->photo)): ?>
-                            <img style="width:100px;height:120px"
-                                 src="<?php echo base_url(); ?>assets/uploads/pickup/<?php echo $pickup->photo; ?>"/>
-                        <?php else: ?>
-                            <img style="width:100px;height:120px"
-                                 src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
-                        <?php endif; ?>
-                        <span style="position: absolute;top:0;left:0;background:#cc4868;padding:0 2px;color:#fff;font-size:12px">
-                        <span class="fa fa-lock"></span>
-                            <?php echo $pickup->pin; ?></span>
-                    </td>
-                    <td valign="top">
-                        <strong class="">
-                            <?php echo $pickup->last_name.', '.$pickup->first_name; ?>
-                            <?php if(is(['admin','manager'])): ?>
-                                <a class="btn btn-danger btn-xs pull-right" href="<?php echo site_url('child/deletePickup/'.$pickup->id); ?>"
-                                   class="delete">
-                                    <i class="fa fa-trash-alt"></i>
-                                </a>
-                            <?php endif; ?>
-                        </strong>
-                        <br/>
-                        <i><?php echo $pickup->relation; ?></i>
-                        <br/>
-                        <span class="fa fa-phone"></span>
-                        <?php echo $pickup->cell; ?>
-                        <br/>
-                        <span class="fa fa-phone"></span>
-                        <?php echo $pickup->other_phone; ?>
-                        <br/>
-                        <span class="fa fa-envelope"></span>
-                        <?php echo $pickup->address; ?>
-                    </td>
-                </tr>
-            </table>
+            <div class="info-box">
+                <div class="info-box-img" style="margin-right:10px;">
+                    <?php if(is_file(APPPATH.'../assets/uploads/pickup/'.$pickup->photo)): ?>
+                        <img style="width:100px;" class="img-rounded"
+                             src="<?php echo base_url(); ?>assets/uploads/pickup/<?php echo $pickup->photo; ?>"/>
+                    <?php else: ?>
+                        <img style="width:100px;" class="img-rounded"
+                             src="<?php echo base_url('assets/img/content/no-image.png'); ?>"/>
+                    <?php endif; ?>
+                </div>
+                <div class="info-box-content">
+                    <?php if(is(['admin', 'manager'])): ?>
+                        <a class="btn btn-danger btn-xs pull-right delete"
+                           href="<?php echo site_url('child/deletePickup/'.$pickup->id); ?>">
+                            <i class="fa fa-trash-alt"></i>
+                        </a>
+                    <?php endif; ?>
+
+                    <h3 style="padding:0;margin:0;margin-top:-8px;"><?php echo $pickup->last_name.', '.$pickup->first_name; ?></h3>
+
+                    <div class="info-box-text" style="margin-bottom:5px;"><?php echo $pickup->relation; ?> |
+                        <span class="label label-danger">
+                             <span class="fa fa-lock"></span> <?php echo $pickup->pin; ?>
+                        </span>
+                    </div>
+                    <div class="info-box-light text-danger">
+
+                    </div>
+
+                    <div class="info-box-text">
+                        <span class="fa fa-phone"></span> <?php echo $pickup->cell; ?>
+                    </div>
+
+                    <?php if(!empty($pickup->other_phone)): ?>
+                        <div class="info-box-text">
+                            <span class="fa fa-phone"></span> <?php echo $pickup->other_phone; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if(!empty($pickup->address)): ?>
+                        <div class="info-box-text">
+                            <span class="fa fa-envelope"></span><?php echo $pickup->address; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
         <?php endforeach; ?>
     </div>
 </div>
@@ -102,12 +109,12 @@
                 <div class="row">
                     <div class="col-md-6">
                         <?php echo form_label(lang('address'));
-                        echo form_textarea('address', null, ['class' => 'form-control','cols'=>3]);
+                        echo form_textarea('address', null, ['class' => 'form-control', 'cols' => 3]);
                         ?>
                     </div>
                     <div class="col-md-6">
                         <?php echo form_label(lang('photo'));
-                        echo form_upload('photo', null, ['class' => 'form-control',]);
+                        echo form_upload('photo', ['class' => 'form-control',]);
                         ?>
 
                     </div>

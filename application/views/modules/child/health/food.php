@@ -1,32 +1,3 @@
-<h2><?php echo lang('Intake history'); ?>
-    <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#foodIntakeModal">
-        <i class="fa fa-plus-circle"></i> <?php echo lang('Record intake'); ?>
-    </button>
-</h2>
-
-
-<table class="table table-hover table-responsive" id="datatable">
-    <thead>
-    <tr>
-        <th><?php echo lang('Date'); ?></th>
-        <th><?php echo lang('Meal time'); ?></th>
-        <th><?php echo lang('Quantity'); ?></th>
-        <th><?php echo lang('remarks'); ?></th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($this->food->getIntake($child->id) as $intake): ?>
-        <tr>
-            <td><?php echo format_date($intake->taken_at); ?></td>
-            <td><?php echo $this->food->mealTime($intake->meal_time); ?></td>
-            <td><?php echo $intake->quantity; ?></td>
-            <td><?php echo $intake->remarks; ?></td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
-
-<hr/>
 <h2><?php echo lang('food_pref_header'); ?>
 
     <button type="button" class="btn btn-warning btn-sm pull-right" data-toggle="modal" data-target="#foodPrefModal">
@@ -60,7 +31,7 @@
                 </td>
                 <td>
                     <?php if(!is('parent')): ?>
-                    <a class="delete" href="<?php echo site_url('child/deleteFoodPref/'.$item->id); ?>">
+                    <a class="delete" href="<?php echo site_url('child/deletePref/'.$item->id); ?>">
                         <span class="fa fa-trash-alt cursor"></span>
                         <?php endif; ?>
                 </td>
@@ -70,6 +41,47 @@
     <?php else: ?>
         <div class="alert alert-warning h3"><?php echo lang('nothing_to_display'); ?></div>
     <?php endif; ?>
+    </tbody>
+</table>
+
+<hr/>
+<h2><?php echo lang('Intake history'); ?>
+
+    <?php if(!is('parent')): ?>
+        <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal"
+                data-target="#foodIntakeModal">
+            <i class="fa fa-plus-circle"></i> <?php echo lang('Record intake'); ?>
+        </button>
+    <?php endif; ?>
+</h2>
+
+
+<table class="table table-hover table-responsive" id="datatable">
+    <thead>
+    <tr>
+        <th><?php echo lang('Date'); ?></th>
+        <th><?php echo lang('Meal time'); ?></th>
+        <th><?php echo lang('Quantity'); ?></th>
+        <th><?php echo lang('remarks'); ?></th>
+        <?php if(!is('parent')): ?>
+            <th></th>
+        <?php endif; ?>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->food->getIntake($child->id) as $intake): ?>
+        <tr>
+            <td><?php echo format_date($intake->taken_at); ?></td>
+            <td><?php echo $this->food->mealTime($intake->meal_time); ?></td>
+            <td><?php echo $intake->quantity; ?></td>
+            <td><?php echo $intake->remarks; ?></td>
+            <?php if(!is('parent')): ?>
+                <td>
+                    <?php echo anchor('food/deleteIntake/'.$intake->id, '<i  class="fa fa-trash"></i>', 'class="delete text-danger"'); ?>
+                </td>
+            <?php endif; ?>
+        </tr>
+    <?php endforeach; ?>
     </tbody>
 </table>
 
@@ -85,7 +97,7 @@
                 </h4>
             </div>
 
-            <?php echo form_open('child/addFoodPref'); ?>
+            <?php echo form_open('food/newPref'); ?>
             <?php echo form_hidden('child_id', $child->id); ?>
 
             <div class="modal-body">
@@ -109,7 +121,7 @@
                 );
 
                 echo form_label(lang('remarks'));
-                echo form_input('remarks', null, ['class' => 'form-control']);
+                echo form_input('comment', null, ['class' => 'form-control']);
                 ?>
             </div>
             <div class="modal-footer">

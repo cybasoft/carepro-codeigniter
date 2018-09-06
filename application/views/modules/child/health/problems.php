@@ -1,13 +1,18 @@
 <h2><?php echo lang('problem_list'); ?>
-    <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#newProblemModal">
-        <i class="fa fa-plus-circle"></i> <?php echo lang('Add new'); ?>
-    </button>
+
+    <?php if(!is('parent')): ?>
+        <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal"
+                data-target="#newProblemModal">
+            <i class="fa fa-plus-circle"></i> <?php echo lang('Add new'); ?>
+        </button>
+    <?php endif; ?>
+
 </h2>
 <hr/>
 <div class="row">
     <div class="col-lg-12">
         <?php $problems = $this->db->where('child_id', $child->id)->get('child_problems'); ?>
-        <?php if($problems !== false && $problems->num_rows()>0): ?>
+        <?php if($problems !== false && $problems->num_rows() > 0): ?>
             <table class="table table-responsive table-striped" id="datatable">
                 <thead>
                 <tr>
@@ -16,7 +21,7 @@
                     <th><?php echo lang('Date last occurred'); ?></th>
                     <th><?php echo lang('Notes'); ?></th>
                     <?php if(!is('parent')): ?>
-                    <th></th>
+                        <th></th>
                     <?php endif; ?>
                 </tr>
                 </thead>
@@ -28,19 +33,19 @@
                         <td><?php echo format_date($problem->last_event, false); ?></td>
                         <td><?php echo $problem->notes; ?></td>
                         <?php if(!is('parent')): ?>
-                        <td>
+                            <td>
                                 <a href="<?php echo site_url('child/deleteProblem/'.$problem->id); ?>"
                                    class="delete text-red pull-right">
                                     <span class="fa fa-trash-alt cursor"></span>
                                 </a>
-                        </td>
+                            </td>
                         <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
         <?php else: ?>
-            <?php echo '<h3 class="alert alert-warning">'.lang('no_results_found').'</h3>'; ?>
+            <div class="callout callout-warning"><?php echo lang('no_results_found'); ?></div>
         <?php endif; ?>
     </div>
 </div>

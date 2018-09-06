@@ -1,10 +1,16 @@
 <h2><?php echo lang('allergies'); ?>
 
-    <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#allergyModal">
-      <i class="fa fa-plus-circle"></i>  <?php echo lang('Add new'); ?>
-    </button>
+    <?php if(!is('parent')): ?>
+        <button type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#allergyModal">
+            <i class="fa fa-plus-circle"></i> <?php echo lang('Add new'); ?>
+        </button>
+    <?php endif; ?>
+
 </h2>
 
+<?php if(is('parent')): ?>
+<div class="callout callout-info"><?php echo lang('Please notify daycare of any allergies'); ?></div>
+<?php endif; ?>
 
 <div>
     <div class="modal fade" id="allergyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -57,7 +63,7 @@
     <div class="col-lg-12">
         <?php
         $allergies = $this->db->where('child_id', $child->id)->get('child_allergy');
-        if($allergies->num_rows()>0) {
+        if($allergies->num_rows() > 0) {
             foreach ($allergies->result() as $allergy) {
                 ?>
                 <div class="box box-warning">
@@ -81,7 +87,7 @@
                 <?php
             }
         } else {
-            echo '<h3 class="alert alert-warning">'.lang('no_known_allergies').'</h3>';
+            echo '<div class="callout callout-warning">'.lang('no_known_allergies').'</div>';
         }
         ?>
     </div>

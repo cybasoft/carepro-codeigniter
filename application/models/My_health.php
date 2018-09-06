@@ -186,28 +186,6 @@ class my_health extends CI_Model
 
     }
 
-    /**
-     * @return bool
-     */
-    function addFoodPref()
-    {
-        $data = array(
-            'child_id' => $this->input->post('child_id'),
-            'food' => $this->input->post('food'),
-            'food_time' => $this->input->post('food_time'),
-            'comment' => $this->input->post('comment'),
-            'created_at' => date_stamp(),
-            'user_id' => $this->user->uid()
-        );
-        if($this->db->insert('child_foodpref', $data)) {
-            //log
-            logEvent("Added food pref for child ID: {$this->input->post('child_id')}");
-            //notify parent
-            $this->parent->notifyParents($data['child_id'], lang('new_foodpref_subject'), lang('new_foodpref_message'));
-            return true;
-        }
-        return false;
-    }
 
     /**
      * @return bool

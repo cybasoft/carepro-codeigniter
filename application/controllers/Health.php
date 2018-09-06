@@ -77,57 +77,6 @@ class Health extends CI_Controller
         redirectPrev(null, 'allergies');
     }
 
-
-    /*
-     * add food pref
-     */
-    function addFoodPref()
-    {
-        $this->form_validation->set_rules('food', lang('food'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('food_time', lang('time'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('comment', lang('comment'), 'trim|xss_clean');
-
-        if($this->form_validation->run() == TRUE) {
-
-            if($this->health->addFoodPref()) {
-                flash('success', lang('request_success'));
-            } else {
-                flash('danger', lang('request_error'));
-            }
-        } else {
-            flash('danger');
-            validation_errors();
-        }
-        redirectPrev(null, 'food');
-
-    }
-
-    /*
-     * delete food pref
-     */
-    function deleteFoodPref($id = "")
-    {
-        allow(['admin','manager','staff']);
-
-        if($id !== "" & is_numeric($id)) {
-            //make sure its the parent authorized or admin
-            $childID = $this->db->where('id', $id)->get('child_foodpref')->row();
-            if(is(['staff','admin']) || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
-                $this->db->where('id', $id);
-                $this->db->delete('child_foodpref');
-                if($this->db->affected_rows() > 0) {
-                    flash('success', lang('request_success'));
-                } else {
-                    flash('danger', lang('request_error'));
-                }
-            } else {
-                flash('danger', lang('record_not_found'));
-            }
-
-        }
-        redirectPrev(null, 'food');
-    }
-
     /**
      * add contact
      */
