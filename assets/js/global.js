@@ -70,7 +70,7 @@ $(document).ready(function () {
             ['table', ['table']],
             ['insert', ['link', 'hr']],
             ['code',['video','picture','codeview']]
-        ],
+        ]
     });
 
     $('#attendance').DataTable({

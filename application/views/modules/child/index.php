@@ -53,8 +53,11 @@
 
                 <hr/>
 
-                <h3><?php echo lang('Rooms'); ?>
-                    <span class="text-sm"><?php echo anchor('rooms', lang('Assign to room')); ?></span>
+                <h3>
+                    <?php echo lang('Rooms'); ?>
+                    <?php if(!is('parent')): ?>
+                        <span class="text-sm"><?php echo anchor('rooms', lang('Assign to room')); ?></span>
+                    <?php endif; ?>
                 </h3>
 
                 <?php $rooms = $this->db->where('child_id', $child->id)

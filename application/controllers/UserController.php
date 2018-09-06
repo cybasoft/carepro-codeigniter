@@ -160,10 +160,10 @@ class UserController extends CI_Controller
     }
 
     //deactivate the user
-    function deactivate($id)
+    function deactivate()
     {
         allow('admin');
-        $id = (int)$id;
+        $id = (int)$this->uri->segment(3);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('confirm', lang('deactivate_validation_confirm_label'), 'required');
         if($this->form_validation->run() == FALSE) {
