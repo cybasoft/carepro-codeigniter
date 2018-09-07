@@ -25,5 +25,3 @@ composer.lock
 /tests/results/
 /artisan
 .vscode
-bitbucket-pipelines.yml
-.git-ftp-ignore
