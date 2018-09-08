@@ -19,7 +19,7 @@ class Meds extends CI_Controller
         auth(true);
         $this->load->model('My_child', 'child');
         $this->load->model('My_health', 'health');
-        $this->module = 'modules/child/health/';
+        $this->module = 'child/health/';
         $this->title = lang('child').'-'.lang('health');
     }
 

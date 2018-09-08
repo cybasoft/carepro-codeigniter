@@ -234,7 +234,7 @@ class My_invoice extends CI_Model
     {
         //todo remove this and references moved to daycare library
         $url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick';
-        $business = get_option('email');
+        $business = session('company_paypal_email');
         $lc = "US";
         $item_name = $item;
         $item_number = 'DayCare_'.$invoice_id;
@@ -268,7 +268,7 @@ class My_invoice extends CI_Model
         }
         $due = str_replace(',', '', $due);
         $due = str_replace(' ', '', $due);
-        $due = str_replace(get_option('currency_symbol'), '', $due);
+        $due = str_replace(session('currency_symbol'), '', $due);
 
         return $due;
     }
@@ -421,7 +421,7 @@ class My_invoice extends CI_Model
             $charge = \Stripe\Charge::create([
                 'source' => $token,
                 'amount' => str_replace('.', '', $data['amount']),
-                'currency' => get_option('currency_abbreviation'),
+                'currency' => session('currency_abbreviation'),
                 'description' => $data['description'],
                 'metadata' => array(
                     'item_id' => $data['invoice_id']
@@ -461,7 +461,7 @@ class My_invoice extends CI_Model
             $charge = \Stripe\Charge::create(array(
                 'customer' => $data['stripe_id'],
                 'amount' => str_replace('.', '', $data['amount']),
-                'currency' => get_option('currency_abbreviation'),
+                'currency' => session('currency_abbreviation'),
                 'description' => $data['description'],
                 'metadata' => array(
                     'item_id' => $data['invoice_id']

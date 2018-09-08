@@ -6,7 +6,7 @@ class Pickup extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        $this->module = 'modules/child/';
+        $this->module = 'child/';
         $this->title = lang('child').'-'.lang('pickup');
     }
 

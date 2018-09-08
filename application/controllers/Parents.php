@@ -34,7 +34,7 @@ class Parents extends CI_Controller
         }
 
         $groups = $this->ion_auth->groups()->result_array();
-        page('modules/users/parents', compact('users', 'groups'));
+        page('users/parents', compact('users', 'groups'));
     }
 
     function invoice($term = 0)

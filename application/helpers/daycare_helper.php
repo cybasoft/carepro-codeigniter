@@ -29,7 +29,7 @@ function format_date($date, $time = true, $timestamp = false)
     if($timestamp == true)
         $date = date('Y-m-d H:i:s', $date);
 
-    $format = get_option('date_format');
+    $format = session('company_date_format');
     if($format == "")
         return date('d M Y H:ia', strtotime($date));
 
@@ -187,11 +187,13 @@ function in_group($id, $group)
 {
     $ci = &get_instance();
     $query = $ci->db
+        ->select('id')
         ->where('users_groups.user_id', $id)
         ->where('groups.name', $group)
         ->from('groups')
         ->join('users_groups', 'users_groups.group_id=groups.id')
         ->count_all_results();
+
     if($query > 0)
         return true;
     return false;
@@ -366,7 +368,7 @@ function demo()
     ];
 
     if($ci->user->uid() > 0) {
-        if(get_option('demo_mode') == 1) {
+        if(session('company_demo_mode') == 1) {
             $ci->load->helper('language');
 
             //prevent all post methods
@@ -410,7 +412,7 @@ function maintenance()
 {
     $ci = &get_instance();
 
-    if(get_option('maintenance_mode') == 1 && !is('admin')) {
+    if(session('company_maintenance_mode') == 1 && !is('admin')) {
         $ci->load->helper('language');
         die('<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
             .lang('maintenance_mode').'
@@ -418,15 +420,17 @@ function maintenance()
     }
 }
 
-/**
- * dump and die
- *
- * @param $array
- */
-function dd($array)
-{
-    print_r($array);
-    die();
+if(!function_exists('ddo')) {
+    /**
+     * dump and die
+     *
+     * @param $array
+     */
+    function ddo($array)
+    {
+        print_r($array);
+        die();
+    }
 }
 
 /**
@@ -459,10 +463,10 @@ function set_active($page)
 function moneyFormat($amount, $symbol = false)
 {
     $amount = str_replace(',', '', $amount);
-    $amount = str_replace(get_option('currency_symbol'), '', $amount);
+    $amount = str_replace(session('company_currency_symbol'), '', $amount);
 
     if($symbol == true)
-        return get_option('currency_symbol').number_format((float)$amount, 2);
+        return session('company_currency_symbol').number_format((float)$amount, 2);
 
     return number_format((float)$amount, 2);
 }
@@ -521,9 +525,17 @@ function checkinTimer($in, $out)
     return $timeDiff;
 }
 
-function special_options()
+function sensitive_options()
 {
-    $options = array(
+    return [
+        'smtp_user' => '', 'smtp_pass' => '',
+        'stripe_pk_live' => '', 'stripe_sk_live' => '', 'stripe_pk_test' => '', 'stripe_sk_test' => '',
+    ];
+}
+
+function general_options()
+{
+    return [
         'company_name' => 'DaycarePRO',
         'slogan' => 'daycare management',
         'email' => 'app@admin.com',
@@ -535,9 +547,8 @@ function special_options()
         'date_format' => 'm/d/Y h:ia',
         'allow_registration' => 0, 'allow_reset_password' => 1, 'enable_captcha' => 0,
         'demo_mode' => 0, 'maintenance_mode' => 0,
-        'use_smtp' => 0, 'smtp_user' => '', 'smtp_pass' => '', 'smtp_host' => '', 'smtp_port' => '',
+        'use_smtp' => 0, 'smtp_host' => '', 'smtp_port' => '',
         'logo' => 'logo.png', 'invoice_logo' => 'invoice_logo.png',
-        'stripe_pk_live' => '', 'stripe_sk_live' => '', 'stripe_pk_test' => '', 'stripe_sk_test' => '',
         'paypal_email' => '', 'paypal_locale' => 'US',
         'page' => 'settings',
         'logo_bg_color' => '', 'top_nav_bg_color' => '', 'top_nav_link_color' => '',
@@ -547,9 +558,14 @@ function special_options()
         'tawkto_embed_url' => '',
         'login_bg_image' => 'login-bg-02.jpg',
         'invoice_terms' => 'Invoice due on receipt. Thank you for your business',
-        'facility_id' => '', 'tax_id' => ''
-    );
-    return $options;
+        'facility_id' => '',
+        'tax_id' => ''
+    ];
+}
+
+function special_options()
+{
+    return array_merge(general_options(), sensitive_options());
 }
 
 function protected_special_option($option)
@@ -622,8 +638,10 @@ function add_option($name, $value, $special = false)
         'option_name' => $name,
         'option_value' => $value
     ]);
-    if($ci->db->affected_rows() > 0)
+    if($ci->db->affected_rows() > 0) {
+        reload_company();
         return true;
+    }
     return false;
 }
 
@@ -652,8 +670,10 @@ function update_option($name, $value, $special = false)
     if($test > 0) {
         $ci->db->where('option_name', $name)->update('options', ['option_value' => $value]);
 
-        if($ci->db->affected_rows() > 0)
+        if($ci->db->affected_rows() > 0) {
+            reload_company();
             return true;
+        }
 
     } else {
 
@@ -678,17 +698,26 @@ function remove_option($name)
     }
     $ci =& get_instance();
     $ci->db->where('option_name', $name)->delete('options');
+    reload_company();
+    return true;
+}
+
+function empty_option($name)
+{
+    $ci = &get_instance();
+    $ci->db->where('option_name', $name)->update('options', ['option_value' => '']);
+    reload_company();
     return true;
 }
 
 function email_config()
 {
-    if(get_option('use_smtp') == 1) {
+    if(session('company_use_smtp') == 1) {
         $config['protocol'] = 'smtp'; //sendmail, smtp, mail
-        $config['smtp_host'] = get_option('smtp_host');
-        $config['smtp_user'] = get_option('smtp_user');
-        $config['smtp_pass'] = get_option('smtp_pass');
-        $config['smtp_port'] = get_option('smtp_port');
+        $config['smtp_host'] = session('company_smtp_host');
+        $config['smtp_user'] = session('company_smtp_user');
+        $config['smtp_pass'] = session('company_smtp_pass');
+        $config['smtp_port'] = session('company_smtp_port');
     } else {
         $config['protocol'] = 'mail';
     }
@@ -784,17 +813,59 @@ function is_checked_in($id, $date = false, $checkedOut = false)
     }
 }
 
-if(!function_exists('session'))
-{
-    function session($item){
-        $ci  = &get_instance();
-        if(is_array($item)){
-            $ci->session->set_userdata($item);
-            return true;
-        }
-        return $ci->session->userdata($item);
+if(!function_exists('str_replace_first')) {
+    function str_replace_first($from, $to, $content)
+    {
+        $from = '/'.preg_quote($from, '/').'/';
+
+        return preg_replace($from, $to, $content, 1);
     }
 }
+/**
+ * @param $item
+ *
+ * @return bool
+ */
+function session($item, $opts = '')
+{
+
+    if($opts !== '') {
+        return get_option(str_replace('company_', '', $item), $opts);
+    }
+
+    if(is_array($item)) { //means we are requesting setting session
+        $ci = &get_instance();
+        $ci->session->set_userdata($item);
+        return true;
+    }
+
+    $ci = &get_instance();
+
+    if(!empty($item) && array_key_exists(str_replace('company_', '', $item), general_options()))
+        return $ci->session->userdata($item);
+
+    elseif(!empty($item) && array_key_exists(str_replace('company_', '', $item), sensitive_options()))
+        return get_option($item);
+
+    else return $ci->session->userdata($item);
+
+}
+
+/**
+ * @param $item
+ */
+function unset_userdata($item)
+{
+    $ci = &get_instance();
+    if(is_array($item)) {
+        foreach ($item as $i) {
+            $ci->session->unset_userdata($i);
+        }
+    } else {
+        $ci->session->unset_userdata($item);
+    }
+}
+
 /**
  * @return array
  */
@@ -808,6 +879,55 @@ function default_payment_methods()
         'PayPal',
         'Stripe'
     ];
+}
+
+function icon($name)
+{
+    return '<i class="fa fa-'.$name.'"></i>';
+}
+
+function enable_debug()
+{
+    $ci =& get_instance();
+    $ci->output->enable_profiler(TRUE);
+}
+
+function disable_debug()
+{
+    $ci =& get_instance();
+    $ci->output->enable_profiler(FALSE);
+}
+
+function reload_company()
+{
+    //todo check if user data has changed and refresh session
+    $ci =& get_instance();
+    $ci->session->unset_userdata('init_company');
+    foreach (general_options() as $opt => $val) {
+        $ci->session->unset_userdata($opt);
+    }
+}
+
+function init_company()
+{
+
+    if(session('init_company') !== 1) {
+        session(['init_company' => 1]);
+        //query db once
+        $company_data = array();
+        foreach (general_options() as $opt => $val) {
+
+            if($opt == 'company_name') {
+                $company_data['company_name'] = get_option('company_name');
+            } else {
+                $value = get_option($opt);
+                if(empty($value))
+                    continue;
+                $company_data['company_'.$opt] = $value;
+            }
+        }
+        session($company_data);
+    }
 }
 
 ?>

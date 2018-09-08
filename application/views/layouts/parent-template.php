@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo get_option('company_name'); ?></title>
+    <title><?php echo session('company_name'); ?></title>
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -18,7 +18,7 @@
 
     <meta id="site_url" content="<?php echo site_url(); ?>">
     <meta id="base_url" content="<?php echo base_url(); ?>">
-    <meta id="lockScreenTimer" content="<?php echo get_option('lockscreen_timer'); ?>">
+    <meta id="lockScreenTimer" content="<?php echo session('company_lockscreen_timer'); ?>">
     <script>
         var lang = <?php echo json_encode($this->lang->language); ?>
     </script>
@@ -38,7 +38,7 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-        ga('create', '<?php echo get_option('google_analytics'); ?>', 'auto');
+        ga('create', '<?php echo session('company_google_analytics'); ?>', 'auto');
         ga('send', 'pageview');
 
     </script>
@@ -55,18 +55,18 @@
 
     <!--start nav-->
     <nav class="navbar navbar-static-top" role="navigation"
-         style="margin-left:0;background-color:<?php echo get_option('top_nav_bg_color', '#03a9f4'); ?>">
+         style="margin-left:0;background-color:<?php echo session('company_top_nav_bg_color', '#03a9f4'); ?>">
         <div class="navbar-left">
             <ul class="nav navbar-nav">
                 <li class="<?php echo set_active('dashboard'); ?>">
                     <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-xs"
-                       style="left:0 !important; background-color: <?php echo get_option('logo_bg_color', '#ffeb3b'); ?>">
-                        <?php if(get_option('logo') == "") : ?>
+                       style="left:0 !important; background-color: <?php echo session('company_logo_bg_color', '#ffeb3b'); ?>">
+                        <?php if(session('company_logo') == "") : ?>
                             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
-                                <?php echo get_option('company_name'); ?>
+                                <?php echo session('company_name'); ?>
                             </span>
                         <?php else : ?>
-                            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('logo'); ?>"/>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
                         <?php endif; ?>
                     </a>
                     <img class="hidden-md hidden-lg pull-left"
@@ -76,7 +76,7 @@
 
                 <li class="<?php echo set_active('dashboard'); ?>">
                     <a href="<?php echo site_url('dashboard'); ?>"
-                       style="color:<?php echo get_option('top_nav_link_color', '#fff'); ?>">
+                       style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                         <i class="fa fa-home"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('dashboard'); ?></span>
                     </a>
@@ -84,7 +84,7 @@
 
                 <li class="<?php echo set_active(array('children', 'child')); ?>">
                     <a href="<?php echo site_url('children'); ?>"
-                       style="color:<?php echo get_option('top_nav_link_color', '#fff'); ?>">
+                       style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                         <i class="fa fa-users"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('children'); ?>
                             <small class="badge pull-right bg-green">
@@ -94,14 +94,14 @@
                 </li>
                 <li class="<?php echo set_active('calendar'); ?>">
                     <a href="<?php echo site_url('calendar'); ?>"
-                       style="color:<?php echo get_option('top_nav_link_color', '#fff'); ?>">
+                       style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                         <i class="fa fa-calendar"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('calendar'); ?></span>
                     </a>
                 </li>
                 <li class="<?php echo set_active(['news']); ?>">
                     <a href="<?php echo site_url('news'); ?>"
-                       style="color:<?php echo get_option('top_nav_link_color', '#fff'); ?>">
+                       style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                         <i class="fa fa-clipboard"></i>
                         <span class="hidden-xs hidden-sm"><?php echo lang('news'); ?></span>
                     </a>
@@ -212,14 +212,14 @@
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
 
 
-<?php if(!empty(get_option('tawkto_embed_url'))): ?>
+<?php if(!empty(session('company_tawkto_embed_url'))): ?>
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         (function () {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
             s1.async = true;
-            s1.src = '<?php echo get_option('tawkto_embed_url'); ?>';
+            s1.src = '<?php echo session('company_tawkto_embed_url'); ?>';
             s1.charset = 'UTF-8';
             s1.setAttribute('crossorigin', '*');
             s0.parentNode.insertBefore(s1, s0);

@@ -771,8 +771,8 @@ class Ion_auth_model extends CI_Model
 
         //notify admin
         $email = array(
-            'to' => get_option('email'),
-            'from' => get_option('email'),
+            'to' => session('company_email'),
+            'from' => session('company_email'),
             'subject' => lang('new_user_email_subject'),
             'message' => lang('new_user_email_body'),
             'template' => 'new_user_notice',
@@ -953,7 +953,7 @@ class Ion_auth_model extends CI_Model
 
         $this->trigger_events('extra_where');
 
-        $query = $this->db->select($this->identity_column.', email, id, password, active, last_login')
+        $query = $this->db->select('*')
             ->where($this->identity_column, $identity)
             ->limit(1)
             ->get($this->tables['users']);
@@ -980,8 +980,9 @@ class Ion_auth_model extends CI_Model
                     redirectPrev();
                     return FALSE;
                 }
-                $this->set_session($user);
+
                 $this->update_last_login($user->id);
+                $this->set_session($user);
                 $this->clear_login_attempts($identity);
                 $this->trigger_events(array('post_login', 'post_login_successful'));
                 $this->set_message('login_successful');
@@ -1088,14 +1089,27 @@ class Ion_auth_model extends CI_Model
 
         $this->trigger_events('pre_set_session');
 
-        $session_data = array(
-            'identity' => $user->{$this->identity_column},
-            'email' => $user->email,
-            'user_id' => $user->id, //everyone likes to overwrite id so we'll use user_id
-            'old_last_login' => $user->last_login
-        );
+//
+//        $session_data = array(
+//            'user_id' => $user->id,
+//            'first_name'=>$user->first_name,
+//            'last_name'=>$user->last_name,
+//            'name'=>$user->first_name.' '.$user->last_name,
+//            'email' => $user->email,
+//            'photo'=>$user->photo,
+//            'pin'=>$user->pin,
+//            'phone'=>$user->phone,
+//            'phone2'=>$user->phone2,
+//            'address'=>$user->address,
+//            'old_last_login' => $user->last_login
+//        );
 
-        $this->session->set_userdata($session_data);
+        //set all user data for use through out the session without multiple DB calls
+        $user->user_id = $user->id;
+        unset($user->id);
+        unset($user->password);
+
+        $this->session->set_userdata((array)$user);
 
         $this->trigger_events('post_set_session');
 

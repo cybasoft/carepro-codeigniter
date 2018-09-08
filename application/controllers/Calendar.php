@@ -19,7 +19,7 @@ class Calendar extends CI_Controller
         $this->load->model('My_calendar', 'calendar');
 
         //local variables
-        $this->module = 'modules/calendar/';
+        $this->module = 'calendar/';
     }
 
     /*
@@ -29,7 +29,7 @@ class Calendar extends CI_Controller
     {
         $this->title = lang('calendar');
         if (is('parent')) :
-            page('modules/parent/calendar');
+            page('parent/calendar');
         else :
             page($this->module . 'index');
         endif;

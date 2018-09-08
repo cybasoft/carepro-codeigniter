@@ -47,7 +47,7 @@
                             <select class="form-control" name="tablename">
                                 <option value="">--<?php echo lang('select'); ?>--</option>
                                 <?php
-                                if(get_option('demo_mode') == 1) {
+                                if(session('company_demo_mode') == 1) {
                                     echo '<option>No available in demo</option>';
                                 } else {
                                     foreach ($this->backup->tablesList() as $table) {

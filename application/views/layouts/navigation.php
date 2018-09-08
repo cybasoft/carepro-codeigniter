@@ -1,5 +1,5 @@
 <nav class="navbar navbar-static-top" role="navigation"
-     style="background-color:<?php echo get_option('top_nav_bg_color', '#03a9f4'); ?>">
+     style="background-color:<?php echo session('company_top_nav_bg_color', '#03a9f4'); ?>">
     <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only"><?php echo lang('toggle_navigation'); ?></span>
         <span class="icon-bar"></span>
@@ -9,6 +9,7 @@
     <div class="navbar-left">
         <ul class="nav navbar-nav">
             <li class="lock-screen"><a href="#"><i class="fa fa-lock cursor"></i></a></li>
+            <li><?php echo anchor('messaging',icon('envelope')); ?></li>
         </ul>
     </div>
     <div class="navbar-right">

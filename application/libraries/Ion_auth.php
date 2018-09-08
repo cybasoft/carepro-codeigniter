@@ -62,9 +62,7 @@ class Ion_auth
     public function __construct()
     {
         //timezone settings
-        //$this->load->model('conf');
-        if(get_option('timezone') !== "")
-            date_default_timezone_set(get_option('timezone'));
+        //$this->load->model('conf'); ;
 
         $this->load->config('ion_auth', TRUE);
         $this->load->library('email');
@@ -105,7 +103,7 @@ class Ion_auth
     {
         $this->ion_auth_model->trigger_events('logged_in');
 
-        return (bool)$this->session->userdata('identity');
+        return (bool)$this->session->userdata('user_id');
     }
 
     /**
@@ -157,7 +155,7 @@ class Ion_auth
             if($user) {
                 $mail = array(
                     'to' => $user->email,
-                    'subject' => get_option('company_name').' - '.$this->lang->line('email_forgotten_password_subject'),
+                    'subject' => session('company_name').' - '.$this->lang->line('email_forgotten_password_subject'),
 
                     'template' => 'forgot_password',
                     'salute' => $user->first_name,
@@ -212,9 +210,9 @@ class Ion_auth
             $message = $this->load->view($this->config->item('email_templates', 'ion_auth').$this->config->item('email_forgot_password_complete', 'ion_auth'), $data, true);
 
             $this->email->clear();
-            $this->email->from(get_option('email'), get_option('company_name'));
+            $this->email->from(session('company_email'), session('company_name'));
             $this->email->to($profile->email);
-            $this->email->subject(get_option('company_name').' - '.$this->lang->line('email_new_password_subject'));
+            $this->email->subject(session('company_name').' - '.$this->lang->line('email_new_password_subject'));
             $this->email->message($message);
 
             if($this->email->send()) {
@@ -316,9 +314,9 @@ class Ion_auth
             $message = $this->load->view($this->config->item('email_templates', 'ion_auth').$this->config->item('email_activate', 'ion_auth'), $data, true);
 
             $this->email->clear();
-            $this->email->from(get_option('email'), get_option('company_name'));
+            $this->email->from(session('company_email'), session('company_name'));
             $this->email->to($email);
-            $this->email->subject(get_option('company_name').' - '.$this->lang->line('email_activation_subject'));
+            $this->email->subject(session('company_name').' - '.$this->lang->line('email_activation_subject'));
             $this->email->message($message);
 
             if($this->email->send() == TRUE) {
@@ -344,14 +342,23 @@ class Ion_auth
     {
         $this->ion_auth_model->trigger_events('logout');
 
-        $identity = $this->config->item('identity', 'ion_auth');
-        $session_data = array(
-            $identity => '',
-            'email' => '',
-            'user_id' => '',
-            'id' => '',
-            'old_last_login' => '',
-        );
+//        $session_data = array(
+//            'user_id' =>'',
+//            'first_name'=>'',
+//            'last_name'=>'',
+//            'name'=>'',
+//            'email' => '',
+//            'photo'=>'',
+//            'pin'=>'',
+//            'phone'=>'',
+//            'phone2'=>'',
+//            'address'=>'',
+//            'old_last_login' => '',
+//        );
+        $session_data = array(); //destroy all user session data
+        foreach($this->session->userdata as $key=>$val){
+            $session_data[$key]='';
+        }
         $this->session->unset_userdata($session_data);
 
         //delete the remember me cookies if they exist

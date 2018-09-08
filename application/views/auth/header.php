@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title><?php echo get_option('company_name'); ?></title>
+    <title><?php echo session('company_name'); ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="DaycarePRO - Daycare management system">
@@ -26,7 +26,7 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', '<?php echo get_option('google_analytics'); ?>', 'auto');
+        ga('create', '<?php echo session('company_google_analytics'); ?>', 'auto');
         ga('require', 'displayfeatures');
         ga('send', 'pageview');
     </script>

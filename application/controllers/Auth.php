@@ -31,7 +31,7 @@ class Auth extends CI_Controller
         if(!empty($this->input->post('email'))) {
             $this->form_validation->set_rules('email', lang('email'), 'required');
             $this->form_validation->set_rules('password', lang('password'), 'required');
-            if(get_option('enable_captcha') == 1)
+            if(session('company_enable_captcha') == 1)
                 $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
 
             if($this->form_validation->run() == true) {
@@ -74,7 +74,7 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required');
         $this->form_validation->set_rules('phone', lang('phone'), 'required');
 
-        if(get_option('enable_captcha') == 1)
+        if(session('company_enable_captcha') == 1)
             $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
 
         if($this->form_validation->run() == true) {
@@ -235,7 +235,7 @@ class Auth extends CI_Controller
     function page($page, $data = array())
     {
         $this->load->view('auth/header');
-        if(get_option('maintenance_mode') == 1) {
+        if(session('company_maintenance_mode') == 1) {
             $this->load->view('errors/maintenance');
         } else {
             $this->load->view('auth/'.$page, $data);

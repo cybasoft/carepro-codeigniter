@@ -375,7 +375,7 @@ class My_child extends CI_Model
             $date = date('Y-m-d');
 
         //limit checkin count to daily only
-        if(get_option('daily_checkin')==1){
+        if(session('company_daily_checkin')==1){
             $this->db->where('DATE(time_in)', $date);
         }
 

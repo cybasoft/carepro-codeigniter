@@ -11,7 +11,7 @@ class Reports extends CI_Controller
         allow(['admin', 'manager']);
         //variables
         $this->load->model('My_reports', 'reports');
-        $this->module = 'modules/reports/';
+        $this->module = 'reports/';
         $this->title = lang('reports');
     }
 
@@ -52,9 +52,9 @@ class Reports extends CI_Controller
     function attendance()
     {
         if(isset($_POST['date'])) {
-            $this->load->view('modules/child/reports/attendance_meals');
+            $this->load->view('child/reports/attendance_meals');
         }else{
-            $this->load->view('modules/child/reports/attendance_date');
+            $this->load->view('child/reports/attendance_date');
         }
     }
 }

@@ -10,7 +10,7 @@ class RoomsController extends CI_Controller
         setRedirect();
         auth(true);
         //local variables
-        $this->module = 'modules/rooms/';
+        $this->module = 'rooms/';
     }
 
     /*

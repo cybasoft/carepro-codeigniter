@@ -13,7 +13,7 @@ class Files extends CI_Controller{
         auth(true);
 
         $this->load->helper('files');
-        $this->module='modules/files/';
+        $this->module='files/';
 
     }
     function index(){

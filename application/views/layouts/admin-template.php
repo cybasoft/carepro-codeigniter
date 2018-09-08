@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo get_option('company_name'); ?>
+    <title><?php echo session('company_name'); ?>
         <?php if(isset($this->title)) {
             echo ' - '.$this->title;
         } ?>
@@ -22,16 +22,20 @@
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/print.css" rel="stylesheet" type="text/css" media="print"/>
 
-    <?php if(!empty(get_option('custom_css'))): ?>
+    <?php if(!empty(session('company_custom_css'))): ?>
         <style type="text/css">
-            <?php echo get_option('custom_css'); ?>
+            <?php echo session('company_custom_css'); ?>
         </style>
     <?php endif; ?>
 
+    <?php if(ENVIRONMENT =='development'): ?>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
+    <?php endif; ?>
 
     <meta id="site_url" content="<?php echo site_url(); ?>">
     <meta id="base_url" content="<?php echo base_url(); ?>">
-    <meta id="lockScreenTimer" content="<?php echo get_option('lockscreen_timer'); ?>">
+    <meta id="lockScreenTimer" content="<?php echo session('company_lockscreen_timer'); ?>">
     <script>
         var lang = <?php echo json_encode($this->lang->language); ?>
     </script>
@@ -54,7 +58,7 @@
             a.src = g;
             m.parentNode.insertBefore(a, m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-        ga('create', '<?php echo get_option('google_analytics'); ?>', 'auto');
+        ga('create', '<?php echo session('company_google_analytics'); ?>', 'auto');
         ga('send', 'pageview');
     </script>
 
@@ -63,17 +67,17 @@
 <div class="modals-loader"></div>
 <header class="header">
     <a href="<?php echo site_url('dashboard'); ?>" class="logo"
-       style="left:0 !important; background-color: <?php echo get_option('logo_bg_color', '#ffeb3b'); ?>">
-        <?php if(get_option('logo') == "") : ?>
+       style="left:0 !important; background-color: <?php echo session('company_logo_bg_color', '#ffeb3b'); ?>">
+        <?php if(session('company_logo') == "") : ?>
             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
-			<?php echo get_option('company_name'); ?>
+			<?php echo session('company_name'); ?>
 				</span>
             <span class="" style="position: absolute; top:13px; left:50px;
 			z-index: 3000; font-size: 12px; color: #ffff00; font-family: monospace">
-			<?php echo get_option('slogan'); ?>
+			<?php echo session('company_slogan'); ?>
 			</span>
         <?php else : ?>
-            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('logo'); ?>"/>
+            <img src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
         <?php endif; ?>
     </a>
     <!--start nav-->
@@ -122,14 +126,14 @@
 
 </script>
 
-<?php if(!empty(get_option('tawkto_embed_url'))): ?>
+<?php if(!empty(session('company_tawkto_embed_url'))): ?>
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         (function () {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
             s1.async = true;
-            s1.src = '<?php echo get_option('tawkto_embed_url'); ?>';
+            s1.src = '<?php echo session('company_tawkto_embed_url'); ?>';
             s1.charset = 'UTF-8';
             s1.setAttribute('crossorigin', '*');
             s0.parentNode.insertBefore(s1, s0);
@@ -142,9 +146,9 @@
 <!--    <script>startLockscreen()</script>-->
 <?php endif; ?>
 
-<?php $this->load->view('modules/children/add_child'); ?>
-<?php $this->load->view('modules/users/add_user'); ?>
-<?php $this->load->view('modules/reports/report-form-popover'); ?>
+<?php $this->load->view('children/add_child'); ?>
+<?php $this->load->view('users/add_user'); ?>
+<?php $this->load->view('reports/report-form-popover'); ?>
 
 </body>
 </html>

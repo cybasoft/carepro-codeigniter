@@ -5,12 +5,12 @@ class Conf extends CI_Model
 
     function __construct()
     {
-        error_reporting(E_ALL);
-        ini_set("display_errors", 1);
-        ini_set("error_log", base_url().'php-error.log');
+//        reload_company();
+        init_company();
+//        dd(session('company_top_nav_bg_color'));
 
-        if(get_option('timezone') !== "")
-            date_default_timezone_set(get_option('timezone'));
+        if(!empty(session('timezone')))
+            date_default_timezone_set(session('timezone'));
         else
             date_default_timezone_set('America/New_York');
 
@@ -28,6 +28,16 @@ class Conf extends CI_Model
         //enforce encryption
         //$this->check_encrypt_key();
         setRedirect(); //remember current page
+
+        //enable profiler in dev
+        if(ENVIRONMENT == 'development') {
+            $this->output->enable_profiler(TRUE);
+//            $this->console->exception(new Exception('test exception'));
+//            $this->console->debug('Debug message');
+//            $this->console->info('Info message');
+//            $this->console->warning('Warning message');
+//            $this->console->error('Error message');
+        }
     }
 
 

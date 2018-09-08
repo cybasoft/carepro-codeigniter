@@ -15,7 +15,7 @@ class news extends CI_Controller
         //authenticate
         auth(true);
         //vars
-        $this->module = 'modules/news/';
+        $this->module = 'news/';
         $this->load->model('My_user', 'user');
         $this->load->model('My_news', 'news');
         $this->title = lang('news');

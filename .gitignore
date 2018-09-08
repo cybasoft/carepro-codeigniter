@@ -25,3 +25,5 @@ composer.lock
 /tests/results/
 /artisan
 .vscode
+
+application/third_party/codeigniter-debugbar

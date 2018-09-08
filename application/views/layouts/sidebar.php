@@ -1,12 +1,12 @@
 <aside class="left-side animate sidebar-offcanvas"
-       style="background-color: <?php echo get_option('left_sidebar_bg_color', '#f4f4f'); ?>">
+       style="background-color: <?php echo session('company_left_sidebar_bg_color', '#f4f4f'); ?>">
     <section class="sidebar">
         <div class="user-panel">
             <div class="text-center image">
-                <img src="<?php echo $this->user->photo(user_id()); ?>" class="img-circle"/>
+                <img src="<?php echo $this->user->photo(session('photo')); ?>" class="img-circle"/>
             </div>
             <div class="text-center user-info">
-                <p><span><?php echo lang('hello'); ?></span> <?php echo $this->user->thisUser('first_name'); ?></p>
+                <p><span><?php echo lang('hello'); ?></span> <?php echo session('first_name'); ?></p>
             </div>
         </div>
         <!-- search form -->
@@ -32,27 +32,23 @@
                     'name' => 'Children',
                     'link' => 'children',
                     'icon' => 'children',
-                    'badge' => $this->child->getCount(),
                     'active' => ['children', 'child']
                 ],
                 [
                     'name' => 'rooms',
                     'link' => 'rooms',
                     'icon' => 'groups',
-                    'badge' => $this->rooms->getCount(),
                     'active' => ['rooms', 'room']
                 ], [
                     'name' => 'Users',
                     'link' => 'users',
                     'icon' => 'users',
-                    'badget' => $this->user->getCount(),
                     'active' => ['users', 'user']
                 ],
                 [
                     'name' => 'Parents',
                     'link' => 'parents',
                     'icon' => 'parents',
-                    'badget' => $this->user->getCount('parent'),
                     'active' => 'parents'
                 ],
                 [
@@ -90,7 +86,7 @@
                     echo set_active($sb['active']);
                 }; ?>">
                     <a href="<?php echo site_url($sb['link']); ?>"
-                       style="color:<?php echo get_option('left_sidebar_link_color', '#333'); ?>">
+                       style="color:<?php echo session('company_left_sidebar_link_color', '#333'); ?>">
                         <span class="left-menu-link-icon">
                             <img class="icon" src="<?php echo assets('img/content/'.$sb['icon'].'.svg'); ?>"/>
                         </span>

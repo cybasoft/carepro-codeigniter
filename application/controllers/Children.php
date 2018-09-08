@@ -12,7 +12,7 @@ class Children extends CI_Controller
         parent::__construct();
         setRedirect();
         $this->load->model('My_invoice', 'invoice');
-        $this->module = 'modules/children/';
+        $this->module = 'children/';
         $this->title = lang('children');
         auth(true);
     }
@@ -25,7 +25,7 @@ class Children extends CI_Controller
     {
         if(is('parent')) {
             $children = $this->parent->getChildren();
-            page('modules/parent/parent_dashboard', compact('children'));
+            page('parent/parent_dashboard', compact('children'));
         } else {
             page($this->module.'index');
         }

@@ -11,22 +11,45 @@ class UserController extends CI_Controller
         parent::__construct();
         setRedirect();
         allow(['admin', 'manager', 'staff']);
-        $this->module = 'modules/users/';
+        $this->module = 'users/';
         $this->title = lang('users');
     }
 
     //redirect if needed, otherwise display the user list
     function index()
     {
-        //set the flash data error message if there is one
-        $message = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         //list the users
-        $users = $this->ion_auth->users()->result();
-        foreach ($users as $k => $user) {
-            $users[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+        $users = $this->db->select('u.*,ug.group_id,g.name as role')
+            ->from('users as u')
+            ->join('users_groups as ug','ug.user_id=u.id','left')
+            ->join('groups as g','g.id=ug.group_id')
+            ->get()->result();
+
+
+
+//        foreach ($users as $k => $user) {
+//            $users[$k]->groups = $this->db->select('name')
+//                ->from('groups')
+//                ->join('users_groups', 'users_groups.group_id=groups.id')
+//                ->where('user_id', $user->id)->get()->result();
+//            foreach ($user->groups as $group) {
+//                $count[$group->name] = $count[$group->name] + 1;
+//            }
+//        }
+
+        $groups = $this->db->select('g.name, count(*) AS total')
+            ->from('users as u')
+            ->join('users_groups as ug','ug.user_id=u.id')
+            ->join('groups as g','g.id=ug.group_id')
+            ->group_by('g.name')
+            ->get()->result();
+
+       $role=[];
+
+        for($i=0; $i<count((array)$groups); $i++){
+            $role[$groups[$i]->name] = $groups[$i]->total;
         }
-        $groups = $this->ion_auth->groups()->result_array();
-        page($this->module.'index', compact('groups', 'users', 'message'));
+        page($this->module.'index', compact('users', 'count','role'));
     }
 
     //create a new user
@@ -64,6 +87,8 @@ class UserController extends CI_Controller
 
     function view()
     {
+        disable_debug();
+
         allow(['admin', 'manager']);
 
         $id = $this->uri->segment(3);
@@ -127,7 +152,7 @@ class UserController extends CI_Controller
             if($this->ion_auth->update($id, $data)) {
                 //update photo if available
                 flash('success', lang('request_success'));
-                if (!empty($_FILES['userfile']['name'])) {
+                if(!empty($_FILES['userfile']['name'])) {
                     $this->uploadPhoto($id);
                 }
             } else {
@@ -141,10 +166,12 @@ class UserController extends CI_Controller
     }
 
     //activate the user
-    function activate($id, $code = false)
+    function activate()
     {
         allow('admin');
-        if($code !== false) {
+        $id = uri_segment(3);
+        $code = uri_segment(4);
+        if(!empty($code)) {
             $activation = $this->ion_auth->activate($id, $code);
         } else {
             $activation = $this->ion_auth->activate($id);
@@ -227,8 +254,10 @@ class UserController extends CI_Controller
     }
 
     //update a group
-    function update_group($id)
+    function update_group()
     {
+        $id = uri_segment(3);
+
         allow('admin');
         if(!$id || empty($id)) {
             redirect('auth', 'refresh');
@@ -255,8 +284,9 @@ class UserController extends CI_Controller
     /*
      * edit group
      */
-    function edit_group($id)
+    function edit_group()
     {
+        $id = uri_segment(3);
         allow('admin');
         $group = $this->ion_auth->group($id)->row();
         //pass the user to the view
@@ -267,8 +297,10 @@ class UserController extends CI_Controller
     /*
      * upload user photo
      */
-    function uploadPhoto($id = "")
+    function uploadPhoto()
     {
+        $id = uri_segment(3);
+
         $upload_path = APPPATH.'../assets/uploads/users';
         $upload_db = 'users';
         if(!file_exists($upload_path)) {

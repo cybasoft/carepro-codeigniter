@@ -3,15 +3,15 @@
         <div class="box box-info">
             <div class="box-body">
                 <div class="text-center">
-                    <h3><?php echo get_option('name'); ?></h3>
-                    <em><?php echo get_option('slogan'); ?></em>
+                    <h3><?php echo session('company_name'); ?></h3>
+                    <em><?php echo session('company_slogan'); ?></em>
                     <br/>
-                    <?php echo get_option('street'); ?>
+                    <?php echo session('company_street'); ?>
                     <br/>
-                    <?php echo get_option('city'); ?>
-                    <?php echo get_option('state'); ?>,
-                    <?php echo get_option('postal_code'); ?>
-                    <?php echo get_option('country'); ?>
+                    <?php echo session('company_city'); ?>
+                    <?php echo session('company_state'); ?>,
+                    <?php echo session('company_postal_code'); ?>
+                    <?php echo session('company_country'); ?>
                 </div>
             </div>
         </div>
@@ -20,23 +20,23 @@
                 <table class="table">
                     <tr>
                         <td><?php echo lang('Facility ID'); ?>:</td>
-                        <td><?php echo get_option('facility_id'); ?></td>
+                        <td><?php echo session('company_facility_id'); ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('Tax ID'); ?>:</td>
-                        <td><?php echo get_option('tax_id'); ?></td>
+                        <td><?php echo session('company_tax_id'); ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('email'); ?>:</td>
-                        <td><?php echo get_option('email') ?></td>
+                        <td><?php echo session('company_email') ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('phone'); ?>:</td>
-                        <td><?php echo get_option('phone') ?></td>
+                        <td><?php echo session('company_phone') ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('fax'); ?>:</td>
-                        <td><?php echo get_option('fax'); ?></td>
+                        <td><?php echo session('company_fax'); ?></td>
                     </tr>
                 </table>
             </div>
@@ -51,7 +51,7 @@
                 <span class="badge">
                     <?php echo $this->db->where('invoice_status', 2)->get('invoices')->num_rows(); ?>
                 </span>
-                <h2><?php echo get_option('currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
+                <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
             </div>
         </div>
         <div class="box box-primary">
@@ -126,7 +126,7 @@
 
         <div class="row hidden-xs">
             <section class="col-sm-12 connectedSortable">
-                <?php $this->load->view('modules/calendar/widget'); ?>
+                <?php $this->load->view('calendar/widget'); ?>
             </section>
         </div>
     </div>

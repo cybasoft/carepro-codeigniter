@@ -11,7 +11,7 @@ class Food extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->module = 'modules/child/';
+        $this->module = 'child/';
         $this->title = lang('food');
         $this->load->model('My_food', 'food');
     }

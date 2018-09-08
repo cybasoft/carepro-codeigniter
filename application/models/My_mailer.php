@@ -15,16 +15,16 @@ class My_mailer extends CI_Model
         }
 
         if(!isset($data['from']))
-            $data['from'] = get_option('email');
+            $data['from'] = session('company_email');
 
         if(!isset($data['from_name']))
-            $data['from_name'] = get_option('company_name');
+            $data['from_name'] = session('company_name');
 
         if(!isset($data['to']))
-            $data['to'] = get_option('email');
+            $data['to'] = session('email');
 
         if(!isset($data['subject']))
-            $data['subject'] = 'Message from '.get_option('company_name');
+            $data['subject'] = 'Message from '.session('company_name');
 
         if(isset($data['bcc']))
             $this->email->bcc($data['bcc']);
@@ -61,7 +61,7 @@ class My_mailer extends CI_Model
         $mail = $this->email->send();
 
         if(isset($data['file'])) {
-            @unlink($file);
+            @unlink($data['file']);
         }
 
         if($mail) {

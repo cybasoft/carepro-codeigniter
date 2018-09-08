@@ -13,6 +13,7 @@ class Settings extends CI_Controller
         parent::__construct();
         setRedirect();
         allow(['admin', 'manager']);
+        disable_debug();
         //variables
         $this->module = 'admin/';
         $this->title = lang('settings');
@@ -20,10 +21,16 @@ class Settings extends CI_Controller
 
     function index()
     {
-        $this->load->model('My_backup','backup');
+        $this->load->model('My_backup', 'backup');
 
         $payMethods = $this->db->get('payment_methods')->result();
-        page($this->module.'settings', compact('payMethods'));
+        $settings = $this->db->get('options')->result_array();
+
+        $option=array();
+        foreach($settings as $key=>$val){
+             $option[$val['option_name']]=$val['option_value'];
+        }
+        page($this->module.'settings', compact('payMethods','option'));
     }
 
     /**
@@ -38,11 +45,15 @@ class Settings extends CI_Controller
         if($this->form_validation->run() == true) {
             $error = 0;
             foreach ($_POST as $field => $value) {
-                if(!update_option($field, $value, true)) {
-                    $error++;
+                if($value == "") {
+                    empty_option($field);
+                } else {
+                    if(!update_option($field, $value, true)) {
+                        $error++;
+                    }
                 }
             }
-            flash('success', lang('Settings have been updated'));
+            flash('success', lang('request_error'));
         } else {
             validation_errors();
             flash('error');

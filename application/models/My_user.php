@@ -6,6 +6,7 @@
  */
 class MY_user extends CI_Model
 {
+
     /**
      * @param       $password
      * @param       $email
@@ -102,10 +103,10 @@ class MY_user extends CI_Model
      *
      * @return string
      */
-    function get($id=null, $item = '')
+    function get($id = null, $item = '')
     {
-        if($id==null)
-            $id= $this->uid();
+        if($id == null)
+            $id = $this->uid();
 
         $user = $this->user($id);
         if($user !== false && !empty($item)) {
@@ -188,14 +189,22 @@ class MY_user extends CI_Model
 
     function getCount($group = null)
     {
-        if($group !== null)
-            return $this->db->where('groups.name', $group)
-                ->from('users')
-                ->join('users_groups', 'users_groups.user_id=users.id')
-                ->join('groups', 'groups.id=users_groups.group_id')
-                ->count_all_results();
+        if($group == null)
+            return $this->db->count_all_results('users');
 
-        return $this->users()->num_rows();
+        $query = "SELECT g.name, count(*) AS total 
+                  FROM users AS u
+                  JOIN users_groups AS ug ON ug.user_id = u.id
+                  JOIN groups AS g
+                  ON g.id = ug.group_id
+                  GROUP BY g.name;";
+        $results = $this->db->query($query)->result();
+
+        foreach ($results as $result) {
+            if($result->name == $group)
+                return $result->total;
+        }
+
     }
 
     /*
@@ -203,14 +212,10 @@ class MY_user extends CI_Model
      */
     function photo($photo = NULL)
     {
-        $defaultPhoto = 'assets/img/content/no-image.png';
-        if(is_numeric($photo)) {
-            $user = $this->db->where('id', $photo)->get('users')->row();
-            if(count((array)$user) > 0 && !empty($user->photo))
-                $defaultPhoto = 'assets/uploads/users/'.$user->photo;
-        }
-
-        $photo = $defaultPhoto;
+        if(empty($photo))
+            $photo = 'assets/img/content/no-image.png';
+        else
+            $photo = 'assets/uploads/users/'.$photo;
 
         return base_url().$photo;
     }

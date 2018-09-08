@@ -137,3 +137,8 @@ $route['food/(:any)/:num']='food/$1';
 //backup
 $route['admin/backup/(:any)']='backupController/$1';
 $route['admin/backup/(:any)/(:any)']='backupController/$1';
+
+//messaging
+$route['messaging'] = 'MessagingController/index';
+$route['messaging/(:any)'] = 'MessagingController/$1';
+$route['messaging/(:any)/:num'] = 'MessagingController/$1/$1';

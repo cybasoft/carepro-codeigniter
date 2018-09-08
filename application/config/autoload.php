@@ -39,7 +39,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |  $autoload['packages'] = array(APPPATH.'third_party', '/usr/local/shared');
 |
  */
-$autoload['packages'] = array();
+$autoload['packages'] = array(APPPATH.'third_party/codeigniter-debugbar');
 
 /*
 | -------------------------------------------------------------------
@@ -60,6 +60,10 @@ $autoload['packages'] = array();
  */
 
 $autoload['libraries'] = array('session', 'database', 'ion_auth', 'daycare', 'form_validation', 'encryption');
+
+if(ENVIRONMENT=='development'){
+    array_unshift($autoload['libraries'],'console');
+}
 
 /*
 | -------------------------------------------------------------------

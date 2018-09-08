@@ -19,7 +19,7 @@ class Invoice extends CI_Controller
         setRedirect();
         auth(true);
         //local variables
-        $this->module = 'modules/child/billing/';
+        $this->module = 'child/billing/';
         $this->invoice_db = 'invoices';
         $this->payments_db = 'accnt_payments';
         $this->load->model('My_child', 'child');
@@ -110,9 +110,9 @@ class Invoice extends CI_Controller
             $child = $this->child->first($invoice->child_id);
 
             if(ENVIRONMENT == 'production') {
-                $stripeKey = get_option('stripe_sk_live');
+                $stripeKey = session('stripe_sk_live');
             } else {
-                $stripeKey = get_option('stripe_sk_test');
+                $stripeKey = session('stripe_sk_test');
             }
             \Stripe\Stripe::setApiKey($stripeKey);
 

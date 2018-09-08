@@ -45,38 +45,38 @@
         <div class="row">
             <div class="col-md-6">
                 <?php
-                echo form_label(lang('company_name'));
-                echo form_input('company_name', get_option('company_name'), ['class' => 'form-control', 'required' => 'required']);
+                echo form_label(lang('name'));
+                echo form_input('name',$option['company_name'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('slogan'));
-                echo form_input('slogan', get_option('slogan'), ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('slogan',$option['slogan'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('Facility ID'), 'facility_id');
-                echo form_input('facility_id', get_option('facility_id'),['class'=>'form-control'] );
+                echo form_input('facility_id',$option['facility_id'],['class'=>'form-control'] );
                 echo form_label(lang('Tax ID'), 'facility_id');
-                echo form_input('tax_id', get_option('tax_id'),['class'=>'form-control'] );
+                echo form_input('tax_id',$option['tax_id'],['class'=>'form-control'] );
                 echo "<hr/>";
                 echo form_label(lang('email'));
-                echo form_input('email', get_option('email'), ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('email',$option['email'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('phone'));
-                echo form_input('phone', get_option('phone'), ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('phone',$option['phone'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('fax'));
-                echo form_input('fax', get_option('fax'), ['class' => 'form-control']);
+                echo form_input('fax',$option['fax'], ['class' => 'form-control']);
                 echo form_label(lang('street'));
-                echo form_input('street', get_option('street'), ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('street',$option['street'], ['class' => 'form-control', 'required' => 'required']);
                 echo "<br/>";
                 echo form_label(lang('street2'));
-                echo form_input('street2', get_option('street2'), ['class' => 'form-control']);
+                echo form_input('street2',$option['street2'], ['class' => 'form-control']);
                 ?>
                 <div class="row">
                     <div class="col-md-6">
                         <?php
                         echo form_label(lang('city'));
-                        echo form_input('city', get_option('city'), ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('city',$option['city'], ['class' => 'form-control', 'required' => 'required']);
                         ?>
                     </div>
                     <div class="col-md-6">
                         <?php
                         echo form_label(lang('state'));
-                        echo form_input('state', get_option('state'), ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('state',$option['state'], ['class' => 'form-control', 'required' => 'required']);
                         ?>
                     </div>
                 </div>
@@ -84,13 +84,13 @@
                     <div class="col-md-6">
                         <?php
                         echo form_label(lang('postal_code'));
-                        echo form_input('postal_code', get_option('postal_code'), ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('postal_code',$option['postal_code'], ['class' => 'form-control', 'required' => 'required']);
                         ?>
                     </div>
                     <div class="col-md-6">
                         <?php
                         echo form_label(lang('country'));
-                        echo form_input('country', get_option('country'), ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('country',$option['country'], ['class' => 'form-control', 'required' => 'required']);
                         ?>
                     </div>
                 </div>
@@ -98,19 +98,19 @@
             <div class="col-md-6">
                 <?php
                 echo form_label(lang('timezone'));
-                echo form_input('timezone', get_option('timezone'), ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('timezone',$option['timezone'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('google_analytics'));
-                echo form_input('google_analytics', get_option('google_analytics'), ['class' => 'form-control']);
+                echo form_input('google_analytics',$option['google_analytics'], ['class' => 'form-control']);
                 echo form_label(lang('date_format'));
-                echo form_input('date_format', get_option('date_format'), ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('date_format',$option['date_format'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('Lockscreen timer (mins)'));
-                echo form_input(['type' => 'number', 'step' => 'any', 'name' => 'lockscreen_timer'], get_option('lockscreen_timer'), ['class' => 'form-control']);
+                echo form_input(['type' => 'number', 'step' => 'any', 'name' => 'lockscreen_timer'],$option['lockscreen_timer'], ['class' => 'form-control']);
                 ?>
                 <hr/>
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('daily_checkin', 0); ?>
-                        <?php echo form_checkbox('daily_checkin', 1, get_option('daily_checkin')); ?>
+                        <?php echo form_checkbox('daily_checkin', 1,$option['daily_checkin']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Restrict to daily checkin'); ?>
                         <i class="fa fa-question-circle text-warning show-tip"
@@ -121,42 +121,42 @@
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('allow_registration', 0); ?>
-                        <?php echo form_checkbox('allow_registration', 1, get_option('allow_registration')); ?>
+                        <?php echo form_checkbox('allow_registration', 1,$option['allow_registration']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Allow registration'); ?></div>
                 </div>
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('allow_reset_password', 0); ?>
-                        <?php echo form_checkbox('allow_reset_password', 1, get_option('allow_reset_password')); ?>
+                        <?php echo form_checkbox('allow_reset_password', 1,$option['allow_reset_password']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Allow resetting password'); ?></div>
                 </div>
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('enable_captcha', 0); ?>
-                        <?php echo form_checkbox('enable_captcha', 1, get_option('enable_captcha')); ?>
+                        <?php echo form_checkbox('enable_captcha', 1,$option['enable_captcha']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Enable captcha'); ?></div>
                 </div>
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('demo_mode', 0); ?>
-                        <?php echo form_checkbox('demo_mode', 1, get_option('demo_mode')); ?>
+                        <?php echo form_checkbox('demo_mode', 1,$option['demo_mode']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Demo mode'); ?></div>
                 </div>
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('maintenance_mode', 0); ?>
-                        <?php echo form_checkbox('maintenance_mode', 1, get_option('maintenance_mode')); ?>
+                        <?php echo form_checkbox('maintenance_mode', 1,$option['maintenance_mode']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Maintenance mode'); ?></div>
                 </div>
                 <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('use_smtp', 0); ?>
-                        <?php echo form_checkbox('use_smtp', 1, get_option('use_smtp')); ?>
+                        <?php echo form_checkbox('use_smtp', 1,$option['use_smtp']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Use SMTP'); ?>
                         <a class="cursor"
@@ -166,18 +166,18 @@
                         <div class="smtp-settings hidden">
                             <hr/>
                             <?php
-                            if(get_option('demo_mode') == 0) {
+                            if(session('demo_mode') == 0) {
                                 echo form_label(lang('smtp_host'));
-                                echo form_input('smtp_host', get_option('smtp_host'), ['class' => 'form-control']);
+                                echo form_input('smtp_host',$option['smtp_host'], ['class' => 'form-control']);
 
                                 echo form_label(lang('smtp_user'));
-                                echo form_input('smtp_user', get_option('smtp_user'), ['class' => 'form-control']);
+                                echo form_input('smtp_user',$option['smtp_user'], ['class' => 'form-control']);
 
                                 echo form_label(lang('smtp_pass'));
-                                echo form_password('smtp_pass', get_option('smtp_pass'), ['class' => 'form-control']);
+                                echo form_password('smtp_pass',$option['smtp_pass'], ['class' => 'form-control']);
 
                                 echo form_label(lang('smtp_port'));
-                                echo form_input('smtp_port', get_option('smtp_port'), ['class' => 'form-control']);
+                                echo form_input('smtp_port',$option['smtp_port'], ['class' => 'form-control']);
                             } else {
                                 echo '<div class="alert alert-danger">'.lang('feature_disabled_in_demo').'</div>';
                             }
@@ -210,9 +210,9 @@
                         <?php
                         echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
                         echo form_label(lang('currency_abbreviation'));
-                        echo form_input('currency_abbreviation', get_option('currency_abbreviation'), ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('currency_abbreviation',$option['currency_abbreviation'], ['class' => 'form-control', 'required' => 'required']);
                         echo form_label(lang('currency_symbol'));
-                        echo form_input('currency_symbol', get_option('currency_symbol'), ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('currency_symbol',$option['currency_symbol'], ['class' => 'form-control', 'required' => 'required']);
                         echo '<br/>';
                         echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
                         echo form_close('demo');
@@ -233,9 +233,9 @@
                         <?php
                         echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
                         echo form_label(lang('PayPal locale'));
-                        echo form_input('paypal_locale', get_option('paypal_locale'), ['class' => 'form-control']);
+                        echo form_input('paypal_locale',$option['paypal_locale'], ['class' => 'form-control']);
                         echo form_label(lang('PayPal  email'));
-                        echo form_input('paypal_email', get_option('paypal_email'), ['class' => 'form-control']);
+                        echo form_input('paypal_email',$option['paypal_email'], ['class' => 'form-control']);
                         echo '<br/>';
                         echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
                         echo form_close('demo'); ?>
@@ -253,17 +253,17 @@
                     </div>
                     <div class="box-body">
                         <?php
-                        if(get_option('demo_mode') == 0) {
+                        if(session('demo_mode') == 0) {
                             echo form_open('settings/update', ['class' => 'settings']);
                             echo form_label(lang('Stripe test public key'));
-                            echo form_input('stripe_pk_test', get_option('stripe_pk_test'), ['class' => 'form-control']);
+                            echo form_input('stripe_pk_test',$option['stripe_pk_test'], ['class' => 'form-control']);
                             echo form_label(lang('Stripe test secret key'));
-                            echo form_password('stripe_sk_test', get_option('stripe_sk_test'), ['class' => 'form-control']);
+                            echo form_password('stripe_sk_test',$option['stripe_sk_test'], ['class' => 'form-control']);
                             echo "<br/>";
                             echo form_label(lang('Stripe live public key'));
-                            echo form_input('stripe_pk_live', get_option('stripe_pk_live'), ['class' => 'form-control']);
+                            echo form_input('stripe_pk_live',$option['stripe_pk_live'], ['class' => 'form-control']);
                             echo form_label(lang('Stripe live secret key'));
-                            echo form_password('stripe_sk_live', get_option('stripe_sk_live'), ['class' => 'form-control']);
+                            echo form_password('stripe_sk_live',$option['stripe_sk_live'], ['class' => 'form-control']);
                             echo '<br/>';
                             echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
                             echo form_close('demo');
@@ -319,9 +319,9 @@
                         <?php
                         echo form_open('settings/update', ['class' => 'settings']);
                         echo form_label(lang('Invoice terms'), 'invoice_terms');
-                        echo form_textarea('invoice_terms', get_option('invoice_terms'), ['class' => 'form-control']);
+                        echo form_textarea('invoice_terms',$option['invoice_terms'], ['class' => 'form-control']);
 //                        echo form_label(lang('Invoice notes'), 'invoice_notes');
-//                        echo form_textarea('invoice_notes', get_option('invoice_notes'), ['class' => 'form-control']);
+//                        echo form_textarea('invoice_notes',$option['invoice_notes'], ['class' => 'form-control']);
                         echo '<br/>';
                         echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit'));
                         echo form_close(); ?>
@@ -339,10 +339,10 @@
             <div class="col-md-6">
                 <div class="box box-default">
                     <div class="box-body">
-                        <h3><?php echo lang('company_logo'); ?></h3>
+                        <h3><?php echo lang('logo'); ?></h3>
 
-                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.get_option('logo'))): ?>
-                            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('logo'); ?>"/>
+                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('logo'))): ?>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.session('logo'); ?>"/>
                         <?php endif; ?>
                         <hr/>
 
@@ -366,8 +366,8 @@
                 <div class="box box-default">
                     <div class="box-body">
                         <h3><?php echo lang('invoice logo'); ?></h3>
-                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.get_option('invoice_logo'))): ?>
-                            <img src="<?php echo base_url().'assets/uploads/content/'.get_option('invoice_logo'); ?>"/>
+                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('invoice_logo'))): ?>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.session('invoice_logo'); ?>"/>
                         <?php endif;
                         echo '<hr/>';
                         echo form_open_multipart('settings/upload_invoice_logo', 'class="input-group"');
@@ -392,27 +392,27 @@
 
             echo '<div class="col-md-6">';
             echo form_label(lang('Logo background color'));
-            echo form_input('logo_bg_color', get_option('logo_bg_color'), ['class' => 'form-control']);
+            echo form_input('logo_bg_color',$option['logo_bg_color'], ['class' => 'form-control']);
             echo '</div>';
 
             echo '<div class="col-md-6">';
             echo form_label(lang('Top navigation background color'));
-            echo form_input('top_nav_bg_color', get_option('top_nav_bg_color'), ['class' => 'form-control']);
+            echo form_input('top_nav_bg_color',$option['top_nav_bg_color'], ['class' => 'form-control']);
             echo '</div>';
 
             echo '<div class="col-md-6">';
             echo form_label(lang('Top navigation link color'));
-            echo form_input('top_nav_link_color', get_option('top_nav_link_color'), ['class' => 'form-control']);
+            echo form_input('top_nav_link_color',$option['top_nav_link_color'], ['class' => 'form-control']);
             echo '</div>';
 
             echo '<div class="col-md-6">';
             echo form_label(lang('Left sidebar color'));
-            echo form_input('left_sidebar_bg_color', get_option('left_sidebar_bg_color'), ['class' => 'form-control']);
+            echo form_input('left_sidebar_bg_color',$option['left_sidebar_bg_color'], ['class' => 'form-control']);
             echo '</div>';
 
             echo '<div class="col-md-6">';
             echo form_label(lang('Left sidebar link color'));
-            echo form_input('left_sidebar_link_color', get_option('left_sidebar_link_color'), ['class' => 'form-control']);
+            echo form_input('left_sidebar_link_color',$option['left_sidebar_link_color'], ['class' => 'form-control']);
             echo '</div>';
             ?>
         </div>
@@ -421,7 +421,7 @@
             <?php
             echo '<div class="col-md-12">';
             echo form_label(lang('Custom CSS'));
-            echo form_textarea('custom_css', get_option('custom_css'), ['class' => 'form-control code']);
+            echo form_textarea('custom_css',$option['custom_css'], ['class' => 'form-control code']);
             echo '</div>';
             ?>
         </div>
@@ -453,7 +453,7 @@
             </div>
             <div class="col-sm-6">
                 <img class="currentLoginImg img-responsive" style="width:100%"
-                     src="<?php echo assets('uploads/content/login/'.get_option('login_bg_image', 'login-bg-02.jpg')); ?>"/>
+                     src="<?php echo assets('uploads/content/login/'.session('login_bg_image', 'login-bg-02.jpg')); ?>"/>
             </div>
         </div>
 
@@ -469,7 +469,7 @@
             <div class="col-sm-6">
                 <?php echo form_label('Tawk.to '.lang('Embed URL'));
                 echo anchor('https://dashboard.tawk.to/#/admin', ' '.lang('get link'), ['target' => '_blank']);
-                echo form_input('tawkto_embed_url', get_option('tawkto_embed_url'), ['class' => 'form-control',
+                echo form_input('tawkto_embed_url',$option['tawkto_embed_url'], ['class' => 'form-control',
                     'placeholder' => 'https://embed.tawk.to/xxxxx/xxxxxx']);
                 echo '<br/>';
                 ?>

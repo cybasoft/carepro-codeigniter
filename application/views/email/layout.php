@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title><?php echo get_option('company_name'); ?></title>
+    <title><?php echo session('company_name'); ?></title>
     <style>
         /* -------------------------------------
             GLOBAL RESETS
@@ -355,7 +355,7 @@
 
                 <table>
                     <tr>
-                        <td><img  src="<?php echo base_url('assets/uploads/content/'.get_option('logo')); ?>" style="width:150px;"/> </td>
+                        <td><img  src="<?php echo base_url('assets/uploads/content/'.session('company_logo')); ?>" style="width:150px;"/> </td>
                     </tr>
                 </table>
                 <table class="main">
@@ -382,7 +382,7 @@
                         <tr>
                             <td class="content-block">
                                 <span class="apple-link">
-                                    <?php echo get_option('company_name'); ?>
+                                    <?php echo session('company_name'); ?>
                                 </span>
                                 <br>
                             </td>

@@ -2,7 +2,7 @@
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">
-            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo get_option('logo'); ?>"
+            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>"
                  alt="Logo">
         </a>
     </div>
@@ -39,12 +39,12 @@
         <span class="label-input100"><?php echo lang('Password'); ?></span>
     </div>
 
-    <?php if(get_option('enable_captcha')): ?>
+    <?php if(session('company_enable_captcha')): ?>
         <div class="flex-sb-m w-full p-t-3 p-b-32">
             <div class="contact100-form-checkbox">
                 <?php echo $data['captcha_image']; ?>
             </div>
-            <?php if(get_option('allow_reset_password')): ?>
+            <?php if(session('company_allow_reset_password')): ?>
                 <div>
                     <?php echo form_input($data['captcha']); ?>
                 </div>
@@ -56,7 +56,7 @@
         <div class="contact100-form-checkbox">
 
         </div>
-        <?php if(get_option('allow_reset_password')): ?>
+        <?php if(session('company_allow_reset_password')): ?>
             <div>
                 <?php echo anchor('auth/forgot', '<span class="fa fa-key"></span> '.lang('forgot_password_heading'), ['class' => 'txt1']); ?>
             </div>
@@ -70,7 +70,7 @@
         </button>
     </div>
 
-    <?php if(get_option('allow_registration') == TRUE): ?>
+    <?php if(session('company_allow_registration') == TRUE): ?>
         <div class="text-center p-t-46 p-b-20">
             <?php echo anchor('auth/register', '<span class="fa fa-user"></span> '.lang('register'), ['class' => 'txt2']); ?>
         </div>
