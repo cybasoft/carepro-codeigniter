@@ -4387,4 +4387,16 @@ a:hover .left-menu-link-icon {
         margin: 0px
     }
 }
+
+#newChatUsers li{
+    padding: 5px;
+    border-right: solid 1px #ccc;
+    border-left: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+    margin:0 0 0 -40px;
+}
+#newChatUsers a{
+    display:block;
+}
 /** end chat box **/
+

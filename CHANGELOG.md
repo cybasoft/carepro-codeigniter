@@ -1,4 +1,8 @@
 ## Version 2.1.7.4
+
+* Added messages module
+* Improved mailer performance
+
  
 ## Version 2.1.7.3
 

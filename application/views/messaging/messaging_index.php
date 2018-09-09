@@ -2,18 +2,18 @@
     <!-- .chat-left-panel -->
     <div class="chat-left-aside">
         <div class="open-panel"><i class="ti-angle-right"></i></div>
-        <div class="chat-left-inner">
+        <div class="chat-left-inner" id="conversations">
             <div class="form-material">
-                <input class="form-control p-20" type="text" placeholder="Search Contact">
+                <input class="form-control p-20 search" type="text" placeholder="Search Conversation">
             </div>
-            <ul class="chatonline style-none ">
+            <ul class="chatonline style-none list">
                 <?php foreach ($senders as $sender): ?>
                     <li>
                         <a href="<?php echo site_url('messaging?m='.$sender->id); ?>"
                            class="<?php echo isset($_GET['m']) && $_GET['m'] == $sender->id ? 'active' : ''; ?>">
                             <img src="<?php echo gravatar($sender->email); ?>"
                                  alt="user-img" class="img-circle">
-                            <span><?php echo $sender->name; ?>
+                            <span class="name"><?php echo $sender->name; ?>
                                 <!--                                    <small class="text-muted">Away</small>-->
                                 </span>
                         </a>
@@ -28,7 +28,10 @@
     <div class="chat-right-aside">
         <div class="chat-main-header">
             <div class="p-20 b-b">
-                <h3 class="box-title">Conversation</h3></div>
+                <h3 class="box-title">Conversation
+                    <?php echo anchor('messaging',icon('plus').' '.lang('New'),'class="btn btn-sm btn-primary pull-right"'); ?>
+                </h3>
+            </div>
         </div>
         <div class="chat-box">
             <ul class="chat-list slimscroll p-t-30">
@@ -49,15 +52,14 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <li>
-                        <div class="chat-image">
-                            <img alt="male" src="<?php echo gravatar(session('email')); ?>">
+                        <div class="chat-image" style="overflow: hidden;">
+                            <i class="fa fa-user fa-3x"></i>
                         </div>
                         <div class="chat-body">
-                            <div class="chat-text">
-                                <h4>Messager bot</h4>
-                                <p> <?php echo lang('Select a conversation on the left'); ?> </p>
-                                <b><?php echo format_date(date('Y-d-m')); ?></b>
+                            <div class="form-material">
+                                <input class="form-control p-20" id="newChatUser" type="text" placeholder="Search Contact">
                             </div>
+                            <ul id="newChatUsers"></ul>
                         </div>
                     </li>
                 <?php endif; ?>
@@ -85,3 +87,6 @@
     </div>
     <!-- .chat-right-panel -->
 </div>
+
+<script>
+</script>

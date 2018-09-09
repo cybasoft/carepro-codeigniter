@@ -46,7 +46,7 @@
             <div class="col-md-6">
                 <?php
                 echo form_label(lang('name'));
-                echo form_input('name', $option['company_name'], ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('name', $option['name'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('slogan'));
                 echo form_input('slogan', $option['slogan'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('Facility ID'), 'facility_id');

@@ -38,7 +38,7 @@ class My_mailer extends CI_Model
         if(isset($data['salute'])) {
             $data['salute'] = sprintf(lang('email_salute'), $data['salute']);
         } else {
-            $data['salute'] = sprintf(lang('email_salute'), $data['to']);
+            $data['salute'] = '';
         }
         $this->email->from($data['from'], $data['from_name']);
         $this->email->to($data['to']);
@@ -67,7 +67,7 @@ class My_mailer extends CI_Model
         if($mail) {
             return TRUE;
         } else {
-            if(ENVIRONMENT == 'developement') {
+            if(ENVIRONMENT == 'development') {
                 log_message('debug', $this->email->print_debugger());
             }
             return FALSE;

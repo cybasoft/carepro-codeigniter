@@ -331,9 +331,9 @@ function page($page, $data = [])
     $ci = &get_instance();
     $data['page'] = $page;
     if(is('parent')) {
-        $ci->load->view('layouts/parent-template', $data);
+        $ci->load->view('layouts/parent/template', $data);
     } else {
-        $ci->load->view('layouts/admin-template', $data);
+        $ci->load->view('layouts/admin/template', $data);
     }
 }
 
@@ -725,15 +725,44 @@ function empty_option($name)
 
 function email_config()
 {
-    if(session('company_use_smtp') == 1) {
+    //get options
+    $ci = &get_instance();
+    $opts = $ci->db
+        ->where('option_name', 'use_smtp')
+        ->or_where('option_name', 'smtp_host')
+        ->or_where('option_name', 'smtp_user')
+        ->or_where('option_name', 'smtp_pass')
+        ->or_where('option_name', 'smtp_port')
+        ->get('options')->result();
+
+    $use_smtp = 0;
+    $smtp_host='';
+    $smtp_user='';
+    $smtp_pass='';
+    $smtp_port='';
+    foreach ($opts as $key => $val) {
+        if($val->option_name == 'use_smtp')
+            $use_smtp = $val->option_value;
+        if($val->option_name == 'smtp_host')
+            $smtp_host = $val->option_value;
+        if($val->option_name == 'smtp_user')
+            $smtp_user = $val->option_value;
+        if($val->option_name == 'smtp_pass')
+            $smtp_pass = $val->option_value;
+        if($val->option_name == 'smtp_port')
+            $smtp_port = $val->option_value;
+    }
+
+    if($use_smtp == 1) {
         $config['protocol'] = 'smtp'; //sendmail, smtp, mail
-        $config['smtp_host'] = session('company_smtp_host');
-        $config['smtp_user'] = session('company_smtp_user');
-        $config['smtp_pass'] = session('company_smtp_pass');
-        $config['smtp_port'] = session('company_smtp_port');
+        $config['smtp_host'] = $smtp_host;
+        $config['smtp_user'] = $smtp_user;
+        $config['smtp_pass'] = $smtp_pass;
+        $config['smtp_port'] =$smtp_port;
     } else {
         $config['protocol'] = 'mail';
     }
+
     $config['mailtype'] = 'html';
     //do not change
     $config['crlf'] = "\r\n";
@@ -933,7 +962,7 @@ function init_company()
     }
 }
 
-function gravatar($email,$size=50)
+function gravatar($email, $size = 50)
 {
     return "https://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."&s=".$size;
 

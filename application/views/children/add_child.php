@@ -21,7 +21,7 @@
                         echo form_date('bday', set_value('bday',date('Y-m-d')), ['class' => 'form-control']);
                         echo form_label(lang('gender'));
                         echo form_dropdown('gender', ['male'=>lang('male'),'female'=>lang('female'),'other'=>lang('other')],set_value('gender'), ['class' => 'form-control']);
-                        echo form_label(lang('ID'));
+                        echo form_label('ID');
                         echo form_input('national_id',set_value('national_id'), ['class' => 'form-control','required'=>'' ]);
                         ?>
                     </div>
@@ -31,7 +31,7 @@
                         echo form_dropdown('blood_type', blood_types(),set_value('blood_type'), ['class' => 'form-control', ]);
                         echo form_label(lang('status'));
                         echo form_dropdown('status', [1=>lang('active'),0=>lang('inactive')],set_value('status'), ['class' => 'form-control', ]);
-                        echo form_label(lang('ethnicity'));
+                        echo form_label(lang('Ethnicity'));
                         echo form_input('ethnicity', set_value('ethnicity'), ['class' => 'form-control', ]);
                         echo form_label(lang('religion'));
                         echo form_input('religion', set_value('religion'), ['class' => 'form-control', ]);

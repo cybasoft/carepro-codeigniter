@@ -157,25 +157,26 @@ $(document).ready(function () {
         height: '100%',
         position: 'right',
         size: "0px",
-        color: '#dcdcdc'
+        color: '#dcdcdc',
+        // scrollTo:$('.chat-list').scrollHeight
     });
 
     $('.chat-left-inner > .chatonline').slimScroll({
         height: '100%',
         position: 'right',
         size: "0px",
-        color: '#dcdcdc'
-
+        color: '#dcdcdc',
+        start: 'bottom',
     });
     $(function () {
         $(window).on("load", function () { // On load
             $('.chat-list').css({
-                'height': (($(window).height()) - 470) + 'px'
+                'height': (($(window).height()) - 450) + 'px'
             });
         });
         $(window).on("resize", function () { // On resize
             $('.chat-list').css({
-                'height': (($(window).height()) - 470) + 'px'
+                'height': (($(window).height()) - 450) + 'px'
             });
         });
     });
@@ -201,4 +202,33 @@ $(document).ready(function () {
         $(".open-panel i").toggleClass("ti-angle-left");
     });
 
+    $("#newChatUser").on('keyup',function(){
+        var user = $(this).val();
+
+        if(user.length >=3){
+
+            $.ajax({
+                url: site_url+'messaging/get_users',
+                data: {user:user}, //$('form').serialize(),
+                type: 'POST',
+                success: function (response) {
+                    var users = JSON.parse(response);
+                    $('#newChatUsers').html('');
+
+                    $.each(users,function (index,user) {
+                        $('#newChatUsers').append('<li><a href="?m='+user.id+'">'+user.name+'</a></li>')
+                    })
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    })
+
+    //search chat users
+    var options = {
+        valueNames: [ 'name']
+    };
+    new List('conversations', options);
 });

@@ -92,7 +92,7 @@
                 <?php echo $child->blood_type; ?>
             </div>
             <div class="col-md-6">
-                <strong><?php echo lang('ethnicity'); ?></strong>:
+                <strong><?php echo lang('Ethnicity'); ?></strong>:
                 <?php echo $child->ethnicity; ?>
             </div>
         </div>

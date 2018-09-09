@@ -1,13 +1,6 @@
 <aside class="left-side animate sidebar-offcanvas">
     <section class="sidebar">
-        <div class="user-panel">
-            <div class="text-center image">
-                <img src="<?php echo $this->user->photo(session('photo')); ?>" class="img-circle"/>
-            </div>
-            <div class="text-center user-info">
-                <p><span><?php echo lang('hello'); ?></span> <?php echo session('first_name'); ?></p>
-            </div>
-        </div>
+
         <!-- search form -->
         <!--form action="#" method="get" class="sidebar-form">
             <div class="input-group">

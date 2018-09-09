@@ -23,7 +23,7 @@
                         echo form_date('bday', date('Y-m-d', strtotime($child->bday)), ['class' => 'form-control']);
                         echo form_label(lang('gender'));
                         echo form_dropdown('gender', ['male'=>lang('male'),'female'=>lang('female'),'other'=>lang('other')],$child->gender, ['class' => 'form-control', 'required'=>'']);
-                        echo form_label(lang('ID'));
+                        echo form_label('ID');
                         echo form_input('national_id', decrypt($child->national_id), ['class' => 'form-control', 'required'=>'' ]);
                         ?>
                     </div>
@@ -33,7 +33,7 @@
                         echo form_dropdown('blood_type', blood_types(),$child->blood_type, ['class' => 'form-control', ]);
                         echo form_label(lang('status'));
                         echo form_dropdown('status', [1=>lang('active'),0=>lang('inactive')],$child->status, ['class' => 'form-control', ]);
-                        echo form_label(lang('ethnicity'));
+                        echo form_label(lang('Ethnicity'));
                         echo form_input('ethnicity', $child->ethnicity, ['class' => 'form-control', ]);
                         echo form_label(lang('religion'));
                         echo form_input('religion', $child->religion, ['class' => 'form-control', ]);

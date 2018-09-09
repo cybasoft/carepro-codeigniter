@@ -31,15 +31,27 @@
             <?php endif; ?>
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user"></i>
-                    <span><?php echo $this->user->user()->last_name; ?>
+                    <img src="<?php echo $this->user->photo(session('photo')); ?>" style="width:20px" class="img-circle"/>
+                    <span class="hidden-xs hidden-sm"><?php echo session('last_name'); ?>
                         <i class="caret"></i></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="<?php echo site_url('profile'); ?>"><i
-                                class="fa fa-user"></i> <?php echo lang('profile'); ?></a></li>
-                    <li><a href="<?php echo site_url('auth/logout'); ?>"><i
-                                class="fa fa-lock"></i> <?php echo lang('logout'); ?></a></li>
+                    <li class="user-header bg-light-blue">
+                        <img src="<?php  echo $this->user->photo(session('photo')); ?>" class="img-circle"/>
+                    </li>
+
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a href="<?php echo site_url('profile'); ?>" class="btn btn-default btn-flat">
+                                <?php echo lang('profile'); ?>
+                            </a>
+                        </div>
+                        <div class="pull-right">
+                            <a href="<?php echo site_url('auth/logout'); ?>" class="btn btn-default btn-flat">
+                                <?php echo lang('logout'); ?>
+                            </a>
+                        </div>
+                    </li>
                 </ul>
             </li>
         </ul>

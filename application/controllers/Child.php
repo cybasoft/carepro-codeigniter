@@ -50,7 +50,7 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('blood_type', lang('birthday'), 'trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('ethnicity', lang('ethnicity'), 'trim|xss_clean');
+        $this->form_validation->set_rules('ethnicity', lang('Ethnicity'), 'trim|xss_clean');
         $this->form_validation->set_rules('religion', lang('religion'), 'trim|xss_clean');
         $this->form_validation->set_rules('birthplace', lang('birthplace'), 'trim|xss_clean');
         if($this->form_validation->run() == TRUE) {

@@ -233,3 +233,5 @@
         $('.my_modal').load('<?php echo site_url('child'); ?>/' + child_id + '/checkOut').modal();
     });
 </script>
+
+<?php $this->load->view('reports/report-form-popover'); ?>
