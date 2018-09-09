@@ -24,23 +24,23 @@ function date_stamp()
  *
  * @return false|string
  */
-function format_date($date, $time = true, $timestamp = false)
+function format_date($date, $time = TRUE, $timestamp = FALSE)
 {
-    if($timestamp == true)
+    if($timestamp == TRUE)
         $date = date('Y-m-d H:i:s', $date);
 
     $format = session('company_date_format');
     if($format == "")
         return date('d M Y H:ia', strtotime($date));
 
-    if($time == false)
+    if($time == FALSE)
         return date('d M Y', strtotime($date));
     return date($format, strtotime($date));
 }
 
-function format_time($time, $timestamp = false)
+function format_time($time, $timestamp = FALSE)
 {
-    if($timestamp == false)
+    if($timestamp == FALSE)
         $time = strtotime($time);
 
     return date('h:ia', $time);
@@ -121,7 +121,7 @@ function last_page()
 /**
  * redirect to previous page
  */
-function redirectPrev($msg = array(), $tab = '')
+function redirectPrev($msg = [], $tab = '')
 {
     $ci = &get_instance();
 
@@ -154,9 +154,9 @@ function is($group)
 
     if(logged_in())
         if($ci->ion_auth->in_group($group))
-            return true;
+            return TRUE;
 
-    return false;
+    return FALSE;
 }
 
 /**
@@ -164,14 +164,14 @@ function is($group)
  *
  * @return bool
  */
-function auth($redirect = false)
+function auth($redirect = FALSE)
 {
-    if(logged_in() == true) {
-        return true;
+    if(logged_in() == TRUE) {
+        return TRUE;
     } else {
         if($redirect)
             redirect('auth/login', 'refresh');
-        return false;
+        return FALSE;
     }
 }
 
@@ -195,8 +195,8 @@ function in_group($id, $group)
         ->count_all_results();
 
     if($query > 0)
-        return true;
-    return false;
+        return TRUE;
+    return FALSE;
 }
 
 /**
@@ -210,7 +210,7 @@ function selected_option($option, $value)
     if($option == $value) {
         return 'selected';
     }
-    return false;
+    return FALSE;
 }
 
 /**
@@ -224,7 +224,7 @@ function checked_option($option, $value)
     if($option == $value) {
         return 'checked';
     }
-    return false;
+    return FALSE;
 }
 
 function related($db, $field1, $value1, $field2, $value2)
@@ -234,9 +234,9 @@ function related($db, $field1, $value1, $field2, $value2)
         ->where($field2, $value2)
         ->get($db)->result();
     if(count((array)$res) > 0) {
-        return true;
+        return TRUE;
     }
-    return false;
+    return FALSE;
 
 }
 
@@ -272,9 +272,9 @@ function decrypt($msg)
 function logged_in()
 {
     $ci = &get_instance();
-    if($ci->ion_auth->logged_in() == true)
-        return true;
-    return false;
+    if($ci->ion_auth->logged_in() == TRUE)
+        return TRUE;
+    return FALSE;
 }
 
 /*
@@ -286,14 +286,14 @@ function logged_in()
 function logEvent($event)
 {
     $ci = &get_instance();
-    $data = array(
+    $data = [
         'user_id' => $ci->user->uid(),
         'date' => time(),
-        'event' => $event
-    );
+        'event' => $event,
+    ];
     if($ci->db->insert('event_log', $data))
-        return true;
-    return false;
+        return TRUE;
+    return FALSE;
 }
 
 /**
@@ -306,10 +306,10 @@ function logEvent($event)
 function allow($group)
 {
     $ci = &get_instance();
-    auth(true);
+    auth(TRUE);
 
     if($ci->ion_auth->in_group($group)) {
-        return true;
+        return TRUE;
     } else {
         flash('danger', lang('access_denied'));
         if($ci->input->is_ajax_request()) {
@@ -326,7 +326,7 @@ function allow($group)
 * @params $type, $msg
 * call status messages
 */
-function page($page, $data = array())
+function page($page, $data = [])
 {
     $ci = &get_instance();
     $data['page'] = $page;
@@ -337,7 +337,7 @@ function page($page, $data = array())
     }
 }
 
-function parents_page($page, $data = array())
+function parents_page($page, $data = [])
 {
     $ci = &get_instance();
     $data['page'] = $page;
@@ -350,7 +350,7 @@ function demo()
         'child',
         'children',
         'rooms',
-        'calendar'
+        'calendar',
     ];
 
     $ci = &get_instance();
@@ -364,7 +364,7 @@ function demo()
         $seg1,
         $seg2,
         $seg3,
-        $seg4
+        $seg4,
     ];
 
     if($ci->user->uid() > 0) {
@@ -460,12 +460,12 @@ function set_active($page)
     return ($page == $uri) ? 'active' : '';
 }
 
-function moneyFormat($amount, $symbol = false)
+function moneyFormat($amount, $symbol = FALSE)
 {
     $amount = str_replace(',', '', $amount);
     $amount = str_replace(session('company_currency_symbol'), '', $amount);
 
-    if($symbol == true)
+    if($symbol == TRUE)
         return session('company_currency_symbol').number_format((float)$amount, 2);
 
     return number_format((float)$amount, 2);
@@ -474,7 +474,7 @@ function moneyFormat($amount, $symbol = false)
 function authorizedToChild($staff_id, $child_id)
 {
     if(is(['admin', 'manager']))
-        return true;
+        return TRUE;
     $ci = &get_instance();
 
     //test staff assigment
@@ -485,7 +485,7 @@ function authorizedToChild($staff_id, $child_id)
         ->where('child_room.child_id', $child_id)
         ->count_all_results();
     if($staff > 0)
-        return true;
+        return TRUE;
 
     //test parent
     $parent = $ci->db->from('child_parents')
@@ -493,16 +493,16 @@ function authorizedToChild($staff_id, $child_id)
         ->where('user_id', $staff_id)
         ->count_all_results();
     if($parent > 0)
-        return true;
+        return TRUE;
 
-    return false;
+    return FALSE;
 }
 
 function valid_date($date, $format = 'Y-m-d')
 {
     $d = DateTime::createFromFormat($format, $date);
 //    return $d && $d->format($format) === $date;
-    return true;
+    return TRUE;
 }
 
 /**
@@ -536,30 +536,43 @@ function sensitive_options()
 function general_options()
 {
     return [
-        'company_name' => 'DaycarePRO',
+        'name' => 'DaycarePRO',
         'slogan' => 'daycare management',
         'email' => 'app@admin.com',
-        'phone' => '', 'fax' => '',
-        'street' => '', 'street2' => '', 'city' => '', 'state' => '', 'postal_code' => '', 'country' => 'USA',
+        'phone' => '',
+        'fax' => '',
+        'street' => '',
+        'street2' => '',
+        'city' => '',
+        'state' => '',
+        'postal_code' => '',
+        'country' => 'USA',
         'timezone' => 'America/New_York',
         'google_analytics' => '',
-        'currency_symbol' => '$', 'currency_abbreviation' => 'USD',
+        'currency_symbol' => '$',
+        'currency_abbreviation' => 'USD',
         'date_format' => 'm/d/Y h:ia',
-        'allow_registration' => 0, 'allow_reset_password' => 1, 'enable_captcha' => 0,
-        'demo_mode' => 0, 'maintenance_mode' => 0,
-        'use_smtp' => 0, 'smtp_host' => '', 'smtp_port' => '',
-        'logo' => 'logo.png', 'invoice_logo' => 'invoice_logo.png',
-        'paypal_email' => '', 'paypal_locale' => 'US',
+        'allow_registration' => 0,
+        'allow_reset_password' => 1,
+        'enable_captcha' => 0,
+        'demo_mode' => 0,
+        'maintenance_mode' => 0,
+        'use_smtp' => 0,
+        'smtp_host' => '',
+        'smtp_port' => '',
+        'logo' => 'logo.png',
+        'invoice_logo' => 'invoice_logo.png',
+        'paypal_email' => '',
+        'paypal_locale' => 'US',
         'page' => 'settings',
-        'logo_bg_color' => '', 'top_nav_bg_color' => '', 'top_nav_link_color' => '',
-        'left_sidebar_bg_color' => '', 'left_sidebar_link_color' => '',
-        'custom_css' => '', 'lockscreen_timer' => '',
         'daily_checkin' => 1,
         'tawkto_embed_url' => '',
         'login_bg_image' => 'login-bg-02.jpg',
         'invoice_terms' => 'Invoice due on receipt. Thank you for your business',
         'facility_id' => '',
-        'tax_id' => ''
+        'tax_id' => '',
+        'lockscreen_timer' => '',
+        'custom_css' => '',
     ];
 }
 
@@ -571,9 +584,9 @@ function special_options()
 function protected_special_option($option)
 {
     if(in_array($option, special_options())) {
-        return true;
+        return TRUE;
     }
-    return false;
+    return FALSE;
 }
 
 /**
@@ -600,7 +613,7 @@ function get_option($name, $default = '')
             return $default;
 
         $data = @unserialize($value);
-        if($value === 'b:0;' || $data !== false) {
+        if($value === 'b:0;' || $data !== FALSE) {
             return unserialize($value);
         } else {
             return $value;
@@ -617,14 +630,14 @@ function get_option($name, $default = '')
  *
  * @return bool
  */
-function add_option($name, $value, $special = false)
+function add_option($name, $value, $special = FALSE)
 {
     if(empty($name))
-        return false;
+        return FALSE;
 
-    if($special == false && protected_special_option($name)) {
+    if($special == FALSE && protected_special_option($name)) {
         flash('error', sprintf(lang('You are using a protected option'), $name));
-        return false;
+        return FALSE;
     }
 
     if(is_object($value))
@@ -636,13 +649,13 @@ function add_option($name, $value, $special = false)
     $ci = &get_instance();
     $ci->db->insert('options', [
         'option_name' => $name,
-        'option_value' => $value
+        'option_value' => $value,
     ]);
     if($ci->db->affected_rows() > 0) {
         reload_company();
-        return true;
+        return TRUE;
     }
-    return false;
+    return FALSE;
 }
 
 /**
@@ -653,10 +666,10 @@ function add_option($name, $value, $special = false)
  *
  * @return bool
  */
-function update_option($name, $value, $special = false)
+function update_option($name, $value, $special = FALSE)
 {
     if(empty($name))
-        return false;
+        return FALSE;
 
     if(is_object($value))
         $value = clone $value;
@@ -672,14 +685,14 @@ function update_option($name, $value, $special = false)
 
         if($ci->db->affected_rows() > 0) {
             reload_company();
-            return true;
+            return TRUE;
         }
 
     } else {
 
         add_option($name, $value, $special);
     }
-    return false;
+    return FALSE;
 }
 
 /**
@@ -690,16 +703,16 @@ function update_option($name, $value, $special = false)
 function remove_option($name)
 {
     if(empty($name))
-        return false;
+        return FALSE;
 
     if(protected_special_option($name)) {
         flash('error', sprintf(lang('You are using a protected option'), $name));
-        return false;
+        return FALSE;
     }
     $ci =& get_instance();
     $ci->db->where('option_name', $name)->delete('options');
     reload_company();
-    return true;
+    return TRUE;
 }
 
 function empty_option($name)
@@ -707,7 +720,7 @@ function empty_option($name)
     $ci = &get_instance();
     $ci->db->where('option_name', $name)->update('options', ['option_value' => '']);
     reload_company();
-    return true;
+    return TRUE;
 }
 
 function email_config()
@@ -752,9 +765,9 @@ function g_decor($name)
 function blood_types()
 {
     $types = [
-        'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+'
+        'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+',
     ];
-    $res = array();
+    $res = [];
     foreach ($types as $type) {
         $res[$type] = $type;
     }
@@ -787,14 +800,14 @@ function set_flash($fields)
     }
 }
 
-function is_checked_in($id, $date = false, $checkedOut = false)
+function is_checked_in($id, $date = FALSE, $checkedOut = FALSE)
 {
     $ci = &get_instance();
 
-    if($checkedOut == false)
+    if($checkedOut == FALSE)
         $ci->db->where('time_out', NULL);
 
-    if($date !== false) {
+    if($date !== FALSE) {
 
         if(valid_date($date)) {
             $d = new DateTime($date);
@@ -807,9 +820,9 @@ function is_checked_in($id, $date = false, $checkedOut = false)
     $ci->db->from('child_checkin');
     $query = $ci->db->count_all_results();
     if(empty($query)) {//child is out
-        return false;
+        return FALSE;
     } else { //child is in
-        return true;
+        return TRUE;
     }
 }
 
@@ -821,6 +834,7 @@ if(!function_exists('str_replace_first')) {
         return preg_replace($from, $to, $content, 1);
     }
 }
+
 /**
  * @param $item
  *
@@ -828,15 +842,10 @@ if(!function_exists('str_replace_first')) {
  */
 function session($item, $opts = '')
 {
-
-    if($opts !== '') {
-        return get_option(str_replace('company_', '', $item), $opts);
-    }
-
     if(is_array($item)) { //means we are requesting setting session
         $ci = &get_instance();
         $ci->session->set_userdata($item);
-        return true;
+        return TRUE;
     }
 
     $ci = &get_instance();
@@ -877,7 +886,7 @@ function default_payment_methods()
         'Debit',
         'Money order',
         'PayPal',
-        'Stripe'
+        'Stripe',
     ];
 }
 
@@ -910,24 +919,24 @@ function reload_company()
 
 function init_company()
 {
-
     if(session('init_company') !== 1) {
         session(['init_company' => 1]);
         //query db once
-        $company_data = array();
+        $company_data = [];
         foreach (general_options() as $opt => $val) {
-
-            if($opt == 'company_name') {
-                $company_data['company_name'] = get_option('company_name');
-            } else {
-                $value = get_option($opt);
-                if(empty($value))
-                    continue;
-                $company_data['company_'.$opt] = $value;
-            }
+            $value = get_option(str_replace('company_'.$opt, '', $opt));
+            if(empty($value))
+                continue;
+            $company_data['company_'.$opt] = $value;
         }
         session($company_data);
     }
+}
+
+function gravatar($email,$size=50)
+{
+    return "https://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."&s=".$size;
+
 }
 
 ?>

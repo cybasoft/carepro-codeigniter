@@ -6,11 +6,10 @@ class Migration extends CI_Controller
     function __construct()
     {
         parent::__construct();
-
         $this->load->library("migration");
 
         //prevent direct access
-        if(!$this->input->is_cli_request()) {
+        if(!is_cli()) {
             show_error("CLI only! Direct calls denied.");
         }
     }
@@ -32,7 +31,7 @@ class Migration extends CI_Controller
         if(ENVIRONMENT == "production" && $this->uri->segment(3) !=="force")
             show_error("\nSet application config to development mode first \n or use \n'php index.php migration run force'");
 
-        if(ENVIRONMENT =="production" && $verion ==null)
+        if(ENVIRONMENT =="production" && $version ==null)
             show_error("\nIn production mode, you must  enter version number");
 
         $mig = $this->db->get('migrations')->row();

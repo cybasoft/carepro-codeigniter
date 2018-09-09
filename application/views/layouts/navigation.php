@@ -1,5 +1,4 @@
-<nav class="navbar navbar-static-top" role="navigation"
-     style="background-color:<?php echo session('company_top_nav_bg_color', '#03a9f4'); ?>">
+<nav class="navbar navbar-static-top" role="navigation">
     <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only"><?php echo lang('toggle_navigation'); ?></span>
         <span class="icon-bar"></span>

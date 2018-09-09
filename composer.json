@@ -8,7 +8,7 @@
 		"support": "http://support.amdtllc.com/"
 	},
 	"require": {
-		"tan5en5/codeigniter-debugbar": "dev-master"
+		"tan5en5/codeigniter-debugbar": "*"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

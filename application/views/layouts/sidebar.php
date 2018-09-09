@@ -1,5 +1,4 @@
-<aside class="left-side animate sidebar-offcanvas"
-       style="background-color: <?php echo session('company_left_sidebar_bg_color', '#f4f4f'); ?>">
+<aside class="left-side animate sidebar-offcanvas">
     <section class="sidebar">
         <div class="user-panel">
             <div class="text-center image">
@@ -86,7 +85,7 @@
                     echo set_active($sb['active']);
                 }; ?>">
                     <a href="<?php echo site_url($sb['link']); ?>"
-                       style="color:<?php echo session('company_left_sidebar_link_color', '#333'); ?>">
+                       style="color:<?php echo session('styles_left_sidebar_link_color', '#333'); ?>">
                         <span class="left-menu-link-icon">
                             <img class="icon" src="<?php echo assets('img/content/'.$sb['icon'].'.svg'); ?>"/>
                         </span>

@@ -9,6 +9,7 @@
     </title>
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
     <link href="<?php echo base_url(); ?>assets/css/open-iconic-bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/fontawesome-all.min.css" rel="stylesheet" type="text/css"/>
@@ -28,10 +29,13 @@
         </style>
     <?php endif; ?>
 
+
     <?php if(ENVIRONMENT =='development'): ?>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
     <?php endif; ?>
+
 
     <meta id="site_url" content="<?php echo site_url(); ?>">
     <meta id="base_url" content="<?php echo base_url(); ?>">
@@ -66,8 +70,7 @@
 <body class="skin-blue">
 <div class="modals-loader"></div>
 <header class="header">
-    <a href="<?php echo site_url('dashboard'); ?>" class="logo"
-       style="left:0 !important; background-color: <?php echo session('company_logo_bg_color', '#ffeb3b'); ?>">
+    <a href="<?php echo site_url('dashboard'); ?>" class="logo">
         <?php if(session('company_logo') == "") : ?>
             <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
 			<?php echo session('company_name'); ?>
@@ -119,6 +122,7 @@
 <script src="<?php echo base_url(); ?>assets/js/fullcalendar.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/plugins/datatables/datatables.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/cookie.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/functions.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>

@@ -208,6 +208,7 @@
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/plugins/datatables/datatables.min.js"></script>
 
+<script src="<?php echo base_url(); ?>assets/plugins/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/functions.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
 

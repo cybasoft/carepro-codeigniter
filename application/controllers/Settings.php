@@ -123,7 +123,7 @@ class Settings extends CI_Controller
                 flash('danger', lang('request_error'));
             }
         }
-        redirectPrev('', '#logo');
+        redirectPrev('', 'logo');
 
     }
 

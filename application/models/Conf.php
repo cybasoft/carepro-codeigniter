@@ -37,6 +37,7 @@ class Conf extends CI_Model
 //            $this->console->info('Info message');
 //            $this->console->warning('Warning message');
 //            $this->console->error('Error message');
+            $this->console->info($this->session->userdata);
         }
     }
 
