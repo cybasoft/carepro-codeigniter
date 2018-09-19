@@ -208,7 +208,7 @@ $(document).ready(function () {
         if(user.length >=3){
 
             $.ajax({
-                url: site_url+'messaging/get_users',
+                url: site_url+'/messaging/get_users',
                 data: {user:user}, //$('form').serialize(),
                 type: 'POST',
                 success: function (response) {

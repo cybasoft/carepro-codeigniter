@@ -3,37 +3,42 @@
 class MessagingController extends CI_Controller
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         setRedirect();
-        auth(TRUE);
+        auth(true);
         $this->title = lang('Messages');
 //        disable_debug();
     }
 
-    function index()
+    public function index()
     {
 
         $senders = $this->getSenders();
 
         $chat = [];
-        if(isset($_GET['m'])) {
+        if (isset($_GET['m'])) {
             $chat = $this->getMessages($_GET['m']);
         }
 
         page('messaging/messaging_index', compact('senders', 'chat'));
     }
 
-    function getMessages($sender)
+    public function getMessages($sender)
     {
-        $received = $this->db
-            ->select('c.*,CONCAT(u.first_name, " ", u.last_name) AS name,u.id AS user_id,u.photo,u.email')
-            ->where('c.receiver_id', user_id())
-            ->where('c.sender_id', $sender)
-            ->from('chat AS c')
-            ->join('users AS u', 'u.id=c.sender_id')
-            ->get()->result();
+        if ($sender !== user_id()) {
+            $received = $this->db
+                ->select('c.*,CONCAT(u.first_name, " ", u.last_name) AS name,u.id AS user_id,u.photo,u.email')
+                ->where('c.receiver_id', user_id())
+                ->where('c.sender_id', $sender)
+                ->from('chat AS c')
+                ->join('users AS u', 'u.id=c.sender_id')
+                ->get()->result();
+        } else {
+            $received = array();
+        }
+
         $response = $this->db
             ->select('c.*,CONCAT(u.first_name, " ", u.last_name) AS name,u.id AS user_id,u.photo,u.email')
             ->where('c.receiver_id', $sender)
@@ -43,13 +48,15 @@ class MessagingController extends CI_Controller
             ->get()->result();
 
         $chat = array_merge($received, $response);
+
         usort($chat, function ($a, $b) {
             return $a->created_at <=> $b->created_at;
         });
+        
         return $chat;
     }
 
-    function getSenders()
+    public function getSenders()
     {
         return $this->db
             ->select('COUNT(*) as total, u.id,u.email,CONCAT(u.first_name, " ", u.last_name) AS name,u.photo')
@@ -60,12 +67,12 @@ class MessagingController extends CI_Controller
             ->get()->result();
     }
 
-    function send()
+    public function send()
     {
         $this->form_validation->set_rules('message', lang('Message'), 'required|trim|xss_clean');
-        if($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == true) {
             $this->db->insert('chat', [
-                'message_key' => time().rand(000000, 999999),
+                'message_key' => time() . rand(000000, 999999),
                 'sender_id' => user_id(),
                 'receiver_id' => $this->input->post('receiver_id'),
                 'message' => $this->input->post('message'),
@@ -75,16 +82,16 @@ class MessagingController extends CI_Controller
 
             //notify user
             //todo send all chat transcript
-            $message = sprintf(lang('You have a message from'),session('first_name').' '.session('last_name'));
-            $message .='<br/><br/></hr>';
-            $message .='<strong>'.$this->input->post('message').'</strong>';
-            $message .='<br/><br/><i>'.lang('Login to your account to respond or view full conversation').'</i><br/>';
-            $message .=anchor('/',site_url());
-            $data=[
-                'message'=> $message,
-                'to'=>$this->user->get($this->input->post('receiver_id'),'email'),
-                'subject'=>lang('New message from '.session('company_name')),
-                'salute'=>$this->user->get($this->input->post('receiver_id'),'first_name')
+            $message = sprintf(lang('You have a message from'), session('first_name') . ' ' . session('last_name'));
+            $message .= '<br/><br/></hr>';
+            $message .= '<strong>' . $this->input->post('message') . '</strong>';
+            $message .= '<br/><br/><i>' . lang('Login to your account to respond or view full conversation') . '</i><br/>';
+            $message .= anchor('/', site_url());
+            $data = [
+                'message' => $message,
+                'to' => $this->user->get($this->input->post('receiver_id'), 'email'),
+                'subject' => lang('New message from ' . session('company_name')),
+                'salute' => $this->user->get($this->input->post('receiver_id'), 'first_name'),
             ];
             $this->mailer->send($data);
             flash('success', lang('Message sent'));
@@ -95,7 +102,7 @@ class MessagingController extends CI_Controller
         redirectPrev();
     }
 
-    function get_users()
+    public function get_users()
     {
 
         $this->db->select('id,email,CONCAT(first_name," ",last_name) as name');

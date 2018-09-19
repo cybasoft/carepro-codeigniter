@@ -351,6 +351,7 @@ function demo()
         'children',
         'rooms',
         'calendar',
+        'messaging'
     ];
 
     $ci = &get_instance();
@@ -723,52 +724,7 @@ function empty_option($name)
     return TRUE;
 }
 
-function email_config()
-{
-    //get options
-    $ci = &get_instance();
-    $opts = $ci->db
-        ->where('option_name', 'use_smtp')
-        ->or_where('option_name', 'smtp_host')
-        ->or_where('option_name', 'smtp_user')
-        ->or_where('option_name', 'smtp_pass')
-        ->or_where('option_name', 'smtp_port')
-        ->get('options')->result();
 
-    $use_smtp = 0;
-    $smtp_host='';
-    $smtp_user='';
-    $smtp_pass='';
-    $smtp_port='';
-    foreach ($opts as $key => $val) {
-        if($val->option_name == 'use_smtp')
-            $use_smtp = $val->option_value;
-        if($val->option_name == 'smtp_host')
-            $smtp_host = $val->option_value;
-        if($val->option_name == 'smtp_user')
-            $smtp_user = $val->option_value;
-        if($val->option_name == 'smtp_pass')
-            $smtp_pass = $val->option_value;
-        if($val->option_name == 'smtp_port')
-            $smtp_port = $val->option_value;
-    }
-
-    if($use_smtp == 1) {
-        $config['protocol'] = 'smtp'; //sendmail, smtp, mail
-        $config['smtp_host'] = $smtp_host;
-        $config['smtp_user'] = $smtp_user;
-        $config['smtp_pass'] = $smtp_pass;
-        $config['smtp_port'] =$smtp_port;
-    } else {
-        $config['protocol'] = 'mail';
-    }
-
-    $config['mailtype'] = 'html';
-    //do not change
-    $config['crlf'] = "\r\n";
-    $config['newline'] = "\r\n";
-    return $config;
-}
 
 function g_decor($name)
 {
@@ -949,16 +905,32 @@ function reload_company()
 function init_company()
 {
     if(session('init_company') !== 1) {
-        session(['init_company' => 1]);
+
         //query db once
         $company_data = [];
         foreach (general_options() as $opt => $val) {
+ 
             $value = get_option(str_replace('company_'.$opt, '', $opt));
+
             if(empty($value))
                 continue;
+
             $company_data['company_'.$opt] = $value;
         }
-        session($company_data);
+        if(empty($company_data))
+        {
+            if(is_cli()){
+                session_start();
+            }else{
+                die('Please complete installation');
+            }
+        }else{
+            session(['init_company' => 1]);
+
+            session($company_data);
+
+        }
+     
     }
 }
 

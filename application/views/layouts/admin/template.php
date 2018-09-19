@@ -30,7 +30,7 @@
     <?php endif; ?>
 
 
-    <?php if(ENVIRONMENT =='development'): ?>
+    <?php if(ENVIRONMENT =='testing'): ?>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/github.min.css">
@@ -221,7 +221,7 @@
                         <div class="col-lg-6">
                             <?php
                             echo form_label(lang('first_name'));
-                            echo form_input('first_name', session('first_name'), ['class' => 'form-control', 'required' => '']);
+                            echo form_input('first_name', set_value('first_name'), ['class' => 'form-control', 'required' => '']);
                             echo form_label(lang('last_name'));
                             echo form_input('last_name', set_value('last_name'), ['class' => 'form-control', 'required' => '']);
                             echo form_label(lang('email'));

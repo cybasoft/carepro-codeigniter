@@ -9,16 +9,18 @@
             <ul class="chatonline style-none list">
                 <?php foreach ($senders as $sender): ?>
                     <li>
-                        <a href="<?php echo site_url('messaging?m='.$sender->id); ?>"
+                        <a href="<?php echo site_url('messaging?m=' . $sender->id); ?>"
                            class="<?php echo isset($_GET['m']) && $_GET['m'] == $sender->id ? 'active' : ''; ?>">
                             <img src="<?php echo gravatar($sender->email); ?>"
                                  alt="user-img" class="img-circle">
                             <span class="name"><?php echo $sender->name; ?>
-                                <!--                                    <small class="text-muted">Away</small>-->
+                                <?php if ($sender->id == user_id()): ?>
+                                <small class="text-muted">Self</small>
+                                <?php endif;?>
                                 </span>
                         </a>
                     </li>
-                <?php endforeach; ?>
+                <?php endforeach;?>
 
                 <li class="p-20"></li>
             </ul>
@@ -29,13 +31,13 @@
         <div class="chat-main-header">
             <div class="p-20 b-b">
                 <h3 class="box-title">Conversation
-                    <?php echo anchor('messaging',icon('plus').' '.lang('New'),'class="btn btn-sm btn-primary pull-right"'); ?>
+                    <?php echo anchor('messaging', icon('plus') . ' ' . lang('New'), 'class="btn btn-sm btn-primary pull-right"'); ?>
                 </h3>
             </div>
         </div>
         <div class="chat-box">
             <ul class="chat-list slimscroll p-t-30">
-                <?php if(isset($_GET['m']) && is_numeric($_GET['m'])): ?>
+                <?php if (isset($_GET['m']) && is_numeric($_GET['m'])): ?>
                     <?php foreach ($chat as $c): ?>
                         <li class="<?php echo $c->sender_id == user_id() ? 'odd' : ''; ?>">
                             <div class="chat-image">
@@ -49,7 +51,7 @@
                                 </div>
                             </div>
                         </li>
-                    <?php endforeach; ?>
+                    <?php endforeach;?>
                 <?php else: ?>
                     <li>
                         <div class="chat-image" style="overflow: hidden;">
@@ -62,11 +64,11 @@
                             <ul id="newChatUsers"></ul>
                         </div>
                     </li>
-                <?php endif; ?>
+                <?php endif;?>
 
             </ul>
 
-            <?php if(isset($_GET['m']) && is_numeric($_GET['m'])): ?>
+            <?php if (isset($_GET['m']) && is_numeric($_GET['m'])): ?>
                 <div class="row send-chat-box">
                     <div class="col-sm-12">
                         <?php echo form_open_multipart('messaging/send'); ?>
@@ -82,7 +84,7 @@
                         <?php echo form_close(); ?>
                     </div>
                 </div>
-            <?php endif; ?>
+            <?php endif;?>
         </div>
     </div>
     <!-- .chat-right-panel -->

@@ -1,4 +1,6 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * @author    : JMuchiri
@@ -23,7 +25,7 @@ class Paypal extends CI_Controller
         $this->load->model('My_child', 'child');
         $this->load->model('My_invoice', 'invoice');
 
-        if(ENVIRONMENT == 'production') {
+        if (ENVIRONMENT == 'production') {
             $this->paypalURL = 'https://www.paypal.com/cgi-bin/webscr';
             $this->txn_verify_url = 'ssl://www.paypal.com';
         } else {
@@ -39,13 +41,13 @@ class Paypal extends CI_Controller
             'currency_code' => session('currency_abbreviation'),
             'no_note' => 1,
             'cmd' => '_xclick',
-            'btn' => 'PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest'
+            'btn' => 'PP-BuyNowBF:btn_buynow_LG.gif:NonHostedGuest',
         );
-        $this->module='child/billing/';
+        $this->module = 'child/billing/';
         $this->title = lang('billing');
     }
 
-    function pay($invoice_id)
+    public function pay($invoice_id)
     {
         //invoice
         $invoice = $this->invoice->get($invoice_id);
@@ -54,38 +56,40 @@ class Paypal extends CI_Controller
 
         $user = $this->user->get();
         $email = $user->email;
-        $querystring = "?business=".urlencode(session('company_paypal_email'))."&";
-        $querystring .= "item_name=".urlencode($child->first_name.' '.$child->last_name)."&";
-        $querystring .= "item_number=".urlencode($invoice_id)."&";
-        $querystring .= "amount=".urlencode($amoutDue)."&";
-        $querystring .= "payer_email=".urlencode($email)."&";
-        $querystring .= "name=".urlencode($user->first_name.' '.$user->last_name)."&";
-        $querystring .= "rm=".urlencode(2)."&";
+        $querystring = "?business=" . urlencode(session('company_paypal_email')) . "&";
+        $querystring .= "item_name=" . urlencode($child->first_name . ' ' . $child->last_name) . "&";
+        $querystring .= "item_number=" . urlencode($invoice_id) . "&";
+        $querystring .= "amount=" . urlencode($amoutDue) . "&";
+        $querystring .= "payer_email=" . urlencode($email) . "&";
+        $querystring .= "name=" . urlencode($user->first_name . ' ' . $user->last_name) . "&";
+        $querystring .= "rm=" . urlencode(2) . "&";
         foreach ($this->paypalContext as $key => $value) {
             $value = urlencode(stripslashes($value));
             $querystring .= "$key=$value&";
         }
-        $querystring .= "return=".urlencode(stripslashes($this->returnURL))."&";
-        $querystring .= "cancel_return=".urlencode(stripslashes($this->cancelURL))."&";
-        $querystring .= "notify_url=".urlencode($this->notifyURL);
-        $querystring .= "&custom=".'invoice'.'|'.$invoice_id;
+        $querystring .= "return=" . urlencode(stripslashes($this->returnURL)) . "&";
+        $querystring .= "cancel_return=" . urlencode(stripslashes($this->cancelURL)) . "&";
+        $querystring .= "notify_url=" . urlencode($this->notifyURL);
+        $querystring .= "&custom=" . 'invoice' . '|' . $invoice_id;
 
         $this->session->set_userdata('exit_page', last_page());
-        redirect($this->paypalURL.$querystring);
+        redirect($this->paypalURL . $querystring);
     }
 
-    function success()
+    public function success()
     {
         $invoice_id = $this->input->post('item_number');
         $invoice = $this->invoice->get($invoice_id);
         $child = $this->child->first($invoice->child_id);
-        if(count((array)$invoice) == 0) {
+        if (count((array) $invoice) == 0) {
             flash('info', lang('We received your payment. Please wait few hours for the transaction reflect in your account'));
         }
-        if($this->input->post('amt'))
+        if ($this->input->post('amt')) {
             $amount = $this->input->post('amt');
-        else
+        } else {
             $amount = $this->input->post('mc_gross');
+        }
+
         //insert tansaction data into the database
         $txn = $this->db->insert('invoice_payments', [
             'invoice_id' => $invoice_id,
@@ -94,10 +98,10 @@ class Paypal extends CI_Controller
             'remarks' => lang('paid_in_full'),
             'user_id' => $this->user->uid(),
             'created_at' => date_stamp(),
-            'date_paid' => date('Y-m-d')
+            'date_paid' => date('Y-m-d'),
         ]);
-        if($txn) {
-            if($this->db->insert_id()) {
+        if ($txn) {
+            if ($this->db->insert_id()) {
                 //$data['insertID'] = $this->db->insert_id();
                 //update status
                 $this->db->where('id', $invoice_id)->update('invoices', ['invoice_status' => "paid"]);
@@ -111,10 +115,10 @@ class Paypal extends CI_Controller
                         'invoice' => array(
                             'id' => $invoice_id,
                             'amount' => $amount,
-                            'method' => 'Paypal - Txn# '.$this->input->post('txn_id'),
+                            'method' => 'Paypal - Txn# ' . $this->input->post('txn_id'),
                             'remarks' => lang('paid_in_full'),
-                            'description' => "Invoice #$invoice_id for $child->first_name $child->last_name"
-                        )
+                            'description' => "Invoice #$invoice_id for $child->first_name $child->last_name",
+                        ),
                     ]
                 );
                 flash('success', lang('Thank you for your payment! We have sent you a confirmation email'));
@@ -124,12 +128,12 @@ class Paypal extends CI_Controller
         } else {
             flash('error', lang('transaction_failed'));
         }
-        redirect('child/'.$child->id.'/billing');
+        redirect('child/' . $child->id . '/billing');
     }
 
-    function cancelled()
+    public function cancelled()
     {
-        flash('error',lang('You have cancelled your PayPal transaction. We look forward to your business again!'));
+        flash('error', lang('You have cancelled your PayPal transaction. We look forward to your business again!'));
         redirect($this->session->userdata('exit_page'));
         //$this->load->view($this->module.'paypal_cancelled');
     }

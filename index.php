@@ -1,14 +1,14 @@
 <?php
+$APP_ENV = 'development';
 /*
  *---------------------------------------------------------------
- * APPLICATION ENVIRONMENT
+ * APPLICATION ENVIRONMENT ($APP_ENV)
  *---------------------------------------------------------------
  * This can be set to anything, but default usage is:
  *     development
  *     testing
  *     production
   */
-	$APP_ENV = 'development';
 
 /*
  *---------------------------------------------------------------

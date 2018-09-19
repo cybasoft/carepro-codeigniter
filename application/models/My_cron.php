@@ -1,4 +1,6 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * Class: my_cron
@@ -13,14 +15,11 @@ class my_cron extends CI_Model
 {
 
     /*Notify admin of event*/
-    function notify($event)
+    public function notify($event)
     {
         $this->load->library('email');
 
-        $user = $this->user->get(null,'last_name');
-
-        $this->email->from(session('company_email'), session('company_name'));
-        $this->email->subject('Event alert!');
+        $user = $this->user->get(null, 'last_name');
 
         $msg[] = 'User: ' . $user;
         $msg[] = '<br>Company' . session('company_name');
@@ -28,10 +27,17 @@ class my_cron extends CI_Model
         $msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
         $msg[] = '<hr/>' . $event;
 
-        $this->email->message(implode($msg));
+        $email = [
+            'from' => session('company_email'),
+            'from_name' => session('company_name'),
+            'subject' => 'Event alert!',
+            'message' => implode($msg),
+        ];
 
-        if ($this->email->send())
+        if ($this->mailer->send($email)) {
             return true;
+        }
+
         return false;
     }
 
@@ -43,27 +49,31 @@ class my_cron extends CI_Model
      *
      *
      */
-    function notifyNewRegistration($company, $email)
+    public function notifyNewRegistration($company, $email)
     {
-        $this->email->from(session('company_email'));
-        $this->email->to(session('company_email'));
-        $this->email->subject('Registration! New user');
-
         $msg[] = "New user has registered <hr/>";
         $msg[] = $company . '<br/> ' . $email;
 
         $msg[] = '<br>' . lang('date') . ': ' . date('d M, Y', time());
         $msg[] = ' / ' . lang('time') . ': ' . date('H:i', time());
 
-        $this->email->message(implode($msg));
+        $mail = [
+            'to' => session('company_email'),
+            'from' => session('company_email'),
+            'from_name' => session('company_name'),
+            'subject' => 'New user registration!',
+            'message' => implode($msg),
+        ];
 
-        if ($this->email->send())
+        if ($this->mailer->send($mail)) {
             return true;
+        }
+
         return false;
     }
 
 //todo move to mailer
-    function sendMail()
+    public function sendMail()
     {
         $this->load->library('email');
 
@@ -75,7 +85,6 @@ class my_cron extends CI_Model
             $this->email->to($row->email); //email parent
             //$this->email->cc('example@example.com');
             $this->email->bcc(session('company_email')); //email admin to log
-
 
             //echo $this->email->print_debugger();
         }

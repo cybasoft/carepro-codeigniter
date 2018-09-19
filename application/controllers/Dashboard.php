@@ -9,7 +9,7 @@ class Dashboard extends CI_Controller
     }
 
     /*
-     * default page
+     * default pagek
      */
     function index()
     {

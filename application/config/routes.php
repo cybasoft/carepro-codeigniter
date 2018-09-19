@@ -6,16 +6,16 @@ $route['migration/(:any)'] = 'migration/$1';
 
 $route['default_controller'] = 'auth';
 $route['404_override'] = 'landing/error404';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = false;
 
 $route['dashboard'] = 'dashboard/index';
 
 $route['auth/(:any)'] = 'auth/$1';
-$route['login']='auth/login';
-$route['register']='auth/register';
-$route['logout']='auth/logout';
-$route['forgot']='auth/forgot';
-$route['reset/(:any)']='auth/reset/$1';
+$route['login'] = 'auth/login';
+$route['register'] = 'auth/register';
+$route['logout'] = 'auth/logout';
+$route['forgot'] = 'auth/forgot';
+$route['reset/(:any)'] = 'auth/reset/$1';
 
 //accounting
 $route['new_invoice'] = 'invoice/create_invoice';
@@ -90,8 +90,8 @@ $route['accounting/:any'] = 'accounting/accounting/$1';
 //child photos
 $route['child/(:num)/photos'] = 'photos/index';
 
-$route['photos/(:any)']='photos/$1';
-$route['photos/(:any)/:num']='photos/$1';
+$route['photos/(:any)'] = 'photos/$1';
+$route['photos/(:any)/:num'] = 'photos/$1';
 
 //parents
 $route['parents/:any'] = 'parents/$1';
@@ -110,33 +110,33 @@ $route['reports/(:any)'] = 'reports/$1';
 
 //rooms
 $route['rooms'] = 'roomsController/index';
-$route['rooms/(:any)']='roomsController/$1';
-$route['rooms/(:any)/:num']='roomsController/$1/$id';
+$route['rooms/(:any)'] = 'roomsController/$1';
+$route['rooms/(:any)/:num'] = 'roomsController/$1/$id';
 
 //health
-$route['health/(:any)']='health/$1';
-$route['health/(:any)/:num']='health/$1';
+$route['health/(:any)'] = 'health/$1';
+$route['health/(:any)/:num'] = 'health/$1';
 
 //meds
-$route['meds/(:any)']='meds/$1';
-$route['meds/(:any)/:num']='meds/$1';
+$route['meds/(:any)'] = 'meds/$1';
+$route['meds/(:any)/:num'] = 'meds/$1';
 
 //notes
-$route['child/:num/notes']='notes/index';
-$route['notes/(:any)']='notes/$1';
-$route['notes/(:any)/:num']='notes/$1';
+$route['child/:num/notes'] = 'notes/index';
+$route['notes/(:any)'] = 'notes/$1';
+$route['notes/(:any)/:num'] = 'notes/$1';
 
 //files
-$route['files']='files/index';
-$route['files/(:any)']='files/$1';
+$route['files'] = 'files/index';
+$route['files/(:any)'] = 'files/$1';
 
 //food
-$route['food/(:any)']='food/$1';
-$route['food/(:any)/:num']='food/$1';
+$route['food/(:any)'] = 'food/$1';
+$route['food/(:any)/:num'] = 'food/$1';
 
 //backup
-$route['admin/backup/(:any)']='backupController/$1';
-$route['admin/backup/(:any)/(:any)']='backupController/$1';
+$route['admin/backup/(:any)'] = 'backupController/$1';
+$route['admin/backup/(:any)/(:any)'] = 'backupController/$1';
 
 //messaging
 $route['messaging'] = 'MessagingController/index';

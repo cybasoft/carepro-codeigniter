@@ -166,7 +166,7 @@
                         <div class="smtp-settings hidden">
                             <hr/>
                             <?php
-                            if(session('demo_mode') == 0) {
+                            if(session('company_demo_mode') == 0) {
                                 echo form_label(lang('smtp_host'));
                                 echo form_input('smtp_host', $option['smtp_host'], ['class' => 'form-control']);
 
@@ -253,7 +253,7 @@
                     </div>
                     <div class="box-body">
                         <?php
-                        if(session('demo_mode') == 0) {
+                        if(session('company_demo_mode') == 0) {
                             echo form_open('settings/update', ['class' => 'settings']);
                             echo form_label(lang('Stripe test public key'));
                             echo form_input('stripe_pk_test', $option['stripe_pk_test'], ['class' => 'form-control']);
@@ -341,8 +341,8 @@
                     <div class="box-body">
                         <h3><?php echo lang('logo'); ?></h3>
 
-                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('logo'))): ?>
-                            <img src="<?php echo base_url().'assets/uploads/content/'.session('logo'); ?>"/>
+                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('company_logo'))): ?>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
                         <?php endif; ?>
                         <hr/>
 
@@ -366,8 +366,8 @@
                 <div class="box box-default">
                     <div class="box-body">
                         <h3><?php echo lang('invoice logo'); ?></h3>
-                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('invoice_logo'))): ?>
-                            <img src="<?php echo base_url().'assets/uploads/content/'.session('invoice_logo'); ?>"/>
+                        <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('company_invoice_logo'))): ?>
+                            <img src="<?php echo base_url().'assets/uploads/content/'.session('company_invoice_logo'); ?>"/>
                         <?php endif;
                         echo '<hr/>';
                         echo form_open_multipart('settings/upload_invoice_logo', 'class="input-group"');

@@ -331,7 +331,7 @@ class Invoice extends CI_Controller
                 'file' => $fileName
             ];
 
-            $this->mailer->send($data);
+            // $this->mailer->send($data);
         }
 
         @unlink($fileName);
