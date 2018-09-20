@@ -4,8 +4,7 @@
 
 class My_parent extends CI_Model
 {
-
-    public function page($page, $data = array())
+    public function page($page, $data = [])
     {
         $data['page'] = $page;
         $this->load->view('parent/inc/home', $data);
@@ -52,7 +51,7 @@ class My_parent extends CI_Model
 
     public function register_child()
     {
-        $data = array(
+        $data = [
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
             'national_id' => encrypt($this->input->post('national_id')),
@@ -60,7 +59,7 @@ class My_parent extends CI_Model
             'gender' => $this->input->post('gender'),
             'created_at' => date_stamp(),
             'last_update' => date_stamp(),
-        );
+        ];
         $this->db->insert('children', $data);
         $last_id = $this->db->insert_id();
 
@@ -71,10 +70,10 @@ class My_parent extends CI_Model
         }
 
         //associate to this parent
-        $data2 = array(
+        $data2 = [
             'child_id' => $last_id,
             'user_id' => $this->user,
-        );
+        ];
         $this->db->insert('child_parents', $data2);
         redirect(site_url('parents/view_child/' . $last_id)); //go to child record
     }
@@ -107,7 +106,27 @@ class My_parent extends CI_Model
         } else {
             return $this->getChildren($parent_id)->num_rows();
         }
+    }
 
+    public function notify_check_out($child_id, $out_guardian)
+    {
+        $child = $this->db->select('id,first_name,last_name')->where('id', $child_id)->get('children')->row();
+
+        $childName = $child->first_name . ' ' . $child->last_name;
+        $message = sprintf(lang('child_checked_out_message'), $childName, date('d M Y @ H:i:A'), $out_guardian);
+        $subject = sprintf(lang('child_checked_out_subject'), $childName);
+
+        $this->notifyParents($child_id, $childName, $subject, $message);
+    }
+
+    public function notify_check_in($child_id, $in_guardian)
+    {
+        $child = $this->db->select('id,first_name,last_name')->where('id', $child_id)->get('children')->row();
+        $childName = $child->first_name . ' ' . $child->last_name;
+        $message = sprintf(lang('child_checked_in_message'), $childName, date('d M Y @ H:i:A'), $in_guardian);
+        $subject = sprintf(lang('child_checked_in_subject'), $childName);
+
+        $this->notifyParents($child_id, $childName, $subject, $message);
     }
 
     /**
@@ -116,10 +135,9 @@ class My_parent extends CI_Model
      * @param $message
      * @return bool
      */
-    public function notifyParents($child_id, $subject, $message)
+    public function notifyParents($child_id, $childName, $subject, $message)
     {
         $child = $this->child->first($child_id);
-        $childName = $child->first_name . ' ' . $child->last_name;
 
         //get parents info
         $parents = $this->child->getParents($child_id)->result();
@@ -130,13 +148,13 @@ class My_parent extends CI_Model
 
         $sent = 0;
         foreach ($parents as $row) {
-            $data = array(
+            $data = [
                 'subject' => $subject,
                 'to' => $row->email,
                 'message' => $message,
                 'childName' => $childName,
                 'salute' => $row->first_name,
-            );
+            ];
             if ($this->mailer->send($data)) {
                 $sent = 1;
                 $sent++;

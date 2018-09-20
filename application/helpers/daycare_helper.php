@@ -526,6 +526,10 @@ function checkinTimer($in, $out)
     return $timeDiff;
 }
 
+function time_difference($in,$out){
+    return checkinTimer($in,$out);
+}
+ 
 function sensitive_options()
 {
     return [

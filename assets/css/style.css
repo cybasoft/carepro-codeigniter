@@ -1,5 +1,5 @@
-@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
-@import url(//fonts.googleapis.com/css?family=Kaushan+Script);
+@import url( //fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
+@import url( //fonts.googleapis.com/css?family=Kaushan+Script);
 
 html,
 body {
@@ -147,7 +147,8 @@ body > .header {
     .collapse-left .user-pane div:nth-child(2) {
         display: none;
     }
-    .collapse-left .left-menu-link-icon .icon{
+
+    .collapse-left .left-menu-link-icon .icon {
         width: 30px !important;
     }
 }
@@ -188,7 +189,10 @@ body.fixed .wrapper {
 .content {
     padding: 10px 15px;
     background: #fff;
-    overflow: auto;
+    /* overflow: auto; */
+}
+.right-side{
+    background:#fff !important
 }
 
 /* Utility */
@@ -1566,6 +1570,7 @@ body > .header .logo .icon {
         opacity: 0;
         top: 120%;
     }
+
     to {
         opacity: 1;
         top: 100%;
@@ -1577,6 +1582,7 @@ body > .header .logo .icon {
         opacity: 0;
         top: 120%;
     }
+
     to {
         opacity: 1;
         top: 100%;
@@ -1585,6 +1591,7 @@ body > .header .logo .icon {
 
 /* Fix dropdown menu for small screens to display correctly on small screens */
 @media screen and (max-width: 767px) {
+
     .navbar-nav > .notifications-menu > .dropdown-menu,
     .navbar-nav > .user-menu > .dropdown-menu,
     .navbar-nav > .tasks-menu > .dropdown-menu,
@@ -1602,6 +1609,7 @@ body > .header .logo .icon {
 
 /* Fix menu positions on xs screens to appear correctly and fully */
 @media screen and (max-width: 480px) {
+
     .navbar-nav > .notifications-menu > .dropdown-menu > li.header,
     .navbar-nav > .tasks-menu > .dropdown-menu > li.header,
     .navbar-nav > .messages-menu > .dropdown-menu > li.header {
@@ -3434,15 +3442,18 @@ body > .header .logo .icon {
 Photo albums
  */
 .photo-row {
-    display: -ms-flexbox; /* IE10 */
+    display: -ms-flexbox;
+    /* IE10 */
     display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
+    -ms-flex-wrap: wrap;
+    /* IE10 */
     flex-wrap: wrap;
     padding: 0 4px;
 }
 
 .photo-column {
-    -ms-flex: 25%; /* IE10 */
+    -ms-flex: 25%;
+    /* IE10 */
     flex: 25%;
     max-width: 25%;
     padding: 0 4px;
@@ -3596,6 +3607,7 @@ Photo albums
     border: solid 1px #1974cc;
     float: left;
     margin-right: 5px;
+    margin-bottom: 5px;
     /*padding: 2px;*/
     position: relative;
     border-radius: 5px;
@@ -3684,7 +3696,8 @@ Photo albums
 }
 
 .i-check input[type=radio]:checked + .i-check-box {
-    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);
 }
 
@@ -3791,8 +3804,10 @@ Photo albums
     left: 25%;
     top: 0;
     -webkit-border-radius: 0 0 3px 3px !important;
-    -moz-border-radius: 0 0 3px 3px !important;;
-    border-radius: 0 0 3px 3px !important;;
+    -moz-border-radius: 0 0 3px 3px !important;
+    ;
+    border-radius: 0 0 3px 3px !important;
+    ;
     text-transform: none;
     background: #1974cc !important;
     padding: 0 2px !important;
@@ -4365,6 +4380,7 @@ a:hover .left-menu-link-icon {
 .p-20 {
     padding: 20px !important
 }
+
 @media screen and (max-width: 767px) {
 
     .chat-main-box .chat-left-aside {
@@ -4388,15 +4404,20 @@ a:hover .left-menu-link-icon {
     }
 }
 
-#newChatUsers li{
+#newChatUsers li {
     padding: 5px;
     border-right: solid 1px #ccc;
     border-left: solid 1px #ccc;
     border-bottom: solid 1px #ccc;
-    margin:0 0 0 -40px;
+    margin: 0 0 0 -40px;
 }
-#newChatUsers a{
-    display:block;
-}
-/** end chat box **/
 
+#newChatUsers a {
+    display: block;
+}
+
+/** end chat box **/
+.pagination li {
+  display:inline-block;
+  padding:5px;
+}

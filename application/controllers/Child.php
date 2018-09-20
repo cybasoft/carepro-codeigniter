@@ -1,4 +1,6 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * @file      : child.php
@@ -7,12 +9,11 @@
  */
 class Child extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
         $this->load->model('My_invoice', 'invoice');
-        $this->load->model('My_food','food');
+        $this->load->model('My_food', 'food');
         $this->module = 'child/';
         $this->title = lang('child');
     }
@@ -21,9 +22,9 @@ class Child extends CI_Controller
      * default page
      * @return void
      */
-    function index($id)
+    public function index($id)
     {
-        if(!authorizedToChild($this->user->uid(), $id)) {
+        if (!authorizedToChild($this->user->uid(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
@@ -32,14 +33,15 @@ class Child extends CI_Controller
         $child = $this->child->child($id);
 
         $pickups = $this->db->where('child_id', $id)->get('child_pickup')->result();
-        if(empty($child)) {
+        if (empty($child)) {
             flash('error', lang('record_not_found'));
             redirect('children');
         }
-        page($this->module.'index', compact('child', 'pickups'));
+
+        page($this->module . 'index', compact('child', 'pickups'));
     }
 
-    function store()
+    public function store()
     {
         allow(['admin', 'manager', 'staff']);
 
@@ -53,11 +55,11 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('ethnicity', lang('Ethnicity'), 'trim|xss_clean');
         $this->form_validation->set_rules('religion', lang('religion'), 'trim|xss_clean');
         $this->form_validation->set_rules('birthplace', lang('birthplace'), 'trim|xss_clean');
-        if($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == true) {
             $register = $this->child->register(true);
-            if($register !== false) {
+            if (false !== $register) {
                 flash('success', lang('request_success'));
-                redirect('child/'.$register);
+                redirect('child/' . $register);
             } else {
                 flash('error', lang('request_error'));
             }
@@ -74,7 +76,7 @@ class Child extends CI_Controller
      * @return void
      */
 
-    function update()
+    public function update()
     {
         allow(['admin', 'manager', 'staff']);
         $this->form_validation->set_rules('nickname', lang('nickname'), 'trim|xss_clean');
@@ -85,24 +87,24 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('blood_type', lang('birthday'), 'trim|xss_clean');
         $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('status', lang('status'), 'required|trim|xss_clean');
-        if($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == true) {
             $this->child->update_child($this->input->post('child_id'));
         } else {
             validation_errors();
             flash('danger');
         }
-        redirect('child/'.$this->input->post('child_id'), 'refresh');
+        redirect('child/' . $this->input->post('child_id'), 'refresh');
     }
 
     /*
      * deleting is currently disable. Only sets record as inactive
      * @return void
      */
-    function deleteChild($id)
+    public function deleteChild($id)
     {
         allow('admin');
         $this->db->where('id', $id);
-        if($this->db->update('children', array('status', 0))) {
+        if ($this->db->update('children', ['status', 0])) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -116,51 +118,52 @@ class Child extends CI_Controller
      * @param $db string
      */
 
-    function uploadPhoto($id = "")
+    public function uploadPhoto($id = '')
     {
         allow(['admin', 'manager', 'staff']);
         $upload_path = './assets/uploads/children';
         $upload_db = 'children';
-        if(!file_exists($upload_path)) {
+        if (!file_exists($upload_path)) {
             mkdir($upload_path, 755, true);
         }
-        if($id == "") { //make sure there are arguments
+        if ('' == $id) {
+            //make sure there are arguments
             flash('danger', lang('request_error'));
             redirectPrev();
         }
-        $config = array(
+        $config = [
             'upload_path' => $upload_path,
             'allowed_types' => 'gif|jpg|png|jpeg|svg',
             //'max_size'      => '100',
             'max_width' => '1240',
             'max_height' => '1240',
             'encrypt_name' => true,
-        );
+        ];
         $this->load->library('upload', $config);
-        if(!$this->upload->do_upload()) {
+        if (!$this->upload->do_upload()) {
             flash('danger', lang('request_error'));
         } else {
             //delete if any exists
             $this->db->where('id', $id);
             $q = $this->db->get($upload_db);
             foreach ($q->result() as $r) {
-                if($r->photo !== "") :
-                    unlink($upload_path.'/'.$r->photo);
-                    $data['photo'] = '';
-                    $this->db->where('id', $id);
+                if ('' !== $r->photo):
+                    unlink($upload_path . '/' . $r->photo);
+                $data['photo'] = '';
+                $this->db->where('id', $id);
 
-                    $this->db->update($upload_db, $data);
+                $this->db->update($upload_db, $data);
                 endif;
             }
             //upload new photo
             $upload_data = $this->upload->data();
-            $data_ary = array(
-                'photo' => $upload_data['file_name']
-            );
+            $data_ary = [
+                'photo' => $upload_data['file_name'],
+            ];
             $this->db->where('id', $id);
             $this->db->update($upload_db, $data_ary);
-            $data = array('upload_data' => $upload_data);
-            if($data) {
+            $data = ['upload_data' => $upload_data];
+            if ($data) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -169,60 +172,61 @@ class Child extends CI_Controller
         redirectPrev();
     }
 
-    function invoice($status = "")
+    public function invoice($status = '')
     {
         $data['status'] = $status;
-        page($this->module.'accounting/index', $data);
+        page($this->module . 'accounting/index', $data);
     }
 
-    function reports($id)
+    public function reports($id)
     {
         $child = $this->child->first($id);
         $attendance = $this->db->where('child_id', $id)->order_by('id', 'DESC')->get('child_checkin');
-        $nyForm= $this->db->where('child_id',$id)->get('form_ny_attendance')->row();
-        page($this->module.'reports/index', compact('child', 'attendance','nyForm'));
+        $nyForm = $this->db->where('child_id', $id)->get('form_ny_attendance')->row();
+        page($this->module . 'reports/index', compact('child', 'attendance', 'nyForm'));
     }
 
     /*
      * check_in
      */
-    function checkIn($id)
+    public function checkIn($id)
     {
         allow(['admin', 'manager', 'staff']);
 
-        $data = array(
+        $data = [
             'child_id' => $id,
             'parents' => $this->child->getParents($id)->result(),
-            'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result()
-        );
-        $this->load->view($this->module.'check_in', $data);
+            'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result(),
+        ];
+        $this->load->view($this->module . 'check_in', $data);
     }
 
     /*
      * check_out
      */
-    function checkOut($id)
+    public function checkOut($id)
     {
         allow(['admin', 'manager', 'staff']);
 
-        $data = array(
+        $data = [
             'child_id' => $id,
             'parents' => $this->child->getParents($id)->result(),
-            'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result()
-        );
-        $this->load->view($this->module.'check_out', $data);
+            'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result(),
+        ]; 
+
+        $this->load->view($this->module . 'check_out', $data);
     }
 
     /*
      * check in
      */
-    function doCheckIn($child_id)
+    public function doCheckIn($child_id)
     {
         allow(['admin', 'manager', 'staff']);
 
         $this->form_validation->set_rules('in_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
-        if($this->form_validation->run() == true) {
-            if($this->child->check_in($child_id)) {
+        if ($this->form_validation->run() == true) {
+            if ($this->child->check_in($child_id)) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -237,13 +241,13 @@ class Child extends CI_Controller
     /*
      * check out
      */
-    function doCheckOut($child_id)
+    public function doCheckOut($child_id)
     {
         allow(['admin', 'manager', 'staff']);
 
         $this->form_validation->set_rules('out_guardian', lang('authorized_pickup'), 'required|trim|xss_clean');
-        if($this->form_validation->run() == true) {
-            if($this->child->check_out($child_id)) {
+        if ($this->form_validation->run() == true) {
+            if ($this->child->check_out($child_id)) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -258,34 +262,34 @@ class Child extends CI_Controller
     /*
      * assign parent
      */
-    function assignParent($child_id)
+    public function assignParent($child_id)
     {
         allow(['admin', 'manager', 'staff']);
 
-        $this->load->view($this->module.'assign_parent', compact('child_id'));
+        $this->load->view($this->module . 'assign_parent', compact('child_id'));
     }
 
-    function doAssignParent($child_id)
+    public function doAssignParent($child_id)
     {
         allow(['admin', 'manager', 'staff']);
 
         $this->child_id = $child_id;
         $this->form_validation->set_rules('parent', lang('parent'), 'required|trim|xss_clean|callback_user_not_assigned');
-        if($this->form_validation->run() == TRUE) {
-            $data = array(
+        if ($this->form_validation->run() == true) {
+            $data = [
                 'user_id' => $this->input->post('parent'),
-                'child_id' => $child_id
-            );
-            if($this->db->insert('child_parents', $data)) {
+                'child_id' => $child_id,
+            ];
+            if ($this->db->insert('child_parents', $data)) {
                 flash('success', lang('request_success'));
 
                 $parent = $this->user->first($this->input->post('parent'));
                 $child = $this->child->first($child_id);
-                $data = array(
+                $data = [
                     'to' => $parent->email,
                     'subject' => lang('assigned_child_subject'),
-                    'message' => sprintf(lang('assigned_child_message'), $child->first_name.' '.$child->last_name, format_date($child->bday, false))
-                );
+                    'message' => sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false)),
+                ];
                 $this->mailer->send($data);
             }
         } else {
@@ -299,14 +303,14 @@ class Child extends CI_Controller
      * user_not_assigned
      * ensure user has not already been assigned
      */
-    function user_not_assigned()
+    public function user_not_assigned()
     {
         $user_id = $this->input->post('parent');
         $this->db->where('user_id', $user_id);
         $this->db->where('child_id', $this->child_id);
         $query = $this->db->get('child_parents');
 
-        if(count((array)$query->row())) {
+        if (count((array) $query->row())) {
             $this->form_validation->set_message('user_not_assigned', lang('user_already_assigned'));
             flash('danger', lang('request_error'));
             return false;
@@ -318,11 +322,11 @@ class Child extends CI_Controller
     /*
      * removeParent
      */
-    function removeParent($child_id, $parent_id)
+    public function removeParent($child_id, $parent_id)
     {
         allow(['admin', 'manager', 'staff']);
 
-        if($this->db->where('child_id', $child_id)
+        if ($this->db->where('child_id', $child_id)
             ->where('user_id', $parent_id)
             ->delete('child_parents')) {
             flash('success', lang('request_success'));
@@ -331,5 +335,4 @@ class Child extends CI_Controller
         }
         redirectPrev();
     }
-
 }

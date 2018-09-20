@@ -3,8 +3,8 @@ class UsersTableSeeder extends CI_Model
 {
     public function __construct($limit = 25)
     {
-
     }
+
     public function run($limit = 25)
     {
         $faker = Faker\Factory::create();
@@ -15,8 +15,7 @@ class UsersTableSeeder extends CI_Model
         $this->seedDefaultUsers();
 
         for ($i = 1; $i <= $limit; $i++) {
-
-            $g='';
+            $g = '';
             if ($i % 2 == 0) {
                 $g = 'male';
             } else {
@@ -36,14 +35,11 @@ class UsersTableSeeder extends CI_Model
             $id = $this->db->insert_id();
 
             $this->db->insert('users_groups', ['group_id' => rand(1, 4), 'user_id' => $id]);
-
         }
-
     }
 
     public function seedDefaultUsers()
     {
-
         $users = [
             [
                 'first_name' => 'Super',
@@ -94,30 +90,27 @@ class UsersTableSeeder extends CI_Model
         foreach ($users as $user) {
             $this->db->insert('users', $user);
             $id = $this->db->insert_id();
-            $data = array(
+            $data = [
                 'group_id' => 1,
                 'user_id' => $id,
-            );
+            ];
             $query = $this->db->insert('users_groups', $data);
             if (!$query) {
                 show_error('Unable to seed');
             }
-
         }
     }
 
     public function seedGroups()
     {
-
         $this->db->truncate('users_groups');
         $this->db->truncate('groups');
 
-        $groups = array(
+        $groups = [
             'admin', 'manager', 'staff', 'parent',
-        );
+        ];
         foreach ($groups as $group) {
-            $this->db->insert('groups', array('name' => $group));
+            $this->db->insert('groups', ['name' => $group]);
         }
     }
-
 }

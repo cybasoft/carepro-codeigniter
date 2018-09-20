@@ -1,4 +1,6 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * @file      : children.php
@@ -11,7 +13,8 @@ class Children extends CI_Controller
     {
         parent::__construct();
         setRedirect();
-        $this->load->model('My_invoice', 'invoice');
+        // $this->load->model('My_invoice', 'invoice');
+        $this->load->model('My_children', 'children');
         $this->module = 'children/';
         $this->title = lang('children');
         auth(true);
@@ -21,14 +24,18 @@ class Children extends CI_Controller
      * default page
      * @return void
      */
-    function index()
+    public function index()
     {
-        if(is('parent')) {
+        if (is('parent')) {
             $children = $this->parent->getChildren();
             page('parent/parent_dashboard', compact('children'));
         } else {
-            page($this->module.'index');
+            $checkedInChildren = $this->children->checkedInChildren();
+            $checkedOutChildren = $this->children->checkedOutChildren();
+            $inactiveChildren = $this->children->inactiveChildren();
+
+            $totalChildren = count((array) $checkedInChildren) + count((array) $checkedOutChildren);
+            page($this->module . 'children', compact('checkedInChildren', 'checkedOutChildren', 'totalChildren', 'inactiveChildren'));
         }
     }
-
 }

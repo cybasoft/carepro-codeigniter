@@ -4,7 +4,6 @@
 
 class Conf extends CI_Model
 {
-
     public function __construct()
     {
         // reload_company();
@@ -49,7 +48,7 @@ class Conf extends CI_Model
      * @params $type, $msg
      * call status messages
      */
-    public function page($page, $data = array())
+    public function page($page, $data = [])
     {
         $data['page'] = $page;
         $this->load->view('index', $data);
@@ -72,7 +71,7 @@ class Conf extends CI_Model
         return '';
     }
 
-    public function totalRecords($db, $data = array())
+    public function totalRecords($db, $data = [])
     {
         if (!empty($data)) {
             foreach ($data as $field => $key) {
@@ -103,15 +102,14 @@ class Conf extends CI_Model
     //lockscreen timer
     public function setTimer($time = 1)
     {
-        $cookie = array(
+        $cookie = [
             'name' => 'timer',
             'value' => $time,
             'expire' => '86500',
             'path' => '/',
             'secure' => true,
-        );
+        ];
         $this->input->set_cookie($cookie);
-
     }
 
     public function getTimer()
@@ -121,7 +119,7 @@ class Conf extends CI_Model
 
     public function stripImage($text)
     {
-        $text = preg_replace("/<img[^>]+./", " ", $text);
+        $text = preg_replace('/<img[^>]+./', ' ', $text);
         $text = str_replace(']]>', ']]>', $text);
         return $text;
     }

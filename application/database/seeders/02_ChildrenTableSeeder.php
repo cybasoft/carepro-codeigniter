@@ -3,8 +3,8 @@ class ChildrenTableSeeder extends CI_Model
 {
     public function __construct($limit = 25)
     {
-
     }
+
     public function run($limit = 25)
     {
         $faker = Faker\Factory::create();
@@ -25,25 +25,24 @@ class ChildrenTableSeeder extends CI_Model
         $this->db->truncate('children');
 
         for ($i = 1; $i <= $limit; $i++) {
-            $data = array(
+            $data = [
                 'nickname' => $faker->username,
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
-                'national_id' => rand(123456, 999999),
+                'national_id' => encrypt(rand(123456, 999999)),
                 'bday' => date('Y-m-d'),
                 'gender' => 'M',
                 'last_update' => date_stamp(),
                 'status' => 1,
                 'created_at' => date_stamp(),
                 'user_id' => 1,
-            );
+            ];
 
             $this->db->insert('children', $data);
             $id = $this->db->insert_id();
 
             //associate with parents;
             if (count($pids) > 0) {
-
                 $parent = $pids[rand(0, count($pids) - 1)];
 
                 echo 'Assigning parent with ID ' . $parent . PHP_EOL;
@@ -54,9 +53,6 @@ class ChildrenTableSeeder extends CI_Model
             } else {
                 echo 'Child ' . $id . ' has not been assinged to a parent' . PHP_EOL;
             }
-
         }
-        echo 'Children seeding complete' . PHP_EOL;
-
     }
 }

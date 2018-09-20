@@ -6,9 +6,44 @@ class My_migration extends CI_Model
 {
     public $seedDir = APPPATH . 'database/seeders/';
 
+    /**
+     * Seeder for one class
+     *
+     * Seeds for one class in application/da
+     *
+     * @param Type $string $class
+     **/
+    public function seedOne($class = null)
+    {
+        if ($class == null) {
+            show_error('No seeder classname entered');
+        }
+
+        $files = [];
+
+        $path = '';
+        foreach (scandir($this->seedDir) as $file) {
+            if ($file != '.' && $file != '..') {
+                $name = $this->_get_seeder_name($file);
+                if ($name == $class) {
+                    $path = $this->seedDir . DIRECTORY_SEPARATOR . $file;
+                    break;
+                }
+            }
+        }
+
+        if (is_file($path)) {
+            require_once $path;
+            $this->_do_seed($class);
+        } else {
+            show_error('Seeder file not found');
+        }
+
+        echo 'Completed seeding ' . $class . PHP_EOL;
+    }
+
     public function seedAll()
     {
-
         echo 'Seeding tables. Please wait...' . PHP_EOL;
 
         $count = 0;
@@ -17,38 +52,28 @@ class My_migration extends CI_Model
 
         foreach (scandir($this->seedDir) as $name) {
             if ($name != '.' && $name != '..') {
-
                 require_once $this->seedDir . DIRECTORY_SEPARATOR . $name;
 
-                $name = $this->_get_seeder_name($name);
+                $class = $this->_get_seeder_name($name);
 
-                echo 'Seeding ' . $name . PHP_EOL;
-
-                $this->db->query('SET FOREIGN_KEY_CHECKS=0;');
-
-                $cn = new $name;
-
-                $cn->run();
-
-                $this->db->query('SET FOREIGN_KEY_CHECKS=1;');
+                $this->_do_seed($class);
 
                 $count++;
             }
         }
 
-        echo 'Completed seeding ' . $count . ' tables ';
-
+        echo 'Completed seeding ' . $count . ' tables ' . PHP_EOL;
     }
 
     public function refresh()
     {
-        if (ENVIRONMENT !== "production") {
+        if (ENVIRONMENT !== 'production') {
             echo 'CAUTION! You are in production mode!';
         }
 
         echo "Are you sure you want to do this?  Type 'yes' to continue: ";
 
-        $handle = fopen("php://stdin", "r");
+        $handle = fopen('php://stdin', 'r');
         $line = fgets($handle);
         if (trim($line) != 'yes') {
             echo "ABORTING!\n";
@@ -63,7 +88,7 @@ class My_migration extends CI_Model
         foreach ($tables as $table) {
             $this->db->query('SET FOREIGN_KEY_CHECKS=0;');
 
-            if ($table == "migrations") {
+            if ($table == 'migrations') {
                 $this->db->query('TRUNCATE table migrations');
                 $this->db->insert('migrations', ['version' => 0]);
                 continue;
@@ -82,8 +107,7 @@ class My_migration extends CI_Model
 
         echo "Seeding\t....................";
         $this->seed();
-        echo "Done!";
-
+        echo 'Done!';
     }
 
     protected function _get_seeder_name($name)
@@ -93,5 +117,31 @@ class My_migration extends CI_Model
         $name = basename($name, '.php');
 
         return $name;
+    }
+
+    protected function _do_seed($class)
+    {
+        echo 'Seeding ' . $class . PHP_EOL;
+
+        $this->db->query('SET FOREIGN_KEY_CHECKS=0;');
+
+        $cn = new $class;
+
+        $cn->run();
+
+        $this->db->query('SET FOREIGN_KEY_CHECKS=1;');
+    }
+
+    public function help()
+    {
+        echo "php index.php migration migrate <version> \tMigrate tables into the database up to version specified" . PHP_EOL;
+        echo "php index.php migration create \tGenerate migrations for all tables" . PHP_EOL;
+        echo "php index.php migration create <table_name> \tGenerate migration for one table" . PHP_EOL;
+        echo "php index.php migration seed \t Seed all seeder files located in /application/database/seeders" . PHP_EOL;
+        echo "php index.php migration seed <ClassName> \t Seed only specific database seeder" . PHP_EOL;
+//        echo "php index.php migrate create [table1, table2] \tGenerate migration for an array of tables".PHP_EOL;
+        //        echo "php index.php migrate create 'table1, table2' \tGenerate migration for a list of tables".PHP_EOL;
+        echo "php index.php migration version <version number> \tPerform migration for a specific version" . PHP_EOL;
+        echo "php index.php refresh \tReload all tables. All data will be lost" . PHP_EOL;
     }
 }

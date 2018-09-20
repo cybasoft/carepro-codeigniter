@@ -74,37 +74,38 @@
             ?>
 
             <?php foreach ($sidebar as $sb): ?>
-                <li class="left-menu-parent <?php if(isset($sb['active'])) {
-                    echo set_active($sb['active']);
-                }; ?>">
-                    <a href="<?php echo site_url($sb['link']); ?>"
-                       style="color:<?php echo session('styles_left_sidebar_link_color', '#333'); ?>">
-                        <span class="left-menu-link-icon">
-                            <img class="icon" src="<?php echo assets('img/content/'.$sb['icon'].'.svg'); ?>"/>
-                        </span>
-                        <span class="left-menu-link-info">
-                            <span class="link-name"><?php echo $sb['name']; ?></span>
-                        </span>
-                        <?php if(isset($sb['badge'])): ?>
-                            <small class="badge pull-right bg-green">
-                                <?php echo $sb['badge']; ?>
-                            </small>
-                        <?php endif; ?>
-                    </a>
-                </li>
+            <li class="left-menu-parent <?php if (isset($sb['active'])) {
+                echo set_active($sb['active']);
+            }; ?>">
+                <a href="<?php echo site_url($sb['link']); ?>" style="color:<?php echo session('styles_left_sidebar_link_color', '#333'); ?>">
+                    <span class="left-menu-link-icon">
+                        <img class="icon" src="<?php echo assets('img/content/' . $sb['icon'] . '.svg'); ?>" />
+                    </span>
+                    <span class="left-menu-link-info">
+                        <span class="link-name">
+                            <?php echo $sb['name']; ?></span>
+                    </span>
+                    <?php if (isset($sb['badge'])): ?>
+                    <small class="badge pull-right bg-green">
+                        <?php echo $sb['badge']; ?>
+                    </small>
+                    <?php endif; ?>
+                </a>
+            </li>
             <?php endforeach; ?>
         </ul>
 
     </section>
-    <div class="footer text-center" style="">
-        <br/>
+    <div class="footer text-center hidden-xs" style="">
+        <br />
         <div style="font-size:12px;padding:5px;">
-            &copy; <?php echo date('Y'); ?>
+            &copy;
+            <?php echo date('Y'); ?>
             <?php echo lang('copyright'); ?>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <a href="//amdtllc.com/support" target="_blank">Open support ticket</a>
-            <br/>
+            <br />
         </div>
     </div>
 </aside>
