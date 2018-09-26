@@ -8,8 +8,8 @@
         <i class="material-icons md-18">edit</i>
     </div>
     <?php endif; ?>
-
 </div>
+<br />
 <div class="modal fade" id="new-photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
