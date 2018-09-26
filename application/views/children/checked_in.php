@@ -19,7 +19,7 @@
         </a>
     </div>
 
-    <a onclick="loadCheckInModal('<?php echo $child->id; ?>')" href="#"
+    <a onclick="loadCheckOutModal('<?php echo $child->id; ?>')" href="#"
         class="btn btn-danger btn-flat btn-sm child-check-out">
         <span class="fa fa-new-window"></span>
         <?php echo lang('check_out'); ?>

@@ -276,15 +276,15 @@ class My_child extends CI_Model
      */
     public function check_in($child_id)
     {
-        if ($this->db->insert(
-            'child_checkin',
-        [
+        $data = [
             'child_id' => $child_id,
             'in_guardian' => $this->input->post('in_guardian'),
             'time_in' => date_stamp(),
             'in_staff_id' => $this->user->uid(),
-        ]
-        )) {
+        ];
+        $this->db->insert('child_checkin', $data);
+
+        if ($this->db->affected_rows() > 0) {
             //mark as checked in
             $this->db->where('id', $child_id)->update('children', ['checkin_status' => 1]);
 
@@ -303,16 +303,16 @@ class My_child extends CI_Model
      */
     public function check_out($child_id)
     {
-        if ($this->db->where('child_id', $child_id)->where('time_out', null)->update(
-            'child_checkin',
-        [
+        $data = [
             'out_guardian' => $this->input->post('out_guardian'),
             'time_out' => date_stamp(),
             'out_staff_id' => $this->user->uid(),
-        ]
-        )) {
-            //mark as checked out
+        ];
 
+        $this->db->where('child_id', $child_id)->where('time_out', null)->update('child_checkin', $data);
+
+        if ($this->db->affected_rows() > 0) {
+            //mark as checked out
             $this->db->where('id', $child_id)->update('children', ['checkin_status' => 0]);
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
@@ -516,5 +516,61 @@ class My_child extends CI_Model
         }
 
         return base_url() . $photo;
+    }
+
+    public function uploadPhoto($id = '')
+    {
+        $upload_path = './assets/uploads/children';
+        $upload_db = 'children';
+        if (!file_exists($upload_path)) {
+            mkdir($upload_path, 755, true);
+        }
+
+        if ($id == '') {
+            return false;
+        }
+
+        $config = [
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|png|jpeg|svg',
+            //'max_size'      => '100',
+            'encrypt_name' => true,
+        ];
+        $this->load->library('upload', $config);
+        if (!$this->upload->do_upload()) {
+            return false;
+        }
+
+        $this->db->where('id', $id);
+
+        foreach ($this->db->get($upload_db)->result() as $r) {
+            if ('' !== $r->photo):
+                unlink($upload_path . '/' . $r->photo);
+            $data['photo'] = '';
+            $this->db->where('id', $id);
+
+            $this->db->update($upload_db, $data);
+            endif;
+        }
+        //upload new photo
+        $upload_data = $this->upload->data();
+        $data_ary = [
+            'photo' => $upload_data['file_name'],
+        ];
+        $this->db->where('id', $id);
+        $this->db->update($upload_db, $data_ary);
+        $data = ['upload_data' => $upload_data];
+
+        $this->conf->photoResize([
+            'image' => $upload_path . '/' . $data_ary['photo'],
+            'width' => 150,
+            'height' => 150
+        ]);
+
+        if ($data) {
+            return true;
+        }
+
+        return false;
     }
 }

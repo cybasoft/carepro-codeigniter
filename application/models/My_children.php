@@ -23,6 +23,7 @@ class My_children extends CI_Model
             ->join('(SELECT child_id, COUNT(*) AS med_count FROM child_meds GROUP BY child_id) cm', 'cm.child_id=c.id', 'left')
             ->where('c.checkin_status', 1)
             ->where('cc.time_out', null)
+            ->group_by('c.id')
             ->get()->result();
         return $res;
     }

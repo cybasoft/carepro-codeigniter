@@ -612,3 +612,5 @@ $lang['Home'] = 'Home';
 $lang['Ethnicity'] = 'Ethnicity';
 $lang['You have a message from'] = 'You have a message from %s';
 $lang['Login to your account to respond or view full conversation'] = 'Login to your account to respond or view full conversation';
+$lang['Currently checked-in']='Currently checked-in';
+$lang['Pending check-in']='Pending check-in';

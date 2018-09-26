@@ -45,17 +45,7 @@ class Child extends CI_Controller
     {
         allow(['admin', 'manager', 'staff']);
 
-        $this->form_validation->set_rules('nickname', lang('nickname'), 'trim|xss_clean');
-        $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
-        $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('blood_type', lang('birthday'), 'trim|xss_clean');
-        $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('ethnicity', lang('Ethnicity'), 'trim|xss_clean');
-        $this->form_validation->set_rules('religion', lang('religion'), 'trim|xss_clean');
-        $this->form_validation->set_rules('birthplace', lang('birthplace'), 'trim|xss_clean');
-        if ($this->form_validation->run() == true) {
+        if ($this->_validate_child()) {
             $register = $this->child->register(true);
             if (false !== $register) {
                 flash('success', lang('request_success'));
@@ -64,6 +54,8 @@ class Child extends CI_Controller
                 flash('error', lang('request_error'));
             }
         } else {
+            set_flash(['nickname', 'first_name', 'last_name', 'national_id', 'bday', 'blood_type', 'gender', 'ethnicity', 'religion', 'birthplace']);
+
             validation_errors();
             flash('danger');
         }
@@ -79,17 +71,11 @@ class Child extends CI_Controller
     public function update()
     {
         allow(['admin', 'manager', 'staff']);
-        $this->form_validation->set_rules('nickname', lang('nickname'), 'trim|xss_clean');
-        $this->form_validation->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('national_id', lang('national_id'), 'required');
-        $this->form_validation->set_rules('bday', lang('birthday'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('blood_type', lang('birthday'), 'trim|xss_clean');
-        $this->form_validation->set_rules('gender', lang('gender'), 'required|trim|xss_clean');
-        $this->form_validation->set_rules('status', lang('status'), 'required|trim|xss_clean');
-        if ($this->form_validation->run() == true) {
+
+        if ($this->_validate_child()) {
             $this->child->update_child($this->input->post('child_id'));
         } else {
+            set_flash(['nickname', 'first_name', 'last_name', 'national_id', 'bday', 'blood_type', 'gender', 'status']);
             validation_errors();
             flash('danger');
         }
@@ -121,54 +107,13 @@ class Child extends CI_Controller
     public function uploadPhoto($id = '')
     {
         allow(['admin', 'manager', 'staff']);
-        $upload_path = './assets/uploads/children';
-        $upload_db = 'children';
-        if (!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
-        }
-        if ('' == $id) {
-            //make sure there are arguments
-            flash('danger', lang('request_error'));
-            redirectPrev();
-        }
-        $config = [
-            'upload_path' => $upload_path,
-            'allowed_types' => 'gif|jpg|png|jpeg|svg',
-            //'max_size'      => '100',
-            'max_width' => '1240',
-            'max_height' => '1240',
-            'encrypt_name' => true,
-        ];
-        $this->load->library('upload', $config);
-        if (!$this->upload->do_upload()) {
-            flash('danger', lang('request_error'));
-        } else {
-            //delete if any exists
-            $this->db->where('id', $id);
-            $q = $this->db->get($upload_db);
-            foreach ($q->result() as $r) {
-                if ('' !== $r->photo):
-                    unlink($upload_path . '/' . $r->photo);
-                $data['photo'] = '';
-                $this->db->where('id', $id);
+        if($this->child->uploadPhoto($id)){
+            flash('success', lang('request_success'));
 
-                $this->db->update($upload_db, $data);
-                endif;
-            }
-            //upload new photo
-            $upload_data = $this->upload->data();
-            $data_ary = [
-                'photo' => $upload_data['file_name'],
-            ];
-            $this->db->where('id', $id);
-            $this->db->update($upload_db, $data_ary);
-            $data = ['upload_data' => $upload_data];
-            if ($data) {
-                flash('success', lang('request_success'));
-            } else {
-                flash('danger', lang('request_error'));
-            }
+        }else{
+            flash('error',lang('request_error'));
         }
+
         redirectPrev();
     }
 
@@ -212,7 +157,7 @@ class Child extends CI_Controller
             'child_id' => $id,
             'parents' => $this->child->getParents($id)->result(),
             'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result(),
-        ]; 
+        ];
 
         $this->load->view($this->module . 'check_out', $data);
     }
@@ -334,5 +279,25 @@ class Child extends CI_Controller
             flash('danger', lang('request_error'));
         }
         redirectPrev();
+    }
+
+
+    protected function _validate_child(){
+        $this->form_validation
+        ->set_rules('nickname', lang('nickname'), 'trim|xss_clean')
+        ->set_rules('first_name', lang('first_name'), 'required|trim|xss_clean')
+        ->set_rules('last_name', lang('last_name'), 'required|trim|xss_clean')
+        ->set_rules('national_id', lang('national_id'), 'required')
+        ->set_rules('bday', lang('birthday'), 'required|trim|xss_clean')
+        ->set_rules('blood_type', lang('birthday'), 'trim|xss_clean')
+        ->set_rules('gender', lang('gender'), 'required|trim|xss_clean')
+        ->set_rules('ethnicity', lang('Ethnicity'), 'trim|xss_clean')
+        ->set_rules('religion', lang('religion'), 'trim|xss_clean')
+        ->set_rules('birthplace', lang('birthplace'), 'trim|xss_clean')
+        ->set_rules('status', lang('status'), 'required|trim|xss_clean');
+
+        if($this->form_validation->run() == true) return true;
+
+        return false;
     }
 }

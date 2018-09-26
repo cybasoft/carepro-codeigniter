@@ -123,4 +123,22 @@ class Conf extends CI_Model
         $text = str_replace(']]>', ']]>', $text);
         return $text;
     }
+
+    /**
+     * Resize an image and overwrite
+     *
+     */
+    public function photoResize($data = [])
+    {
+        $config['image_library'] = 'gd2';
+        $config['source_image'] = $data['image'];
+        $config['create_thumb'] = isset($data['thumb']) ? $data['thumb'] : false;
+        $config['maintain_ratio'] = isset($data['ratio']) ? $data['ratio'] : true;
+        $config['width'] = isset($data['width']) ? $data['width'] : 200;
+        $config['height'] = isset($data['height']) ? $data['height'] : 200;
+
+        $this->load->library('image_lib', $config);
+
+        $this->image_lib->resize();
+    }
 }
