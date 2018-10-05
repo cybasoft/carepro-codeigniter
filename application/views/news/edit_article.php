@@ -1,42 +1,39 @@
 <div class="row">
-    <div class="col-sm-3 col-md-3 col-lg-3">
-        <!--		<ul class="nav news-menu">
+    <?php echo form_open('news/update/'.$article->id); ?>
+    <div class="col-sm-9">
+        <?php
+        echo form_label(lang('Title'), 'title');
+        echo form_input('title', $article->title, ['class' => 'form-control', 'required' => 'required']);
 
-                    // list articles
-                    //$this->db->order_by('order', 'asc');
-        //			foreach($articles->result() as $row) {
-        //				echo '<li>' . anchor('news/editor/' . $row->id, $row->article_name) . '</li>';
-        //			}
-                </ul>
+        echo form_label(lang('Content'), 'content');
+        echo form_textarea('content', html_entity_decode($article->content), ['class' => 'form-control editor', 'rows' => 10]);
 
-        -->
-        <?php $this->load->view($this->module . 'sidebar'); ?>
+        ?>
     </div>
-    <div class="col-sm-9 col-md-9 col-lg-9">
-        <div class="box box-primary">
-            <?php echo form_open('news/edit'); ?>
-            <div class="box-header">
-                <input type="text" name="article_name" class="form-control" required=""
-                       placeholder="<?php echo lang('title'); ?>" value="<?php echo $article->article_name; ?>"/>
-                <br/>
-                <input type="text" name="article_order" class="form-control" required=""
-                       placeholder="<?php echo lang('list_order'); ?>" value="<?php echo $article->list_order; ?>"/>
-            </div>
-            <div class="box-body">
-				<textarea name="article_body" class="form-control editor" id="editor" required=""
-                          style="height:400px"><?php echo $article->article_body; ?></textarea>
-            </div>
-            <div class="box-footer">
-                <button class="btn btn-primary"><?php echo lang('update'); ?></button>
-                <button onclick="deleteArticle('<?php echo $article->id; ?>')" type="button"
-                        class="btn btn-danger pull-right">
-                    <span class="fa fa-trash-alt"></span>
-                    <?php echo lang('delete'); ?>
-                </button>
-            </div>
-            <?php echo form_close(); ?>
-        </div>
+    <div class="col-sm-3">
+        <?php
+        echo form_label(lang('Date'),'publish_date');
+        echo form_date('publish_date',NULL, ['class'=>'form-control']);
+        echo form_label(lang('Status'),'status');
+        echo form_dropdown('status',['published'=>lang('Published'),'draft'=>lang('Draft')],'draft', ['class'=>'form-control']);
+        echo form_label(lang('Category'),'category');
+        echo form_dropdown('category_id',$categories,$article->category_id, ['class'=>'form-control']);
+        echo form_input('category',null, ['class'=>'form-control','placeholder'=>lang('Enter new category')]);
+        echo form_label(lang('list_order'), 'list_order');
+        echo form_input('list_order', $article->list_order, ['class' => 'form-control', 'required' => 'required']);
+        ?>
+        <br/>
+        <?php echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit')); ?>
+
+        <a href="#" onclick="deleteArticle('<?php echo $article->id; ?>')" type="button"
+                class="btn btn-danger pull-right">
+            <span class="fa fa-trash-alt"></span>
+            <?php echo lang('delete'); ?>
+        </a>
     </div>
+    <?php echo form_close(); ?>
+
+
 </div>
 <script type="text/javascript">
     function deleteArticle(id) {

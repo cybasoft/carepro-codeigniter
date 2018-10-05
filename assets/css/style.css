@@ -4425,3 +4425,41 @@ a:hover .left-menu-link-icon {
   display:inline-block;
   padding:5px;
 }
+.news-box{
+    -webkit-box-shadow: 3px -3px 3px 0px rgba(82,80,82,0.67);
+    -moz-box-shadow: 3px -3px 3px 0px rgba(82,80,82,0.67);
+    box-shadow: 3px -3px 3px 0px rgba(82,80,82,0.67);
+    height:100vh;
+    border:solid 1px rgba(82,80,82,0.67);
+    margin-bottom:20px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
+}
+.news-box .btn{
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+a[data-ci-pagination-page]{
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+a[data-ci-pagination-page]:last-child{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+a[data-ci-pagination-page]:first-child{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+a[data-ci-pagination-page]:active{
+    background-color: dodgerblue;
+    color: white;
+}
+
+a[data-ci-pagination-page]>strong{
+    color:red;
+}
+a[data-ci-pagination-page]:hover:not(.active) {background-color: #ddd;}

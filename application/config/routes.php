@@ -97,9 +97,12 @@ $route['photos/(:any)/:num'] = 'photos/$1';
 $route['parents/:any'] = 'parents/$1';
 
 //parent
-$route['parent/(:any)'] = 'parentController/$1';
+$route['parent/(:any)'] = 'ParentController/$1';
 
-$route['news/(:any)'] = 'news/$1';
+$route['news'] = 'NewsController/index';
+$route['news/(:any)'] = 'NewsController/$1';
+$route['news/(:any)/:num'] = 'NewsController/$1';
+
 $route['lockscreen'] = 'dashboard/lockscreen';
 $route['invoice/(:num)/stripe-pay'] = 'invoice/stripePayment/$1';
 

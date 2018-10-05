@@ -614,3 +614,7 @@ $lang['You have a message from'] = 'You have a message from %s';
 $lang['Login to your account to respond or view full conversation'] = 'Login to your account to respond or view full conversation';
 $lang['Currently checked-in']='Currently checked-in';
 $lang['Pending check-in']='Pending check-in';
+$lang['Enter new category'] = 'Enter new category';
+$lang['Page not found'] = 'Page not found';
+$lang['News admin'] = 'News admin';
+$lang['Latest news'] = 'Latest news';

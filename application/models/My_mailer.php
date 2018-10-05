@@ -130,20 +130,22 @@ class My_mailer extends CI_Model
         }
 
         $this->email->message($message);
-        $mail = $this->email->send();
+
+        if ($this->email->send()) {
+            $success = true;
+        } else {
+            if (ENVIRONMENT == 'development') {
+                log_message('debug', $this->email->print_debugger());
+            }
+            $success = false;
+        }
 
         if (isset($data['file'])) {
             @unlink($data['file']);
         }
 
-        if ($mail) {
-            return true;
-        } else {
-            if (ENVIRONMENT == 'development') {
-                log_message('debug', $this->email->print_debugger());
-            }
-            return false;
-        }
+        return $success;
+
     }
 
 }
