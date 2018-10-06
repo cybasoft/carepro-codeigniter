@@ -1,7 +1,7 @@
 <?php
 
 // copy form POST
-if(isset($_POST['copy']) && !FM_READONLY) {
+if(isset($_POST['copy']) && !FM_READONLY && session('company_demo_mode') !==1) {
     $copy_files = $_POST['file'];
     if(!is_array($copy_files) || empty($copy_files)) {
         fm_set_msg('Nothing selected', 'alert');

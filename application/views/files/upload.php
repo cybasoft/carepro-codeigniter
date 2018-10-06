@@ -1,5 +1,5 @@
 <?php
-if(isset($_GET['upload']) && !FM_READONLY) {
+if(isset($_GET['upload']) && !FM_READONLY && session('company_demo_mode') !==1) {
     fm_show_header(); // HEADER
     fm_show_nav_path(FM_PATH); // current path
     ?>

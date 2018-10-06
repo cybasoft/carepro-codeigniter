@@ -1,6 +1,6 @@
 <?php
 // Unpack
-if(isset($_GET['unzip']) && !FM_READONLY) {
+if(isset($_GET['unzip']) && !FM_READONLY && session('company_demo_mode') !==1) {
     $unzip = $_GET['unzip'];
     $unzip = fm_clean_path($unzip);
     $unzip = str_replace('/', '', $unzip);

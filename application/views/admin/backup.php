@@ -79,7 +79,7 @@
         $('.del_sql').click(function () {
             if (confirm('<?php echo lang('confirm_delete_item'); ?>')) {
                 var id = $(this).attr('id');
-                window.location.href = '<?php echo site_url('admin/backup/delete_backup'); ?>/' + id;
+                window.location.href = site_url+'admin/backup/delete_backup/' + id;
             }
         });
     });

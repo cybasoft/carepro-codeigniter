@@ -1,7 +1,7 @@
 <?php
 
 // Rename
-if(isset($_GET['ren'], $_GET['to']) && !FM_READONLY) {
+if(isset($_GET['ren'], $_GET['to']) && !FM_READONLY && session('company_demo_mode') !==1) {
     // old name
     $old = $_GET['ren'];
     $old = fm_clean_path($old);

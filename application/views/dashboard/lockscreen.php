@@ -48,7 +48,7 @@
                    window.location.reload();
                 },
                 error: function( jqXhr, textStatus, errorThrown ){
-                    window.location.href='<?php echo site_url('/auth/logout'); ?>';
+                    window.location.href=site_url+'auth/logout';
                 }
             });
         })

@@ -1,7 +1,7 @@
 <?php
 
 // Pack files
-if(isset($_POST['group'], $_POST['zip']) && !FM_READONLY) {
+if(isset($_POST['group'], $_POST['zip']) && !FM_READONLY && session('company_demo_mode') !==1) {
     $path = FM_ROOT_PATH;
     if(FM_PATH != '') {
         $path .= '/'.FM_PATH;

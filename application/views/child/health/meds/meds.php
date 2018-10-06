@@ -88,7 +88,7 @@
         var modal = $('#medHistoryModal');
         var med_id = $(this).attr('id');
         $.ajax({
-            url: '<?php echo site_url('meds/history'); ?>/' + med_id,
+            url: site_url+'meds/history/' + med_id,
             type: 'GET',
             success: function (response) {
               //var records = JSON.parse(response);

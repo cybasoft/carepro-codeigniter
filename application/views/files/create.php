@@ -1,5 +1,6 @@
 <?php
-if(isset($_GET['new']) && isset($_GET['type']) && !FM_READONLY) {
+
+if(isset($_GET['new']) && isset($_GET['type']) && !FM_READONLY && session('company_demo_mode') !==1) {
     allow(['admin','manager','staff']);
     $new = strip_tags($_GET['new']);
     $type = $_GET['type'];

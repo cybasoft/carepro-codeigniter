@@ -232,7 +232,7 @@
         $("select[name=invoice_change_status]").change(function () {
             var status = $(this).val();
             var id = $(this).attr('id');
-            var url = '<?php echo site_url(); ?>invoice/' + id + '/updateStatus';
+            var url = site_url+'invoice/' + id + '/updateStatus';
             var fData = {invoice_status: status, id: id};
             $.ajax({
                 url: url,
@@ -253,7 +253,7 @@
             var id = '<?php echo $this->uri->segment(3); ?>';
             var fData = {invoice_terms: terms, id: id};
             $.ajax({
-                url: "<?php echo site_url('invoice/update_terms'); ?>/" + id,
+                url: site_url+'invoice/update_terms/'+ id,
                 type: "POST",
                 data: fData,
                 success: function (data, textStatus, jqXHR) {

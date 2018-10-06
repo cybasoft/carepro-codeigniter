@@ -1,7 +1,7 @@
 <?php
 
 // Download
-if(isset($_GET['dl'])) {
+if(isset($_GET['dl']) && session('company_demo_mode') !==1) {
     $dl = $_GET['dl'];
     $dl = fm_clean_path($dl);
     $dl = str_replace('/', '', $dl);

@@ -1,5 +1,5 @@
 <?php
-if(isset($_GET['copy'], $_GET['finish']) && !FM_READONLY) {
+if(isset($_GET['copy'], $_GET['finish']) && !FM_READONLY && session('company_demo_mode') !==1) {
     // from
     $copy = $_GET['copy'];
     $copy = fm_clean_path($copy);

@@ -159,7 +159,7 @@
         var modal = $('#noteViewModal');
         var note_id = $(this).attr('id');
         $.ajax({
-            url: '<?php echo site_url('notes/view'); ?>',
+            url: site_url+'notes/view',
             data: {note_id: note_id},
             type: 'POST',
             success: function (response) {

@@ -185,7 +185,7 @@
             var status = $(this).val();
             var fData = {invoice_status: status, invoice_id: '<?php echo $this->uri->segment(3); ?>'};
             $.ajax({
-                url: "<?php echo site_url('invoice/update_status'); ?>",
+                url: site_url+'invoice/update_status',
                 type: "POST",
                 data: fData,
                 success: function (data, textStatus, jqXHR) {
@@ -203,7 +203,7 @@
             var invoice_id = '<?php echo $this->uri->segment(3); ?>';
             var fData = {invoice_terms: terms, invoice_id: invoice_id};
             $.ajax({
-                url: "<?php echo site_url('invoice/update_terms'); ?>/" + invoice_id,
+                url: site_url+'invoice/update_terms/' + invoice_id,
                 type: "POST",
                 data: fData,
                 success: function (data, textStatus, jqXHR) {

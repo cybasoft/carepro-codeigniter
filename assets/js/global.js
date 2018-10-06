@@ -237,4 +237,14 @@ $(document).ready(function () {
 
     var childOpts = {valueNames: ['childname']};
     new List('room-children', childOpts);
+
+    //child checkin
+    $('.checkin-btn').click(function () {
+        var child_id = $(this).attr('id');
+        $('.my_modal').load(site_url + child_id + '/checkIn').modal();
+    });
+    $('.checkout-btn').click(function () {
+        var child_id = $(this).attr('id');
+        $('.my_modal').load(site_url + child_id + '/checkOut').modal();
+    });
 });
