@@ -11,11 +11,11 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<div class="box box-solid box-warning">
-			<div class="box-header">
-				<h3 class="box-title"><?php echo lang('groups'); ?></h3>
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title"><?php echo lang('groups'); ?></h3>
 			</div>
-			<div class="box-body">
+			<div class="card-body">
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 					<tr align="center">
@@ -48,11 +48,11 @@
 	</div>
 
 	<div class="col-lg-6">
-		<div class="box box-solid box-warning">
-			<div class="box-header">
-				<h3 class="box-title"><?php echo lang('create_group_heading'); ?></h3>
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title"><?php echo lang('create_group_heading'); ?></h3>
 			</div>
-			<div class="box-body">
+			<div class="card-body">
 				<?php echo form_open("users/create_group"); ?>
 				<table class="table no-border">
 					<tr>

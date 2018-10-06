@@ -1,5 +1,8 @@
-<div id="calendar"></div>
-
+<div class="card">
+	<div class="card-body">
+        <div id="calendar"></div>
+    </div>
+</div>
 <script type="text/javascript">
 	$(function() {
 		 $('#calendar').fullCalendar({

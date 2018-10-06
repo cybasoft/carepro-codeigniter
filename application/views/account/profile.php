@@ -1,29 +1,31 @@
 <div class="row">
     <div class="col-lg-6">
-        <table class="table">
-            <tr>
-                <td><?php echo lang('first_name'); ?></td>
-                <td><?php echo $user->first_name; ?></td>
-            </tr>
-            <tr>
-                <td><?php echo lang('last_name'); ?></td>
-                <td><?php echo $user->last_name; ?></td>
-            </tr>
-            <tr>
-                <td><?php echo lang('last_login'); ?></td>
-                <td><?php echo format_date($user->last_login); ?></td>
-            </tr>
-            <tr>
-                <td><?php echo lang('registration_date'); ?></td>
-                <td><?php echo format_date($user->created_at); ?></td>
-            </tr>
-        </table>
 
-        <div class="box box-solid box-default">
-            <div class="box-header">
-                <h3 class="box-title"><?php echo lang('contact_information'); ?></h3>
+        <div class="card">
+            <table class="table">
+                <tr>
+                    <td><?php echo lang('first_name'); ?></td>
+                    <td><?php echo $user->first_name; ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo lang('last_name'); ?></td>
+                    <td><?php echo $user->last_name; ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo lang('last_login'); ?></td>
+                    <td><?php echo format_date($user->last_login); ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo lang('registration_date'); ?></td>
+                    <td><?php echo format_date($user->created_at); ?></td>
+                </tr>
+            </table>
+        </div>
+        <div class="card card-success">
+            <div class="card-header">
+                <h3 class="card-title"><?php echo lang('contact_information'); ?></h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <?php
                 echo form_open('profile/update_user_data');
                 echo form_label(lang('Phone'));
@@ -36,16 +38,16 @@
                 echo form_textarea('address', $user->address, ['class' => 'form-control']);
 
                 echo '<br/>';
-                echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit'));
+                echo form_button(['type' => 'submit', 'class' => 'btn btn-success'], lang('submit'));
                 echo form_close(); ?>
             </div>
         </div>
 
-        <div class="box box-solid box-default">
-            <div class="box-header">
-                <h3 class="box-title"><?php echo lang('update_email'); ?></h3>
+        <div class="card card-solid card-default">
+            <div class="card-header">
+                <h3 class="card-title"><?php echo lang('update_email'); ?></h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <?php
                 echo form_open('profile/update_email');
 
@@ -57,34 +59,34 @@
 
                 echo '<br/>';
 
-                echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit'));
+                echo form_button(['type' => 'submit', 'class' => 'btn btn-success'], lang('submit'));
                 echo form_close(); ?>
             </div>
         </div>
     </div>
     <div class="col-lg-6">
 
-        <div class="box box-solid box-default">
-            <div class="box-header">
-                <h3 class="box-title"><?php echo lang('change_pin'); ?></h3>
+        <div class="card card-solid card-default">
+            <div class="card-header">
+                <h3 class="card-title"><?php echo lang('change_pin'); ?></h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <?php
                 echo form_open('profile/change_pin');
                 echo form_label(lang('Pin'), 'pin');
                 echo form_input('pin', $user->pin, ['class' => 'form-control', 'required' => '']);
                 echo '<br/>';
-                echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit'));
+                echo form_button(['type' => 'submit', 'class' => 'btn btn-success'], lang('submit'));
                 echo form_close();
                 ?>
             </div>
         </div>
 
-        <div class="box box-solid box-danger">
-            <div class="box-header">
-                <h3 class="box-title"><?php echo lang('change_password'); ?></h3>
+        <div class="card card-solid card-danger">
+            <div class="card-header">
+                <h3 class="card-title"><?php echo lang('change_password'); ?></h3>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <?php
                 echo form_open('profile/change_password');
 

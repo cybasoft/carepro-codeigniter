@@ -18,21 +18,21 @@
                     <a title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal"
                        data-target="#registerChildModal">
                         <i class="fa fa-user-plus"></i>
-                        <span class="hidden-xs"><?php echo lang('Register child'); ?></span>
+                        <span class="hidden-sm-up"><?php echo lang('Register child'); ?></span>
                     </a>
                 </li>
                 <li class="btn-info">
                     <a title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal"
                        data-target="#newUserModal">
                         <i class="fa fa-user-plus"></i>
-                        <span class="hidden-xs"><?php echo lang('Register user'); ?></span>
+                        <span class="hidden-sm-up"><?php echo lang('Register user'); ?></span>
                     </a>
                 </li>
             <?php endif; ?>
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="<?php echo $this->user->photo(session('photo')); ?>" style="width:20px" class="img-circle"/>
-                    <span class="hidden-xs hidden-sm"><?php echo session('last_name'); ?>
+                    <span class="hidden-sm-up "><?php echo session('last_name'); ?>
                         <i class="caret"></i></span>
                 </a>
                 <ul class="dropdown-menu">

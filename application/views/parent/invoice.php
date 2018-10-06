@@ -16,8 +16,8 @@
                 <div class="tab-pane <?php if(!isset($_GET['view'])) {
                     echo 'active';
                 } ?>" id="1-1">
-                    <div class="box box-info">
-                        <div class="box-body">
+                    <div class="card">
+                        <div class="card-body">
                             <?php
                             if(isset($_GET['status'])):
                                 $status = $_GET['status'];
@@ -43,7 +43,7 @@
                             $this->db->where('child_id', $this->child->getID());
                             $query = $this->invoice->getInvoices();
                             ?>
-                            <table class="table table-stripped table-responsive">
+                            <table class="table table-stripped ">
                                 <thead>
                                 <tr>
                                     <td>#</td>
@@ -82,8 +82,8 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="1-2">
-                    <div class="box box-warning">
-                        <div class="box-body">
+                    <div class="card">
+                        <div class="card-body">
 
                         </div>
                     </div>
@@ -91,15 +91,15 @@
                 <div class="tab-pane <?php if(isset($_GET['view'])) {
                     echo 'active';
                 } ?>" id="1-x">
-                    <div class="box box-primary">
-                        <div class="box-body">
+                    <div class="card">
+                        <div class="card-body">
                             <div style="font-family: courier, monospace">
                                 <div class="row">
                                     <div class="col-sm-4 invoice-col">
-                                        <div class="box box-solid">
-                                            <div class="box-header bg-light-blue">
+                                        <div class="card">
+                                            <div class="card-header bg-light-blue">
                                             </div>
-                                            <div class="box-body">
+                                            <div class="card-body">
                                                 <?php echo $this->company->logo(); ?>
                                                 <?php
                                                 $this->db->where('id', $_GET['view']);
@@ -274,8 +274,8 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="1-3">
-                    <div class="box box-success">
-                        <div class="box-body">
+                    <div class="card">
+                        <div class="card-body">
 
                         </div>
                     </div>

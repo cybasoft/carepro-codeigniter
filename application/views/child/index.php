@@ -68,9 +68,9 @@
                 <?php endforeach;?>
             </div>
             <div class="col-sm-6">
-                <div class="box box-solid box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title"><?php echo lang('parents'); ?></h3>
+                <div class="card">
+                    <div class="card-header with-border">
+                        <h3 class="card-title"><?php echo lang('parents'); ?></h3>
                         <?php if (!is('parent')): ?>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool  assign-user-btn">
@@ -80,7 +80,7 @@
                             </div>
                         <?php endif;?>
                     </div>
-                    <div class="box-body table-responsive">
+                    <div class="card-body ">
                         <div class="assign-user"></div>
                         <?php $this->load->view($this->module . 'parents');?>
                     </div>

@@ -116,7 +116,7 @@ class My_parent extends CI_Model
         $message = sprintf(lang('child_checked_out_message'), $childName, date('d M Y @ H:i:A'), $out_guardian);
         $subject = sprintf(lang('child_checked_out_subject'), $childName);
 
-        $this->notifyParents($child_id, $childName, $subject, $message);
+        $this->notifyParents($child_id, $subject, $message);
     }
 
     public function notify_check_in($child_id, $in_guardian)
@@ -126,7 +126,7 @@ class My_parent extends CI_Model
         $message = sprintf(lang('child_checked_in_message'), $childName, date('d M Y @ H:i:A'), $in_guardian);
         $subject = sprintf(lang('child_checked_in_subject'), $childName);
 
-        $this->notifyParents($child_id, $childName, $subject, $message);
+        $this->notifyParents($child_id, $subject, $message);
     }
 
     /**
@@ -135,10 +135,10 @@ class My_parent extends CI_Model
      * @param $message
      * @return bool
      */
-    public function notifyParents($child_id, $childName, $subject, $message)
+    public function notifyParents($child_id, $subject, $message)
     {
         $child = $this->child->first($child_id);
-
+        $childName = $child->first_name . ' ' . $child->last_name;
         //get parents info
         $parents = $this->child->getParents($child_id)->result();
 

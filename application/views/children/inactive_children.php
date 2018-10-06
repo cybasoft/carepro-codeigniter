@@ -1,4 +1,4 @@
-<table class="table table-responsive table-striped" id="datatable">
+<table class="table table-striped" id="datatable">
     <thead>
         <tr>
             <th></th>

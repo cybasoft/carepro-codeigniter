@@ -2,11 +2,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
                 <h4 class="modal-title" id="myModalLabel">
                    <?php echo sprintf(lang('Medication history for'),$child->first_name.' '.$child->last_name); ?>
                 </h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                </button>
             </div>
             <div class="modal-body">
                 <div id="modal-content"></div>

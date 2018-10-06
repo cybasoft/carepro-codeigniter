@@ -27,32 +27,20 @@ class Invoice extends CI_Controller
         $this->title = lang('child').'-'.lang('invoice');
     }
 
-    function index($id)
+    function index()
     {
-        if(!authorizedToChild($this->user->uid(), $id)) {
+        $child_id = $this->uri->segment(2);
+        if(!authorizedToChild($this->user->uid(),$child_id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
 
-        $child = $this->child->first($id);
-        $invoices = $this->invoice->all(null, $id);
+        $child = $this->child->first($child_id);
+        $invoices = $this->invoice->all(null, $child_id);
         page($this->module.'index', compact('child', 'invoices'));
     }
 
-    function invoices($id, $status)
-    {
-        $child = $this->child->first($id);
 
-        if($status !== "all") {
-            $this->db->where('invoice_status', $status);
-        }
-        if(isset($_GET['search'])) {
-            $this->db->where('id', $_GET['search']);
-        }
-        $invoices = $this->invoice->childInvoices($child->id);
-
-        $this->load->view($this->module.'invoices', compact('child', 'invoices'));
-    }
 
 
     function view($id)

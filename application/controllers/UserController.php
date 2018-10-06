@@ -25,8 +25,6 @@ class UserController extends CI_Controller
             ->join('groups as g','g.id=ug.group_id')
             ->get()->result();
 
-
-
 //        foreach ($users as $k => $user) {
 //            $users[$k]->groups = $this->db->select('name')
 //                ->from('groups')
@@ -49,7 +47,7 @@ class UserController extends CI_Controller
         for($i=0; $i<count((array)$groups); $i++){
             $role[$groups[$i]->name] = $groups[$i]->total;
         }
-        page($this->module.'index', compact('users', 'count','role'));
+        page($this->module.'users', compact('users', 'count','role'));
     }
 
     //create a new user

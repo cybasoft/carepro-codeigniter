@@ -2,11 +2,11 @@
 <div class="row">
 	<?php $this->load->view('children/accounting/invoice_nav'); ?>
 	<div class="col-lg-10 col-md-10 col-sm-10">
-		<div class="box box-solid box-info">
-			<div class="box-header">
-				<div class="box-title"><?php echo lang('payments_header'); ?></div>
+		<div class="card">
+			<div class="card-header">
+				<div class="card-title"><?php echo lang('payments_header'); ?></div>
 			</div>
-			<div class="box-body">
+			<div class="card-body">
 				<table class="table table-stripped">
 					<th><?php echo lang('invoice'); ?></th>
 					<th><?php echo lang('amount'); ?></th>

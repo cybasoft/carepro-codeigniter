@@ -138,9 +138,7 @@
 <script src="<?php echo base_url(); ?>assets/js/cookie.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/functions.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/global.js" type="text/javascript"></script>
-<script>
 
-</script>
 
 <?php if (!empty(session('company_tawkto_embed_url'))): ?>
     <!--Start of Tawk.to Script-->
@@ -167,9 +165,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
                 <h4 class="modal-title" id="registerChildModalLabel"><?php echo lang('Register child'); ?></h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                </button>
             </div>
             <?php echo form_open('child/register'); ?>
 
@@ -221,9 +221,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
                 <h4 class="modal-title" id="newUserModal"><?php echo lang('Register user'); ?></h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                </button>
             </div>
             <?php echo form_open('users/create'); ?>
             <div class="modal-body">

@@ -46,9 +46,9 @@
 </div>
 <?php endif; ?>
 
-<div class="box box-info box-solid">
-    <div class="box-header">
-        <h3 class="box-title">
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
             <?php echo sprintf(lang('child_page_heading'), $child->first_name . ' ' . $child->last_name); ?>
         </h3>
         <div class="box-tools pull-right">
@@ -58,7 +58,7 @@
             <?php endif; ?>
         </div>
     </div>
-    <div class="box-body table-responsive">
+    <div class="card-body ">
         <?php if (!empty($child->nickname)): ?>
         <div class="row text-danger">
             <div class="col-md-6">

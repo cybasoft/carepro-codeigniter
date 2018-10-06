@@ -37,7 +37,7 @@ class notes extends CI_Controller
             ->order_by('created_at', 'DESC')
             ->get('child_incident')
             ->result();
-        page($this->module.'index', compact('child', 'notes', 'incidents'));
+        page($this->module.'notes', compact('child', 'notes', 'incidents'));
     }
 
     /*

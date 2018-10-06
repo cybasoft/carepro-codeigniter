@@ -51,16 +51,17 @@ $end_time = array(
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title"><?php echo lang('edit'); ?></h4>
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span
-                        class="sr-only"><?php echo lang('close'); ?></span></button>
-                <h4 class="modal-title text-danger"><?php echo lang('edit'); ?></h4>
+                    <span aria-hidden="true">&times;</span>
+                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                </button>
             </div>
             <div class="modal-body">
 
                 <?php echo form_open('calendar/updateEvent'); ?>
                 <input type="hidden" id="event_id" name="id" value="" />
-                <table class="table table-hover table-responsive">
+                <table class="table table-hover ">
                     <tr>
                         <td class="text-right">
                             <span class="label-text text-info"><?php echo lang('title'); ?></span>

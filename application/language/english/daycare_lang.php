@@ -256,7 +256,7 @@ $lang['date_out'] = 'Date out';
 $lang['no_results_found'] = 'No results found';
 
 //actions
-$lang['actions'] = 'Actions';
+$lang['Actions'] = 'Actions';
 $lang['back'] = 'Back';
 $lang['add'] = 'Add';
 $lang['register'] = 'Register';
@@ -617,4 +617,5 @@ $lang['Pending check-in']='Pending check-in';
 $lang['Enter new category'] = 'Enter new category';
 $lang['Page not found'] = 'Page not found';
 $lang['News admin'] = 'News admin';
+$lang['Manual payment entry'] = 'Manual payment entry';
 $lang['Latest news'] = 'Latest news';

@@ -2,7 +2,6 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 //generate migration tables (!)
 $route['migration/(:any)'] = 'migration/$1';
-//$route['migration/(:any)/(:any)'] = 'migration/$1';
 
 $route['default_controller'] = 'auth';
 $route['404_override'] = 'landing/error404';
@@ -61,9 +60,12 @@ $route['child/deleteProblem/(:num)'] = 'health/deleteProblem/$1';
 $route['child/(:num)/pickup']['post'] = 'pickup/store/$1';
 $route['child/deletePickup/(:num)'] = 'pickup/deletePickup/$1';
 $route['child/(:num)/attendance'] = 'child/attendance/$1';
+
+$route['child/:num/billing']='BillingController/index';
+$route['child/:num/billing/(:any)']='BillingController/$1';
+
 $route['invoice/:any'] = 'accounting/invoice/$1';
 $route['invoice/(:num)/pay'] = 'invoice/pay/$1';
-$route['child/(:num)/billing'] = 'invoice/index/$1';
 $route['child/(:num)/invoices/search'] = 'invoice/invoices/$1/all';
 $route['child/(:num)/invoices/(:any)'] = 'invoice/invoices/$1/$2';
 $route['child/(:num)/newInvoice'] = 'invoice/create/$1';

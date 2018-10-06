@@ -2,7 +2,7 @@
 <?php echo anchor('news/create',icon('plus').' '.lang('New article'),'class="btn btn-primary pull-right"'); ?>
 <br/>
 <br/>
-<table class="table table-responsive table-striped" id="datatable">
+<table class="table  table-striped" id="datatable">
     <thead>
     <tr>
         <th><?php echo lang('Date'); ?></th>

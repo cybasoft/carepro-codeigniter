@@ -26,7 +26,7 @@ class RoomsController extends CI_Controller
             $rooms = $this->rooms->all();
 
         $this->title = lang('rooms');
-        page($this->module.'index',compact('rooms'));
+        page($this->module.'rooms',compact('rooms'));
     }
 
     function view()
@@ -51,7 +51,7 @@ class RoomsController extends CI_Controller
 
         $notes = $this->rooms->notes($id);
 
-        page($this->module.'view', compact('room', 'children', 'staff', 'allStaff', 'allChildren','notes'));
+        page($this->module.'room-view', compact('room', 'children', 'staff', 'allStaff', 'allChildren','notes'));
     }
 
     function store()

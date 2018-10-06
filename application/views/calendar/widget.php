@@ -1,13 +1,23 @@
-<div class="box box-solid box-default">
-    <div class="box-body">
+<div class="card">
+    <div class="card-body">
         <div id="calendar"></div>
     </div>
-    <div class="box-footer text-black"></div>
+    <div class="card-footer text-black"></div>
 </div>
 
 <script type="text/javascript">
     $(function () {
         $('#calendar').fullCalendar({
+            slotDuration: '00:30:00',
+            minTime: '06:00:00',
+            maxTime: '19:00:00',
+            defaultView: 'month',
+            handleWindowResize: true,
+            timeFormat: 'H(:mm)',
+            editable: true,
+            droppable: false,
+            eventLimit: true,
+            selectable: true,
             header: {
                 left: 'prev,next, today',
                 center: 'title',
@@ -16,11 +26,10 @@
             events: {
                 url: 'calendar/events'
             },
-            timeFormat: 'H(:mm)',
             eventClick: function (calEvent, jsEvent, view) {
-                var start_d = calEvent.start.format("MM/DD/YYYY");
+                var start_d = moment(calEvent.start_date).format("MM/DD/YYYY");
+                var end_d = moment(calEvent.end_date).format("MM/DD/YYYY");
                 var start_t = calEvent.start_t;
-                var end_d = calEvent.end.format("MM/DD/YYYY");
                 var end_t = calEvent.end_t;
 
                 $('#view-event').modal('show');
@@ -48,9 +57,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                            class="sr-only"><?php echo lang('close'); ?></span></button>
                 <h4 class="modal-title" id="myModalLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                </button>
             </div>
             <div class="modal-body">
                 <table class="table">

@@ -6,85 +6,94 @@ if(count((array)$incident) > 0):
 ?>
 <div class="row">
     <div class="col-md-8">
-        <table class="table table-responsive table-striped">
-            <tr>
-                <td colspan="2">
-                    <h3 class="text-danger"><?php echo $incident->title; ?></h3>
-                    <em>
-                        <?php
-                        echo sprintf(lang('created on %s by %s'),
-                            format_date($incident->created_at),
-                            $this->user->user($incident->user_id)->first_name.' '
-                            .$this->user->user($incident->user_id)->last_name);
-                        ?>
+        <div class="card">
+        	<div class="card-header">
+        		<h4 class="card-title text-danger"><?php echo $incident->title; ?></h4>
 
-                    </em>
-                </td>
-            </tr>
-            <tr>
-                <td><strong><?php echo lang('incident date'); ?>:</strong></td>
-                <td><?php echo format_date($incident->date_occurred); ?></td>
-            </tr>
-            <tr>
-                <td><strong><?php echo lang('incident_type'); ?>:</strong></td>
-                <td><?php echo $incident->incident_type; ?></td>
-            </tr>
-            <tr>
-                <td><strong><?php echo lang('location'); ?>:</strong></td>
-                <td>  <?php echo $incident->location; ?></td>
-            </tr>
-            <tr>
-                <td colspan="2"><strong><?php echo lang('description'); ?></strong> <br/>
-                    <?php echo $incident->description; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong><?php echo lang('actions_taken'); ?></strong><br/>
-                    <?php echo $incident->actions_taken; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong><?php echo lang('actions_taken'); ?></strong><br/>
-                    <?php echo $incident->actions_taken; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong><?php echo lang('witnesses'); ?></strong><br/>
-                    <?php echo $incident->witnesses; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <strong><?php echo lang('remarks'); ?></strong><br/>
-                    <?php echo $incident->remarks; ?>
-                </td>
-            </tr>
-        </table>
+                <em>
+                    <?php
+                    echo sprintf(lang('created on %s by %s'),
+                        format_date($incident->created_at),
+                        $this->user->user($incident->user_id)->first_name.' '
+                        .$this->user->user($incident->user_id)->last_name);
+                    ?>
+
+                </em>
+        	</div>
+        	<div class="card-body">
+                <table class="table  table-striped">
+                    <tr>
+                        <td><strong><?php echo lang('incident date'); ?>:</strong></td>
+                        <td><?php echo format_date($incident->date_occurred); ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong><?php echo lang('incident_type'); ?>:</strong></td>
+                        <td><?php echo $incident->incident_type; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong><?php echo lang('location'); ?>:</strong></td>
+                        <td>  <?php echo $incident->location; ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong><?php echo lang('description'); ?></strong> <br/>
+                            <?php echo $incident->description; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong><?php echo lang('actions_taken'); ?></strong><br/>
+                            <?php echo $incident->actions_taken; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong><?php echo lang('actions_taken'); ?></strong><br/>
+                            <?php echo $incident->actions_taken; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong><?php echo lang('witnesses'); ?></strong><br/>
+                            <?php echo $incident->witnesses; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong><?php echo lang('remarks'); ?></strong><br/>
+                            <?php echo $incident->remarks; ?>
+                        </td>
+                    </tr>
+                </table>
+        	</div>
+        </div>
     </div>
     <div class="col-md-4">
-        <strong class="text-danger"><?php echo lang('incident photos'); ?></strong>
-        <?php if(is(['admin','staff','manager'])): ?>
-            <form action="<?php echo site_url('notes/storeIncidentPhotos'); ?>"
-                  enctype="multipart/form-data" class="dropzone" id="image-upload" method="POST">
-                <?php echo form_hidden('child_id', $child->id); ?>
-                <?php echo form_hidden('incident_id',$incident->id); ?>
-            </form>
+      <div class="card">
+      	<div class="card-header">
+      		<h4 class="card-title"><?php echo lang('incident photos'); ?></h4>
+      	</div>
+      	<div class="card-body">
+            <?php if(is(['admin','staff','manager'])): ?>
+                <form action="<?php echo site_url('notes/storeIncidentPhotos'); ?>"
+                      enctype="multipart/form-data" class="dropzone" id="image-upload" method="POST">
+                    <?php echo form_hidden('child_id', $child->id); ?>
+                    <?php echo form_hidden('incident_id',$incident->id); ?>
+                </form>
+            <?php endif; ?>
+            <div class="flexbin flexbin-margin" id="lightgallery">
+                <?php if(count($photos['results']) > 0): ?>
+                <?php foreach ($photos['results'] as $photo): ?>
+                    <a data-src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>?id=<?php echo $photo->id; ?>&route=/notes/deleteIncidentPhoto">
+                        <img src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>"/>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php if(isset($photos['links'])) { ?>
+            <?php echo $photos['links']; ?>
+        <?php } ?>
         <?php endif; ?>
-        <div class="flexbin flexbin-margin" id="lightgallery">
-            <?php if(count($photos['results']) > 0): ?>
-            <?php foreach ($photos['results'] as $photo): ?>
-                <a data-src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>?id=<?php echo $photo->id; ?>&route=/notes/deleteIncidentPhoto">
-                    <img src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>"/>
-                </a>
-            <?php endforeach; ?>
-        </div>
-    <?php if(isset($photos['links'])) { ?>
-        <?php echo $photos['links']; ?>
-    <?php } ?>
-    <?php endif; ?>
+      	</div>
+      </div>
     </div>
     <?php endif; ?>
 </div>

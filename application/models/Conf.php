@@ -32,7 +32,7 @@ class Conf extends CI_Model
         setRedirect(); //remember current page
 
         //enable profiler in dev
-        if (ENVIRONMENT == 'test') {
+        if (ENVIRONMENT == 'development') {
             $this->output->enable_profiler(true);
 //            $this->console->exception(new Exception('test exception'));
             //            $this->console->debug('Debug message');

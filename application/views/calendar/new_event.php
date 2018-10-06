@@ -3,15 +3,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title"><?php echo lang('new_event'); ?></h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
-                    <span class="sr-only"><?php echo lang('close'); ?></span>
+                    <span  class="sr-only"><?php echo lang('close'); ?></span>
                 </button>
-                <h4 class="modal-title text-danger"><?php echo lang('new_event'); ?></h4>
             </div>
             <?php echo form_open('calendar/addEvent'); ?>
             <div class="modal-body">
-                <table class="table table-responsive no-border">
+                <table class="table  no-border">
                     <tr>
                         <td class="text-right">
                             <span class="label-text text-info"><?php echo lang('title'); ?></span>

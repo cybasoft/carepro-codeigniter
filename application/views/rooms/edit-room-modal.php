@@ -2,11 +2,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">
                     <?php echo lang('Edit room'); ?>
                 </h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                </button>
             </div>
             <?php echo form_open('rooms/update'); ?>
             <?php echo form_hidden('room_id', $room->id); ?>

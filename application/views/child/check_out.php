@@ -2,9 +2,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel"><?php echo lang('check_out'); ?></h2>
+
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                             class="sr-only"><?php echo lang('close'); ?></span></button>
-                <h2 class="modal-title" id="myModalLabel"><?php echo lang('check_out'); ?></h2>
             </div>
             <?php echo form_open('child/'.$child_id.'/checkOut'); ?>
 

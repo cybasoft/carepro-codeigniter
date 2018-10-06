@@ -1,13 +1,13 @@
-<div class="box box-solid box-warning">
-    <div class="box-header">
-        <div class="box-title btn-block">
+<div class="card">
+    <div class="card-header">
+        <div class="card-title btn-block">
             <?php echo lang('authorized_pickup'); ?>
             <a href="#" data-toggle="modal" data-target="#newPickupModal">
                 <i class="fa fa-plus pull-right"></i>
             </a>
         </div>
     </div>
-    <div class="box-body">
+    <div class="card-body">
         <?php foreach ($pickups as $pickup) : ?>
         <div class="info-box">
             <div class="info-box-img" style="margin-right:10px;">
@@ -66,11 +66,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
+
                 <h4 class="modal-title" id="myModalLabel">
                     <?php echo lang('authorized_pickup'); ?>
                 </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
             </div>
 
             <?php echo form_open_multipart('child/' . $child->id . '/pickup') ?>

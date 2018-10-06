@@ -11,31 +11,6 @@
     src: url('../fonts/poppins/Poppins-Medium.ttf');
 }
 
-@font-face {
-    font-family: Poppins-Bold;
-    src: url('../fonts/poppins/Poppins-Bold.ttf');
-}
-
-@font-face {
-    font-family: Poppins-SemiBold;
-    src: url('../fonts/poppins/Poppins-SemiBold.ttf');
-}
-
-@font-face {
-    font-family: Montserrat-Bold;
-    src: url('../fonts/montserrat/Montserrat-Bold.ttf');
-}
-
-@font-face {
-    font-family: Montserrat-SemiBold;
-    src: url('../fonts/montserrat/Montserrat-SemiBold.ttf');
-}
-
-@font-face {
-    font-family: Montserrat-Regular;
-    src: url('../fonts/montserrat/Montserrat-Regular.ttf');
-}
-
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
@@ -52,7 +27,7 @@ body, html {
 
 /*---------------------------------------------*/
 a {
-    font-family: Poppins-Regular;
+    font-family: Poppins-Regular, Sans-serif, serif;
     font-size: 14px;
     line-height: 1.7;
     color: #666666;
@@ -78,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-    font-family: Poppins-Regular;
+    font-family: Poppins-Regular, Sans-serif, serif;
     font-size: 14px;
     line-height: 1.7;
     color: #666666;
@@ -189,25 +164,6 @@ iframe {
     border: none !important;
 }
 
-/*//////////////////////////////////////////////////////////////////
-[ utility ]*/
-
-/*==================================================================
-[ Text ]*/
-.txt1 {
-    font-family: Montserrat-Regular;
-    font-size: 13px;
-    line-height: 1.4;
-    color: #555555;
-}
-
-.txt2 {
-    font-family: Montserrat-Regular;
-    font-size: 13px;
-    line-height: 1.4;
-    color: #999999;
-}
-
 /*==================================================================
 [ Size ]*/
 .size1 {
@@ -306,7 +262,7 @@ iframe {
 .login100-form-title {
     width: 100%;
     display: block;
-    font-family: Poppins-Regular;
+    font-family: Poppins-Regular, Sans-serif, serif;
     font-size: 30px;
     color: #333333;
     line-height: 1.2;
@@ -333,7 +289,7 @@ iframe {
 }
 
 .label-input100 {
-    font-family: Montserrat-Regular;
+    font-family: Poppins-Regular, Sans-serif, serif;
     font-size: 18px;
     color: #999999;
     line-height: 1.2;
@@ -356,7 +312,7 @@ iframe {
     display: block;
     width: 100%;
     background: transparent;
-    font-family: Montserrat-Regular;
+    font-family: Poppins-Regular, Sans-serif, serif;
     font-size: 18px;
     color: #555555;
     line-height: 1.2;
@@ -447,7 +403,7 @@ input.input100 {
 }
 
 .label-checkbox100 {
-    font-family: Poppins-Regular;
+    font-family: Poppins-Regular, Sans-serif, serif;
     font-size: 13px;
     color: #999999;
     line-height: 1.4;
@@ -516,8 +472,7 @@ input.input100 {
     height: 50px;
     border-radius: 10px;
     background: #6675df;
-
-    font-family: Montserrat-Bold;
+    font-family: Poppins-Regular, Sans-serif, serif;
     font-size: 12px;
     color: #fff;
     line-height: 1.2;
@@ -591,8 +546,7 @@ input.input100 {
     transform: translateY(-50%);
     right: 12px;
     pointer-events: none;
-
-    font-family: Poppins-Regular;
+    font-family: Poppins-Regular, Sans-serif, serif;
     color: #c80000;
     font-size: 13px;
     line-height: 1.4;
@@ -651,19 +605,21 @@ input.input100 {
     color: #fff;
 }
 
-.page-copyright{
-    font-weight:normal;
+.page-copyright {
+    font-weight: normal;
     position: absolute;
     bottom: 10px;
     left: 10px;
-    color:#fff;
+    color: #fff;
     text-shadow: 0 0 1px #0c0f20;
 }
-.page-copyright a{
-    color:#fff;
+
+.page-copyright a {
+    color: #fff;
     text-shadow: 0 0 1px #0c0f20;
 }
-.logo{
+
+.logo {
     width: 250px;
     margin-left: 20px;
     margin-top: 20px;

@@ -30,7 +30,7 @@
     <div class="chat-right-aside">
         <div class="chat-main-header">
             <div class="p-20 b-b">
-                <h3 class="box-title">Conversation
+                <h3 class="card-title">Conversation
                     <?php echo anchor('messaging', icon('plus') . ' ' . lang('New'), 'class="btn btn-sm btn-primary pull-right"'); ?>
                 </h3>
             </div>

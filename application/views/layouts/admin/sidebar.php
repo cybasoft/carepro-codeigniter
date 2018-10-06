@@ -96,7 +96,7 @@
         </ul>
 
     </section>
-    <div class="footer text-center hidden-xs" style="">
+    <div class="footer text-center hidden-sm-up" style="">
         <br />
         <div style="font-size:12px;padding:5px;">
             &copy;

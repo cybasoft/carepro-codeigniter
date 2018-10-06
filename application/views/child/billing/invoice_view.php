@@ -1,52 +1,51 @@
 <?php $this->load->view('child/nav'); ?>
 <div class="row">
-    <div class="col-sm-2 col-lg-2 col-md-2 table-responsive">
+    <div class="col-sm-2 col-lg-2 col-md-2 ">
         <?php $this->load->view('child/sidebar'); ?>
     </div>
     <div class="col-sm-10 col-lg-10 col-md-10">
-        <div class="nav-tabs-custom">
+        <div class="card">
+
+
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                <li class="nav-item">
+                    <a class="nav-link active show" href="#home" aria-controls="home" role="tab" data-toggle="tab">
                         <i class="fa fa-money"></i>
                         <?php echo lang('invoice').' #: '.$invoice[0]->id; ?>
                     </a>
                 </li>
-                <li role="presentation">
-                    <a href="#history" aria-controls="history" role="tab" data-toggle="tab">
+                <li class="nav-item" role="tab">
+                    <a class="nav-link" href="#history" aria-controls="history" role="tab" data-toggle="tab">
                         <i class="fa fa-history"></i>
                         <?php echo lang('Payment history'); ?>
                     </a>
                 </li>
-                <li class="pull-right">
-                    <?php if(!is('parent') && $invoice[0]->invoice_status !== "paid"): ?>
-                        <a class="btn bg-black btn-flat btn-box-tool" data-toggle="modal"
-                           data-target="#newItemModal">
-                            <i class="fa fa-plus"></i> <?php echo lang('add_item'); ?>
-                        </a>
-                    <?php endif; ?>
-                </li>
-                <li class="pull-right">
-                    <a href="<?php echo site_url('invoice/'.$invoice[0]->id.'/preview'); ?>"
-                       target="_blank"
-                       class="btn bg-black btn-flat btn-box-tool">
-                        <i class="fa fa-print"></i> <?php echo lang('print'); ?>
-                    </a>
-                </li>
-                <li class="pull-right">
-                    <?php if(!is('parent') && $invoice[0]->invoice_status !== "paid"): ?>
-                        <a class="btn bg-black btn-flat btn-box-tool" data-toggle="modal"
-                           data-target="#payModal">
-                            <span class="fa fa-credit-card"></span>
-                            <?php echo lang('manual_pay'); ?>
-                        </a>
-                    <?php endif; ?>
-                </li>
             </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active" id="home">
-                    <div class="box box-default box-solid">
-                        <div class="box-body">
+            <div class="tab-content tabcontent-border">
+                <div role="tabpanel" class="tab-pane fade in active show" id="home">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <?php if(!is('parent') && $invoice[0]->invoice_status !== "paid"): ?>
+                                <a class="btn btn-default btn-sm card-tools" data-toggle="modal"
+                                   data-target="#newItemModal">
+                                    <i class="fa fa-plus"></i> <?php echo lang('add_item'); ?>
+                                </a>
+                            <?php endif; ?>
+                            <a href="<?php echo site_url('invoice/'.$invoice[0]->id.'/preview'); ?>"
+                               target="_blank"
+                               class="btn btn-default btn-sm card-tools">
+                                <i class="fa fa-print"></i> <?php echo lang('print'); ?>
+                            </a>
+                            <?php if(!is('parent') && $invoice[0]->invoice_status !== "paid"): ?>
+                                <a class="btn btn-default btn-sm card-tools" data-toggle="modal"
+                                   data-target="#payModal">
+                                    <span class="fa fa-credit-card"></span>
+                                    <?php echo lang('manual_pay'); ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <h4>
@@ -59,11 +58,11 @@
                                     </h4>
                                     <h4>
                                         <strong><?php echo lang('date'); ?>:</strong>
-                                        <?php echo format_date($invoice[0]->created_at, false); ?>
+                                        <?php echo format_date($invoice[0]->created_at, FALSE); ?>
                                     </h4>
                                     <h4>
                                         <strong><?php echo lang('due'); ?>:</strong>
-                                        <?php echo format_date($invoice[0]->date_due, false); ?>
+                                        <?php echo format_date($invoice[0]->date_due, FALSE); ?>
                                     </h4>
                                 </div>
                                 <div class="col-sm-8">
@@ -126,7 +125,7 @@
                                                            class="form-control text-right"
                                                            readonly
                                                            name="item_sub_total"
-                                                           value="<?php echo moneyFormat($item->qty * $item->price,true); ?>"/>
+                                                           value="<?php echo moneyFormat($item->qty * $item->price, TRUE); ?>"/>
                                                 </td>
                                                 <?php if(!is('parent')): ?>
                                                     <td>
@@ -142,11 +141,11 @@
                                         <tfoot>
                                         <tr class="text-right">
                                             <td colspan="4" class="no-border"> <?php echo lang('sub_total'); ?> :</td>
-                                            <td><?php echo moneyFormat($subTotal,true); ?></td>
+                                            <td><?php echo moneyFormat($subTotal, TRUE); ?></td>
                                         </tr>
                                         <tr class="text-right text-success">
                                             <td colspan="4" class="no-border"><?php echo lang('amount_paid'); ?> :</td>
-                                            <td><?php echo $amountPaid > 0 ? moneyFormat($amountPaid,true) : "0.00" ?></td>
+                                            <td><?php echo $amountPaid > 0 ? moneyFormat($amountPaid, TRUE) : "0.00" ?></td>
                                         </tr>
                                         <tr class="text-right text-danger">
                                             <td colspan="4" class="no-border "> <?php echo lang('amount_due'); ?> :</td>
@@ -154,7 +153,7 @@
                                                 <?php if($amountDue < 0): ?>
                                                     <span class="label label-success"><?php echo lang('refund'); ?></span>
                                                 <?php endif; ?>
-                                                <?php echo moneyFormat($amountDue,true); ?>
+                                                <?php echo moneyFormat($amountDue, TRUE); ?>
                                             </td>
                                         </tr>
                                         </tfoot>
@@ -186,7 +185,7 @@
                             </div>
                             <div class="load"></div>
                         </div>
-                        <div class="box-footer">
+                        <div class="card-footer">
                             <h4><?php echo lang('invoice_terms'); ?></h4>
                             <?php echo $invoice[0]->invoice_terms; ?>
                         </div>
@@ -194,28 +193,36 @@
 
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="history">
-                    <h3><?php echo lang('Payment history'); ?></h3>
-                    <table class="table table-striped">
-                        <tr>
-                            <th><?php echo lang('date'); ?></th>
-                            <th><?php echo lang('amount'); ?></th>
-                            <th><?php echo lang('payment_method'); ?></th>
-                            <th><?php echo lang('remarks'); ?></th>
-                        </tr>
-                        <?php foreach ($this->invoice->payments(null, $invoice[0]->id)->result() as $payment): ?>
-                            <tr>
-                                <td><?php echo format_date($payment->created_at, false); ?></td>
-                                <td><?php echo moneyFormat($payment->amount, true); ?></td>
-                                <td><?php echo $payment->method; ?></td>
-                                <td><?php echo $payment->remarks; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><?php echo lang('Payment history'); ?></h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th><?php echo lang('date'); ?></th>
+                                    <th><?php echo lang('amount'); ?></th>
+                                    <th><?php echo lang('payment_method'); ?></th>
+                                    <th><?php echo lang('remarks'); ?></th>
+                                </tr>
+                                <?php foreach ($this->invoice->payments(NULL, $invoice[0]->id)->result() as $payment): ?>
+                                    <tr>
+                                        <td><?php echo format_date($payment->created_at, FALSE); ?></td>
+                                        <td><?php echo moneyFormat($payment->amount, TRUE); ?></td>
+                                        <td><?php echo $payment->method; ?></td>
+                                        <td><?php echo $payment->remarks; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <?php $this->load->view($this->module.'invoice_item_create'); ?>
 <?php $this->load->view($this->module.'payment_create'); ?>
 
@@ -260,4 +267,3 @@
         });
     });
 </script>
-

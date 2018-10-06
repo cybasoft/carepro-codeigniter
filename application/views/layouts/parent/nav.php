@@ -3,7 +3,7 @@
     <div class="navbar-left">
         <ul class="nav navbar-nav">
             <li class="<?php echo set_active('dashboard'); ?>">
-                <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-xs"
+                <a href="<?php echo site_url('dashboard'); ?>" class="logo hidden-sm-up"
                    style="left:0 !important; background-color: <?php echo session('company_logo_bg_color', '#ffeb3b'); ?>">
                     <?php if(session('company_logo') == "") : ?>
                         <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
@@ -22,35 +22,35 @@
                 <a href="<?php echo site_url('dashboard'); ?>"
                    style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                     <i class="fa fa-home"></i>
-                    <span class="hidden-xs hidden-sm"><?php echo lang('dashboard'); ?></span>
+                    <span class="hidden-sm-up "><?php echo lang('dashboard'); ?></span>
                 </a>
             </li>
 
-            <li class="<?php echo set_active(array('children', 'child')); ?>">
+            <li class="<?php echo set_active(['children', 'child']); ?>">
                 <a href="<?php echo site_url('children'); ?>"
                    style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                     <i class="fa fa-users"></i>
-                    <span class="hidden-xs hidden-sm"><?php echo lang('children'); ?>
+                    <span class="hidden-sm-up "><?php echo lang('children'); ?>
                         <small class="badge pull-right bg-green">
                                 <?php echo $this->child->getCount(); ?>
                             </small>
                 </a>
             </li>
             <li>
-                <?php echo anchor('messaging',icon('envelope').' <span class="hidden-sm">'.lang('Messages').'</span>'); ?>
+                <?php echo anchor('messaging', icon('envelope').' <span class="d-none d-md-block">'.lang('Messages').'</span>'); ?>
             </li>
             <li class="<?php echo set_active('calendar'); ?>">
                 <a href="<?php echo site_url('calendar'); ?>"
                    style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                     <i class="fa fa-calendar"></i>
-                    <span class="hidden-xs hidden-sm"><?php echo lang('calendar'); ?></span>
+                    <span class="hidden-sm-up "><?php echo lang('calendar'); ?></span>
                 </a>
             </li>
             <li class="<?php echo set_active(['news']); ?>">
                 <a href="<?php echo site_url('news'); ?>"
                    style="color:<?php echo session('company_top_nav_link_color', '#fff'); ?>">
                     <i class="fa fa-clipboard"></i>
-                    <span class="hidden-xs hidden-sm"><?php echo lang('news'); ?></span>
+                    <span class="hidden-sm-up "><?php echo lang('news'); ?></span>
                 </a>
             </li>
         </ul>
@@ -59,13 +59,14 @@
         <ul class="nav navbar-nav">
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<?php echo $this->user->photo(session('photo')); ?>" style="width:20px" class="img-circle"/>
-                    <span class="hidden-xs hidden-sm"><?php echo session('last_name'); ?>
+                    <img src="<?php echo $this->user->photo(session('photo')); ?>" style="width:20px"
+                         class="img-circle"/>
+                    <span class="hidden-sm-up "><?php echo session('last_name'); ?>
                         <i class="caret"></i></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li class="user-header bg-light-blue">
-                        <img src="<?php  echo $this->user->photo(session('photo')); ?>" class="img-circle"/>
+                        <img src="<?php echo $this->user->photo(session('photo')); ?>" class="img-circle"/>
                     </li>
 
                     <li class="user-footer">

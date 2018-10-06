@@ -39,7 +39,7 @@ class Photos extends CI_Controller
                 show_404();
             }
         } else {
-            page($this->module.'index', compact('child', 'photos'));
+            page($this->module.'photos', compact('child', 'photos'));
         }
     }
 

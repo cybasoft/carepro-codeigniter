@@ -76,10 +76,10 @@
 
 
         <div class="col-sm-4 col-sm-offset-4 invoice-col text-right">
-            <div class="box box-solid">
-                <div class="box-header bg-light-blue">
+            <div class="card">
+                <div class="card-header bg-light-blue">
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                     <?php
                     $street = session('company_street');
                     $street2 = session('company_street2');

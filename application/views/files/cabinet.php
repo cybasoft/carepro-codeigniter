@@ -551,7 +551,7 @@ $all_files_size = 0;
                 <td class="inline-actions">
                     <?php if(!FM_READONLY): ?>
                         <a title="Delete" class="text-danger"
-                           href="?p=<?php echo urlencode(FM_PATH) ?>&amp;del=<?php echo urlencode($f) ?>"
+                           href="?p=<?php echo urlencode(FM_PATH) ?>&del=<?php echo urlencode($f) ?>"
                            onclick="return confirm('Delete folder?');">
                             <i class="fa fa-trash-alt" aria-hidden="true"></i>
                         </a>
@@ -559,7 +559,7 @@ $all_files_size = 0;
                            onclick="rename('<?php echo fm_enc(FM_PATH) ?>', '<?php echo fm_enc($f) ?>');return false;">
                             <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                         </a>
-                        <a title="Copy to..." href="?p=&amp;copy=<?php echo urlencode(trim(FM_PATH.'/'.$f, '/')) ?>">
+                        <a title="Copy to..." href="?p=<?php echo urlencode(FM_PATH) ?>&copy=<?php echo urlencode(trim(FM_PATH.'/'.$f, '/')) ?>">
                             <i class="fa fa-copy" aria-hidden="true"></i>
                         </a>
                     <?php endif; ?>

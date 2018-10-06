@@ -1,4 +1,4 @@
-<div class="box-footer bg-aqua"><?php echo lang('update_child_notice'); ?></div>
+<div class="card-footer bg-aqua"><?php echo lang('update_child_notice'); ?></div>
 <div class="row">
 
     <?php if (count((array)$children) == 0): ?>
@@ -12,15 +12,15 @@
     <?php foreach ($children->result() as $child): ?>
         <div class="col-lg-4 col-md-4 col-xs-12">
             <br/>
-            <div class="box box-info">
-                <div class="box-header box-border">
-                    <h3 class="box-title">
+            <div class="card">
+                <div class="card-header box-border">
+                    <h3 class="card-title">
                         <a href="<?php echo site_url('child/'.$child->id); ?>">
                             <?php echo $child->first_name . ' ' . $child->last_name; ?>
                         </a>
                     </h3>
                 </div>
-                <div class="box-body">
+                <div class="card-body">
                     <table class="table">
                         <tr>
                             <td rowspan="5">
@@ -53,7 +53,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="box-footer">
+                <div class="card-footer">
 
                     <div class="bg-warning">
                     <span

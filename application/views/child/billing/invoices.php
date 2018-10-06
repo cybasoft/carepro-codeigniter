@@ -1,65 +1,66 @@
-<table class="table table-stripped table-responsive table-bordered">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th><?php echo lang('status'); ?></th>
-        <th><?php echo lang('amount'); ?></th>
-        <th><?php echo lang('paid'); ?></th>
-        <th><?php echo lang('due'); ?></th>
-        <th><?php echo lang('due_date'); ?></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    foreach ($invoices as $invoice) :
-        $download = anchor('invoice/download/'.$invoice->id, '<span class="btn btn-sm btn-warning"><i class="fa fa-download"></i> '.lang('download').'</span>');
-        $subTotal = $this->invoice->subTotal($invoice->id);
-        $totalDue = $this->invoice->amountPaid($invoice->id);
+<?php $this->load->view('child/nav'); ?>
+<div class="row">
+    <div class="col-sm-2">
+        <?php $this->load->view('child/sidebar'); ?>
+    </div>
+    <div class="col-sm-10">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title"><?php echo lang('Invoices'); ?></h4>
 
-        $state = '';
-        if($totalDue < 0) {
-            $state = ' <span class="label label-success">'.lang('refund').'</span> ';
-        }
-        ?>
-        <tr>
-            <td>
-                <?php echo anchor('invoice/'.$invoice->id.'/view', ($invoice->id < 10) ? '000'.$invoice->id : $invoice->id); ?></td>
-            <td><?php echo lang($invoice->invoice_status); ?></td>
-            <td><?php echo moneyFormat($subTotal, true); ?></td>
-            <td><?php echo moneyFormat($this->invoice->amountPaid($invoice->id), true); ?></td>
-            <td>
-                <span class="text-danger"><?php echo moneyFormat($totalDue, true).$state; ?></span>
-            </td>
-            <td><?php echo format_date($invoice->date_due, false); ?></td>
-            <td class="text-right">
-                <a href="<?php echo site_url('invoice/'.$invoice->id.'/view'); ?>" class="btn btn-info btn-sm show-tip"
-                data-toggle="tooltip" title="<?php echo lang('view'); ?>">
-                    <i class="fa fa-folder-open"></i>
-                </a>
-                <a target="_blank" class="btn btn-default btn-sm"
-                   title="<?php echo lang('Print'); ?>"
-                   href="<?php echo site_url('invoice/'.$invoice->id.'/preview'); ?>">
-                    <i class="fa fa-print"></i>
-                </a>
-                <a href="<?php echo site_url('invoice/'.$invoice->id.'/download?dl'); ?>"
-                   class="btn btn-default btn-sm"
-                   title="<?php echo lang('Download'); ?>"><i class="fa fa-file-pdf text-danger"></i>
-                </a>
-                <a href="<?php echo site_url('invoice/'.$invoice->id.'/download?send'); ?>"
-                   class="btn btn-info btn-sm show-tip" data-toggle="tooltip" title="<?php echo lang('send_to_parent'); ?>">
-                    <i class="fa fa-envelope"></i>
-                </a>
                 <?php if(!is('parent')): ?>
-                    <a href="#"
-                       onclick="confirmDelete('<?php echo site_url("invoice/{$invoice->id}/delete"); ?>')"
-                       class="delete btn btn-danger btn-sm show-tip" data-toggle="tooltip" title="<?php echo lang('delete'); ?>
-">
-                        <i class="fa fa-trash-alt"></i>
+                    <a href="<?php echo site_url('child/'.$child->id.'/newInvoice'); ?>"
+                       class="btn btn-info btn-sm card-tools">
+                        <i class="fa fa-plus"></i>
+                        <?php echo lang('new_invoice'); ?>
                     </a>
                 <?php endif; ?>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
+            </div>
+            <div class="card-body">
+
+                <table class="table table-striped" id="datatable">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><?php echo lang('status'); ?></th>
+                        <th><?php echo lang('amount'); ?></th>
+                        <th><?php echo lang('paid'); ?></th>
+                        <th><?php echo lang('due'); ?></th>
+                        <th><?php echo lang('due_date'); ?></th>
+                        <th data-sortable="false"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($invoices as $invoice): ?>
+                        <tr>
+                            <td><?php echo anchor('invoice/'.$invoice->id.'/view', ($invoice->id < 10) ? '000'.$invoice->id : $invoice->id); ?></td>
+                            <td><?php echo lang($invoice->invoice_status); ?></td>
+                            <td><?php echo moneyFormat($invoice->amount, TRUE); ?></td>
+                            <td><?php echo moneyFormat($invoice->totalPaid, TRUE); ?></td>
+                            <td class="text-danger"><?php echo moneyFormat($invoice->totalDue, TRUE); ?></td>
+                            <td><?php echo format_date($invoice->date_due, FALSE); ?></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false"><?php echo lang('Actions'); ?>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <?php echo anchor('invoice/'.$invoice->id.'/view', icon('folder-open').' '.lang('Open'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor('invoice/'.$invoice->id.'/download?dl', icon('file-pdf').' '.lang('Download'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor('invoice/'.$invoice->id.'/download?send', icon('envelope').' '.lang('send_to_parent'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor('invoice/'.$invoice->id.'/preview', icon('print').' '.lang('Print'), 'target="_blank" class="dropdown-item"'); ?>
+                                        <?php if(!is('parent')): ?>
+                                            <div class="dropdown-divider"></div>
+                                            <?php echo anchor('invoice/'.$invoice->id.'/delete', icon('trash-alt').' '.lang('Delete'), 'class="delete dropdown-item text-danger"'); ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

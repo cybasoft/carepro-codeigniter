@@ -10,8 +10,8 @@
 </div>
 
 
-<script src="<?php echo assets('js/jquery.min.js'); ?>"></script>
-<script src="<?php echo assets('js/bootstrap.min.js'); ?>"></script>
+<script src="<?php echo assets('plugins/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
 <script src="<?php echo assets('js/login.js'); ?>"></script>
 
 </body>

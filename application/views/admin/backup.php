@@ -1,10 +1,13 @@
 <div class="row">
-    <div class="col-lg-8">
-        <div class="box box-solid box-default">
-            <div class="box-body">
-
-                <div class="table-responsive">
-                    <h3><?php echo lang('Database backups'); ?></h3>
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <?php echo lang('Database backups'); ?>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="">
                     <table class="table table-bordered table-hover table-striped table-condensed">
                         <thead>
                         <tr>
@@ -35,9 +38,9 @@
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div class="box box-solid box-primary">
-            <div class="box-body text-center">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-body text-center">
                 <?php echo anchor('admin/backup/backup_db', '<i class="fa fa-database"></i> '.lang('Create database backup'), 'class="btn btn-danger"'); ?>
                 <hr/>
                 <?php echo form_open('admin/backup/create_csv', ['class' => 'form-group', 'demo' => 1]); ?>

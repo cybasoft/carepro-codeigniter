@@ -69,7 +69,7 @@ $(document).ready(function () {
             ['height', ['height']],
             ['table', ['table']],
             ['insert', ['link', 'hr']],
-            ['code',['video','picture','codeview']]
+            ['code', ['video', 'picture', 'codeview']]
         ]
     });
 
@@ -86,7 +86,7 @@ $(document).ready(function () {
     });
 
     //lockscreen
-    if (lockScreenTimer === undefined || lockScreenTimer ==="")
+    if (lockScreenTimer === undefined || lockScreenTimer === "")
         lockScreenTimer = 5;
 
     var lockTimer = 1320000 * lockScreenTimer;
@@ -103,7 +103,7 @@ $(document).ready(function () {
     //news articles
     $('.news-sidebar>li>a').click(function () {
         var article_id = $(this).attr('id');
-        var page = site_url+'view_article/' + article_id;
+        var page = site_url + 'view_article/' + article_id;
         $('.news-article').html('loading <img src="../assets/img/loader.gif"/>').load(page);
     });
 
@@ -111,7 +111,7 @@ $(document).ready(function () {
     $('.del-article-btn').click(function () {
         var article_id = $(this).attr('id');
         if (confirm('Are you sure you want to delete this?')) {
-            window.location.href = site_url+'news/delete/' + article_id;
+            window.location.href = site_url + 'news/delete/' + article_id;
         }
     });
 
@@ -202,21 +202,21 @@ $(document).ready(function () {
         $(".open-panel i").toggleClass("ti-angle-left");
     });
 
-    $("#newChatUser").on('keyup',function(){
+    $("#newChatUser").on('keyup', function () {
         var user = $(this).val();
 
-        if(user.length >=3){
+        if (user.length >= 3) {
 
             $.ajax({
-                url: site_url+'/messaging/get_users',
-                data: {user:user}, //$('form').serialize(),
+                url: site_url + '/messaging/get_users',
+                data: {user: user}, //$('form').serialize(),
                 type: 'POST',
                 success: function (response) {
                     var users = JSON.parse(response);
                     $('#newChatUsers').html('');
 
-                    $.each(users,function (index,user) {
-                        $('#newChatUsers').append('<li><a href="?m='+user.id+'">'+user.name+'</a></li>')
+                    $.each(users, function (index, user) {
+                        $('#newChatUsers').append('<li><a href="?m=' + user.id + '">' + user.name + '</a></li>')
                     })
                 },
                 error: function (error) {
@@ -226,9 +226,15 @@ $(document).ready(function () {
         }
     })
 
-    //search chat users
-    var options = {
-        valueNames: [ 'name']
-    };
-    new List('conversations', options);
+    var convOpts ={valueNames: ['name'], page: 10, pagination: true}
+    new List('conversations', convOpts);
+
+    var coutOpts = {valueNames: ['name', 'born', 'nid'], page: 10, pagination: true};
+    new List('checkedout-children', coutOpts);
+
+    var staffOpts = {valueNames: ['staffname']};
+    new List('room-staff', staffOpts);
+
+    var childOpts = {valueNames: ['childname']};
+    new List('room-children', childOpts);
 });

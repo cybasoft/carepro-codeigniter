@@ -331,9 +331,9 @@ function page($page, $data = [])
     $ci = &get_instance();
     $data['page'] = $page;
     if(is('parent')) {
-        $ci->load->view('layouts/parent/template', $data);
+        $ci->load->view('layouts/template', $data);
     } else {
-        $ci->load->view('layouts/admin/template', $data);
+        $ci->load->view('layouts/template', $data);
     }
 }
 

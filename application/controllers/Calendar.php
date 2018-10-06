@@ -38,7 +38,9 @@ class Calendar extends CI_Controller
     function events()
     {
         $this->db->order_by('id');
-        $query = $this->db->get('calendar')->result();
+        $query = $this->db
+            ->select('*,start as start_date,end as end_date')
+            ->get('calendar')->result();
         // sending the encoded result to success page
         echo json_encode($query);
     }

@@ -70,11 +70,28 @@ class My_invoice extends CI_Model
 
     function childInvoices($id)
     {
-        $this->db->from('invoices');
-        $this->db->where('invoices.child_id', $id);
+        $invoices = $this->db->where('child_id',$id)->get('invoices')->result();
 
-        $result = $this->db->get()->result();
-        return $result;
+        foreach($invoices as $invoice){
+
+            $invoice->amount=0;
+            $invoice->totalPaid=0;
+            $invoice->totalDue = 0;
+
+            $invoice->items= $this->db->where('invoice_id',$invoice->id)->get('invoice_items')->result();
+            $invoice->payments = $this->db->where('invoice_id',$invoice->id)->get('invoice_payments')->result();
+
+            foreach($invoice->items as $item){
+                $invoice->amount = $invoice->amount+($item->price*$item->qty);
+            }
+            foreach($invoice->payments as $payment){
+                $invoice->totalPaid =$invoice->totalPaid+$payment->amount;
+            }
+
+            $invoice->totalDue = $invoice->amount-$invoice->totalPaid;
+
+        }
+        return $invoices;
     }
 
     /**
