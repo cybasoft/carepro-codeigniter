@@ -241,10 +241,10 @@ $(document).ready(function () {
     //child checkin
     $('.checkin-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.my_modal').load(site_url + child_id + '/checkIn').modal();
+        $('.my_modal').load(site_url+'child/' + child_id + '/checkIn').modal('show');
     });
     $('.checkout-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.my_modal').load(site_url + child_id + '/checkOut').modal();
+        $('.my_modal').load(site_url + 'child/'+ child_id + '/checkOut').modal('show');
     });
 });
