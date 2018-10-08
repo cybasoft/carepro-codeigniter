@@ -2,6 +2,7 @@
 
 class Migration extends CI_Controller
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -9,7 +10,7 @@ class Migration extends CI_Controller
         $this->load->model('My_migration', 'mig');
 
         //prevent direct access
-        if (!is_cli()) {
+        if(!is_cli()) {
             show_error('CLI only! Direct calls denied.');
         }
     }
@@ -19,45 +20,50 @@ class Migration extends CI_Controller
         $this->mig->help();
     }
 
-    public function run($version = null)
+    public function run($version = NULL)
     {
-        //prevent migrations in production mode
-        if (ENVIRONMENT == 'production' && $this->uri->segment(3) !== 'force') {
-            show_error("\nSet application config to development mode first \n or use \n'php index.php migration run force'");
-        }
+        //warn migrations in production mode
+        if(ENVIRONMENT == 'production') {
+            echo 'CAUTION! You are in production mode!';
+            echo "Are you sure you want to do this?  Type 'yes' to continue: ";
 
-        if (ENVIRONMENT == 'production' && $version == null) {
-            show_error("\nIn production mode, you must  enter version number");
+            $handle = fopen('php://stdin', 'r');
+            $line = fgets($handle);
+            if(trim($line) != 'yes') {
+                echo "ABORTING!\n";
+                exit;
+            }
+            fclose($handle);
         }
 
         $mig = $this->db->get('migrations')->row();
-        $migration = false;
+        $migration = FALSE;
 
-        if (count((array) $mig) > 0) {
-            if ($version == null) { //migrate all
+        if(count((array)$mig) > 0) {
+            if($version == NULL) { //migrate all
                 $migration = $this->migration->latest();
             } else {
-                if ($version == $mig->version) { //same migration run twice
-                    echo lang('This migration has already been run') . PHP_EOL;
+                if($version == $mig->version) { //same migration run twice
+                    echo lang('This migration has already been run').PHP_EOL;
                     exit();
                 }
-                if ($version < $mig->version) { //rollback
-                    echo sprintf(lang('Rolling back from migration %s to %s'), $mig->version, $version) . PHP_EOL;
+                if($version < $mig->version) { //rollback
+                    echo sprintf(lang('Rolling back from migration %s to %s'), $mig->version, $version).PHP_EOL;
                 }
-                $files = glob(APPPATH . 'database/migrations/' . $version . '*.php');
+                $files = glob(APPPATH.'database/migrations/'.$version.'*.php');
                 //check if migration files exist exist
-                if (count($files) > 0) {
+                if(count($files) > 0) {
                     $migration = $this->migration->version($version);
                 } else {
-                    echo lang('No new migrations to run') . PHP_EOL;
+                    echo lang('No new migrations to run').PHP_EOL;
                     exit();
                 }
             }
         }
-        if (!$migration) {
+        if(!$migration) {
             show_error($this->migration->error_string());
         } else {
-            echo lang('Migration(s) done') . PHP_EOL;
+            echo lang('Migration(s) done').PHP_EOL;
         }
     }
 
@@ -67,7 +73,7 @@ class Migration extends CI_Controller
     public function create($tables = '*')
     {
         $this->load->library('Migrations');
-        echo 'Generating migration files for ' . $tables . ' ' . PHP_EOL;
+        echo 'Generating migration files for '.$tables.' '.PHP_EOL;
         $this->migrations->generate($tables);
     }
 
@@ -76,13 +82,13 @@ class Migration extends CI_Controller
      */
     public function seed($class = '*')
     {
-        if ($class == '*') {
+        if($class == '*') {
             $this->mig->seedAll();
         } else {
             $this->mig->seedOne($class);
         }
 
-        echo 'Seeding completed ' . PHP_EOL;
+        echo 'Seeding completed '.PHP_EOL;
     }
 
     /**

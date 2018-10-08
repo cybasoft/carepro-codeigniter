@@ -1,6 +1,19 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+$config['email_config'] = array(
+    'protocol' => 'sendmail', //sendmail, smtp, mail
+
+    //no need to complete these if using sendmail
+    'smtp_host' => '',
+    'smtp_user' => '',
+    'smtp_pass' => '',
+    'smtp_port' => '',
+    'mailtype' => 'html', //html, text
+    //do not change
+    'crlf' => "\r\n",
+    'newline' => "\r\n"
+);
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
