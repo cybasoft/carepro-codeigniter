@@ -19,8 +19,8 @@
 					<div class="nid">
 						<?php echo decrypt($child->national_id); ?>
 					</div>
-					<a onclick="loadCheckInModal('<?php echo $child->id; ?>')" href="#"
-					 class="btn btn-primary btn-flat btn-sm child-check-in">
+					<a id="<?php echo $child->id; ?>" href="#"
+					 class="btn btn-primary btn-flat btn-sm checkin-btn">
 						<span class="fa fa-check"></span>
 						<?php echo lang('check_in') . ' &nbsp; '; ?>
 					</a>

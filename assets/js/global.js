@@ -48,31 +48,8 @@ $(document).ready(function () {
 
     // $('[data-toggle="popover"]').popover();
     //Editors
-    $('.editor').summernote({
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['insert', ['link', 'hr']]
-        ],
-    });
-    $('.editor-full').summernote();
-    $('.editor-media').summernote({
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['insert', ['link', 'hr']],
-            ['code', ['video', 'picture', 'codeview']]
-        ]
-    });
 
+    // $('#editor').trumbowyg();
     $('#attendance').DataTable({
         buttons: [
             'pdf'
@@ -241,10 +218,12 @@ $(document).ready(function () {
     //child checkin
     $('.checkin-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.my_modal').load(site_url+'child/' + child_id + '/checkIn').modal('show');
+        console.log(child_id);
+        $('.modals-loader').load(site_url+'child/' + child_id + '/checkIn').modal('show');
     });
     $('.checkout-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.my_modal').load(site_url + 'child/'+ child_id + '/checkOut').modal('show');
+        console.log(child_id);
+        $('.modals-loader').load(site_url + 'child/'+ child_id + '/checkOut').modal('show');
     });
 });

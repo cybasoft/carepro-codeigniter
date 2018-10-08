@@ -73,17 +73,4 @@
     </div>
 </div>
 
-<div class="my_modal"></div>
-
-<script type="text/javascript">
-    function loadCheckInModal(child_id) {
-        $('.my_modal').load(site_url + 'child/' + child_id + '/checkIn').modal();
-    }
-
-    function loadCheckOutModal(child_id) {
-        $('.my_modal').load(site_url + 'child/' + child_id + '/checkOut').modal();
-    }
-
-</script>
-
 <?php $this->load->view('reports/report-form-popover');

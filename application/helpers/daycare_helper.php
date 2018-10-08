@@ -321,11 +321,6 @@ function allow($group)
 
 }
 
-/*
-* msg()
-* @params $type, $msg
-* call status messages
-*/
 function page($page, $data = [])
 {
     $ci = &get_instance();
@@ -529,7 +524,7 @@ function checkinTimer($in, $out)
 function time_difference($in,$out){
     return checkinTimer($in,$out);
 }
- 
+
 function sensitive_options()
 {
     return [
@@ -913,7 +908,7 @@ function init_company()
         //query db once
         $company_data = [];
         foreach (general_options() as $opt => $val) {
- 
+
             $value = get_option(str_replace('company_'.$opt, '', $opt));
 
             if(empty($value))
@@ -934,7 +929,7 @@ function init_company()
             session($company_data);
 
         }
-     
+
     }
 }
 

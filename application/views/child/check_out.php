@@ -1,4 +1,4 @@
-<div class="modal show" id="check-out"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal show" id="check-out"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:block">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

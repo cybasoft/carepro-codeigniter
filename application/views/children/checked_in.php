@@ -19,8 +19,8 @@
         </a>
     </div>
 
-    <a onclick="loadCheckOutModal('<?php echo $child->id; ?>')" href="#"
-        class="btn btn-danger btn-flat btn-sm child-check-out">
+    <a id="<?php echo $child->id; ?>" href="#"
+        class="btn btn-danger btn-flat btn-sm checkout-btn">
         <span class="fa fa-new-window"></span>
         <?php echo lang('check_out'); ?>
     </a>

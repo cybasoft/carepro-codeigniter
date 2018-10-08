@@ -19,7 +19,6 @@
     <link href="<?php echo assets('plugins/fc/fullcalendar.print.css'); ?>" rel="stylesheet"  media="print">
     <link href="<?php echo assets('plugins/sweetalert/sweetalert.css'); ?>" rel="stylesheet"  media="all">
 
-
     <link href="<?php echo assets('css/theme-style.css'); ?>" rel="stylesheet">
 
     <?php if(!empty(session('company_custom_css'))): ?>
@@ -123,28 +122,29 @@
     </div>
 </div>
 
+<div class="modals-loader"></div>
+<?php $this->load->view('layouts/modals'); ?>
+
 <script src="<?php echo assets('plugins/extras/moment.min.js'); ?>" type="text/javascript"></script>
+<script src="<?php echo assets('plugins/extras/jquery.slimscroll.js'); ?>" type="text/javascript"></script>
 
 <script src="<?php echo assets('plugins/popper/popper.min.js'); ?>"></script>
 <script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
 <script src="<?php echo assets('plugins/perfect-scrollbar/perfect-scrollbar.jquery.min.js'); ?>"></script>
 <script src="<?php echo assets('plugins/sparkline/sparkline.js'); ?>"></script>
 
-
-<script src="<?php echo assets('plugins/summernote/summernote.min.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo assets('plugins/sweetalert/sweetalert2.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo assets('plugins/fc/fullcalendar.min.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo assets('js/calendar.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo assets('plugins/datatables/datatables.min.js'); ?>" type="text/javascript"></script>
-<script src="<?php echo assets('plugins/extras/jquery.slimscroll.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo assets('js/functions.js'); ?>" type="text/javascript"></script>
+
 <script src="<?php echo assets('js/global.js'); ?>" type="text/javascript"></script>
 
 <script src="<?php echo assets('js/waves.js'); ?>"></script>
 <script src="<?php echo assets('js/sidebarmenu.js'); ?>"></script>
 <script src="<?php echo assets('js/custom.js'); ?>"></script>
 
-<!--<script src="--><?php //echo base_url(); ?><!--assets/js/jquery.min.js"></script>-->
 <script src="<?php echo assets('plugins/listjs/list.min.js'); ?>" type="text/javascript"></script>
 
 <?php if(!empty(session('company_tawkto_embed_url'))): ?>
@@ -166,10 +166,7 @@
     <script>startLockscreen()</script>
 <?php endif; ?>
 
-<?php $this->load->view('layouts/modals'); ?>
-
-<div class="modals-loader"></div>
-
+<?php $this->load->view('partials/editor'); ?>
 </body>
 
 </html>

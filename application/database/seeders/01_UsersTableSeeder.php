@@ -15,7 +15,6 @@ class UsersTableSeeder extends CI_Model
         $this->seedDefaultUsers();
 
         for ($i = 1; $i <= $limit; $i++) {
-            $g = '';
             if ($i % 2 == 0) {
                 $g = 'male';
             } else {
@@ -24,7 +23,7 @@ class UsersTableSeeder extends CI_Model
 
             $data = [
                 'first_name' => $faker->firstName($g),
-                'last_name' => $faker->lastName($g),
+                'last_name' => $faker->lastName,
                 'email' => $faker->email,
                 'password' => password_hash('password', PASSWORD_BCRYPT),
                 'pin' => rand(1111, 9999),

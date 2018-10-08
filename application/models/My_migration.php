@@ -52,9 +52,11 @@ class My_migration extends CI_Model
         $count = 0;
 
         foreach (scandir($this->seedDir) as $name) {
-            if($name == '.' && $name == '..') continue;
+            if($name == '.' || $name == '..'){
+                continue;
+            }
 
-            require_once $this->seedDir.DIRECTORY_SEPARATOR.$name;
+            require_once $this->seedDir.'/'.$name;
 
             $class = $this->_get_seeder_name($name);
 
