@@ -9,15 +9,14 @@ pipelines:
           - apt-get update
           - apt-get -qq install git-ftp
 
-          # Initial setup  Comment out after initial push
-          - git config git-ftp.url $FTP_HOST2
-          - git config git-ftp.user $FTP_USERNAME
-          - git config git-ftp.password $FTP_PASSWORD
-          # Upload all files
-          - git ftp init
-          - git ftp push
-          # End of  comemnt out
+          # INITIAL PUSH -- Comment out after initial push
+          #- git config git-ftp.url $FTP_HOST2
+          #- git config git-ftp.user $FTP_USERNAME
+          #- git config git-ftp.password $FTP_PASSWORD
+          #- git ftp init
+          #- git ftp push
+          # END INITIAL PUSH
 
-          #- git ftp push --user $FTP_USERNAME --passwd $FTP_PASSWORD $FTP_HOST
-          #- git ftp push --user $FTP_USERNAME --passwd $FTP_PASSWORD $FTP_HOST2
+          - git ftp push --user $FTP_USERNAME --passwd $FTP_PASSWORD $FTP_HOST
+          - git ftp push --user $FTP_USERNAME --passwd $FTP_PASSWORD $FTP_HOST2
           - echo "Deploying to test environment"

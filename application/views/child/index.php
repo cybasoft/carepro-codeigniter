@@ -70,15 +70,15 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header with-border">
-                        <h3 class="card-title"><?php echo lang('parents'); ?></h3>
-                        <?php if (!is('parent')): ?>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool  assign-user-btn">
-                                    <span class="fa fa-link"></span>
-                                    <?php echo lang('assign'); ?>
-                                </button>
-                            </div>
-                        <?php endif;?>
+                        <h4 class="card-title btn-block"><?php echo lang('parents'); ?>
+                            <?php if (!is('parent')): ?>
+                                    <button type="button" id="<?php echo $child->id; ?>"
+                                            class="btn btn-default btn-xs  assign-parent-btn pull-right">
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                            <?php endif;?>
+                        </h4>
+
                     </div>
                     <div class="card-body ">
                         <div class="assign-user"></div>

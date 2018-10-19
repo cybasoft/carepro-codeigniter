@@ -1,11 +1,11 @@
 <div class="card">
     <div class="card-header">
-        <div class="card-title btn-block">
+        <h4 class="card-title btn-block">
             <?php echo lang('authorized_pickup'); ?>
-            <a href="#" data-toggle="modal" data-target="#newPickupModal">
-                <i class="fa fa-plus pull-right"></i>
+            <a href="#" data-toggle="modal" class="btn btn-default btn-xs pull-right" data-target="#newPickupModal">
+                <i class="fa fa-plus"></i>
             </a>
-        </div>
+        </h4>
     </div>
     <div class="card-body">
         <?php foreach ($pickups as $pickup) : ?>

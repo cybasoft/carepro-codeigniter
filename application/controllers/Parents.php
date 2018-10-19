@@ -37,6 +37,14 @@ class Parents extends CI_Controller
         page('users/parents', compact('users', 'groups'));
     }
 
+
+    function parents(){
+        allow(['admin','manager','staff']);
+        $parents= $this->parent->parents();
+        $child_id = $this->uri->segment(3);
+        $this->load->view('child/assign_parent',compact('parents','child_id'));
+    }
+
     function invoice($term = 0)
     {
         $this->db->where('child_id', $this->child->getChildId());

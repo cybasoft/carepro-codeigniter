@@ -218,12 +218,15 @@ $(document).ready(function () {
     //child checkin
     $('.checkin-btn').click(function () {
         var child_id = $(this).attr('id');
-        console.log(child_id);
         $('.modals-loader').load(site_url+'child/' + child_id + '/checkIn').modal('show');
     });
     $('.checkout-btn').click(function () {
         var child_id = $(this).attr('id');
-        console.log(child_id);
         $('.modals-loader').load(site_url + 'child/'+ child_id + '/checkOut').modal('show');
+    });
+
+    $('.assign-parent-btn').click(function(){
+        var id = $(this).attr('id');
+        $('.modals-loader').load(site_url+'parents/parents/'+id).modal('show')
     });
 });

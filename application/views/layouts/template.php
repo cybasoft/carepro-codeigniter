@@ -27,7 +27,7 @@
         </style>
     <?php endif; ?>
 
-    <meta id="site_url" content="<?php echo site_url(); ?>/">
+    <meta id="site_url" content="<?php echo site_url(); ?>">
     <meta id="base_url" content="<?php echo base_url(); ?>">
     <meta id="lockScreenTimer" content="<?php echo session('company_lockscreen_timer'); ?>">
     <script>

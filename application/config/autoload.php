@@ -104,7 +104,7 @@ $autoload['helper'] = ['url', 'form_helper', 'html', 'form', 'security', 'daycar
 | config files.  Otherwise, leave it blank.
 |
  */
-$autoload['config'] = ['form_validation'];
+$autoload['config'] = [];
 
 /*
 | -------------------------------------------------------------------
