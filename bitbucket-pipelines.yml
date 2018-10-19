@@ -24,5 +24,7 @@ pipelines:
         name: Deploy to production
         deployment: production
         script:
+          - apt-get update
+          - apt-get -qq install git-ftp
           - git-ftp push --user $FTP_USERNAME --passwd $FTP_PASSWORD $FTP_HOST2
           - echo "Deploying to CarePRO demo"
