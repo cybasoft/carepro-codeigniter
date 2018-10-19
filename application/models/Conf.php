@@ -65,6 +65,10 @@ class Conf extends CI_Model
     {
         $langFiles = $this->loadLanguageFiles();
 
+        if(!$this->session->userdata('language')){
+            session(['language' => config_item('language')]);
+        }
+
         if(isset($_GET['language'])) {
             $lang = $_GET['language'];
 
@@ -75,7 +79,6 @@ class Conf extends CI_Model
                 session(['language' => config_item('language')]);
             session(['language' => $lang]);
         }
-        $this->config->set_item('language', session('language'));
 
         $this->lang->load($langFiles, session('language'));
     }

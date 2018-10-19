@@ -29,7 +29,7 @@ You can assign access to an admin, manager, staff member or parent.
 * News module
 * Privacy lockscreen when left unattended
 
-> [sign up to receive update](https://careproapp.com")
+> [sign up to receive update](https://careproapp.com)
 
 > [Submit a support ticket here](https://amdtllc.com/support)
 
