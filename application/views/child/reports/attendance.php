@@ -1,5 +1,5 @@
 <h2><i class="fa fa-clipboard"></i> <?php echo lang('attendance_report'); ?></h2>
-<table class="table table-stripped" id="attendance">
+<table class="table table-stripped" id="attendances">
     <thead>
     <tr>
         <th>#</th>

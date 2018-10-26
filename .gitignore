@@ -26,4 +26,7 @@ composer.lock
 /artisan
 .vscode
 
+docs/.git
+
 application/third_party/codeigniter-debugbar
+application/temp/captcha/*

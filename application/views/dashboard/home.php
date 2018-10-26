@@ -57,7 +57,7 @@
         <div class="card">
             <ul class="nav nav-pills nav-stacked">
                 <li class="active">
-                    <?php echo anchor('reports/roster?daily&date='.date('Y-m-d'), '<i class="fa fa-file-pdf-o"></i> Children Roster', 'target="_blank"'); ?>
+                    <?php echo anchor('reports/roster?daily&date='.date('Y-m-d'), '<i class="fa fa-print"></i> Children Roster', 'target="_blank" class="bg-blue text-white"'); ?>
                 </li>
             </ul>
         </div>
@@ -67,7 +67,7 @@
         <div class="row">
             <div class="col-lg-2 col-md-2 col-xs-4">
                 <!-- small box -->
-                <div class="small-box bg-aqua cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
+                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
                     <div class="inner">
                         <h3><?php echo $this->child->getCount(); ?></h3>
                         <p><?php echo lang('children'); ?></p>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-yellow cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
+                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
                     <div class="inner">
                         <h3><?php echo $this->user->getCount(); ?></h3>
                         <p><?php echo lang('users'); ?></p>
@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-blue cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
+                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
                     <div class="inner">
                         <h3><?php echo $this->user->getCount('parent'); ?></h3>
                         <p><?php echo lang('parents'); ?></p>
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-teal cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
+                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
                     <div class="inner">
                         <h3><?php echo $this->user->getCount('staff'); ?></h3>
                         <p><?php echo lang('staff'); ?></p>
@@ -105,7 +105,7 @@
             </div>
 
             <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-green cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
+                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
                     <div class="inner">
                         <h3><?php echo $this->db->select('id')->get('invoices')->num_rows(); ?></h3>
                         <p><?php echo lang('invoices'); ?></p>
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-gray cursor" onclick="location.href='<?php echo site_url('news'); ?>'">
+                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('news'); ?>'">
                     <div class="inner">
                         <h3><?php echo $this->db->select('id')->get('news')->num_rows(); ?></h3>
                         <p><?php echo lang('News'); ?></p>

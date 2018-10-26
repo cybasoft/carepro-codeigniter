@@ -12,6 +12,7 @@ class Child extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        auth();
         $this->load->model('My_invoice', 'invoice');
         $this->load->model('My_food', 'food');
         $this->module = 'child/';
@@ -125,6 +126,11 @@ class Child extends CI_Controller
 
     public function reports($id)
     {
+        if (!authorizedToChild($this->user->uid(), $id)) {
+            flash('error', lang('You do not have permission to view this child\'s profile'));
+            redirectPrev();
+        }
+
         $child = $this->child->first($id);
         $attendance = $this->db->where('child_id', $id)->order_by('id', 'DESC')->get('child_checkin');
         $nyForm = $this->db->where('child_id', $id)->get('form_ny_attendance')->row();

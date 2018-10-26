@@ -6,7 +6,7 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title"><?php echo lang('Invoices'); ?></h4>
+                <h4 class="card-title btn-block"><?php echo lang('Invoices'); ?>
 
                 <?php if(!is('parent')): ?>
                     <a href="<?php echo site_url('child/'.$child->id.'/newInvoice'); ?>"
@@ -15,6 +15,7 @@
                         <?php echo lang('new_invoice'); ?>
                     </a>
                 <?php endif; ?>
+                </h4>
             </div>
             <div class="card-body">
 
