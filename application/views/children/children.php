@@ -10,7 +10,7 @@
         <li class="nav-item">
             <a class="nav-link" href="#inactive" aria-controls="inactive" role="tab"
                data-toggle="tab">
-                <i class="fa fa-info"></i>
+                <i class="fa fa-exclamation-triangle"></i>
                 <?php echo lang('inactive_children'); ?>
             </a>
         </li>
