@@ -29,4 +29,3 @@ composer.lock
 docs/.git
 
 application/third_party/codeigniter-debugbar
-application/temp/captcha/*
