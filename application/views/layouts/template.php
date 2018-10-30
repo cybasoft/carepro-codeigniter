@@ -13,11 +13,11 @@
 
     <link href="<?php echo assets('css/theme.css'); ?>" rel="stylesheet">
 
-    <link href="<?php echo assets('css/print.css'); ?>" rel="stylesheet"  media="print">
-    <link href="<?php echo assets('plugins/datatables/dataTables.bootstrap.css'); ?>" rel="stylesheet"  media="all">
-    <link href="<?php echo assets('plugins/fc/fullcalendar.css'); ?>" rel="stylesheet"  media="all">
-    <link href="<?php echo assets('plugins/fc/fullcalendar.print.css'); ?>" rel="stylesheet"  media="print">
-    <link href="<?php echo assets('plugins/sweetalert/sweetalert.css'); ?>" rel="stylesheet"  media="all">
+    <link href="<?php echo assets('css/print.css'); ?>" rel="stylesheet" media="print">
+    <link href="<?php echo assets('plugins/datatables/dataTables.bootstrap.css'); ?>" rel="stylesheet" media="all">
+    <link href="<?php echo assets('plugins/fc/fullcalendar.css'); ?>" rel="stylesheet" media="all">
+    <link href="<?php echo assets('plugins/fc/fullcalendar.print.css'); ?>" rel="stylesheet" media="print">
+    <link href="<?php echo assets('plugins/sweetalert/sweetalert.css'); ?>" rel="stylesheet" media="all">
 
     <link href="<?php echo assets('css/theme-style.css'); ?>" rel="stylesheet">
 
@@ -37,7 +37,8 @@
 
     <script src="<?php echo assets('plugins/jquery/jquery.min.js'); ?>"></script>
     <script src="<?php echo assets('plugins/extras/jquery-ui.min.js'); ?>" type="text/javascript"></script>
-<!--    <script src="--><?php //echo assets('plugins/extras/jquery.ui.touch-punch-improved.js'); ?><!--" type="text/javascript"></script>-->
+    <!--    <script src="-->
+    <?php //echo assets('plugins/extras/jquery.ui.touch-punch-improved.js'); ?><!--" type="text/javascript"></script>-->
 
     <?php if(ENVIRONMENT == 'testing'): ?>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -114,9 +115,9 @@
             </div>
         <?php endif; ?>
         <footer class="footer text-center">
-            &copy;
-            <?php echo date('Y'); ?> |
-            <?php echo lang('copyright'); ?> |
+
+            <?php echo config_item('version'); ?> |
+            <?php echo config_item('copyright'); ?> |
             <a href="//amdtllc.com/support" target="_blank">Open support ticket</a>
         </footer>
     </div>

@@ -17,6 +17,7 @@ class Migration_Add_children_checkin extends CI_Migration
                     'type' => 'INT',
                     'constraint' => '11',
                     'null' => false,
+                    'default'=>'0'
                 ),
             ]);
 

@@ -1,9 +1,10 @@
-<?php if (!defined('BASEPATH')) {
+<?php if(!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
 class My_children extends CI_Model
 {
+
     public function checkedInChildren()
     {
         // $this->db->distinct();
@@ -22,10 +23,14 @@ class My_children extends CI_Model
             ->join('(SELECT child_id,  COUNT(*) as allergy_count FROM child_allergy GROUP BY child_id) ca', 'c.id=ca.child_id', 'left')
             ->join('(SELECT child_id, COUNT(*) AS med_count FROM child_meds GROUP BY child_id) cm', 'cm.child_id=c.id', 'left')
             ->where('c.checkin_status', 1)
-            ->where('cc.time_out', null)
+            ->where('cc.time_out', NULL)
             ->group_by('c.id')
-            ->get()->result();
-        return $res;
+            ->get();
+
+        if(count($res->result_array) > 0)
+            return $res->result();
+
+        return [];
     }
 
     public function checkedOutChildren()
@@ -45,10 +50,10 @@ class My_children extends CI_Model
         return $this->db->where('status', 0)->get('children')->result();
     }
 
-    public function checkinTimer($dateTimeIn = null)
+    public function checkinTimer($dateTimeIn = NULL)
     {
-        $count = time_difference($dateTimeIn, date('Y-m-d H:i:s'))->h . ' ' . lang('hrs') .
-        ' ' . time_difference($dateTimeIn, date('Y-m-d H:i:s'))->i . ' ' . lang('mins');
+        $count = time_difference($dateTimeIn, date('Y-m-d H:i:s'))->h.' '.lang('hrs').
+            ' '.time_difference($dateTimeIn, date('Y-m-d H:i:s'))->i.' '.lang('mins');
 
         return $count;
     }

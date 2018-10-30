@@ -18,6 +18,8 @@ $APP_ENV = 'development';
  * Different environments will require different levels of error reporting.
  * By default development will show errors but testing and live will hide them.
  */
+const CAREPRO_VERSION="2.0.2";
+
 define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : $APP_ENV);
 switch (ENVIRONMENT)
 {
