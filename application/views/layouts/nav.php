@@ -54,6 +54,12 @@
             </ul>
             <ul class="navbar-nav float-right">
 
+                <?php if(base_url() == "https://careproapp.com/demo/"): ?>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-dark btn btn-warning" href="https://careproapp.com/checkout">Buy Now</a>
+                    </li>
+                <?php endif; ?>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark"
                        href="#"
@@ -63,9 +69,9 @@
                         <i class="fa fa-flag"></i> <?php echo ucwords($this->conf->getLanguage()); ?>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                       <?php foreach($this->conf->getLanguages() as $language){
-                           echo anchor(uri_string().'?language='.$language,icon('flag').' '.$language,'class="dropdown-item"');
-                       } ?>
+                        <?php foreach ($this->conf->getLanguages() as $language) {
+                            echo anchor(uri_string().'?language='.$language, icon('flag').' '.$language, 'class="dropdown-item"');
+                        } ?>
                     </div>
                 </li>
                 <li class="nav-item lock-screen"><a href="#" class="nav-link"><i class="fa fa-lock cursor"></i></a></li>

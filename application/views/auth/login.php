@@ -2,7 +2,8 @@
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">
-            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>"
+            <img class="logo"
+                 src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>"
                  alt="Logo">
         </a>
     </div>
@@ -21,7 +22,7 @@
             'name' => 'email',
             'type' => 'email',
             'class' => 'input100',
-            'required' => 'required'
+            'required' => 'required',
         ]); ?>
         <span class="focus-input100"></span>
         <span class="label-input100"><?php echo lang('Email'); ?></span>
@@ -33,7 +34,7 @@
             'name' => 'password',
             'type' => 'password',
             'class' => 'input100',
-            'required' => 'required'
+            'required' => 'required',
         ]); ?>
         <span class="focus-input100"></span>
         <span class="label-input100"><?php echo lang('Password'); ?></span>
@@ -77,4 +78,12 @@
 
     <?php endif; ?>
 
+    <?php if(base_url() == "https://careproapp.com/demo/"): ?>
+        <strong>Admin</strong><br/>
+        admin@app.com / password<br/>
+        <strong>Parent</strong><br/>
+        parent@app.com / password<br/>
+        <strong>Staff</strong><br/>
+        staff@app.com / password
+    <?php endif ?>
 </form>

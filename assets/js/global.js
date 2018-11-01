@@ -212,6 +212,12 @@ $(document).ready(function () {
     var staffOpts = {valueNames: ['staffname']};
     new List('room-staff', staffOpts);
 
+    var rnotes=new List('room-notes', {
+        valueNames: ['room-note','room-note-date'],
+        page: 10,
+        pagination: true
+    });
+
     var childOpts = {valueNames: ['childname']};
     new List('room-children', childOpts);
 

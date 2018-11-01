@@ -8,26 +8,36 @@
         </h4>
 
     </div>
-    <div class="card-body">
-        <?php foreach ($notes as $note): ?>
-            <div class="info-box">
-                <div class="info-box-img">
-                    <img style="width:40px;margin-right:10px;" src="<?php echo $this->user->photo($note->user_id); ?>"
-                         class="pull-left">
+    <div class="card-body" id="room-notes">
+        <input class="search form-control" placeholder="Search"/>
+        <br/>
+        <span class="label label-default sort pull-right cursor" data-sort="date">
+            Sort by date
+        </span>
+        <div class="clearfix"></div>
+        <hr/>
+        <div class="list">
+            <?php foreach ($notes as $note): ?>
+                <div class="info-box">
+                    <div class="info-box-img">
+                        <img style="width:40px;margin-right:10px;"
+                             src="<?php echo $this->user->photo($note->user_id); ?>"
+                             class="pull-left">
+                    </div>
+                    <div class="info-box-text">
+                        <a href="#"><?php echo $this->user->get($note->user_id, 'name'); ?></a>
+                        <span class="small pull-right room-note-date">
+                            <?php echo format_date($note->created_at, TRUE); ?>
+                            <a class=" delete" href="/rooms/deleteNote/<?php echo $note->id; ?>">
+                            <i class="fa fa-trash-alt text-danger"></i></a>
+                        </span>
+                    </div>
+                    <div class="info-box-notes room-note">
+                        <?php echo $note->content; ?>
+                    </div>
                 </div>
-                <div class="info-box-text">
-                    <a href="#"><?php echo $this->user->get($note->user_id, 'name'); ?></a>
-                    <span class="small pull-right"><?php echo format_date($note->created_at, true); ?>
-                        <a class=" delete" href="/rooms/deleteNote/<?php echo $note->id; ?>">
-                            <i class="fa fa-trash-alt text-danger"></i>
-                        </a>
-                    </span>
-                </div>
-                <div class="info-box-notes">
-                    <?php echo $note->content; ?>
-                </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
 
@@ -38,7 +48,7 @@
                 <h4 class="modal-title" id="noteModalLabel"><?php echo lang('New note'); ?></h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
-                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                    <span class="sr-only"><?php echo lang('close'); ?></span>
                 </button>
             </div>
             <?php echo form_open('rooms/addNote'); ?>
@@ -53,12 +63,12 @@
                 echo form_button(
                     [
                         'type' => 'submit',
-                        'class' => 'btn btn-primary'
+                        'class' => 'btn btn-primary',
                     ], lang('submit'));
                 echo form_button(
                     [
                         'data-dismiss' => 'modal',
-                        'class' => 'btn btn-default'
+                        'class' => 'btn btn-default',
                     ], lang('close'));
                 ?>
             </div>

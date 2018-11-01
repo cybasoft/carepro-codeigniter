@@ -7,6 +7,7 @@ class My_rooms extends CI_Model
 
     /**
      * retrieve all rooms
+     *
      * @return mixed
      */
     function all()
@@ -31,14 +32,14 @@ class My_rooms extends CI_Model
             [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
-                'created_at' => date_stamp()
+                'created_at' => date_stamp(),
             ]
         );
 
-        if($this->db->affected_rows()>0)
-            return true;
+        if($this->db->affected_rows() > 0)
+            return TRUE;
 
-        return false;
+        return FALSE;
     }
 
     /**
@@ -50,19 +51,20 @@ class My_rooms extends CI_Model
             [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
-                'created_at' => date_stamp()
+                'created_at' => date_stamp(),
             ],
             ['id' => $this->input->post('room_id')]
         );
 
-        if($this->db->affected_rows()>0)
-            return true;
+        if($this->db->affected_rows() > 0)
+            return TRUE;
 
-        return false;
+        return FALSE;
     }
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     function children($id)
@@ -81,6 +83,7 @@ class My_rooms extends CI_Model
      * Get all users assinged to a room
      *
      * @param $id
+     *
      * @return mixed
      */
     function staff($id)
@@ -96,7 +99,8 @@ class My_rooms extends CI_Model
 
     /**
      * @param string $id
-     * @param $name
+     * @param        $name
+     *
      * @return mixed
      */
     function check_unique_name($id = '', $name)
@@ -110,6 +114,7 @@ class My_rooms extends CI_Model
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     function notes($id)
@@ -129,13 +134,13 @@ class My_rooms extends CI_Model
             'user_id' => $this->user->uid(),
             'room_id' => $this->input->post('room_id'),
             'content' => $this->input->post('notes'),
-            'created_at' => date_stamp()
+            'created_at' => date_stamp(),
         ];
         $this->db->insert('child_room_notes', $data);
 
-        if($this->db->affected_rows()>0)
-            return true;
+        if($this->db->affected_rows() > 0)
+            return TRUE;
 
-        return false;
+        return FALSE;
     }
 }
