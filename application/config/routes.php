@@ -5,7 +5,7 @@ $route['migration/(:any)'] = 'migration/$1';
 
 $route['default_controller'] = 'auth';
 $route['404_override'] = 'landing/error404';
-$route['translate_uri_dashes'] = false;
+$route['translate_uri_dashes'] = FALSE;
 
 $route['dashboard'] = 'dashboard/index';
 
@@ -61,8 +61,8 @@ $route['child/(:num)/pickup']['post'] = 'pickup/store/$1';
 $route['child/deletePickup/(:num)'] = 'pickup/deletePickup/$1';
 $route['child/(:num)/attendance'] = 'child/attendance/$1';
 
-$route['child/:num/billing']='BillingController/index';
-$route['child/:num/billing/(:any)']='BillingController/$1';
+$route['child/:num/billing'] = 'BillingController/index';
+$route['child/:num/billing/(:any)'] = 'BillingController/$1';
 
 $route['invoice/:any'] = 'accounting/invoice/$1';
 $route['invoice/(:num)/pay'] = 'invoice/pay/$1';
@@ -152,3 +152,6 @@ $route['messaging/(:any)/:num'] = 'MessagingController/$1/$1';
 //meals
 $route['meals/(:any)'] = 'MealController/$1';
 $route['meals/(:any)/:num'] = 'MealController/$1';
+//activities
+$route['activities/(:any)'] = 'ActivityController/$1';
+$route['activities/(:any)/:num'] = 'ActivityController/$1';

@@ -73,6 +73,12 @@
                </a>
            </li>
            <li class="nav-item">
+               <a class="nav-link" href="#activities" aria-controls="activities" role="tab" data-toggle="tab">
+                   <i class="fa fa-weight"></i>
+                   <?php echo lang('Activity Plan'); ?>
+               </a>
+           </li>
+           <li class="nav-item">
                <a class="nav-link" href="#meal" aria-controls="meal" role="tab" data-toggle="tab">
                    <i class="fa fa-calendar-check"></i>
                    <?php echo lang('Meal Plan'); ?>
@@ -83,8 +89,11 @@
             <div role="tabpanel" class="tab-pane fade in active show" id="notes">
                 <?php $this->load->view($this->module.'room-notes'); ?>
             </div>
+            <div role="tabpanel" class="tab-pane fade" id="activities">
+                <?php $this->load->view($this->module.'activity-planner'); ?>
+            </div>
             <div role="tabpanel" class="tab-pane fade" id="meal">
-                <?php $this->load->view($this->module.'meal/meal'); ?>
+                <?php $this->load->view($this->module.'meal-planner'); ?>
             </div>
         </div>
     </div>

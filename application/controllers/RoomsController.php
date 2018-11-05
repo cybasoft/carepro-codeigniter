@@ -12,6 +12,7 @@ class RoomsController extends CI_Controller
         //local variables
         $this->module = 'rooms/';
         $this->load->model('My_meal','meal');
+        $this->load->model('My_activity','activity');
     }
 
     /*
@@ -56,7 +57,9 @@ class RoomsController extends CI_Controller
         $mealTypes = $this->meal->mealTypes();
         $days = $this->meal->days();
 
-        page($this->module.'room-view', compact('room', 'children', 'staff', 'allStaff', 'allChildren','notes','meals','mealTypes','days'));
+        $activities = $this->activity->activities();
+
+        page($this->module.'room-view', compact('room', 'children', 'staff', 'allStaff', 'allChildren','notes','meals','mealTypes','days','activities'));
     }
 
     function store()

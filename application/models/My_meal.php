@@ -13,7 +13,7 @@ class My_meal extends CI_Model
             'meal_type' => $this->input->post('meal_type'),
             'name' => $this->input->post('name'),
             'meal_date' => $this->input->post('meal_date'),
-            'user_id' => $this->input->post('user_id'),
+            'user_id' => user_id(),
             'created_at' => date_stamp(),
             'updated_at' => date_stamp(),
         ];

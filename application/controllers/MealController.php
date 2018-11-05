@@ -53,6 +53,7 @@ class MealController extends CI_Controller
     }
 
     function clear(){
+        allow(['admin', 'manager', 'staff']);
         $this->meal->clear();
         flash('success',lang('Meal plan has been cleared'));
         redirectPrev(null,'meal');

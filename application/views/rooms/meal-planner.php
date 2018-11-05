@@ -125,11 +125,18 @@
     .add-meal {
         font-size: 20px;
     }
+    .meal-header .fa-chevron-right, .meal-header .fa-chevron-left{
+        color: #20aecc;
+    }
+
+    .meal-header .fa-chevron-right:hover, .meal-header .fa-chevron-left:hover{
+        color: #ccc;
+    }
 </style>
 
-<div class="card">
+<div class="card weekly">
     <div class="card-header">
-        <h3 class="card-title text-center">
+        <h3 class="card-title text-center meal-header">
             <?php
             if(isset($_GET['week']) && $_GET['week'] !== "") {
 
@@ -158,6 +165,16 @@
     </div>
 
     <div class="card-content">
+        <div class="weekly-btns">
+            <?php if(!isset($_GET['week']) || isset($_GET['week']) && $_GET['week'] == date('Y-m-d')): ?>
+                <a href="<?php echo site_url('meals/copy'); ?>"
+                   class="btn btn-primary btn-sm copy-plan"><?php echo icon('copy').' '.lang('Copy to next week'); ?></a>
+                <a href="<?php echo site_url('meals/clear'); ?>"
+                   class="btn btn-warning btn-sm clear-plan"><?php echo icon('trash').' '.lang('Clear meal plan'); ?></a>
+            <?php else: ?>
+                <?php echo anchor(uri_string().'#meal',icon('home').' '.lang('This week'),'class="btn btn-primary btn-sm"'); ?>
+            <?php endif; ?>
+        </div>
         <table>
             <thead>
             <tr>
@@ -165,7 +182,7 @@
                 <?php foreach ($mealTypes as $mealType): ?>
                     <th>
                         <span class="time"><?php echo lang($mealType->name); ?></span>
-                        <i class="fa fa-plus-square pull-right" style="font-size:20px"
+                        <i class="fa fa-plus-square pull-right cursor" style="font-size:20px"
                            onclick="addMeal('<?php echo ucfirst($mealType->name); ?>','<?php echo $mealType->id; ?>');"></i>
                     </th>
                 <?php endforeach; ?>
@@ -202,16 +219,7 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer">
-        <?php if(!isset($_GET['week']) || isset($_GET['week']) && $_GET['week'] == date('Y-m-d')): ?>
-            <a href="<?php echo site_url('meals/copy'); ?>"
-               class="btn btn-primary btn-sm copy-plan"><?php echo icon('copy').' '.lang('Copy to next week'); ?></a>
-            <a href="<?php echo site_url('meals/clear'); ?>"
-               class="btn btn-warning btn-sm clear-plan"><?php echo icon('trash').' '.lang('Clear meal plan'); ?></a>
-        <?php else: ?>
-        <?php echo anchor(uri_string().'#meal',icon('home').' '.lang('This week'),'class="btn btn-primary btn-sm"'); ?>
-        <?php endif; ?>
-    </div>
+
 </div>
 
 <div class="modal fade" id="mealModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
