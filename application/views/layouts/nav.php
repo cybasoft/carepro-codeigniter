@@ -7,16 +7,15 @@
                 <b class="logo-icon p-l-10">
 
                     <?php if(session('company_logo') == '') : ?>
-                        <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000">
-			<?php echo session('company_name'); ?>
-				</span>
+                        <span class=""
+                              style="position: absolute; top:-7px; left:45px; z-index: 3000"><?php echo session('company_name'); ?></span>
                         <span class="" style="position: absolute; top:13px; left:50px;
-			z-index: 3000; font-size: 12px; color: #ffff00; font-family: monospace">
-			<?php echo session('company_slogan'); ?>
-			</span>
+			z-index: 3000; font-size: 12px; color: #ffff00; font-family: monospace"><?php echo session('company_slogan'); ?></span>
                     <?php else : ?>
-                        <img class="light-logo" style="height:50px"
+                        <img class="light-logo"
                              src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
+
+                        <img class="dark-logo" src="<?php echo base_url().'assets/uploads/content/logo-small.png'; ?>"/>
                     <?php endif; ?>
                 </b>
             </a>
@@ -56,7 +55,8 @@
 
                 <?php if(base_url() == "https://careproapp.com/demo/"): ?>
                     <li class="nav-item">
-                        <a class="nav-link waves-effect waves-dark btn btn-warning" href="https://careproapp.com/checkout">Buy Now</a>
+                        <a class="nav-link waves-effect waves-dark btn btn-warning"
+                           href="https://careproapp.com/checkout">Buy Now</a>
                     </li>
                 <?php endif; ?>
 

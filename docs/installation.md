@@ -61,6 +61,8 @@ After seeding, you will have a default admin user to login into your application
 
 > You can reload migrations by running `php index.php migration refresh`. You must be in development environment. All data will be lost
 
+> You can undo the last migration by running `php index.php migration undo`
+
 ## Advanced
 
 ### For developers

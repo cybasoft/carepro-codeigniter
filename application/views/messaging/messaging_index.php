@@ -21,9 +21,9 @@
                         </a>
                     </li>
                 <?php endforeach;?>
-
                 <li class="p-20"></li>
             </ul>
+            <ul class="pagination"></ul>
         </div>
     </div>
 

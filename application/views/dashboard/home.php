@@ -51,7 +51,7 @@
                 <span class="badge">
                     <?php echo $this->db->where('invoice_status', 2)->get('invoices')->num_rows(); ?>
                 </span>
-                <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
+                <h2><?php echo session('company_currency_symbol').$this->invoice->getTotalDue(); ?></h2>
             </div>
         </div>
         <div class="card">
@@ -65,65 +65,45 @@
 
     <div class="col-lg-9 col-md-8 col-sm-8">
         <div class="row">
-            <div class="col-lg-2 col-md-2 col-xs-4">
-                <!-- small box -->
-                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
-                    <div class="inner">
-                        <h3><?php echo $this->child->getCount(); ?></h3>
-                        <p><?php echo lang('children'); ?></p>
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor"
+                 onclick="location.href='<?php echo site_url('children'); ?>'">
+                <div class="info-box">
+                    <span class="info-box-icon bg-maroon"><i class="fa fa-user-alt"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?php echo lang('children'); ?></span>
+                        <span class="info-box-number"><?php echo $this->child->getCount(); ?></span>
                     </div>
-                    <div class="icon"><i class="fa fa-users"></i></div>
                 </div>
             </div>
-
-            <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
-                    <div class="inner">
-                        <h3><?php echo $this->user->getCount(); ?></h3>
-                        <p><?php echo lang('users'); ?></p>
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor"
+                 onclick="location.href='<?php echo site_url('parents'); ?>'">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?php echo lang('parents'); ?></span>
+                        <span class="info-box-number"><?php echo $this->user->getCount('parent'); ?></span>
                     </div>
-                    <div class="icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
-                    <div class="inner">
-                        <h3><?php echo $this->user->getCount('parent'); ?></h3>
-                        <p><?php echo lang('parents'); ?></p>
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?php echo lang('users'); ?></span>
+                        <span class="info-box-number"><?php echo $this->user->getCount(); ?></span>
                     </div>
-                    <div class="icon"><i class="fa fa-users" aria-hidden="true"></i></div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
-                    <div class="inner">
-                        <h3><?php echo $this->user->getCount('staff'); ?></h3>
-                        <p><?php echo lang('staff'); ?></p>
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?php echo lang('Managers'); ?></span>
+                        <span class="info-box-number"><?php echo $this->user->getCount('manager'); ?></span>
                     </div>
-                    <div class="icon"><i class="fa fa-users" aria-hidden="true"></i></div>
-                </div>
-            </div>
-
-            <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
-                    <div class="inner">
-                        <h3><?php echo $this->db->select('id')->get('invoices')->num_rows(); ?></h3>
-                        <p><?php echo lang('invoices'); ?></p>
-                    </div>
-                    <div class="icon"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-xs-4">
-                <div class="small-box bg-dash cursor" onclick="location.href='<?php echo site_url('news'); ?>'">
-                    <div class="inner">
-                        <h3><?php echo $this->db->select('id')->get('news')->num_rows(); ?></h3>
-                        <p><?php echo lang('News'); ?></p>
-                    </div>
-                    <div class="icon"><i class="fa fa-clipboard" aria-hidden="true"></i></div>
                 </div>
             </div>
         </div>
-
         <div class="row hidden-sm-up">
             <section class="col-sm-12 connectedSortable">
                 <?php $this->load->view('calendar/widget'); ?>

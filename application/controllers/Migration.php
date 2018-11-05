@@ -66,6 +66,16 @@ class Migration extends CI_Controller
             echo lang('Migration(s) done').PHP_EOL;
         }
     }
+    function undo(){
+        $mig = $this->db->get('migrations')->row();
+        $newMig = $mig->version-1;
+
+        //append 0 if 2 digit
+        if(strlen($newMig)==2){
+            $newMig = '0'.$newMig;
+        }
+        $this->run($newMig);
+    }
 
     /**
      * Generate migration file for a table

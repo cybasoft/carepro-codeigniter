@@ -1,4 +1,11 @@
 # Change log
+## Version 2.2.1
+
+* Added undo function for migration. To undo last one migration, run `php index.php migration undo`
+* Added a meal plan for rooms
+* Design updates with new dashboard info boxes look
+* Fixed issue that prevent checkin/out to work properly
+* Added version number on the footer
 
 ## Version 2.2.0 | 17 Oct 2018
 

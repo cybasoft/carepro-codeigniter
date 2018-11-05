@@ -31,6 +31,7 @@
             <thead>
             <tr align="center">
                 <th></th>
+                <th></th>
                 <th><?php echo lang('Name'); ?></th>
                 <th><?php echo lang('Email'); ?></th>
                 <th><?php echo lang('Phone'); ?></th>
@@ -41,6 +42,7 @@
             </thead>
             <?php foreach ($users as $user): ?>
                 <tr>
+                    <td><?php echo $user->id; ?></td>
                     <td>
                         <img class="img-circle" style="height:50px;width:50px;"
                              src="<?php echo $this->user->photo($user->photo); ?>">

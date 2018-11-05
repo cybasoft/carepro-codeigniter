@@ -103,6 +103,9 @@ $(document).ready(function () {
     });
 
     $('.delete').click(function (e) {
+
+        e.preventDefault();
+
         var loc = $(this).attr('href');
         swal({
             title: lang['confirm_delete_title'],
@@ -119,7 +122,6 @@ $(document).ready(function () {
             if (loc !== undefined)
                 window.location.href = loc;
         });
-        e.preventDefault();
     });
 });
 
@@ -203,36 +205,35 @@ $(document).ready(function () {
         }
     })
 
-    var convOpts ={valueNames: ['name'], page: 10, pagination: true}
-    new List('conversations', convOpts);
-
-    var coutOpts = {valueNames: ['name', 'born', 'nid'], page: 10, pagination: true};
-    new List('checkedout-children', coutOpts);
-
-    var staffOpts = {valueNames: ['staffname']};
-    new List('room-staff', staffOpts);
-
-    var rnotes=new List('room-notes', {
-        valueNames: ['room-note','room-note-date'],
-        page: 10,
-        pagination: true
-    });
-
-    var childOpts = {valueNames: ['childname']};
-    new List('room-children', childOpts);
-
     //child checkin
     $('.checkin-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.modals-loader').load(site_url+'child/' + child_id + '/checkIn').modal('show');
+        $('.modals-loader').load(site_url + 'child/' + child_id + '/checkIn').modal('show');
     });
     $('.checkout-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.modals-loader').load(site_url + 'child/'+ child_id + '/checkOut').modal('show');
+        $('.modals-loader').load(site_url + 'child/' + child_id + '/checkOut').modal('show');
     });
 
-    $('.assign-parent-btn').click(function(){
+    $('.assign-parent-btn').click(function () {
         var id = $(this).attr('id');
-        $('.modals-loader').load(site_url+'parents/parents/'+id).modal('show')
+        $('.modals-loader').load(site_url + 'parents/parents/' + id).modal('show')
+    });
+
+
+    new List('conversations', {valueNames: ['name'], page: 10, pagination: true});
+
+    new List('checkedout-children',
+        {valueNames: ['name', 'born', 'nid'], page: 10, pagination: true}
+    );
+
+    new List('room-staff', {valueNames: ['staffname']});
+
+    new List('room-children', {valueNames: ['childname']});
+
+    new List('room-notes', {
+        valueNames: ['room-note', 'room-note-date'],
+        page: 10,
+        pagination: true
     });
 });

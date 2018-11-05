@@ -1,17 +1,17 @@
 <div class="card">
     <div class="card-header">
-    <h3 class="card-title">
-        <?php echo !empty($room->description) ? $room->description : $room->name; ?>
-        <button type="button" class="btn btn-default btn-sm card-tools" data-toggle="modal" data-target="#myModal">
-            <i class="fa fa-pencil-alt"></i> <?php echo lang('edit'); ?>
-        </button>
-    </h3>
+        <h3 class="card-title">
+            <?php echo !empty($room->description) ? $room->description : $room->name; ?>
+            <button type="button" class="btn btn-default btn-sm card-tools" data-toggle="modal" data-target="#myModal">
+                <i class="fa fa-pencil-alt"></i> <?php echo lang('edit'); ?>
+            </button>
+        </h3>
     </div>
 </div>
 
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
 
         <div class="card">
             <div class="card-header">
@@ -27,10 +27,10 @@
             <div class="card-body">
                 <div class="row">
                     <?php foreach ($staff as $as): ?>
-                        <div class="col-xs-3">
+                        <div class="col-sm-4 text-center">
                             <img class="img-thumbnail" style="height:100px;"
-                                 src="<?php echo $this->user->photo($as->user_id); ?>"/>
-                            <h4> <?php echo $as->first_name.' '.$as->last_name; ?></h4>
+                                 src="<?php echo $this->user->photo($as->photo); ?>"/><br/>
+                            <?php echo $as->first_name.' '.$as->last_name; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -52,10 +52,10 @@
 
                 <div class="row">
                     <?php foreach ($children as $cg): ?>
-                        <div class="col-xs-3">
+                        <div class="col-sm-4 text-center">
                             <img class="img-thumbnail" style="width:100px;height:100px;"
-                                 src="<?php echo $this->child->photo($cg->child_id); ?>"/>
-                            <h4><?php echo anchor('child/'.$cg->child_id, $cg->first_name.' '.$cg->last_name); ?></h4>
+                                 src="<?php echo $this->child->photo($cg->photo); ?>"/><br/>
+                            <?php echo anchor('child/'.$cg->child_id, $cg->first_name.' '.$cg->last_name); ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -64,8 +64,29 @@
 
     </div>
 
-    <div class="col-sm-6">
-        <?php $this->load->view($this->module.'room-notes'); ?>
+    <div class="col-sm-8">
+       <ul class="nav nav-tabs" role="tablist">
+           <li class="nav-item">
+               <a class="nav-link active show" href="#notes" aria-controls="notes" role="tab" data-toggle="tab">
+                   <i class="fa fa-clipboard"></i>
+                   <?php echo lang('Notes'); ?>
+               </a>
+           </li>
+           <li class="nav-item">
+               <a class="nav-link" href="#meal" aria-controls="meal" role="tab" data-toggle="tab">
+                   <i class="fa fa-calendar-check"></i>
+                   <?php echo lang('Meal Plan'); ?>
+               </a>
+           </li>
+       </ul>
+        <div class="tab-content tabcontent-border">
+            <div role="tabpanel" class="tab-pane fade in active show" id="notes">
+                <?php $this->load->view($this->module.'room-notes'); ?>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="meal">
+                <?php $this->load->view($this->module.'meal/meal'); ?>
+            </div>
+        </div>
     </div>
 
 </div>

@@ -95,8 +95,12 @@ $(function() {
         var width = (window.innerWidth > 0) ? window.innerWidth : this.screen.width;
         if (width < 1170) {
             $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
+            $('.dark-logo').show()
+            $('.light-logo').hide()
         } else {
             $("#main-wrapper").attr("data-sidebartype", "full");
+            $('.dark-logo').hide()
+            $('.light-logo').show()
         }
     };
     $(window).ready(setsidebartype);
@@ -109,9 +113,13 @@ $(function() {
         if ($("#main-wrapper").hasClass("mini-sidebar")) {
             $(".sidebartoggler").prop("checked", !0);
             $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
+            $('.dark-logo').show()
+            $('.light-logo').hide()
         } else {
             $(".sidebartoggler").prop("checked", !1);
             $("#main-wrapper").attr("data-sidebartype", "full");
+            $('.dark-logo').hide()
+            $('.light-logo').show()
         }
     });
 });

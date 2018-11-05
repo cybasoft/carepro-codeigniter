@@ -11,33 +11,39 @@
     <div class="card-body" id="room-notes">
         <input class="search form-control" placeholder="Search"/>
         <br/>
-        <span class="label label-default sort pull-right cursor" data-sort="date">
+        <a class=" sort  cursor" data-sort="room-note-date">
             Sort by date
-        </span>
-        <div class="clearfix"></div>
-        <hr/>
-        <div class="list">
+        </a>
+
+        <div class="list list-group">
+
             <?php foreach ($notes as $note): ?>
-                <div class="info-box">
-                    <div class="info-box-img">
-                        <img style="width:40px;margin-right:10px;"
-                             src="<?php echo $this->user->photo($note->user_id); ?>"
-                             class="pull-left">
-                    </div>
-                    <div class="info-box-text">
-                        <a href="#"><?php echo $this->user->get($note->user_id, 'name'); ?></a>
-                        <span class="small pull-right room-note-date">
-                            <?php echo format_date($note->created_at, TRUE); ?>
+                <div class="list-group-item">
+                    <div class="media">
+                        <div class="align-self-start mr-2">
+                            <img style="width:50px;height:50px;margin-right:10px;-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"
+                                 src="<?php echo $this->user->photo($note->photo); ?>"
+                                 class="">
+                        </div>
+                        <div class="media-body">
+                            <p class="mb-1">
+                                <a class="text-purple m-0"
+                                   href="#"><?php echo $this->user->get($note->user_id, 'name'); ?></a>
+                                <small class="text-muted room-note-date"> <?php echo format_date($note->created_at, TRUE); ?></small>
+                            </p>
+                            <div class="text-sm room-note">
+                                <?php echo $note->content; ?>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
                             <a class=" delete" href="/rooms/deleteNote/<?php echo $note->id; ?>">
-                            <i class="fa fa-trash-alt text-danger"></i></a>
-                        </span>
-                    </div>
-                    <div class="info-box-notes room-note">
-                        <?php echo $note->content; ?>
+                                <i class="fa fa-trash-alt text-danger"></i></a>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
+        <ul class="pagination"></ul>
     </div>
 </div>
 

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo assets('img/favicon.ico'); ?>">
     <title><?php echo session('company_name'); ?>
         <?php echo (isset($this->title)) ? ' - '.$this->title : ''; ?>
     </title>
@@ -20,6 +20,7 @@
     <link href="<?php echo assets('plugins/sweetalert/sweetalert.css'); ?>" rel="stylesheet" media="all">
 
     <link href="<?php echo assets('css/theme-style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo assets('css/theme-colors.css'); ?>" rel="stylesheet">
 
     <?php if(!empty(session('company_custom_css'))): ?>
         <style type="text/css">
@@ -37,6 +38,9 @@
 
     <script src="<?php echo assets('plugins/jquery/jquery.min.js'); ?>"></script>
     <script src="<?php echo assets('plugins/extras/jquery-ui.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php echo assets('plugins/popper/popper.min.js'); ?>"></script>
+    <script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
+
     <!--    <script src="-->
     <?php //echo assets('plugins/extras/jquery.ui.touch-punch-improved.js'); ?><!--" type="text/javascript"></script>-->
 
@@ -129,8 +133,6 @@
 <script src="<?php echo assets('plugins/extras/moment.min.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo assets('plugins/extras/jquery.slimscroll.js'); ?>" type="text/javascript"></script>
 
-<script src="<?php echo assets('plugins/popper/popper.min.js'); ?>"></script>
-<script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
 <script src="<?php echo assets('plugins/perfect-scrollbar/perfect-scrollbar.jquery.min.js'); ?>"></script>
 <script src="<?php echo assets('plugins/sparkline/sparkline.js'); ?>"></script>
 

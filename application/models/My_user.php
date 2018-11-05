@@ -217,7 +217,7 @@ class MY_user extends CI_Model
         else
             $photo = 'assets/uploads/users/'.$photo;
 
-        return base_url().$photo;
+        return base_url($photo);
     }
 
     /**
@@ -276,4 +276,5 @@ class MY_user extends CI_Model
             ->get()
             ->result();
     }
+
 }

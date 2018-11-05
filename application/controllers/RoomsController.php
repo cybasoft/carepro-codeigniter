@@ -11,6 +11,7 @@ class RoomsController extends CI_Controller
         auth(true);
         //local variables
         $this->module = 'rooms/';
+        $this->load->model('My_meal','meal');
     }
 
     /*
@@ -51,7 +52,11 @@ class RoomsController extends CI_Controller
 
         $notes = $this->rooms->notes($id);
 
-        page($this->module.'room-view', compact('room', 'children', 'staff', 'allStaff', 'allChildren','notes'));
+        $meals = $this->meal->meals();
+        $mealTypes = $this->meal->mealTypes();
+        $days = $this->meal->days();
+
+        page($this->module.'room-view', compact('room', 'children', 'staff', 'allStaff', 'allChildren','notes','meals','mealTypes','days'));
     }
 
     function store()

@@ -69,7 +69,7 @@ class My_rooms extends CI_Model
      */
     function children($id)
     {
-        $children = $this->db->select('children.id as child_id,children.first_name,children.last_name,'.$this->table.'.name,'.$this->table.'.description,child_room.child_id,child_room.room_id')
+        $children = $this->db->select('children.id as child_id,children.first_name,children.last_name,children.photo,'.$this->table.'.name,'.$this->table.'.description,child_room.child_id,child_room.room_id')
             ->from('children')
             ->join('child_room', 'child_room.child_id=children.id')
             ->join($this->table, $this->table.'.id=child_room.room_id')
@@ -119,10 +119,19 @@ class My_rooms extends CI_Model
      */
     function notes($id)
     {
-        return $this->db->where('room_id', $id)
-            ->order_by('created_at', 'desc')
-            ->get('child_room_notes')
+        return $this->db->select('crn.*,u.photo')
+            ->from('child_room_notes crn')
+            ->join('users u', 'u.id=crn.user_id')
+            ->where('crn.room_id', $id)
+
+            ->order_by('crn.created_at', 'desc')
+            ->get()
             ->result();
+
+//        return $this->db->where('room_id', $id)
+//            ->order_by('created_at', 'desc')
+//            ->get('child_room_notes')
+//            ->result();
     }
 
     /**

@@ -1,9 +1,10 @@
-<?php if (!defined('BASEPATH')) {
+<?php if(!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
 class My_child extends CI_Model
 {
+
     public function first($id)
     {
         return $this->db->where('id', $id)->get('children')->row();
@@ -17,22 +18,22 @@ class My_child extends CI_Model
      */
     public function get($id, $field = '')
     {
-        if ($field == 'name') {
+        if($field == 'name') {
             $field = ['first_name', 'last_name'];
         }
 
         $this->db->where('id', $id);
         $child = $this->db->get('children')->row();
 
-        if (is_array($field) && !empty($field)) {
+        if(is_array($field) && !empty($field)) {
             $res = '';
             foreach ($field as $item) {
-                $res .= $child->$item . ' ';
+                $res .= $child->$item.' ';
             }
             return $res;
         }
 
-        if ($field !== '') {
+        if($field !== '') {
             return $child->$field;
         }
 
@@ -57,7 +58,7 @@ class My_child extends CI_Model
      *
      * @return mixed
      */
-    public function child($id = null)
+    public function child($id = NULL)
     {
         return $this->db->where('id', $id)->get('children')->row();
     }
@@ -81,7 +82,7 @@ class My_child extends CI_Model
      *
      * @return mixed
      */
-    public function getParent($id = null)
+    public function getParent($id = NULL)
     {
         $this->db->where('children.id', $id);
         $this->db->select('*');
@@ -99,7 +100,7 @@ class My_child extends CI_Model
     public function getData($db, $child_id)
     {
         $data = [];
-        if ($db == 'child_checkin') {
+        if($db == 'child_checkin') {
             $this->db->order_by('id', 'DESC');
         }
 
@@ -110,13 +111,13 @@ class My_child extends CI_Model
     /**
      * @return mixed
      */
-    public function getCount($active = true)
+    public function getCount($active = TRUE)
     {
-        if (is('parent')) {
+        if(is('parent')) {
             $query = $this->parent->getChildren($this->user->uid());
             return $query->num_rows();
         }
-        if ($active == true) {
+        if($active == TRUE) {
             $this->db->where('status', 1);
         } else {
             $this->db->where('status', 0);
@@ -147,10 +148,10 @@ class My_child extends CI_Model
         $this->db->where('child_id', $child_id);
         $this->db->where('user_id', $user_id);
         $query = $this->db->get('child_parents');
-        if ($query->num_rows() > 0) {
-            return true;
+        if($query->num_rows() > 0) {
+            return TRUE;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
@@ -159,7 +160,7 @@ class My_child extends CI_Model
      * get all child information
      */
 
-    public function register($getID = false)
+    public function register($getID = FALSE)
     {
         $data = [
             'nickname' => $this->input->post('nickname'),
@@ -180,14 +181,14 @@ class My_child extends CI_Model
         $this->db->insert('children', $data);
         $last_id = $this->db->insert_id();
 
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
-            return false;
+            return FALSE;
         }
 
         //assign child to user if this user is parent
-        if (is('parent')) {
+        if(is('parent')) {
             $data2 = [
                 'child_id' => $last_id,
                 'user_id' => $this->user->uid(),
@@ -198,11 +199,11 @@ class My_child extends CI_Model
         //log event
         logEvent("Add child {$data['first_name']} {$data['last_name']}");
 
-        if ($getID) {
+        if($getID) {
             return $last_id;
         }
 
-        return true;
+        return TRUE;
     }
 
     /*
@@ -228,7 +229,7 @@ class My_child extends CI_Model
         ];
         $this->db->where('id', $child_id);
         $this->db->update('children', $data);
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows() > 0) {
             //log event
             logEvent("Updated child {$data['first_name']} {$data['last_name']}");
 
@@ -259,13 +260,13 @@ class My_child extends CI_Model
 
         $this->db->insert('child_pickup', $data);
         $insert_id = $this->db->insert_id();
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows() > 0) {
             //log event
             logEvent("Added pickup contact for child ID {$id}");
-            $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'] . ' ' . $data['last_name']));
+            $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
@@ -284,16 +285,16 @@ class My_child extends CI_Model
         ];
         $this->db->insert('child_checkin', $data);
 
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows() > 0) {
             //mark as checked in
             $this->db->where('id', $child_id)->update('children', ['checkin_status' => 1]);
 
             $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
 
             logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
-            return true;
+            return TRUE;
         }
-        return false;
+        return FALSE;
     }
 
     /**
@@ -309,18 +310,18 @@ class My_child extends CI_Model
             'out_staff_id' => $this->user->uid(),
         ];
 
-        $this->db->where('child_id', $child_id)->where('time_out', null)->update('child_checkin', $data);
+        $this->db->where('child_id', $child_id)->where('time_out', NULL)->update('child_checkin', $data);
 
-        if ($this->db->affected_rows() > 0) {
+        if($this->db->affected_rows() > 0) {
             //mark as checked out
             $this->db->where('id', $child_id)->update('children', ['checkin_status' => 0]);
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
 
             logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
-            return true;
+            return TRUE;
         }
-        return false;
+        return FALSE;
     }
 
     /**
@@ -331,14 +332,14 @@ class My_child extends CI_Model
      *
      * @return bool
      */
-    public function checkedIn($id, $date = false, $checkedOut = false)
+    public function checkedIn($id, $date = FALSE, $checkedOut = FALSE)
     {
-        if ($checkedOut == false) {
-            $this->db->where('time_out', null);
+        if($checkedOut == FALSE) {
+            $this->db->where('time_out', NULL);
         }
 
-        if ($date !== false) {
-            if (valid_date($date)) {
+        if($date !== FALSE) {
+            if(valid_date($date)) {
                 $d = new DateTime($date);
                 $date = $d->format('Y-m-d ');
                 $this->db->where('DATE(time_in)', $date);
@@ -347,10 +348,10 @@ class My_child extends CI_Model
         $this->db->where('child_id', $id);
         $this->db->from('child_checkin');
         $query = $this->db->count_all_results();
-        if (empty($query)) { //child is out
-            return false;
+        if(empty($query)) { //child is out
+            return FALSE;
         } else { //child is in
-            return true;
+            return TRUE;
         }
     }
 
@@ -360,25 +361,25 @@ class My_child extends CI_Model
      *
      * @return mixed
      */
-    public function checkinCounter($id, $date = null)
+    public function checkinCounter($id, $date = NULL)
     {
         $count = '0.00';
-        if ($date == null || $date == 'today') {
+        if($date == NULL || $date == 'today') {
             $date = date('Y-m-d');
         }
 
         //limit checkin count to daily only
-        if (session('company_daily_checkin') == 1) {
+        if(session('company_daily_checkin') == 1) {
             $this->db->where('DATE(time_in)', $date);
         }
 
         $this->db->where('child_id', $id);
-        $this->db->where('time_out', null);
+        $this->db->where('time_out', NULL);
         $res = $this->db->get('child_checkin');
-        if ($res->num_rows() > 0) {
+        if($res->num_rows() > 0) {
             $result = $res->row();
-            $count = checkinTimer($result->time_in, date('Y-m-d H:i:s'))->h . ' ' . lang('hrs') .
-            ' ' . checkinTimer($result->time_in, date('Y-m-d H:i:s'))->i . ' ' . lang('mins');
+            $count = checkinTimer($result->time_in, date('Y-m-d H:i:s'))->h.' '.lang('hrs').
+                ' '.checkinTimer($result->time_in, date('Y-m-d H:i:s'))->i.' '.lang('mins');
         }
         //
         return $count;
@@ -393,24 +394,24 @@ class My_child extends CI_Model
      *
      * @return array|mixed
      */
-    public function checkedInLog($id, $item, $date = false)
+    public function checkedInLog($id, $item, $date = FALSE)
     {
-        if ($date !== false) {
-            if (valid_date($date)) {
+        if($date !== FALSE) {
+            if(valid_date($date)) {
                 $d = new DateTime($date);
                 $date = $d->format('Y-m-d ');
                 $this->db->where('DATE(time_in)', $date);
             }
         }
 
-        $this->db->where('time_out', null);
+        $this->db->where('time_out', NULL);
         $this->db->where('child_id', $id);
         $row = $this->db->get('child_checkin')->row();
 
-        if (count((array) $row) > 0) {
+        if(count((array)$row) > 0) {
             $data = [
                 'in_guardian' => $row->in_guardian,
-                'date_in' => format_date($row->time_in, false),
+                'date_in' => format_date($row->time_in, FALSE),
                 'time_in' => format_time($row->time_in),
                 'timer' => $this->checkinCounter($id),
             ];
@@ -431,10 +432,10 @@ class My_child extends CI_Model
         $this->db->limit(1);
         $this->db->select('child_id,time_out');
         $this->db->where('child_id', $id);
-        $this->db->where('time_out IS NOT NULL', null, false);
+        $this->db->where('time_out IS NOT NULL', NULL, FALSE);
         $this->db->order_by('time_out', 'DESC');
         $row = $this->db->get('child_checkin')->row();
-        if (count((array) $row) > 0) {
+        if(count((array)$row) > 0) {
             return format_date($row->time_out);
         }
 
@@ -447,10 +448,10 @@ class My_child extends CI_Model
      *
      * @return mixed
      */
-    public function attendance($id, $date = null)
+    public function attendance($id, $date = NULL)
     {
         $this->db->where('child_id', $id);
-        if ($date !== null) {
+        if($date !== NULL) {
             $this->db->where('DATE(time_in)', $date);
         }
 
@@ -490,12 +491,12 @@ class My_child extends CI_Model
     public function roomCount($id, $type = 'children')
     {
         $this->db->where('room_id', $id);
-        if ($type == 'children') {
+        if($type == 'children') {
             $res = $this->db->count_all_results('child_room');
         } else {
             $res = $this->db->count_all_results('child_room_staff');
         }
-        if (count((array) $res) > 0) {
+        if(count((array)$res) > 0) {
             return $res;
         }
 
@@ -509,47 +510,47 @@ class My_child extends CI_Model
      */
     public function photo($photo)
     {
-        if (!empty($photo)) {
-            $photo = 'assets/uploads/children/' . $photo;
+        if(!empty($photo)) {
+            $photo = 'assets/uploads/children/'.$photo;
         } else {
             $photo = 'assets/img/content/no-image.png';
         }
 
-        return base_url() . $photo;
+        return base_url($photo);
     }
 
     public function uploadPhoto($id = '')
     {
         $upload_path = './assets/uploads/children';
         $upload_db = 'children';
-        if (!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
+        if(!file_exists($upload_path)) {
+            mkdir($upload_path, 755, TRUE);
         }
 
-        if ($id == '') {
-            return false;
+        if($id == '') {
+            return FALSE;
         }
 
         $config = [
             'upload_path' => $upload_path,
             'allowed_types' => 'gif|jpg|png|jpeg|svg',
             //'max_size'      => '100',
-            'encrypt_name' => true,
+            'encrypt_name' => TRUE,
         ];
         $this->load->library('upload', $config);
-        if (!$this->upload->do_upload()) {
-            return false;
+        if(!$this->upload->do_upload()) {
+            return FALSE;
         }
 
         $this->db->where('id', $id);
 
         foreach ($this->db->get($upload_db)->result() as $r) {
-            if ('' !== $r->photo):
-                unlink($upload_path . '/' . $r->photo);
-            $data['photo'] = '';
-            $this->db->where('id', $id);
+            if('' !== $r->photo):
+                unlink($upload_path.'/'.$r->photo);
+                $data['photo'] = '';
+                $this->db->where('id', $id);
 
-            $this->db->update($upload_db, $data);
+                $this->db->update($upload_db, $data);
             endif;
         }
         //upload new photo
@@ -562,15 +563,15 @@ class My_child extends CI_Model
         $data = ['upload_data' => $upload_data];
 
         $this->conf->photoResize([
-            'image' => $upload_path . '/' . $data_ary['photo'],
+            'image' => $upload_path.'/'.$data_ary['photo'],
             'width' => 150,
-            'height' => 150
+            'height' => 150,
         ]);
 
-        if ($data) {
-            return true;
+        if($data) {
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 }
