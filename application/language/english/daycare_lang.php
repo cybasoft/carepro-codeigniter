@@ -566,3 +566,6 @@ $lang['Activity deleted'] = 'Activity deleted';
 $lang['Activity plan copied to next week'] = 'Activity plan copied to next week';
 $lang['Activity plan has been cleared'] = 'Activity plan has been cleared';
 $lang['New activity'] = 'New activity';
+$lang['Business hours'] = 'Business hours';
+$lang['Start time'] = 'Start time';
+$lang['End time'] = 'End time';

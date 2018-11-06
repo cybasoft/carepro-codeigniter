@@ -40,7 +40,9 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title"><?php echo lang('assigned children'); ?>
-                    <button type="button" class="btn btn-warning btn-xs card-tools" data-toggle="modal"
+                    <button type="button"
+                            class="btn btn-warning btn-xs card-tools"
+                            data-toggle="modal"
                             data-target="#childrenModal">
                         <i class="fa fa-user-plus"></i>
                         <?php echo lang('Assign children'); ?>

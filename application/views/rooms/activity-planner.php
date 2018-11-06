@@ -30,9 +30,9 @@
     </div>
 
     <?php
-    $h_start = "08:00";
-    $h_end = "17:00";
-    $interval = "30";
+    $h_start = session('company_hours_start');
+    $h_end = session('company_hours_end');
+    $interval = "30";//todo
 
     $starttimestamp = strtotime($h_start);
     $endtimestamp = strtotime($h_end);

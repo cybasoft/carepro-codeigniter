@@ -382,6 +382,7 @@ class Auth extends CI_Controller
         //log the user out
         $this->ion_auth->logout();
         $this->conf->setTimer(0);
+        reload_company();
         //redirect them to the login page
         redirect('auth/login', 'refresh');
     }

@@ -9,7 +9,6 @@ class Conf extends CI_Model
     {
         // reload_company();
         init_company();
-//        dd(session('company_top_nav_bg_color'));
 
         if(!empty(session('timezone'))) {
             date_default_timezone_set(session('timezone'));

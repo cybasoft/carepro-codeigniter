@@ -38,16 +38,16 @@ If  you are on development/testing server, create the respective directories and
 
 * Run `php index.php migration run` to run a new migration copy or just `php index.php migration run <version number>`  to upgrade to the latest migration.
 
-* In production mode, run `php indx.php migration run force`
-* Run  `php index.php migration seed <table (optional)>`
+* In production mode, when you run `php indx.php migration run`, you will need to confirm by typing "yes"
+* Run  `php index.php migration seed` to run all available seeds or `php index.php migration seed SeederClass` where SeederClass is the name of the seeder file. Ommit the numeric portion '00_' and extension '.php'.
 
-> The Table option can be left blank to run all available seeds.
+Available seeders:
 
-Available seed options:
+`UsersTableSeeder`- Create admin user
 
-`php index.php migration seed users`- Create admin user
+`GroupsTableSeeder` - Create admin, manager, staff and parent groups
 
-`php index.php migration seed groups` - Create admin, manager, staff and parent groups
+`NewsTableSeeder` - Create fake news
 
 > IMPORTNANT! Remember to set your application to production in index.php when setup is complete! You can also set environment in your .htaccess by adding `SetEnv CI_ENV production`
 

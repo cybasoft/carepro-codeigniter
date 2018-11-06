@@ -69,7 +69,23 @@
                 echo form_input('date_format', $option['date_format'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('Lockscreen timer (mins)'));
                 echo form_input(['type' => 'number', 'step' => 'any', 'name' => 'lockscreen_timer'], $option['lockscreen_timer'], ['class' => 'form-control']);
+                echo form_label(lang('Business hours'), 'hours_start');
+
                 ?>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label('Start time');
+                        echo form_time('hours_start', $option['hours_start'], ['class' => 'form-control']);
+                        ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label('End time');
+                        echo form_time('hours_end', $option['hours_end'], ['class' => 'form-control']);
+                        ?>
+                    </div>
+                </div>
                 <hr/>
                 <div class="row">
                     <div class="col-md-1">

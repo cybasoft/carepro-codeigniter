@@ -28,7 +28,7 @@ class My_migration extends CI_Model
 
             $name = $this->_get_seeder_name($file);
 
-            if($name == $class) {
+            if($name == $class.'.php') {
                 $path = $this->seedDir.DIRECTORY_SEPARATOR.$file;
                 break;
             }

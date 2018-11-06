@@ -21,6 +21,10 @@ class Settings extends CI_Controller
 
     function index()
     {
+        if(session('company_demo_mode') ==1){
+            allow('super');
+        }
+
         $this->load->model('My_backup', 'backup');
 
         $payMethods = $this->db->get('payment_methods')->result();
@@ -30,6 +34,7 @@ class Settings extends CI_Controller
         foreach($settings as $key=>$val){
              $option[$val['option_name']]=$val['option_value'];
         }
+
         page($this->module.'settings', compact('payMethods','option'));
     }
 

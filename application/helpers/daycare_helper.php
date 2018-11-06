@@ -573,6 +573,8 @@ function general_options()
         'tax_id' => '',
         'lockscreen_timer' => '',
         'custom_css' => '',
+        'hours_start'=>'',
+        'hours_end'=>''
     ];
 }
 
