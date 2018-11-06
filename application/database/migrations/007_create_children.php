@@ -54,6 +54,7 @@ class Migration_create_children extends CI_Migration
             'photo' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100,
+                'null'=>TRUE
             ),
             'user_id' => array(
                 'type' => 'INT',

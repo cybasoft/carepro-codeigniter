@@ -14,6 +14,16 @@ class UsersTableSeeder extends CI_Model
         $this->db->truncate('users');
         $this->seedDefaultUsers();
 
+        $photos = [];
+        foreach (scandir(APPPATH.'../assets/uploads/users') as $file) {
+            if(pathinfo($file, PATHINFO_EXTENSION) == 'jpg' || pathinfo($file, PATHINFO_EXTENSION) == 'png') {
+                //delete
+//                @unlink(APPPATH.'../assets/uploads/staff/'.$file);
+                //reuse
+                $photos[] = $file;
+            }
+        }
+
         for ($i = 1; $i <= $limit; $i++) {
             if ($i % 2 == 0) {
                 $g = 'male';
@@ -28,6 +38,7 @@ class UsersTableSeeder extends CI_Model
                 'password' => password_hash('password', PASSWORD_BCRYPT),
                 'pin' => rand(1111, 9999),
                 'active' => 1,
+                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
             ];
             $this->db->insert('users', $data);
 
@@ -39,6 +50,16 @@ class UsersTableSeeder extends CI_Model
 
     public function seedDefaultUsers()
     {
+        $photos = [];
+        foreach (scandir(APPPATH.'../assets/uploads/users') as $file) {
+            if(pathinfo($file, PATHINFO_EXTENSION) == 'jpg' || pathinfo($file, PATHINFO_EXTENSION) == 'png') {
+                //delete
+//                @unlink(APPPATH.'../assets/uploads/staff/'.$file);
+                //reuse
+                $photos[] = $file;
+            }
+        }
+
         $users = [
             [
                 'first_name' => 'Super',
@@ -48,6 +69,7 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
+                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
             ],
             [
                 'first_name' => 'Admin',
@@ -57,6 +79,7 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
+                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
             ],
             [
                 'first_name' => 'Manager',
@@ -66,6 +89,7 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
+                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
             ],
             [
                 'first_name' => 'Staff',
@@ -75,6 +99,7 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
+                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
             ],
             [
                 'first_name' => 'Parent',
@@ -84,6 +109,7 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
+                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
             ],
         ];
         foreach ($users as $user) {

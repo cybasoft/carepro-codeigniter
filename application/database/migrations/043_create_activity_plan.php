@@ -11,7 +11,7 @@ class Migration_create_activity_plan extends CI_Migration
 
     public function up()
     {
-
+        $this->db->query('ALTER TABLE children MODIFY photo varchar(100);');
         $this->meal_plan('activity_plan');
     }
 

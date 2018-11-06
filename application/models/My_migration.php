@@ -16,33 +16,29 @@ class My_migration extends CI_Model
      * Seeds for one class in application/da
      *
      **/
-    public function seedOne($class = NULL)
+    public function seedOne($name = NULL)
     {
-        if($class == NULL) {
+        if($name == NULL) {
             show_error('No seeder classname entered');
         }
 
-        $path = '';
         foreach (scandir($this->seedDir) as $file) {
             if($file == "." || $file == "..") continue;
 
-            $name = $this->_get_seeder_name($file);
+            $class = $this->_get_seeder_name($file);
 
-            if($name == $class.'.php') {
-                $path = $this->seedDir.DIRECTORY_SEPARATOR.$file;
+
+            if(str_replace('.php','',$class) == $name) {
+                require_once $this->seedDir.$file;
+
+                $this->_do_seed($name);
+
+                echo 'Completed seeding '.$name.PHP_EOL;
                 break;
             }
 
         }
 
-        if(is_file($path)) {
-            require_once $path;
-            $this->_do_seed($class);
-        } else {
-            show_error('Seeder file not found');
-        }
-
-        echo 'Completed seeding '.$class.PHP_EOL;
     }
 
     public function seedAll()
@@ -60,7 +56,7 @@ class My_migration extends CI_Model
 
             $class = $this->_get_seeder_name($name);
 
-            $this->_do_seed($class);
+            $this->_do_seed(basename($class,'.php'));
 
             $count++;
         }
@@ -126,7 +122,7 @@ class My_migration extends CI_Model
 
         $this->db->query('SET FOREIGN_KEY_CHECKS=0;');
 
-        $class = basename($class,'.php');
+        $class = basename($class);
 
         $cn = new $class;
 

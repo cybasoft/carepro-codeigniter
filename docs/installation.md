@@ -43,11 +43,11 @@ If  you are on development/testing server, create the respective directories and
 
 Available seeders:
 
-`UsersTableSeeder`- Create admin user
-
-`GroupsTableSeeder` - Create admin, manager, staff and parent groups
-
-`NewsTableSeeder` - Create fake news
+`UsersTableSeeder`
+`GroupsTableSeeder`
+`NewsTableSeeder`
+`RoomsTableSeeder`
+`CalendarTableSeeder`
 
 > IMPORTNANT! Remember to set your application to production in index.php when setup is complete! You can also set environment in your .htaccess by adding `SetEnv CI_ENV production`
 

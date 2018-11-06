@@ -59,7 +59,7 @@
                         'active' => ['news', 'article'],
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ], [
-                        'name' => 'Settigns',
+                        'name' => 'Settings',
                         'link' => 'settings',
                         'icon' => 'settings',
                         'active' => ['settings'],

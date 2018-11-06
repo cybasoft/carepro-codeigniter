@@ -27,7 +27,7 @@ class My_children extends CI_Model
             ->group_by('c.id')
             ->get();
 
-        if(count($res->result_array) > 0)
+        if(count($res->result_array()) > 0)
             return $res->result();
 
         return [];
