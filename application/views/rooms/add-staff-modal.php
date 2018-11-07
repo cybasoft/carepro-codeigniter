@@ -27,7 +27,6 @@
                             <label class="checkbox-inline">
                                     <input type="checkbox"
                                            name="user_id[]"
-                                        <?php echo (related('child_room_staff', 'user_id', $s->id, 'room_id', $room->id)) ? 'checked' : ''; ?>
                                            value="<?php echo $s->id; ?>"/>
                                 <span class="staffname"><?php echo $s->first_name.' '.$s->last_name; ?></span>
                             </label>

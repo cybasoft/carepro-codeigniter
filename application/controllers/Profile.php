@@ -25,7 +25,7 @@ class Profile extends CI_Controller
 	function index()
 	{
 		$data = array(
-			'user' => $this->user->user()
+			'user' => $this->user->get()
 		);
 		page($this->module . 'profile', $data);
 

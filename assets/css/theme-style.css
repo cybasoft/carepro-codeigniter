@@ -1208,7 +1208,7 @@ label, output {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    padding: 0 4px
+    padding: 0 4px;
 }
 
 .photo-column {
@@ -1270,7 +1270,13 @@ label, output {
     object-fit: cover;
     max-width: 100%;
     min-width: 100%;
-    vertical-align: bottom
+    vertical-align: bottom;
+
+    padding: .25rem;
+    background-color: #fff;
+    border: 2px solid #dee2e6;
+    border-radius: .25rem;
+    cursor: pointer;
 }
 
 @media (max-width: 980px) {
@@ -2314,7 +2320,7 @@ a[data-ci-pagination-page]:hover:not(.active) {
     font-size: 10px
 }
 
-.weekly table .meal-item,.weekly table .activity-item {
+.weekly table .meal-item, .weekly table .activity-item {
     display: block;
     background: #009688;
     margin-bottom: 1px;
@@ -2324,7 +2330,7 @@ a[data-ci-pagination-page]:hover:not(.active) {
 }
 
 @media (max-width: 60em) {
-    .weekly  table tbody tr td.day span {
+    .weekly table tbody tr td.day span {
         transform: rotate(270deg);
         -webkit-transform: rotate(270deg);
         -moz-transform: rotate(270deg);
@@ -2332,11 +2338,11 @@ a[data-ci-pagination-page]:hover:not(.active) {
 }
 
 @media (max-width: 27em) {
-    .weekly  table thead tr th {
+    .weekly table thead tr th {
         font-size: 65%;
     }
 
-    .weekly  table thead tr th .time {
+    .weekly table thead tr th .time {
         display: block;
         font-size: 1.2em;
         border-radius: 50%;
@@ -2369,7 +2375,8 @@ a[data-ci-pagination-page]:hover:not(.active) {
 .weekly-header .fa-chevron-right:hover, .weekly-header .fa-chevron-left:hover {
     color: #ccc;
 }
-.weekly-btns{
-    margin:5px 0;
+
+.weekly-btns {
+    margin: 5px 0;
     text-align: center;
 }

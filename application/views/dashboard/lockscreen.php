@@ -8,11 +8,11 @@
     <?php endif; ?>
     <div class="headline text-center" id="time"></div>
     <div class="lockscreen-name">
-        <?php echo strtoupper($this->user->user()->last_name); ?>
+        <?php echo strtoupper($this->user->get(user_id(),'last_name')); ?>
     </div>
     <div class="lockscreen-item">
         <div class="lockscreen-image">
-            <img src="<?php echo $this->user->photo(user_id()); ?>"/>
+            <img src="<?php echo $this->user->photo(session('photo')); ?>"/>
         </div>
         <div class="lockscreen-credentials">
             <?php echo form_open(uri_string()); ?>

@@ -15,6 +15,36 @@ class My_rooms extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
+    function getRoom($id)
+    {
+        $room = $this->db->where('id', $id)->get('child_rooms')->row();
+
+        $room->children = $this->db->select('children.id as child_id,children.first_name,children.last_name,children.photo,child_rooms.name,child_rooms.description,child_room.child_id,child_room.room_id')
+            ->from('children')
+            ->join('child_room', 'child_room.child_id=children.id')
+            ->join('child_rooms', 'child_rooms.id=child_room.room_id')
+            ->where('child_rooms.id', $id)
+            ->get()->result();
+
+        $room->staff = $this->db->select('*')
+            ->from('users')
+            ->join('child_room_staff', 'child_room_staff.user_id=users.id')
+            ->where('child_room_staff.room_id', $id)
+            ->get()->result();
+
+        $room->notes = $this->db->select("crn.*,concat(u.first_name, ' ', u.last_name) as name, u.photo")
+            ->from('child_room_notes crn')
+            ->join('users u', 'u.id=crn.user_id')
+            ->where('crn.room_id', $id)
+            ->order_by('crn.created_at', 'desc')
+            ->get()->result();
+
+        $room->meals = $this->meal->meals($id);
+        $room->activities = $this->activity->activities($id);
+
+        return $room;
+    }
+
     /**
      * @return mixed
      */
@@ -123,7 +153,6 @@ class My_rooms extends CI_Model
             ->from('child_room_notes crn')
             ->join('users u', 'u.id=crn.user_id')
             ->where('crn.room_id', $id)
-
             ->order_by('crn.created_at', 'desc')
             ->get()
             ->result();

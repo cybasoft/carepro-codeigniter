@@ -26,7 +26,7 @@
                         <?php foreach ($allChildren as $c): ?>
                             <label class="checkbox-inline">
                                     <input type="checkbox"
-                                           name="child_id[]" <?php echo (related('child_room', 'child_id', $c->id, 'room_id', $room->id)) ? 'checked' : ''; ?>
+                                           name="child_id[]"
                                            value="<?php echo $c->id; ?>"/>
                                 <span class="childname"><?php echo $c->first_name.' '.$c->last_name; ?></span>
                             </label>

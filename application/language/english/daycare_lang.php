@@ -569,3 +569,4 @@ $lang['New activity'] = 'New activity';
 $lang['Business hours'] = 'Business hours';
 $lang['Start time'] = 'Start time';
 $lang['End time'] = 'End time';
+$lang['Enabled'] = 'Enabled';

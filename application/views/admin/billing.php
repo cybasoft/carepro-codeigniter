@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -65,6 +64,9 @@
                     echo form_input('stripe_pk_live', $option['stripe_pk_live'], ['class' => 'form-control']);
                     echo form_label(lang('Stripe live secret key'));
                     echo form_password('stripe_sk_live', $option['stripe_sk_live'], ['class' => 'form-control']);
+                    echo '<br/>';
+                    echo form_label(lang('Enabled'), 'stripe_enabled');
+                    echo form_dropdown('stripe_enabled', [0 => lang('No'), 1 => lang('Yes')], $option['stripe_enabled'], ['class' => 'form-control']);
                     echo '<br/>';
                     echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
                     echo form_close('demo');

@@ -53,7 +53,7 @@ class My_activity extends CI_Model
     /**
      * @return mixed
      */
-    function activities()
+    function activities($id)
     {
         if(isset($_GET['week']) && $_GET['week'] !== "") {
             $date = $_GET['week'];
@@ -61,6 +61,7 @@ class My_activity extends CI_Model
             $result = $this->db
                 ->where('activity_date >=', $date)
                 ->where('activity_date <=', $end_date)
+                ->where('room_id',$id)
                 ->get('activity_plan')
                 ->result_array();
         } else {
@@ -68,6 +69,7 @@ class My_activity extends CI_Model
             $result = $this->db
                 ->where('activity_date >=', $monday)
                 ->where('activity_date <=', date('Y-m-d', strtotime('monday this week +6 days')))
+                ->where('room_id',$id)
                 ->get('activity_plan')
                 ->result_array();
         }

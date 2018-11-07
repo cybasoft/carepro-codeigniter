@@ -1398,7 +1398,7 @@ class Ion_auth_model extends CI_Model
         $this->set_message('delete_successful');
 
         //log event
-        logEvent("Deleted {$this->user->user($id)->email}");
+        logEvent("Deleted {$this->user->get($id,'email')}");
 
         return TRUE;
     }

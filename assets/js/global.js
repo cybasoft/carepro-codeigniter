@@ -109,7 +109,6 @@ $(document).ready(function () {
         var loc = $(this).attr('href');
         swal({
             title: lang['confirm_delete_title'],
-            text: lang['confirm_delete_warning'],
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#DD6B55',

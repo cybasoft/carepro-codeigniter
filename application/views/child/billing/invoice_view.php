@@ -150,44 +150,46 @@
                                         <tr class="text-right text-danger">
                                             <td colspan="4" class="no-border "> <?php echo lang('amount_due'); ?> :</td>
                                             <td>
-                                                <?php if($amountDue < 0): ?>
+                                                <?php if(moneyFormat($amountDue) < 0): ?>
                                                     <span class="label label-success"><?php echo lang('refund'); ?></span>
                                                 <?php endif; ?>
-                                                <?php echo moneyFormat($amountDue, TRUE); ?>
+                                                <?php echo moneyFormat($amountDue,true); ?>
                                             </td>
                                         </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card-footer">
+                            <h4><?php echo lang('Invoice terms'); ?></h4>
+                            <?php echo $invoice[0]->invoice_terms; ?>
+                        </div>
+                    </div>
 
+                    <div class="card">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-12">
-
-                                    <?php if((int)$amountDue > 0):
-                                        if(!empty(session('company_stripe_sk_live') || !empty(session('company_stripe_sk_test')))): ?>
+                                    <?php if(moneyFormat($amountDue) > 0):
+                                        if(get_option('stripe_enabled')==1): ?>
                                             <?php $this->load->view('child/billing/payment_stripe'); ?>
                                             <hr/>
                                         <?php endif; ?>
 
-                                        <?php if(!empty(session('company_paypal_email'))): ?>
+                                        <?php if(!empty(get_option('paypal_email'))): ?>
                                         <div style="border:solid 1px #CCCCCC;padding:10px">
                                             <h4>PayPal</h4>
                                             <a href="<?php echo site_url('invoice/'.$invoice[0]->id.'/paypal'); ?>"
-                                               class="btn btn-primary">
-                                                <img src="<?php echo assets('img/content/paypal.svg'); ?>"
-                                                     style="width:16px;"/>
-                                                <?php echo sprintf(lang('pay_with'), 'PayPal'); ?></a>
+                                               class="btn btn-info">
+                                                <i class="fa fa-cc-paypal"></i>
+                                                <?php echo sprintf(lang('pay_with').' %s', 'PayPal'); ?></a>
                                         </div>
                                     <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>
                             <div class="load"></div>
-                        </div>
-                        <div class="card-footer">
-                            <h4><?php echo lang('invoice_terms'); ?></h4>
-                            <?php echo $invoice[0]->invoice_terms; ?>
                         </div>
                     </div>
 

@@ -8,19 +8,12 @@ class Migration_add_stripe_id_to_user extends CI_Migration
      *
      * @return void
      */
-    protected $table = 'children';
+    protected $table = 'user';
 
     public function up()
     {
-        $field1 = array(
-            'stripe_customer_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'null' => TRUE,
-                'unique'=>true
-            ),
-        );
-        $this->dbforge->add_column($this->table, $field1);
+       //nothing here
+        //moved to migration 044
     }
 
     /**
@@ -30,8 +23,7 @@ class Migration_add_stripe_id_to_user extends CI_Migration
      */
     public function down()
     {
-        // Drop table child_allergy
-        $this->dbforge->drop_column($this->table, 'stripe_customer_id');
+       //nothing here
     }
 
 }

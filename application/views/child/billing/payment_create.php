@@ -16,7 +16,7 @@
                         <?php echo lang('amount'); ?>
                     </div>
                     <div class="col-sm-6">
-                        <input name="amount" value="" class="form-control" required=""/>
+                        <input type="number" step="0.01" name="amount" value="" class="form-control" required=""/>
                     </div>
                 </div>
                 <br/>

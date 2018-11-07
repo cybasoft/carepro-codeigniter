@@ -15,7 +15,7 @@ class MY_user extends CI_Model
      *
      * @return bool
      */
-    public function reg($password, $email, $additional_data = array(), $groups = array())
+    public function reg($password, $email, $additional_data = [], $groups = [])
     {
         $this->load->model('ion_auth_model');
         $this->ion_auth->trigger_events('pre_register');
@@ -29,15 +29,15 @@ class MY_user extends CI_Model
         $ip_address = $this->input->ip_address();
         $password = $this->ion_auth->hash_password($password);
         // Users table.
-        $data = array(
+        $data = [
             'password' => $password,
             'email' => $email,
             'ip_address' => $ip_address,
             'created_at' => date_stamp(),
             'last_login' => date_stamp(),
-            'active' => ($manual_activation === false ? 1 : 0)
+            'active' => ($manual_activation === FALSE ? 1 : 0),
 
-        );
+        ];
         //filter out any data passed that doesnt have a matching column in the users table
         //and merge the set user data and the additional data
         $userData = array_merge($this->ion_auth->_filter_data('users', $additional_data), $data);
@@ -82,50 +82,29 @@ class MY_user extends CI_Model
      *
      * @return bool
      */
-    function user($id = null)
+    function get($id = NULL, $item = '')
     {
-        if($id == null) {
+        if($id == NULL) {
             $uid = $this->uid();
         } else {
             $uid = $id;
         }
+
         $query = $this->db->where('id', $uid)->get('users');
+
         if($query->num_rows() > 0) {
-            return $query->row();
+            $user = $query->row();
+
+            if($item == 'name')
+                return $user->first_name.' '.$user->last_name;
+
+            if($item !== '')
+                return $user->$item;
+
+            return $user;
         }
-        return false;
+        return FALSE;
         //return $this->db->get('users')->row();
-    }
-
-    /**
-     * @param $id
-     * @param $item
-     *
-     * @return string
-     */
-    function get($id = null, $item = '')
-    {
-        if($id == null)
-            $id = $this->uid();
-
-        $user = $this->user($id);
-        if($user !== false && !empty($item)) {
-            if(is_array($item)) {
-                $u = '';
-                foreach ($item as $i) {
-                    $u .= $user->$i;
-                }
-                return $u;
-            } else {
-                if($item == 'name')
-                    return $user->first_name.' '.$user->last_name;
-
-                $user = (array)$user;
-                return $user[$item];
-            }
-
-        }
-        return '';
     }
 
     /**
@@ -143,9 +122,9 @@ class MY_user extends CI_Model
         $this->db->join('groups', 'users_groups.group_id=groups.id');
 
         if($this->db->get()->num_rows() > 0)
-            return true;
+            return TRUE;
 
-        return false;
+        return FALSE;
     }
 
     function uid()
@@ -183,13 +162,13 @@ class MY_user extends CI_Model
                 return $row->$item;
             }
         }
-        return false;
+        return FALSE;
     }
 
 
-    function getCount($group = null)
+    function getCount($group = NULL)
     {
-        if($group == null)
+        if($group == NULL)
             return $this->db->count_all_results('users');
 
         $query = "SELECT g.name, count(*) AS total 

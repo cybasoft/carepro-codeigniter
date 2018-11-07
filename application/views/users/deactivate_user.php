@@ -11,7 +11,7 @@
                 <?php else: ?>
                     <div class="callout callout-info">
                         <h3><?php echo lang('deactivate_heading'); ?></h3>
-                        <p><?php echo sprintf(lang('deactivate_subheading'), $this->user->user($id)->last_name); ?></p>
+                        <p><?php echo sprintf(lang('deactivate_subheading'), $this->user->get($id,'name')); ?></p>
                     </div>
                     <?php echo form_open('users/deactivate/'.$id); ?>
                     <input type="hidden" name="confirm" value="yes"/>

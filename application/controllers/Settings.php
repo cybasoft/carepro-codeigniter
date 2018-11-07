@@ -65,6 +65,8 @@ class Settings extends CI_Controller
             echo 'error';
             exit;
         }
+
+        reload_company();
         echo 'success';
     }
 

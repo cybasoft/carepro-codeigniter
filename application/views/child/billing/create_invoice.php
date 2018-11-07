@@ -69,7 +69,7 @@
                     <tfoot>
                     <tr>
                         <td colspan="3" rowspan="3" class="text-right">
-                            <label><?php echo lang('invoice_terms'); ?></label>
+                            <label><?php echo lang('Invoice terms'); ?></label>
                             <textarea name="invoice_terms" rows="4"
                                       class="form-control"><?php echo session('company_invoice_terms'); ?></textarea>
                         </td>

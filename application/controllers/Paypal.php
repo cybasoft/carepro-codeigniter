@@ -54,7 +54,7 @@ class Paypal extends CI_Controller
         $amoutDue = $this->invoice->amountDue($invoice_id);
         $child = $this->child->first($invoice->child_id);
 
-        $user = $this->user->get();
+        $user = $this->user->get(user_id());
         $email = $user->email;
         $querystring = "?business=" . urlencode(session('company_paypal_email')) . "&";
         $querystring .= "item_name=" . urlencode($child->first_name . ' ' . $child->last_name) . "&";

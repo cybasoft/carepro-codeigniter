@@ -151,6 +151,25 @@ function redirectPrev($msg = [], $tab = '')
 function is($group)
 {
     $ci = &get_instance();
+//
+//    $ci->db->select('id');
+//    $ci->db->where('users_groups.user_id', user_id());
+//    $ci->db->from('groups');
+//    $ci->db->join('users_groups', 'users_groups.group_id=groups.id');
+//    if(is_numeric($group)) {
+//        $ci->db->or_where('groups.id', $group);
+//    }
+//    if(is_array($group)) {
+//        foreach ($group as $g) {
+//            if(is_numeric($g))
+//                $ci->db->or_where('groups.id', $g);
+//            else
+//                $ci->db->or_where('groups.name', $g);
+//        }
+//    }
+//    $res = $ci->db->count_all_results();
+//    if($res > 1)
+//        return TRUE;
 
     if(logged_in())
         if($ci->ion_auth->in_group($group))
@@ -346,7 +365,7 @@ function demo()
         'children',
         'rooms',
         'calendar',
-        'messaging'
+        'messaging',
     ];
 
     $ci = &get_instance();
@@ -521,8 +540,9 @@ function checkinTimer($in, $out)
     return $timeDiff;
 }
 
-function time_difference($in,$out){
-    return checkinTimer($in,$out);
+function time_difference($in, $out)
+{
+    return checkinTimer($in, $out);
 }
 
 function sensitive_options()
@@ -573,8 +593,9 @@ function general_options()
         'tax_id' => '',
         'lockscreen_timer' => '',
         'custom_css' => '',
-        'hours_start'=>'',
-        'hours_end'=>''
+        'hours_start' => '',
+        'hours_end' => '',
+        'stripe_enabled' => 0,
     ];
 }
 
@@ -724,8 +745,6 @@ function empty_option($name)
     reload_company();
     return TRUE;
 }
-
-
 
 function g_decor($name)
 {
@@ -918,14 +937,13 @@ function init_company()
 
             $company_data['company_'.$opt] = $value;
         }
-        if(empty($company_data))
-        {
-            if(is_cli()){
+        if(empty($company_data)) {
+            if(is_cli()) {
                 session_start();
-            }else{
+            } else {
                 die('Please complete installation');
             }
-        }else{
+        } else {
             session(['init_company' => 1]);
 
             session($company_data);

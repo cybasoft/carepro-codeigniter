@@ -7,19 +7,18 @@
     <hr/>
     <div class="form-row">
         <label for="card-element"><?php echo lang('Credit or debit card'); ?></label>
-        <div id="card-element"></div>
+        <div id="card-element" style="width:100%"></div>
         <div id="card-errors" role="alert"></div>
     </div>
     <br/>
-    <button class="btn btn-info submit-pay">
-        <img src="<?php echo assets('img/content/stripe.svg'); ?>" style="width:16px;"/> <?php echo sprintf(lang('pay_with'), 'Stripe'); ?>
+    <button class="btn btn-primary submit-pay">
+        <img src="<?php echo assets('img/content/stripe.svg'); ?>"
+             style="width:16px;"/> <?php echo sprintf(lang('pay_with').' %s', 'Stripe'); ?>
     </button>
 </form>
 <script>
-    $('.submit-pay').click(function () {
-        $(this).remove()
-    });
-    var stripe = Stripe("<?php  echo (ENVIRONMENT == 'production') ? session('company_stripe_pk_live') : $stripeKey = session('company_stripe_pk_test'); ?>");
+    var stripe = Stripe("<?php  echo (ENVIRONMENT == 'production') ? session('stripe_pk_live') : $stripeKey = session('stripe_pk_test'); ?>");
+
     var elements = stripe.elements();
     var style = {
         base: {
@@ -59,6 +58,7 @@
             }
         });
     });
+
     function stripeTokenHandler(token) {
         // Insert the token ID into the form so it gets submitted to the server
         var form = document.getElementById('payment-form');

@@ -204,7 +204,7 @@
                     </td>
                     <?php foreach ($mealTypes as $mealType): ?>
                         <td class="meal-day">
-                            <?php foreach ($this->meal->getMeal($mealType->id, $date, $meals) as $item): ?>
+                            <?php foreach ($this->meal->getMeal($mealType->id, $date, $room->meals) as $item): ?>
                                 <?php if(is(['admin', 'manager', 'staff'])): ?>
                                     <a href="<?php echo site_url('meals/delete/'.$item['id']); ?>"
                                        class="delete meal-item"><?php echo $item['name']; ?></a>

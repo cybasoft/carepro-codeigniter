@@ -121,8 +121,7 @@
                                     <div class="card-footer">
                                         <?php echo format_date($incident->date_occurred); ?>
                                         <?php echo lang('by'); ?>
-                                        <?php echo $this->user->user($incident->user_id)->first_name; ?>
-                                        <?php echo $this->user->user($incident->user_id)->last_name; ?>
+                                        <?php echo $this->user->get($incident->user_id,'name'); ?>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

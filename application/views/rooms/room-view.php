@@ -26,8 +26,14 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <?php foreach ($staff as $as): ?>
+                    <?php foreach ($room->staff as $as): ?>
                         <div class="col-sm-4 text-center">
+                            <?php if(is(['admin', 'manager'])): ?>
+                            <a  class="delete" href="/rooms/detachStaff/<?php echo $room->id.'/'.$as->id; ?>"
+                               style="position: absolute;right: 10px;top:-10px">
+                                <i class="fa fa-times-circle text-danger"></i>
+                            </a>
+                            <?php endif; ?>
                             <img class="img-thumbnail" style="height:100px;"
                                  src="<?php echo $this->user->photo($as->photo); ?>"/><br/>
                             <?php echo $as->first_name.' '.$as->last_name; ?>
@@ -53,8 +59,14 @@
             <div class="card-body">
 
                 <div class="row">
-                    <?php foreach ($children as $cg): ?>
-                        <div class="col-sm-4 text-center">
+                    <?php foreach ($room->children as $cg): ?>
+                        <div class="col-sm-4 text-center" style="margin-bottom:10px">
+                            <?php if(is(['admin', 'manager'])): ?>
+                                <a class="delete" href="/rooms/detachChild/<?php echo $room->id.'/'.$cg->child_id; ?>"
+                                   style="position: absolute;right: 10px;top:-10px">
+                                    <i class="fa fa-times-circle text-danger"></i>
+                                </a>
+                            <?php endif; ?>
                             <img class="img-thumbnail" style="width:100px;height:100px;"
                                  src="<?php echo $this->child->photo($cg->photo); ?>"/><br/>
                             <?php echo anchor('child/'.$cg->child_id, $cg->first_name.' '.$cg->last_name); ?>
@@ -67,26 +79,26 @@
     </div>
 
     <div class="col-sm-8">
-       <ul class="nav nav-tabs" role="tablist">
-           <li class="nav-item">
-               <a class="nav-link active show" href="#notes" aria-controls="notes" role="tab" data-toggle="tab">
-                   <i class="fa fa-clipboard"></i>
-                   <?php echo lang('Notes'); ?>
-               </a>
-           </li>
-           <li class="nav-item">
-               <a class="nav-link" href="#activities" aria-controls="activities" role="tab" data-toggle="tab">
-                   <i class="fa fa-weight"></i>
-                   <?php echo lang('Activity Plan'); ?>
-               </a>
-           </li>
-           <li class="nav-item">
-               <a class="nav-link" href="#meal" aria-controls="meal" role="tab" data-toggle="tab">
-                   <i class="fa fa-calendar-check"></i>
-                   <?php echo lang('Meal Plan'); ?>
-               </a>
-           </li>
-       </ul>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" href="#notes" aria-controls="notes" role="tab" data-toggle="tab">
+                    <i class="fa fa-clipboard"></i>
+                    <?php echo lang('Notes'); ?>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#activities" aria-controls="activities" role="tab" data-toggle="tab">
+                    <i class="fa fa-weight"></i>
+                    <?php echo lang('Activity Plan'); ?>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#meal" aria-controls="meal" role="tab" data-toggle="tab">
+                    <i class="fa fa-calendar-check"></i>
+                    <?php echo lang('Meal Plan'); ?>
+                </a>
+            </li>
+        </ul>
         <div class="tab-content tabcontent-border">
             <div role="tabpanel" class="tab-pane fade in active show" id="notes">
                 <?php $this->load->view($this->module.'room-notes'); ?>

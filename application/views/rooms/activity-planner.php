@@ -91,7 +91,7 @@
                         }
                         ?>
                         <td class="hour">
-                            <?php foreach ($this->activity->getActivity($date, $hour, $activities) as $item): ?>
+                            <?php foreach ($this->activity->getActivity($date, $hour, $room->activities) as $item): ?>
                                 <span
                                         id="<?php echo $item['id']; ?>"
                                         data-name="<?php echo $item['name']; ?>"

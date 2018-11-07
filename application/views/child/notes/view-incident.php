@@ -14,8 +14,7 @@ if(count((array)$incident) > 0):
                     <?php
                     echo sprintf(lang('created on %s by %s'),
                         format_date($incident->created_at),
-                        $this->user->user($incident->user_id)->first_name.' '
-                        .$this->user->user($incident->user_id)->last_name);
+                        $this->user->get($incident->user_id,'name'));
                     ?>
 
                 </em>

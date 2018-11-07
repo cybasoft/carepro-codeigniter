@@ -168,7 +168,7 @@
             </table>
 
             <?php if(!empty($invoice->invoice_terms)): ?>
-                <h4><?php echo lang('invoice_terms'); ?></h4>
+                <h4><?php echo lang('Invoice terms'); ?></h4>
 
                 <div class="text-muted well well-sm no-shadow"><?php echo $invoice->invoice_terms; ?></div>
             <?php endif; ?>

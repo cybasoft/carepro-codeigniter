@@ -169,7 +169,7 @@
     </tbody>
 </table>
 
-<h4><?php echo lang('invoice_terms'); ?></h4>
+<h4><?php echo lang('Invoice terms'); ?></h4>
 <?php echo $invoice->invoice_terms; ?>
 </body>
 </html>

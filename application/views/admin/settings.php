@@ -32,26 +32,20 @@
                     <div class="row">
                         <div class="col-md-6">
                             <ul>
-                                <li><a href="https://github.com/amdtllc/daycarepro/wiki">Wiki</a></li>
-                                <li><a href="https://amdtcllc.com/support">Support tickets</a></li>
-                                <li><a href="https://github.com/amdtllc/daycarepro/wiki/Change-log">Change log</a></li>
-                                <li><a href="https://github.com/amdtllc/daycarepro/wiki/Configuration">Configuration</a>
-                                </li>
-                                <li><a href="https://github.com/amdtllc/daycarepro/issues">Known issues</a></li>
-                                <li><a href="https://github.com/amdtllc/daycarepro/wiki/Licenses">Licenses</a></li>
+                                <li><a target="_blank" href="<?php echo site_url('docs'); ?>">User Guide</a></li>
+                                <li><a target="_blank" href="https://support.amdtllc.com">Support tickets</a></li>
+                                <li><a target="_blank" href="<?php echo site_url('docs/#/changelog'); ?>">Change log</a></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <div class="callout callout-info">
-                                <h3>Thank you for supporting this project!</h3>
+                                <h3>Thank you for your support!</h3>
                                 <p>Your donation helps us keep working on this script and make it available at a
                                     very affordable price and provide free support</p>
                                 <form action="https://www.paypal.com/cgi-bin/webscr" target="_blank" method="post">
                                     <input type="hidden" name="cmd" value="_s-xclick">
                                     <input type="hidden" name="hosted_button_id" value="Q3N6CNB3RRJBJ">
-                                    <input type="image"
-                                           src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
-                                           name="submit" alt="PayPal - The safer, easier way to pay online!">
+                                    <button class="btn btn-primary btn-block"><i class="fa fa-paypal"></i> DONATE</button>
                                     <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
                                          width="1"
                                          height="1">

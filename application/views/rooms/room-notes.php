@@ -15,7 +15,7 @@
             Sort by date
         </a>
         <div class="list list-group">
-            <?php foreach ($notes as $note): ?>
+            <?php foreach ($room->notes as $note): ?>
                 <div class="list-group-item">
                     <div class="media">
                         <div class="align-self-start mr-2">
@@ -26,7 +26,7 @@
                         <div class="media-body">
                             <p class="mb-1">
                                 <a class="text-purple m-0"
-                                   href="#"><?php echo $this->user->get($note->user_id, 'name'); ?></a>
+                                   href="#"><?php echo $note->name; ?></a>
                                 <small class="text-muted room-note-date"> <?php echo format_date($note->created_at, TRUE); ?></small>
                             </p>
                             <div class="text-sm room-note">

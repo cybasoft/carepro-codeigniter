@@ -89,7 +89,8 @@ class Invoice extends CI_Controller
             $token = $_POST['stripeToken'];
             require_once APPPATH."third_party/stripe/init.php";
 
-            $user = $this->user->get();
+            $user = $this->user->get(user_id());
+
             $email = $user->email;
 
             //invoice
@@ -107,14 +108,14 @@ class Invoice extends CI_Controller
             //check if user is already registered
             if($user->stripe_customer_id == "") {
                 //add customer to stripe
-                $customer = $this->invoice->createStripeCustomer();
+                $customer = $this->invoice->createStripeCustomer($user->email, $this->input->post('stripeToken'));
                 $stripeID = $customer->id;
                 //add to database
                 $this->db->where('id', $user->id)->update('users', ['stripe_customer_id' => $stripeID]);
             }
 
             $charge = $this->invoice->createStripeCharge($token, [
-                'amount' => $amoutDue,
+                'amount' => moneyFormat($amoutDue)*100,
                 'description' => "Invoice #$invoice_id for $child->first_name $child->last_name",
                 'invoice_id' => $invoice_id
             ]);
@@ -193,7 +194,7 @@ class Invoice extends CI_Controller
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('description'), 'required|xss_clean');
         $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean|callback_is_money');
-        $this->form_validation->set_rules('invoice_terms', lang('invoice_terms'), 'xss_clean');
+        $this->form_validation->set_rules('invoice_terms', lang('Invoice terms'), 'xss_clean');
 
         if($this->form_validation->run() == TRUE) {
             $invoice = $this->invoice->createInvoice($id);

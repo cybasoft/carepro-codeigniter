@@ -130,10 +130,10 @@ class Meds extends CI_Controller
             $data[] = [
                 'date' => date('d/M/Y', strtotime($result->given_at)),
                 'time' => date('h:ia', strtotime($result->given_at)),
-                'staff' => $this->user->get($result->user_id, ['first_name', 'last_name']),
+                'staff' => $this->user->get($result->user_id, ['name']),
                 'remarks' => ($result->staff_only == 1) ? '<span class="label label-default">'.lang('Staff only').'</span>' : ''
                     .$result->remarks,
-                'actions' => anchor('meds/deleteHistory/'.$result->id, '<i class="fa fa-trash text-danger"></i>', 'class="delete"')
+                'actions' => !is('parent')?anchor('meds/deleteHistory/'.$result->id, '<i class="fa fa-trash text-danger"></i>', 'class="delete"'):''
             ];
         }
 
@@ -162,7 +162,7 @@ class Meds extends CI_Controller
 
         $this->table->set_template(
             [
-                'table_open' => '<table class="table table-responsive table-striped">'
+                'table_open' => '<table class="table table-striped">'
             ]
         );
 
@@ -172,6 +172,8 @@ class Meds extends CI_Controller
 
     function deleteHistory()
     {
+        allow(['admin','manager','staff']);
+
         $this->db->where('id', $this->uri->segment(3))->delete('meds_admin');
 
         if($this->db->affected_rows() > 0)

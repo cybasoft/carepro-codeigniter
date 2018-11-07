@@ -285,9 +285,9 @@ class My_invoice extends CI_Model
         }
         $due = str_replace(',', '', $due);
         $due = str_replace(' ', '', $due);
-        $due = str_replace(session('currency_symbol'), '', $due);
+        $due = str_replace(session('company_currency_symbol'), '', $due);
 
-        return $due;
+        return number_format($due,2);
     }
 
     /**
@@ -399,7 +399,8 @@ class My_invoice extends CI_Model
         try {
             $customer = \Stripe\Customer::create(array(
                 'email' => $email,
-                'source' => $token
+                'source' => $token,
+                'currency'=>session('comapny_currency_abbreviation')
             ));
             return $customer;
         } catch (\Stripe\Error\Card $e) {
@@ -416,11 +417,16 @@ class My_invoice extends CI_Model
             $error = $e->getMessage();
         }
 
+
         if($error !== null) {
             flash('error', $error);
             redirectPrev();
         };
         return false;
+    }
+
+    function money($amount){
+        return $amount;
     }
 
     /**
@@ -437,8 +443,8 @@ class My_invoice extends CI_Model
             //charge a credit or a debit card
             $charge = \Stripe\Charge::create([
                 'source' => $token,
-                'amount' => str_replace('.', '', $data['amount']),
-                'currency' => session('currency_abbreviation'),
+                'amount' => $data['amount'],
+                'currency' => session('company_currency_abbreviation'),
                 'description' => $data['description'],
                 'metadata' => array(
                     'item_id' => $data['invoice_id']
@@ -474,11 +480,12 @@ class My_invoice extends CI_Model
     function createStripeSubscription($data)
     {
         $error = null;
+
         try {
             $charge = \Stripe\Charge::create(array(
                 'customer' => $data['stripe_id'],
-                'amount' => str_replace('.', '', $data['amount']),
-                'currency' => session('currency_abbreviation'),
+                'amount' => $data['amount'],
+                'currency' => session('customer_currency_abbreviation'),
                 'description' => $data['description'],
                 'metadata' => array(
                     'item_id' => $data['invoice_id']

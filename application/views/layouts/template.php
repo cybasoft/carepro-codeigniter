@@ -44,7 +44,7 @@
     <!--    <script src="-->
     <?php //echo assets('plugins/extras/jquery.ui.touch-punch-improved.js'); ?><!--" type="text/javascript"></script>-->
 
-    <?php if(ENVIRONMENT == 'testing'): ?>
+    <?php if(config_item('log_threshold')>0 && ENVIRONMENT == 'development'): ?>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <script type="text/javascript"
                 src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>

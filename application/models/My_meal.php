@@ -43,7 +43,7 @@ class My_meal extends CI_Model
     /**
      * @return mixed
      */
-    function meals()
+    function meals($id)
     {
         if(isset($_GET['week']) && $_GET['week'] !==""){
             $date = $_GET['week'];
@@ -51,6 +51,7 @@ class My_meal extends CI_Model
             $result = $this->db
                 ->where('meal_date >=', $date)
                 ->where('meal_date <=', $end_date)
+                ->where('room_id',$id)
                 ->get('meal_plan')
                 ->result_array();
         }else{
@@ -58,6 +59,7 @@ class My_meal extends CI_Model
             $result = $this->db
                 ->where('meal_date >=', $monday)
                 ->where('meal_date <=', date('Y-m-d', strtotime('monday this week +6 days')))
+                ->where('room_id',$id)
                 ->get('meal_plan')
                 ->result_array();
         }

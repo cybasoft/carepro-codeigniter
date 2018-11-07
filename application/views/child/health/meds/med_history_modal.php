@@ -1,5 +1,5 @@
 <div class="modal fade" id="medHistoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">
@@ -11,7 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="modal-content"></div>
+                <div id="modal-content" style="width:100%"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('close'); ?></button>

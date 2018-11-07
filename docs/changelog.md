@@ -9,6 +9,13 @@
 * Added news, calendar and room seeders
 * Fixed migrations not working on Linux servers
 * Fixed child checkin/out
+* Improved news - added articles sidebar,  added publish time
+* Added pagination to parents
+* Fixed parents list in child view
+* Updated parent's dashboard
+* Fixed payment system
+* Added ability to enable/disable Stripe gateway
+* Performance improvements
 
 ## Version 2.2.0 | 17 Oct 2018
 
