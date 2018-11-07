@@ -6,17 +6,15 @@
                 <?php echo lang('New note'); ?>
             </button>
         </h4>
-
     </div>
+
     <div class="card-body" id="room-notes">
         <input class="search form-control" placeholder="Search"/>
         <br/>
         <a class=" sort  cursor" data-sort="room-note-date">
             Sort by date
         </a>
-
         <div class="list list-group">
-
             <?php foreach ($notes as $note): ?>
                 <div class="list-group-item">
                     <div class="media">

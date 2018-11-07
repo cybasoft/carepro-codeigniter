@@ -6,6 +6,9 @@
 * Design updates with new dashboard info boxes look
 * Fixed issue that prevent checkin/out to work properly
 * Added version number on the footer
+* Added news, calendar and room seeders
+* Fixed migrations not working on Linux servers
+* Fixed child checkin/out
 
 ## Version 2.2.0 | 17 Oct 2018
 

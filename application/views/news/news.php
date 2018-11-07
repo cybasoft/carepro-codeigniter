@@ -25,4 +25,30 @@
             <?php echo $this->pagination->create_links(); ?>
         </div>
     </div>
+    <div class="col-sm-3">
+        <?php if(is(['manager', 'admin'])): ?>
+            <a href="<?php echo site_url('news/create'); ?>" class="btn btn-primary btn-sm btn-flat">
+                <i class="fa fa-plus"></i>
+                <?php echo lang('new_article'); ?>
+            </a>
+            <a href="<?php echo site_url('news/admin'); ?>" class="btn btn-primary btn-sm btn-flat">
+                <i class="fa fa-clipboard"></i>
+                <?php echo lang('News admin'); ?>
+            </a>
+            <hr/>
+        <?php endif; ?>
+        <ul class="nav nav-pills nav-stacked news-sidebar">
+            <h3><?php echo lang('Latest news'); ?></h3>
+            <?php foreach ($articles as $row): ?>
+                <li class="nav-item" style="border-bottom:solid 1px #ccc;">
+                    <a class="nav-link" href="<?php echo site_url('news/article/'.$row->id); ?>">
+                        <?php echo $row->title; ?><br/>
+                        <span class="text-sm text-success">
+                            <?php echo format_date($row->publish_date, FALSE); ?>
+                        </span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 </div>

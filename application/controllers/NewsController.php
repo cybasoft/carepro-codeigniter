@@ -131,18 +131,18 @@ class newsController extends CI_Controller
     /*
      * delete article
      */
-    function delete($id)
+    function delete()
     {
         allow(['admin', 'manager']);
+        $id = $this->uri->segment(3);
 
         if($this->news->delete($id) == TRUE) { //successful
             flash('success', lang('request_success'));
-            redirect('news', 'refresh');
         } else {
             flash('danger', lang('request_error'));
-            redirectPrev();
         }
 
+        redirect('news/admin');
     }
 
     function _pagination($perPage)

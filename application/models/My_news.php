@@ -27,7 +27,7 @@ class My_news extends CI_Model
                     $this->db->$opt($val);
             }
         }
-        $this->db->order_by('created_at','DESC');
+        $this->db->order_by('publish_date','DESC');
         $articles = $this->db->get('news')->result();
 
         return $articles;
@@ -71,13 +71,13 @@ class My_news extends CI_Model
         $data['content'] = $this->input->post('content');
         $data['list_order'] = $this->input->post('list_order');
         $data['status'] = $this->input->post('status');
+        $time = date('H:i:s',strtotime($this->input->post('publish_time')));
+        $data['publish_date'] = $this->input->post('publish_date').' '.$time;
         $data['category_id'] = $category;
 
         if($id == NULL) {
             $data['user_id'] = $this->user->uid();
         }
-
-        $data['publish_date'] = $this->input->post('publish_date') || date_stamp();
 
         return $data;
 

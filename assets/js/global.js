@@ -236,4 +236,9 @@ $(document).ready(function () {
         page: 10,
         pagination: true
     });
+    new List('parents', {
+        valueNames: ['parent-name', 'child-name'],
+        page: 10,
+        pagination: true
+    });
 });
