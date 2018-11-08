@@ -42,9 +42,9 @@ $route['child/(:num)/uploadPhoto'] = 'child/uploadPhoto/$1';
 $route['child/(:num)/assignParent']['get'] = 'child/assignParent/$1';
 $route['child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1';
 $route['child/(:num)/(:num)/removeParent'] = 'child/removeParent/$1/$2';
-$route['child/(:num)/checkIn']['get'] = 'child/checkIn/$1';
+$route['child/checkInOut/(:num)'] = 'child/checkInOut/$1';
+
 $route['child/(:num)/checkIn']['post'] = 'child/doCheckIn/$1';
-$route['child/(:num)/checkOut']['get'] = 'child/checkOut/$1';
 $route['child/(:num)/checkOut']['post'] = 'child/doCheckOut/$1';
 $route['child/(:num)/health'] = 'health/index/$1';
 $route['child/addAllergy'] = 'health/addAllergy';

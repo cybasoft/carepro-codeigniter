@@ -29,7 +29,7 @@
                     <?php foreach ($room->staff as $as): ?>
                         <div class="col-sm-4 text-center">
                             <?php if(is(['admin', 'manager'])): ?>
-                            <a  class="delete" href="/rooms/detachStaff/<?php echo $room->id.'/'.$as->id; ?>"
+                            <a  class="delete" href="<?php echo site_url('/rooms/detachStaff/'.$room->id.'/'.$as->id); ?>"
                                style="position: absolute;right: 10px;top:-10px">
                                 <i class="fa fa-times-circle text-danger"></i>
                             </a>
@@ -62,7 +62,7 @@
                     <?php foreach ($room->children as $cg): ?>
                         <div class="col-sm-4 text-center" style="margin-bottom:10px">
                             <?php if(is(['admin', 'manager'])): ?>
-                                <a class="delete" href="/rooms/detachChild/<?php echo $room->id.'/'.$cg->child_id; ?>"
+                                <a class="delete" href="<?php echo site_url('/rooms/detachChild/'.$room->id.'/'.$cg->child_id); ?>"
                                    style="position: absolute;right: 10px;top:-10px">
                                     <i class="fa fa-times-circle text-danger"></i>
                                 </a>

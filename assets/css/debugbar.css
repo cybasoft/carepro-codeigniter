@@ -1,0 +1,23 @@
+div.phpdebugbar .fa {
+    font-weight: 900 !important;
+    color:#333 !important;
+}
+.phpdebugbar-text,.phpdebugbar-close-btn,.phpdebugbar-minimize-btn{
+    color:#333;
+}
+.phpdebugbar-indicator span.phpdebugbar-text{
+    color: #ff5722;
+}
+a.phpdebugbar-tab.phpdebugbar-active{
+    color: #9c27b0 !important;
+}
+div.phpdebugbar-header {
+    background-color: #fff !important
+}
+a.phpdebugbar-tab span.phpdebugbar-badge{
+    background:#333 !important;
+    color:#fff !important;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    border-radius: 3px !important;
+}

@@ -140,16 +140,16 @@ class Child extends CI_Controller
     /*
      * check_in
      */
-    public function checkIn($id)
+    public function checkInOut()
     {
         allow(['admin', 'manager', 'staff']);
 
-        $data = [
-            'child_id' => $id,
-            'parents' => $this->child->getParents($id)->result(),
-            'authPickups' => $this->db->where('child_id', $id)->get('child_pickup')->result(),
-        ];
-        $this->load->view($this->module . 'check_in', $data);
+        $child_id = uri_segment(3);
+        $parents = $this->child->getParents($child_id)->result();
+        $authPickups=$this->db->where('child_id', $child_id)->get('child_pickup')->result();
+
+        $action = uri_segment(4);
+        $this->load->view($this->module . 'check_in_out', compact('child_id','parents','authPickups','action'));
     }
 
     /*
