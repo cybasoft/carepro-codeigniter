@@ -1,21 +1,22 @@
 # Change log
-## Version 2.2.1
+
+## Version 2.2.1 | 7 Nov 2018
 
 * Added undo function for migration. To undo last one migration, run `php index.php migration undo`
 * Added a meal plan for rooms
 * Design updates with new dashboard info boxes look
-* Fixed issue that prevent checkin/out to work properly
 * Added version number on the footer
 * Added news, calendar and room seeders
-* Fixed migrations not working on Linux servers
-* Fixed child checkin/out
 * Improved news - added articles sidebar,  added publish time
 * Added pagination to parents
-* Fixed parents list in child view
 * Updated parent's dashboard
-* Fixed payment system
 * Added ability to enable/disable Stripe gateway
 * Performance improvements
+* Fixed migrations not working on Linux servers
+* Fixed issue that prevent checkin/out to work properly
+* Fixed payment system
+* Fixed parents list in child view
+* Fixed child checkin/out
 
 ## Version 2.2.0 | 17 Oct 2018
 

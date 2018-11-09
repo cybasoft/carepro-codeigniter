@@ -1,14 +1,7 @@
 $(document).ready(function () {
 
     //Enable sidebar toggle
-    $("[data-toggle='offcanvas']").click(function (e) {
-        e.preventDefault();
 
-        $('.left-side').toggleClass("collapse-left").toggleClass('animate');
-        $('.user-info').toggleClass("hidden");
-        $(".right-side").toggleClass("strech");
-        $('.left-menu-link-info').toggleClass("hidden");
-    });
 
     /* Smooth Scroll to Top
     * ====================== */

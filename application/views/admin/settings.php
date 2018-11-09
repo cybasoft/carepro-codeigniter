@@ -50,6 +50,9 @@
                                          width="1"
                                          height="1">
                                 </form>
+
+                                <h3>Join our mailing list for the latest updates</h3>
+
                             </div>
                         </div>
                     </div>

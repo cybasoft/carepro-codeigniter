@@ -12,9 +12,17 @@ $(function() {
     $(".left-sidebar").hover(
         function() {
             $(".navbar-header").addClass("expand-logo");
+            if(Boolean(sessionStorage.getItem('mini-sidebar'))) {
+                $('.dark-logo').hide()
+                $('.light-logo').show()
+            }
         },
         function() {
             $(".navbar-header").removeClass("expand-logo");
+            if(Boolean(sessionStorage.getItem('mini-sidebar'))) {
+                $('.dark-logo').show()
+                $('.light-logo').hide()
+            }
         }
     );
     // this is for close icon when navigation open in mobile view
@@ -22,6 +30,7 @@ $(function() {
         $("#main-wrapper").toggleClass("show-sidebar");
         $(".nav-toggler i").toggleClass("ti-menu");
     });
+
     $(".nav-lock").on('click', function() {
         $("body").toggleClass("lock-nav");
         $(".nav-lock i").toggleClass("mdi-toggle-switch-off");
@@ -102,6 +111,15 @@ $(function() {
             $('.dark-logo').hide()
             $('.light-logo').show()
         }
+        if(Boolean(sessionStorage.getItem('mini-sidebar'))){
+            $("#main-wrapper").attr("data-sidebartype", "mini-sidebar").addClass("mini-sidebar");
+            $('.dark-logo').show()
+            $('.light-logo').hide()
+        }else{
+            $("#main-wrapper").attr("data-sidebartype", "full").removeClass('mini-sidebar');
+            $('.dark-logo').hide()
+            $('.light-logo').show()
+        }
     };
     $(window).ready(setsidebartype);
     $(window).on("resize", setsidebartype);
@@ -109,6 +127,7 @@ $(function() {
     /* This is for sidebartoggler*/
     //****************************
     $('.sidebartoggler').on("click", function() {
+
         $("#main-wrapper").toggleClass("mini-sidebar");
         if ($("#main-wrapper").hasClass("mini-sidebar")) {
             $(".sidebartoggler").prop("checked", !0);
@@ -121,5 +140,14 @@ $(function() {
             $('.dark-logo').hide()
             $('.light-logo').show()
         }
+
+        if (Boolean(sessionStorage.getItem('mini-sidebar'))) {
+            sessionStorage.setItem('mini-sidebar', '');
+        } else {
+            sessionStorage.setItem('mini-sidebar', '1');
+        }
+
     });
+
+
 });

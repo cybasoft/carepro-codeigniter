@@ -6,6 +6,7 @@ class Dashboard extends CI_Controller
     {
         parent::__construct();
         $this->title = lang('dashboard');
+        auth(true);
     }
 
     /*
