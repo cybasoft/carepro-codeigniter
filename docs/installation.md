@@ -37,9 +37,9 @@
 If  you are on development/testing server, create the respective directories and copy the database.php and config.php there.
 
 * Run `php index.php migration run` to run a new migration copy or just `php index.php migration run <version number>`  to upgrade to the latest migration.
-
-* In production mode, when you run `php indx.php migration run`, you will need to confirm by typing "yes"
-* Run  `php index.php migration seed` to run all available seeds or `php index.php migration seed SeederClass` where SeederClass is the name of the seeder file. Ommit the numeric portion '00_' and extension '.php'.
+*`php indx.php migration run`, you will need to confirm by typing in production mode "yes"
+* `composer install` install dependencies
+* Run `php index.php migration seed` to run all available seeds or `php index.php migration seed SeederClass` where SeederClass is the name of the seeder file. Ommit the numeric portion '00_' and extension '.php'.
 
 Available seeders:
 

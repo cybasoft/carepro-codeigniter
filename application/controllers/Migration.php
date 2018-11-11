@@ -116,11 +116,5 @@ class Migration extends CI_Controller
         //fixes
         @unlink(APPPATH.'/database/migrations/043_reate_activity_plan.php');
         @unlink(APPPATH.'database/migrations/044_add_stripe_id_to_user.php');
-
-        $f = @fopen(APPPATH.'database/migrations/026_add_stripe_id_to_user.php', "r+");
-        if ($f !== false) {
-            ftruncate($f, 0);
-            fclose($f);
-        }
     }
 }
