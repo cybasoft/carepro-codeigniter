@@ -6,6 +6,9 @@ class Migration extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        //correct previous migration issues
+        $this->_fixes();
+
         $this->load->library('migration');
         $this->load->model('My_migration', 'mig');
 
@@ -107,5 +110,17 @@ class Migration extends CI_Controller
     public function refresh()
     {
         $this->mig->refresh();
+    }
+
+    function _fixes(){
+        //fixes
+        @unlink(APPPATH.'/database/migrations/043_reate_activity_plan.php');
+        @unlink(APPPATH.'database/migrations/044_add_stripe_id_to_user.php');
+
+        $f = @fopen(APPPATH.'database/migrations/026_add_stripe_id_to_user.php', "r+");
+        if ($f !== false) {
+            ftruncate($f, 0);
+            fclose($f);
+        }
     }
 }

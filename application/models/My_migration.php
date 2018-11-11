@@ -104,7 +104,7 @@ class My_migration extends CI_Model
         echo "Done!\n";
 
         echo "Seeding\t....................";
-        $this->seed();
+        $this->seedAll();
         echo 'Done!';
     }
 
