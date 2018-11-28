@@ -12,7 +12,12 @@ class My_rooms extends CI_Model
      */
     function all()
     {
-        return $this->db->get($this->table)->result();
+        $res= $this->db->get($this->table)->result();
+        foreach($res as $key=>$r){
+            $res[$key]->total_children=$this->db->where('room_id',$r->id)->count_all_results('child_room');
+            $res[$key]->total_staff = $this->db->where('room_id',$r->id)->count_all_results('child_room_staff');
+        }
+        return $res;
     }
 
     function getRoom($id)

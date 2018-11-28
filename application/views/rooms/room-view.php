@@ -16,11 +16,15 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title"><?php echo lang('assigned staff'); ?>
-                    <button type="button" class="btn btn-primary btn-xs card-tools" data-toggle="modal"
-                            data-target="#staffModal">
-                        <i class="fa fa-user-plus"></i>
-                        <?php echo lang('Assign staff'); ?>
-                    </button>
+
+                    <?php if(is(['admin', 'manager'])): ?>
+                        <button type="button" class="btn btn-primary btn-xs card-tools" data-toggle="modal"
+                                data-target="#staffModal">
+                            <i class="fa fa-user-plus"></i>
+                            <?php echo lang('Assign staff'); ?>
+                        </button>
+                    <?php endif; ?>
+
                 </h4>
 
             </div>
@@ -29,10 +33,11 @@
                     <?php foreach ($room->staff as $as): ?>
                         <div class="col-sm-4 text-center">
                             <?php if(is(['admin', 'manager'])): ?>
-                            <a  class="delete" href="<?php echo site_url('/rooms/detachStaff/'.$room->id.'/'.$as->id); ?>"
-                               style="position: absolute;right: 10px;top:-10px">
-                                <i class="fa fa-times-circle text-danger"></i>
-                            </a>
+                                <a class="delete"
+                                   href="<?php echo site_url('/rooms/detachStaff/'.$room->id.'/'.$as->id); ?>"
+                                   style="position: absolute;right: 10px;top:-10px">
+                                    <i class="fa fa-times-circle text-danger"></i>
+                                </a>
                             <?php endif; ?>
                             <img class="img-thumbnail" style="height:100px;"
                                  src="<?php echo $this->user->photo($as->photo); ?>"/><br/>
@@ -46,15 +51,18 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title"><?php echo lang('assigned children'); ?>
-                    <button type="button"
-                            class="btn btn-warning btn-xs card-tools"
-                            data-toggle="modal"
-                            data-target="#childrenModal">
-                        <i class="fa fa-user-plus"></i>
-                        <?php echo lang('Assign children'); ?>
-                    </button>
-                </h4>
 
+                    <?php if(is(['admin', 'manager'])): ?>
+                        <button type="button"
+                                class="btn btn-warning btn-xs card-tools"
+                                data-toggle="modal"
+                                data-target="#childrenModal">
+                            <i class="fa fa-user-plus"></i>
+                            <?php echo lang('Assign children'); ?>
+                        </button>
+                    <?php endif; ?>
+
+                </h4>
             </div>
             <div class="card-body">
 
@@ -62,7 +70,8 @@
                     <?php foreach ($room->children as $cg): ?>
                         <div class="col-sm-4 text-center" style="margin-bottom:10px">
                             <?php if(is(['admin', 'manager'])): ?>
-                                <a class="delete" href="<?php echo site_url('/rooms/detachChild/'.$room->id.'/'.$cg->child_id); ?>"
+                                <a class="delete"
+                                   href="<?php echo site_url('/rooms/detachChild/'.$room->id.'/'.$cg->child_id); ?>"
                                    style="position: absolute;right: 10px;top:-10px">
                                     <i class="fa fa-times-circle text-danger"></i>
                                 </a>
@@ -113,8 +122,10 @@
     </div>
 
 </div>
+<?php if(is(['admin', 'manager'])):
+    echo anchor('rooms/destroy/'.$room->id, '<i class="fa fa-trash"></i> '.lang('Delete room'), ['class' => 'btn btn-xs btn-danger delete card-tools']);
+endif; ?>
 
-<?php echo anchor('rooms/destroy/'.$room->id, '<i class="fa fa-trash"></i> '.lang('Delete room'), ['class' => 'btn btn-xs btn-danger delete card-tools']); ?>
 
 <?php $this->load->view($this->module.'edit-room-modal'); ?>
 <?php $this->load->view($this->module.'add-children-modal'); ?>

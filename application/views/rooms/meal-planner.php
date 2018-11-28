@@ -182,7 +182,7 @@
                 <?php foreach ($mealTypes as $mealType): ?>
                     <th>
                         <span class="time"><?php echo lang($mealType->name); ?></span>
-                        <i class="fa fa-plus-square pull-right cursor" style="font-size:20px"
+                        <i class="fa fa-plus pull-right cursor text-warning" style="font-size:20px"
                            onclick="addMeal('<?php echo ucfirst($mealType->name); ?>','<?php echo $mealType->id; ?>');"></i>
                     </th>
                 <?php endforeach; ?>

@@ -18,26 +18,34 @@ class notes extends CI_Controller
     function index()
     {
         $id = $this->uri->segment(2);
-        $child = $this->child->first($id);
-        if(!authorizedToChild($this->user->uid(), $id)) {
+        if(!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
+
+
+        $child = $this->db->where('id',$id)->get('children')->row();
         if(empty($child)) {
             flash('error', lang('request_error'));
             redirect('dashboard', 'refresh');
         }
-        $notes = $this->db
-            ->where('child_id', $child->id)
-            ->order_by('created_at', 'DESC')
-            ->get('child_notes')
-            ->result();
-        $incidents = $this->db
-            ->where('child_id', $child->id)
-            ->order_by('created_at', 'DESC')
-            ->get('child_incident')
-            ->result();
-        page($this->module.'notes', compact('child', 'notes', 'incidents'));
+
+        $child->notes = $this->db
+            ->where('cn.child_id',$id)
+            ->select("cn.*,nc.name as category,CONCAT(u.first_name,' ',u.last_name) as user_name")
+            ->from('child_notes AS cn')
+            ->join('notes_categories AS nc','nc.id=cn.category_id')
+            ->join('users AS u','u.id=cn.user_id')
+            ->get()->result();
+
+        $child->incidents = $this->db
+            ->where('ci.child_id',$id)
+            ->select("ci.*,CONCAT(u.first_name,' ',u.last_name) as user_name")
+            ->from('child_incident AS ci')
+            ->join('users AS u','u.id=ci.user_id')
+            ->get()->result();
+
+        page($this->module.'notes', compact('child'));
     }
 
     /*

@@ -121,12 +121,12 @@ function last_page()
 /**
  * redirect to previous page
  */
-function redirectPrev($msg = [], $tab = '')
+function redirectPrev($msg = [], $tab = '', $type = 'info')
 {
     $ci = &get_instance();
 
     if(!empty($msg)) {
-        flash('info', $msg);
+        flash($type, $msg);
     }
 
     //dont redirect if json
@@ -151,26 +151,24 @@ function redirectPrev($msg = [], $tab = '')
 function is($group)
 {
     $ci = &get_instance();
-//
-//    $ci->db->select('id');
-//    $ci->db->where('users_groups.user_id', user_id());
-//    $ci->db->from('groups');
-//    $ci->db->join('users_groups', 'users_groups.group_id=groups.id');
-//    if(is_numeric($group)) {
-//        $ci->db->or_where('groups.id', $group);
-//    }
-//    if(is_array($group)) {
-//        foreach ($group as $g) {
-//            if(is_numeric($g))
-//                $ci->db->or_where('groups.id', $g);
-//            else
-//                $ci->db->or_where('groups.name', $g);
+    //save user role to session to reduce database calls
+//    $role=$ci->session->userdata('role');
+//    if($role){
+//        if(is_array($group)){
+//            $found = 0;
+//            foreach($group as $g){
+//                if(in_array($g,$role))
+//                    $found=1;
+//            }
+//            if($found ==1)
+//                return true;
+//        }else{
+//            if(in_array($group,$role))
+//                return true;
 //        }
 //    }
-//    $res = $ci->db->count_all_results();
-//    if($res > 1)
-//        return TRUE;
 
+    //session has failed so we continue
     if(logged_in())
         if($ci->ion_auth->in_group($group))
             return TRUE;
@@ -499,6 +497,7 @@ function authorizedToChild($staff_id, $child_id)
         ->where('child_room_staff.user_id', $staff_id)
         ->where('child_room.child_id', $child_id)
         ->count_all_results();
+
     if($staff > 0)
         return TRUE;
 

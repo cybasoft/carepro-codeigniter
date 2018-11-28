@@ -200,11 +200,11 @@ $(document).ready(function () {
     //child checkin
     $('.checkin-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.modals-loader').load(site_url + 'child/checkInOut/'+child_id+'/checkin').modal('show');
+        $('.modals-loader').load(site_url + 'child/checkInOut/' + child_id + '/checkin').modal('show');
     });
     $('.checkout-btn').click(function () {
         var child_id = $(this).attr('id');
-        $('.modals-loader').load(site_url + 'child/checkInOut/'+child_id).modal('show');
+        $('.modals-loader').load(site_url + 'child/checkInOut/' + child_id).modal('show');
     });
 
     $('.assign-parent-btn').click(function () {
@@ -233,3 +233,78 @@ $(document).ready(function () {
         pagination: true
     });
 });
+
+//meds
+$(document).ready(function () {
+    $('.adminMedModal').click(function () {
+        var med_id = $(this).attr('data-medId');
+        var modal = $('#medAdminModal');
+        modal.find('input[name=med_id]').val(med_id);
+        modal.find('.medName').text($(this).attr('data-name'));
+        modal.find('.medNotes').text($(this).attr('data-desc'));
+    });
+
+    $('.medHistory').click(function () {
+        var med_id = $(this).attr('id');
+
+        $('#med-modal').load(site_url + 'meds/history/' + med_id, function () {
+            $(this).find('.modal').modal('show');
+
+            $('.deleteHistory').click(function (e) {
+                e.preventDefault();
+
+                var btn = $(this)
+                var id = btn.attr('id');
+
+                swal({
+                    title: lang['confirm_delete_title'],
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: lang['confirm_delete_btn'],
+                    closeOnConfirm: false,
+                    backdrop: false,
+                    allowOutsideClick: false
+                }, function () {
+                    var url = site_url + 'meds/deleteHistory/' + id;
+                    $.ajax({
+                        url: url,
+                        data: {id: id}, //$('form').serialize(),
+                        type: 'POST',
+                        success: function (response) {
+                            swal({
+                                type: 'success',
+                                text: response.message
+                            });
+                            btn.closest('tr').remove();
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            })
+        });
+    });
+
+    $('#medImagesModalBtn').click(function () {
+        $('#med-modal').load(site_url + 'meds/medImages', function () {
+            $(this).find('.modal').modal('show')
+        });
+    });
+
+    $('.newMedModal').click(function () {
+        var id = $(this).attr('id');
+        $('#med-modal').load(site_url + 'meds/newMedModal', function () {
+            $(this).find('input[name=child_id]').val(id);
+            $(this).find('.modal').modal('show')
+        });
+    });
+
+    $('.delete-med').click(function (e) {
+        e.preventDefault();
+        var url = site_url + 'meds/destroy/' + $(this).attr('id');
+        if (confirm('Are you sure?'))
+            window.location.href = url;
+    })
+})

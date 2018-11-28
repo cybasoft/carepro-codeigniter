@@ -248,12 +248,19 @@ class MY_user extends CI_Model
      */
     function rooms($id)
     {
-        return $this->db->select('child_rooms.*')
-            ->from('child_rooms')
-            ->join('child_room_staff', 'child_room_staff.user_id=child_rooms.id')
-            ->where('child_room_staff.user_id', $id)
+        $res= $this->db
+            ->select('*')
+            ->from('child_rooms AS cr')
+            ->join('child_room_staff AS crs', 'crs.room_id=cr.id','inner')
+            ->where('crs.user_id', $id)
             ->get()
             ->result();
+
+        foreach($res as $key=>$r){
+            $res[$key]->total_children=$this->db->where('room_id',$r->id)->count_all_results('child_room');
+            $res[$key]->total_staff = $this->db->where('room_id',$r->id)->count_all_results('child_room_staff');
+        }
+        return $res;
     }
 
 }

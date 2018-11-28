@@ -11,15 +11,19 @@ if(!defined('BASEPATH')) exit('No direct script access allowed');
  */
 class Meds extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
-        //redirect session
+
         setRedirect();
-        auth(true);
-        $this->load->model('My_child', 'child');
-        $this->load->model('My_health', 'health');
+
+        auth(TRUE);
+
         $this->module = 'child/health/';
+
+        $this->load->model('My_meds', 'meds');
+
         $this->title = lang('child').'-'.lang('health');
     }
 
@@ -32,7 +36,7 @@ class Meds extends CI_Controller
         $this->form_validation->set_rules('med_name', lang('medication'), 'required|trim|xss_clean');
         if($this->form_validation->run() == TRUE) {
 
-            if($this->health->addMedicationToChild()) {
+            if($this->meds->addMedicationToChild()) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -42,7 +46,7 @@ class Meds extends CI_Controller
             validation_errors();
             flash('error');
         }
-        redirectPrev(null, 'meds');
+        redirectPrev(NULL, 'meds');
     }
 
     /*
@@ -51,22 +55,22 @@ class Meds extends CI_Controller
      */
     function destroy()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
 
-        if($this->health->deleteMedication($this->uri->segment(3))) {
+        if($this->meds->deleteMedication($this->uri->segment(3))) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
         }
         //go back
-        redirectPrev(null, 'meds');
+        redirectPrev(NULL, 'meds');
     }
 
     function uploadMedPhoto()
     {
         $this->form_validation->set_rules('med_name', lang('Medication name'), 'required|trim|xss_clean');
-        if($this->form_validation->run() == true) {
-            if($this->health->uploadMedPhoto($this->input->post('med_name')))
+        if($this->form_validation->run() == TRUE) {
+            if($this->meds->uploadMedPhoto($this->input->post('med_name')))
                 flash('success', lang('request_success'));
         } else {
             validation_errors();
@@ -78,10 +82,10 @@ class Meds extends CI_Controller
 
     function deleteMedicationPhoto()
     {
-        if($this->health->deleteMedicationPhoto($this->uri->segment(3)))
+        if($this->meds->deleteMedicationPhoto($this->uri->segment(3)))
             flash('success', lang('request_success'));
 
-        redirectPrev(null, 'meds');
+        redirectPrev(NULL, 'meds');
     }
 
     function medModal()
@@ -94,8 +98,8 @@ class Meds extends CI_Controller
     {
         $this->form_validation->set_rules('date', lang('Date'), 'required|xss_clean|trim');
         $this->form_validation->set_rules('time', lang('Time'), 'required|xss_clean|trim');
-        if($this->form_validation->run() == true) {
-            if($this->health->administerMed()) {
+        if($this->form_validation->run() == TRUE) {
+            if($this->meds->administerMed()) {
                 flash('success', lang('Record added'));
             } else {
                 flash('error', lang('request_error'));
@@ -116,73 +120,43 @@ class Meds extends CI_Controller
         if(!$this->input->is_ajax_request())
             exit('No direct script access allowed');
 
-        $this->load->library('table');
+        $medHistory = $this->meds->history($this->uri->segment(3));
+        $med = $this->db
+            ->select("child_meds.*,CONCAT(children.first_name,' ',children.last_name) as child_name")
+            ->where('child_meds.id', $this->uri->segment(3))
+            ->from('child_meds')
+            ->join('children', 'children.id=child_meds.child_id')
+            ->get()->row();
 
-        if(is('parent'))
-            $this->db->where('staff_only !=', 1);
-        $this->db->where('med_id', $this->uri->segment(3));
-        $results = $this->db->get('meds_admin')->result();
-
-        $data = array();
-
-        foreach ($results as $result) {
-
-            $data[] = [
-                'date' => date('d/M/Y', strtotime($result->given_at)),
-                'time' => date('h:ia', strtotime($result->given_at)),
-                'staff' => $this->user->get($result->user_id, ['name']),
-                'remarks' => ($result->staff_only == 1) ? '<span class="label label-default">'.lang('Staff only').'</span>' : ''
-                    .$result->remarks,
-                'actions' => !is('parent')?anchor('meds/deleteHistory/'.$result->id, '<i class="fa fa-trash text-danger"></i>', 'class="delete"'):''
-            ];
-        }
-
-        $med = $this->db->where('id', $this->uri->segment(3))->get('child_meds')->row();
-
-        $this->table->add_row(
-            [
-                'colspan' => 2,
-                'data' => '<h3 class="text-danger">'.$med->med_name.'</h3>'
-            ],
-            [
-                'colspan' => 3,
-                'data' => '<h4 class="text-warning">'.$med->med_notes.'</h4>'
-            ]
-        );
-
-        $this->table->set_heading(
-            [
-                lang('Date'),
-                lang('Time'),
-                lang('Staff'),
-                lang('Remarks'),
-                ''
-            ]
-        );
-
-        $this->table->set_template(
-            [
-                'table_open' => '<table class="table table-striped">'
-            ]
-        );
-
-        echo $this->table->generate($data);
-
+        $this->load->view($this->module.'meds/med_history_modal', compact('medHistory', 'med'));
     }
 
+    /**
+     * @param $id
+     *
+     * @return false|string
+     */
     function deleteHistory()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
 
-        $this->db->where('id', $this->uri->segment(3))->delete('meds_admin');
+        $res = $this->meds->deleteHistory($this->uri->segment(3));
 
-        if($this->db->affected_rows() > 0)
-            flash('success', lang('request_success'));
+        if($res > 0)
+            echo json_encode(['message' => lang('request_success')]);
         else
-            flash('error', lang('request_error'));
+            echo json_encode(['messages' => lang('request_error')]);
+    }
 
-        redirectPrev('', 'meds');
-
+    function medImages(){
+        allow(['admin', 'manager', 'staff','parent']);
+        $medImages = $this->db->get('med_photos')->result();
+        $this->load->view($this->module.'meds/med_images_modal',compact('medImages'));
+    }
+    function newMedModal(){
+        allow(['admin', 'manager', 'staff','parent']);
+        $medImages = $this->db->get('med_photos')->result();
+        $this->load->view($this->module.'meds/create_med_modal',compact('medImages'));
     }
 }
 

@@ -234,7 +234,17 @@ class RoomsController extends CI_Controller
     {
         allow(['admin', 'manager', 'staff']);
 
-        $this->db->where('id', $this->uri->segment(3))->delete('child_room_notes');
+        $id = $this->uri->segment(3);
+
+        if(is('staff')) {
+            $note = $this->db->where('id', $id)->get('child_room_notes')->row();
+            if($note->user_id !== user_id())
+            {
+                redirectPrev(lang('Access denied'),'','error');
+            }
+        }
+
+        $this->db->where('id', $id)->delete('child_room_notes');
 
         flash('success', lang('request_success'));
 

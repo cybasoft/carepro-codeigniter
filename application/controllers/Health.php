@@ -2,32 +2,45 @@
 
 class Health extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
         //redirect session
         setRedirect();
-        auth(true);
+        auth(TRUE);
         $this->load->model('My_child', 'child');
         $this->load->model('My_health', 'health');
         $this->load->model('My_food', 'food');
+        $this->load->model('My_meds', 'meds');
+
         $this->module = 'child/health/';
         $this->title = lang('child').'-'.lang('health');
     }
 
     function index($id)
     {
-        if(!authorizedToChild($this->user->uid(), $id)) {
+        if(!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
 
-        $data['child'] = $this->child->first($id);
-        if(empty($data['child'])) {
+        $child = $this->db->where('id', $id)->get('children')->row();
+
+        $child->meds = $this->db
+            ->select('cm.*,mp.name,mp.photo')
+            ->where('cm.child_id', $child->id)
+            ->from('child_meds as cm')
+            ->join('med_photos as mp', 'mp.id=cm.photo_id','left')
+            ->order_by('cm.id', 'DESC')
+            ->get()->result();
+
+        if(empty($child)) {
             flash('error', lang('request_error'));
             redirect('/dashboard');
         }
-        page($this->module.'index', $data);
+
+        page($this->module.'health', compact('child'));
     }
 
     /*
@@ -36,7 +49,7 @@ class Health extends CI_Controller
      */
     function addAllergy()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
 
         $this->form_validation->set_rules('allergy', 'Allergy Name', 'required|trim|xss_clean');
 
@@ -58,7 +71,7 @@ class Health extends CI_Controller
 
         }
 
-        redirectPrev(null, 'allergies');
+        redirectPrev(NULL, 'allergies');
     }
 
     /*
@@ -66,7 +79,7 @@ class Health extends CI_Controller
      */
     function deleteAllergy($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         $this->db->where('id', $id);
         $this->db->delete('child_allergy');
         if($this->db->affected_rows() > 0) {
@@ -74,7 +87,7 @@ class Health extends CI_Controller
         } else {
             flash('danger', lang('request_error'));
         }
-        redirectPrev(null, 'allergies');
+        redirectPrev(NULL, 'allergies');
     }
 
     /**
@@ -96,7 +109,7 @@ class Health extends CI_Controller
             flash('danger');
             validation_errors();
         }
-        redirectPrev(null, 'emergency_contacts');
+        redirectPrev(NULL, 'emergency_contacts');
     }
 
     /**
@@ -104,13 +117,13 @@ class Health extends CI_Controller
      */
     function deleteContact($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         if($this->db->where('id', $id)->delete('child_contacts')) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));
         }
-        redirectPrev(null, 'contacts');
+        redirectPrev(NULL, 'contacts');
     }
 
 
@@ -134,7 +147,7 @@ class Health extends CI_Controller
             flash('danger');
             validation_errors();
         }
-        redirectPrev(null, 'providers');
+        redirectPrev(NULL, 'providers');
     }
 
     /**
@@ -142,13 +155,13 @@ class Health extends CI_Controller
      */
     function deleteProvider($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         if($this->db->where('id', $id)->delete('child_providers')) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));
         }
-        redirectPrev(null, 'providers');
+        redirectPrev(NULL, 'providers');
     }
 
 
@@ -158,7 +171,7 @@ class Health extends CI_Controller
      */
     function addProblem()
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
 
         $this->form_validation->set_rules('name', lang('problem'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('first_event', lang('problem'), 'required|trim|xss_clean');
@@ -174,7 +187,7 @@ class Health extends CI_Controller
             flash('danger', lang('request_error'));
         }
 
-        redirectPrev(null, 'problem-list');
+        redirectPrev(NULL, 'problem-list');
     }
 
     /**
@@ -182,12 +195,12 @@ class Health extends CI_Controller
      */
     function deleteProblem($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         if($this->db->where('id', $id)->delete('child_problems')) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));
         }
-        redirectPrev(null, 'problem-list');
+        redirectPrev(NULL, 'problem-list');
     }
 }

@@ -26,11 +26,11 @@
                         <div class="card-footer">
                             <div class="row text-sm">
                                 <div class="col-md-6">
-                                    <span class="label label-success"><?php echo $this->child->roomCount($room->id, 'staff'); ?></span>
+                                    <span class="label label-success"><?php echo $room->total_staff; ?></span>
                                     <?php echo lang('staff'); ?>
                                 </div>
                                 <div class="col-md-6">
-                                    <i class="label label-success"><?php echo $this->child->roomCount($room->id, 'children'); ?></i>
+                                    <i class="label label-success"><?php echo $room->total_children; ?></i>
                                     <?php echo lang('children'); ?>
                                 </div>
                             </div>

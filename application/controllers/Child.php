@@ -25,7 +25,7 @@ class Child extends CI_Controller
      */
     public function index($id)
     {
-        if (!authorizedToChild($this->user->uid(), $id)) {
+        if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
@@ -38,7 +38,6 @@ class Child extends CI_Controller
             flash('error', lang('record_not_found'));
             redirect('children');
         }
-
         page($this->module . 'index', compact('child', 'pickups'));
     }
 

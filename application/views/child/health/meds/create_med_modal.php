@@ -11,7 +11,7 @@
             </div>
             <?php echo form_open_multipart('meds/addMedicationToChild'); ?>
             <div class="modal-body">
-                <?php echo form_hidden('child_id', $child->id);
+                <?php echo form_hidden('child_id', '');
                 echo form_label(lang('medication'), 'med_name');
                 echo form_input('med_name', null, ['class' => 'form-control','required'=>'']);
                 echo form_label(lang('notes'), 'med_notes');
@@ -20,8 +20,8 @@
                 ?>
                 <select name="photo_id" class="form-control">
                     <option><?php echo lang('select'); ?></option>
-                    <?php foreach ($this->db->get('med_photos')->result() as $photo): ?>
-                        <option value="<?php echo $photo->id; ?>"><?php echo $photo->name; ?></option>
+                    <?php foreach ($medImages as $image): ?>
+                        <option value="<?php echo $image->id; ?>"><?php echo $image->name; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

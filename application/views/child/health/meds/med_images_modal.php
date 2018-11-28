@@ -19,7 +19,7 @@
 
                 <hr/>
                 <div class="row">
-                    <?php foreach ($this->db->get('med_photos')->result() as $medImg): ?>
+                    <?php foreach ($medImages as $medImg): ?>
                         <div class="col-xs-2 text-center">
                             <img style="width:200px;height:150px;" src="<?php echo base_url('assets/uploads/meds/'.$medImg->photo); ?>"/>
                             <br/>

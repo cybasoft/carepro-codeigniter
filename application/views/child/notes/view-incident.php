@@ -1,6 +1,12 @@
 <link href="<?php echo base_url('assets/plugins/dz/dropzone.min.css'); ?>" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="<?php echo base_url('assets/plugins/lg/css/lightgallery.min.css'); ?>"/>
-<?php $incident = $this->db->where('id', $_GET['viewIncident'])->get('child_incident')->row();
+<?php $incident = $this->db
+    ->where('ci.id', $_GET['viewIncident'])
+    ->select("ci.*,CONCAT(u.first_name,' ',u.last_name) as user_name")
+    ->from('child_incident AS ci')
+    ->order_by('ci.id','DESC')
+    ->join('users AS u','u.id=ci.user_id')
+    ->get()->row();
 $photos = $this->photos->albums('child_incident_photos', $child->id, null, base_url('child/1/notes?viewIncident=4#view-notes'));
 if(count((array)$incident) > 0):
 ?>
@@ -14,7 +20,7 @@ if(count((array)$incident) > 0):
                     <?php
                     echo sprintf(lang('created on %s by %s'),
                         format_date($incident->created_at),
-                        $this->user->get($incident->user_id,'name'));
+                        $incident->user_name);
                     ?>
 
                 </em>
@@ -82,7 +88,7 @@ if(count((array)$incident) > 0):
             <div class="flexbin flexbin-margin" id="lightgallery">
                 <?php if(count($photos['results']) > 0): ?>
                 <?php foreach ($photos['results'] as $photo): ?>
-                    <a data-src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>?id=<?php echo $photo->id; ?>&route=/notes/deleteIncidentPhoto">
+                    <a id="incident-img" data-src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>?id=<?php echo $photo->id; ?>&route=/notes/deleteIncidentPhoto">
                         <img src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>"/>
                     </a>
                 <?php endforeach; ?>
@@ -101,7 +107,7 @@ if(count((array)$incident) > 0):
 <script src="<?php echo base_url('assets/plugins/lg/js/lg-thumbnail.min.js'); ?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/plugins/lg/js/lg-fullscreen.min.js'); ?>" type="text/javascript"></script>
 <script type="text/javascript">
-    $('a[href=#view-notes]').find('i').append(' <?php echo $incident->title; ?>');
+    $('#incident-img').find('i').append(' <?php echo $incident->title; ?>');
     Dropzone.options.imageUpload = {
         maxFilesize: 3,
         acceptedFiles: ".jpeg,.jpg,.png,.gif",
