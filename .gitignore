@@ -3,6 +3,7 @@ application/config/development
 application/config/production/
 application/config/testing/
 !application/logs/index.html
+application/temp/captcha/*
 
 !application/*/.htaccess
 composer.lock
