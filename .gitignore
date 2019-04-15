@@ -7,7 +7,7 @@ application/temp/captcha/*
 
 !application/*/.htaccess
 composer.lock
-/vendor/
+vendor
 
 # IDE Files
 #-------------------------
