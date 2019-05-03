@@ -1,3 +1,8 @@
+<style>
+.login100-form-btn:hover{
+ color: #ffffff;
+}
+</style>
 <form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
@@ -71,11 +76,14 @@
         </button>
     </div>
 
+    <!-- <div class="container-login100-form-btn mt-2">
+        <?php echo anchor('auth/register', lang('register'), ['class' => 'login100-form-btn']); ?>
+    </div> -->
+
     <?php if(session('company_allow_registration') == TRUE): ?>
         <div class="text-center p-t-46 p-b-20">
             <?php echo anchor('auth/register', '<span class="fa fa-user"></span> '.lang('register'), ['class' => 'txt2']); ?>
         </div>
-
     <?php endif; ?>
 
     <?php if(base_url() == "https://careproapp.com/demo/"): ?>
