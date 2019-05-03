@@ -64,7 +64,7 @@
         </div>
         <?php if(session('company_allow_reset_password')): ?>
             <div>
-                <?php echo anchor('auth/forgot', '<span class="fa fa-key"></span> '.lang('forgot_password_heading'), ['class' => 'txt1']); ?>
+                <?php echo anchor('register', '<span class="fa fa-key"></span> '.lang('forgot_password_heading'), ['class' => 'txt1']); ?>
             </div>
         <?php endif; ?>
     </div>
@@ -79,6 +79,10 @@
     <!-- <div class="container-login100-form-btn mt-2">
         <?php echo anchor('auth/register', lang('register'), ['class' => 'login100-form-btn']); ?>
     </div> -->
+
+    <div class="container-login100-form-btn mt-2">
+        <?php echo anchor('user/register', lang('register'), ['class' => 'login100-form-btn']); ?>
+    </div>
 
     <?php if(session('company_allow_registration') == TRUE): ?>
         <div class="text-center p-t-46 p-b-20">

@@ -156,3 +156,8 @@ $route['meals/(:any)/:num'] = 'MealController/$1';
 //activities
 $route['activities/(:any)'] = 'ActivityController/$1';
 $route['activities/(:any)/:num'] = 'ActivityController/$1';
+
+
+//user registration
+$route['user/register'] = 'RegistrationController';
+$route['user/create'] = 'RegistrationController/create';
