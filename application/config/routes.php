@@ -167,5 +167,5 @@ $route['daycare'] = 'RegistrationController/daycare_register';
 $route['daycare/store'] = 'RegistrationController/store_daycare';
 
 //stripe payment
-$route['my-stripe'] = "StripeController";
+$route['payment'] = "StripeController";
 $route['stripePost']['post'] = "StripeController/stripePost";

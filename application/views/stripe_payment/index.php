@@ -100,13 +100,14 @@
                     <div class="card-body">
 
                         <?php if ($this->session->flashdata('success')) { ?>
-                            <div class="alert alert-success text-center">
+                            <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                                <p><?php echo $this->session->flashdata('success'); ?></p>
+                                <p class="m-0"><?php echo $this->session->flashdata('success'); ?></p>
                             </div>
                         <?php } ?>
 
-                        <form role="form" action="/daycarepro-app-master/index.php/stripePost" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
+                        <form role="form" action="stripePost" method="post" 
+                        class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
 
                             <div class='form-row row'>
                                 <div class='col-12 form-group required'>
@@ -141,7 +142,7 @@
 
                             <div class="row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now</button>
+                                    <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ($100)</button>
                                 </div>
                             </div>
 
@@ -195,6 +196,7 @@
         });
 
         function stripeResponseHandler(status, response) {
+            console.log(status);
             if (response.error) {
                 $('.error')
                     .removeClass('d-none')

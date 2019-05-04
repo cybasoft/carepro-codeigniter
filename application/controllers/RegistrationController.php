@@ -7,6 +7,7 @@ class RegistrationController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('My_user_registration');
+        $this->load->model('My_daycare_registration');
     }
     public function index()
     {
@@ -45,6 +46,24 @@ class RegistrationController extends CI_Controller
     }
 
     public function store_daycare(){
-        redirect('my-stripe');
+
+        $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|min_length[2]');
+        $this->form_validation->set_rules('employee_tax_identifier', lang('employee_tax_identifier'), 'required|xss_clean');
+        $this->form_validation->set_rules('address_line_1', lang('address_line_1'), 'required|xss_clean');
+        $this->form_validation->set_rules('city', lang('city'), 'required|xss_clean');
+        $this->form_validation->set_rules('state', lang('state'), 'required|xss_clean');
+        $this->form_validation->set_rules('zip_code', lang('zip_code'), 'required|xss_clean');
+        $this->form_validation->set_rules('country', lang('country'), 'required|xss_clean');
+        $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
+
+        if ($this->form_validation->run() == true) {
+            $this->My_daycare_registration->store();
+            redirect('payment');
+        } else {
+            set_flash(['name', 'employee_tax_identifier', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);
+            validation_errors();
+            flash('danger');
+            redirect('daycare');
+        }
     }
 }
