@@ -161,3 +161,11 @@ $route['activities/(:any)/:num'] = 'ActivityController/$1';
 //user registration
 $route['user/register'] = 'RegistrationController';
 $route['user/create'] = 'RegistrationController/create';
+
+//daycare registration
+$route['daycare'] = 'RegistrationController/daycare_register';
+$route['daycare/store'] = 'RegistrationController/store_daycare';
+
+//stripe payment
+$route['my-stripe'] = "StripeController";
+$route['stripePost']['post'] = "StripeController/stripePost";

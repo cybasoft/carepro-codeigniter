@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title><?php echo session('company_name'); ?></title>
@@ -17,40 +18,31 @@
         }
     </style>
 </head>
+
 <body class="transparent-header">
     <div class="section-empty section-item">
         <div class="container content">
             <div class="row">
                 <div class="col-md-10 offset-md-1 login-box shadow-1 ">
                     <div class="text-center">
-                        <h2 style="padding-bottom:15px;">Register</h2>
+                        <h2 style="padding-bottom:15px;">Daycare Registration</h2>
                     </div>
                     <?php if (!empty($this->session->flashdata('type'))) : ?>
                         <div style="">
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
-                    <?php endif; ?> <?php echo form_open('user/create', ['class' => 'form-box']); ?>
+                    <?php endif; ?> <?php echo form_open('daycare/store', ['class' => 'form-box']); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>
                             <input class="form-control form-value" required="" name="name" type="text" value="<?php echo set_value('name'); ?>">
                         </div>
                         <div class="col-md-6">
-                            <p>E-Mail Address *</p>
-                            <input name="email" type="email" class="form-control form-value" required="" value="<?php echo set_value('email'); ?>">
+                            <p>Employee Tax Identifier *</p>
+                            <input name="employee_tax_identifier" type="text" class="form-control form-value" required="" value="<?php echo set_value('employee_tax_identifier'); ?>">
                         </div>
                     </div>
-                    <hr class="space xs" />
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>Password *</p>
-                            <input required="" name="password" type="password" class="form-control form-value" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <p>Confirm Password *</p>
-                            <input type="password" required="" name="password_confirm" class="form-control form-value" value="">
-                        </div>
-                    </div>
+                    <hr class="space xs" />                
                     <hr class="space xs" />
                     <div class="row">
                         <div class="col-md-6">
@@ -100,15 +92,11 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn-sm btn" type="submit">Register</button>
-                    <div>
-                        <a href="../auth/login" style="float:right;">Already have an account?</a>
-                    </div>
-                    <?php echo form_close(); ?>
-                    <p style="padding-top: 40px;" class="text-center">By registering your account, you agree to the <a href="https://stripe.com/us/connect-account/legal" class="btn-text" target="_blank">Stripe Connected Account Agreement</a>.</p>
+                    <button class="btn-sm btn" type="submit">Register</button>        
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

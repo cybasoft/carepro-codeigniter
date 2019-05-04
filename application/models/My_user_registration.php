@@ -2,9 +2,10 @@
 
 class My_user_registration extends CI_Model
 {
-    public function store_user(){
+    public function store_user()
+    {
         $this->load->model('ion_auth_model');
-        $password = $this->ion_auth->hash_password($this->input->post('password'));   
+        $password = $this->ion_auth->hash_password($this->input->post('password'));
 
         $data = array(
             'name' => $this->input->post('name'),
@@ -18,7 +19,5 @@ class My_user_registration extends CI_Model
             'country' => $this->input->post('country'),
             'phone' => $this->input->post('phone'),
         );
-        print_r($data);
-        exit();
     }
 }
