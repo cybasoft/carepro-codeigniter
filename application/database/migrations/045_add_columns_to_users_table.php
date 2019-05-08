@@ -44,11 +44,24 @@ class Migration_add_columns_to_users_table extends CI_Migration
                 'constraint' => '100',
                 'after' => 'state'
             ),
-            'payment_status' => array(
+            'owner_status' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '100',
                 'null' => TRUE,
             ),
+            'selected_plan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'null' => TRUE,
+            ),
+            'daycare_id' => array(
+                'type'  => 'VARCHAR',
+                'constraint' => '100',
+                'null' => TRUE,
+            ),
+            'updated_at' => [
+                'type' => 'TIMESTAMP',
+            ],
         );
         $this->dbforge->add_column($this->table, $field1);
     }

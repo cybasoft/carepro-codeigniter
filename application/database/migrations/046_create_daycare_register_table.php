@@ -58,16 +58,22 @@ class Migration_create_daycare_register_table extends CI_Migration
                 'constraint' => 20,
                 'null' => TRUE,
             ),
-            'created_at' => array(
-                'type' => 'DATETIME'
-            )
+            'created_at' => [
+                'type' => 'TIMESTAMP',
+            ],
+            'updated_at' => [
+                'type' => 'TIMESTAMP',
+            ],
+            'deleted_at' => [
+                'type' => 'TIMESTAMP',
+            ]
         ));
 
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
         // Create Table users
-        $this->dbforge->create_table("daycare_users", TRUE);
+        $this->dbforge->create_table("daycare", TRUE);
 
     }
 
@@ -79,7 +85,7 @@ class Migration_create_daycare_register_table extends CI_Migration
     public function down()
     {
         // Drop table users
-        $this->dbforge->drop_table("daycare_users", TRUE);
+        $this->dbforge->drop_table("daycare", TRUE);
     }
 
 }

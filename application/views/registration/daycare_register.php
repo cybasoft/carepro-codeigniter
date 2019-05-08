@@ -31,7 +31,8 @@
                         <div style="">
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
-                    <?php endif; ?> <?php echo form_open('daycare/store', ['class' => 'form-box']); ?>
+                    <?php endif; ?>
+                    <?php echo form_open('daycare/store', ['class' => 'form-box']); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>

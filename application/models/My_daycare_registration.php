@@ -15,6 +15,6 @@ class My_daycare_registration extends CI_Model
             'country' => $this->input->post('country'),
             'phone' => $this->input->post('phone'),
         );
-        $this->db->insert('daycare_users', $data);
+        $this->db->insert('daycare', $data);
     }
 }

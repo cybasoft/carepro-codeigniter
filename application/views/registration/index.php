@@ -15,6 +15,9 @@
         .form-control {
             height: 34px;
         }
+        .stripe_connect:hover{
+            text-decoration: none;
+        }
     </style>
 </head>
 <body class="transparent-header">
@@ -29,7 +32,18 @@
                         <div style="">
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
-                    <?php endif; ?> <?php echo form_open('user/create', ['class' => 'form-box']); ?>
+                    <?php endif; ?>
+                    <?php if (!empty($this->session->flashdata('success'))) : ?>
+                        <div class="alert alert-primary alert-dismissable">
+                            <?php echo $this->session->flashdata('success'); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($this->session->flashdata('error'))) : ?>
+                        <div class="alert alert-danger alert-dismissable">
+                            <?php echo $this->session->flashdata('error'); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php echo form_open('user/create', ['class' => 'form-box']); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>
@@ -105,7 +119,7 @@
                         <a href="../auth/login" style="float:right;">Already have an account?</a>
                     </div>
                     <?php echo form_close(); ?>
-                    <p style="padding-top: 40px;" class="text-center">By registering your account, you agree to the <a href="https://stripe.com/us/connect-account/legal" class="btn-text" target="_blank">Stripe Connected Account Agreement</a>.</p>
+                    <p style="padding-top: 40px;" class="text-center">By registering your account, you agree to the <a href="https://stripe.com/us/connect-account/legal" class="btn-text stripe_connect" target="_blank">Stripe Connected Account Agreement</a>.</p>
                 </div>
             </div>
         </div>

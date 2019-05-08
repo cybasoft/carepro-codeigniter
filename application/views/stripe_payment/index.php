@@ -196,7 +196,6 @@
         });
 
         function stripeResponseHandler(status, response) {
-            console.log(status);
             if (response.error) {
                 $('.error')
                     .removeClass('d-none')
@@ -209,7 +208,6 @@
                 $form.get(0).submit();
             }
         }
-
     });
 </script>
 

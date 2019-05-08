@@ -540,5 +540,5 @@ $config['rewrite_short_tags'] = FALSE;
  */
 $config['proxy_ips'] = '';
 
-$config['copyright'] = '© '.date('Y') .' - <a href="http://amdtllc.com" target="_blank">A&M Digital Tech</a>';
-$config['version']='CarePro Version: '.CAREPRO_VERSION;
+$config['copyright'] = '© ' . date('Y') . ' - <a href="http://amdtllc.com" target="_blank">A&M Digital Tech</a>';
+$config['version'] = 'CarePro Version: ' . CAREPRO_VERSION;

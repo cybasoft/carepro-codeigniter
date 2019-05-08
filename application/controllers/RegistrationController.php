@@ -8,6 +8,7 @@ class RegistrationController extends CI_Controller
         parent::__construct();
         $this->load->model('My_user_registration');
         $this->load->model('My_daycare_registration');
+        $this->load->helper('url_helper');
     }
     public function index()
     {
@@ -31,7 +32,7 @@ class RegistrationController extends CI_Controller
 
         if ($this->form_validation->run() == true) {
             $this->My_user_registration->store_user();
-            redirect('daycare');
+            // redirect('daycare');
         } else {
             set_flash(['email', 'name', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone', 'password']);
             validation_errors();
@@ -41,11 +42,13 @@ class RegistrationController extends CI_Controller
     }
 
     //daycare registration
-    public function daycare_register(){
+    public function daycare_register()
+    {
         $this->load->view('registration/daycare_register');
     }
 
-    public function store_daycare(){
+    public function store_daycare()
+    {
 
         $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|min_length[2]');
         $this->form_validation->set_rules('employee_tax_identifier', lang('employee_tax_identifier'), 'required|xss_clean');
@@ -65,5 +68,14 @@ class RegistrationController extends CI_Controller
             flash('danger');
             redirect('daycare');
         }
+    }
+    public function email_verified($activation_code = NULL)
+    {
+        $owner_status = $this->My_user_registration->status[1];
+        $data = array(
+            'owner_status' => $owner_status,
+        );
+        $this->db->where('activation_code', $activation_code);
+        $this->db->update('users', $data);
     }
 }
