@@ -1,114 +1,37 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title><?php echo session('company_name'); ?></title>
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo assets('img/favicon.ico'); ?>">
-    <script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
-    <link href="<?php echo base_url(); ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        .panel-title {
-            display: inline;
-            font-weight: 100;
-            color: #0e1a35;
-        }
-
-        .display-table {
-            display: table;
-        }
-
-        .display-tr {
-            display: table-row;
-        }
-
-        .display-td {
-            display: table-cell;
-            vertical-align: middle;
-            width: 61%;
-        }
-
-        .has-error,
-        .has-error .control-label {
-            color: #a94442;
-        }
-
-        .has-error .form-control {
-            border-color: #a94442;
-        }
-
-        label {
-            display: inline-block;
-            max-width: 100%;
-            margin-bottom: 5px;
-            font-weight: 100;
-            color: #8492af;
-        }
-
-        .form-control {
-            background-color: #f4f9fe !important;
-            display: block;
-            width: 100%;
-            height: 34px;
-            padding: 6px 12px;
-            font-size: 14px;
-            line-height: 1.42857143;
-            color: #555;
-            background-color: #fff;
-            background-image: none;
-            border: 0px solid #ffffff;
-            border-radius: 4px;
-            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
-            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
-            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-        }
-        .form-control:focus{
-            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0);
-        }
-        .card{
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.13) !important;
-        }
-        .card-header{
-            background-color: rgb(255, 255, 255);
-            border-bottom: 0;
-        }
-        .btn-primary, .btn-primary:hover{
-            background-color: #5584ff;
-            border-color: #5584ff;
-        }
-        .btn-primary{
-            box-shadow: 0 0 0 0.2rem #5584ff !important;
-        }
-    </style>
+<?php  $this->load->view("custom_layouts/header");  ?>
+    <link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
 </head>
-
 <body>
     <div class="container">
         <div class="row pt-5">
-            <div class="col-md-6 offset-md-3 pt-5 mt-5">
-                <div class="card credit-card-box">
+            <div class="offset-4">
+                <img src="../../assets/img/logo.png" class="w-50 mb-3 offset-1">
+                <p class="subscribe_text offset-1">Subscribe to Carepro Plan</p>
+            </div>
+            <div class="col-md-6 offset-1">
+                <div class="card credit-card-box mt-3">
                     <div class="card-header display-table">
                         <div class="row display-tr">
-                            <h3 class="panel-title display-td">Payment Details</h3>
-                            <div class="display-td">
-                                <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                            <div class="display-td float-right">
+                                <img class="img-responsive float-right" src="../../assets/img/daycare/card_img.png">
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <form role="form" action="../stripePost" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
+                        <div class="card-body">
 
-                        <?php if ($this->session->flashdata('success')) { ?>
-                            <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                                <p class="m-0"><?php echo $this->session->flashdata('success'); ?></p>
-                            </div>
-                        <?php } ?>
-
-                        <form role="form" action="stripePost" method="post" 
-                        class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
-
+                            <?php if ($this->session->flashdata('success')) { ?>
+                                <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                    <p class="m-0"><?php echo $this->session->flashdata('success'); ?></p>
+                                </div>
+                            <?php } ?>
+                            <?php if (!empty($this->session->flashdata('subscription_error'))) : ?>
+                                <div class="alert alert-danger alert-dismissable">
+                                    <?php echo $this->session->flashdata('subscription_error'); ?>
+                                </div>
+                            <?php endif; ?>
                             <div class='form-row row'>
                                 <div class='col-12 form-group required'>
                                     <label class='control-label'>Name on Card</label> <input class='form-control' size='4' type='text'>
@@ -139,27 +62,93 @@
                                         again.</div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ($100)</button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
+                        </div>
+                        <div class="col-3 offset-5 mt-3 d-none">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" id="form_submit">Buy Now</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+            <div class="col-6 col-md-4 mt-3">
+                <p class="text-center selected_plan">Basic Plan</p>
+                <div class="plan_div ml-5 pl-5">
+                    <div class="row">
+                        <p class="col-md-1">
+                            <span><i class="fas fa-child"></i></span>
+                        </p>
+                        <p class="col-md-10">
+                            Children 10
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-1">
+                            <span><i class="fas fa-chalkboard-teacher"></i></span>
+                        </p>
+                        <p class="col-md-10">
+                            staff members 5
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-1">
+                            <span><i class="fas fa-calendar"></i></span>
+                        </p>
+                        <p class="col-md-10">
+                            Calender events 20
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-1">
+                            <span><i class="fas fa-newspaper"></i></span>
+                        </p>
+                        <p class="col-md-10">
+                            No News Module
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-1">
+                            <span><i class="fas fa-home"></i></span>
+                        </p>
+                        <p class="col-md-10">
+                            No Rooms
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-1">
+                            <span><i class="fas fa-file-invoice"></i></span>
+                        </p>
+                        <p class="col-md-10">
+                            Invoices 30
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p class="col-md-1">
+                            <span><i class="fas fa-file-upload"></i></span>
+                        </p>
+                        <p class="col-md-10">
+                            No Files
+                        </p>
+                    </div>
+                </div>
+                <p class="mb-0 amount_to_pay text-center">$35 / month</p>
+            </div>
+            <div class="col-3 offset-5 mt-3">
+                <button class="btn btn-primary btn-lg btn-block" type="submit" id="buy_now">Buy Now</button>
+            </div>
         </div>
+    </div>
+    </div>
 
     </div>
 
 </body>
 
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/user_register/stripe.js"></script>
 
 <script type="text/javascript">
     $(function() {
+        $("#buy_now").click(function() {
+            $("#form_submit").click();
+        });
         var $form = $(".require-validation");
         $('form.require-validation').bind('submit', function(e) {
             var $form = $(".require-validation"),

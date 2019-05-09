@@ -58,6 +58,10 @@ class Migration_create_daycare_register_table extends CI_Migration
                 'constraint' => 20,
                 'null' => TRUE,
             ),
+            'daycare_id' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+            ), 
             'created_at' => [
                 'type' => 'TIMESTAMP',
             ],

@@ -16,9 +16,19 @@ class My_user_registration extends CI_Model
     public function store_user()
     {
         $this->load->model('ion_auth_model');
+        $this->load->library('session');
+
         $password = $this->ion_auth->hash_password($this->input->post('password'));
         $activation_code = $this->generate_activation_code();
         $email = $this->input->post('email');
+        $user_name =  $this->input->post('name');
+        $session_data = array(
+            'user_name' => $user_name,
+            'plan' => 0,
+            'email' => $email,
+            'price' => 35
+        );
+        $this->session->set_userdata($session_data);
 
         $query = $this->db->get_where('users', array(
             'activation_code' => $activation_code
@@ -28,7 +38,7 @@ class My_user_registration extends CI_Model
             $activation_code = $this->generate_activation_code();
         }
         $data = array(
-            'name' => $this->input->post('name'),
+            'name' => $user_name,
             'email' => $email,
             'password' => $password,
             'activation_code' => $activation_code,
@@ -42,6 +52,16 @@ class My_user_registration extends CI_Model
             'phone' => $this->input->post('phone'),
             'owner_status' => $this->status[0],
         );
+        $this->send_confirmation_email($email,$user_name,$activation_code,$data);
+    }
+
+    public function generate_activation_code()
+    {
+        $this->load->helper('string');
+        $activation_code = random_string('alnum', 30);
+        return $activation_code;
+    }
+    public function insert_user($data){
         $this->db->insert('users', $data);
 
         $insert_id = $this->db->insert_id();
@@ -52,22 +72,14 @@ class My_user_registration extends CI_Model
             'group_id' => $group_id
         );
         $this->db->insert('users_groups', $users_groups);
-        $this->send_confirmation_email($email, $activation_code);
     }
-
-    public function generate_activation_code()
-    {
-        $this->load->helper('string');
-        $activation_code = random_string('alnum', 30);
-        return $activation_code;
-    }
-
-    public function send_confirmation_email($user_email, $activation_code){
+    public function send_confirmation_email($user_email,$user_name, $activation_code,$data){
         $this->load->config('email');
         $this->load->library('email');
         
-        $data = array(
-            'activation_code' => $activation_code
+        $email_data = array(
+            'activation_code' => $activation_code,
+            'user_name' => $user_name,
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
@@ -76,14 +88,16 @@ class My_user_registration extends CI_Model
         $this->email->to($to);
         $this->email->subject('Email verification');
 
-        $body= $this->load->view('owner_email/confirm_email', $data, true);
+        $body= $this->load->view('owner_email/confirm_email', $email_data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
-            $this->session->set_flashdata("success","Verification email is sent successfully.");            
-        }
+            $this->session->set_flashdata("verify_email","Please check your email to confirm your account.");
+            $this->insert_user($data);
+            $this->load->view('registration/success');
+        }   
         else{
-            $this->session->set_flashdata("error","Enable to sent verification email. Please try again.");
+            $this->session->set_flashdata("verify_email_error","Enable to sent verification email. Please try again.");
+            $this->load->view('registration/index');
         }
-        redirect('user/register');
     }
 }

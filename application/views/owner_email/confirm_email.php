@@ -7,9 +7,13 @@
     </head>
     <body>
         <div>
-            Verify email for carepro
-            <a href="http://localhost/daycarepro-app/index.php/payment/<?php echo $activation_code ?>">
-               http://localhost/daycarepro-app/index.php/payment/<?php echo $activation_code ?>
+           Hello <?php echo $user_name ?>, <br/><br/>
+           Your email is verified.<br/> Now, you can go further for subscription plan’s payment using following link.<br/>
+           Link: <a href="http://localhost/daycarepro-app/index.php/payment/<?php echo $activation_code ?>">
+               http://localhost/daycarepro-app/index.php/payment/<?php echo $activation_code ?></a><br/><br/>
+
+               Thanks!<br/>
+               Team Carepro
             </a>          
         </div>
     </body>

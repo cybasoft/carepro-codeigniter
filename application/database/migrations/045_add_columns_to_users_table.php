@@ -60,7 +60,7 @@ class Migration_add_columns_to_users_table extends CI_Migration
                 'null' => TRUE,
             ),
             'updated_at' => [
-                'type' => 'TIMESTAMP',
+                'type' => 'DATETIME',
             ],
         );
         $this->dbforge->add_column($this->table, $field1);

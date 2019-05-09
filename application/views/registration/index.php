@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title><?php echo session('company_name'); ?></title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo assets('img/favicon.ico'); ?>">
-    <link href="<?php echo base_url(); ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
+<?php  $this->load->view("custom_layouts/header");  ?>
+<script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
@@ -33,14 +25,9 @@
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
                     <?php endif; ?>
-                    <?php if (!empty($this->session->flashdata('success'))) : ?>
-                        <div class="alert alert-primary alert-dismissable">
-                            <?php echo $this->session->flashdata('success'); ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (!empty($this->session->flashdata('error'))) : ?>
+                    <?php if (!empty($this->session->flashdata('verify_email_error'))) : ?>
                         <div class="alert alert-danger alert-dismissable">
-                            <?php echo $this->session->flashdata('error'); ?>
+                            <?php echo $this->session->flashdata('verify_email_error'); ?>
                         </div>
                     <?php endif; ?>
                     <?php echo form_open('user/create', ['class' => 'form-box']); ?>

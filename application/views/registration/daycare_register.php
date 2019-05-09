@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title><?php echo session('company_name'); ?></title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo assets('img/favicon.ico'); ?>">
-    <link href="<?php echo base_url(); ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
+<?php  $this->load->view("custom_layouts/header");  ?>
+<script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
@@ -16,9 +7,11 @@
         .form-control {
             height: 34px;
         }
+        .stripe_connect:hover{
+            text-decoration: none;
+        }
     </style>
 </head>
-
 <body class="transparent-header">
     <div class="section-empty section-item">
         <div class="container content">
@@ -32,6 +25,11 @@
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
                     <?php endif; ?>
+                    <?php if (!empty($this->session->flashdata('daycare'))) : ?>
+                                <div class="alert alert-primary alert-dismissable">
+                                    <?php echo $this->session->flashdata('daycare'); ?>
+                                </div>
+                            <?php endif; ?>
                     <?php echo form_open('daycare/store', ['class' => 'form-box']); ?>
                     <div class="row">
                         <div class="col-md-6">

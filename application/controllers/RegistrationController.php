@@ -12,6 +12,7 @@ class RegistrationController extends CI_Controller
     }
     public function index()
     {
+
         $this->load->view('registration/index');
     }
     public function create()
@@ -32,7 +33,6 @@ class RegistrationController extends CI_Controller
 
         if ($this->form_validation->run() == true) {
             $this->My_user_registration->store_user();
-            // redirect('daycare');
         } else {
             set_flash(['email', 'name', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone', 'password']);
             validation_errors();
@@ -61,7 +61,8 @@ class RegistrationController extends CI_Controller
 
         if ($this->form_validation->run() == true) {
             $this->My_daycare_registration->store();
-            redirect('payment');
+            $this->session->set_flashdata("daycare","Daycare user added successfully.");
+            redirect('daycare');
         } else {
             set_flash(['name', 'employee_tax_identifier', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);
             validation_errors();
@@ -77,5 +78,14 @@ class RegistrationController extends CI_Controller
         );
         $this->db->where('activation_code', $activation_code);
         $this->db->update('users', $data);
+
+        $query = $this->db->get_where('users', array(
+            'activation_code' => $activation_code
+        ));
+        $check_status = $query->row_array();
+        $confirmed = $check_status['owner_status'];
+        if ($confirmed === "confirmed"){
+            $this->load->view('stripe_payment/index');
+        }
     }
 }
