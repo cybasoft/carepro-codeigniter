@@ -25,9 +25,9 @@
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
                     <?php endif; ?>
-                    <?php if (!empty($this->session->flashdata('daycare'))) : ?>
+                    <?php if (!empty($this->session->flashdata('message'))) : ?>
                                 <div class="alert alert-primary alert-dismissable">
-                                    <?php echo $this->session->flashdata('daycare'); ?>
+                                    <?php echo $this->session->flashdata('message'); ?>
                                 </div>
                             <?php endif; ?>
                     <?php echo form_open('daycare/store', ['class' => 'form-box']); ?>

@@ -83,6 +83,7 @@ class StripeController extends CI_Controller
         $check_status = $query->row_array();
         $subscribed = $check_status['owner_status'];
         if ($subscribed === "subscribed"){
+            $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");
             redirect('daycare');
         }
     }

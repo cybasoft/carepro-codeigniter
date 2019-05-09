@@ -61,7 +61,7 @@ class RegistrationController extends CI_Controller
 
         if ($this->form_validation->run() == true) {
             $this->My_daycare_registration->store();
-            $this->session->set_flashdata("daycare","Daycare user added successfully.");
+            $this->session->set_flashdata("message","Daycare user added successfully.");
             redirect('daycare');
         } else {
             set_flash(['name', 'employee_tax_identifier', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);
