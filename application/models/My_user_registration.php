@@ -93,7 +93,7 @@ class My_user_registration extends CI_Model
         if($this->email->send()){
             $this->session->set_flashdata("verify_email","Please check your email to confirm your account.");
             $this->insert_user($data);
-            $this->load->view('registration/success');
+            $this->load->view('registration/success' ,$user_name);
         }   
         else{
             $this->session->set_flashdata("verify_email_error","Enable to sent verification email. Please try again.");

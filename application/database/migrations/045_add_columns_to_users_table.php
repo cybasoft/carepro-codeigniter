@@ -58,6 +58,7 @@ class Migration_add_columns_to_users_table extends CI_Migration
                 'type'  => 'VARCHAR',
                 'constraint' => '100',
                 'null' => TRUE,
+                'unsigned'=>TRUE
             ),
             'updated_at' => [
                 'type' => 'DATETIME',

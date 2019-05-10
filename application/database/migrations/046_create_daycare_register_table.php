@@ -61,7 +61,11 @@ class Migration_create_daycare_register_table extends CI_Migration
             'daycare_id' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 20,
-            ), 
+            ),
+            'logo' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 200,
+            ),
             'created_at' => [
                 'type' => 'TIMESTAMP',
             ],
@@ -78,7 +82,6 @@ class Migration_create_daycare_register_table extends CI_Migration
 
         // Create Table users
         $this->dbforge->create_table("daycare", TRUE);
-
     }
 
     /**

@@ -170,3 +170,6 @@ $route['daycare/store'] = 'RegistrationController/store_daycare';
 $route['payment'] = "StripeController";
 $route['payment/(:any)'] = "RegistrationController/email_verified/$1";
 $route['stripePost']['post'] = "StripeController/stripePost";
+
+//test
+$route['success'] = "RegistrationController/test";

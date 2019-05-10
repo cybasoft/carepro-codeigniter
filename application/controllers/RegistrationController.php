@@ -15,6 +15,11 @@ class RegistrationController extends CI_Controller
 
         $this->load->view('registration/index');
     }
+    public function test()
+    {
+
+        $this->load->view('registration/success');
+    }
     public function create()
     {
         $tables = $this->config->item('tables', 'ion_auth');
@@ -60,11 +65,16 @@ class RegistrationController extends CI_Controller
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
 
         if ($this->form_validation->run() == true) {
-            $this->My_daycare_registration->store();
-            $this->session->set_flashdata("message","Daycare user added successfully.");
-            redirect('daycare');
+            $success_status = $this->My_daycare_registration->store();
+            if($success_status === NULL){
+                // $this->session->set_flashdata("message","Daycare registered successfully.");
+                // redirect('daycare');
+            }else{
+                $this->session->set_flashdata("error",$success_status);
+                $this->load->view('registration/daycare_register');
+            }
         } else {
-            set_flash(['name', 'employee_tax_identifier', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);
+            set_flash(['name', 'employee_tax_identifier','logo', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);
             validation_errors();
             flash('danger');
             redirect('daycare');

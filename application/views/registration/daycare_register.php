@@ -1,17 +1,36 @@
-<?php  $this->load->view("custom_layouts/header");  ?>
+<?php $this->load->view("custom_layouts/header");  ?>
 <script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
-    <style>
-        .form-control {
-            height: 34px;
-        }
-        .stripe_connect:hover{
-            text-decoration: none;
-        }
-    </style>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
+<style>
+    .form-control {
+        height: 34px;
+    }
+
+    .stripe_connect:hover {
+        text-decoration: none;
+    }
+
+    .user-edit-fileinput {
+        position: absolute;
+        visibility: hidden;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+    .img_preview {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .media {
+        margin-left: 12px;
+    }
+</style>
 </head>
+
 <body class="transparent-header">
     <div class="section-empty section-item">
         <div class="container content">
@@ -26,11 +45,16 @@
                         </div>
                     <?php endif; ?>
                     <?php if (!empty($this->session->flashdata('message'))) : ?>
-                                <div class="alert alert-primary alert-dismissable">
-                                    <?php echo $this->session->flashdata('message'); ?>
-                                </div>
-                            <?php endif; ?>
-                    <?php echo form_open('daycare/store', ['class' => 'form-box']); ?>
+                        <div class="alert alert-primary alert-dismissable">
+                            <?php echo $this->session->flashdata('message'); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($this->session->flashdata('error'))) : ?>
+                        <div class="alert alert-danger alert-dismissable">
+                            <?php echo $this->session->flashdata('error'); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php echo form_open_multipart('daycare/store', ['class' => 'form-box']); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>
@@ -41,7 +65,7 @@
                             <input name="employee_tax_identifier" type="text" class="form-control form-value" required="" value="<?php echo set_value('employee_tax_identifier'); ?>">
                         </div>
                     </div>
-                    <hr class="space xs" />                
+                    <hr class="space xs" />
                     <hr class="space xs" />
                     <div class="row">
                         <div class="col-md-6">
@@ -91,11 +115,62 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn-sm btn" type="submit">Register</button>        
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p for="avatar">logo</p>
+                            <div class="media align-items-center form-group ml-0">
+                                <img src="../assets/img/daycare/default-user-image.png" alt="daycare logo" class="ui-w-100 img_preview mr-3" id="img_preview">
+                                <div class="media-body" id="img_div">
+                                    <label class="btn btn-outline-primary btn-sm change_btn mr-1 mt-4">
+                                        change
+                                        <input type="file" class="user-edit-fileinput" name="logo" value="<?php echo set_value('logo'); ?>" id="avatar" accept="image/*">
+                                    </label>
+                                    <button type="button" class="btn btn-default btn-sm md-btn-flat mt-3 reset_btn">reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mt-2">
+                                <button class="btn-sm btn mt-5 float-right" type="submit">Register</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function() {
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.img_preview').attr('src', e.target.result);
+                    $("#avatar").attr('value', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(".user-edit-fileinput").change(function() {
+            $("#img_preview").attr("src", "");
+            $("#img_preview").removeClass("mr-3");
+            $("#img_preview").addClass("d-block");
+            $("#img_div").addClass("ml-3");
+            $("#edit_image").val('');
+            $("#customer_image").val('');
+            $("#profile_image").val('');
+            readURL(this);
+        });
+        $(".reset_btn").click(function() {
+            $("#avatar").attr('value', '');
+            $("#edit_image").val('');
+            $("#customer_image").val('');
+            $("#profile_image").val('');
+            $("#img_preview").attr('src', '../assets/img/daycare/default-user-image.png');
+        });
+    });
+</script>
 
 </html>
