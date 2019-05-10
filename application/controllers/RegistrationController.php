@@ -15,11 +15,6 @@ class RegistrationController extends CI_Controller
 
         $this->load->view('registration/index');
     }
-    public function test()
-    {
-
-        $this->load->view('registration/success');
-    }
     public function create()
     {
         $tables = $this->config->item('tables', 'ion_auth');

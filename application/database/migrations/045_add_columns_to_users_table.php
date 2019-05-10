@@ -55,9 +55,8 @@ class Migration_add_columns_to_users_table extends CI_Migration
                 'null' => TRUE,
             ),
             'daycare_id' => array(
-                'type'  => 'VARCHAR',
-                'constraint' => '100',
-                'null' => TRUE,
+                'type'  => 'INT',
+                'constraint' => '11',
                 'unsigned'=>TRUE
             ),
             'updated_at' => [

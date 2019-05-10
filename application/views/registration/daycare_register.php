@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
+<script src="<?php echo base_url(); ?>assets/plugins/extras/jquery-ui.min.js"></script>
 <style>
     .form-control {
         height: 34px;
@@ -28,10 +29,23 @@
     .media {
         margin-left: 12px;
     }
+
+    .notifictions {
+        z-index: 3000;
+        max-width: 500px;
+        top: 10px;
+        right: 5px;
+        position: absolute !important;
+    }
 </style>
 </head>
 
 <body class="transparent-header">
+    <?php if (!empty($this->session->flashdata('message'))) : ?>
+        <div class="alert alert-success alert-dismissible fade show notifictions" role="alert">
+            <?php echo $this->session->flashdata('message'); ?>
+        </div>
+    <?php endif; ?>
     <div class="section-empty section-item">
         <div class="container content">
             <div class="row">
@@ -41,11 +55,6 @@
                     </div>
                     <?php if (!empty($this->session->flashdata('type'))) : ?>
                         <div style="">
-                            <?php echo $this->session->flashdata('message'); ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (!empty($this->session->flashdata('message'))) : ?>
-                        <div class="alert alert-primary alert-dismissable">
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
                     <?php endif; ?>
@@ -170,6 +179,8 @@
             $("#profile_image").val('');
             $("#img_preview").attr('src', '../assets/img/daycare/default-user-image.png');
         });
+
+        $(".notifictions").delay(2000).hide("slide", { direction: "right" }, 5000);
     });
 </script>
 
