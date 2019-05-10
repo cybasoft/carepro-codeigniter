@@ -45,7 +45,7 @@ class My_daycare_registration extends CI_Model
             );
             $this->db->where('email', $email);
             $this->db->update('users', $data);
-            $this->send_welcome_email();
+            $this->send_welcome_email($daycare_id);
         }else{
             return $error;
         }
@@ -84,7 +84,7 @@ class My_daycare_registration extends CI_Model
         }
     }
 
-    public function send_welcome_email(){
+    public function send_welcome_email($daycare_id){
         $user_name = $this->session->userdata('user_name');
         $to = $this->session->userdata('email');
 
@@ -93,6 +93,7 @@ class My_daycare_registration extends CI_Model
         
         $data = array(
             'user_name' => $user_name,
+            'daycare_id' => $daycare_id
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
@@ -103,14 +104,14 @@ class My_daycare_registration extends CI_Model
         $body= $this->load->view('owner_email/welcome_email', $data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
-            $this->change_owner_status($to);
+            $this->change_owner_status($to,$daycare_id);
         }   
         else{
             $this->session->set_flashdata("subscription_error","Enable to sent welcome email. Please try again.");
         }
     }
 
-    public function change_owner_status($to){
+    public function change_owner_status($to,$daycare_id){
         $owner_status = $this->My_user_registration->status[3];
         $data = array(
             'owner_status' => $owner_status,
@@ -125,7 +126,7 @@ class My_daycare_registration extends CI_Model
         $registered = $check_status['owner_status'];
         if ($registered === "registered"){
             // $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");
-            redirect('/');
+            redirect(''.$daycare_id.'/login');
         }
     }
 }

@@ -37,10 +37,26 @@
         right: 5px;
         position: absolute !important;
     }
+    body{
+        position: 
+    }
+    .loading_div {
+        display: none;
+        position: fixed;
+        background: #fff url('../assets/img/loader.gif') no-repeat 50%;
+        opacity: .5;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 100%;
+    }
 </style>
 </head>
 
 <body class="transparent-header">
+    <div class="loading_div">
+    </div>
     <?php if (!empty($this->session->flashdata('message'))) : ?>
         <div class="alert alert-success alert-dismissible fade show notifictions" role="alert">
             <?php echo $this->session->flashdata('message'); ?>
@@ -53,7 +69,7 @@
                     <div class="text-center">
                         <h2 style="padding-bottom:15px;">Daycare Registration</h2>
                     </div>
-                    <?php if (!empty($this->session->flashdata('type'))) : ?>
+                    <?php  if (!empty($this->session->flashdata('type'))) : ?>
                         <div style="">
                             <?php echo $this->session->flashdata('message'); ?>
                         </div>
@@ -63,7 +79,7 @@
                             <?php echo $this->session->flashdata('error'); ?>
                         </div>
                     <?php endif; ?>
-                    <?php echo form_open_multipart('daycare/store', ['class' => 'form-box']); ?>
+                    <?php echo form_open_multipart('daycare/store', ['class' => 'form-box daycare_register']); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>
@@ -151,6 +167,11 @@
 </body>
 <script>
     $(document).ready(function() {
+        $('.daycare_register').submit(function(e) {
+            e.target.checkValidity();
+            $('.loading_div').show();
+        });
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -180,7 +201,9 @@
             $("#img_preview").attr('src', '../assets/img/daycare/default-user-image.png');
         });
 
-        $(".notifictions").delay(2000).hide("slide", { direction: "right" }, 5000);
+        $(".notifictions").delay(2000).hide("slide", {
+            direction: "right"
+        }, 5000);
     });
 </script>
 

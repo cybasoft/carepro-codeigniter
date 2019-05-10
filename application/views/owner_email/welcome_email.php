@@ -10,7 +10,7 @@
         Hello <?php echo $user_name ?>, <br /><br />
         <h2> Welcome to daycarepro app</h2><br/>
         Visit your dashboard from here: 
-        <a href="http://localhost/daycarepro-app/index.php/">http://localhost/daycarepro-app/index.php/</a><br/><br/>
+        <a href="http://localhost/daycarepro-app/index.php/<?php echo $daycare_id ?>/login">http://localhost/daycarepro-app/index.php/<?php echo $daycare_id ?>/login</a><br/><br/>
 
         Thanks!<br/>
         Team Carepro

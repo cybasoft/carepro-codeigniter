@@ -1,18 +1,34 @@
-<?php  $this->load->view("custom_layouts/header");  ?>
+<?php $this->load->view("custom_layouts/header");  ?>
 <script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
-    <style>
-        .form-control {
-            height: 34px;
-        }
-        .stripe_connect:hover{
-            text-decoration: none;
-        }
-    </style>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
+<style>
+    .form-control {
+        height: 34px;
+    }
+    .stripe_connect:hover {
+        text-decoration: none;
+    }
+    body {
+        position: relative
+    }
+    .loading_div {
+        display: none;
+        position: fixed;
+        background: #fff url('../../assets/img/loader.gif') no-repeat 50%;
+        opacity: .5;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 100%;
+    }
+</style>
 </head>
 <body class="transparent-header">
+    <div class="loading_div">
+    </div>
     <div class="section-empty section-item">
         <div class="container content">
             <div class="row">
@@ -30,7 +46,7 @@
                             <?php echo $this->session->flashdata('verify_email_error'); ?>
                         </div>
                     <?php endif; ?>
-                    <?php echo form_open('user/create', ['class' => 'form-box']); ?>
+                    <?php echo form_open('user/create', ['class' => 'form-box user_register']); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>
@@ -101,7 +117,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn-sm btn" type="submit">Register</button>
+                    <button class="btn-sm btn" type="submit" id="user_register">Register</button>
                     <div>
                         <a href="../auth/login" style="float:right;">Already have an account?</a>
                     </div>
@@ -112,4 +128,12 @@
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function(){
+        $('.user_register').submit(function (e) {
+            e.target.checkValidity();
+            $('.loading_div').show();
+        });
+    });
+</script>
 </html>

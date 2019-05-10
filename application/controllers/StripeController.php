@@ -38,14 +38,14 @@ class StripeController extends CI_Controller
         $to = $this->session->userdata('email');
         $price = $this->session->userdata('price');
 
-        require_once('application/libraries/stripe-php/init.php');
-        \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
-        \Stripe\Charge::create([
-            "amount" => $price * 100,
-            "currency" => "usd",
-            "source" => $this->input->post('stripeToken'),
-            "description" => "Test payment from Jyoti."
-        ]);
+        // require_once('application/libraries/stripe-php/init.php');
+        // \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
+        // \Stripe\Charge::create([
+        //     "amount" => $price * 100,
+        //     "currency" => "usd",
+        //     "source" => $this->input->post('stripeToken'),
+        //     "description" => "Test payment from Jyoti."
+        // ]);
 
         $this->load->config('email');
         $this->load->library('email');

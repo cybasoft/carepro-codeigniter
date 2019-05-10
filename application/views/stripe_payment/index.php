@@ -1,8 +1,26 @@
 <?php  $this->load->view("custom_layouts/header");  ?>
     <link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
+    <style>
+         body{
+        position: relative;
+    }
+    .loading_div {
+        display: none;
+        position: fixed;
+        background: #fff url('../../assets/img/loader.gif') no-repeat 50%;
+        opacity: .5;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 100%;
+    }
+    </style>
 </head>
 <body>
+<div class="loading_div">
+    </div>
     <div class="container">
         <div class="row pt-5">
             <div class="offset-4">
@@ -18,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <form role="form" action="../stripePost" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
+                    <form role="form" action="../stripePost" method="post" class="require-validation payment_form" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
                         <div class="card-body">
 
                             <?php if ($this->session->flashdata('success')) { ?>
@@ -146,6 +164,10 @@
 
 <script type="text/javascript">
     $(function() {
+        $('.payment_form').submit(function(e) {
+            e.target.checkValidity();
+            $('.loading_div').show();
+        });
         $("#buy_now").click(function() {
             $("#form_submit").click();
         });
