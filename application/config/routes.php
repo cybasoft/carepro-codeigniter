@@ -172,4 +172,4 @@ $route['payment/(:any)'] = "RegistrationController/email_verified/$1";
 $route['stripePost']['post'] = "StripeController/stripePost";
 
 //test
-$route['(.*)/login'] = 'auth/login';
+$route['(.*)/login'] = 'Auth/daycare_logo/$1';

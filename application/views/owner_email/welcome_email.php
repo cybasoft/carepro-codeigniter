@@ -7,8 +7,8 @@
 </head>
 <body>
     <div>
-        Hello <?php echo $user_name ?>, <br /><br />
-        <h2> Welcome to daycarepro app</h2><br/>
+        Hello <?php echo $user_name ?>, <br />
+        <h2> Welcome to daycarepro app</h2>
         Visit your dashboard from here: 
         <a href="http://localhost/daycarepro-app/index.php/<?php echo $daycare_id ?>/login">http://localhost/daycarepro-app/index.php/<?php echo $daycare_id ?>/login</a><br/><br/>
 

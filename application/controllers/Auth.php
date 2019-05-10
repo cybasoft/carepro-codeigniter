@@ -21,6 +21,15 @@ class Auth extends CI_Controller
         $this->login();
     }
 
+    public function daycare_logo($daycare_id = NULL){
+        $query = $this->db->get_where('daycare', array(
+            'daycare_id' => $daycare_id
+        ));
+        $result = $query->result();
+        $logo = $result[0]->logo;
+        $this->login();
+    }
+
     function login()
     {
         if($this->ion_auth->logged_in())

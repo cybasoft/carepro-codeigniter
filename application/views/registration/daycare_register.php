@@ -53,7 +53,6 @@
     }
 </style>
 </head>
-
 <body class="transparent-header">
     <div class="loading_div">
     </div>
@@ -206,5 +205,4 @@
         }, 5000);
     });
 </script>
-
 </html>
