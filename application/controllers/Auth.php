@@ -1,4 +1,7 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+use phpDocumentor\Reflection\Types\Null_;
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth extends CI_Controller
 {
@@ -20,17 +23,8 @@ class Auth extends CI_Controller
     {
         $this->login();
     }
-
-    public function daycare_logo($daycare_id = NULL){
-        $query = $this->db->get_where('daycare', array(
-            'daycare_id' => $daycare_id
-        ));
-        $result = $query->result();
-        $logo = $result[0]->logo;
-        $this->login();
-    }
-
-    function login()
+    
+    function login($daycare_id = NULL)
     {
         if($this->ion_auth->logged_in())
             redirect('dashboard', 'refresh');
@@ -67,6 +61,20 @@ class Auth extends CI_Controller
             'placeholder' => 'Captcha'
         );
         $data['captcha_image'] = $captcha['image'];
+
+        //daycare logo
+        if($daycare_id !== Null){
+            $query = $this->db->get_where('daycare', array(
+                'daycare_id' => $daycare_id
+            ));
+            $result = $query->result();
+            $logo = $result[0]->logo;
+            $image = base_url() . 'assets/uploads/daycare_logo/' .$logo;
+            
+        }else{
+            $image = base_url() . 'assets/uploads/content/logo.png';
+        }
+        $data['logo'] = $image;
         $this->page('login', compact('data'));
     }
 

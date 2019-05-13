@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <h5>Hi <?php echo $user_name ?>,</h5>
                     <p>Thanks for signing up for Carepro. We're very excited to have to have you on board.<br />
-                        To get started using Carepro, </p>
+                        To get started, </p>
 
                     <h5 class="text-center">Please check your email to confirm your account.</h5><br />
                     Thanks,<br />

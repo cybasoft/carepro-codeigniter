@@ -7,9 +7,15 @@
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">
+        <?php if($data['logo']){ ?>
             <img class="logo"
-                 src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>"
+                 src="<?php echo $data['logo']; ?>"
                  alt="Logo">
+        <?php }else{ ?>
+            <img class="logo"
+            src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>"
+            alt="Logo">
+        <?php } ?>
         </a>
     </div>
 
