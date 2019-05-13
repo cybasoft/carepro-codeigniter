@@ -70,7 +70,7 @@
         </div>
         <?php if(session('company_allow_reset_password')): ?>
             <div>
-                <?php echo anchor('register', '<span class="fa fa-key"></span> '.lang('forgot_password_heading'), ['class' => 'txt1']); ?>
+                <?php echo anchor('forgot', '<span class="fa fa-key"></span> '.lang('forgot_password_heading'), ['class' => 'txt1']); ?>
             </div>
         <?php endif; ?>
     </div>
