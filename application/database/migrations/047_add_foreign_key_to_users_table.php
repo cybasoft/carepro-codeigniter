@@ -11,6 +11,6 @@ class Migration_add_foreign_key_to_users_table extends CI_Migration
 
     public function up()
     {
-        $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+          $this->db->query('ALTER TABLE `'.$this->table.'` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 }

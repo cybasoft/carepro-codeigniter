@@ -12,9 +12,17 @@ class RegistrationController extends CI_Controller
     }
     public function index()
     {
-
-        $this->load->view('registration/index');
+       $price = $this->input->post('price');
+       $plan = $this->input->post('plan');
+       $session_data = array(
+        'plan' => $plan,
+        'price' => $price
+       );
+       $this->session->set_userdata($session_data);
+       $this->load->view('registration/index');
     }
+
+    //owner registration
     public function create()
     {
         $tables = $this->config->item('tables', 'ion_auth');
@@ -47,6 +55,7 @@ class RegistrationController extends CI_Controller
         $this->load->view('registration/daycare_register');
     }
 
+    //daycare registration 
     public function store_daycare()
     {
 
@@ -75,6 +84,7 @@ class RegistrationController extends CI_Controller
             redirect('daycare');
         }
     }
+    //function to send verification email
     public function email_verified($activation_code = NULL)
     {
         $owner_status = $this->My_user_registration->status[1];
@@ -92,5 +102,10 @@ class RegistrationController extends CI_Controller
         if ($confirmed === "confirmed"){
             $this->load->view('stripe_payment/index');
         }
+    }
+
+    //subscription  page
+    public function subscription(){
+        $this->load->view('registration/subscription_page');
     }
 }

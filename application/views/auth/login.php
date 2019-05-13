@@ -87,7 +87,7 @@
     </div> -->
 
     <div class="container-login100-form-btn mt-2">
-        <?php echo anchor('user/register', lang('register'), ['class' => 'login100-form-btn']); ?>
+        <?php echo anchor('subscription', lang('register'), ['class' => 'login100-form-btn']); ?>
     </div>
 
     <?php if(session('company_allow_registration') == TRUE): ?>

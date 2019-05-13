@@ -13,6 +13,8 @@ class My_user_registration extends CI_Model
         '2' => 'subscribed',
         '3' => 'registered'
     );
+
+    //store owner data
     public function store_user()
     {
         $this->load->model('ion_auth_model');
@@ -24,9 +26,7 @@ class My_user_registration extends CI_Model
         $user_name =  $this->input->post('name');
         $session_data = array(
             'user_name' => $user_name,
-            'plan' => 0,
             'email' => $email,
-            'price' => 35
         );
         $this->session->set_userdata($session_data);
 
@@ -37,12 +37,18 @@ class My_user_registration extends CI_Model
         if ($count !== 0) {
             $activation_code = $this->generate_activation_code();
         }
+
+        $get_plan = $this->db->get_where('subscription_plans',array(
+            'plan' => $this->session->userdata('plan'),
+        ));
+
+        $selected_plan = $get_plan->result();
         $data = array(
             'name' => $user_name,
             'email' => $email,
             'password' => $password,
             'activation_code' => $activation_code,
-            'selected_plan' => '0',
+            'selected_plan' => $selected_plan[0]->id,
             'address_line_1' => $this->input->post('address_line_1'),
             'address_line_2' => $this->input->post('address_line_2'),
             'city' => $this->input->post('city'),
@@ -55,6 +61,7 @@ class My_user_registration extends CI_Model
         $this->send_confirmation_email($email,$user_name,$activation_code,$data);
     }
 
+    //generate activation code for email verification
     public function generate_activation_code()
     {
         $this->load->helper('string');
@@ -73,6 +80,8 @@ class My_user_registration extends CI_Model
         );
         $this->db->insert('users_groups', $users_groups);
     }
+
+    //send confirmation email to owner
     public function send_confirmation_email($user_email,$user_name, $activation_code,$data){
         $this->load->config('email');
         $this->load->library('email');

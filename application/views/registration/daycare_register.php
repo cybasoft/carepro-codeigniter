@@ -38,7 +38,7 @@
         position: absolute !important;
     }
     body{
-        position: 
+        overflow-x: hidden;
     }
     .loading_div {
         display: none;

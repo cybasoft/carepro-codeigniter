@@ -1,10 +1,11 @@
-<?php  $this->load->view("custom_layouts/header");  ?>
-    <link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
-    <style>
-         body{
+<?php $this->load->view("custom_layouts/header");  ?>
+<link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
+<style>
+    body {
         position: relative;
     }
+
     .loading_div {
         display: none;
         position: fixed;
@@ -16,10 +17,11 @@
         z-index: 1000;
         height: 100%;
     }
-    </style>
+</style>
 </head>
+
 <body>
-<div class="loading_div">
+    <div class="loading_div">
     </div>
     <div class="container">
         <div class="row pt-5">
@@ -95,7 +97,7 @@
                             <span><i class="fas fa-child"></i></span>
                         </p>
                         <p class="col-md-10">
-                            Children 10
+                            <?php echo lang('Children 10'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -103,7 +105,7 @@
                             <span><i class="fas fa-chalkboard-teacher"></i></span>
                         </p>
                         <p class="col-md-10">
-                            staff members 5
+                            <?php echo  lang('Staff members 5'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -111,7 +113,7 @@
                             <span><i class="fas fa-calendar"></i></span>
                         </p>
                         <p class="col-md-10">
-                            Calender events 20
+                            <?php echo  lang('Calender events 20'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -119,7 +121,7 @@
                             <span><i class="fas fa-newspaper"></i></span>
                         </p>
                         <p class="col-md-10">
-                            No News Module
+                            <?php echo  lang('No News Module'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -127,7 +129,7 @@
                             <span><i class="fas fa-home"></i></span>
                         </p>
                         <p class="col-md-10">
-                            No Rooms
+                            <?php echo  lang('No Rooms'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -135,7 +137,7 @@
                             <span><i class="fas fa-file-invoice"></i></span>
                         </p>
                         <p class="col-md-10">
-                            Invoices 30
+                        <?php echo  lang('Invoices 30'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -143,7 +145,7 @@
                             <span><i class="fas fa-file-upload"></i></span>
                         </p>
                         <p class="col-md-10">
-                            No Files
+                        <?php echo  lang('No Files'); ?>
                         </p>
                     </div>
                 </div>
