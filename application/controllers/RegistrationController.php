@@ -100,7 +100,13 @@ class RegistrationController extends CI_Controller
         $check_status = $query->row_array();
         $confirmed = $check_status['owner_status'];
         if ($confirmed === "confirmed"){
-            $this->load->view('stripe_payment/index');
+            $selected_plan = $this->session->userdata('plan');
+
+            $query = $this->db->get_where('subscription_plans',array(
+                'plan' => $selected_plan
+            ));
+            $plan_details = $query->result();
+            $this->load->view('stripe_payment/index' , $plan_details[0]);
         }
     }
 

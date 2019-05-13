@@ -8,7 +8,7 @@
 <body>
     <div>
         Hello <?php echo $user_name ?>, <br /><br />
-        Your payment of $35 completed successfully.<br/>
+        Your payment of $<?php echo $price ?> completed successfully.<br/>
         Thank you for subscription to carepro basic plan!<br/><br/>
         Daycare registration link:<br/>
         <a href="http://localhost/daycarepro-app/index.php/daycare">http://localhost/daycarepro-app/index.php/daycare</a><br/><br/>

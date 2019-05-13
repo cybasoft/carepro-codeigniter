@@ -37,7 +37,7 @@ class StripeController extends CI_Controller
         $user_name = $this->session->userdata('user_name');
         $to = $this->session->userdata('email');
         $price = $this->session->userdata('price');
-
+      
         require_once('application/libraries/stripe-php/init.php');
         \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
         \Stripe\Charge::create([
@@ -52,6 +52,7 @@ class StripeController extends CI_Controller
         
         $data = array(
             'user_name' => $user_name,
+            'price' => $this->session->userdata('price')
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');

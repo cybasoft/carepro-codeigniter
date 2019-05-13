@@ -1,34 +1,33 @@
 <style>
-.login100-form-btn:hover{
- color: #ffffff;
-}
+    .login100-form-btn:hover {
+        color: #ffffff;
+    }
+
+    .logo {
+        height: 100px;
+    }
 </style>
 <form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">
-        <?php if($data['logo']){ ?>
-            <img class="logo"
-                 src="<?php echo $data['logo']; ?>"
-                 alt="Logo">
-        <?php }else{ ?>
-            <img class="logo"
-            src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>"
-            alt="Logo">
-        <?php } ?>
+            <?php if ($data['logo']) { ?>
+                <img class="logo" src="<?php echo $data['logo']; ?>" alt="Logo">
+            <?php } else { ?>
+                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>" alt="Logo">
+            <?php } ?>
         </a>
     </div>
 
     <span class="login100-form-title p-b-43"><?php echo lang('Login'); ?></span>
 
-    <?php if(!empty($this->session->flashdata('type'))) : ?>
+    <?php if (!empty($this->session->flashdata('type'))) : ?>
         <div style="">
             <?php echo $this->session->flashdata('message'); ?>
         </div>
     <?php endif; ?>
 
-    <div class="wrap-input100 validate-input"
-         data-validate="<?php echo lang('Valid email is required'); ?>: ex@abc.xyz">
+    <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Valid email is required'); ?>: ex@abc.xyz">
         <?php echo form_input([
             'name' => 'email',
             'type' => 'email',
@@ -51,12 +50,12 @@
         <span class="label-input100"><?php echo lang('Password'); ?></span>
     </div>
 
-    <?php if(session('company_enable_captcha')): ?>
+    <?php if (session('company_enable_captcha')) : ?>
         <div class="flex-sb-m w-full p-t-3 p-b-32">
             <div class="contact100-form-checkbox">
                 <?php echo $data['captcha_image']; ?>
             </div>
-            <?php if(session('company_allow_reset_password')): ?>
+            <?php if (session('company_allow_reset_password')) : ?>
                 <div>
                     <?php echo form_input($data['captcha']); ?>
                 </div>
@@ -68,9 +67,9 @@
         <div class="contact100-form-checkbox">
 
         </div>
-        <?php if(session('company_allow_reset_password')): ?>
+        <?php if (session('company_allow_reset_password')) : ?>
             <div>
-                <?php echo anchor('forgot', '<span class="fa fa-key"></span> '.lang('forgot_password_heading'), ['class' => 'txt1']); ?>
+                <?php echo anchor('forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading'), ['class' => 'txt1']); ?>
             </div>
         <?php endif; ?>
     </div>
@@ -81,27 +80,29 @@
             <?php echo lang('Login'); ?>
         </button>
     </div>
+    <?php if ($data['daycare'] === 'yes') : ?>
+        <div class="container-login100-form-btn mt-2">
+            <?php echo anchor('subscription', lang('register'), ['class' => 'login100-form-btn']); ?>
+        </div>
+    <?php elseif($data['daycare'] === 'no') : ?>
+        <div class="container-login100-form-btn mt-2">
+            <?php echo anchor('register', lang('register'), ['class' => 'login100-form-btn']); ?>
+        </div>
+        <?php endif; ?>
 
-    <!-- <div class="container-login100-form-btn mt-2">
-        <?php echo anchor('auth/register', lang('register'), ['class' => 'login100-form-btn']); ?>
-    </div> -->
 
-    <div class="container-login100-form-btn mt-2">
-        <?php echo anchor('subscription', lang('register'), ['class' => 'login100-form-btn']); ?>
-    </div>
-
-    <?php if(session('company_allow_registration') == TRUE): ?>
+    <?php if (session('company_allow_registration') == TRUE) : ?>
         <div class="text-center p-t-46 p-b-20">
-            <?php echo anchor('auth/register', '<span class="fa fa-user"></span> '.lang('register'), ['class' => 'txt2']); ?>
+            <?php echo anchor('auth/register', '<span class="fa fa-user"></span> ' . lang('register'), ['class' => 'txt2']); ?>
         </div>
     <?php endif; ?>
 
-    <?php if(base_url() == "https://careproapp.com/demo/"): ?>
-        <strong>Admin</strong><br/>
-        admin@app.com / password<br/>
-        <strong>Parent</strong><br/>
-        parent@app.com / password<br/>
-        <strong>Staff</strong><br/>
+    <?php if (base_url() == "https://careproapp.com/demo/") : ?>
+        <strong>Admin</strong><br />
+        admin@app.com / password<br />
+        <strong>Parent</strong><br />
+        parent@app.com / password<br />
+        <strong>Staff</strong><br />
         staff@app.com / password
     <?php endif ?>
 </form>

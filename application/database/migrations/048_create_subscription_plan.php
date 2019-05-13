@@ -17,8 +17,36 @@ class Migration_create_subscription_plan extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 100
             ),
-            'price' => array(
+            'children' => array(
                 'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'staff_members' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'calender_events' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'news_module' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'rooms' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'invoices' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'files' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'price' => array(
+                'type' => 'FLOAT',
                 'constraint' => 100
             )
         ));

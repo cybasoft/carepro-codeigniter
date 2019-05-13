@@ -27,7 +27,7 @@
         <div class="row pt-5">
             <div class="offset-4">
                 <img src="../../assets/img/logo.png" class="w-50 mb-3 offset-1">
-                <p class="subscribe_text offset-1">Subscribe to Carepro Plan</p>
+                <p class="subscribe_text offset-1"><?php echo lang('Subscribe to Carepro Plan'); ?></p>
             </div>
             <div class="col-md-6 offset-1">
                 <div class="card credit-card-box mt-3">
@@ -54,13 +54,13 @@
                             <?php endif; ?>
                             <div class='form-row row'>
                                 <div class='col-12 form-group required'>
-                                    <label class='control-label'>Name on Card</label> <input class='form-control' size='4' type='text'>
+                                    <label class='control-label'><?php echo lang('Name on Card'); ?></label> <input class='form-control' size='4' type='text'>
                                 </div>
                             </div>
 
                             <div class='form-row row'>
                                 <div class='col-12 form-group required'>
-                                    <label class='control-label'>Card Number</label> <input autocomplete='off' class='form-control card-number' size='20' type='text'>
+                                    <label class='control-label'><?php echo lang('Card Number'); ?></label> <input autocomplete='off' class='form-control card-number' size='20' type='text'>
                                 </div>
                             </div>
 
@@ -69,35 +69,36 @@
                                     <label class='control-label'>CVC</label> <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'>
                                 </div>
                                 <div class='col-12 col-md-4 form-group expiration required'>
-                                    <label class='control-label'>Expiration Month</label> <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
+                                    <label class='control-label'><?php echo lang('Expiration Month'); ?></label> <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
                                 </div>
                                 <div class='col-12 col-md-4 form-group expiration required'>
-                                    <label class='control-label'>Expiration Year</label> <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
+                                    <label class='control-label'><?php echo lang('Expiration Year'); ?></label> <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
                                 </div>
                             </div>
 
                             <div class='form-row row'>
                                 <div class='col-md-12 error form-group d-none'>
-                                    <div class='alert-danger alert'>Please correct the errors and try
-                                        again.</div>
+                                    <div class='alert-danger alert'>
+                                        <?php echo lang('Please correct the errors and try again.'); ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-3 offset-5 mt-3 d-none">
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" id="form_submit">Buy Now</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" id="form_submit"><?php echo lang('Buy Now'); ?></button>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="col-6 col-md-4 mt-3">
-                <p class="text-center selected_plan">Basic Plan</p>
+                <p class="text-center selected_plan"><?php echo $plan; ?> <?php echo lang('Plan'); ?></p>
                 <div class="plan_div ml-5 pl-5">
                     <div class="row">
                         <p class="col-md-1">
                             <span><i class="fas fa-child"></i></span>
                         </p>
                         <p class="col-md-10">
-                            <?php echo lang('Children 10'); ?>
+                        <?php echo $children; ?><?php echo lang(' Children'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -105,7 +106,7 @@
                             <span><i class="fas fa-chalkboard-teacher"></i></span>
                         </p>
                         <p class="col-md-10">
-                            <?php echo  lang('Staff members 5'); ?>
+                        <?php echo $staff_members; ?> <?php echo  lang(' Staff members'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -113,7 +114,7 @@
                             <span><i class="fas fa-calendar"></i></span>
                         </p>
                         <p class="col-md-10">
-                            <?php echo  lang('Calender events 20'); ?>
+                        <?php echo $calender_events; ?><?php echo  lang(' Calender events '); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -121,7 +122,7 @@
                             <span><i class="fas fa-newspaper"></i></span>
                         </p>
                         <p class="col-md-10">
-                            <?php echo  lang('No News Module'); ?>
+                        <?php echo $news_module; ?> <?php echo  lang(' News Module'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -129,7 +130,7 @@
                             <span><i class="fas fa-home"></i></span>
                         </p>
                         <p class="col-md-10">
-                            <?php echo  lang('No Rooms'); ?>
+                        <?php echo $rooms; ?> <?php echo  lang(' Rooms'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -137,7 +138,7 @@
                             <span><i class="fas fa-file-invoice"></i></span>
                         </p>
                         <p class="col-md-10">
-                        <?php echo  lang('Invoices 30'); ?>
+                        <?php echo $invoices; ?><?php echo  lang(' Invoices'); ?>
                         </p>
                     </div>
                     <div class="row">
@@ -145,11 +146,11 @@
                             <span><i class="fas fa-file-upload"></i></span>
                         </p>
                         <p class="col-md-10">
-                        <?php echo  lang('No Files'); ?>
+                        <?php echo $files; ?> <?php echo  lang(' Files'); ?>
                         </p>
                     </div>
                 </div>
-                <p class="mb-0 amount_to_pay text-center">$35 / month</p>
+                <p class="mb-0 amount_to_pay text-center">$<?php echo $price; ?> / month</p>
             </div>
             <div class="col-3 offset-5 mt-3">
                 <button class="btn btn-primary btn-lg btn-block" type="submit" id="buy_now">Buy Now</button>
@@ -166,10 +167,6 @@
 
 <script type="text/javascript">
     $(function() {
-        $('.payment_form').submit(function(e) {
-            e.target.checkValidity();
-            $('.loading_div').show();
-        });
         $("#buy_now").click(function() {
             $("#form_submit").click();
         });
@@ -192,6 +189,8 @@
                     $input.parent().addClass('has-error');
                     $errorMessage.removeClass('d-none');
                     e.preventDefault();
+                }else{
+                    $('.loading_div').show();
                 }
             });
 

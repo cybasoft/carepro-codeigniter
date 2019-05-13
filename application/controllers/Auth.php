@@ -70,11 +70,13 @@ class Auth extends CI_Controller
             $result = $query->result();
             $logo = $result[0]->logo;
             $image = base_url() . 'assets/uploads/daycare_logo/' .$logo;
-            
+            $daycare = 'yes';
         }else{
             $image = base_url() . 'assets/uploads/content/logo.png';
+            $daycare = 'no';
         }
         $data['logo'] = $image;
+        $data['daycare'] = $daycare;
         $this->page('login', compact('data'));
     }
 

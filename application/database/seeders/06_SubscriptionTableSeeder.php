@@ -10,14 +10,35 @@ class SubscriptionTableSeeder extends CI_Migration
         $plan_details = [
             [
                 'plan' => 'basic',
+                'children' => 10,
+                'staff_members' => 5,
+                'calender_events' => 20,
+                'news_module' => 'No',
+                'rooms' => 'No',
+                'invoices' => 30,
+                'files' => 'No',
                 'price' => 35
             ],
             [
                 'plan' => 'silver',
+                'children' => 20,
+                'staff_members' => 10,
+                'calender_events' => 50,
+                'news_module' => 'Yes',
+                'rooms' => 'No',
+                'invoices' => 100,
+                'files' => '250MB',
                 'price' => 59.99
             ],
             [
                 'plan' => 'gold',
+                'children' => 'Unlimited',
+                'staff_members' => 'Unlimited',
+                'calender_events' => 'Unlimited',
+                'news_module' => 'Yes',
+                'rooms' => 'Yes',
+                'invoices' => 'Unlimited',
+                'files' => '2GB',
                 'price' => 120
             ],
         ];

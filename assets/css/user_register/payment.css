@@ -101,6 +101,7 @@ label {
     font-size: 25px;
     color: #5584ff;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .has-error .form-control {
