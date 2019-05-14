@@ -176,3 +176,7 @@ $route['(.*)/login'] = 'Auth/login/$1';
 
 //subscription page
 $route['subscription'] = 'RegistrationController/subscription';
+
+//parent registration
+$route['(.*)/register'] = 'auth/register/$1';
+$route['(.*)/create_parent'] = 'RegistrationController/create_parent/$1';

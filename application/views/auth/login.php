@@ -2,10 +2,6 @@
     .login100-form-btn:hover {
         color: #ffffff;
     }
-
-    .logo {
-        height: 100px;
-    }
 </style>
 <form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
 
@@ -80,13 +76,13 @@
             <?php echo lang('Login'); ?>
         </button>
     </div>
-    <?php if ($data['daycare'] === 'yes') : ?>
+    <?php if ($data['daycare'] === 'no') : ?>
         <div class="container-login100-form-btn mt-2">
             <?php echo anchor('subscription', lang('register'), ['class' => 'login100-form-btn']); ?>
         </div>
-    <?php elseif($data['daycare'] === 'no') : ?>
+    <?php elseif($data['daycare'] === 'yes') : ?>
         <div class="container-login100-form-btn mt-2">
-            <?php echo anchor('register', lang('register'), ['class' => 'login100-form-btn']); ?>
+            <?php echo anchor($data['daycare_id'].'/register', lang('register'), ['class' => 'login100-form-btn']); ?>
         </div>
         <?php endif; ?>
 

@@ -8,12 +8,12 @@
 <body>
     <div>
         Hello <?php echo $user_name ?>, <br />
-        <h2> Welcome to daycarepro app</h2>
+        <h2> Welcome to Daycarepro app</h2>
         Visit your dashboard from here: 
         <a href="http://localhost/daycarepro-app/index.php/<?php echo $daycare_id ?>/login">http://localhost/daycarepro-app/index.php/<?php echo $daycare_id ?>/login</a><br/><br/>
 
         Thanks!<br/>
-        Team Carepro
+        Team Daycarepro
         </a>
     </div>
 </body>

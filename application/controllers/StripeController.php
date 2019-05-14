@@ -58,7 +58,7 @@ class StripeController extends CI_Controller
         $from = $this->config->item('smtp_user');
         $this->email->from($from, 'Daycare');
         $this->email->to($to);
-        $this->email->subject('Carepro payment');
+        $this->email->subject('Daycare payment');
 
         $body= $this->load->view('owner_email/thanku_email', $data, true);
         $this->email->message($body);        //Send mail

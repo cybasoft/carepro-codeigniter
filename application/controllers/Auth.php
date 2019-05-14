@@ -23,24 +23,24 @@ class Auth extends CI_Controller
     {
         $this->login();
     }
-    
+
     function login($daycare_id = NULL)
     {
-        if($this->ion_auth->logged_in())
+        if ($this->ion_auth->logged_in())
             redirect('dashboard', 'refresh');
 
         $this->refreshCaptcha();
 
-        if(!empty($this->input->post('email'))) {
+        if (!empty($this->input->post('email'))) {
             $this->form_validation->set_rules('email', lang('email'), 'required');
             $this->form_validation->set_rules('password', lang('password'), 'required');
-            if(session('company_enable_captcha') == 1)
+            if (session('company_enable_captcha') == 1)
                 $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
 
-            if($this->form_validation->run() == true) {
+            if ($this->form_validation->run() == true) {
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
-                if($this->ion_auth->login($email, $password)) {
+                if ($this->ion_auth->login($email, $password)) {
                     redirect('dashboard', 'refresh');
                 } else {
                     flash('error', 'Username or password is incorrect');
@@ -63,26 +63,27 @@ class Auth extends CI_Controller
         $data['captcha_image'] = $captcha['image'];
 
         //daycare logo
-        if($daycare_id !== Null){
+        if ($daycare_id !== Null) {
             $query = $this->db->get_where('daycare', array(
                 'daycare_id' => $daycare_id
             ));
             $result = $query->result();
             $logo = $result[0]->logo;
-            $image = base_url() . 'assets/uploads/daycare_logo/' .$logo;
+            $image = base_url() . 'assets/uploads/daycare_logo/' . $logo;
             $daycare = 'yes';
-        }else{
+        } else {
             $image = base_url() . 'assets/uploads/content/logo.png';
             $daycare = 'no';
         }
         $data['logo'] = $image;
         $data['daycare'] = $daycare;
+        $data['daycare_id'] =  $daycare_id;
         $this->page('login', compact('data'));
     }
 
-    function register()
+    function register($daycareId = NULL)
     {
-        if($this->ion_auth->logged_in()) redirect('dashboard', 'refresh');
+        if ($this->ion_auth->logged_in()) redirect('dashboard', 'refresh');
 
         $this->refreshCaptcha();
 
@@ -93,10 +94,10 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required');
         $this->form_validation->set_rules('phone', lang('phone'), 'required');
 
-        if(session('company_enable_captcha') == 1)
+        if (session('company_enable_captcha') == 1)
             $this->form_validation->set_rules('captcha', lang('captcha'), 'required|callback_validate_captcha');
 
-        if($this->form_validation->run() == true) {
+        if ($this->form_validation->run() == true) {
 
             $data = array(
                 'first_name' => $this->input->post('first_name'),
@@ -106,7 +107,7 @@ class Auth extends CI_Controller
                 'address' => $this->input->post('address')
             );
 
-            if($this->auth->register($data, 'parent')) {
+            if ($this->auth->register($data, 'parent')) {
                 flash('success', lang('Registration successful'));
 
                 // if($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
@@ -119,7 +120,7 @@ class Auth extends CI_Controller
             }
         } else {
             //the user is not logging in so display the login page
-            if(!empty($this->input->post('email'))) {
+            if (!empty($this->input->post('email'))) {
                 validation_errors();
                 flash('danger');
             }
@@ -179,20 +180,32 @@ class Auth extends CI_Controller
                 'style' => 'border:solid 1px #ccc',
                 'placeholder' => 'Captcha'
             );
+            //daycare logo
+            if ($daycareId !== Null) {
+                $query = $this->db->get_where('daycare', array(
+                    'daycare_id' => $daycareId
+                ));
+                $result = $query->result();
+                $logo = $result[0]->logo;
+                $image = base_url() . 'assets/uploads/daycare_logo/' . $logo;
+            } else {
+                $image = base_url() . 'assets/uploads/content/logo.png';
+            }
+            $data['logo'] = $image;
             $data['captcha_image'] = $captcha['image'];
+            $data['daycare_id'] = $daycareId;
             $this->page('register', compact('data'));
         }
     }
 
     public function validate_captcha($captcha)
     {
-        if((int)$captcha !== (int)$this->session->flashdata('captcha')) {
+        if ((int)$captcha !== (int)$this->session->flashdata('captcha')) {
             $this->form_validation->set_message('validate_captcha', lang('invalid_captcha'));
             return false;
         } else {
             return true;
         }
-
     }
 
     /**
@@ -205,8 +218,8 @@ class Auth extends CI_Controller
             'word' => rand(1111, 9999),
             'word_length' => 4,
             'img_path' => './application/temp/captcha/',
-            'img_url' => base_url().'application/temp/captcha/',
-            'font_path' => base_url().'system/fonts/texb.ttf',
+            'img_url' => base_url() . 'application/temp/captcha/',
+            'font_path' => base_url() . 'system/fonts/texb.ttf',
             'img_width' => '150',
             'show_grid' => FALSE,
             'img_height' => 28,
@@ -229,11 +242,11 @@ class Auth extends CI_Controller
         $path = './application/temp/captcha/';
         $dir = new DirectoryIterator($path);
         foreach ($dir as $fileinfo) {
-            if(!$fileinfo->isDot()) {
+            if (!$fileinfo->isDot()) {
                 $image = explode('.', $fileinfo->getFilename());
                 $captcha = $image[0];
-                if($captcha < $expiration)
-                    @unlink($path.$fileinfo->getFilename());
+                if ($captcha < $expiration)
+                    @unlink($path . $fileinfo->getFilename());
             }
         }
     }
@@ -244,7 +257,7 @@ class Auth extends CI_Controller
     function validate_password($password)
     {
         $password_confirmation = $this->input->post('password_confirm');
-        if($password == $password_confirmation) {
+        if ($password == $password_confirmation) {
             return true;
         } else {
             $this->form_validation->set_message('validate_password', lang('password_error'));
@@ -255,10 +268,10 @@ class Auth extends CI_Controller
     function page($page, $data = array())
     {
         $this->load->view('auth/header');
-        if(session('company_maintenance_mode') == 1) {
+        if (session('company_maintenance_mode') == 1) {
             $this->load->view('errors/maintenance');
         } else {
-            $this->load->view('auth/'.$page, $data);
+            $this->load->view('auth/' . $page, $data);
         }
         $this->load->view('auth/footer');
     }
@@ -267,22 +280,22 @@ class Auth extends CI_Controller
 
     function forgot()
     {
-        if(!empty($this->input->post('email'))) {
+        if (!empty($this->input->post('email'))) {
             $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');
-            if($this->form_validation->run() == false) {
+            if ($this->form_validation->run() == false) {
                 $this->data['identity_label'] = 'email';
                 validation_errors();
                 flash('danger');
             } else {
                 // get identity from username or email
                 $identity = $this->ion_auth->where('email', strtolower($this->input->post('email')))->users()->row();
-                if(empty($identity)) {
+                if (empty($identity)) {
                     flash('danger', lang('forgot_password_email_not_found'));
                     redirectPrev();
                 }
                 //run the forgotten password method to email an activation code to the user
                 $forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
-                if($forgotten) {
+                if ($forgotten) {
                     //if there were no errors
                     flash('success', lang('password_reset_link_sent'));
                     redirect('auth/login');
@@ -299,19 +312,19 @@ class Auth extends CI_Controller
 
     public function reset($code = NULL)
     {
-        if(!$code) {
+        if (!$code) {
             flash('error', lang('invalid_request'));
             redirect('auth/forgot');
         }
 
         $user = $this->ion_auth->forgotten_password_check($code);
-        if($user) {
-            $this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[new_confirm]');
+        if ($user) {
+            $this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
             $this->form_validation->set_rules('new_confirm', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
 
-            if($this->form_validation->run() == false) {
+            if ($this->form_validation->run() == false) {
 
-                if($this->input->post('new')) {
+                if ($this->input->post('new')) {
                     validation_errors();
                     flash('danger');
                 }
@@ -321,13 +334,13 @@ class Auth extends CI_Controller
                     'name' => 'new',
                     'id' => 'new',
                     'type' => 'password',
-                    'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+                    'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
                 );
                 $this->data['new_password_confirm'] = array(
                     'name' => 'new_confirm',
                     'id' => 'new_confirm',
                     'type' => 'password',
-                    'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
+                    'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
                 );
                 $this->data['user_id'] = array(
                     'name' => 'user_id',
@@ -340,9 +353,8 @@ class Auth extends CI_Controller
 
                 //render
                 $this->page('reset_password', $this->data);
-
             } else {
-                if($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
+                if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
                     //something fishy might be up
                     $this->ion_auth->clear_forgotten_password_code($code);
                     show_error($this->lang->line('error_csrf'));
@@ -350,10 +362,10 @@ class Auth extends CI_Controller
                     // finally change the password
                     $identity = $user->{$this->config->item('identity', 'ion_auth')};
                     $change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
-                    if($change) {
+                    if ($change) {
                         //Login if the password was successfully changed
                         flash('success', $this->ion_auth->messages());
-                        if($this->ion_auth->login($identity, $this->input->post('new'))) {
+                        if ($this->ion_auth->login($identity, $this->input->post('new'))) {
                             redirect('dashboard', 'refresh');
                         } else {
                             flash('error', 'Username or password is incorrect');
@@ -365,7 +377,6 @@ class Auth extends CI_Controller
                     }
                 }
             }
-
         } else {
             flash('danger', $this->ion_auth->errors());
             redirect("auth/forgot", 'refresh');
@@ -387,8 +398,10 @@ class Auth extends CI_Controller
 
     function _valid_csrf_nonce()
     {
-        if($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
-            $this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')) {
+        if (
+            $this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
+            $this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')
+        ) {
             return TRUE;
         } else {
             return FALSE;

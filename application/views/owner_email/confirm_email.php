@@ -13,7 +13,7 @@
                http://localhost/daycarepro-app/index.php/payment/<?php echo $activation_code ?></a><br/><br/>
 
                Thanks!<br/>
-               Team Carepro
+               Team Daycarepro
             </a>          
         </div>
     </body>

@@ -8,6 +8,7 @@ class RegistrationController extends CI_Controller
         parent::__construct();
         $this->load->model('My_user_registration');
         $this->load->model('My_daycare_registration');
+        $this->load->model('My_parent_registration');
         $this->load->helper('url_helper');
     }
     public function index()
@@ -113,5 +114,27 @@ class RegistrationController extends CI_Controller
     //subscription  page
     public function subscription(){
         $this->load->view('registration/subscription_page');
+    }
+
+    //create parent
+    public function create_parent($daycare_id = NULL){
+        $tables = $this->config->item('tables', 'ion_auth');
+
+        $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
+        $this->form_validation->set_rules('last_name', lang('last_name'), 'required|xss_clean|min_length[2]');
+        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
+        $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
+        $this->form_validation->set_rules('password', lang('password'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[password_confirm]');
+        $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');
+    
+        if($this->form_validation->run() == true) {
+            $this->My_parent_registration->store_parent($daycare_id);   
+            redirect($daycare_id.'/login');
+        }else{
+            set_flash(['email', 'first_name', 'last_name', 'phone', 'password']);
+            validation_errors();
+            flash('danger');
+            redirect($daycare_id.'/register');
+        }
     }
 }
