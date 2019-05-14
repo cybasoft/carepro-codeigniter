@@ -9,13 +9,16 @@
     .loading_div {
         display: none;
         position: fixed;
-        background: #fff url('../../assets/img/loader.gif') no-repeat 50%;
+        background: #fff url('../assets/img/loader.gif') no-repeat 50%;
         opacity: .5;
         top: 0;
         left: 0;
         width: 100%;
         z-index: 1000;
         height: 100%;
+    }
+    .btn_div{
+        margin-left: 20%;
     }
 </style>
 </head>
@@ -26,19 +29,19 @@
     <div class="container">
         <div class="row pt-5">
             <div class="offset-4">
-                <img src="../../assets/img/logo.png" class="w-50 mb-3 offset-1">
-                <p class="subscribe_text offset-1"><?php echo lang('Subscribe to Carepro Plan'); ?></p>
+                <img src="../assets/img/logo.png" class="w-50 mb-3 offset-1">
+                <p class="subscribe_text offset-1"><?php echo lang('Subscribe to Daycarepro Plan'); ?></p>
             </div>
             <div class="col-md-6 offset-1">
                 <div class="card credit-card-box mt-3">
                     <div class="card-header display-table">
                         <div class="row display-tr">
                             <div class="display-td float-right">
-                                <img class="img-responsive float-right" src="../../assets/img/daycare/card_img.png">
+                                <img class="img-responsive float-right" src="../assets/img/daycare/card_img.png">
                             </div>
                         </div>
                     </div>
-                    <form role="form" action="../stripePost" method="post" class="require-validation payment_form" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
+                    <form role="form" action="../stripePost/<?php echo $activation_code; ?>" method="post" class="require-validation payment_form" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
                         <div class="card-body">
 
                             <?php if ($this->session->flashdata('success')) { ?>
@@ -152,7 +155,7 @@
                 </div>
                 <p class="mb-0 amount_to_pay text-center">$<?php echo $price; ?> / month</p>
             </div>
-            <div class="col-3 offset-5 mt-3">
+            <div class="col-3 mt-3 btn_div">
                 <button class="btn btn-primary btn-lg btn-block" type="submit" id="buy_now">Buy Now</button>
             </div>
         </div>

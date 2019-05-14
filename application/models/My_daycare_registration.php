@@ -2,7 +2,7 @@
 
 class My_daycare_registration extends CI_Model
 {   
-    public function store()
+    public function store($activation_code)
     {
         $image = '';
         $error = '';
@@ -10,6 +10,9 @@ class My_daycare_registration extends CI_Model
         $file =  $this->store_logo($daycare_id);
         if(isset($file['error'])){
             $error =  $file['error'];
+            if($error === "You did not select a file to upload."){
+                $image = '';
+            }
         }else if(isset($file['logo'])) {
             $image = $file['logo']['file_name'];
         }
@@ -21,7 +24,7 @@ class My_daycare_registration extends CI_Model
         if ($count !== 0) {
             $daycare_id = $this->generate_unquie_daycareId();
         }
-        if($image !== ''){
+        if($image !== '' || $image === ''){
             $data = array(
                 'name' => $this->input->post('name'),
                 'employee_tax_identifier' => $this->input->post('employee_tax_identifier'),
@@ -38,14 +41,20 @@ class My_daycare_registration extends CI_Model
             $this->db->insert('daycare', $data);
     
             $insert_id = $this->db->insert_id();
-    
-            $email = $this->session->userdata('email');
+            
+            $query = $this->db->get_where('users',array(
+                'activation_code' => $activation_code
+            ));
+            $user_details = $query->result_array()[0];
+            $email = $user_details['email'];
+            $name = $user_details['name'];
+
             $data = array(
                 'daycare_id' => $insert_id,
             );
             $this->db->where('email', $email);
             $this->db->update('users', $data);
-            $this->send_welcome_email($daycare_id);
+            $this->send_welcome_email($daycare_id,$email,$name);
         }else{
             return $error;
         }
@@ -84,27 +93,24 @@ class My_daycare_registration extends CI_Model
         }
     }
 
-    public function send_welcome_email($daycare_id){
-        $user_name = $this->session->userdata('user_name');
-        $to = $this->session->userdata('email');
-
+    public function send_welcome_email($daycare_id,$email,$name){
         $this->load->config('email');
         $this->load->library('email');
         
         $data = array(
-            'user_name' => $user_name,
+            'user_name' => $name,
             'daycare_id' => $daycare_id
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
         $this->email->from($from, 'Daycare');
-        $this->email->to($to);
+        $this->email->to($email);
         $this->email->subject('Daycare register');
 
         $body= $this->load->view('owner_email/welcome_email', $data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
-            $this->change_owner_status($to,$daycare_id);
+            $this->change_owner_status($email,$daycare_id);
         }   
         else{
             $this->session->set_flashdata("subscription_error","Enable to sent welcome email. Please try again.");
@@ -125,7 +131,6 @@ class My_daycare_registration extends CI_Model
         $check_status = $query->row_array();
         $registered = $check_status['owner_status'];
         if ($registered === "registered"){
-            // $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");
             redirect(''.$daycare_id.'/login');
         }
     }

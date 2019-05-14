@@ -4,6 +4,7 @@
 
 class My_parent_registration extends CI_Model
 {
+    //store parent
     public function store_parent($daycare_id){
         $this->load->model('ion_auth_model');
         $query = $this->db->get_where('daycare', array(
@@ -12,14 +13,21 @@ class My_parent_registration extends CI_Model
         $result_query = $query->result();
         $owner_id = $result_query[0]->id;
         $password = $this->ion_auth->hash_password($this->input->post('password'));        
+        $first_name = $this->input->post('first_name');
+        $last_name =$this->input->post('last_name');
         $data = array(
-            'first_name' => $this->input->post('first_name'),
-            'last_name' => $this->input->post('last_name'),
+            'first_name' => $first_name,
+            'last_name' => $last_name,
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
             'password' => $password,
             'daycare_id' => $owner_id
         );
+        $parent_name = $first_name .' '. $last_name;
+        $this->send_activation_email($data,$daycare_id,$parent_name);
+    }
+    //insert parent to database
+    public function insert_parent($data){
         $this->db->insert('users', $data);
 
         $insert_id = $this->db->insert_id();
@@ -30,5 +38,46 @@ class My_parent_registration extends CI_Model
             'group_id' => $group_id
         );
         $this->db->insert('users_groups',$users_groups);
+    }
+
+    //send activation email to owner for parent self registration
+    public function send_activation_email($data,$daycare_id,$parent_name){
+        $this->load->config('email');
+        $this->load->library('email');
+        $daycare_details = $this->db->get_where('daycare',array(
+            'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->result_array();
+
+        $user_details = $this->db->get_where('users',array(
+            'daycare_id' => $daycare[0]['id']
+        ));
+
+        $users = $user_details->result_array()[0];
+        
+        $user_name = $users['name'];
+        $user_email = $users['email'];
+
+        $email_data = array(
+            'user_name' => $user_name,
+            'parent_name' => $parent_name
+        );
+        $this->email->set_mailtype('html');
+        $from = $this->config->item('smtp_user');
+        $to = $user_email;
+        $this->email->from($from, 'Daycare');
+        $this->email->to($to);
+        $this->email->subject('Parent activation');
+
+        $body= $this->load->view('owner_email/activate_parent_email', $email_data, true);
+        $this->email->message($body);        //Send mail
+        if($this->email->send()){
+            $this->insert_parent($data);
+            redirect($daycare_id.'/login');
+        }   
+        else{
+            $this->session->set_flashdata("verify_email_error","Enable to sent activation email. Please try again.");
+            redirect($daycare_id.'/register');
+        }
     }
 }

@@ -14,12 +14,23 @@
     .pricing-name{
         z-index: 10 !important;
     }
-    .circle-button:hover{
-        color: #EB6C6A !important;
+    .circle-button:hover,.btn:not(.btn-border):hover{
         border-color: #EB6C6A !important;
+        background-color: #ffffff !important;
+        color: #EB6C6A;
     }
     .pricing-table .pricing-price.list-group-item{
-        font-size: 64px;
+        font-size: 60px;
+    }
+    .circle-button{
+        border-color: #EB6C6A;
+        background-color: #EB6C6A !important;
+    }
+    .pricing-table .pricing-price span:first-child{
+        color: #5584ff;
+    }
+    .fas{
+        color: #EB6C6A;
     }
 </style>
 </head>
@@ -80,8 +91,8 @@
                             <span class="col-10"><?php echo  lang('No Files'); ?></span>
                         </p>
                     </div>
-                    <div class="list-group-item pricing-btn">
-                        <input type="submit" class="btn btn-sm btn-border circle-button" value="Order now">
+                    <div class="list-group-item pricing-btn text-center">
+                        <input type="submit" class="btn btn-sm circle-button" value="Order now">
                     </div>
                 </div>
                 </form>
@@ -139,8 +150,8 @@
                             <span class="col-10"><?php echo  lang('230MB Files'); ?></span>
                         </p>
                     </div>
-                    <div class="list-group-item pricing-btn">
-                        <input type="submit" class="btn btn-sm btn-border circle-button" value="Order now">
+                    <div class="list-group-item pricing-btn text-center">
+                        <input type="submit" class="btn btn-sm circle-button" value="Order now">
                     </div>
                 </div>
             </form>
@@ -198,8 +209,8 @@
                             <span class="col-10"><?php echo  lang('2GB Files'); ?></span>
                         </p>
                     </div>
-                    <div class="list-group-item pricing-btn">
-                        <input type="submit" class="btn btn-sm btn-border circle-button" value="Order now">
+                    <div class="list-group-item pricing-btn text-center">
+                        <input type="submit" class="btn btn-sm circle-button" value="Order now">
                     </div>
                 </div>
                 </form>

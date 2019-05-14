@@ -90,9 +90,9 @@
 <?php else: ?>
     <div class="alert alert-warning">Registration is not allowed at this time</div>
 <?php endif; ?>
-<div class="container-login100-form-btn mt-2">
+<!-- <div class="container-login100-form-btn mt-2">
             <?php echo anchor($data['daycare_id'].'/login', lang('Login'), ['class' => 'login100-form-btn']); ?>
-        </div>
+        </div> -->
 <!-- <div class="text-center p-t-46 p-b-20">
     <?php echo anchor($data['daycare_id'].'/login', '<span class="fa fa-user"></span> '.lang('Login'), ['class' => 'txt2']); ?>
 </div> -->

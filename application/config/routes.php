@@ -163,13 +163,13 @@ $route['user/register'] = 'RegistrationController';
 $route['user/create'] = 'RegistrationController/create';
 
 //daycare registration
-$route['daycare'] = 'RegistrationController/daycare_register';
-$route['daycare/store'] = 'RegistrationController/store_daycare';
+$route['daycare/(:any)'] = 'RegistrationController/daycare_register/$1';
+$route['daycare/store/(:any)'] = 'RegistrationController/store_daycare/$1';
 
 //stripe payment
 $route['payment'] = "StripeController";
 $route['payment/(:any)'] = "RegistrationController/email_verified/$1";
-$route['stripePost']['post'] = "StripeController/stripePost";
+$route['stripePost/(:any)']['post'] = "StripeController/stripePost/$1";
 
 //daycare login page
 $route['(.*)/login'] = 'Auth/login/$1';

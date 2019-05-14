@@ -7,6 +7,7 @@ class SubscriptionTableSeeder extends CI_Migration
 
     public function run()
     {
+        $this->db->truncate('subscription_plans');
         $plan_details = [
             [
                 'plan' => 'basic',

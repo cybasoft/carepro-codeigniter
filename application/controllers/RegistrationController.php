@@ -51,13 +51,14 @@ class RegistrationController extends CI_Controller
     }
 
     //daycare registration
-    public function daycare_register()
+    public function daycare_register($activation_code = NULL)
     {
-        $this->load->view('registration/daycare_register');
+        $data['activation_code'] = $activation_code;
+        $this->load->view('registration/daycare_register',$data);
     }
 
     //daycare registration 
-    public function store_daycare()
+    public function store_daycare($activation_code = NULL)
     {
 
         $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|min_length[2]');
@@ -70,13 +71,11 @@ class RegistrationController extends CI_Controller
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
 
         if ($this->form_validation->run() == true) {
-            $success_status = $this->My_daycare_registration->store();
-            if($success_status === NULL){
-                // $this->session->set_flashdata("message","Daycare registered successfully.");
-                // redirect('daycare');
-            }else{
+            $success_status = $this->My_daycare_registration->store($activation_code);
+            if($success_status !== NULL){
+                $data['activation_code'] = $activation_code;
                 $this->session->set_flashdata("error",$success_status);
-                $this->load->view('registration/daycare_register');
+                $this->load->view('registration/daycare_register',$data);
             }
         } else {
             set_flash(['name', 'employee_tax_identifier','logo', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);
@@ -100,14 +99,26 @@ class RegistrationController extends CI_Controller
         ));
         $check_status = $query->row_array();
         $confirmed = $check_status['owner_status'];
+        $selected_plan = $check_status['selected_plan'];
+    
         if ($confirmed === "confirmed"){
-            $selected_plan = $this->session->userdata('plan');
-
             $query = $this->db->get_where('subscription_plans',array(
-                'plan' => $selected_plan
+                'id' => $selected_plan
             ));
-            $plan_details = $query->result();
-            $this->load->view('stripe_payment/index' , $plan_details[0]);
+            $plan_details = $query->result_array();
+            $data1 = array(
+                'plan' => $plan_details[0]['plan'],
+                'children' => $plan_details[0]['children'],
+                'staff_members' => $plan_details[0]['staff_members'],
+                'calender_events' => $plan_details[0]['calender_events'],
+                'news_module' => $plan_details[0]['news_module'],
+                'rooms' => $plan_details[0]['rooms'],
+                'invoices' => $plan_details[0]['invoices'],
+                'files' => $plan_details[0]['files'],
+                'price' => $plan_details[0]['price'],
+                'activation_code' => $activation_code
+            );
+            $this->load->view('stripe_payment/index' , $data1);
         }
     }
 
@@ -129,7 +140,6 @@ class RegistrationController extends CI_Controller
     
         if($this->form_validation->run() == true) {
             $this->My_parent_registration->store_parent($daycare_id);   
-            redirect($daycare_id.'/login');
         }else{
             set_flash(['email', 'first_name', 'last_name', 'phone', 'password']);
             validation_errors();

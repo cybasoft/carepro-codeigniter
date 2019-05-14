@@ -78,7 +78,7 @@
                             <?php echo $this->session->flashdata('error'); ?>
                         </div>
                     <?php endif; ?>
-                    <?php echo form_open_multipart('daycare/store', ['class' => 'form-box daycare_register']); ?>
+                    <?php echo form_open_multipart("daycare/store/$activation_code", ['class' => 'form-box daycare_register']); ?>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>

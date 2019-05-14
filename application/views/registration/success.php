@@ -16,6 +16,9 @@
         color: #EB6C6A;
         font-weight: 700;
     }
+    .card-body{
+        font-family: Poppins-Regular, Sans-serif, serif;
+    }
 </style>
 </head>
 
@@ -24,16 +27,16 @@
         <div class="row mt-5 pt-3">
             <div class="card offset-sm-3 col-sm-6 mt-5 p-0">
                 <div class="card-header text-center">
-                    <img src="../../assets/img/daycare/mail-1454731_960_720.png" class="email_img">
+                    <img src="../assets/img/daycare/mail-1454731_960_720.png" class="email_img">
                 </div>
                 <div class="card-body">
                     <h5>Hi <?php echo $user_name ?>,</h5>
-                    <p>Thanks for signing up for Carepro. We're very excited to have to have you on board.<br />
+                    <p>Thanks for signing up for Daycarepro. We're very excited to have you on board.<br />
                         To get started, </p>
 
                     <h5 class="text-center">Please check your email to confirm your account.</h5><br />
                     Thanks,<br />
-                    <span>Carepro Team</span>
+                    <span>Team Daycarepro</span>
                 </div>
             </div>
         </div>

@@ -32,27 +32,39 @@ class StripeController extends CI_Controller
      *
      * @return Response
      */
-    public function stripePost()
+    public function stripePost($activation_code = NULL)
     {
-        $user_name = $this->session->userdata('user_name');
-        $to = $this->session->userdata('email');
-        $price = $this->session->userdata('price');
+        $query = $this->db->get_where('users',array(
+            'activation_code' => $activation_code
+        ));
+        $user_data = $query->result_array()[0];
+        $user_name = $user_data['name'];
+        $to = $user_data['email'];
+
+        $selected_plan = $user_data['selected_plan'];
+        $get_plan_details = $this->db->get_where('subscription_plans',array(
+            'id' => $selected_plan
+        ));
+        $plans = $get_plan_details->result_array()[0];
+        $price = $plans['price'];
+        $plan = $plans['plan'];
       
-        require_once('application/libraries/stripe-php/init.php');
-        \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
-        \Stripe\Charge::create([
-            "amount" => $price * 100,
-            "currency" => "usd",
-            "source" => $this->input->post('stripeToken'),
-            "description" => "Test payment from Jyoti."
-        ]);
+        // require_once('application/libraries/stripe-php/init.php');
+        // \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
+        // \Stripe\Charge::create([
+        //     "amount" => $price * 100,
+        //     "currency" => "usd",
+        //     "source" => $this->input->post('stripeToken'),
+        //     "description" => "Test payment from Jyoti."
+        // ]);
 
         $this->load->config('email');
         $this->load->library('email');
         
         $data = array(
             'user_name' => $user_name,
-            'price' => $this->session->userdata('price')
+            'price' => $price,
+            'plan' => $plan
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
@@ -63,14 +75,14 @@ class StripeController extends CI_Controller
         $body= $this->load->view('owner_email/thanku_email', $data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
-            $this->change_owner_status($to);
+            $this->change_owner_status($to,$activation_code);
         }   
         else{
             $this->session->set_flashdata("subscription_error","Enable to sent verification email. Please try again.");
         }
     }
 
-    public function change_owner_status($to){
+    public function change_owner_status($to,$activation_code){
         $owner_status = $this->My_user_registration->status[2];
         $data = array(
             'owner_status' => $owner_status,
@@ -85,7 +97,7 @@ class StripeController extends CI_Controller
         $subscribed = $check_status['owner_status'];
         if ($subscribed === "subscribed"){
             $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");
-            redirect('daycare');
+            redirect('daycare/'.$activation_code);
         }
     }
 }
