@@ -1,4 +1,7 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+use phpDocumentor\Reflection\Types\Null_;
+
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class RegistrationController extends CI_Controller
 {
@@ -54,7 +57,26 @@ class RegistrationController extends CI_Controller
     public function daycare_register($activation_code = NULL)
     {
         $data['activation_code'] = $activation_code;
-        $this->load->view('registration/daycare_register',$data);
+        $query = $this->db->get_where('users',array(
+            'activation_code' => $activation_code
+        ));
+        $user_details = $query->row_array();
+        $user_status = $user_details['owner_status'];
+        $daycare = $user_details['daycare_id'];
+        
+        if($daycare !== NULL){
+            $daycare_details = $this->db->get_where('daycare',array(
+                'id' => $daycare
+            ));
+            $daycare_data = $daycare_details->row_array();
+            $daycare_id = $daycare_data['daycare_id'];
+        }
+        if($user_status === "subscribed"){
+            $this->load->view('registration/daycare_register',$data);
+        }
+        elseif($user_status === "registered"){
+            redirect(''.$daycare_id.'/login');
+        }
     }
 
     //daycare registration 
@@ -87,38 +109,54 @@ class RegistrationController extends CI_Controller
     //function to send verification email
     public function email_verified($activation_code = NULL)
     {
-        $owner_status = $this->My_user_registration->status[1];
-        $data = array(
-            'owner_status' => $owner_status,
-        );
-        $this->db->where('activation_code', $activation_code);
-        $this->db->update('users', $data);
-
         $query = $this->db->get_where('users', array(
             'activation_code' => $activation_code
         ));
         $check_status = $query->row_array();
-        $confirmed = $check_status['owner_status'];
         $selected_plan = $check_status['selected_plan'];
+        $user_status = $check_status['owner_status'];
+        $daycare = $check_status['daycare_id'];
+
+        if($user_status === $this->My_user_registration->status[0]){
+
+            $owner_status = $this->My_user_registration->status[1];
+            $data = array(
+                'owner_status' => $owner_status,
+            );
+            $this->db->where('activation_code', $activation_code);
+            $this->db->update('users', $data);
+        }
+        if($daycare !== NULL){
+            $daycare_details = $this->db->get_where('daycare',array(
+                'id' => $daycare
+            ));
+            $daycare_data = $daycare_details->row_array();
+            $daycare_id = $daycare_data['daycare_id'];
+        }
     
-        if ($confirmed === "confirmed"){
+        if ($user_status === "confirmed"){
             $query = $this->db->get_where('subscription_plans',array(
                 'id' => $selected_plan
             ));
-            $plan_details = $query->result_array();
+            $plan_details = $query->row_array();
             $data1 = array(
-                'plan' => $plan_details[0]['plan'],
-                'children' => $plan_details[0]['children'],
-                'staff_members' => $plan_details[0]['staff_members'],
-                'calender_events' => $plan_details[0]['calender_events'],
-                'news_module' => $plan_details[0]['news_module'],
-                'rooms' => $plan_details[0]['rooms'],
-                'invoices' => $plan_details[0]['invoices'],
-                'files' => $plan_details[0]['files'],
-                'price' => $plan_details[0]['price'],
+                'plan' => $plan_details['plan'],
+                'children' => $plan_details['children'],
+                'staff_members' => $plan_details['staff_members'],
+                'calender_events' => $plan_details['calender_events'],
+                'news_module' => $plan_details['news_module'],
+                'rooms' => $plan_details['rooms'],
+                'invoices' => $plan_details['invoices'],
+                'files' => $plan_details['files'],
+                'price' => $plan_details['price'],
                 'activation_code' => $activation_code
             );
             $this->load->view('stripe_payment/index' , $data1);
+        }
+        elseif($user_status === "subscribed"){
+            redirect('daycare/'.$activation_code);
+        }elseif($user_status === "registered"){
+            redirect(''.$daycare_id.'/login');
         }
     }
 

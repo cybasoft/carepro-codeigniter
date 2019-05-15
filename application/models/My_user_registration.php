@@ -86,7 +86,7 @@ class My_user_registration extends CI_Model
     public function send_confirmation_email($user_email,$user_name, $activation_code,$data){
         $this->load->config('email');
         $this->load->library('email');
-        
+
         $email_data = array(
             'activation_code' => $activation_code,
             'user_name' => $user_name,

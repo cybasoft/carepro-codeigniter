@@ -2,6 +2,7 @@
 
 class My_daycare_registration extends CI_Model
 {   
+    //Store information of daycare
     public function store($activation_code)
     {
         $image = '';
@@ -38,27 +39,26 @@ class My_daycare_registration extends CI_Model
                 'daycare_id' => $daycare_id,
                 'logo' => $image
             );
-            $this->db->insert('daycare', $data);
-    
-            $insert_id = $this->db->insert_id();
-            
-            $query = $this->db->get_where('users',array(
-                'activation_code' => $activation_code
-            ));
-            $user_details = $query->result_array()[0];
-            $email = $user_details['email'];
-            $name = $user_details['name'];
-
-            $data = array(
-                'daycare_id' => $insert_id,
-            );
-            $this->db->where('email', $email);
-            $this->db->update('users', $data);
-            $this->send_welcome_email($daycare_id,$email,$name);
+            $this->send_welcome_email($daycare_id,$activation_code,$data);
         }else{
             return $error;
         }
     }
+
+    //insert daycare info in database
+    public function insert_daycare($data,$email){
+        $this->db->insert('daycare', $data);
+    
+        $insert_id = $this->db->insert_id();
+        
+        $store_id = array(
+            'daycare_id' => $insert_id,
+        );
+        $this->db->where('email', $email);
+        $this->db->update('users', $store_id);
+    }
+    
+    //Function to generate unique daycare id
     public function generate_unquie_daycareId(){
         $year = date("y");
         $month = date("m");
@@ -68,6 +68,7 @@ class My_daycare_registration extends CI_Model
         return $daycare_id;
     }
 
+    //function to store daycare logo
     public function store_logo($filename) {
         $Upload_folder = "daycare_logo";
         if(!file_exists('./assets/uploads/'.$Upload_folder)){
@@ -93,9 +94,17 @@ class My_daycare_registration extends CI_Model
         }
     }
 
-    public function send_welcome_email($daycare_id,$email,$name){
+    //function to send welcome email to daycare for login page
+    public function send_welcome_email($daycare_id,$activation_code,$user_data){
         $this->load->config('email');
         $this->load->library('email');
+
+        $query = $this->db->get_where('users',array(
+            'activation_code' => $activation_code
+        ));
+        $user_details = $query->result_array()[0];
+        $email = $user_details['email'];
+        $name = $user_details['name'];
         
         $data = array(
             'user_name' => $name,
@@ -110,6 +119,7 @@ class My_daycare_registration extends CI_Model
         $body= $this->load->view('owner_email/welcome_email', $data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
+            $this->insert_daycare($user_data,$email);
             $this->change_owner_status($email,$daycare_id);
         }   
         else{

@@ -21,6 +21,7 @@ class My_parent_registration extends CI_Model
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
             'password' => $password,
+            'active' => 0,
             'daycare_id' => $owner_id
         );
         $parent_name = $first_name .' '. $last_name;
