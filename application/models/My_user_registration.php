@@ -57,6 +57,7 @@ class My_user_registration extends CI_Model
             'country' => $this->input->post('country'),
             'phone' => $this->input->post('phone'),
             'owner_status' => $this->status[0],
+            'active' => 0
         );
         $this->send_confirmation_email($email,$user_name,$activation_code,$data);
     }

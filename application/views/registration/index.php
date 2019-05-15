@@ -16,7 +16,7 @@
     .loading_div {
         display: none;
         position: fixed;
-        background: #fff url('../../assets/img/loader.gif') no-repeat 50%;
+        background: #fff url('../assets/img/loader.gif') no-repeat 50%;
         opacity: .5;
         top: 0;
         left: 0;

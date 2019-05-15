@@ -20,6 +20,9 @@
     .btn_div{
         margin-left: 20%;
     }
+    .fas{
+        color: #EB6C6A;
+    }
 </style>
 </head>
 

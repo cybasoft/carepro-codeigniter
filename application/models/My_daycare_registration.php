@@ -121,6 +121,7 @@ class My_daycare_registration extends CI_Model
         $owner_status = $this->My_user_registration->status[3];
         $data = array(
             'owner_status' => $owner_status,
+            'active' => 1
         );
         $this->db->where('email', $to);
         $this->db->update('users', $data);

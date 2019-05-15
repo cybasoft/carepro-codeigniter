@@ -64,7 +64,8 @@ class StripeController extends CI_Controller
         $data = array(
             'user_name' => $user_name,
             'price' => $price,
-            'plan' => $plan
+            'plan' => $plan,
+            'activation_code' => $activation_code
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
@@ -96,7 +97,7 @@ class StripeController extends CI_Controller
         $check_status = $query->row_array();
         $subscribed = $check_status['owner_status'];
         if ($subscribed === "subscribed"){
-            $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");
+            $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");           
             redirect('daycare/'.$activation_code);
         }
     }
