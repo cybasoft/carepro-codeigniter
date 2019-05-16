@@ -7,7 +7,10 @@
 </head>
 <body>
     <div>
-        Hello <?php echo $user_name; ?>, <br /><br />
+        <p>Hello <?php echo $user_name; ?>,</p>
+        <?php if($payment_success !== ''): ?>
+               <p style="font-weight: 700; font-size: 16px"><?php echo $payment_success; ?></p>
+        <?php endif; ?>
         Your payment of $<?php echo $price; ?> completed successfully.<br/>
         Thank you for subscription to daycare <?php echo $plan; ?> plan!<br/><br/>
         Daycare registration link:<br/>

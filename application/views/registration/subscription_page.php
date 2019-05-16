@@ -32,6 +32,9 @@
     .fas{
         color: #EB6C6A;
     }
+    .pricing-table .btn{
+        padding: 10px 80px;
+    }
 </style>
 </head>
 

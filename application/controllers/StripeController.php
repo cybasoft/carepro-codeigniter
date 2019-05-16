@@ -65,7 +65,9 @@ class StripeController extends CI_Controller
             'user_name' => $user_name,
             'price' => $price,
             'plan' => $plan,
-            'activation_code' => $activation_code
+            'activation_code' => $activation_code,
+            'registered_success' => '',
+            'payment_success' => ''
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');

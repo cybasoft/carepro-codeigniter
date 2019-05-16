@@ -7,8 +7,12 @@
     </head>
     <body>
         <div>
-           Hello <?php echo $user_name ?>, <br/><br/>
-           Your email is verified.<br/> Now, you can go further for subscription plan’s payment using following link.<br/>
+           <p>Hello <?php echo $user_name ?>,</p>
+           <?php if($registered_success !== ''): ?>
+               <p style="font-weight: 700; font-size: 16px"><?php echo $registered_success; ?></p>
+           <?php endif; ?>
+           Please confirm your email.<br>
+           To confirm your email, click the link below and go further for subscription plan’s payment.<br/>
            Link: <a href="http://localhost/daycarepro-app/payment/<?php echo $activation_code ?>">
                http://localhost/daycarepro-app/payment/<?php echo $activation_code ?></a><br/><br/>
 

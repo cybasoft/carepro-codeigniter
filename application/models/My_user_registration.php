@@ -90,6 +90,8 @@ class My_user_registration extends CI_Model
         $email_data = array(
             'activation_code' => $activation_code,
             'user_name' => $user_name,
+            'registered_success' => '',
+            'payment_success' => ''
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');

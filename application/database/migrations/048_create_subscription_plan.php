@@ -47,7 +47,6 @@ class Migration_create_subscription_plan extends CI_Migration
             ),
             'price' => array(
                 'type' => 'FLOAT',
-                'constraint' => 100
             )
         ));
 

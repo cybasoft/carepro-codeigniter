@@ -92,7 +92,8 @@ class Migration_create_users extends CI_Migration
                 'null' => TRUE,
             ),
             'created_at' => array(
-                'type' => 'TIMESTAMP'
+                'type' => 'TIMESTAMP',
+                'default' => 'CURRENT_TIMESTAMP',
             )
         ));
 
