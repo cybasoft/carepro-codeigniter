@@ -1,5 +1,5 @@
 <?php
-$APP_ENV = 'development';
+$APP_ENV = 'testing';
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT ($APP_ENV)
