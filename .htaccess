@@ -1,1 +1,20 @@
-RewriteEngine OnRewriteCond %{REQUEST_FILENAME} !-fRewriteCond %{REQUEST_FILENAME} !-dRewriteCond $1 !^(index\.php|images|scripts|styles|vendor|robots\.txt)RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+<IfModule mod_rewrite.c>
+
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond $1 !^(index\.php|images|scripts|styles|vendor|robots\.txt)
+    RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+
+    # Deny direct .git access
+    RewriteRule "^(.*/)?\.git/" - [F,L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>a
