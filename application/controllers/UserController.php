@@ -47,6 +47,7 @@ class UserController extends CI_Controller
         for($i=0; $i<count((array)$groups); $i++){
             $role[$groups[$i]->name] = $groups[$i]->total;
         }
+        $count = 0;
         page($this->module.'users', compact('users', 'count','role'));
     }
 

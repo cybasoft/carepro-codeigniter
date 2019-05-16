@@ -90,9 +90,10 @@ class Auth extends CI_Controller
             if($this->auth->register($data, 'parent')) {
                 flash('success', lang('Registration successful'));
 
-                if($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
-                    redirect('dashboard', 'refresh');
-                }
+                // if($this->ion_auth->login($this->input->post('email'), $this->input->post('password'))) {
+                //     redirect('dashboard', 'refresh');
+                // }
+                redirect('login');
             } else {
                 flash('error', lang('request_error'));
                 redirectPrev();

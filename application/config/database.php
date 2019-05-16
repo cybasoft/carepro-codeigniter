@@ -76,10 +76,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
     'dsn' => '',
-    'hostname' => 'localhost',
-    'username' => '',//fill this
+    'hostname' => '127.0.0.1',
+    'username' => 'root',//fill this
     'password' => '',//fill this
-    'database' => '',//fill this
+    'database' => 'day_care',//fill this
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,

@@ -9,8 +9,8 @@
 
 <span class="login100-form-title p-b-43"><?php echo lang('register_form_header'); ?></span>
 
-<?php if(session('company_allow_registration') == TRUE): ?>
-<?php echo lang('register_form_notice'); ?>
+<?php if(session('company_allow_registration') == FALSE): ?>
+<!-- <?php echo lang('register_form_notice'); ?> -->
 
     <?php if(!empty($this->session->flashdata('type'))) : ?>
         <div style="">

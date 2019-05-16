@@ -745,9 +745,10 @@ class Ion_auth_model extends CI_Model
             'ip_address' => $ip_address,
             'created_at' => date_stamp(),
             'last_login' => date_stamp(),
-            'active' => ($manual_activation === FALSE ? 1 : 0),
+            'active' => 0,
         ];
-
+        // 'active' => ($manual_activation === FALSE ? 1 : 0),
+        
         //filter out any data passed that doesnt have a matching column in the users table
         //and merge the set user data and the additional data
         $userData = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);
