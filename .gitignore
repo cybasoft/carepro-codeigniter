@@ -1,7 +1,7 @@
 .DS_Store
 application/config/development
 application/config/production/
-application/config/testing/
+application/config/staging/
 !application/logs/index.html
 application/temp/captcha/*
 
@@ -29,3 +29,5 @@ vendor
 docs/.git
 
 application/third_party/codeigniter-debugbar
+
+index.php
