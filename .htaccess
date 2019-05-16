@@ -1,11 +1,10 @@
 <IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ index.php/$1 [L]
-
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond $1 !^(index\.php|images|scripts|styles|vendor|robots\.txt)
+    RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
 
 	# Deny direct .git access
-
 	RewriteRule "^(.*/)?\.git/" - [F,L]
 </IfModule>

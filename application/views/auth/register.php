@@ -1,8 +1,16 @@
-<?php echo form_open('auth/register', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
+<style>
+    .login100-form-btn:hover {
+        color: #ffffff;
+    }
+</style>
+<?php echo form_open($data['daycare_id'].'/create_parent', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
 <div class="text-center" style="position:absolute;top:0;right:150px">
     <a href="<?php echo site_url(); ?>">
-        <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>"
-             alt="Logo">
+    <?php if ($data['logo']) { ?>
+                <img class="logo" src="<?php echo $data['logo']; ?>" alt="Logo">
+            <?php } else { ?>
+                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>" alt="Logo">
+            <?php } ?>
     </a>
 </div>
 
@@ -54,11 +62,11 @@
         <span class="label-input100"><?php echo lang('confirm_password'); ?></span>
     </div>
 
-    <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
+    <!-- <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
         <?php echo form_textarea($data['address']); ?>
         <span class="focus-input100"></span>
         <span class="label-input100"><?php echo lang('Address'); ?></span>
-    </div>
+    </div> -->
 
     <?php if(session('company_enable_captcha')): ?>
         <div class="flex-sb-m w-full p-t-3 p-b-32">
@@ -82,10 +90,12 @@
 <?php else: ?>
     <div class="alert alert-warning">Registration is not allowed at this time</div>
 <?php endif; ?>
-<div class="text-center p-t-46 p-b-20">
-    <?php echo anchor('auth/login', '<span class="fa fa-user"></span> '.lang('Login'), ['class' => 'txt2']); ?>
-</div>
+<!-- <div class="container-login100-form-btn mt-2">
+            <?php echo anchor($data['daycare_id'].'/login', lang('Login'), ['class' => 'login100-form-btn']); ?>
+        </div> -->
+<!-- <div class="text-center p-t-46 p-b-20">
+    <?php echo anchor($data['daycare_id'].'/login', '<span class="fa fa-user"></span> '.lang('Login'), ['class' => 'txt2']); ?>
+</div> -->
 
 
 <?php echo form_close(); ?>
-

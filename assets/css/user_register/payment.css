@@ -1,0 +1,109 @@
+.panel-title {
+    display: inline !important;
+    font-weight: 100 !important;
+    color: #0e1a35 !important;
+}
+
+.display-table {
+    display: table;
+}
+
+.display-tr {
+    display: table-row;
+}
+
+.display-td {
+    display: table-cell;
+    vertical-align: middle;
+    width: 61%;
+}
+
+.has-error,
+.has-error .control-label {
+    color: #a94442;
+}
+
+.has-error .form-control {
+    border-color: #a94442;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 100;
+    color: #8492af;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+}
+
+.card {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.13) !important;
+}
+
+.card-header {
+    background-color: rgb(255, 255, 255);
+    border-bottom: 0;
+}
+
+.btn-primary,
+.btn-primary:hover {
+    background-color: #5584ff;
+    border-color: #5584ff;
+}
+
+.btn-primary {
+    box-shadow: 0 0 0 0.2rem #5584ff !important;
+}
+
+.form-control {
+    background-color: #f4f9fe !important;
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 0px solid #ffffff;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.subscribe_text {
+    font-size: 25px;
+}
+
+.amount_to_pay {
+    color: #EB6C6A;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.plan_div {
+    color: #716e6e;
+    font-size: 17px
+}
+
+.plan_div p {
+    margin-bottom: 12px
+}
+
+.selected_plan {
+    font-size: 25px;
+    color: #5584ff;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.has-error .form-control {
+    border: 1px solid #a94442;
+}
