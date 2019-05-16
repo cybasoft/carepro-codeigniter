@@ -3,7 +3,6 @@ application/config/development
 application/config/production/
 application/config/testing/
 !application/logs/index.html
-application/temp/captcha/*
 
 !application/*/.htaccess
 composer.lock
@@ -29,3 +28,7 @@ vendor
 docs/.git
 
 application/third_party/codeigniter-debugbar
+
+index.php
+
+.ftpquota
