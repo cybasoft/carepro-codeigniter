@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-//generate migration tables (!). Disabled in live mode
-//$route['migration/(:any)'] = 'migration/$1';
+//generate migration tables (!)
+$route['migration/(:any)'] = 'migration/$1';
 
 $route['default_controller'] = 'auth';
 $route['404_override'] = 'landing/error404';
