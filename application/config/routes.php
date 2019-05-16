@@ -161,6 +161,7 @@ $route['activities/(:any)/:num'] = 'ActivityController/$1';
 //user registration
 $route['user/register'] = 'RegistrationController';
 $route['user/create'] = 'RegistrationController/create';
+$route['user/plan'] = 'RegistrationController/plan';
 
 //daycare registration
 $route['daycare/(:any)'] = 'RegistrationController/daycare_register/$1';

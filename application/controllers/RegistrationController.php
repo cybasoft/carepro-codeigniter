@@ -15,15 +15,19 @@ class RegistrationController extends CI_Controller
         $this->load->helper('url_helper');
     }
     public function index()
-    {
-       $price = $this->input->post('price');
-       $plan = $this->input->post('plan');
-       $session_data = array(
-        'plan' => $plan,
-        'price' => $price
-       );
-       $this->session->set_userdata($session_data);
-       $this->load->view('registration/index');
+    {                  
+        $this->load->view('registration/index');
+    }
+
+    public function plan(){
+        $price = $this->input->post('price');
+        $plan = $this->input->post('plan');
+        $data = array(
+         'plan' => $plan,
+         'price' => $price
+        );      
+        $this->session->set_userdata($data);        
+        redirect('user/register');
     }
 
     //owner registration
@@ -161,7 +165,8 @@ class RegistrationController extends CI_Controller
     }
 
     //subscription  page
-    public function subscription(){
+    public function subscription()
+    {
         $this->load->view('registration/subscription_page');
     }
 

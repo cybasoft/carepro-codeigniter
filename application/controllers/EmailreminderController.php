@@ -48,9 +48,9 @@ class EmailreminderController extends CI_Controller
                                 'user_name' => $users['name'],
                                 'price' => $price,
                                 'plan' => $plan,
-                                'registered_success' => 'Quick reminder user registration completed successfully. 
-                                                     Now please confirm your email and go further.',
-                                'payment_success' => 'Quick reminder payment completed successfully. 
+                                'registered_success' => 'Quick reminder: user registration completed successfully.
+                                                            Now please confirm your email to go further.',
+                                'payment_success' => 'Quick reminder: payment completed successfully. 
                                 Now please complete your daycare company registration.'                     
                             );
                             $this->email->set_mailtype('html');

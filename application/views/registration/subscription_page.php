@@ -42,7 +42,7 @@
     <div class="container content">
         <div class="row">
             <div class="col-md-4">
-                <form method="post" action="user/register">
+                <form method="post" action="user/plan">
                 <div class="list-group pricing-table">
                     <div class="list-group-item pricing-price">
                         <span>$</span>35<span>/mon</span>
@@ -101,7 +101,7 @@
                 </form>
             </div>
             <div class="col-md-4">
-            <form method="post" action="user/register">
+            <form method="post" action="user/plan">
                 <div class="list-group pricing-table">
                     <div class="list-group-item pricing-price">
                         <span>$</span>59.99<span>/mon</span>
@@ -160,7 +160,7 @@
             </form>
             </div>
             <div class="col-md-4">
-                <form method="post" action="user/register">
+                <form method="post" action="user/plan">
                 <div class="list-group pricing-table">
                     <div class="list-group-item pricing-price">
                         <span>$</span>120<span>/mon</span>

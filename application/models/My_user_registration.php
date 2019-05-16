@@ -36,8 +36,7 @@ class My_user_registration extends CI_Model
         $count = $query->num_rows();
         if ($count !== 0) {
             $activation_code = $this->generate_activation_code();
-        }
-
+        }       
         $get_plan = $this->db->get_where('subscription_plans',array(
             'plan' => $this->session->userdata('plan'),
         ));
@@ -83,7 +82,7 @@ class My_user_registration extends CI_Model
     }
 
     //send confirmation email to owner
-    public function send_confirmation_email($user_email,$user_name, $activation_code,$data){
+    public function send_confirmation_email($user_email,$user_name, $activation_code,$data){        
         $this->load->config('email');
         $this->load->library('email');
 
@@ -107,9 +106,9 @@ class My_user_registration extends CI_Model
             $this->insert_user($data);
             $this->load->view('registration/success' ,$user_name);
         }   
-        else{
+        else{           
             $this->session->set_flashdata("verify_email_error","Enable to sent verification email. Please try again.");
-            $this->load->view('registration/index');
+            redirect('user/register');
         }
     }
 }
