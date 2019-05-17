@@ -1,15 +1,21 @@
-Thank you for the purchase!
+# Daycare Management System
 
-Copy files to your installation directory
+# Installation
 
-Go to https://amdtllc.github.io/carepro
+- Change environment in `index.php`
+- Open `application/config/<environment>` and edit `config.php` and `database.php`
+- Run `php index.php migration run`. See migration options
+- Run `php index.php migration seed`
 
-Open http://your-domain.com/docs for the complete installation guide
+## Migration options
 
-
-BUG REPORTS
-If your purchase includes 6 month support, you will get support for fixing any issues you encounter
-during installation or operation of the program.
-You can purchase extendend support for a period longer than 6 months.
-
-To request support, submit a ticket at https://careproapp.com/support
+>`php index.php migration <option>`:
+- `run` Execute all migrations
+- `run <version>` Run single migration by version number
+- `undo` undo last migration
+- `create` Generate migration files from database tables !!THIS MAY OVERWRITE CURRENT MIGRATIONS!!
+- `create <ClassName>` Generate migration using specific class
+- `seed` Seed data from all available seeders
+- `seed <ClassName>` Seed data from specified class
+- `refresh` Truncate all tables and run migrations again
+- `help` show help options

@@ -80,11 +80,11 @@
         <div class="container-login100-form-btn mt-2">
             <?php echo anchor('subscription', lang('register'), ['class' => 'login100-form-btn']); ?>
         </div>
-    <?php elseif($data['daycare'] === 'yes') : ?>
+    <?php elseif ($data['daycare'] === 'yes') : ?>
         <div class="container-login100-form-btn mt-2">
-            <?php echo anchor($data['daycare_id'].'/register', lang('register'), ['class' => 'login100-form-btn']); ?>
+            <?php echo anchor($data['daycare_id'] . '/register', lang('register'), ['class' => 'login100-form-btn']); ?>
         </div>
-        <?php endif; ?>
+    <?php endif; ?>
 
 
     <?php if (session('company_allow_registration') == TRUE) : ?>

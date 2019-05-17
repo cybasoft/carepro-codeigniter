@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-//generate migration tables (!). Disabled in live mode
-//$route['migration/(:any)'] = 'migration/$1';
+//generate migration tables (!)
+$route['migration/(:any)'] = 'migration/$1';
 
-$route['default_controller'] = 'auth/login';
+$route['default_controller'] = 'auth';
 $route['404_override'] = 'landing/error404';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -156,31 +156,3 @@ $route['meals/(:any)/:num'] = 'MealController/$1';
 //activities
 $route['activities/(:any)'] = 'ActivityController/$1';
 $route['activities/(:any)/:num'] = 'ActivityController/$1';
-
-
-//user registration
-$route['user/register'] = 'RegistrationController';
-$route['user/create'] = 'RegistrationController/create';
-$route['user/plan'] = 'RegistrationController/plan';
-
-//daycare registration
-$route['daycare/(:any)'] = 'RegistrationController/daycare_register/$1';
-$route['daycare/store/(:any)'] = 'RegistrationController/store_daycare/$1';
-
-//stripe payment
-$route['payment'] = "StripeController";
-$route['payment/(:any)'] = "RegistrationController/email_verified/$1";
-$route['stripePost/(:any)']['post'] = "StripeController/stripePost/$1";
-
-//daycare login page
-$route['(.*)/login'] = 'Auth/login/$1';
-
-//subscription page
-$route['subscription'] = 'RegistrationController/subscription';
-
-//parent registration
-$route['(.*)/register'] = 'auth/register/$1';
-$route['(.*)/create_parent'] = 'RegistrationController/create_parent/$1';
-
-//send remainder email
-$route['reminder'] = 'EmailreminderController/send_reminder_email';
