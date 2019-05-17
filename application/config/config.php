@@ -15,9 +15,9 @@ $config['email_config'] = array(
     'newline' => "\r\n"
 );
 
-$config['stripe_key'] = 'pk_test_qetTlwEqbj7ojcfNGytBW4uF005r8sQ744';
+// $config['stripe_key'] = 'pk_test_qetTlwEqbj7ojcfNGytBW4uF005r8sQ744';
 
-$config['stripe_secret'] = 'sk_test_DaiHsoELxk7AKx2CV5iKPc84009Len8HVy';
+// $config['stripe_secret'] = 'sk_test_DaiHsoELxk7AKx2CV5iKPc84009Len8HVy';
 
 /*
 |--------------------------------------------------------------------------

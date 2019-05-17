@@ -49,7 +49,6 @@ class StripeController extends CI_Controller
         $price = $plans['price'];
         $plan = $plans['plan'];
       
-        require_once('application/libraries/stripe-php/init.php');
         \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
         \Stripe\Charge::create([
             "amount" => $price * 100,
