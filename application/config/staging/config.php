@@ -2,22 +2,18 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 $config['email_config'] = array(
-    'protocol' => 'sendmail', //sendmail, smtp, mail
+    'protocol' => 'smtp', //sendmail, smtp, mail
 
     //no need to complete these if using sendmail
-    'smtp_host' => '',
-    'smtp_user' => '',
-    'smtp_pass' => '',
-    'smtp_port' => '',
+    'smtp_host' => 'smtp.mailtrap.io',
+    'smtp_user' => '54e3cca2656762',
+    'smtp_pass' => '236677684d56fd',
+    'smtp_port' => '2525',
     'mailtype' => 'html', //html, text
     //do not change
     'crlf' => "\r\n",
     'newline' => "\r\n"
 );
-
-// $config['stripe_key'] = 'pk_test_qetTlwEqbj7ojcfNGytBW4uF005r8sQ744';
-
-// $config['stripe_secret'] = 'sk_test_DaiHsoELxk7AKx2CV5iKPc84009Len8HVy';
 
 /*
 |--------------------------------------------------------------------------
@@ -402,6 +398,7 @@ $config['sess_save_path'] = sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
+
 /*
 |--------------------------------------------------------------------------
 | Cookie Related Variables
