@@ -20,7 +20,7 @@
         color: #EB6C6A;
     }
     .pricing-table .pricing-price.list-group-item{
-        font-size: 60px;
+        font-size: 55px;
     }
     .circle-button{
         border-color: #EB6C6A;
@@ -95,7 +95,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Order now">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
                     </div>
                 </div>
                 </form>
@@ -154,7 +154,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Order now">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
                     </div>
                 </div>
             </form>
@@ -213,7 +213,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Order now">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
                     </div>
                 </div>
                 </form>

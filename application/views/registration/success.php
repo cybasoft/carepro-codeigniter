@@ -30,7 +30,7 @@
                     <img src="../assets/img/daycare/mail-1454731_960_720.png" class="email_img">
                 </div>
                 <div class="card-body">
-                    <h5>Hi <?php echo $user_name ?>,</h5>
+                    <h5>Hello <?php echo $user_name ?>,</h5>
                     <p>Thanks for signing up for Daycarepro. We're very excited to have you on board.<br />
                         To get started, </p>
 
