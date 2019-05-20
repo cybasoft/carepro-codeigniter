@@ -145,6 +145,7 @@ class My_daycare_registration extends CI_Model
         $check_status = $query->row_array();
         $registered = $check_status['owner_status'];
         if ($registered === "4"){
+            $this->session->set_flashdata("success","Daycare registered successfully.");
             redirect(''.$daycare_id.'/login');
         }
     }

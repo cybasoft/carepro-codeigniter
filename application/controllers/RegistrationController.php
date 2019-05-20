@@ -102,6 +102,8 @@ class RegistrationController extends CI_Controller
                 $data['activation_code'] = $activation_code;
                 $this->session->set_flashdata("error",$success_status);
                 $this->load->view('registration/daycare_register',$data);
+            }else{
+                
             }
         } else {
             set_flash(['name', 'employee_tax_identifier','logo', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);

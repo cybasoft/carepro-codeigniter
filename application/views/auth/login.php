@@ -1,20 +1,19 @@
-<style>
-    .login100-form-btn:hover {
-        color: #ffffff;
-    }
-</style>
 <form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">
-            <?php if ($data['logo']) { ?>
+            <?php if ($data['logo'] !== base_url()."assets/uploads/daycare_logo/") { ?>
                 <img class="logo" src="<?php echo $data['logo']; ?>" alt="Logo">
             <?php } else { ?>
                 <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>" alt="Logo">
             <?php } ?>
         </a>
     </div>
-
+    <?php if (!empty($this->session->flashdata('success'))) : ?>
+        <div class="alert alert-success alert-dismissible fade show notifictions" role="alert">
+            <?php echo $this->session->flashdata('success'); ?>
+        </div>
+    <?php endif; ?>
     <span class="login100-form-title p-b-43"><?php echo lang('Login'); ?></span>
 
     <?php if (!empty($this->session->flashdata('type'))) : ?>
@@ -22,7 +21,6 @@
             <?php echo $this->session->flashdata('message'); ?>
         </div>
     <?php endif; ?>
-
     <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Valid email is required'); ?>: ex@abc.xyz">
         <?php echo form_input([
             'name' => 'email',

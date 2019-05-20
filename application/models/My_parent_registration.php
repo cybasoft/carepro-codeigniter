@@ -74,6 +74,7 @@ class My_parent_registration extends CI_Model
         $this->email->message($body);        //Send mail
         if($this->email->send()){
             $this->insert_parent($data);
+            $this->session->set_flashdata("success","Parent registered successfully.");
             redirect($daycare_id.'/login');
         }   
         else{
