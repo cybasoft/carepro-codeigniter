@@ -14,7 +14,6 @@ class StripeController extends CI_Controller
         parent::__construct();
         $this->load->library("session");
         $this->load->helper('url');
-        $this->load->model('My_user_registration');
     }
 
     /**
@@ -85,7 +84,9 @@ class StripeController extends CI_Controller
     }
 
     public function change_owner_status($to,$activation_code){
-        $owner_status = $this->My_user_registration->status[2];
+        $get_status = $this->db->get('user_status');
+        $result = $get_status->result_array();
+        $owner_status = $result[2]['id'];
         $data = array(
             'owner_status' => $owner_status,
         );
@@ -96,8 +97,8 @@ class StripeController extends CI_Controller
             'email' => $to
         ));
         $check_status = $query->row_array();
-        $user_status = $check_status['owner_status'];        
-        if ($user_status === "subscribed"){
+        $user_status = $check_status['owner_status'];       
+        if ($user_status === "3"){
             $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");           
             redirect('daycare/'.$activation_code);
         }

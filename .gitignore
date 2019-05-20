@@ -28,7 +28,7 @@ docs/.git
 
 application/third_party/codeigniter-debugbar
 
-index.php
+/index.php
 
 .ftpquota
 /.project

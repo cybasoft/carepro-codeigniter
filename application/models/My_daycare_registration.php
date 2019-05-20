@@ -128,7 +128,10 @@ class My_daycare_registration extends CI_Model
     }
 
     public function change_owner_status($to,$daycare_id){
-        $owner_status = $this->My_user_registration->status[3];
+        $get_status = $this->db->get('user_status');
+        $result = $get_status->result_array();
+
+        $owner_status = $result[3]['id'];
         $data = array(
             'owner_status' => $owner_status,
             'active' => 1
@@ -141,7 +144,7 @@ class My_daycare_registration extends CI_Model
         ));
         $check_status = $query->row_array();
         $registered = $check_status['owner_status'];
-        if ($registered === "registered"){
+        if ($registered === "4"){
             redirect(''.$daycare_id.'/login');
         }
     }

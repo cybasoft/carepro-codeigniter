@@ -15,7 +15,7 @@ class RegistrationController extends CI_Controller
         $this->load->helper('url_helper');
     }
     public function index()
-    {                  
+    {        
         $this->load->view('registration/index');
     }
 
@@ -75,10 +75,10 @@ class RegistrationController extends CI_Controller
             $daycare_data = $daycare_details->row_array();
             $daycare_id = $daycare_data['daycare_id'];
         }
-        if($user_status === "subscribed"){
+        if($user_status === "3"){
             $this->load->view('registration/daycare_register',$data);
         }
-        elseif($user_status === "registered"){
+        elseif($user_status === "4"){
             redirect(''.$daycare_id.'/login');
         }
     }
@@ -121,9 +121,12 @@ class RegistrationController extends CI_Controller
         $user_status = $check_status['owner_status'];
         $daycare = $check_status['daycare_id'];
 
-        if($user_status === $this->My_user_registration->status[0]){
+        $get_status = $this->db->get('user_status');
+        $result = $get_status->result_array();        
 
-            $owner_status = $this->My_user_registration->status[1];
+        if($user_status === "1"){
+
+            $owner_status = $result[1]['id'];
             $data = array(
                 'owner_status' => $owner_status,
             );
@@ -138,7 +141,7 @@ class RegistrationController extends CI_Controller
             $daycare_id = $daycare_data['daycare_id'];
         }
     
-        if ($user_status === "confirmed"){
+        if ($user_status === "2"){
             $query = $this->db->get_where('subscription_plans',array(
                 'id' => $selected_plan
             ));
@@ -157,9 +160,9 @@ class RegistrationController extends CI_Controller
             );
             $this->load->view('stripe_payment/index' , $data1);
         }
-        elseif($user_status === "subscribed"){
+        elseif($user_status === "3"){
             redirect('daycare/'.$activation_code);
-        }elseif($user_status === "registered"){
+        }elseif($user_status === "4"){
             redirect(''.$daycare_id.'/login');
         }
     }

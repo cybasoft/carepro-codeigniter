@@ -2,18 +2,6 @@
 
 class My_user_registration extends CI_Model
 {
-    public $plans = array(
-        'basic' => '0',
-        'silver' => '1',
-        'gold' => '2'
-    );
-    public $status = array(
-        '0' => 'draft',
-        '1' => 'confirmed',
-        '2' => 'subscribed',
-        '3' => 'registered'
-    );
-
     //store owner data
     public function store_user()
     {
@@ -37,11 +25,19 @@ class My_user_registration extends CI_Model
         if ($count !== 0) {
             $activation_code = $this->generate_activation_code();
         }       
+
+        //get plan details
         $get_plan = $this->db->get_where('subscription_plans',array(
             'plan' => $this->session->userdata('plan'),
         ));
-
         $selected_plan = $get_plan->result();
+
+        //get user status detail
+        $get_status = $this->db->get('user_status');
+        $owner_status = $get_status->result_array();
+
+        // print_r($owner_status[2]['status']);
+        // exit();
         $data = array(
             'name' => $user_name,
             'email' => $email,
@@ -55,7 +51,7 @@ class My_user_registration extends CI_Model
             'pin' => $this->input->post('zip_code'),
             'country' => $this->input->post('country'),
             'phone' => $this->input->post('phone'),
-            'owner_status' => $this->status[0],
+            'owner_status' => $owner_status[0]['id'],
             'active' => 0
         );
         $this->send_confirmation_email($email,$user_name,$activation_code,$data);
