@@ -20,7 +20,8 @@ class Migration_add_columns_to_users_table extends CI_Migration
             ),
             'address_id' => array(
                 'type' => 'INT',
-                'constraint' => '100',
+                'constraint' => 11,
+                'unsigned'=>TRUE,
                 'after' => 'password'
             ),
             'owner_status' => array(

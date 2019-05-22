@@ -29,7 +29,8 @@ class Migration_create_daycare_register_table extends CI_Migration
             ),
             'address_id' => array(
                 'type' => 'INT',
-                'constraint' => 100,
+                'constraint' => 11,
+                'unsigned'=>TRUE,
             ),            
             'daycare_id' => array(
                 'type' => 'VARCHAR',
