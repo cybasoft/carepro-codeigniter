@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller
      * default pagek
      */
     function index($daycare_id = NULL)
-    {    
+    {            
         $this->load->model('my_invoice', 'invoice');
         if($daycare_id === NULL){                     
             if(is(['super','admin','manager'])) {
@@ -50,7 +50,7 @@ class Dashboard extends CI_Controller
             } elseif(is('staff')) {
                 redirect('rooms');
     
-            } else {
+            } else {                
                 $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
             }
         }
@@ -60,7 +60,7 @@ class Dashboard extends CI_Controller
     {   
         $ci = &get_instance();
         $data['page'] = $page;
-        $data['daycare_id'] = $daycare_id;
+        $data['daycare_id'] = $daycare_id;        
         if(is('parent')) {
             $ci->load->view('layouts/template', $data);
         } else {

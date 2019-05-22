@@ -41,7 +41,7 @@ $config['stripe_secret'] = 'sk_test_DaiHsoELxk7AKx2CV5iKPc84009Len8HVy';
 | a PHP script and you can easily do that on your own.
 |
  */
-$config['base_url'] = "https://" . $_SERVER['HTTP_HOST'] . '/';
+$config['base_url'] = "";
 
 /*
 |--------------------------------------------------------------------------

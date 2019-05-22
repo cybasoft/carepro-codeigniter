@@ -5,7 +5,7 @@
             <?php if ($data['logo'] !== base_url()."assets/uploads/daycare_logo/") { ?>
                 <img class="logo" src="<?php echo $data['logo']; ?>" alt="Logo">
             <?php } else { ?>
-                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>" alt="Logo">
+                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
             <?php } ?>
         </a>
     </div>
