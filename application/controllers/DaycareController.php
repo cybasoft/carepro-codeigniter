@@ -51,7 +51,7 @@ class DaycareController extends CI_Controller
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
 
         if ($this->form_validation->run() == true) {
-            $success_status = $this->My_daycare_registration->store($activation_code);
+            $success_status = $this->My_daycare_registration->store($activation_code);          
             if ($success_status !== NULL) {
                 $data['activation_code'] = $activation_code;
                 $this->session->set_flashdata("error", $success_status);

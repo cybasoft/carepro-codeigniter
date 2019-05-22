@@ -47,7 +47,26 @@ class My_daycare_registration extends CI_Model
 
     //insert daycare info in database
     public function insert_daycare($data,$email,$activation_code){
-        $this->db->insert('daycare', $data);
+        $address_data = array(
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip_code' => $data['zip'],
+            'country' => $data['country'],
+            'phone' => $data['phone'],
+        );
+        $this->db->insert('address', $address_data);
+        $address_id = $this->db->insert_id();
+
+        $daycare_data = array(
+            'name' => $data['name'],
+            'employee_tax_identifier' => $data['employee_tax_identifier'],
+            'address_id' => $address_id,
+            'daycare_id' => $data['daycare_id'],
+            'logo' => $data['logo'],            
+        );
+        $this->db->insert('daycare', $daycare_data);
     
         $insert_id = $this->db->insert_id();
         

@@ -27,37 +27,10 @@ class Migration_create_daycare_register_table extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 100
             ),
-            'address_line_1' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-            ),
-            'address_line_2' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-                'null' => TRUE,
-            ),
-            'city' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-            ),
-            'state' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100,
-            ),
-            'zip' => array(
+            'address_id' => array(
                 'type' => 'INT',
-                'constraint' => 11,
-                'null' => TRUE,
-            ),
-            'country' => array(
-                'type' => 'VARCHAR',
                 'constraint' => 100,
-            ),
-            'phone' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 20,
-                'null' => TRUE,
-            ),
+            ),            
             'daycare_id' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 20,

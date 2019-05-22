@@ -64,8 +64,30 @@ class My_user_registration extends CI_Model
         $activation_code = random_string('alnum', 30);
         return $activation_code;
     }
-    public function insert_user($data){
-        $this->db->insert('users', $data);
+    public function insert_user($data, $activation_code){
+        $address_data = array(
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip_code' => $data['pin'],
+            'country' => $data['country'],
+            'phone' => $data['phone'],
+        );
+        $this->db->insert('address', $address_data);
+        $address_id = $this->db->insert_id();
+
+        $user_data = array(
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'address_id' => $address_id,
+            'activation_code' => $activation_code,
+            'selected_plan' => $data['selected_plan'],
+            'owner_status' => $data['owner_status'],
+            'active' => 0
+        );
+        $this->db->insert('users', $user_data);
 
         $insert_id = $this->db->insert_id();
         $group_id = 5;
@@ -99,11 +121,11 @@ class My_user_registration extends CI_Model
         $this->email->message($body);        //Send mail
         if($this->email->send()){
             $this->session->set_flashdata("verify_email","Please check your email to confirm your account.");
-            $this->insert_user($data);
+            $this->insert_user($data,$activation_code);
             $this->load->view('registration/success' ,$user_name);
         }   
         else{           
-            $this->session->set_flashdata("verify_email_error","Enable to sent verification email. Please try again.");
+            $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
             redirect('user/register');
         }
     }
