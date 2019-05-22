@@ -23,6 +23,7 @@
     .fas{
         color: #EB6C6A;
     }
+    
 </style>
 </head>
 

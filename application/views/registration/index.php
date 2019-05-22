@@ -24,6 +24,7 @@
         z-index: 1000;
         height: 100%;
     }
+
 </style>
 </head>
 <body class="transparent-header">

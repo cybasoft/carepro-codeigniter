@@ -3,7 +3,6 @@
         <div id="calendar"></div>
     </div>
 </div>
-
 <?php
 $this->load->view('calendar/view_event');
 if(is(['admin', 'manager', 'staff']))

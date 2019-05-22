@@ -1,4 +1,5 @@
 <?php $this->load->view('child/nav'); ?>
+
 <div class="row">
     <div class="col-sm-2 col-lg-2 col-md-2 ">
         <?php $this->load->view('child/sidebar'); ?>
