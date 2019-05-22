@@ -11,6 +11,7 @@ class DaycareController extends CI_Controller
         parent::__construct();
         $this->load->model('My_daycare_registration');
         $this->load->helper('url_helper');
+        $this->load->model('ion_auth_model', 'auth');
     }
     public function index($activation_code = NULL)
     {

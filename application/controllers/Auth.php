@@ -25,9 +25,14 @@ class Auth extends CI_Controller
     }
 
     function login($daycare_id = NULL)
-    {
-        if ($this->ion_auth->logged_in())
-            redirect('dashboard', 'refresh');
+    {        
+        if ($this->ion_auth->logged_in()){
+            if($daycare_id !== NULL){
+                redirect($daycare_id.'/dashboard', 'refresh');
+            }else{
+                redirect('dashboard', 'refresh');
+            }
+        }
 
         $this->refreshCaptcha();
 
@@ -41,7 +46,11 @@ class Auth extends CI_Controller
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
                 if ($this->ion_auth->login($email, $password)) {                    
-                    redirect('dashboard', 'refresh');
+                    if($daycare_id !== NULL){
+                        redirect($daycare_id.'/dashboard', 'refresh');
+                    }else{
+                        redirect('dashboard', 'refresh');
+                    }
                 } else {
                     flash('error', 'Username or password is incorrect');
                 }
@@ -72,9 +81,11 @@ class Auth extends CI_Controller
             $image = base_url() . 'assets/uploads/daycare_logo/' . $logo;
             $daycare = 'yes';
         } else {
+            $logo = '';
             $image = base_url() . 'assets/uploads/content/logo.png';
             $daycare = 'no';
         }
+        $this->session->set_userdata('company_logo',$logo);         
         $data['logo'] = $image;
         $data['daycare'] = $daycare;
         $data['daycare_id'] =  $daycare_id;
@@ -408,7 +419,7 @@ class Auth extends CI_Controller
         }
     }
 
-    function logout()
+    function logout($daycare_id = NULL)
     {
         $this->data['title'] = "Logout";
 
@@ -417,7 +428,11 @@ class Auth extends CI_Controller
         $this->conf->setTimer(0);
         reload_company();
         //redirect them to the login page
-        redirect('auth/login', 'refresh');
+        if($daycare_id !== NULL){
+            redirect($daycare_id.'/login', 'refresh');
+        }else{
+            redirect('auth/login', 'refresh');
+        }
     }
     /*
      *

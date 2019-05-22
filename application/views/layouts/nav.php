@@ -5,7 +5,6 @@
                         class="ti-menu ti-close"></i></a>
             <a class="navbar-brand" href="<?php echo site_url(); ?>">
                 <b class="logo-icon p-l-10">
-
                     <?php if(session('company_logo') == '') : ?>
                         <span class=""
                               style="position: absolute; top:-7px; left:45px; z-index: 3000"><?php echo session('company_name'); ?></span>
@@ -13,7 +12,7 @@
 			z-index: 3000; font-size: 12px; color: #ffff00; font-family: monospace"><?php echo session('company_slogan'); ?></span>
                     <?php else : ?>
                         <img class="light-logo"
-                             src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
+                             src="<?php echo base_url().'assets/uploads/daycare_logo/'.session('company_logo'); ?>"/>
 
                         <img class="dark-logo" src="<?php echo base_url().'assets/uploads/content/logo-small.png'; ?>"/>
                     <?php endif; ?>
@@ -91,10 +90,17 @@
                             <?php echo lang('profile'); ?>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">
+                        <?php if($daycare_id !== ''): ?>
+                        <a class="dropdown-item" href="<?php echo site_url($daycare_id.'/logout'); ?>">
                             <i class="fa fa-power-off m-r-5 m-l-5"></i>
                             <?php echo lang('Logout'); ?>
                         </a>
+                    <?php else: ?>
+                    <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">
+                            <i class="fa fa-power-off m-r-5 m-l-5"></i>
+                            <?php echo lang('Logout'); ?>
+                        </a>
+                    <?php endif; ?>
                     </div>
                 </li>
             </ul>

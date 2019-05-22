@@ -339,7 +339,7 @@ function allow($group)
 }
 
 function page($page, $data = [])
-{
+{    
     $ci = &get_instance();
     $data['page'] = $page;
     if(is('parent')) {

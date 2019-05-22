@@ -1,4 +1,4 @@
-<form action="<?php echo site_url('auth/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
+<form action="<?php echo site_url($data['daycare_id'].'/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">

@@ -12,22 +12,59 @@ class Dashboard extends CI_Controller
     /*
      * default pagek
      */
-    function index()
-    {        
+    function index($daycare_id = NULL)
+    {    
         $this->load->model('my_invoice', 'invoice');
+        if($daycare_id === NULL){                     
+            if(is(['super','admin','manager'])) {
+                page('dashboard/home');
+    
+            } elseif(is('parent')) {
+                $children = $this->parent->getChildren();
+                page('parent/parent_dashboard', compact('children'));
+    
+            } elseif(is('staff')) {
+                redirect('rooms');
+    
+            } else {
+                $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
+            }
+        }else{
+            $daycare_details = $this->db->get_where('daycare', array(
+                'daycare_id' => $daycare_id
+            ));
+            $daycare = $daycare_details->row_array();
+            if($daycare['logo'] !== ''){
+                $logo = $daycare['logo'];
+            }else{
+                $logo = '';        
+            }     
+            $this->session->set_userdata('company_logo',$logo);
+            if(is(['super','admin','manager'])) {
+                page('dashboard/home');
+    
+            } elseif(is('parent')) {
+                $children = $this->parent->getChildren();
+                page('parent/parent_dashboard', compact('children'));
+    
+            } elseif(is('staff')) {
+                redirect('rooms');
+    
+            } else {
+                $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
+            }
+        }
+    }
 
-        if(is(['super','admin','manager'])) {
-            page('dashboard/home');
-
-        } elseif(is('parent')) {
-            $children = $this->parent->getChildren();
-            page('parent/parent_dashboard', compact('children'));
-
-        } elseif(is('staff')) {
-            redirect('rooms');
-
+    function dashboard_page($page, $data = [],$daycare_id)
+    {   
+        $ci = &get_instance();
+        $data['page'] = $page;
+        $data['daycare_id'] = $daycare_id;
+        if(is('parent')) {
+            $ci->load->view('layouts/template', $data);
         } else {
-            page('dashboard/pending');
+            $ci->load->view('layouts/template', $data);
         }
     }
 
