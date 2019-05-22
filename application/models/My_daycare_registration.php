@@ -46,7 +46,7 @@ class My_daycare_registration extends CI_Model
     }
 
     //insert daycare info in database
-    public function insert_daycare($data,$email){
+    public function insert_daycare($data,$email,$activation_code){
         $this->db->insert('daycare', $data);
     
         $insert_id = $this->db->insert_id();
@@ -56,6 +56,7 @@ class My_daycare_registration extends CI_Model
         );
         $this->db->where('email', $email);
         $this->db->update('users', $store_id);
+        // $this->stripe_connect_account($insert_id,$data,$activation_code);
     }
     
     //Function to generate unique daycare id
@@ -118,8 +119,8 @@ class My_daycare_registration extends CI_Model
 
         $body= $this->load->view('owner_email/welcome_email', $data, true);
         $this->email->message($body);        //Send mail
-        if($this->email->send()){
-            $this->insert_daycare($user_data,$email);
+        if($this->email->send()){           
+            $this->insert_daycare($user_data,$email,$activation_code);
             $this->change_owner_status($email,$daycare_id);
         }   
         else{
@@ -148,5 +149,80 @@ class My_daycare_registration extends CI_Model
             $this->session->set_flashdata("success","Daycare registered successfully.");
             redirect(''.$daycare_id.'/login');
         }
+    }
+
+    public function stripe_connect_account($insert_id,$data,$activation_code){
+        $this->load->helper('url_helper');
+        $users = $this->db->get_where('users',array(
+            'daycare_id' => $insert_id
+        ));
+        $user_details = $users->row_array();
+        $daycare = $data;
+
+        try {
+            \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
+            $account = \Stripe\Account::create(
+                [
+                    "country" => "US",
+                    "type" => "custom",
+                    'business_profile' => [
+                        'name' => $daycare['name']
+                    ],
+                    'email' => 'jyotirsignh07@gmail.com',
+                    "business_type" => 'company',
+                    'requested_capabilities' => ['card_payments'],
+                    'company'  => 
+                    [
+                        'address' => 
+                            [
+                                'city' => $daycare['city'],
+                                'country' => 'US',
+                                'line1' => $daycare['address_line_1'],
+                                'line2' => $daycare['address_line_2'],
+                                'postal_code' => $daycare['zip'],
+                                'state' => $daycare['state']
+                            ],
+                            'name' => $daycare['name'],                            
+                    ],
+                    // 'legal_entity' => [
+                    //     'type' => 'company',
+                    //     'address' => [
+                    //         'city' => $daycare['city'],
+                    //         'country' => $daycare['country'],
+                    //         'line1' => $daycare['address_line_1'],
+                    //         'line2' => $daycare['address_line_2'],
+                    //         'postal_code' => $daycare['zip'],
+                    //         'state' => $daycare['state']
+                    //     ],
+                    //     'phone_number' => $user_details['phone'],
+                    //     'business_tax_id' => $daycare['employee_tax_identifier'],
+                    //     'first_name' => $user_details['name'],
+                    //     'last_name' => '',
+                    //     'personal_address' => [
+                    //         'city' => $user_details['city'],
+                    //         'country' => $user_details['country'],
+                    //         'line1' => $user_details['address_line_1'],
+                    //         'line2' => $user_details['address_line_2'],
+                    //         'postal_code' => $user_details['pin'],
+                    //         'state' => $user_details['state']
+                    //     ]
+                    // ]
+                ]
+            );
+
+            // $managed_account = $daycare->managed_account()->create([
+            //     'stripe_managed_account_id' => $account->id,
+            //     'stripe_secret_key' =>$account->keys['secret'],
+            //     'stripe_publishable_key' =>$account->keys['publishable'],
+            // ]);
+            // print_r($account);
+            // exit();
+        } catch (\Exception $exception) {
+            $error = $exception->getMessage();           
+            $this->session->set_flashdata("error", $error);          
+            redirect('daycare/'.$activation_code);
+            $this->load->view('registration/daycare_register', $daycare);
+        }
+        
     }
 }

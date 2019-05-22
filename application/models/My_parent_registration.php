@@ -61,7 +61,11 @@ class My_parent_registration extends CI_Model
 
         $email_data = array(
             'user_name' => $user_name,
-            'parent_name' => $parent_name
+            'parent_name' => $parent_name,
+            'firstname' => $data['first_name'],
+            'lastname' => $data['last_name'],
+            'email' => $data['email'],
+            'phone' => $data['phone']
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');

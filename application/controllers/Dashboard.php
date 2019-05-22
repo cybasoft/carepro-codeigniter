@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller
      * default pagek
      */
     function index()
-    {
+    {        
         $this->load->model('my_invoice', 'invoice');
 
         if(is(['super','admin','manager'])) {

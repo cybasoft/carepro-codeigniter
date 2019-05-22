@@ -8,11 +8,15 @@
     <body>
         <div>
            Hello <?php echo $user_name; ?>, <br/><br/>
-           <?php echo $parent_name; ?> has requested for activation of the account.<br/><br/>
+           <?php echo $parent_name; ?> has requested for activation of the account.<br/>
+            <p>Firstname: <?php echo $firstname; ?></p>
+            <p>Lastname: <?php echo $lastname; ?></p>
+            <p>Email: <?php echo $email; ?></p>
+            <p>phone: <?php echo $phone; ?></p>
 
                Thanks!<br/>
                Team Daycarepro
-            </a>          
+            </a>     
         </div>
     </body>
 </html>

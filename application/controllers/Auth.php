@@ -40,7 +40,7 @@ class Auth extends CI_Controller
             if ($this->form_validation->run() == true) {
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
-                if ($this->ion_auth->login($email, $password)) {
+                if ($this->ion_auth->login($email, $password)) {                    
                     redirect('dashboard', 'refresh');
                 } else {
                     flash('error', 'Username or password is incorrect');
