@@ -51,12 +51,16 @@ class DaycareController extends CI_Controller
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
 
         if ($this->form_validation->run() == true) {
-            $success_status = $this->My_daycare_registration->store($activation_code);          
-            if ($success_status !== NULL) {
+            $success_status = $this->My_daycare_registration->store($activation_code);
+            if($success_status['success'] !== ''){
+                $client_id = $this->config->item('client_id');
+                redirect('https://connect.stripe.com/oauth/authorize?response_type=code&client_id='.$client_id.'&scope=read_write');
+            }elseif($success_status['error'] !== ''){
                 $data['activation_code'] = $activation_code;
-                $this->session->set_flashdata("error", $success_status);
+                $this->session->set_flashdata("error", $success_status['error']);
                 $this->load->view('registration/daycare_register', $data);
             }
+            
         } else {
             set_flash(['name', 'employee_tax_identifier', 'logo', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone']);
             validation_errors();
@@ -117,6 +121,18 @@ class DaycareController extends CI_Controller
             redirect('daycare/' . $activation_code);
         } elseif ($user_status === "4") {
             redirect('' . $daycare_id . '/login');
+        }
+    }
+
+    public function store_stripe_detail(){
+        $data = $this->My_daycare_registration->stripe_store();
+        if($data){
+            $email = $data['email'];
+            $password = $data['password'];
+            $daycare_id = $data['daycare_id'];
+            if ($this->ion_auth->login($email, $password)) {
+                redirect($daycare_id . '/dashboard', 'refresh');
+            }
         }
     }
 }

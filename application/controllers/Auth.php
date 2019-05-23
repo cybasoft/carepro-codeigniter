@@ -26,10 +26,10 @@ class Auth extends CI_Controller
 
     function login($daycare_id = NULL)
     {        
-        if ($this->ion_auth->logged_in()){
-            if($daycare_id !== NULL){
-                redirect($daycare_id.'/dashboard', 'refresh');
-            }else{
+        if ($this->ion_auth->logged_in()) {
+            if ($daycare_id !== NULL) {
+                redirect($daycare_id . '/dashboard', 'refresh');
+            } else {
                 redirect('dashboard', 'refresh');
             }
         }
@@ -45,10 +45,10 @@ class Auth extends CI_Controller
             if ($this->form_validation->run() == true) {
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
-                if ($this->ion_auth->login($email, $password)) {                    
-                    if($daycare_id !== NULL){
-                        redirect($daycare_id.'/dashboard', 'refresh');
-                    }else{
+                if ($this->ion_auth->login($email, $password)) {
+                    if ($daycare_id !== NULL) {
+                        redirect($daycare_id . '/dashboard', 'refresh');
+                    } else {
                         redirect('dashboard', 'refresh');
                     }
                 } else {
@@ -85,7 +85,7 @@ class Auth extends CI_Controller
             $image = base_url() . 'assets/uploads/content/logo.png';
             $daycare = 'no';
         }
-        $this->session->set_userdata('company_logo',$logo);         
+        $this->session->set_userdata('company_logo', $logo);
         $data['logo'] = $image;
         $data['daycare'] = $daycare;
         $data['daycare_id'] =  $daycare_id;
@@ -428,9 +428,9 @@ class Auth extends CI_Controller
         $this->conf->setTimer(0);
         reload_company();
         //redirect them to the login page
-        if($daycare_id !== NULL){
-            redirect($daycare_id.'/login', 'refresh');
-        }else{
+        if ($daycare_id !== NULL) {
+            redirect($daycare_id . '/login', 'refresh');
+        } else {
             redirect('auth/login', 'refresh');
         }
     }

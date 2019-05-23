@@ -15,7 +15,7 @@ class RegistrationController extends CI_Controller
         $this->load->helper('url_helper');
     }
     public function index()
-    {
+    {        
         $this->load->view('registration/index');
     }
 
@@ -49,7 +49,13 @@ class RegistrationController extends CI_Controller
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
 
         if ($this->form_validation->run() == true) {
-            $this->My_user_registration->store_user();
+            $status = $this->My_user_registration->store_user();            
+            if($status['success'] !== ''){
+                $this->load->view('registration/success' ,$status);
+            }elseif($status['error'] !== ''){
+                $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
+            redirect('user/register');
+            }
         } else {
             set_flash(['email', 'name', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone', 'password']);
             validation_errors();

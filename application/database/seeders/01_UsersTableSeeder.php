@@ -132,7 +132,7 @@ class UsersTableSeeder extends CI_Model
         $this->db->truncate('groups');
 
         $groups = [
-            'admin', 'manager', 'staff', 'parent', 'owner'
+            'admin', 'manager', 'staff', 'parent'
         ];
         foreach ($groups as $group) {
             $this->db->insert('groups', ['name' => $group]);

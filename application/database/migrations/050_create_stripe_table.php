@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_create_daycare_register_table extends CI_Migration
+class Migration_create_stripe_table extends CI_Migration
 {
 
     /**
@@ -19,34 +19,24 @@ class Migration_create_daycare_register_table extends CI_Migration
                 'auto_increment'=>TRUE,
                 'unsigned'=>TRUE
             ),
-            'name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100
-            ),
-            'employee_tax_identifier' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 100
-            ),
-            'address_id' => array(
+            'daycare_id' => array(
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'=>TRUE,
-            ),            
-            'daycare_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 20,
+                'unsigned'=>TRUE
             ),
-            'logo' => array(
+            'stripe_user_id' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 200,
+                'constraint' => 100
             ),
+            'stripe_publishable_key' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),                        
             'created_at' => [
                 'type' => 'TIMESTAMP',
+                'default' => 'CURRENT_TIMESTAMP',
             ],
             'updated_at' => [
-                'type' => 'TIMESTAMP',
-            ],
-            'deleted_at' => [
                 'type' => 'TIMESTAMP',
             ]
         ));
@@ -55,8 +45,9 @@ class Migration_create_daycare_register_table extends CI_Migration
         $this->dbforge->add_key("id", TRUE);
 
         // Create Table users
-        $this->dbforge->create_table("daycare", TRUE);
-        $this->db->query('ALTER TABLE `users` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+        $this->dbforge->create_table("stripe_connect_detail", TRUE);
+
+        $this->db->query('ALTER TABLE `stripe_connect_detail` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 
     /**
@@ -67,7 +58,7 @@ class Migration_create_daycare_register_table extends CI_Migration
     public function down()
     {
         // Drop table users
-        $this->dbforge->drop_table("daycare", TRUE);
+        $this->dbforge->drop_table("stripe_connect_detail", TRUE);
     }
 
 }

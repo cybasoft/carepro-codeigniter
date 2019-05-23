@@ -66,7 +66,7 @@
                         'allow' => ['admin'],
                     ], [
                         'name' => 'Logout',
-                        'link' => 'auth/logout',
+                        'link' => $daycare_id.'/logout',
                         'icon' => 'exit',
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],

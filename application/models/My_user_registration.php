@@ -36,8 +36,6 @@ class My_user_registration extends CI_Model
         $get_status = $this->db->get('user_status');
         $owner_status = $get_status->result_array();
 
-        // print_r($owner_status[2]['status']);
-        // exit();
         $data = array(
             'name' => $user_name,
             'email' => $email,
@@ -54,7 +52,8 @@ class My_user_registration extends CI_Model
             'owner_status' => $owner_status[0]['id'],
             'active' => 0
         );
-        $this->send_confirmation_email($email,$user_name,$activation_code,$data);
+        $status = $this->send_confirmation_email($email,$user_name,$activation_code,$data);
+        return $status;
     }
 
     //generate activation code for email verification
@@ -90,7 +89,7 @@ class My_user_registration extends CI_Model
         $this->db->insert('users', $user_data);
 
         $insert_id = $this->db->insert_id();
-        $group_id = 5;
+        $group_id = 1;
 
         $users_groups = array(
             'user_id' => $insert_id,
@@ -122,11 +121,18 @@ class My_user_registration extends CI_Model
         if($this->email->send()){
             $this->session->set_flashdata("verify_email","Please check your email to confirm your account.");
             $this->insert_user($data,$activation_code);
-            $this->load->view('registration/success' ,$user_name);
+            $status = array(
+                'success' => $user_name,
+                'error' => ''
+            );
+            return $status;            
         }   
-        else{           
-            $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
-            redirect('user/register');
+        else{
+            $status = array(
+                'success' => '',
+                'error' => 'error'
+            );
+            return $status;            
         }
     }
 }

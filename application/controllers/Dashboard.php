@@ -41,11 +41,11 @@ class Dashboard extends CI_Controller
             }     
             $this->session->set_userdata('company_logo',$logo);
             if(is(['super','admin','manager'])) {
-                page('dashboard/home');
+                $this->dashboard_page('dashboard/home',$data = [],$daycare_id);
     
             } elseif(is('parent')) {
                 $children = $this->parent->getChildren();
-                page('parent/parent_dashboard', compact('children'));
+                $this->dashboard_page('parent/parent_dashboard',$data = [],$daycare_id);
     
             } elseif(is('staff')) {
                 redirect('rooms');
