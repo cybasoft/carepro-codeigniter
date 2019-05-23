@@ -349,6 +349,18 @@ function page($page, $data = [])
     }
 }
 
+function dashboard_page($page, $data = [],$daycare_id)
+    {   
+        $ci = &get_instance();
+        $data['page'] = $page;
+        $data['daycare_id'] = $daycare_id;        
+        if(is('parent')) {
+            $ci->load->view('layouts/template', $data);
+        } else {
+            $ci->load->view('layouts/template', $data);
+        }
+    }
+
 function parents_page($page, $data = [])
 {
     $ci = &get_instance();
@@ -957,5 +969,3 @@ function gravatar($email, $size = 50)
     return "https://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."&s=".$size;
 
 }
-
-?>

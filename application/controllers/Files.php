@@ -16,8 +16,8 @@ class Files extends CI_Controller{
         $this->module='files/';
 
     }
-    function index(){
-        page($this->module.'cabinet');
+    function index($daycare_id = NULL){      
+        dashboard_page($this->module.'cabinet',$data=[],$daycare_id = '');
     }
 
     function upload(){

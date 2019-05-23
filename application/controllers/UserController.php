@@ -16,7 +16,7 @@ class UserController extends CI_Controller
     }
 
     //redirect if needed, otherwise display the user list
-    function index()
+    function index($daycare_id = NULL)
     {
         //list the users
         $users = $this->db->select('u.*,ug.group_id,g.name as role')
@@ -48,7 +48,7 @@ class UserController extends CI_Controller
             $role[$groups[$i]->name] = $groups[$i]->total;
         }
         $count = 0;
-        page($this->module.'users', compact('users', 'count','role'));
+        dashboard_page($this->module.'users', compact('users', 'count','role'),$daycare_id);
     }
 
     //create a new user

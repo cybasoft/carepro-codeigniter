@@ -41,30 +41,18 @@ class Dashboard extends CI_Controller
             }     
             $this->session->set_userdata('company_logo',$logo);
             if(is(['super','admin','manager'])) {
-                $this->dashboard_page('dashboard/home',$data = [],$daycare_id);
+                dashboard_page('dashboard/home',$data = [],$daycare_id);
     
             } elseif(is('parent')) {
                 $children = $this->parent->getChildren();
-                $this->dashboard_page('parent/parent_dashboard',$data = [],$daycare_id);
+                dashboard_page('parent/parent_dashboard',$data = [],$daycare_id);
     
             } elseif(is('staff')) {
                 redirect('rooms');
     
             } else {                
-                $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
+                dashboard_page('dashboard/pending',$data = [],$daycare_id);
             }
-        }
-    }
-
-    function dashboard_page($page, $data = [],$daycare_id)
-    {   
-        $ci = &get_instance();
-        $data['page'] = $page;
-        $data['daycare_id'] = $daycare_id;        
-        if(is('parent')) {
-            $ci->load->view('layouts/template', $data);
-        } else {
-            $ci->load->view('layouts/template', $data);
         }
     }
 
