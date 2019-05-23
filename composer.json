@@ -9,7 +9,7 @@
 	},
 	"require": {
 		"fzaninotto/faker": "^1.8",
-		"stripe/stripe-php": "^6.35"
+		"stripe/stripe-php": "^6.36"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
