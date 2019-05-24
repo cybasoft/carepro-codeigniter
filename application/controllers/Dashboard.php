@@ -48,8 +48,7 @@ class Dashboard extends CI_Controller
                 dashboard_page('parent/parent_dashboard',$data = [],$daycare_id);
     
             } elseif(is('staff')) {
-                redirect('rooms');
-    
+                redirect($daycare_id.'/rooms');
             } else {                
                 dashboard_page('dashboard/pending',$data = [],$daycare_id);
             }

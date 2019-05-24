@@ -14,6 +14,8 @@
             <p>Email: <?php echo $email; ?></p>
             <p>phone: <?php echo $phone; ?></p>
 
+            Activation link: <a href="<?php echo base_url(); ?><?php echo $daycare_id ?>/parents"><?php echo base_url(); ?><?php echo $daycare_id ?>/parents</a><br/><br/>
+
                Thanks!<br/>
                Team Daycarepro
             </a>     

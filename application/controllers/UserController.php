@@ -52,8 +52,17 @@ class UserController extends CI_Controller
     }
 
     //create a new user
-    function create()
-    {
+    function create($daycare_id = NULL)
+    {        
+        if($daycare_id !== NULL){
+            $daycare_details = $this->db->get_where('daycare',array(
+                'daycare_id' => $daycare_id
+            ));
+            $daycare  = $daycare_details->row_array();
+            $owner_id = $daycare['id'];
+        }else{
+            $owner_id = '';
+        }
         $tables = $this->config->item('tables', 'ion_auth');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
@@ -71,6 +80,7 @@ class UserController extends CI_Controller
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
                 'phone' => $this->input->post('phone'),
+                'daycare_id' => $owner_id
             );
             $group = $this->input->post('group');
             if($this->ion_auth->register($additional_data, $group)) {

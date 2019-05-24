@@ -16,8 +16,8 @@ class Parents extends CI_Controller
     }
 
     function index($daycare_id = NULL)
-    {
-        $users = $this->db
+    {       
+            $users = $this->db
             ->select('u.*', 'groups.name')
             ->where('g.name', 'parent')
             ->from('users as u')
@@ -34,7 +34,7 @@ class Parents extends CI_Controller
         }
 
         $groups = $this->ion_auth->groups()->result_array();
-        dashboard_page('users/parents', compact('users', 'groups'),$daycare_id);
+        dashboard_page('users/parents', compact('users', 'groups'),$daycare_id);              
     }
 
 

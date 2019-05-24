@@ -91,7 +91,6 @@ class Auth extends CI_Controller
         $data['daycare_id'] =  $daycare_id;
         $this->page('login', compact('data'));
     }
-
     function register($daycareId = NULL)
     {
         if ($this->ion_auth->logged_in()) redirect('dashboard', 'refresh');
@@ -198,9 +197,9 @@ class Auth extends CI_Controller
                 ));
                 $result = $query->result();
                 $logo = $result[0]->logo;
-                $image = base_url() . 'assets/uploads/daycare_logo/' . $logo;
+                $image = $logo;
             } else {
-                $image = base_url() . 'assets/uploads/content/logo.png';
+                $image = "";
             }
             $data['logo'] = $image;
             $data['captcha_image'] = $captcha['image'];

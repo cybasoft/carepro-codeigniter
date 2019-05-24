@@ -39,8 +39,10 @@ $route['(.*)/calendar'] = 'calendar/index/$1';
 $route['(.*)/children'] = 'children/index/$1';
 
 //child
-$route['child/register']['post'] = 'child/store';
-$route['child/(:num)']['get'] = 'child/index/$1';
+// $route['child/register']['post'] = 'child/store';
+$route['(.*)/child/register']['post'] = 'child/store/$1';
+// $route['child/(:num)']['get'] = 'child/index/$1';
+$route['(.*)/child/(:num)']['get'] = 'child/index/$1/$2';
 $route['child/(:num)']['post'] = 'child/update';
 $route['child/(:num)/uploadPhoto'] = 'child/uploadPhoto/$1';
 $route['child/(:num)/assignParent']['get'] = 'child/assignParent/$1';
@@ -202,3 +204,4 @@ $route['(.*)/profile/update_user'] = 'Profile/update_user_data/$1';
 $route['(.*)/profile/update_user_email'] = 'profile/update_email/$1';
 $route['(.*)/profile/change__user_password'] = 'profile/change_password/$1';
 $route['(.*)/profile/change_user_pin'] = 'profile/change_pin/$1';
+$route['(.*)/users/create'] = "UserController/create/$1";

@@ -1,4 +1,7 @@
-<?php if (!defined('BASEPATH')) {
+<?php
+use phpDocumentor\Reflection\Types\Null_;
+
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -23,8 +26,8 @@ class Child extends CI_Controller
      * default page
      * @return void
      */
-    public function index($id)
-    {
+    public function index($daycare_id = NULL,$id)
+    {        
         if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -36,20 +39,20 @@ class Child extends CI_Controller
         $pickups = $this->db->where('child_id', $id)->get('child_pickup')->result();
         if (empty($child)) {
             flash('error', lang('record_not_found'));
-            redirect('children');
+            redirect($daycare_id.'/children');
         }
-        page($this->module . 'index', compact('child', 'pickups'));
+        dashboard_page($this->module . 'index', compact('child', 'pickups'),$daycare_id);
     }
 
-    public function store()
-    {
+    public function store($daycare_id = NULL)
+    {        
         allow(['admin', 'manager', 'staff']);
 
         if ($this->_validate_child()) {
-            $register = $this->child->register(true);
+            $register = $this->child->register(true);            
             if (false !== $register) {
                 flash('success', lang('request_success'));
-                redirect('child/' . $register);
+                redirect($daycare_id.'/child/' . $register);
             } else {
                 flash('error', lang('request_error'));
             }
@@ -59,7 +62,7 @@ class Child extends CI_Controller
             validation_errors();
             flash('danger');
         }
-        redirect('children', 'refresh');
+        redirect($daycare_id.'/children', 'refresh');
     }
 
     /*

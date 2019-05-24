@@ -182,12 +182,19 @@ function is($group)
  * @return bool
  */
 function auth($redirect = FALSE)
-{
+{    
+    $ci =& get_instance();
+    $daycare_id = $ci->uri->segment(1);    
     if(logged_in() == TRUE) {
         return TRUE;
     } else {
-        if($redirect)
-            redirect('auth/login', 'refresh');
+        if($redirect){
+            if($daycare_id === ''){
+                redirect('auth/login', 'refresh');
+            }else{
+                redirect($daycare_id.'/login', 'refresh');
+            }
+        }
         return FALSE;
     }
 }
@@ -352,7 +359,7 @@ function page($page, $data = [])
 function dashboard_page($page, $data = [],$daycare_id)
     {   
         $ci = &get_instance();
-        $data['page'] = $page;
+        $data['page'] = $page; 
         $data['daycare_id'] = $daycare_id;        
         if(is('parent')) {
             $ci->load->view('layouts/template', $data);

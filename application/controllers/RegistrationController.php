@@ -37,7 +37,7 @@ class RegistrationController extends CI_Controller
         $tables = $this->config->item('tables', 'ion_auth');
 
         $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|min_length[2]');
-        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]',array('is_unique', 'This Email is already registered.'));
         $this->form_validation->set_rules('password', lang('password'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
@@ -78,7 +78,7 @@ class RegistrationController extends CI_Controller
 
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|xss_clean|min_length[2]');
-        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]',array('is_unique', 'This Email is already registered.'));
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
         $this->form_validation->set_rules('password', lang('password'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');

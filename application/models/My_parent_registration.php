@@ -48,14 +48,13 @@ class My_parent_registration extends CI_Model
         $daycare_details = $this->db->get_where('daycare',array(
             'daycare_id' => $daycare_id
         ));
-        $daycare = $daycare_details->result_array();
+        $daycare = $daycare_details->result_array();        
 
         $user_details = $this->db->get_where('users',array(
             'daycare_id' => $daycare[0]['id']
         ));
 
-        $users = $user_details->result_array()[0];
-        
+        $users = $user_details->row_array();       
         $user_name = $users['name'];
         $user_email = $users['email'];
 
@@ -65,14 +64,15 @@ class My_parent_registration extends CI_Model
             'firstname' => $data['first_name'],
             'lastname' => $data['last_name'],
             'email' => $data['email'],
-            'phone' => $data['phone']
+            'phone' => $data['phone'],
+            'daycare_id' => $daycare_id
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
         $to = $user_email;
         $this->email->from($from, 'Daycare');
         $this->email->to($to);
-        $this->email->subject('Parent activation');
+        $this->email->subject('Parent Activation');
 
         $body= $this->load->view('owner_email/activate_parent_email', $email_data, true);
         $this->email->message($body);        //Send mail
@@ -82,7 +82,7 @@ class My_parent_registration extends CI_Model
             redirect($daycare_id.'/login');
         }   
         else{
-            $this->session->set_flashdata("verify_email_error","Enable to sent activation email. Please try again.");
+            $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
             redirect($daycare_id.'/register');
         }
     }
