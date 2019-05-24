@@ -14,7 +14,7 @@
         Your payment of $<?php echo $price; ?> completed successfully.<br/>
         Thank you for subscription to daycare <?php echo $plan; ?> plan!<br/><br/>
         Daycare registration link:<br/>
-        <a href="http://localhost/daycarepro-app/daycare/<?php echo $activation_code; ?>">http://localhost/daycarepro-app/daycare/<?php echo $activation_code; ?></a><br/><br/>
+        <a href="<?php echo base_url(); ?>daycare/<?php echo $activation_code; ?>"><?php echo base_url(); ?>daycare/<?php echo $activation_code; ?></a><br/><br/>
         Thanks!<br/>
         Team Daycarepro
         </a>

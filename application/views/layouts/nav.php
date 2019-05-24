@@ -67,7 +67,7 @@
                         <img src="<?php echo $this->user->photo(session('photo')); ?>" class="rounded-circle" width="31" height="31">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                        <a class="dropdown-item" href="<?php echo site_url('profile'); ?>">
+                        <a class="dropdown-item" href="<?php echo site_url($daycare_id.'/profile'); ?>">
                             <i class="ti-user m-r-5 m-l-5"></i>
                             <?php echo lang('profile'); ?>
                         </a>

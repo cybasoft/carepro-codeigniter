@@ -58,7 +58,7 @@ class MY_profile extends CI_Model
             session($data); //update session data
             return true;
         }
-
+        
         return false;
     }
 }

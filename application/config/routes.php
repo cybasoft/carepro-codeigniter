@@ -195,3 +195,10 @@ $route['reminder'] = 'EmailreminderController/send_reminder_email';
 $route['(.*)/dashboard'] = 'dashboard/index/$1'; //daycare dashboard
 $route['(.*)/logout'] = 'auth/logout/$1'; //daycare login
 $route['store_stripe'] = 'DaycareController/store_stripe_detail';
+
+//profile route
+$route['(.*)/profile'] = 'Profile/index/$1';
+$route['(.*)/profile/update_user'] = 'Profile/update_user_data/$1';
+$route['(.*)/profile/update_user_email'] = 'profile/update_email/$1';
+$route['(.*)/profile/change__user_password'] = 'profile/change_password/$1';
+$route['(.*)/profile/change_user_pin'] = 'profile/change_pin/$1';

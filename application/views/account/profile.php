@@ -27,7 +27,7 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open('profile/update_user_data');
+                echo form_open($daycare_id.'/profile/update_user');
                 echo form_label(lang('Phone'));
                 echo form_input('phone', $user->phone, ['class' => 'form-control', 'required' => '']);
 
@@ -49,10 +49,10 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open('profile/update_email');
+                echo form_open($daycare_id.'/profile/update_user_email');
 
                 echo form_label(lang('current_password'), 'password');
-                echo form_password('passowrd', null, ['class' => 'form-control', 'required' => '']);
+                echo form_password('password', null, ['class' => 'form-control', 'required' => '']);
 
                 echo form_label(lang('email'), 'email');
                 echo form_input(['type' => 'email', 'name'=>'email', 'class' => 'form-control', 'required' => ''], $user->email);
@@ -72,7 +72,7 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open('profile/change_pin');
+                echo form_open($daycare_id.'/profile/change_user_pin');
                 echo form_label(lang('Pin'), 'pin');
                 echo form_input('pin', $user->pin, ['class' => 'form-control', 'required' => '']);
                 echo '<br/>';
@@ -88,7 +88,7 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open('profile/change_password');
+                echo form_open($daycare_id.'/profile/change__user_password');
 
                 echo form_label(lang('current_password'), 'password');
                 echo form_password('password', null, ['class' => 'form-control', 'required' => '']);
