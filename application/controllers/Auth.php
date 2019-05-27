@@ -25,7 +25,7 @@ class Auth extends CI_Controller
     }
 
     function login($daycare_id = NULL)
-    {        
+    {       
         if ($this->ion_auth->logged_in()) {
             if ($daycare_id !== NULL) {
                 redirect($daycare_id . '/dashboard', 'refresh');
@@ -46,10 +46,19 @@ class Auth extends CI_Controller
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
                 if ($this->ion_auth->login($email, $password)) {
+                    $check_parent = $this->session->userdata("users");                   
                     if ($daycare_id !== NULL) {
-                        redirect($daycare_id . '/dashboard', 'refresh');
+                        if($check_parent === "parent"){
+                            redirect($daycare_id . '/parents', 'refresh');
+                        }else{
+                            redirect($daycare_id . '/dashboard', 'refresh');
+                        }                        
                     } else {
-                        redirect('dashboard', 'refresh');
+                        if($check_parent === "parent"){
+                            redirect('parents', 'refresh');
+                        }else{
+                            redirect('dashboard', 'refresh');
+                        }
                     }
                 } else {
                     flash('error', 'Username or password is incorrect');
@@ -89,7 +98,7 @@ class Auth extends CI_Controller
         $data['logo'] = $image;
         $data['daycare'] = $daycare;
         $data['daycare_id'] =  $daycare_id;
-        $this->page('login', compact('data'));
+        $this->page('login', compact('data'));       
     }
     function register($daycareId = NULL)
     {

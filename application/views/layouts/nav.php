@@ -60,7 +60,7 @@
                         } ?>
                     </div>
                 </li>
-                <li class="nav-item lock-screen"><a href="#" class="nav-link"><i class="fa fa-lock cursor"></i></a></li>
+                <li class="nav-item lock-screen" data-daycare_id=<?php echo $daycare_id; ?>><a href="#" class="nav-link"><i class="fa fa-lock cursor"></i></a></li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

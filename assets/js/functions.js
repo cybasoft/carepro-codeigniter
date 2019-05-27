@@ -43,7 +43,7 @@ function editUser(id) {
     })
 }
 
-function startLockscreen() {
-    $('body').load(site_url + 'lockscreen');
+function startLockscreen(daycare_id) {
+    $('body').load(site_url + daycare_id +'/lockscreen');
     $('html').addClass('lockscreen');
 }

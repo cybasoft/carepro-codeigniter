@@ -55,12 +55,16 @@ class Dashboard extends CI_Controller
         }
     }
 
-    function lockscreen()
-    {
+    function lockscreen($daycare_id = NULL)
+    {       
         $this->conf->setTimer(1);
         if(auth(true)) {
+            $data = array(
+                'daycare_id' => $daycare_id
+            );
+
             //check cookie
-            $this->load->view('dashboard/lockscreen');
+            $this->load->view('dashboard/lockscreen',$data);
         }
     }
 

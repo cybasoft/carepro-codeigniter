@@ -26,7 +26,7 @@ $route['(.*)/settings'] = 'settings/index/$1';
 // $route['users'] = 'userController/index';
 $route['(.*)/users'] = 'userController/index/$1';
 $route['users/(:any)'] = 'userController/$1';
-$route['users/(:any)/:num'] = 'userController/$1';
+$route['(.*)/users/(:any)/:num'] = 'userController/index/$1';
 
 $route['groups/:num'] = 'userController/edit_group/$1';
 
@@ -114,7 +114,7 @@ $route['(.*)/news'] = 'NewsController/index/$1';
 $route['news/(:any)'] = 'NewsController/$1';
 $route['news/(:any)/:num'] = 'NewsController/$1';
 
-$route['lockscreen'] = 'dashboard/lockscreen';
+$route['(.*)/lockscreen'] = 'dashboard/lockscreen/$1';
 $route['invoice/(:num)/stripe-pay'] = 'invoice/stripePayment/$1';
 
 //reports

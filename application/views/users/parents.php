@@ -10,8 +10,8 @@
                          src="<?php echo is_file(APPPATH.'../assets/uploads/users/'.$user['photo']) ? base_url('assets/uploads/users/'.$user['photo']) : base_url('assets/img/content/no-image.png'); ?>">
                     <div class="text-center">
                         <br/>
-                        <?php echo ($user['active']) ? anchor('users/deactivate/'.$user['id'], '<span class="label label-info">'
-                            .lang('index_active_link').'</span>') : anchor('users/activate/'.$user['id'], '<span class="label label-danger">'
+                        <?php echo ($user['active']) ? anchor($daycare_id.'/users/deactivate/'.$user['id'], '<span class="label label-info">'
+                            .lang('index_active_link').'</span>') : anchor($daycare_id.'/users/activate/'.$user['id'], '<span class="label label-danger">'
                             .lang('index_inactive_link').'</span>'); ?>
                     </div>
                 </div>
