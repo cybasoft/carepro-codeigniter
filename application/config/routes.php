@@ -13,7 +13,9 @@ $route['auth/(:any)'] = 'auth/$1';
 $route['login'] = 'auth/login';
 $route['register'] = 'auth/register';
 $route['logout'] = 'auth/logout';
-$route['forgot'] = 'auth/forgot';
+// $route['forgot'] = 'auth/forgot';
+$route['(.*)/forgot'] = 'auth/forgot/$1';
+
 $route['reset/(:any)'] = 'auth/reset/$1';
 
 //accounting
@@ -26,7 +28,9 @@ $route['(.*)/settings'] = 'settings/index/$1';
 // $route['users'] = 'userController/index';
 $route['(.*)/users'] = 'userController/index/$1';
 $route['users/(:any)'] = 'userController/$1';
-$route['(.*)/users/(:any)/:num'] = 'userController/index/$1';
+// $route['users/(:any)/:num'] = 'userController/$1';
+$route['(.*)/users/(:any)/(:num)'] = 'userController/change_status/$1/$2/$3';
+$route['(.*)/users/(:any)/status'] = 'userController/active_deactive_user/$1/$2';
 
 $route['groups/:num'] = 'userController/edit_group/$1';
 

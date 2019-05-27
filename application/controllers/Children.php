@@ -28,7 +28,7 @@ class Children extends CI_Controller
     {        
         if (is('parent')) {
             $children = $this->parent->getChildren();
-            page('parent/parent_dashboard', compact('children'));
+            dashboard_page('parent/parent_dashboard', compact('children'),$daycare_id);
         } else {
             $checkedInChildren = $this->children->checkedInChildren();
             $checkedOutChildren = $this->children->checkedOutChildren();

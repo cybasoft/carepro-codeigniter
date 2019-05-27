@@ -28,7 +28,9 @@ $lang['index_create_group_link'] = 'Create a new group';
 
 // Deactivate User
 $lang['deactivate_heading'] = 'Deactivate User';
+$lang['activate_heading'] = 'Activate User';
 $lang['deactivate_subheading'] = 'Are you sure you want to deactivate the user \'%s\'';
+$lang['activate_subheading'] = 'Are you sure you want to activate the user \'%s\'';
 $lang['deactivate_confirm_y_label'] = 'Yes:';
 $lang['deactivate_confirm_n_label'] = 'No:';
 $lang['deactivate_submit_btn'] = 'Submit';

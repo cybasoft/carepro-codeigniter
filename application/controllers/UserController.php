@@ -59,10 +59,10 @@ class UserController extends CI_Controller
                 'daycare_id' => $daycare_id
             ));
             $daycare  = $daycare_details->row_array();
-            $owner_id = $daycare['id'];
+            $owner_id = $daycare['id'];            
         }else{
             $owner_id = '';
-        }
+        }      
         $tables = $this->config->item('tables', 'ion_auth');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
@@ -175,11 +175,11 @@ class UserController extends CI_Controller
     }
 
     //activate the user
-    function activate()
+    function activate($id,$daycare_id)
     {
         allow('admin');
-        $id = uri_segment(3);
-        $code = uri_segment(4);
+        // $id = uri_segment(3);
+        $code = "";
         if(!empty($code)) {
             $activation = $this->ion_auth->activate($id, $code);
         } else {
@@ -192,14 +192,14 @@ class UserController extends CI_Controller
             //redirect them to the forgot password page
             flash('danger', lang('request_error'));
         }
-        redirect("users", 'refresh');
+        redirect($daycare_id."/users", 'refresh');
     }
 
     //deactivate the user
-    function deactivate()
+    function deactivate($id,$daycare_id)
     {
         allow('admin');
-        $id = (int)$this->uri->segment(3);
+        // $id = (int)$this->uri->segment(3);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('confirm', lang('deactivate_validation_confirm_label'), 'required');
         if($this->form_validation->run() == FALSE) {
@@ -215,10 +215,24 @@ class UserController extends CI_Controller
             } else {
                 flash('info', lang('action_cancelled'));
             }
-            redirect("users", 'refresh');
+            redirect($daycare_id."/users", 'refresh');
         }
     }
-
+    function active_deactive_user($daycare_id = NULL, $user_status = NULL){       
+        $id = $this->input->post('user_id');
+        if($user_status === "deactivate"){
+            $this->deactivate($id,$daycare_id);
+        }elseif($user_status === "activate"){
+            $this->activate($id,$daycare_id);
+        }
+    }
+    function change_status($daycare_id = NULL,$user_status = NULL,$id = NULL){
+        $data = array(
+            'id' => $id,
+            'user_status' => $user_status
+        );
+        dashboard_page($this->module.'deactivate_user', $data,$daycare_id);
+    }
     /*
      * ensure all tables exist
      */

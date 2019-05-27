@@ -54,8 +54,8 @@
                         <span class="label label-<?php echo g_decor($user->role); ?>"><?php echo $user->role; ?></span>
                     </td>
                     <td align="center" valign="top">
-                        <?php echo ($user->active) ? anchor("users/deactivate/".$user->id, '<span class="text-primary">'
-                            .lang('index_active_link').'</span>') : anchor("users/activate/".$user->id, '<span class="text-danger">'
+                        <?php echo ($user->active) ? anchor($daycare_id."/users/deactivate/".$user->id, '<span class="text-primary">'
+                            .lang('index_active_link').'</span>') : anchor($daycare_id."/users/activate/".$user->id, '<span class="text-danger">'
                             .lang('index_inactive_link').'</span>'); ?>
                     </td>
                     <td style="width:75px;" class="text-right">

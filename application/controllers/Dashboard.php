@@ -45,7 +45,7 @@ class Dashboard extends CI_Controller
     
             } elseif(is('parent')) {
                 $children = $this->parent->getChildren();
-                dashboard_page('parent/parent_dashboard',$data = [],$daycare_id);
+                dashboard_page('parent/parent_dashboard',compact('children'),$daycare_id);
     
             } elseif(is('staff')) {
                 redirect($daycare_id.'/rooms');

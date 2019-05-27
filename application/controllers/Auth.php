@@ -297,8 +297,8 @@ class Auth extends CI_Controller
 
     //log the user out
 
-    function forgot()
-    {
+    function forgot($daycare_id = NULL)
+    {        
         if (!empty($this->input->post('email'))) {
             $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');
             if ($this->form_validation->run() == false) {
@@ -317,14 +317,27 @@ class Auth extends CI_Controller
                 if ($forgotten) {
                     //if there were no errors
                     flash('success', lang('password_reset_link_sent'));
-                    redirect('auth/login');
+                    redirect($daycare_id.'/login');
                 } else {
                     flash('danger', lang('request_error'));
-                    redirect('auth/forgot');
+                    redirect($daycare_id.'/forgot');
                 }
             }
         }
-        $this->page('forgot_password');
+        $daycare_details = $this->db->get_where("daycare",array(
+            'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->row_array();
+        if($daycare['logo'] !== NULL){
+            $logo = $daycare['logo'];
+        }else{
+            $logo = '';
+        }
+        $data = array(
+            'daycare_id' => $daycare_id,
+            'logo' => $logo
+        );
+        $this->page('forgot_password',$data);
     }
 
     //forgot password
