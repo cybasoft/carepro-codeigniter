@@ -24,8 +24,16 @@ class Profile extends CI_Controller
 
 	function index($daycare_id = NULL)
 	{
+		$user = $this->user->get();
+
+		$address_details = $this->db->get_where("address", array(
+			'id' => $user->address_id
+		));
+		$address = $address_details->row_array();
+
 		$data = array(
-			'user' => $this->user->get(),
+			'user' => $user,
+			'address' => $address,
 			'daycare_id' => $daycare_id
 		);
 		dashboard_page($this->module . 'profile', $data,$daycare_id);
@@ -95,8 +103,9 @@ class Profile extends CI_Controller
 	function update_user_data($daycare_id = NULL)
 	{
 		$this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean|trim');
-		$this->form_validation->set_rules('phone2', lang('other_phone'), 'xss_clean|trim');
-		$this->form_validation->set_rules('address', lang('address'), 'required|xss_clean|trim');
+		$this->form_validation->set_rules('address_line_1', lang('address_line_1'), 'xss_clean|trim');
+		$this->form_validation->set_rules('city', lang('city'), 'required|xss_clean|trim');
+		$this->form_validation->set_rules('state', lang('state'), 'required|xss_clean|trim');
 
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->profile->update_user_data()) {

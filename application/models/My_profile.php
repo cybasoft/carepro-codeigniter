@@ -6,10 +6,14 @@ class MY_profile extends CI_Model
     function change_pin()
     {
         $data = array(
-            'pin' => $this->input->post('pin')
+            'zip_code' => $this->input->post('pin')
         );
-        $this->db->where('id', $this->user->uid());
-        if($this->db->update('users', $data))
+        $get_users_details = $this->db->get_where('users',array(
+            'id' => $this->user->uid()
+        ));
+        $users = $get_users_details->row_array();
+        $this->db->where('id', $users['address_id']);
+        if($this->db->update('address', $data))
             return true;
         return false;
     }
@@ -49,12 +53,19 @@ class MY_profile extends CI_Model
     {
         $data = [
             'phone' => $this->input->post('phone'),
-            'phone2' => $this->input->post('phone2'),
-            'address' => $this->input->post('address')
+            'address_line_1' => $this->input->post('address_line_1'),
+            'address_line_2' => $this->input->post('address_line_2'),
+            'city' => $this->input->post('city'),
+            'state' => $this->input->post('state'),
+            'country' => $this->input->post('country')
         ];
 
-        $this->db->where('id', $this->user->uid());
-        if($this->db->update('users', $data)) {
+        $get_users_details = $this->db->get_where('users',array(
+            'id' => $this->user->uid()
+        ));
+        $users = $get_users_details->row_array();
+        $this->db->where('id', $users['address_id']);
+        if($this->db->update('address', $data)) {
             session($data); //update session data
             return true;
         }
