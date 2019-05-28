@@ -62,7 +62,7 @@ class UserController extends CI_Controller
             $owner_id = $daycare['id'];            
         }else{
             $owner_id = '';
-        }      
+        }
         $tables = $this->config->item('tables', 'ion_auth');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');

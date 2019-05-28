@@ -73,7 +73,7 @@
                     <div class="card-header with-border">
                         <h4 class="card-title btn-block"><?php echo lang('parents'); ?>
                             <?php if (!is('parent')): ?>
-                                    <button type="button" id="<?php echo $child->id; ?>"
+                                    <button type="button" id="<?php echo $child->id; ?>" data-daycare-id="<?php echo $daycare_id;?>"
                                             class="btn btn-default btn-xs  assign-parent-btn pull-right">
                                         <span class="fa fa-plus"></span>
                                     </button>

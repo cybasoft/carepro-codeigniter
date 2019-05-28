@@ -18,6 +18,7 @@ class Child extends CI_Controller
         auth();
         $this->load->model('My_invoice', 'invoice');
         $this->load->model('My_food', 'food');
+        $this->load->model('My_user');
         $this->module = 'child/';
         $this->title = lang('child');
     }
@@ -45,8 +46,8 @@ class Child extends CI_Controller
     }
 
     public function store($daycare_id = NULL)
-    {        
-        allow(['admin', 'manager', 'staff']);
+    {
+        allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
             $register = $this->child->register(true);            
@@ -71,18 +72,18 @@ class Child extends CI_Controller
      * @return void
      */
 
-    public function update()
+    public function update($daycare_id = NULL)
     {
         allow(['admin', 'manager', 'staff']);
 
         if ($this->_validate_child()) {
-            $this->child->update_child($this->input->post('child_id'));
+            $this->child->update_child($this->input->post('child_id') , $daycare_id);
         } else {
             set_flash(['nickname', 'first_name', 'last_name', 'national_id', 'bday', 'blood_type', 'gender', 'status']);
             validation_errors();
             flash('danger');
         }
-        redirect('child/' . $this->input->post('child_id'), 'refresh');
+        redirect($daycare_id.'/child/' . $this->input->post('child_id'), 'refresh');
     }
 
     /*
@@ -222,8 +223,8 @@ class Child extends CI_Controller
         $this->load->view($this->module . 'assign_parent', compact('child_id'));
     }
 
-    public function doAssignParent($child_id)
-    {
+    public function doAssignParent($daycare_id,$child_id)
+    {        
         allow(['admin', 'manager', 'staff']);
 
         $this->child_id = $child_id;
@@ -236,7 +237,7 @@ class Child extends CI_Controller
             if ($this->db->insert('child_parents', $data)) {
                 flash('success', lang('request_success'));
 
-                $parent = $this->user->first($this->input->post('parent'));
+                $parent = $this->My_user->first($this->input->post('parent'));
                 $child = $this->child->first($child_id);
                 $data = [
                     'to' => $parent->email,

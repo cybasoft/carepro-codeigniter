@@ -6,8 +6,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?php echo form_open('child/'.$child_id.'/assignParent'); ?>
-            <div class="modal-body">
+            <?php echo form_open($daycare_id.'/child/'.$child_id.'/assignParent'); ?>
+            <div class="modal-body">                
                 <div class="pull-left">
                     <select class="form-control" name="parent">
                         <option value="">--<?php echo ucwords(lang('select')); ?>--</option>

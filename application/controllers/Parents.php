@@ -32,17 +32,18 @@ class Parents extends CI_Controller
             $this->db->join('child_parents as cp', 'cp.child_id=c.id', 'left');
             $users[$i]['children'] = $this->db->get()->result_array();
         }
+        $this->session->unset_userdata("users");
 
         $groups = $this->ion_auth->groups()->result_array();
         dashboard_page('users/parents', compact('users', 'groups'),$daycare_id);              
     }
 
 
-    function parents(){
+    function parents($daycare_id = NULL){       
         allow(['admin','manager','staff']);
         $parents= $this->parent->parents();
-        $child_id = $this->uri->segment(3);
-        $this->load->view('child/assign_parent',compact('parents','child_id'));
+        $child_id = $this->uri->segment(4);
+        $this->load->view('child/assign_parent',compact('parents','child_id','daycare_id'));
     }
 
     function invoice($term = 0)

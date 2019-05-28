@@ -741,19 +741,7 @@ class Ion_auth_model extends CI_Model
         $ip_address = $this->_prepare_ip($this->input->ip_address());
         $password = $this->hash_password($password);
 
-        // Users table.
-        $data = [
-            'password' => $password,
-            'email' => $email,
-            'ip_address' => $ip_address,
-            'created_at' => date_stamp(),
-            'last_login' => date_stamp(),
-            'active' => 0,
-        ];
-        // 'active' => ($manual_activation === FALSE ? 1 : 0),
 
-        //filter out any data passed that doesnt have a matching column in the users table
-        //and merge the set user data and the additional data
         $user_id = $this->user->uid();
 
         $user_detail = $this->db->get_where('users', array(
@@ -773,6 +761,25 @@ class Ion_auth_model extends CI_Model
         $group_details = $users_group->row_array();
         $group_id = $group_details['group_id'];
 
+        if($group_id == 4){
+            $active = 0;
+        }else{
+            $active = 1;
+        }
+        // Users table.
+        $data = [
+            'password' => $password,
+            'email' => $email,
+            'ip_address' => $ip_address,
+            'created_at' => date_stamp(),
+            'last_login' => date_stamp(),
+            'active' => $active,
+        ];
+        // 'active' => ($manual_activation === FALSE ? 1 : 0),
+
+        //filter out any data passed that doesnt have a matching column in the users table
+        //and merge the set user data and the additional data        
+
         $userData = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);        
         $this->trigger_events('extra_set');
         $this->db->insert($this->tables['users'], $userData);
@@ -791,12 +798,13 @@ class Ion_auth_model extends CI_Model
         }
 
         $this->trigger_events('post_register');
-        if ($group_id == 3 || $group_id == 2) {
+        if ($group_id != 4) {
             $email_data = array(
                 'first_name' => $additional_data['first_name'],
                 'last_name' => $additional_data['last_name'],
                 'staff_firstname' => $users['first_name'],
                 'staff_lastname' => $users['last_name'],
+                'email' => $users['email'],
                 'daycare_id' => $daycare['daycare_id']
             );
             $this->email->set_mailtype('html');

@@ -17,7 +17,7 @@
             <td><img style="width:80px;"
                      src="<?php echo $child->photo == '' ? base_url().'assets/img/content/no-image.png' : base_url().'assets/uploads/children/'.$child->photo; ?>">
             </td>
-            <td><a href="<?php echo site_url('/child/'.$child->id); ?>">
+            <td><a href="<?php echo site_url($daycare_id.'/child/'.$child->id); ?>">
                     <?php echo $child->last_name.', '.$child->first_name; ?>
                 </a>
             </td>

@@ -46,11 +46,14 @@ $route['(.*)/children'] = 'children/index/$1';
 // $route['child/register']['post'] = 'child/store';
 $route['(.*)/child/register']['post'] = 'child/store/$1';
 // $route['child/(:num)']['get'] = 'child/index/$1';
+$route['child/(:num)']['post'] = 'child/update/$1';
 $route['(.*)/child/(:num)']['get'] = 'child/index/$1/$2';
-$route['child/(:num)']['post'] = 'child/update';
+// $route['(.*)/child/(:num)']['post'] = 'child/update/$1';
 $route['child/(:num)/uploadPhoto'] = 'child/uploadPhoto/$1';
-$route['child/(:num)/assignParent']['get'] = 'child/assignParent/$1';
-$route['child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1';
+// $route['child/(:num)/assignParent']['get'] = 'child/assignParent/$1';
+// $route['child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1';
+$route['(.*)/child/(:num)/assignParent']['get'] = 'child/assignParent/$1/$2';
+$route['(.*)/child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1/$2';
 $route['child/(:num)/(:num)/removeParent'] = 'child/removeParent/$1/$2';
 $route['child/checkInOut/(:num)'] = 'child/checkInOut/$1';
 
@@ -108,7 +111,7 @@ $route['photos/(:any)/:num'] = 'photos/$1';
 //parents
 // $route['parents/:any'] = 'parents/$1';
 $route['(.*)/parents'] = 'parents/index/$1';
-$route['parents/(:any)/(:any)'] = 'parents/$1';
+$route['(.*)/parents/(:any)/(:any)'] = 'parents/parents/$1/$2/$3';
 
 //parent
 $route['parent/(:any)'] = 'ParentController/$1';

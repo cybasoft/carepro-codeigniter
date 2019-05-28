@@ -9,14 +9,7 @@
 <body>
     <div>
         <p>Hello <?php echo $first_name.' '.$last_name; ?>,</p>
-        <p>
-        <?php if($staff_firstname !== ""): ?>
-        <?php echo $staff_firstname.' '.$staff_lastname; ?>
-        <?php else: ?>
-        <?php echo $email; ?>
-        <?php endif; ?>
-        has invited you to Daycarepro dashboard.
-         </p>
+        <p>Your child <?php echo $child_first_name . ' '; ?><?php echo $child_last_name; ?> has been registered sucessfully for Daycarepro app</p>
         Visit Daycarecarepro: <a href="<?php echo base_url(); ?><?php echo $daycare_id ?>/dashboard">
         <?php echo base_url(); ?><?php echo $daycare_id ?>/dashboard</a><br/><br/>
         Thanks!<br />
