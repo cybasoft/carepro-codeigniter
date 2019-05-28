@@ -175,8 +175,12 @@ class UserController extends CI_Controller
     }
 
     //activate the user
-    function activate($id,$daycare_id)
+    function activate($id,$daycare_id,$user_status)
     {
+        $user_details = $this->db->get_where('users',array(
+            'id' => $id
+        ));
+        $user = $user_details->row_array();
         allow('admin');
         // $id = uri_segment(3);
         $code = "";
@@ -192,13 +196,19 @@ class UserController extends CI_Controller
             //redirect them to the forgot password page
             flash('danger', lang('request_error'));
         }
+        $this->send_user_status_email($user,$user_status,$daycare_id);
         redirect($daycare_id."/users", 'refresh');
     }
 
     //deactivate the user
-    function deactivate($id,$daycare_id)
-    {
+    function deactivate($id,$daycare_id,$user_status)
+    {        
+        $user_details = $this->db->get_where('users',array(
+            'id' => $id
+        ));
+        $user = $user_details->row_array();
         allow('admin');
+        
         // $id = (int)$this->uri->segment(3);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('confirm', lang('deactivate_validation_confirm_label'), 'required');
@@ -210,7 +220,8 @@ class UserController extends CI_Controller
             page($this->module.'deactivate_user', compact('id'));
         } else {
             if($this->input->post('confirm') == 'yes') {
-                $this->ion_auth->deactivate($id);
+                $this->ion_auth->deactivate($id);  
+                $this->send_user_status_email($user,$user_status,$daycare_id);              
                 flash('warning', lang('user_deactivated'));
             } else {
                 flash('info', lang('action_cancelled'));
@@ -218,13 +229,39 @@ class UserController extends CI_Controller
             redirect($daycare_id."/users", 'refresh');
         }
     }
-    function active_deactive_user($daycare_id = NULL, $user_status = NULL){       
-        $id = $this->input->post('user_id');
+    function active_deactive_user($daycare_id = NULL, $user_status = NULL){              
+
+        $id = $this->input->post('user_id');        
         if($user_status === "deactivate"){
-            $this->deactivate($id,$daycare_id);
+            $this->deactivate($id,$daycare_id,$user_status);           
         }elseif($user_status === "activate"){
-            $this->activate($id,$daycare_id);
-        }
+            $this->activate($id,$daycare_id, $user_status);
+        }        
+    }
+
+    function send_user_status_email($user,$user_status,$daycare_id){
+        $this->load->config('email');
+        $this->load->library('email');
+
+        $email_data = array(
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
+            'username' => $user['name'],
+            'user_status' => $user_status,
+            'daycare_id' => $daycare_id
+         );
+         $this->email->set_mailtype('html');
+         $from = $this->config->item('smtp_user');
+         $to = $user['email'];
+         $this->email->from($from, 'Daycarepro');
+         $this->email->to($to);
+         $this->email->subject('User Status Change');
+
+         $body = $this->load->view('owner_email/user_status', $email_data, true);
+         $this->email->message($body);        //Send mail
+         if ($this->email->send()) {
+             $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+         }
     }
     function change_status($daycare_id = NULL,$user_status = NULL,$id = NULL){
         $data = array(

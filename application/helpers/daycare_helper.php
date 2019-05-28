@@ -506,7 +506,7 @@ function moneyFormat($amount, $symbol = FALSE)
 
 function authorizedToChild($staff_id, $child_id)
 {
-    if(is(['admin', 'manager', 'staff']))
+    if(is(['admin', 'manager']))
         return TRUE;
     $ci = &get_instance();
 

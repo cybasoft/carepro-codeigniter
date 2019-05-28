@@ -73,7 +73,7 @@ class Child extends CI_Controller
      */
 
     public function update($daycare_id = NULL)
-    {
+    {      
         allow(['admin', 'manager', 'staff']);
 
         if ($this->_validate_child()) {
@@ -81,9 +81,9 @@ class Child extends CI_Controller
         } else {
             set_flash(['nickname', 'first_name', 'last_name', 'national_id', 'bday', 'blood_type', 'gender', 'status']);
             validation_errors();
-            flash('danger');
+            flash('danger');       
         }
-        redirect($daycare_id.'/child/' . $this->input->post('child_id'), 'refresh');
+        redirectPrev();
     }
 
     /*

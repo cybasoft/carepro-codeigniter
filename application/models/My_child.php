@@ -227,6 +227,7 @@ class My_child extends CI_Model
         ));
         $children = $child_details->row_array();
 
+        $status = $this->input->post('status');
         $data = [
             'nickname' => $this->input->post('nickname'),
             'first_name' => $this->input->post('first_name'),
@@ -235,7 +236,7 @@ class My_child extends CI_Model
             'national_id' => encrypt($this->input->post('national_id')),
             'blood_type' => $this->input->post('blood_type'),
             'gender' => $this->input->post('gender'),
-            'status' => $this->input->post('status'),
+            'status' => $status,
             'ethnicity' => $this->input->post('ethnicity'),
             'religion' => $this->input->post('religion'),
             'birthplace' => $this->input->post('birthplace'),
@@ -245,7 +246,7 @@ class My_child extends CI_Model
         $this->db->update('children', $data);
 
         //Send email to parent if child status changed from inactive to active
-        if($this->input->post('status') == 1 && $children['status'] == 0){
+        if($status != $children['status']){            
             $get_parent = $this->db->get_where('child_parents',array(
                 'child_id' => $child_id
             ));
@@ -256,27 +257,30 @@ class My_child extends CI_Model
             ));
 
             $parent = $parent_details->row_array();
-
-            $email_data = array(
-                'first_name' => $parent['first_name'],
-                'last_name' => $parent['last_name'],
-                'child_first_name' => $this->input->post('first_name'),
-                'child_last_name' => $this->input->post('last_name'),
-                'daycare_id'     => $daycare_id
-            );
-            $this->email->set_mailtype('html');
-            $from = $this->config->item('smtp_user');
-            $to = $parent['email'];
-            $this->email->from($from, 'Daycare');
-            $this->email->to($to);
-            $this->email->subject('Child Register Successful');
-
-            $body = $this->load->view('owner_email/child_register_email', $email_data, true);
-            $this->email->message($body);        //Send mail
-            if ($this->email->send()) {
-                $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+            
+            if($parent !== NULL){
+                $email_data = array(
+                    'first_name' => $parent['first_name'],
+                    'last_name' => $parent['last_name'],
+                    'child_first_name' => $this->input->post('first_name'),
+                    'child_last_name' => $this->input->post('last_name'),
+                    'daycare_id'     => $daycare_id,
+                    'child_status' => $status
+                );
+                $this->email->set_mailtype('html');
+                $from = $this->config->item('smtp_user');
+                $to = $parent['email'];
+                $this->email->from($from, 'Daycare');
+                $this->email->to($to);
+                $this->email->subject('Child Register Successful');
+    
+                $body = $this->load->view('owner_email/child_register_email', $email_data, true);
+                $this->email->message($body);        //Send mail
+                if ($this->email->send()) {
+                    $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+                }
             }
-        }
+        }       
         if($this->db->affected_rows() > 0) {
             //log event
             logEvent("Updated child {$data['first_name']} {$data['last_name']}");
