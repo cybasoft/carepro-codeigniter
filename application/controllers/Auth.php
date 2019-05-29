@@ -39,9 +39,7 @@ class Auth extends CI_Controller
             if ($logged_user['daycare_id'] === $daycare['id']) {
                 redirect($daycare_id . '/dashboard', 'refresh');
             } else {
-                print_r("You don't have access to this daycare.");
-                exit();
-                redirect('dashboard', 'refresh');
+                redirect('/', 'refresh');
             }
         }
 
@@ -69,13 +67,7 @@ class Auth extends CI_Controller
                             redirect($daycare_id . '/dashboard', 'refresh');
                         }                        
                     } else {                        
-                        print_r("You don't have access to this daycare.");
-                        exit();
-                        // if($check_parent === "parent"){
-                        //     redirect('parents', 'refresh');
-                        // }else{
-                        //     redirect('dashboard', 'refresh');
-                        // }
+                       redirect('/','refresh');
                     }
                 } else {
                     flash('error', 'Username or password is incorrect');

@@ -57,6 +57,8 @@ class Migration_create_daycare_register_table extends CI_Migration
         // Create Table users
         $this->dbforge->create_table("daycare", TRUE);
         $this->db->query('ALTER TABLE `users` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+        $this->db->query('ALTER TABLE `children` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+
     }
 
     /**

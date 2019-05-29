@@ -160,8 +160,13 @@ class My_child extends CI_Model
      * get all child information
      */
 
-    public function register($getID = FALSE)
+    public function register($getID = FALSE,$daycare_id)
     {
+        $daycare_details = $this->db->get_where('daycare',array(
+            'daycare_id' => $daycare_id
+        ));      
+        $daycare = $daycare_details->row_array();
+
         if(is('parent')){
             $status = 0;
         }else{
@@ -178,6 +183,7 @@ class My_child extends CI_Model
             'status' => $status,
             'created_at' => date_stamp(),
             'user_id' => $this->user->uid(),
+            'daycare_id' => $daycare['id'],
             'religion' => $this->input->post('religion'),
             'ethnicity' => $this->input->post('ethnicity'),
             'birthplace' => $this->input->post('birthplace'),

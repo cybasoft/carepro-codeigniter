@@ -61,6 +61,11 @@ class Migration_create_children extends CI_Migration
                 'constraint' => '11',
                 'unsigned' => TRUE
             ),
+            'daycare_id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned'=>TRUE
+            ),
             'created_at' => array(
                 'type' => 'DATETIME',
             ),
