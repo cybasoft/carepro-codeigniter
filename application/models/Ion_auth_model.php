@@ -804,7 +804,7 @@ class Ion_auth_model extends CI_Model
                 'last_name' => $additional_data['last_name'],
                 'staff_firstname' => $users['first_name'],
                 'staff_lastname' => $users['last_name'],
-                'email' => $users['email'],
+                'name' => $users['name'],
                 'daycare_id' => $daycare['daycare_id']
             );
             $this->email->set_mailtype('html');

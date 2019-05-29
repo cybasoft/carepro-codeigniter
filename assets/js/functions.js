@@ -37,8 +37,8 @@ function decodeHtml(str) {
     });
 }
 
-function editUser(id) {
-    $('.modals-loader').load(site_url + 'users/view/' + id, function () {
+function editUser(id,daycare_id) {    
+    $('.modals-loader').load(site_url + 'users/view/' + daycare_id + '/' + id, function () {
         $('#editUserModal').modal('show')
     })
 }

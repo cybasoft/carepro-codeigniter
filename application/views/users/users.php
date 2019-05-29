@@ -47,7 +47,7 @@
                         <img class="img-circle" style="height:50px;width:50px;"
                              src="<?php echo $this->user->photo($user->photo); ?>">
                     </td>
-                    <td><?php echo $user->first_name.' '.$user->last_name; ?></td>
+                    <td><?php if($user->first_name !== ''){ echo $user->first_name.' '.$user->last_name;}else{ echo $user->name; } ?></td>
                     <td><?php echo $user->email; ?></td>
                     <td><?php echo $user->phone; ?></td>
                     <td>
@@ -59,11 +59,11 @@
                             .lang('index_inactive_link').'</span>'); ?>
                     </td>
                     <td style="width:75px;" class="text-right">
-                        <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
+                        <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>','<?php echo $daycare_id ?>')" class="cursor">
                     <span class="btn btn-default btn-xs">
                         <i class="fa fa-pencil-alt"></i></span>
                         </a>
-                        <?php echo anchor("users/delete/".$user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
+                        <?php echo anchor("users/delete/".$daycare_id.'/'.$user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
                     </td>
                 </tr>
             <?php

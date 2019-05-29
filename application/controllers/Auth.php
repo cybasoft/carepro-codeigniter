@@ -26,10 +26,21 @@ class Auth extends CI_Controller
 
     function login($daycare_id = NULL)
     {       
+        $daycare_details = $this->db->get_where('daycare',array(
+            'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->row_array(); 
+        
+        $logged_user_detail = $this->db->get_where('users',array(
+            'id' => $this->user->uid()            
+        ));        
+        $logged_user = $logged_user_detail->row_array();
         if ($this->ion_auth->logged_in()) {
-            if ($daycare_id !== NULL) {
+            if ($logged_user['daycare_id'] === $daycare['id']) {
                 redirect($daycare_id . '/dashboard', 'refresh');
             } else {
+                print_r("You don't have access to this daycare.");
+                exit();
                 redirect('dashboard', 'refresh');
             }
         }
@@ -46,19 +57,25 @@ class Auth extends CI_Controller
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
                 if ($this->ion_auth->login($email, $password)) {
-                    $check_parent = $this->session->userdata("users");                   
-                    if ($daycare_id !== NULL) {
+                    $check_parent = $this->session->userdata("users");
+                    $users_details = $this->db->get_where('users',array(
+                        'email' => $email,            
+                    ));        
+                    $users = $users_details->row_array();    
+                    if ($users['daycare_id'] === $daycare['id']) {
                         if($check_parent === "parent"){
                             redirect($daycare_id . '/parents', 'refresh');
                         }else{
                             redirect($daycare_id . '/dashboard', 'refresh');
                         }                        
-                    } else {
-                        if($check_parent === "parent"){
-                            redirect('parents', 'refresh');
-                        }else{
-                            redirect('dashboard', 'refresh');
-                        }
+                    } else {                        
+                        print_r("You don't have access to this daycare.");
+                        exit();
+                        // if($check_parent === "parent"){
+                        //     redirect('parents', 'refresh');
+                        // }else{
+                        //     redirect('dashboard', 'refresh');
+                        // }
                     }
                 } else {
                     flash('error', 'Username or password is incorrect');

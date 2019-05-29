@@ -19,34 +19,30 @@ class UserController extends CI_Controller
     function index($daycare_id = NULL)
     {
         //list the users
+        $daycare_details = $this->db->get_where('daycare',array(
+              'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->row_array();
+
         $users = $this->db->select('u.*,ug.group_id,g.name as role')
             ->from('users as u')
+            ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
             ->get()->result();
-
-//        foreach ($users as $k => $user) {
-//            $users[$k]->groups = $this->db->select('name')
-//                ->from('groups')
-//                ->join('users_groups', 'users_groups.group_id=groups.id')
-//                ->where('user_id', $user->id)->get()->result();
-//            foreach ($user->groups as $group) {
-//                $count[$group->name] = $count[$group->name] + 1;
-//            }
-//        }
-
+                        
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
+            ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id')
             ->join('groups as g','g.id=ug.group_id')
             ->group_by('g.name')
-            ->get()->result();
-
+            ->get()->result();            
        $role=[];
 
         for($i=0; $i<count((array)$groups); $i++){
             $role[$groups[$i]->name] = $groups[$i]->total;
-        }
+        }       
         $count = 0;
         dashboard_page($this->module.'users', compact('users', 'count','role'),$daycare_id);
     }
@@ -94,13 +90,13 @@ class UserController extends CI_Controller
         redirectPrev();
     }
 
-    function view()
+    function view($daycare_id = NULL,$id = NULL)
     {
         disable_debug();
 
         allow(['admin', 'manager']);
 
-        $id = $this->uri->segment(3);
+        // $id = $this->uri->segment(3);
 
         if(empty($id) || !is_numeric($id)) {
             show_404();
@@ -113,14 +109,15 @@ class UserController extends CI_Controller
         $myData = array(
             'user' => $user,
             'groups' => $groups,
-            'currentGroups' => $currentGroups
+            'currentGroups' => $currentGroups,
+            'daycare_id' => $daycare_id
         );
         $this->load->view($this->module.'edit_user', $myData);
     }
 
     //edit a user
-    function update()
-    {
+    function update($daycare_id = NULL,$id=NULL)
+    {       
         allow(['admin', 'manager']);
         $id = $this->input->post('user_id');
         //validate form input
@@ -274,18 +271,18 @@ class UserController extends CI_Controller
      * ensure all tables exist
      */
 
-    function delete()
-    {
+    function delete($daycare_id = NULL,$id = NULL)
+    {        
         allow('admin');
 
-        $this->db->where('id', $this->uri->segment(3));
+        $this->db->where('id', $id);
         $this->db->delete('users');
         if($this->db->affected_rows() > 0)
             flash('success', lang('request_success'));
         else
             flash('danger', lang('request_error'));
 
-        redirect('users', 'refresh');
+        redirect($daycare_id.'/users', 'refresh');
     }
 
     // create a new group
@@ -359,12 +356,11 @@ class UserController extends CI_Controller
      */
     function uploadPhoto()
     {
-        $id = uri_segment(3);
-
+        $id = uri_segment(4);        
         $upload_path = APPPATH.'../assets/uploads/users';
         $upload_db = 'users';
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
+            mkdir($upload_path, 0755, true);
         }
         if($id == "") { //make sure there are arguments
             flash('danger', lang('request_error'));

@@ -13,7 +13,7 @@
         <?php if($staff_firstname !== ""): ?>
         <?php echo $staff_firstname.' '.$staff_lastname; ?>
         <?php else: ?>
-        <?php echo $email; ?>
+        <?php echo $name; ?>
         <?php endif; ?>
         has invited you to Daycarepro dashboard.
          </p>
