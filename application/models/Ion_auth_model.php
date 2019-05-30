@@ -814,7 +814,7 @@ class Ion_auth_model extends CI_Model
             $this->email->to($to);
             $this->email->subject('Daycare Invitation');
 
-            $body = $this->load->view('owner_email/parent_welcome', $email_data, true);
+            $body = $this->load->view('owner_email/register_user_email', $email_data, true);
             $this->email->message($body);        //Send mail
             if ($this->email->send()) {
                 $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");

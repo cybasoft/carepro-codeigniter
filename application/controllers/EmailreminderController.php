@@ -78,7 +78,7 @@ class EmailreminderController extends CI_Controller
                                 }
                             } elseif ($users['owner_status'] === 'subscribed') {
                                 $this->email->subject('Daycare payment');
-                                $body = $this->load->view('owner_email/thanku_email', $email_data, true);
+                                $body = $this->load->view('owner_email/payment_success_email', $email_data, true);
                                 $this->email->message($body);
                                 if ($this->email->send()) {
                                     echo "Success";

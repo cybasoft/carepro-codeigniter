@@ -72,7 +72,7 @@ class StripeController extends CI_Controller
         $this->email->to($to);
         $this->email->subject('Daycare payment');
 
-        $body= $this->load->view('owner_email/thanku_email', $data, true);
+        $body= $this->load->view('owner_email/payment_success_email', $data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
             $this->change_owner_status($to,$activation_code);
