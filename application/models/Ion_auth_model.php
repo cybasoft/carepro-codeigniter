@@ -1042,10 +1042,9 @@ class Ion_auth_model extends CI_Model
 
                 return TRUE;
             }
-        }
-
+        }        
         //Hash something anyway, just to take up time
-        $this->hash_password($true_password);
+        // $this->hash_password($true_password);
         $this->increase_login_attempts($identity);
         $this->trigger_events('post_login_unsuccessful');
         $this->set_error('login_unsuccessful');

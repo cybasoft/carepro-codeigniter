@@ -16,7 +16,7 @@
         Your payment of $<?php echo $price; ?> completed successfully.<br/>
         Thank you for subscription to daycare <?php echo $plan; ?> plan!<br/><br/>
         For Daycare registration Click the button below:<br/><br/>
-        <p><a href="<?php echo base_url(); ?>daycare/<?php echo $activation_code; ?>" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 17px;">Daycare Register</a><br/><br/></p>
+        <p><a href="<?php echo base_url(); ?>daycare/<?php echo $activation_code; ?>" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Daycare Register</a><br/><br/></p>
         Thanks!<br />
         Daycarepro Team
         </a>

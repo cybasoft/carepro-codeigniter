@@ -99,7 +99,7 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open($daycare_id.'/profile/change__user_password');
+                echo form_open($daycare_id.'/profile/change_user_password');
 
                 echo form_label(lang('current_password'), 'password');
                 echo form_password('password', null, ['class' => 'form-control', 'required' => '']);
@@ -115,6 +115,6 @@
                 echo form_button(['type' => 'submit', 'class' => 'btn btn-danger'], lang('submit'));
                 echo form_close(); ?>
             </div>
-        </div>
+        </div>        
     </div>
 </div>

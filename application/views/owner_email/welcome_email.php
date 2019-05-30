@@ -12,7 +12,7 @@
         <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $user_name ?>,</p>
         <h2 style="color: #03a9f4;"> Welcome to Daycarepro app</h2>
         Visit your dashboard from here: <br/>
-        <p><a href="<?php echo base_url(); ?><?php echo $daycare_id ?>/login" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 17px;">Visit Dashboard</a><br/><br/></p>
+        <p><a href="<?php echo base_url(); ?><?php echo $daycare_id ?>/login" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit Dashboard</a><br/><br/></p>
         Thanks!<br />
         Daycarepro Team
         </a>

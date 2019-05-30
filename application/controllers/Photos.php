@@ -14,9 +14,9 @@ class Photos extends CI_Controller
         $this->title = lang('child').'-'.lang('photos');
     }
 
-    function index()
+    function index($daycare_id,$id)
     {
-        $child = $this->child->first($this->uri->segment(2));
+        $child = $this->child->first($id);
 
         if(!authorizedToChild($this->user->uid(), $child->id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
@@ -25,8 +25,8 @@ class Photos extends CI_Controller
 
         $this->my_child = $child;
         $photos = $this->photos->albums('photos', $child->id, 'album');
-        $method = $this->uri->segment(4);
-        $param = $this->uri->segment(5);
+        $method = $this->uri->segment(5);
+        $param = $this->uri->segment(6);      
 
         if($method !== null) {
             if(method_exists($this, $method)) {
@@ -38,8 +38,8 @@ class Photos extends CI_Controller
             } else {
                 show_404();
             }
-        } else {
-            page($this->module.'photos', compact('child', 'photos'));
+        } else {           
+            page($this->module.'photos', compact('child', 'photos', 'daycare_id'));
         }
     }
 

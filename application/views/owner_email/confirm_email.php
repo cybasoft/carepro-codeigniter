@@ -18,7 +18,7 @@
             Please confirm your email.<br>
             To confirm your email, click the button below and go further for subscription plan’s payment.<br />
         </p>
-        <p><a href="<?php echo base_url(); ?>payment/<?php echo $activation_code ?>" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 17px;">Verify Email</a><br /><br /></p>
+        <p><a href="<?php echo base_url(); ?>payment/<?php echo $activation_code ?>" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Verify Your Email</a><br /><br /></p>
         Thanks!<br />
         Daycarepro Team
         </a>

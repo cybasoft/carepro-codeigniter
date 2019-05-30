@@ -59,7 +59,8 @@ $route['child/checkInOut/(:num)'] = 'child/checkInOut/$1';
 
 $route['child/(:num)/checkIn']['post'] = 'child/doCheckIn/$1';
 $route['child/(:num)/checkOut']['post'] = 'child/doCheckOut/$1';
-$route['child/(:num)/health'] = 'health/index/$1';
+// $route['child/(:num)/health'] = 'health/index/$1';
+$route['(.*)/child/(:num)/health'] = 'health/index/$1/$2';
 $route['child/addAllergy'] = 'health/addAllergy';
 $route['child/addContact'] = 'health/addContact';
 $route['child/addProvider'] = 'health/addProvider';
@@ -74,7 +75,9 @@ $route['child/(:num)/pickup']['post'] = 'pickup/store/$1';
 $route['child/deletePickup/(:num)'] = 'pickup/deletePickup/$1';
 $route['child/(:num)/attendance'] = 'child/attendance/$1';
 
-$route['child/:num/billing'] = 'BillingController/index';
+// $route['child/:num/billing'] = 'BillingController/index';
+$route['(.*)/child/(:num)/billing'] = 'BillingController/index/$1/$2';
+
 $route['child/:num/billing/(:any)'] = 'BillingController/$1';
 
 $route['invoice/:any'] = 'accounting/invoice/$1';
@@ -103,7 +106,8 @@ $route['charges/:any'] = 'accounting/charges/$1';
 $route['accounting/:any'] = 'accounting/accounting/$1';
 
 //child photos
-$route['child/(:num)/photos'] = 'photos/index';
+// $route['child/(:num)/photos'] = 'photos/index';
+$route['(.*)/child/(:num)/photos'] = 'photos/index/$1/$2';
 
 $route['photos/(:any)'] = 'photos/$1';
 $route['photos/(:any)/:num'] = 'photos/$1';
@@ -126,7 +130,8 @@ $route['invoice/(:num)/stripe-pay'] = 'invoice/stripePayment/$1';
 
 //reports
 $route['child/reports'] = 'reports/index';
-$route['child/(:num)/reports'] = 'child/reports/$1';
+// $route['child/(:num)/reports'] = 'child/reports/$1';
+$route['(.*)/child/(:num)/reports'] = 'child/reports/$1/$2';
 $route['reports/(:any)'] = 'reports/$1';
 
 //rooms
@@ -145,7 +150,8 @@ $route['meds/(:any)'] = 'meds/$1';
 $route['meds/(:any)/:num'] = 'meds/$1';
 
 //notes
-$route['child/:num/notes'] = 'notes/index';
+// $route['child/:num/notes'] = 'notes/index';
+$route['(.*)/child/(:num)/notes'] = 'notes/index/$1/$2';
 $route['notes/(:any)'] = 'notes/$1';
 $route['notes/(:any)/:num'] = 'notes/$1';
 
@@ -209,7 +215,7 @@ $route['store_stripe'] = 'DaycareController/store_stripe_detail';
 $route['(.*)/profile'] = 'Profile/index/$1';
 $route['(.*)/profile/update_user'] = 'Profile/update_user_data/$1';
 $route['(.*)/profile/update_user_email'] = 'profile/update_email/$1';
-$route['(.*)/profile/change__user_password'] = 'profile/change_password/$1';
+$route['(.*)/profile/change_user_password'] = 'profile/change_password/$1';
 $route['(.*)/profile/change_user_pin'] = 'profile/change_pin/$1';
 $route['(.*)/users/create'] = "UserController/create/$1";
 

@@ -16,7 +16,7 @@
             <?php if ($child_status == 1) : ?>
                 has been registered sucessfully for Daycarepro app. <br />
                 Visit Daycarecarepro:
-                 <p><a href="<?php echo base_url(); ?><?php echo $daycare_id ?>/dashboard" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 17px;">
+                 <p><a href="<?php echo base_url(); ?><?php echo $daycare_id ?>/dashboard" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">
                     Visit Dashboard</a></p>
             <?php else : ?>
                 has been deactivated from daycarepro app.<br />

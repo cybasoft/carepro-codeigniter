@@ -96,11 +96,11 @@ class Auth extends CI_Controller
             ));
             $result = $query->result();
             $logo = $result[0]->logo;
-            $image = base_url() . 'assets/uploads/daycare_logo/' . $logo;
+            $image = $logo;
             $daycare = 'yes';
         } else {
             $logo = '';
-            $image = base_url() . 'assets/uploads/content/logo.png';
+            $image = "";
             $daycare = 'no';
         }
         $this->session->set_userdata('company_logo', $logo);

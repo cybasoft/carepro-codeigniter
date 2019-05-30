@@ -127,17 +127,17 @@ class Child extends CI_Controller
         page($this->module . 'accounting/index', $data);
     }
 
-    public function reports($id)
-    {
+    public function reports($daycare_id,$id)
+    {       
         if (!authorizedToChild($this->user->uid(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
 
-        $child = $this->child->first($id);
-        $attendance = $this->db->where('child_id', $id)->order_by('id', 'DESC')->get('child_checkin');
-        $nyForm = $this->db->where('child_id', $id)->get('form_ny_attendance')->row();
-        page($this->module . 'reports/index', compact('child', 'attendance', 'nyForm'));
+        $child = $this->child->first($id);       
+        $attendance = $this->db->where('child_id', $id)->order_by('id', 'DESC')->get('child_checkin');        
+        $nyForm = $this->db->where('child_id', $id)->get('form_ny_attendance')->row();       
+        page($this->module . 'reports/index', compact('child', 'attendance', 'nyForm','daycare_id'));
     }
 
     /*
