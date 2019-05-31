@@ -43,7 +43,7 @@ $(document).ready(function () {
     //Editors
 
     // $('#editor').trumbowyg();
-    $('#attendance').DataTable({
+    $('#attendances').DataTable({
         buttons: [
             'pdf'
         ]

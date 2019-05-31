@@ -9,10 +9,10 @@
                 <h4 class="card-title btn-block"><?php echo lang('Invoices'); ?>
 
                 <?php if(!is('parent')): ?>
-                    <a href="<?php echo site_url('child/'.$child->id.'/newInvoice'); ?>"
+                    <a href="<?php echo site_url($daycare_id.'/child/'.$child->id.'/newInvoice'); ?>"
                        class="btn btn-info btn-sm card-tools">
                         <i class="fa fa-plus"></i>
-                        <?php echo lang('new_invoice'); ?>
+                        <?php echo lang('new_Invoice'); ?>
                     </a>
                 <?php endif; ?>
                 </h4>
@@ -34,7 +34,7 @@
                     <tbody>
                     <?php foreach ($invoices as $invoice): ?>
                         <tr>
-                            <td><?php echo anchor('invoice/'.$invoice->id.'/view', ($invoice->id < 10) ? '000'.$invoice->id : $invoice->id); ?></td>
+                            <td><?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/view', ($invoice->id < 10) ? '000'.$invoice->id : $invoice->id); ?></td>
                             <td><?php echo lang($invoice->invoice_status); ?></td>
                             <td><?php echo moneyFormat($invoice->amount, TRUE); ?></td>
                             <td><?php echo moneyFormat($invoice->totalPaid, TRUE); ?></td>

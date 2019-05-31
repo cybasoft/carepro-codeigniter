@@ -28,17 +28,17 @@
                 <li class="nav-item"><?php echo anchor($daycare_id . '/messaging', icon('envelope') . ' ' . lang('Messages'), 'class="nav-link"'); ?></li>
                 <?php if (is(['manager', 'admin', 'staff', 'parent'])) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" title="<?php echo lang('Register child'); ?>" href="#" data-toggle="modal" data-target="#registerChildModal">
+                        <a class="nav-link" title="Register Child" href="#" data-toggle="modal" data-target="#registerChildModal">
                             <i class="fa fa-user-plus"></i>
-                            <span class="hidden-sm-up"><?php echo lang('Register child'); ?></span>
+                            <span class="hidden-sm-up">Register Child</span>
                         </a>
                     </li>
                 <?php endif; ?>
                 <?php if (is(['manager', 'admin', 'staff'])): ?>
                 <li class="nav-item">
-                    <a class="nav-link" title="<?php echo lang('Register user'); ?>" href="#" data-toggle="modal" data-target="#newUserModal">
+                    <a class="nav-link" title="Register User" href="#" data-toggle="modal" data-target="#newUserModal">
                         <i class="fa fa-user-plus"></i>
-                        <span class="hidden-sm-up"><?php echo lang('Register user'); ?></span>
+                        <span class="hidden-sm-up">Register User</span>
                     </a>
                 </li>
                 <?php endif; ?>

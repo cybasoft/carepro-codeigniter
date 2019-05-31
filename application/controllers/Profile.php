@@ -100,6 +100,25 @@ class Profile extends CI_Controller
 		redirect($daycare_id.'/profile', 'refresh');
 	}
 
+	function reset_password($daycare_id = NULL){
+		$this->form_validation->set_rules('password', lang('old_password'), 'required|callback_validate_password');
+		$this->form_validation->set_rules('new_password', lang('new_password'), 'required|min_length[6]|max_length[15]|matches[new_password_confirm]');
+		$this->form_validation->set_rules('new_password_confirm', lang('new_password'), 'required');
+		if ($this->form_validation->run() == false) {
+			validation_errors();
+			flash('danger');
+			redirect($daycare_id.'/profile', 'refresh');
+		} else {
+			if ($this->profile->reset_password($daycare_id)) {
+				flash('success', lang('request_success'));
+				redirect($daycare_id.'/logout', 'refresh');
+			} else {
+				flash('danger', lang('request_error'));
+				redirect($daycare_id.'/profile', 'refresh');
+			}
+		}
+	}
+
 	function update_user_data($daycare_id = NULL)
 	{
 		$this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean|trim');

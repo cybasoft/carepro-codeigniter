@@ -95,7 +95,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select Plan">
                     </div>
                 </div>
                 </form>
@@ -154,7 +154,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select Plan">
                     </div>
                 </div>
             </form>
@@ -213,7 +213,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select Plan">
                     </div>
                 </div>
                 </form>

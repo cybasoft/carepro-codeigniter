@@ -8,18 +8,13 @@ class My_daycare_registration extends CI_Model
         $image = '';
         $error = '';
         $daycare_id = $this->generate_unquie_daycareId();
-        $file =  $this->store_logo($daycare_id);
-        if(isset($file['error'])){
-            $error =  $file['error'];
-            if($error === "You did not select a file to upload."){
-                $image = '';
-            }else{
-                $image = 'error';
-            }
+        $file =  $this->store_logo($daycare_id);        
+        if(isset($file['error'])){           
+            $error =  $file['error'];                                     
+            $image = 'error';            
         }else if(isset($file['logo'])) {
             $image = $file['logo']['file_name'];
-        }
-
+        }        
         $query = $this->db->get_where('daycare', array(
             'daycare_id' => $daycare_id
         ));
@@ -27,7 +22,7 @@ class My_daycare_registration extends CI_Model
         if ($count !== 0) {
             $daycare_id = $this->generate_unquie_daycareId();
         }
-        if($image !== 'error' || $image === ''){
+        if($image !== 'error'){
             $data = array(
                 'name' => $this->input->post('name'),
                 'employee_tax_identifier' => $this->input->post('employee_tax_identifier'),
@@ -113,12 +108,11 @@ class My_daycare_registration extends CI_Model
         $config['max_height'] = 1500;    
         $config['file_name'] = $filename;
 
-        $this->load->library('upload', $config);
-
+        $this->load->library('upload', $config);        
         if (!$this->upload->do_upload('logo')) {
-            $error = array('error' => $this->upload->display_errors());
+            $error = array('error' => $this->upload->display_errors());            
             return $error;
-        } else {
+        }else {
             $data = array('logo' => $this->upload->data());
             return $data;
         }

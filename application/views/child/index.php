@@ -1,5 +1,4 @@
 <?php $this->load->view('child/nav');?>
-
 <div class="row">
     <div class="col-sm-2">
         <?php $this->load->view('child/sidebar');?>
@@ -14,27 +13,27 @@
                 <div class="row">
                     <div class="col-md-12">
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/health#allergies'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/health#allergies'); ?>">
                             <?php echo lang('allergies'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/health#meds'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/health#meds'); ?>">
                             <?php echo lang('medications'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/health#problem-list'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/health#problem-list'); ?>">
                             <?php echo lang('problem_list'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/health#food'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/health#food'); ?>">
                             <?php echo lang('food_pref_header'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/health#emergency_contacts'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/health#emergency_contacts'); ?>">
                             <?php echo lang('emergency_contacts'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/health#providers'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/health#providers'); ?>">
                             <?php echo lang('healthcare_providers'); ?>
                         </a>
                     </div>
@@ -43,11 +42,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/notes#notes'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/notes#notes'); ?>">
                             <?php echo lang('notes'); ?>
                         </a>
                         <a class="btn btn-default btn-xs"
-                           href="<?php echo site_url('child/' . $child->id . '/notes#incidents'); ?>">
+                           href="<?php echo site_url($daycare_id.'/child/' . $child->id . '/notes#incidents'); ?>">
                             <?php echo lang('incident_reports'); ?>
                         </a>
                     </div>
@@ -58,7 +57,7 @@
                 <h3>
                     <?php echo lang('Rooms'); ?>
                     <?php if (!is('parent')): ?>
-                        <span class="text-sm"><?php echo anchor('rooms', lang('Assign to room')); ?></span>
+                        <span class="text-sm"><?php echo anchor($daycare_id.'/rooms', lang('Assign to room')); ?></span>
                     <?php endif;?>
                 </h3>
 

@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <div class="card card-solid card-danger">
+        <!-- <div class="card card-solid card-danger">
             <div class="card-header">
                 <h3 class="card-title"><?php echo lang('change_password'); ?></h3>
             </div>
@@ -115,6 +115,29 @@
                 echo form_button(['type' => 'submit', 'class' => 'btn btn-danger'], lang('submit'));
                 echo form_close(); ?>
             </div>
-        </div>        
+        </div>         -->
+        <div class="card card-solid card-danger">
+            <div class="card-header">
+                <h3 class="card-title"><?php echo lang('reset_password'); ?></h3>
+            </div>
+            <div class="card-body">
+                <?php
+                echo form_open($daycare_id.'/profile/change_reset_password');
+
+                echo form_label(lang('current_password'), 'password');
+                echo form_password('password', null, ['class' => 'form-control', 'required' => '']);
+
+                echo form_label(lang('new_password'), 'new_password');
+                echo form_password('new_password', null, ['class' => 'form-control', 'required' => '']);
+
+                echo form_label(lang('confirm_password'), 'new_password_confirm');
+                echo form_password('new_password_confirm', null, ['class' => 'form-control', 'required' => '']);
+
+                echo '<br/>';
+
+                echo form_button(['type' => 'submit', 'class' => 'btn btn-danger'], lang('submit'));
+                echo form_close(); ?>
+            </div>
+        </div>
     </div>
 </div>

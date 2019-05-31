@@ -457,6 +457,7 @@ class Auth extends CI_Controller
         $this->ion_auth->logout();
         $this->conf->setTimer(0);
         reload_company();
+        $this->session->unset_userdata('users');
         //redirect them to the login page
         if ($daycare_id !== NULL) {
             redirect($daycare_id . '/login', 'refresh');

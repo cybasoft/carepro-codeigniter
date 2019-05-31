@@ -84,11 +84,15 @@ $route['invoice/:any'] = 'accounting/invoice/$1';
 $route['invoice/(:num)/pay'] = 'invoice/pay/$1';
 $route['child/(:num)/invoices/search'] = 'invoice/invoices/$1/all';
 $route['child/(:num)/invoices/(:any)'] = 'invoice/invoices/$1/$2';
-$route['child/(:num)/newInvoice'] = 'invoice/create/$1';
-$route['child/(:num)/createInvoice'] = 'invoice/store/$1';
+// $route['child/(:num)/newInvoice'] = 'invoice/create/$1';
+$route['(.*)/child/(:num)/newInvoice'] = 'invoice/create/$1/$2';
+// $route['child/(:num)/createInvoice'] = 'invoice/store/$1';
+
+$route['(.*)/child/(:num)/createInvoice'] = 'invoice/store/$1/$2';
 
 $route['invoice/(:num)/delete'] = 'invoice/delete/$1';
-$route['invoice/(:num)/view'] = 'invoice/view/$1';
+// $route['invoice/(:num)/view'] = 'invoice/view/$1';
+$route['(.*)/invoice/(:num)/view'] = 'invoice/view/$1/$2';
 $route['invoice/(:num)/addItem'] = 'invoice/addItem/$1';
 $route['invoice/(:num)/deleteItem/(:num)'] = 'invoice/deleteItem/$1/$2';
 $route['invoice/(:num)/makePayment'] = 'invoice/makePayment/$1';
@@ -217,8 +221,10 @@ $route['(.*)/profile/update_user'] = 'Profile/update_user_data/$1';
 $route['(.*)/profile/update_user_email'] = 'profile/update_email/$1';
 $route['(.*)/profile/change_user_password'] = 'profile/change_password/$1';
 $route['(.*)/profile/change_user_pin'] = 'profile/change_pin/$1';
+$route['(.*)/profile/change_reset_password'] = 'profile/reset_password/$1';
 $route['(.*)/users/create'] = "UserController/create/$1";
 
 $route['users/view/(.*)/(:num)'] = 'UserController/view/$1/$2';
 $route['users/update/(.*)/(:num)'] = 'UserController/update/$1/$2';
 $route['users/delete/(.*)/(:any)'] = 'UserController/delete/$1/$2';
+$route['welcome_email'] = 'RegistrationController/welcome_email';
