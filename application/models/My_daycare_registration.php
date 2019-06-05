@@ -70,13 +70,13 @@ class My_daycare_registration extends CI_Model
 
     //function to store daycare logo
     public function store_logo($filename) {
-        $Upload_folder = "daycare_logo";
-        if(!file_exists('./assets/uploads/'.$Upload_folder)){
-            if (!mkdir('./assets/uploads/' . $Upload_folder, 0777, true)) {//0777
+        $upload_folder = './assets/uploads/daycare_logo';
+        if(!file_exists($upload_folder)){
+            if (!mkdir($upload_folder, 0777, true)) {//0777
                 die('Failed to create folders...');
             }
         }
-        $config['upload_path'] = './assets/uploads/'.$Upload_folder;
+        $config['upload_path'] = $upload_folder;
         $config['allowed_types'] = 'jpeg|jpg|png';
         $config['max_size'] = 2000;
         $config['max_width'] = 1500;
