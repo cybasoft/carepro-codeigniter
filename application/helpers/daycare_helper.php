@@ -185,7 +185,7 @@ function auth($redirect = FALSE)
 {    
     $ci =& get_instance();
     $daycare_id = $ci->uri->segment(1);   
-    $ci->session->set_userdata("users","parent");        
+    $ci->session->set_userdata("users","parent");      
     if(logged_in() == TRUE) {
         return TRUE;
     } else {

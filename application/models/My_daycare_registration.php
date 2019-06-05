@@ -36,7 +36,7 @@ class My_daycare_registration extends CI_Model
                 'daycare_id' => $daycare_id,
                 'logo' => $image
             );
-            $status = $this->send_welcome_email($daycare_id,$activation_code,$data);
+            $status = $this->send_welcome_email($daycare_id,$activation_code,$data,$image);
             $result = array(
                 'success' => $status,
                 'error' => ''
@@ -119,7 +119,7 @@ class My_daycare_registration extends CI_Model
     }
 
     //function to send welcome email to daycare for login page
-    public function send_welcome_email($daycare_id,$activation_code,$user_data){
+    public function send_welcome_email($daycare_id,$activation_code,$user_data,$image){
         $this->load->config('email');
         $this->load->library('email');
 
@@ -132,7 +132,8 @@ class My_daycare_registration extends CI_Model
         
         $data = array(
             'user_name' => $name,
-            'daycare_id' => $daycare_id
+            'daycare_id' => $daycare_id,
+            'image' => $image
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
