@@ -1,6 +1,8 @@
 .DS_Store
-application/config/development
-application/config/production/
+application/config/development/*
+application/config/production/*
+application/config/staging/*
+
 !application/logs/index.html
 
 !application/*/.htaccess
