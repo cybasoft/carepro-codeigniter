@@ -1,19 +1,25 @@
 .DS_Store
-application/config/development/*
-application/config/production/*
-application/config/staging/*
 
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
 !application/logs/index.html
 
 !application/*/.htaccess
+
 composer.lock
-vendor
+
+user_guide_src/build/*
+user_guide_src/cilexer/build/*
+user_guide_src/cilexer/dist/*
+user_guide_src/cilexer/pycilexer.egg-info/*
+/vendor/
 
 # IDE Files
 #-------------------------
 /nbproject/
 .idea/*
-.vscode
 
 ## Sublime Text cache files
 *.tmlanguage.cache
@@ -23,14 +29,8 @@ vendor
 *.sublime-project
 /tests/tests/
 /tests/results/
-/artisan
-.vscode
-
-docs/.git
 
 application/third_party/codeigniter-debugbar
-
-index.php
 
 .ftpquota
 /.project
