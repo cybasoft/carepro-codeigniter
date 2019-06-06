@@ -8,11 +8,11 @@
                     <span  class="sr-only"><?php echo lang('close'); ?></span>
                 </button>
             </div>
-            <?php echo form_open("users/create"); ?>
+            <?php echo form_open($daycare_id."/users/create"); ?>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6">                          
                             <?php
 echo form_label(lang('first_name'));
 echo form_input('first_name', set_value('first_name'), ['class' => 'form-control', 'required' => '']);

@@ -30,6 +30,14 @@
         ga('require', 'displayfeatures');
         ga('send', 'pageview');
     </script>
+    <style>
+    .login100-form-btn:hover {
+        color: #ffffff;
+    }
+    body{
+        overflow-x: hidden;
+    }
+</style>
 </head>
 
 <body style="background-color: #666666;">

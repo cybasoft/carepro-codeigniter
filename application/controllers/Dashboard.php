@@ -12,31 +12,59 @@ class Dashboard extends CI_Controller
     /*
      * default pagek
      */
-    function index()
-    {
+    function index($daycare_id = NULL)
+    {            
         $this->load->model('my_invoice', 'invoice');
-
-        if(is(['super','admin','manager'])) {
-            page('dashboard/home');
-
-        } elseif(is('parent')) {
-            $children = $this->parent->getChildren();
-            page('parent/parent_dashboard', compact('children'));
-
-        } elseif(is('staff')) {
-            redirect('rooms');
-
-        } else {
-            page('dashboard/pending');
+        if($daycare_id === NULL){                     
+            if(is(['super','admin','manager'])) {
+                page('dashboard/home');
+    
+            } elseif(is('parent')) {
+                $children = $this->parent->getChildren();
+                page('parent/parent_dashboard', compact('children'));
+    
+            } elseif(is('staff')) {
+                redirect('rooms');
+    
+            } else {
+                $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
+            }
+        }else{
+            $daycare_details = $this->db->get_where('daycare', array(
+                'daycare_id' => $daycare_id
+            ));
+            $daycare = $daycare_details->row_array();
+            if($daycare['logo'] !== ''){
+                $logo = $daycare['logo'];
+            }else{
+                $logo = '';        
+            }     
+            $this->session->set_userdata('company_logo',$logo);
+            if(is(['super','admin','manager'])) {
+                dashboard_page('dashboard/home',$data = [],$daycare_id);
+    
+            } elseif(is('parent')) {
+                $children = $this->parent->getChildren();
+                dashboard_page('parent/parent_dashboard',compact('children'),$daycare_id);
+    
+            } elseif(is('staff')) {
+                redirect($daycare_id.'/rooms');
+            } else {                
+                dashboard_page('dashboard/pending',$data = [],$daycare_id);
+            }
         }
     }
 
-    function lockscreen()
-    {
+    function lockscreen($daycare_id = NULL)
+    {       
         $this->conf->setTimer(1);
         if(auth(true)) {
+            $data = array(
+                'daycare_id' => $daycare_id
+            );
+
             //check cookie
-            $this->load->view('dashboard/lockscreen');
+            $this->load->view('dashboard/lockscreen',$data);
         }
     }
 

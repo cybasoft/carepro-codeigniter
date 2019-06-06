@@ -74,7 +74,8 @@ class MY_user extends CI_Model
      */
     function first($id)
     {
-        return $this->user($id);
+        // return $this->user($id);
+        return $this->db->where('id', $id)->get('users')->row();
     }
 
     /**

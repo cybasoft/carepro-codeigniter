@@ -37,13 +37,13 @@ function decodeHtml(str) {
     });
 }
 
-function editUser(id) {
-    $('.modals-loader').load(site_url + 'users/view/' + id, function () {
+function editUser(id,daycare_id) {    
+    $('.modals-loader').load(site_url + 'users/view/' + daycare_id + '/' + id, function () {
         $('#editUserModal').modal('show')
     })
 }
 
-function startLockscreen() {
-    $('body').load(site_url + 'lockscreen');
+function startLockscreen(daycare_id) {
+    $('body').load(site_url + daycare_id +'/lockscreen');
     $('html').addClass('lockscreen');
 }

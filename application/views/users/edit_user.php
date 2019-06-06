@@ -8,7 +8,7 @@
                     <span  class="sr-only"><?php echo lang('close'); ?></span>
                 </button>
             </div>
-            <?php echo form_open_multipart('users/update/'.$user->id); ?>
+            <?php echo form_open_multipart('users/update/'.$daycare_id.'/'.$user->id); ?>
 
             <?php echo form_hidden('user_id', $user->id); ?>
             <div class="modal-body">
@@ -102,7 +102,7 @@
                         <div class="text-center">
                             <?php
                             if(is_file(APPPATH.'../assets/uploads/users/'.$user->photo)) {
-                                echo '<img class="img-circle" style="height:100px"
+                                echo '<img class="img-circle" style="height:100px;width: 200px;"
                                    src="'.base_url().'assets/uploads/users/'.$user->photo.'"/>';
                             }
                             ?>

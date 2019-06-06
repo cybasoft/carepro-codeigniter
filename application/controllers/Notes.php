@@ -15,9 +15,8 @@ class notes extends CI_Controller
         $this->title = lang('child').'-'.lang('notes');
     }
 
-    function index()
-    {
-        $id = $this->uri->segment(2);
+    function index($daycare_id,$id)
+    {        
         if(!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -27,7 +26,7 @@ class notes extends CI_Controller
         $child = $this->db->where('id',$id)->get('children')->row();
         if(empty($child)) {
             flash('error', lang('request_error'));
-            redirect('dashboard', 'refresh');
+            redirect($daycare_id.'/dashboard', 'refresh');
         }
 
         $child->notes = $this->db
@@ -45,7 +44,7 @@ class notes extends CI_Controller
             ->join('users AS u','u.id=ci.user_id')
             ->get()->result();
 
-        page($this->module.'notes', compact('child'));
+        page($this->module.'notes', compact('child','daycare_id'));
     }
 
     /*

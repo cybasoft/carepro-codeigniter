@@ -16,44 +16,49 @@ class UserController extends CI_Controller
     }
 
     //redirect if needed, otherwise display the user list
-    function index()
+    function index($daycare_id = NULL)
     {
         //list the users
+        $daycare_details = $this->db->get_where('daycare',array(
+              'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->row_array();
+
         $users = $this->db->select('u.*,ug.group_id,g.name as role')
             ->from('users as u')
+            ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
             ->get()->result();
-
-//        foreach ($users as $k => $user) {
-//            $users[$k]->groups = $this->db->select('name')
-//                ->from('groups')
-//                ->join('users_groups', 'users_groups.group_id=groups.id')
-//                ->where('user_id', $user->id)->get()->result();
-//            foreach ($user->groups as $group) {
-//                $count[$group->name] = $count[$group->name] + 1;
-//            }
-//        }
-
+                        
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
+            ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id')
             ->join('groups as g','g.id=ug.group_id')
             ->group_by('g.name')
-            ->get()->result();
-
+            ->get()->result();            
        $role=[];
 
         for($i=0; $i<count((array)$groups); $i++){
             $role[$groups[$i]->name] = $groups[$i]->total;
-        }
+        }       
         $count = 0;
-        page($this->module.'users', compact('users', 'count','role'));
+        dashboard_page($this->module.'users', compact('users', 'count','role'),$daycare_id);
     }
 
     //create a new user
-    function create()
-    {
+    function create($daycare_id = NULL)
+    {        
+        if($daycare_id !== NULL){
+            $daycare_details = $this->db->get_where('daycare',array(
+                'daycare_id' => $daycare_id
+            ));
+            $daycare  = $daycare_details->row_array();
+            $owner_id = $daycare['id'];            
+        }else{
+            $owner_id = '';
+        }
         $tables = $this->config->item('tables', 'ion_auth');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
@@ -71,6 +76,7 @@ class UserController extends CI_Controller
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
                 'phone' => $this->input->post('phone'),
+                'daycare_id' => $owner_id
             );
             $group = $this->input->post('group');
             if($this->ion_auth->register($additional_data, $group)) {
@@ -84,13 +90,13 @@ class UserController extends CI_Controller
         redirectPrev();
     }
 
-    function view()
+    function view($daycare_id = NULL,$id = NULL)
     {
         disable_debug();
 
         allow(['admin', 'manager']);
 
-        $id = $this->uri->segment(3);
+        // $id = $this->uri->segment(3);
 
         if(empty($id) || !is_numeric($id)) {
             show_404();
@@ -103,14 +109,15 @@ class UserController extends CI_Controller
         $myData = array(
             'user' => $user,
             'groups' => $groups,
-            'currentGroups' => $currentGroups
+            'currentGroups' => $currentGroups,
+            'daycare_id' => $daycare_id
         );
         $this->load->view($this->module.'edit_user', $myData);
     }
 
     //edit a user
-    function update()
-    {
+    function update($daycare_id = NULL,$id=NULL)
+    {       
         allow(['admin', 'manager']);
         $id = $this->input->post('user_id');
         //validate form input
@@ -165,11 +172,15 @@ class UserController extends CI_Controller
     }
 
     //activate the user
-    function activate()
+    function activate($id,$daycare_id,$user_status)
     {
+        $user_details = $this->db->get_where('users',array(
+            'id' => $id
+        ));
+        $user = $user_details->row_array();
         allow('admin');
-        $id = uri_segment(3);
-        $code = uri_segment(4);
+        // $id = uri_segment(3);
+        $code = "";
         if(!empty($code)) {
             $activation = $this->ion_auth->activate($id, $code);
         } else {
@@ -182,14 +193,20 @@ class UserController extends CI_Controller
             //redirect them to the forgot password page
             flash('danger', lang('request_error'));
         }
-        redirect("users", 'refresh');
+        $this->send_user_status_email($user,$user_status,$daycare_id);
+        redirect($daycare_id."/users", 'refresh');
     }
 
     //deactivate the user
-    function deactivate()
-    {
+    function deactivate($id,$daycare_id,$user_status)
+    {        
+        $user_details = $this->db->get_where('users',array(
+            'id' => $id
+        ));
+        $user = $user_details->row_array();
         allow('admin');
-        $id = (int)$this->uri->segment(3);
+        
+        // $id = (int)$this->uri->segment(3);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('confirm', lang('deactivate_validation_confirm_label'), 'required');
         if($this->form_validation->run() == FALSE) {
@@ -200,31 +217,72 @@ class UserController extends CI_Controller
             page($this->module.'deactivate_user', compact('id'));
         } else {
             if($this->input->post('confirm') == 'yes') {
-                $this->ion_auth->deactivate($id);
+                $this->ion_auth->deactivate($id);  
+                $this->send_user_status_email($user,$user_status,$daycare_id);              
                 flash('warning', lang('user_deactivated'));
             } else {
                 flash('info', lang('action_cancelled'));
             }
-            redirect("users", 'refresh');
+            redirect($daycare_id."/users", 'refresh');
         }
     }
+    function active_deactive_user($daycare_id = NULL, $user_status = NULL){              
 
+        $id = $this->input->post('user_id');        
+        if($user_status === "deactivate"){
+            $this->deactivate($id,$daycare_id,$user_status);           
+        }elseif($user_status === "activate"){
+            $this->activate($id,$daycare_id, $user_status);
+        }        
+    }
+
+    function send_user_status_email($user,$user_status,$daycare_id){
+        $this->load->config('email');
+        $this->load->library('email');
+
+        $email_data = array(
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
+            'username' => $user['name'],
+            'user_status' => $user_status,
+            'daycare_id' => $daycare_id
+         );
+         $this->email->set_mailtype('html');
+         $from = $this->config->item('smtp_user');
+         $to = $user['email'];
+         $this->email->from($from, 'Daycarepro');
+         $this->email->to($to);
+         $this->email->subject('User Status Change');
+
+         $body = $this->load->view('owner_email/user_status', $email_data, true);
+         $this->email->message($body);        //Send mail
+         if ($this->email->send()) {
+             $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+         }
+    }
+    function change_status($daycare_id = NULL,$user_status = NULL,$id = NULL){
+        $data = array(
+            'id' => $id,
+            'user_status' => $user_status
+        );
+        dashboard_page($this->module.'deactivate_user', $data,$daycare_id);
+    }
     /*
      * ensure all tables exist
      */
 
-    function delete()
-    {
+    function delete($daycare_id = NULL,$id = NULL)
+    {        
         allow('admin');
 
-        $this->db->where('id', $this->uri->segment(3));
+        $this->db->where('id', $id);
         $this->db->delete('users');
         if($this->db->affected_rows() > 0)
             flash('success', lang('request_success'));
         else
             flash('danger', lang('request_error'));
 
-        redirect('users', 'refresh');
+        redirect($daycare_id.'/users', 'refresh');
     }
 
     // create a new group
@@ -298,12 +356,11 @@ class UserController extends CI_Controller
      */
     function uploadPhoto()
     {
-        $id = uri_segment(3);
-
+        $id = uri_segment(4);        
         $upload_path = APPPATH.'../assets/uploads/users';
         $upload_db = 'users';
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
+            mkdir($upload_path, 0755, true);
         }
         if($id == "") { //make sure there are arguments
             flash('danger', lang('request_error'));

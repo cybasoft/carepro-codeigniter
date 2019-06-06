@@ -12,7 +12,7 @@ class MessagingController extends CI_Controller
 //        disable_debug();
     }
 
-    public function index()
+    public function index($daycare_id = NULL)
     {
 
         $senders = $this->getSenders();
@@ -22,7 +22,7 @@ class MessagingController extends CI_Controller
             $chat = $this->getMessages($_GET['m']);
         }
 
-        page('messaging/messaging_index', compact('senders', 'chat'));
+        dashboard_page('messaging/messaging_index', compact('senders', 'chat'), $daycare_id);
     }
 
     public function getMessages($sender)

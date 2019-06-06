@@ -14,7 +14,7 @@
     </div>
 
     <div class="child-info">
-        <a href="<?php echo site_url('/child/' . $child->id); ?>">
+        <a href="<?php echo site_url($daycare_id.'/child/' . $child->id); ?>">
             <?php echo $child->last_name . ', ' . $child->first_name; ?>
         </a>
     </div>

@@ -66,8 +66,9 @@ define('FM_READONLY', !empty($readonly_users) && in_array($current_user, $readon
 define('FM_IS_WIN', DIRECTORY_SEPARATOR == '\\');
 
 // always use ?p=
-if(!isset($_GET['p']) && empty($_FILES)) {
-    fm_redirect(FM_SELF_URL.'?p=');
+if(!isset($_GET['p']) && empty($_FILES)) {   
+    fm_redirect('?p=');
+    // fm_redirect(FM_SELF_URL.'?p=');
 }
 
 // get path

@@ -6,16 +6,16 @@
 <?php echo form_open($data['daycare_id'].'/create_parent', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
 <div class="text-center" style="position:absolute;top:0;right:150px">
     <a href="<?php echo site_url(); ?>">
-    <?php if ($data['logo']) { ?>
-                <img class="logo" src="<?php echo $data['logo']; ?>" alt="Logo">
+    <?php if ($data['logo'] !== '') { ?>
+                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php $data['logo']; ?>" alt="Logo">
             <?php } else { ?>
-                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_logo'); ?>" alt="Logo">
+                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
             <?php } ?>
     </a>
 </div>
 
 
-<span class="login100-form-title p-b-43"><?php echo lang('register_form_header'); ?></span>
+<span class="login100-form-title p-b-43"><?php echo lang('Parent Registration'); ?></span>
 
 <?php if(session('company_allow_registration') == FALSE): ?>
 <!-- <?php echo lang('register_form_notice'); ?> -->
@@ -23,6 +23,11 @@
     <?php if(!empty($this->session->flashdata('type'))) : ?>
         <div style="">
             <?php echo $this->session->flashdata('message'); ?>
+        </div>
+    <?php endif; ?>
+    <?php if(!empty($this->session->flashdata('verify_email_error'))) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $this->session->flashdata('verify_email_error'); ?>
         </div>
     <?php endif; ?>
 

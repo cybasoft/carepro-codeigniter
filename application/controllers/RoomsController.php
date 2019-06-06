@@ -19,7 +19,7 @@ class RoomsController extends CI_Controller
     /*
      * display main page
      */
-    function index()
+    function index($daycare_id = NULL)
     {
         allow(['admin', 'manager', 'staff']);
 
@@ -29,9 +29,8 @@ class RoomsController extends CI_Controller
             $rooms = $this->rooms->all();
 
         $this->title = lang('rooms');
-        page($this->module.'rooms', compact('rooms'));
-    }
-
+        dashboard_page($this->module.'rooms', compact('rooms'),$daycare_id);
+    }    
     function view()
     {
         allow(['admin', 'manager', 'staff']);

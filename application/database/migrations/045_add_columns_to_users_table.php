@@ -18,31 +18,11 @@ class Migration_add_columns_to_users_table extends CI_Migration
                 'constraint' => '100',
                 'after' => 'last_name'
             ),
-            'address_line_1' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
+            'address_id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned'=>TRUE,
                 'after' => 'password'
-            ),
-            'address_line_2' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'null'=>TRUE,
-                'after' => 'address_line_1'
-            ),
-            'city' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'after' => 'address_line_2'
-            ),
-            'state' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'after' => 'city'
-            ),
-            'country' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-                'after' => 'state'
             ),
             'owner_status' => array(
                 'type' => 'VARCHAR',

@@ -5,7 +5,7 @@
 class My_children extends CI_Model
 {
 
-    public function checkedInChildren()
+    public function checkedInChildren($daycare_id)
     {
         // $this->db->distinct();
         // $this->db->select('c.*,cc.time_in,cc.time_out,cc.in_guardian,cc.out_guardian,cc.in_staff_id,cc.out_staff_id,cc.remarks');
@@ -15,10 +15,14 @@ class My_children extends CI_Model
         // $this->db->where('DATE(cc.time_in)', date('Y-m-d'));
         // // $this->db->where('id', $id);
         // return $this->db->get()->result();
-
+        $daycare_details = $this->db->get_where('daycare',array(
+             'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->row_array();      
         $res = $this->db
             ->select('c.*,cc.time_in,cc.time_out,cc.in_guardian,cc.out_guardian,cc.in_staff_id,cc.out_staff_id,cc.remarks, ca.allergy_count, cm.med_count')
             ->from('children AS c')
+            ->where('c.daycare_id',$daycare['id'])
             ->join('child_checkin as cc', 'cc.child_id=c.id', 'left')
             ->join('(SELECT child_id,  COUNT(*) as allergy_count FROM child_allergy GROUP BY child_id) ca', 'c.id=ca.child_id', 'left')
             ->join('(SELECT child_id, COUNT(*) AS med_count FROM child_meds GROUP BY child_id) cm', 'cm.child_id=c.id', 'left')
@@ -33,11 +37,16 @@ class My_children extends CI_Model
         return [];
     }
 
-    public function checkedOutChildren()
+    public function checkedOutChildren($daycare_id)
     {
+        $daycare_details = $this->db->get_where('daycare',array(
+            'daycare_id' => $daycare_id
+       ));
+       $daycare = $daycare_details->row_array();      
         $res = $this->db
             ->select('c.*,cc.last_checkin')
             ->from('children AS c')
+            ->where('c.daycare_id',$daycare['id'])
             ->join('(SELECT child_id,time_in AS last_checkin FROM child_checkin ORDER BY time_in DESC LIMIT 1) cc', 'cc.child_id=c.id', 'left')
             ->where('c.checkin_status', 0)
             ->get()->result();
@@ -45,9 +54,17 @@ class My_children extends CI_Model
         return $res;
     }
 
-    public function inactiveChildren()
+    public function inactiveChildren($daycare_id)
     {
-        return $this->db->where('status', 0)->get('children')->result();
+        $daycare_details = $this->db->get_where('daycare',array(
+            'daycare_id' => $daycare_id
+       ));
+       $daycare = $daycare_details->row_array();
+
+        return $this->db->where([
+                'status' => 0, 
+                'daycare_id' => $daycare['id']
+        ])->get('children')->result();
     }
 
     public function checkinTimer($dateTimeIn = NULL)

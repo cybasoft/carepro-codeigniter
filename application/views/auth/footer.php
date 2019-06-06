@@ -13,6 +13,14 @@
 <script src="<?php echo assets('plugins/jquery/jquery.min.js'); ?>"></script>
 <script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
 <script src="<?php echo assets('js/login.js'); ?>"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/extras/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".notifictions").delay(2000).hide("slide", {
+            direction: "right"
+        }, 5000);
+    });
+</script>
 
 </body>
 

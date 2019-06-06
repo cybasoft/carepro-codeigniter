@@ -22,19 +22,27 @@ class Profile extends CI_Controller
 
 	}
 
-	function index()
+	function index($daycare_id = NULL)
 	{
-		$data = array(
-			'user' => $this->user->get()
-		);
-		page($this->module . 'profile', $data);
+		$user = $this->user->get();
 
+		$address_details = $this->db->get_where("address", array(
+			'id' => $user->address_id
+		));
+		$address = $address_details->row_array();
+
+		$data = array(
+			'user' => $user,
+			'address' => $address,
+			'daycare_id' => $daycare_id
+		);
+		dashboard_page($this->module . 'profile', $data,$daycare_id);
 	}
 
 	/*
 	 * change pin
 	 */
-	function change_pin()
+	function change_pin($daycare_id = NULL)
 	{
 		$this->form_validation->set_rules('pin', lang('pin'), 'required|integer|xss_clean|trim|min_length[4]');
 		if ($this->form_validation->run() === TRUE) {
@@ -47,16 +55,16 @@ class Profile extends CI_Controller
 			validation_errors();
 			flash('danger');
 		}
-		redirect('profile');
+		redirect($daycare_id.'/profile');
 	}
 
 	/*
 	 * change email
 	 */
-	function update_email()
+	function update_email($daycare_id = NULL)
 	{
 		$this->form_validation->set_rules('password', lang('password'), 'required|xss_clean|trim|callback_validate_password');
-		$this->form_validation->set_rules('email', lang('email'), 'required|valid_email|xss_clean|trim|callback_email_check');
+		$this->form_validation->set_rules('email', lang('email'), 'required|valid_email|xss_clean|trim|callback_email_check'); 
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->profile->change_email()) {
 				flash('success', lang('request_success'));
@@ -67,13 +75,13 @@ class Profile extends CI_Controller
 			validation_errors();
 			flash('danger');
 		}
-		redirect('profile');
+		redirect($daycare_id.'/profile');
 	}
 
 	/*
 	 * change password
 	 */
-	function change_password()
+	function change_password($daycare_id = NULL)
 	{
 
 		$this->form_validation->set_rules('password', lang('old_password'), 'required|callback_validate_password');
@@ -89,14 +97,34 @@ class Profile extends CI_Controller
 				flash('danger', lang('request_error'));
 			}
 		}
-		redirect('profile', 'refresh');
+		redirect($daycare_id.'/profile', 'refresh');
 	}
 
-	function update_user_data()
+	function reset_password($daycare_id = NULL){
+		$this->form_validation->set_rules('password', lang('old_password'), 'required|callback_validate_password');
+		$this->form_validation->set_rules('new_password', lang('new_password'), 'required|min_length[6]|max_length[15]|matches[new_password_confirm]');
+		$this->form_validation->set_rules('new_password_confirm', lang('new_password'), 'required');
+		if ($this->form_validation->run() == false) {
+			validation_errors();
+			flash('danger');
+			redirect($daycare_id.'/profile', 'refresh');
+		} else {
+			if ($this->profile->reset_password($daycare_id)) {
+				flash('success', lang('request_success'));
+				redirect($daycare_id.'/logout', 'refresh');
+			} else {
+				flash('danger', lang('request_error'));
+				redirect($daycare_id.'/profile', 'refresh');
+			}
+		}
+	}
+
+	function update_user_data($daycare_id = NULL)
 	{
 		$this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean|trim');
-		$this->form_validation->set_rules('phone2', lang('other_phone'), 'xss_clean|trim');
-		$this->form_validation->set_rules('address', lang('address'), 'required|xss_clean|trim');
+		$this->form_validation->set_rules('address_line_1', lang('address_line_1'), 'xss_clean|trim');
+		$this->form_validation->set_rules('city', lang('city'), 'required|xss_clean|trim');
+		$this->form_validation->set_rules('state', lang('state'), 'required|xss_clean|trim');
 
 		if ($this->form_validation->run() === TRUE) {
 			if ($this->profile->update_user_data()) {
@@ -111,7 +139,7 @@ class Profile extends CI_Controller
 
 		}
 
-		redirect('profile', 'refresh');
+		redirect($daycare_id.'/profile', 'refresh');
 
 	}
 

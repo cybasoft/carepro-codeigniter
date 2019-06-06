@@ -182,12 +182,20 @@ function is($group)
  * @return bool
  */
 function auth($redirect = FALSE)
-{
+{    
+    $ci =& get_instance();
+    $daycare_id = $ci->uri->segment(1);   
+    $ci->session->set_userdata("users","parent");      
     if(logged_in() == TRUE) {
         return TRUE;
     } else {
-        if($redirect)
-            redirect('auth/login', 'refresh');
+        if($redirect){            
+            if($daycare_id === ''){
+                redirect('auth/login', 'refresh');
+            }else{
+                redirect($daycare_id.'/login', 'refresh');
+            }
+        }
         return FALSE;
     }
 }
@@ -339,7 +347,7 @@ function allow($group)
 }
 
 function page($page, $data = [])
-{
+{    
     $ci = &get_instance();
     $data['page'] = $page;
     if(is('parent')) {
@@ -348,6 +356,18 @@ function page($page, $data = [])
         $ci->load->view('layouts/template', $data);
     }
 }
+
+function dashboard_page($page, $data = [],$daycare_id)
+    {   
+        $ci = &get_instance();
+        $data['page'] = $page; 
+        $data['daycare_id'] = $daycare_id;        
+        if(is('parent')) {
+            $ci->load->view('layouts/template', $data);
+        } else {
+            $ci->load->view('layouts/template', $data);
+        }
+    }
 
 function parents_page($page, $data = [])
 {
@@ -957,5 +977,3 @@ function gravatar($email, $size = 50)
     return "https://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."&s=".$size;
 
 }
-
-?>

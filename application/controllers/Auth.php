@@ -26,9 +26,20 @@ class Auth extends CI_Controller
 
     function login($daycare_id = NULL)
     {
-        if ($this->ion_auth->logged_in())
-            redirect('dashboard', 'refresh');
+        $daycare_details = $this->db->get_where('daycare', array(
+            'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->row_array();
 
+        $logged_user_detail = $this->db->get_where('users', array(
+            'id' => $this->user->uid()
+        ));
+        $logged_user = $logged_user_detail->row_array();
+        if ($this->ion_auth->logged_in()) {            
+            if ($logged_user['daycare_id'] === $daycare['id']) {
+                redirect($daycare_id . '/dashboard', 'refresh');
+            }
+        }
         $this->refreshCaptcha();
 
         if (!empty($this->input->post('email'))) {
@@ -40,47 +51,65 @@ class Auth extends CI_Controller
             if ($this->form_validation->run() == true) {
                 $email = $this->input->post('email');
                 $password = $this->input->post('password');
-                if ($this->ion_auth->login($email, $password)) {
-                    redirect('dashboard', 'refresh');
+                $login = $this->ion_auth->login($email, $password, $daycare_id);
+                if ($login == "1") {
+                    $check_parent = $this->session->userdata("users");
+                    $users_details = $this->db->get_where('users', array(
+                        'email' => $email,
+                    ));
+                    $users = $users_details->row_array();
+                    if ($users['daycare_id'] === $daycare['id']) {
+                        if ($check_parent === "parent") {
+                            redirect($daycare_id . '/parents', 'refresh');
+                        } else {
+                            redirect($daycare_id . '/dashboard', 'refresh');
+                        }
+                    }
                 } else {
-                    flash('error', 'Username or password is incorrect');
+                    if ($email !== '' && $login === 'error') {
+                        $this->session->set_flashdata("error", "You don't have an account. Get an account from here!");
+                        redirect('/', 'refresh');
+                    } else {
+                        flash('error', 'Username or password is incorrect');
+                    }
                 }
-            } else {
+            } else {                
                 validation_errors();
                 flash('error');
             }
-        }
+        }else {
+            $captcha = $this->captcha();
+            $data['captcha'] = array(
+                'type' => 'text',
+                'name' => 'captcha',
+                'class' => 'form-control input100',
+                'required' => 'required',
+                'style' => 'border:solid 1px #ccc',
+                'placeholder' => 'Captcha'
+            );
+            $data['captcha_image'] = $captcha['image'];
 
-        $captcha = $this->captcha();
-        $data['captcha'] = array(
-            'type' => 'text',
-            'name' => 'captcha',
-            'class' => 'form-control input100',
-            'required' => 'required',
-            'style' => 'border:solid 1px #ccc',
-            'placeholder' => 'Captcha'
-        );
-        $data['captcha_image'] = $captcha['image'];
-
-        //daycare logo
-        if ($daycare_id !== Null) {
-            $query = $this->db->get_where('daycare', array(
-                'daycare_id' => $daycare_id
-            ));
-            $result = $query->result();
-            $logo = $result[0]->logo;
-            $image = base_url() . 'assets/uploads/daycare_logo/' . $logo;
-            $daycare = 'yes';
-        } else {
-            $image = base_url() . 'assets/uploads/content/logo.png';
-            $daycare = 'no';
+            //daycare logo
+            if ($daycare_id !== Null) {
+                $query = $this->db->get_where('daycare', array(
+                    'daycare_id' => $daycare_id
+                ));
+                $result = $query->result();
+                $logo = $result[0]->logo;
+                $image = $logo;
+                $daycare = 'yes';
+            } else {
+                $logo = '';
+                $image = "";
+                $daycare = 'no';
+            }
+            $this->session->set_userdata('company_logo', $logo);
+            $data['logo'] = $image;
+            $data['daycare'] = $daycare;
+            $data['daycare_id'] =  $daycare_id;
+            $this->page('login', compact('data'));
         }
-        $data['logo'] = $image;
-        $data['daycare'] = $daycare;
-        $data['daycare_id'] =  $daycare_id;
-        $this->page('login', compact('data'));
     }
-
     function register($daycareId = NULL)
     {
         if ($this->ion_auth->logged_in()) redirect('dashboard', 'refresh');
@@ -187,9 +216,9 @@ class Auth extends CI_Controller
                 ));
                 $result = $query->result();
                 $logo = $result[0]->logo;
-                $image = base_url() . 'assets/uploads/daycare_logo/' . $logo;
+                $image = $logo;
             } else {
-                $image = base_url() . 'assets/uploads/content/logo.png';
+                $image = "";
             }
             $data['logo'] = $image;
             $data['captcha_image'] = $captcha['image'];
@@ -278,7 +307,7 @@ class Auth extends CI_Controller
 
     //log the user out
 
-    function forgot()
+    function forgot($daycare_id = NULL)
     {
         if (!empty($this->input->post('email'))) {
             $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');
@@ -298,14 +327,27 @@ class Auth extends CI_Controller
                 if ($forgotten) {
                     //if there were no errors
                     flash('success', lang('password_reset_link_sent'));
-                    redirect('auth/login');
+                    redirect($daycare_id . '/login');
                 } else {
                     flash('danger', lang('request_error'));
-                    redirect('auth/forgot');
+                    redirect($daycare_id . '/forgot');
                 }
             }
         }
-        $this->page('forgot_password');
+        $daycare_details = $this->db->get_where("daycare", array(
+            'daycare_id' => $daycare_id
+        ));
+        $daycare = $daycare_details->row_array();
+        if ($daycare['logo'] !== NULL) {
+            $logo = $daycare['logo'];
+        } else {
+            $logo = '';
+        }
+        $data = array(
+            'daycare_id' => $daycare_id,
+            'logo' => $logo
+        );
+        $this->page('forgot_password', $data);
     }
 
     //forgot password
@@ -408,7 +450,7 @@ class Auth extends CI_Controller
         }
     }
 
-    function logout()
+    function logout($daycare_id = NULL)
     {
         $this->data['title'] = "Logout";
 
@@ -416,8 +458,13 @@ class Auth extends CI_Controller
         $this->ion_auth->logout();
         $this->conf->setTimer(0);
         reload_company();
+        $this->session->unset_userdata('users');
         //redirect them to the login page
-        redirect('auth/login', 'refresh');
+        if ($daycare_id !== NULL) {
+            redirect($daycare_id . '/login', 'refresh');
+        } else {
+            redirect('auth/login', 'refresh');
+        }
     }
     /*
      *

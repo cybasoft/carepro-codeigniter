@@ -25,13 +25,13 @@ class Calendar extends CI_Controller
     /*
      * display main page
      */
-    function index()
+    function index($daycare_id = NULL)
     {
         $this->title = lang('calendar');
         if (is('parent')) :
-            page('parent/calendar');
+            dashboard_page('parent/calendar',$data = [], $daycare_id);
         else :
-            page($this->module . 'index');
+            dashboard_page($this->module . 'index',$data = [], $daycare_id);
         endif;
     }
 

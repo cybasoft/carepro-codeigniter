@@ -37,9 +37,13 @@
     }
 </style>
 </head>
-
 <body>
     <div class="container content">
+    <?php if (!empty($this->session->flashdata('error'))) : ?>
+                        <div class="alert alert-danger alert-dismissable">
+                            <?php echo $this->session->flashdata('error'); ?>
+                        </div>
+                    <?php endif; ?>
         <div class="row">
             <div class="col-md-4">
                 <form method="post" action="user/plan">
@@ -95,7 +99,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select Plan">
                     </div>
                 </div>
                 </form>
@@ -154,7 +158,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select Plan">
                     </div>
                 </div>
             </form>
@@ -213,7 +217,7 @@
                         </p>
                     </div>
                     <div class="list-group-item pricing-btn text-center">
-                        <input type="submit" class="btn btn-sm circle-button" value="Select plan">
+                        <input type="submit" class="btn btn-sm circle-button" value="Select Plan">
                     </div>
                 </div>
                 </form>

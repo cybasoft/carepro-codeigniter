@@ -10,8 +10,8 @@
                          src="<?php echo is_file(APPPATH.'../assets/uploads/users/'.$user['photo']) ? base_url('assets/uploads/users/'.$user['photo']) : base_url('assets/img/content/no-image.png'); ?>">
                     <div class="text-center">
                         <br/>
-                        <?php echo ($user['active']) ? anchor('users/deactivate/'.$user['id'], '<span class="label label-info">'
-                            .lang('index_active_link').'</span>') : anchor('users/activate/'.$user['id'], '<span class="label label-danger">'
+                        <?php echo ($user['active']) ? anchor($daycare_id.'/users/deactivate/'.$user['id'], '<span class="label label-info">'
+                            .lang('index_active_link').'</span>') : anchor($daycare_id.'/users/activate/'.$user['id'], '<span class="label label-danger">'
                             .lang('index_inactive_link').'</span>'); ?>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                             <ul class="list-links child-name" style="display:grid">
                                 <?php foreach ($user['children'] as $child): ?>
                                     <li>
-                                        <?php echo anchor('child/'.$child['id'], $child['first_name'].' '.$child['last_name']); ?>
+                                        <?php echo anchor($daycare_id.'/child/'.$child['id'], $child['first_name'].' '.$child['last_name']); ?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
@@ -47,7 +47,7 @@
                 <span class="btn btn-default btn-xs">
                     <i class="fa fa-pencil-alt"></i></span>
                         </a>
-                        <?php echo anchor('users/delete/'.$user['id'], '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
+                        <?php echo anchor('users/delete/'.$daycare_id.'/'.$user['id'], '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
                     </div>
                 </div>
             </div>

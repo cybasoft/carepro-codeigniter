@@ -160,8 +160,18 @@ class My_child extends CI_Model
      * get all child information
      */
 
-    public function register($getID = FALSE)
+    public function register($getID = FALSE,$daycare_id)
     {
+        $daycare_details = $this->db->get_where('daycare',array(
+            'daycare_id' => $daycare_id
+        ));      
+        $daycare = $daycare_details->row_array();
+
+        if(is('parent')){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
         $data = [
             'nickname' => $this->input->post('nickname'),
             'first_name' => $this->input->post('first_name'),
@@ -170,9 +180,10 @@ class My_child extends CI_Model
             'bday' => $this->input->post('bday'),
             'gender' => $this->input->post('gender'),
             'last_update' => date_stamp(),
-            'status' => 1,
+            'status' => $status,
             'created_at' => date_stamp(),
             'user_id' => $this->user->uid(),
+            'daycare_id' => $daycare['id'],
             'religion' => $this->input->post('religion'),
             'ethnicity' => $this->input->post('ethnicity'),
             'birthplace' => $this->input->post('birthplace'),
@@ -211,8 +222,18 @@ class My_child extends CI_Model
      *
      */
 
-    public function update_child($child_id)
+    public function update_child($child_id,$daycare_id)
     {
+        $this->load->config('email');
+        $this->load->library('email');
+
+        //get children detail to check child status
+        $child_details = $this->db->get_where('children', array(
+            'id' => $child_id
+        ));
+        $children = $child_details->row_array();
+
+        $status = $this->input->post('status');
         $data = [
             'nickname' => $this->input->post('nickname'),
             'first_name' => $this->input->post('first_name'),
@@ -221,7 +242,7 @@ class My_child extends CI_Model
             'national_id' => encrypt($this->input->post('national_id')),
             'blood_type' => $this->input->post('blood_type'),
             'gender' => $this->input->post('gender'),
-            'status' => $this->input->post('status'),
+            'status' => $status,
             'ethnicity' => $this->input->post('ethnicity'),
             'religion' => $this->input->post('religion'),
             'birthplace' => $this->input->post('birthplace'),
@@ -229,6 +250,43 @@ class My_child extends CI_Model
         ];
         $this->db->where('id', $child_id);
         $this->db->update('children', $data);
+
+        //Send email to parent if child status changed from inactive to active
+        if($status != $children['status']){            
+            $get_parent = $this->db->get_where('child_parents',array(
+                'child_id' => $child_id
+            ));
+            $get_parent_id = $get_parent->row_array();
+
+            $parent_details = $this->db->get_where('users',array(
+                'id' => $get_parent_id['user_id']
+            ));
+
+            $parent = $parent_details->row_array();
+            
+            if($parent !== NULL){
+                $email_data = array(
+                    'first_name' => $parent['first_name'],
+                    'last_name' => $parent['last_name'],
+                    'child_first_name' => $this->input->post('first_name'),
+                    'child_last_name' => $this->input->post('last_name'),
+                    'daycare_id'     => $daycare_id,
+                    'child_status' => $status
+                );
+                $this->email->set_mailtype('html');
+                $from = $this->config->item('smtp_user');
+                $to = $parent['email'];
+                $this->email->from($from, 'Daycare');
+                $this->email->to($to);
+                $this->email->subject('Child Register Successful');
+    
+                $body = $this->load->view('owner_email/child_register_email', $email_data, true);
+                $this->email->message($body);        //Send mail
+                if ($this->email->send()) {
+                    $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+                }
+            }
+        }       
         if($this->db->affected_rows() > 0) {
             //log event
             logEvent("Updated child {$data['first_name']} {$data['last_name']}");

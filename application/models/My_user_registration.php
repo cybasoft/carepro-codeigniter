@@ -2,18 +2,6 @@
 
 class My_user_registration extends CI_Model
 {
-    public $plans = array(
-        'basic' => '0',
-        'silver' => '1',
-        'gold' => '2'
-    );
-    public $status = array(
-        '0' => 'draft',
-        '1' => 'confirmed',
-        '2' => 'subscribed',
-        '3' => 'registered'
-    );
-
     //store owner data
     public function store_user()
     {
@@ -37,11 +25,17 @@ class My_user_registration extends CI_Model
         if ($count !== 0) {
             $activation_code = $this->generate_activation_code();
         }       
+
+        //get plan details
         $get_plan = $this->db->get_where('subscription_plans',array(
             'plan' => $this->session->userdata('plan'),
         ));
-
         $selected_plan = $get_plan->result();
+
+        //get user status detail
+        $get_status = $this->db->get('user_status');
+        $owner_status = $get_status->result_array();
+
         $data = array(
             'name' => $user_name,
             'email' => $email,
@@ -55,10 +49,11 @@ class My_user_registration extends CI_Model
             'pin' => $this->input->post('zip_code'),
             'country' => $this->input->post('country'),
             'phone' => $this->input->post('phone'),
-            'owner_status' => $this->status[0],
+            'owner_status' => $owner_status[0]['id'],
             'active' => 0
         );
-        $this->send_confirmation_email($email,$user_name,$activation_code,$data);
+        $status = $this->send_confirmation_email($email,$user_name,$activation_code,$data);
+        return $status;
     }
 
     //generate activation code for email verification
@@ -68,11 +63,33 @@ class My_user_registration extends CI_Model
         $activation_code = random_string('alnum', 30);
         return $activation_code;
     }
-    public function insert_user($data){
-        $this->db->insert('users', $data);
+    public function insert_user($data, $activation_code){
+        $address_data = array(
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip_code' => $data['pin'],
+            'country' => $data['country'],
+            'phone' => $data['phone'],
+        );
+        $this->db->insert('address', $address_data);
+        $address_id = $this->db->insert_id();
+
+        $user_data = array(
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'address_id' => $address_id,
+            'activation_code' => $activation_code,
+            'selected_plan' => $data['selected_plan'],
+            'owner_status' => $data['owner_status'],
+            'active' => 0
+        );
+        $this->db->insert('users', $user_data);
 
         $insert_id = $this->db->insert_id();
-        $group_id = 5;
+        $group_id = 1;
 
         $users_groups = array(
             'user_id' => $insert_id,
@@ -103,12 +120,19 @@ class My_user_registration extends CI_Model
         $this->email->message($body);        //Send mail
         if($this->email->send()){
             $this->session->set_flashdata("verify_email","Please check your email to confirm your account.");
-            $this->insert_user($data);
-            $this->load->view('registration/success' ,$user_name);
+            $this->insert_user($data,$activation_code);
+            $status = array(
+                'success' => $user_name,
+                'error' => ''
+            );
+            return $status;            
         }   
-        else{           
-            $this->session->set_flashdata("verify_email_error","Enable to sent verification email. Please try again.");
-            redirect('user/register');
+        else{
+            $status = array(
+                'success' => '',
+                'error' => 'error'
+            );
+            return $status;            
         }
     }
 }

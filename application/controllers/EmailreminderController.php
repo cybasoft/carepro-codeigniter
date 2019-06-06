@@ -51,7 +51,7 @@ class EmailreminderController extends CI_Controller
                                 'registered_success' => 'Quick reminder: user registration completed successfully.
                                                             Now please confirm your email to go further.',
                                 'payment_success' => 'Quick reminder: payment completed successfully. 
-                                Now please complete your daycare company registration.'                     
+                                Now please complete your daycare company registration.'
                             );
                             $this->email->set_mailtype('html');
                             $from = $this->config->item('smtp_user');
@@ -61,18 +61,32 @@ class EmailreminderController extends CI_Controller
                             if ($users['owner_status'] === 'draft') {
                                 $this->email->subject('Email verification');
                                 $body = $this->load->view('owner_email/confirm_email', $email_data, true);
+                                $this->email->message($body);
+                                if ($this->email->send()) {
+                                    echo "Success";
+                                } else {
+                                    echo "Error";
+                                }
                             } else if ($users['owner_status'] === 'confirmed') {
                                 $this->email->subject('Email verification');
                                 $body = $this->load->view('owner_email/confirm_email', $email_data, true);
+                                $this->email->message($body);
+                                if ($this->email->send()) {
+                                    echo "Success";
+                                } else {
+                                    echo "Error";
+                                }
                             } elseif ($users['owner_status'] === 'subscribed') {
                                 $this->email->subject('Daycare payment');
-                                $body = $this->load->view('owner_email/thanku_email', $email_data, true);
-                            }
-                            $this->email->message($body);
-                            if ($this->email->send()){
+                                $body = $this->load->view('owner_email/payment_success_email', $email_data, true);
+                                $this->email->message($body);
+                                if ($this->email->send()) {
+                                    echo "Success";
+                                } else {
+                                    echo "Error";
+                                }
+                            }else{
                                 echo "Success";
-                            } else {
-                                echo "Error";
                             }
                             break;
                         }

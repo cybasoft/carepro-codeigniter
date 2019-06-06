@@ -19,7 +19,7 @@ class Settings extends CI_Controller
         $this->title = lang('settings');
     }
 
-    function index()
+    function index($daycare_id = NULL)
     {
         if(session('company_demo_mode') ==1){
             allow('super');
@@ -35,7 +35,7 @@ class Settings extends CI_Controller
              $option[$val['option_name']]=$val['option_value'];
         }
 
-        page($this->module.'settings', compact('payMethods','option'));
+        dashboard_page($this->module.'settings', compact('payMethods','option'), $daycare_id);
     }
 
     /**

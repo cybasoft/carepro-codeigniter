@@ -43,7 +43,7 @@ $(document).ready(function () {
     //Editors
 
     // $('#editor').trumbowyg();
-    $('#attendance').DataTable({
+    $('#attendances').DataTable({
         buttons: [
             'pdf'
         ]
@@ -62,11 +62,13 @@ $(document).ready(function () {
     var lockTimer = 1320000 * lockScreenTimer;
 
     $('.lock-screen').click(function () {
-        startLockscreen();
+        var daycare_id = $(this).data("daycare_id");
+        startLockscreen(daycare_id);
     });
 
     setTimeout(function () {
-        startLockscreen()
+        var daycare_id = $('.lock-screen').data("daycare_id");
+        startLockscreen(daycare_id);
     }, lockTimer);
 
 
@@ -209,7 +211,8 @@ $(document).ready(function () {
 
     $('.assign-parent-btn').click(function () {
         var id = $(this).attr('id');
-        $('.modals-loader').load(site_url + 'parents/parents/' + id).modal('show')
+        var daycare_id = $(this).data('daycare-id');
+        $('.modals-loader').load(site_url + daycare_id +'/parents/parents/' + id).modal('show')
     });
 
     new List('conversations', {valueNames: ['name'], page: 10, pagination: true});

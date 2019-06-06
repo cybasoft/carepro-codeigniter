@@ -89,14 +89,14 @@
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
                         <h4 class="page-title">
-                            <?php echo isset($this->title) ? $this->title : strtoupper($this->uri->segment(1)); ?>
+                            <?php echo isset($this->title) ? $this->title : strtoupper($this->uri->segment(2)); ?>
                         </h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><?php echo anchor('/', lang('Home')); ?></li>
                                     <li class="breadcrumb-item active"
-                                        aria-current="page"><?php echo ucwords($this->uri->segment(1)); ?></li>
+                                        aria-current="page"><?php echo ucwords($this->uri->segment(2)); ?></li>
                                 </ol>
                             </nav>
                         </div>

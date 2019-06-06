@@ -1,4 +1,7 @@
-<?php if (!defined('BASEPATH')) {
+<?php
+use phpDocumentor\Reflection\Types\Null_;
+
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
@@ -15,6 +18,7 @@ class Child extends CI_Controller
         auth();
         $this->load->model('My_invoice', 'invoice');
         $this->load->model('My_food', 'food');
+        $this->load->model('My_user');
         $this->module = 'child/';
         $this->title = lang('child');
     }
@@ -23,8 +27,8 @@ class Child extends CI_Controller
      * default page
      * @return void
      */
-    public function index($id)
-    {
+    public function index($daycare_id = NULL,$id)
+    {        
         if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -36,20 +40,20 @@ class Child extends CI_Controller
         $pickups = $this->db->where('child_id', $id)->get('child_pickup')->result();
         if (empty($child)) {
             flash('error', lang('record_not_found'));
-            redirect('children');
+            redirect($daycare_id.'/children');
         }
-        page($this->module . 'index', compact('child', 'pickups'));
+        dashboard_page($this->module . 'index', compact('child', 'pickups'),$daycare_id);
     }
 
-    public function store()
+    public function store($daycare_id = NULL)
     {
-        allow(['admin', 'manager', 'staff']);
+        allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
-            $register = $this->child->register(true);
+            $register = $this->child->register(true,$daycare_id);            
             if (false !== $register) {
                 flash('success', lang('request_success'));
-                redirect('child/' . $register);
+                redirect($daycare_id.'/child/' . $register);
             } else {
                 flash('error', lang('request_error'));
             }
@@ -59,7 +63,7 @@ class Child extends CI_Controller
             validation_errors();
             flash('danger');
         }
-        redirect('children', 'refresh');
+        redirect($daycare_id.'/children', 'refresh');
     }
 
     /*
@@ -68,18 +72,18 @@ class Child extends CI_Controller
      * @return void
      */
 
-    public function update()
-    {
+    public function update($daycare_id = NULL)
+    {      
         allow(['admin', 'manager', 'staff']);
 
         if ($this->_validate_child()) {
-            $this->child->update_child($this->input->post('child_id'));
+            $this->child->update_child($this->input->post('child_id') , $daycare_id);
         } else {
             set_flash(['nickname', 'first_name', 'last_name', 'national_id', 'bday', 'blood_type', 'gender', 'status']);
             validation_errors();
-            flash('danger');
+            flash('danger');       
         }
-        redirect('child/' . $this->input->post('child_id'), 'refresh');
+        redirectPrev();
     }
 
     /*
@@ -123,17 +127,17 @@ class Child extends CI_Controller
         page($this->module . 'accounting/index', $data);
     }
 
-    public function reports($id)
-    {
+    public function reports($daycare_id,$id)
+    {       
         if (!authorizedToChild($this->user->uid(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
 
-        $child = $this->child->first($id);
-        $attendance = $this->db->where('child_id', $id)->order_by('id', 'DESC')->get('child_checkin');
-        $nyForm = $this->db->where('child_id', $id)->get('form_ny_attendance')->row();
-        page($this->module . 'reports/index', compact('child', 'attendance', 'nyForm'));
+        $child = $this->child->first($id);       
+        $attendance = $this->db->where('child_id', $id)->order_by('id', 'DESC')->get('child_checkin');        
+        $nyForm = $this->db->where('child_id', $id)->get('form_ny_attendance')->row();       
+        page($this->module . 'reports/index', compact('child', 'attendance', 'nyForm','daycare_id'));
     }
 
     /*
@@ -219,8 +223,8 @@ class Child extends CI_Controller
         $this->load->view($this->module . 'assign_parent', compact('child_id'));
     }
 
-    public function doAssignParent($child_id)
-    {
+    public function doAssignParent($daycare_id,$child_id)
+    {        
         allow(['admin', 'manager', 'staff']);
 
         $this->child_id = $child_id;
@@ -233,7 +237,7 @@ class Child extends CI_Controller
             if ($this->db->insert('child_parents', $data)) {
                 flash('success', lang('request_success'));
 
-                $parent = $this->user->first($this->input->post('parent'));
+                $parent = $this->My_user->first($this->input->post('parent'));
                 $child = $this->child->first($child_id);
                 $data = [
                     'to' => $parent->email,

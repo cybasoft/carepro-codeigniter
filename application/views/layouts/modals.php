@@ -8,7 +8,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?php echo form_open('child/register'); ?>
+            <?php echo form_open($daycare_id.'/child/register'); ?>
 
             <div class="modal-body">
                 <div class="row">
@@ -62,7 +62,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?php echo form_open('users/create'); ?>
+            <?php echo form_open($daycare_id.'/users/create'); ?>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">

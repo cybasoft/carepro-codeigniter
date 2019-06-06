@@ -16,15 +16,15 @@ class Files extends CI_Controller{
         $this->module='files/';
 
     }
-    function index(){
-        page($this->module.'cabinet');
+    function index($daycare_id = NULL){       
+        dashboard_page($this->module.'cabinet',$data=[],$daycare_id);
     }
 
     function upload(){
         // get path
         $upload_path = './assets/uploads/files';
         $p = isset($_GET['p']) ? $_GET['p'] : (isset($_POST['p']) ? $_POST['p'] : '');
-        $p = fm_clean_path($p);
+        $p = fm_clean_path($p);        
         $path=$upload_path;
 
         if($p != '') {

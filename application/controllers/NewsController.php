@@ -27,7 +27,7 @@ class newsController extends CI_Controller
         page($this->module.'news_admin', compact('articles'));
     }
 
-    function index()
+    function index($daycare_id = NULL)
     {
         $this->load->helper('text');
 
@@ -46,7 +46,7 @@ class newsController extends CI_Controller
             ]
         );
 
-        page($this->module.'news', compact('articles'));
+        dashboard_page($this->module.'news', compact('articles'), $daycare_id);
     }
 
     function create()

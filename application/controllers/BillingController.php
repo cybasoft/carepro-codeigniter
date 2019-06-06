@@ -16,11 +16,11 @@ class BillingController extends CI_Controller
         $this->title = lang('child').'-'.lang('invoice');
     }
 
-    function index()
+    function index($daycare_id,$id)
     {
-        $child_id = $this->uri->segment(2);
+        $child_id = $id;
         $child = $this->child->first($child_id);
         $invoices = $this->invoice->childInvoices($child_id);
-        page($this->module.'invoices', compact('child','invoices'));
+        page($this->module.'invoices', compact('child','invoices','daycare_id'));
     }
 }

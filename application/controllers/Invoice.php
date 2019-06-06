@@ -43,7 +43,7 @@ class Invoice extends CI_Controller
 
 
 
-    function view($id)
+    function view($daycare_id,$id)
     {
         $invoice = $this->invoice->all($id);
 
@@ -55,7 +55,7 @@ class Invoice extends CI_Controller
         $subTotal = $this->invoice->subTotal($invoice[0]->id);
         $amountPaid = $this->invoice->amountPaid($invoice[0]->id);
         $amountDue = $this->invoice->amountDue($invoice[0]->id);
-        page($this->module.'invoice_view', compact('invoice', 'child', 'subTotal', 'amountPaid', 'amountDue'));
+        page($this->module.'invoice_view', compact('invoice', 'child', 'subTotal', 'amountPaid', 'amountDue' ,'daycare_id'));
     }
 
     function views($invoice_id)
@@ -180,14 +180,14 @@ class Invoice extends CI_Controller
     /*
      * create invoice
      */
-    function create($id)
+    function create($daycare_id,$id)
     {
         allow(['admin', 'manager', 'staff']);
         $child = $this->child->first($id);
-        page($this->module.'create_invoice', compact('child'));
+        page($this->module.'create_invoice', compact('child','daycare_id'));
     }
 
-    function store($id)
+    function store($daycare_id,$id)
     {
         allow(['admin', 'manager', 'staff']);
 
@@ -209,7 +209,7 @@ class Invoice extends CI_Controller
             flash('danger');
             redirectPrev();
         }
-        redirect('invoice/'.$invoice.'/view');
+        redirect($daycare_id.'/invoice/'.$invoice.'/view');
     }
 
     function is_money($money)
