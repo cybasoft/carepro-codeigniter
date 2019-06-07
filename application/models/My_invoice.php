@@ -52,7 +52,7 @@ class My_invoice extends CI_Model
     function all($id = '', $childID = '')
     {
 
-        $this->db->select('invoices.*,invoice_items.item_name,invoice_items.description,invoice_items.price,invoice_items.qty,invoice_items.discount');
+        $this->db->select('invoices.*,invoice_items.id as item_id,invoice_items.item_name,invoice_items.description,invoice_items.price,invoice_items.qty,invoice_items.discount');
         $this->db->from('invoices');
         $this->db->join('invoice_items', 'invoice_items.invoice_id=invoices.id', 'left');
 
@@ -62,8 +62,7 @@ class My_invoice extends CI_Model
         if($childID > 0)
             $this->db->where('invoices.child_id', $childID);
 
-        $result = $this->db->get()->result();
-
+        $result = $this->db->get()->result();        
         return $result;
 
     }

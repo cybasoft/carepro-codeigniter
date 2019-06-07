@@ -26,11 +26,11 @@
 
                 <p style="font-size: 20px">Features of Daycare:</p>
                 <p style="font-size: 16px;text-align:center">Invite admin, staff and parent</p>
-                <p><img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/1.png" alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
+                <p><img src="<?php echo base_url(); ?>assets/img/daycare/1.png" alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
                 <p style="font-size: 16px;text-align:center">Customise your rooms and invoices</p>
-                <p><img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/2.png" alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
+                <p><img src="<?php echo base_url(); ?>assets/img/daycare/2.png" alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
                 <p style="font-size: 16px;text-align:center">Stay update about upcoming events</p>
-                <p><img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/3.png" alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>                   
+                <p><img src="<?php echo base_url(); ?>assets/img/daycare/3.png" alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>                   
                 <p>
                     Thanks!<br />
                     Daycarepro Team<br />

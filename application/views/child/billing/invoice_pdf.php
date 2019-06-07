@@ -51,7 +51,7 @@
         </td>
         <td rowspan="5" style="text-align: right;">
             <img style="width:200px"
-                 src="<?php echo APPPATH.'../assets/uploads/content/'.session('company_invoice_logo'); ?>"/>
+                 src="<?php echo base_url(); ?>/assets/uploads/daycare_logo/<?php echo $image; ?>"/>
             <br/>
             <strong><?php echo session('company_name'); ?></strong><br/>
             <?php

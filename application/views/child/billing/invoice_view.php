@@ -97,7 +97,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach ($invoice as $item): ?>
+                                        <?php foreach ($invoice as $item):?>
                                             <tr id="new_item">
                                                 <td>
                                                     <input disabled name="item_name[]"
@@ -129,7 +129,7 @@
                                                 </td>
                                                 <?php if(!is('parent')): ?>
                                                     <td>
-                                                        <a href="<?php echo site_url('invoice/'.$invoice[0]->id.'/deleteItem/'.$item->id); ?>"
+                                                        <a href="<?php echo site_url('invoice/'.$invoice[0]->id.'/deleteItem/'.$item->item_id); ?>"
                                                            class="delete">
                                                             <span class="fa fa-trash-alt text-danger cursor"></span>
                                                         </a>

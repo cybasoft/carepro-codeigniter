@@ -1,5 +1,6 @@
 <?php use Dompdf\Dompdf;
 use Dompdf\Options;
+use Dompdf\FrameReflower\Page;
 
 if(!defined('BASEPATH')) exit('No direct script access allowed');
 
@@ -45,11 +46,16 @@ class Invoice extends CI_Controller
 
     function view($daycare_id,$id)
     {
-        $invoice = $this->invoice->all($id);
+        $invoice = $this->invoice->all($id);        
 
         if(empty($invoice))
             show_404();
 
+        $item = $this->db->get_where('invoice_items',array(
+            'invoice_id' => $invoice[0]->id
+        ));
+        $item_data = $item->result_array();
+              
         $child = $this->child->get($invoice[0]->child_id);
 
         $subTotal = $this->invoice->subTotal($invoice[0]->id);
@@ -268,13 +274,18 @@ class Invoice extends CI_Controller
      * @param string $action
      * @param int    $send
      */
-    function pdf($id)
+    function pdf($daycare_id,$id)
     {
         //get child data
         $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
         $invoice_items = $this->invoice->getInvoiceItems($id);
         $child = $this->child->first($invoice->child_id);
 
+        $daycare_details = $this->db->get_where('daycare',array(
+            'daycare_id' => $daycare_id
+        ));
+        $daycare_data = $daycare_details->row_array();
+        $image = $daycare_data['logo'];
         //format pdf
         $this->load->library('PDF');
 
@@ -283,49 +294,77 @@ class Invoice extends CI_Controller
         $options->set('isHtml5ParserEnabled', true);
         $options->set('defaultFont', 'Courier');
 
-        $dompdf = new Dompdf($options);
-        $dompdf->setPaper('A4', 'portrait');
+        $dompdf = new Dompdf($options);        
+        $dompdf->setPaper('A4', 'portrait');        
 
-        $html = $this->load->view($this->module.'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'action', 'send'), true);
+        $html = $this->load->view($this->module.'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'action', 'send','image'), true);
 
         $dompdf->loadHtml($html);
         $dompdf->render();
 
         if(isset($_GET['dl']))
-            $dompdf->stream();
+            $dompdf->stream('invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf');
 
         if(isset($_GET['send'])) {
             $output = $dompdf->output();
 
-            $fileName = 'application/temp/invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf';
+            $fileName = 'application/temp/invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf';            
             file_put_contents($fileName, $output);
 
-            $this->sendInvoice($child, $fileName);
-            flash('success', sprintf(lang('Invoice has been send to parents of'), $child->first_name));
+            $send_email = $this->sendInvoice($child, $fileName,$image);
+            if($send_email !== ""){
+                flash('error', sprintf(lang('No parent assigned to child'), $child->first_name)); 
+            }else{
+                flash('success', sprintf(lang('Invoice has been send to parents of'), $child->first_name));
+            }
         }
 
         redirectPrev();
     }
 
-    function sendInvoice($child, $fileName)
+    function sendInvoice($child, $fileName,$image)
     {
+        $this->load->config('email');
+        $this->load->library('email');
+        
         $parents = $this->child->getParents($child->id);
+        $parents_data = $parents->result();       
 
-        foreach ($parents->result() as $parent) {
-
-            $data = [
-                'to' => $parent->email,
-                'subject' => sprintf(lang('invoice_email_subject'), $child->last_name),
-                'message' => sprintf(lang('invoice_email_message'), $child->last_name),
-                'file' => $fileName
-            ];
-
-            // $this->mailer->send($data);
+        if(empty($parents_data)){
+            $error = "no parent";
+            return $error;
+        }else{
+            foreach ($parents_data as $parent) {
+                // $data = [
+                //     'to' => $parent->email,
+                //     'subject' => sprintf(lang('invoice_email_subject'), $child->last_name),
+                //     'message' => sprintf(lang('invoice_email_message'), $child->last_name),
+                //     'file' => $fileName
+                // ];
+    
+                // $this->mailer->send($data);                
+        
+                $email_data = array(
+                    'parent_name' => $parent->first_name . ' ' . $parent->last_name,
+                    'child_name' => $child->first_name .' '. $child->last_name,
+                    'image' => $image,
+                );
+                $this->email->set_mailtype('html');
+                $from = $this->config->item('smtp_user');
+                $to = $parent->email;
+                $this->email->from($from, 'Daycare');
+                $this->email->to($to);
+                $this->email->subject('Child Invoice');
+                $this->email->attach($fileName);
+                $body= $this->load->view('owner_email/child_invoice_email', $email_data, true);
+                $this->email->message($body);        //Send mail
+                $this->email->send();
+            }
+    
+            @unlink($fileName);
+            $error = "";
+            return $error;
         }
-
-        @unlink($fileName);
-
-        return true;
     }
 
     function delete($invoice_id)
@@ -349,13 +388,12 @@ class Invoice extends CI_Controller
     }
 
     function deleteItem($invoice_id, $item_id)
-    {
+    {       
         allow(['admin', 'manager']);
 
         $this->db->where('id', $item_id);
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
-
         if($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {

@@ -19,10 +19,6 @@ class RegistrationController extends CI_Controller
         $this->load->view('registration/index');
     }
 
-    public function welcome_email(){
-        $this->load->view('owner_email/welcome_email');
-    }
-
     public function plan()
     {
         $price = $this->input->post('price');

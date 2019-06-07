@@ -98,7 +98,7 @@ $route['invoice/(:num)/deleteItem/(:num)'] = 'invoice/deleteItem/$1/$2';
 $route['invoice/(:num)/makePayment'] = 'invoice/makePayment/$1';
 $route['invoice/(:num)/preview'] = 'invoice/preview/$1';
 
-$route['invoice/(:num)/download'] = 'invoice/pdf/$1';
+$route['(.*)/invoice/(:num)/download'] = 'invoice/pdf/$1/$2';
 
 $route['invoice/(:num)/updateStatus'] = 'invoice/updateStatus/$1';
 
@@ -227,4 +227,3 @@ $route['(.*)/users/create'] = "UserController/create/$1";
 $route['users/view/(.*)/(:num)'] = 'UserController/view/$1/$2';
 $route['users/update/(.*)/(:num)'] = 'UserController/update/$1/$2';
 $route['users/delete/(.*)/(:any)'] = 'UserController/delete/$1/$2';
-$route['welcome_email'] = 'RegistrationController/welcome_email';

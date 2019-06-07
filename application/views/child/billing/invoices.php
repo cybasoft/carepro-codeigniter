@@ -46,9 +46,9 @@
                                             aria-haspopup="true" aria-expanded="false"><?php echo lang('Actions'); ?>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <?php echo anchor('invoice/'.$invoice->id.'/view', icon('folder-open').' '.lang('Open'), 'class="dropdown-item"'); ?>
-                                        <?php echo anchor('invoice/'.$invoice->id.'/download?dl', icon('file-pdf').' '.lang('Download'), 'class="dropdown-item"'); ?>
-                                        <?php echo anchor('invoice/'.$invoice->id.'/download?send', icon('envelope').' '.lang('send_to_parent'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/view', icon('folder-open').' '.lang('Open'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/download?dl', icon('file-pdf').' '.lang('Download'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/download?send', icon('envelope').' '.lang('send_to_parent'), 'class="dropdown-item"'); ?>
                                         <?php echo anchor('invoice/'.$invoice->id.'/preview', icon('print').' '.lang('Print'), 'target="_blank" class="dropdown-item"'); ?>
                                         <?php if(!is('parent')): ?>
                                             <div class="dropdown-divider"></div>
