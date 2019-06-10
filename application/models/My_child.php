@@ -50,7 +50,8 @@ class My_child extends CI_Model
      */
     public function children()
     {
-        return $this->db->get('children');
+        $daycare_id = $this->session->userdata('daycare_id');
+        return $this->db->where('daycare_id',$daycare_id)->get('children');
     }
 
     /**

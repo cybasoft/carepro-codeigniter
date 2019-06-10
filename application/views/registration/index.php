@@ -27,6 +27,11 @@
         z-index: 1000;
         height: 100%;
     }
+
+    .content {
+        padding-top: 46px !important;
+        padding-bottom: 10px !important;
+    }
 </style>
 </head>
 
@@ -56,6 +61,9 @@
                             <p>Name *</p>
                             <input class="form-control form-value" required="" name="name" type="text" value="<?php echo set_value('name'); ?>">
                         </div>
+                    </div>
+                    <hr class="space xs" />
+                    <div class="row">
                         <div class="col-md-12">
                             <p>E-Mail Address *</p>
                             <input name="email" type="email" class="form-control form-value" required="" value="<?php echo set_value('email'); ?>">
@@ -67,6 +75,9 @@
                             <p>Password *</p>
                             <input required="" name="password" type="password" class="form-control form-value" value="">
                         </div>
+                    </div>
+                    <hr class="space xs" />
+                    <div class="row">
                         <div class="col-md-12">
                             <p>Confirm Password *</p>
                             <input type="password" required="" name="password_confirm" class="form-control form-value" value="">

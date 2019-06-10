@@ -84,7 +84,8 @@ class My_daycare_registration extends CI_Model
             'address_id' => $user_address
         );
         $this->db->where('email', $email);
-        $this->db->update('users', $store_id);        
+        $this->db->update('users', $store_id);    
+        $this->session->set_userdata('daycare_id',$data['daycare_id']);
     }
     
     //Function to generate unique daycare id
