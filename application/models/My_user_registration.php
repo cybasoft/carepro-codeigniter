@@ -41,14 +41,7 @@ class My_user_registration extends CI_Model
             'email' => $email,
             'password' => $password,
             'activation_code' => $activation_code,
-            'selected_plan' => $selected_plan[0]->id,
-            'address_line_1' => $this->input->post('address_line_1'),
-            'address_line_2' => $this->input->post('address_line_2'),
-            'city' => $this->input->post('city'),
-            'state' => $this->input->post('state'),
-            'pin' => $this->input->post('zip_code'),
-            'country' => $this->input->post('country'),
-            'phone' => $this->input->post('phone'),
+            'selected_plan' => $selected_plan[0]->id,          
             'owner_status' => $owner_status[0]['id'],
             'active' => 0
         );
@@ -64,23 +57,10 @@ class My_user_registration extends CI_Model
         return $activation_code;
     }
     public function insert_user($data, $activation_code){
-        $address_data = array(
-            'address_line_1' => $data['address_line_1'],
-            'address_line_2' => $data['address_line_2'],
-            'city' => $data['city'],
-            'state' => $data['state'],
-            'zip_code' => $data['pin'],
-            'country' => $data['country'],
-            'phone' => $data['phone'],
-        );
-        $this->db->insert('address', $address_data);
-        $address_id = $this->db->insert_id();
-
         $user_data = array(
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'address_id' => $address_id,
             'activation_code' => $activation_code,
             'selected_plan' => $data['selected_plan'],
             'owner_status' => $data['owner_status'],

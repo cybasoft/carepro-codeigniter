@@ -63,12 +63,15 @@ class My_daycare_registration extends CI_Model
             'phone' => $data['phone'],
         );
         $this->db->insert('address', $address_data);
-        $address_id = $this->db->insert_id();
+        $user_address = $this->db->insert_id();
+
+        $this->db->insert('address', $address_data);
+        $daycare_address = $this->db->insert_id();        
 
         $daycare_data = array(
             'name' => $data['name'],
             'employee_tax_identifier' => $data['employee_tax_identifier'],
-            'address_id' => $address_id,
+            'address_id' => $daycare_address,
             'daycare_id' => $data['daycare_id'],
             'logo' => $data['logo'],            
         );
@@ -78,6 +81,7 @@ class My_daycare_registration extends CI_Model
         
         $store_id = array(
             'daycare_id' => $insert_id,
+            'address_id' => $user_address
         );
         $this->db->where('email', $email);
         $this->db->update('users', $store_id);        

@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div style="width: 93%;background: #60aff4a8;height: 100%;padding: 4% 3%;">
+    <div style="width: 93%;background: #60aff4a8;height: 100%;padding: 4% 3%;font-family:'Poppins-Regular, Sans-serif, serif'">
         <div style="background-color:white;width:90%,margin-left: 2%;">
             <div style="background:#eb6c6ab3">
                  <p style="margin:0;font-size:40px;color:#ffffff;line-height:2.5;padding:1% 2%">

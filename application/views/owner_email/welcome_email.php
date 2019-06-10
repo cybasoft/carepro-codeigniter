@@ -8,7 +8,7 @@
 </head>
 <body>
     <div style="width: 93%;background-image: linear-gradient(#60AFF4, #EB6C6A);height: 100%;padding: 4% 3%;">
-        <div style="background-color:white;width:90%,margin-left: 2%;">
+        <div style="background-color:white;width:90%,margin-left: 2%;font-family:'Poppins-Regular, Sans-serif, serif'">
             <div style="text-align:center;background:#60aff470">
                 <img src="<?php echo base_url(); ?>assets/img/daycare/gif-img.gif" alt="Daycare logo" style="width: 200px;margin-top: 2%;"><br /><br />
             </div>
