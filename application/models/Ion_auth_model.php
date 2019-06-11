@@ -997,7 +997,7 @@ class Ion_auth_model extends CI_Model
      * @author Mathew
      **/
     public function login($identity, $password)
-    {
+    {        
         $this->trigger_events('pre_login');
 
         if (empty($identity) || empty($password)) {
@@ -1032,8 +1032,7 @@ class Ion_auth_model extends CI_Model
                     flash('error', lang('login_unsuccessful_not_active'));
                     redirectPrev();
                     return FALSE;
-                }
-
+                }    
                 $this->update_last_login($user->id);
                 $this->set_session($user);
                 $this->clear_login_attempts($identity);

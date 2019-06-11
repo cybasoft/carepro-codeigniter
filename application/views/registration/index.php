@@ -3,38 +3,8 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
-<style>
-    .form-control {
-        height: 34px;
-    }
-
-    .stripe_connect:hover {
-        text-decoration: none;
-    }
-
-    body {
-        position: relative
-    }
-
-    .loading_div {
-        display: none;
-        position: fixed;
-        background: #fff url('../assets/img/loader.gif') no-repeat 50%;
-        opacity: .5;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        height: 100%;
-    }
-
-    .content {
-        padding-top: 46px !important;
-        padding-bottom: 10px !important;
-    }
-</style>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/daycare.css">
 </head>
-
 <body class="transparent-header">
     <div class="loading_div">
     </div>

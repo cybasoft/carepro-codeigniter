@@ -1,0 +1,45 @@
+.form-control {
+    height: 34px;
+}
+.stripe_connect:hover {
+    text-decoration: none;
+}
+.user-edit-fileinput {
+    position: absolute;
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+.img_preview {
+    width: 60px !important;
+    height: 60px !important;
+}
+.media {
+    margin-left: 12px;
+}
+.notifictions {
+    z-index: 3000;
+    max-width: 500px;
+    top: 10px;
+    right: 5px;
+    position: absolute !important;
+}
+body{
+    overflow-x: hidden;
+}
+.loading_div {
+    display: none;
+    position: fixed;
+    background: #fff url('../../img/loader.gif') no-repeat 50%;
+    opacity: .5;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 100%;
+}
+.content {
+    padding-top: 46px !important;
+    padding-bottom: 10px !important;
+}

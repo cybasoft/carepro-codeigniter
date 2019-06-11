@@ -12,9 +12,9 @@ class Dashboard extends CI_Controller
     /*
      * default pagek
      */
-    function index($daycare_id = NULL)
+    function index()
     {            
-        $this->session->set_userdata('daycare_id',$daycare_id);
+        $daycare_id = $this->session->userdata('daycare_id');       
         $this->load->model('my_invoice', 'invoice');
         if($daycare_id === NULL){                     
             if(is(['super','admin','manager'])) {
@@ -30,7 +30,7 @@ class Dashboard extends CI_Controller
             } else {
                 $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
             }
-        }else{
+        }else{           
             $daycare_details = $this->db->get_where('daycare', array(
                 'daycare_id' => $daycare_id
             ));
