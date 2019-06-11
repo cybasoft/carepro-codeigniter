@@ -65,8 +65,9 @@ class RegistrationController extends CI_Controller
     }
 
     //create parent
-    public function create_parent($daycare_id = NULL)
+    public function create_parent()
     {
+        $daycare_id = $this->session->userdata('daycare_id');        
         $tables = $this->config->item('tables', 'ion_auth');
 
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
@@ -82,7 +83,7 @@ class RegistrationController extends CI_Controller
             set_flash(['email', 'first_name', 'last_name', 'phone', 'password']);
             validation_errors();
             flash('danger');
-            redirect($daycare_id . '/register');
+            redirect('register');
         }
     }
 }

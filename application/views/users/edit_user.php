@@ -8,7 +8,7 @@
                     <span  class="sr-only"><?php echo lang('close'); ?></span>
                 </button>
             </div>
-            <?php echo form_open_multipart('users/update/'.$daycare_id.'/'.$user->id); ?>
+            <?php echo form_open_multipart('users/update/'.$user->id); ?>
 
             <?php echo form_hidden('user_id', $user->id); ?>
             <div class="modal-body">

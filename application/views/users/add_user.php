@@ -8,7 +8,7 @@
                     <span  class="sr-only"><?php echo lang('close'); ?></span>
                 </button>
             </div>
-            <?php echo form_open($daycare_id."/users/create"); ?>
+            <?php echo form_open("users/create"); ?>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">

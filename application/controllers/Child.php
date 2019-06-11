@@ -27,8 +27,9 @@ class Child extends CI_Controller
      * default page
      * @return void
      */
-    public function index($daycare_id = NULL,$id)
+    public function index($id)
     {        
+        $daycare_id = $this->session->userdata('daycare_id');
         if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -45,8 +46,9 @@ class Child extends CI_Controller
         dashboard_page($this->module . 'index', compact('child', 'pickups'),$daycare_id);
     }
 
-    public function store($daycare_id = NULL)
+    public function store()
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
@@ -72,8 +74,9 @@ class Child extends CI_Controller
      * @return void
      */
 
-    public function update($daycare_id = NULL)
+    public function update()
     {      
+        $daycare_id = $this->session->userdata('daycare_id');
         allow(['admin', 'manager', 'staff']);
 
         if ($this->_validate_child()) {
@@ -127,8 +130,9 @@ class Child extends CI_Controller
         page($this->module . 'accounting/index', $data);
     }
 
-    public function reports($daycare_id,$id)
-    {       
+    public function reports($id)
+    {   
+        $daycare_id = $this->session->userdata('daycare_id');
         if (!authorizedToChild($this->user->uid(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();

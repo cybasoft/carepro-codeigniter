@@ -18,8 +18,9 @@ class Health extends CI_Controller
         $this->title = lang('child').'-'.lang('health');
     }
 
-    function index($daycare_id,$id)
+    function index($id)
     {        
+        $daycare_id = $this->session->userdata('daycare_id');
         if(!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();

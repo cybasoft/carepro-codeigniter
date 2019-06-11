@@ -10,7 +10,7 @@
 					<img style="width:110px;height:108px;margin-right:5px;" class="img-thumbnail" src="<?php echo $this->child->photo($child->photo); ?>" />
 				</div>
 				<div class="col-xs-8">
-					<a class="name" href="<?php echo site_url($daycare_id.'/child/' . $child->id); ?>">
+					<a class="name" href="<?php echo site_url('child/' . $child->id); ?>">
 						<?php echo $child->last_name . ', ' . $child->first_name; ?>
 					</a>
 					<div class="born">

@@ -65,7 +65,7 @@
 
     <div class="col-lg-9 col-md-8 col-sm-8">
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url($daycare['daycare_id'].'/children'); ?>'">
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
                 <div class="info-box">
                     <span class="info-box-icon bg-maroon"><i class="fa fa-user-alt"></i></span>
                     <div class="info-box-content">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url($daycare['daycare_id'].'/parents'); ?>'">
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('parents'); ?>'">
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
                     <div class="info-box-content">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url($daycare['daycare_id'].'/users'); ?>'">
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
                 <div class="info-box">
                     <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
                     <div class="info-box-content">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url($daycare['daycare_id'].'/users'); ?>'">
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('users'); ?>'">
                 <div class="info-box">
                     <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
                     <div class="info-box-content">

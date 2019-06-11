@@ -1,6 +1,6 @@
 <div class="modal fade" id="updateChildModal" tabindex="-1" role="dialog" aria-labelledby="updateChildModalLabel">
     <div class="modal-dialog" role="document">
-        <?php echo form_open($daycare_id.'/child/'.$child->id); ?>
+        <?php echo form_open('child/'.$child->id); ?>
         <?php echo form_hidden('child_id', $child->id); ?>
         <div class="modal-content">
             <div class="modal-header">

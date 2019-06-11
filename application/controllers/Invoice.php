@@ -44,9 +44,10 @@ class Invoice extends CI_Controller
 
 
 
-    function view($daycare_id,$id)
+    function view($id)
     {
-        $invoice = $this->invoice->all($id);        
+        $daycare_id = $this->session->userdata('daycare_id');
+        $invoice = $this->invoice->all($id);   
 
         if(empty($invoice))
             show_404();
@@ -186,15 +187,17 @@ class Invoice extends CI_Controller
     /*
      * create invoice
      */
-    function create($daycare_id,$id)
+    function create($id)
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         allow(['admin', 'manager', 'staff']);
         $child = $this->child->first($id);
         page($this->module.'create_invoice', compact('child','daycare_id'));
     }
 
-    function store($daycare_id,$id)
+    function store($id)
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         allow(['admin', 'manager', 'staff']);
 
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
@@ -215,7 +218,7 @@ class Invoice extends CI_Controller
             flash('danger');
             redirectPrev();
         }
-        redirect($daycare_id.'/invoice/'.$invoice.'/view');
+        redirect('invoice/'.$invoice.'/view');
     }
 
     function is_money($money)
@@ -274,8 +277,9 @@ class Invoice extends CI_Controller
      * @param string $action
      * @param int    $send
      */
-    function pdf($daycare_id,$id)
+    function pdf($id)
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         //get child data
         $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
         $invoice_items = $this->invoice->getInvoiceItems($id);

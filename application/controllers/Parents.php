@@ -15,8 +15,9 @@ class Parents extends CI_Controller
         $this->title = lang('parents');
     }
 
-    function index($daycare_id = NULL)
+    function index()
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         $daycare_details = $this->db->get_where('daycare', array(
             'daycare_id' => $daycare_id
         ));

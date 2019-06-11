@@ -16,8 +16,9 @@ class UserController extends CI_Controller
     }
 
     //redirect if needed, otherwise display the user list
-    function index($daycare_id = NULL)
+    function index()
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         //list the users
         $daycare_details = $this->db->get_where('daycare',array(
               'daycare_id' => $daycare_id
@@ -48,8 +49,9 @@ class UserController extends CI_Controller
     }
 
     //create a new user
-    function create($daycare_id = NULL)
+    function create()
     {        
+        $daycare_id = $this->session->userdata('daycare_id');
         if($daycare_id !== NULL){
             $daycare_details = $this->db->get_where('daycare',array(
                 'daycare_id' => $daycare_id
@@ -116,8 +118,9 @@ class UserController extends CI_Controller
     }
 
     //edit a user
-    function update($daycare_id = NULL,$id=NULL)
-    {       
+    function update($id=NULL)
+    {   
+        $daycare_id = $this->session->userdata('daycare_id');
         allow(['admin', 'manager']);
         $id = $this->input->post('user_id');
         //validate form input
@@ -194,7 +197,7 @@ class UserController extends CI_Controller
             flash('danger', lang('request_error'));
         }
         $this->send_user_status_email($user,$user_status,$daycare_id);
-        redirect($daycare_id."/users", 'refresh');
+        redirect("users", 'refresh');
     }
 
     //deactivate the user
@@ -223,11 +226,12 @@ class UserController extends CI_Controller
             } else {
                 flash('info', lang('action_cancelled'));
             }
-            redirect($daycare_id."/users", 'refresh');
+            redirect("users", 'refresh');
         }
     }
-    function active_deactive_user($daycare_id = NULL, $user_status = NULL){              
-
+    function active_deactive_user($user_status = NULL)
+    {              
+        $daycare_id = $this->session->userdata('daycare_id');
         $id = $this->input->post('user_id');        
         if($user_status === "deactivate"){
             $this->deactivate($id,$daycare_id,$user_status);           
@@ -260,7 +264,9 @@ class UserController extends CI_Controller
              $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
          }
     }
-    function change_status($daycare_id = NULL,$user_status = NULL,$id = NULL){
+    function change_status($id = NULL){
+        $user_status = $this->uri->segment(2);
+        $daycare_id = $this->session->userdata('daycare_id');
         $data = array(
             'id' => $id,
             'user_status' => $user_status
@@ -271,7 +277,7 @@ class UserController extends CI_Controller
      * ensure all tables exist
      */
 
-    function delete($daycare_id = NULL,$id = NULL)
+    function delete($id = NULL)
     {        
         allow('admin');
 
@@ -282,7 +288,7 @@ class UserController extends CI_Controller
         else
             flash('danger', lang('request_error'));
 
-        redirect($daycare_id.'/users', 'refresh');
+        redirect('users', 'refresh');
     }
 
     // create a new group

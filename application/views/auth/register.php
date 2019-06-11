@@ -3,7 +3,7 @@
         color: #ffffff;
     }
 </style>
-<?php echo form_open($data['daycare_id'].'/create_parent', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
+<?php echo form_open('create_parent', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
 <div class="text-center" style="position:absolute;top:0;right:150px">
     <a href="<?php echo site_url(); ?>">
     <?php if ($data['logo'] !== '') { ?>
