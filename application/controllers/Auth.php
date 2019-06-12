@@ -305,7 +305,7 @@ class Auth extends CI_Controller
     function forgot()
     {
         if (!empty($this->input->post('email'))) {
-            $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');
+            $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');            
             if ($this->form_validation->run() == false) {
                 $this->data['identity_label'] = 'email';
                 validation_errors();

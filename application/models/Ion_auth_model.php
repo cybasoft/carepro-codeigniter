@@ -536,7 +536,7 @@ class Ion_auth_model extends CI_Model
      * @return bool
      */
     public function forgotten_password($identity)
-    {
+    {        
         if (empty($identity)) {
             $this->trigger_events(['post_forgotten_password', 'post_forgotten_password_unsuccessful']);
             return FALSE;
