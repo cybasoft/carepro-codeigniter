@@ -25,8 +25,9 @@ class Calendar extends CI_Controller
     /*
      * display main page
      */
-    function index($daycare_id = NULL)
+    function index()
     {
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $this->title = lang('calendar');
         if (is('parent')) :
             dashboard_page('parent/calendar',$data = [], $daycare_id);
@@ -38,9 +39,11 @@ class Calendar extends CI_Controller
     function events()
     {
         $this->db->order_by('id');
+        $active_user = $this->user->uid();       
         $query = $this->db
             ->select('*,start as start_date,end as end_date')
-            ->get('calendar')->result();
+            ->where('user_id',$active_user)
+            ->get('calendar')->result();      
         // sending the encoded result to success page
         echo json_encode($query);
     }

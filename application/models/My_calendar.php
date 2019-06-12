@@ -35,6 +35,7 @@ class My_calendar extends CI_Model
 			'end' => $this->input->post('end'),
 			'end_t' => $this->input->post('end_t'),
 			'description' => $this->input->post('desc'),
+			'user_id' => $this->user->uid(),
 			'allDay' => $allDay
 		);
 

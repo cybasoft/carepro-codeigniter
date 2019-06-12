@@ -29,7 +29,7 @@ class Child extends CI_Controller
      */
     public function index($id)
     {        
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');       
         if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -48,7 +48,7 @@ class Child extends CI_Controller
 
     public function store()
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');        
         allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
@@ -76,7 +76,7 @@ class Child extends CI_Controller
 
     public function update()
     {      
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
 
         if ($this->_validate_child()) {
@@ -132,7 +132,7 @@ class Child extends CI_Controller
 
     public function reports($id)
     {   
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if (!authorizedToChild($this->user->uid(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -227,8 +227,9 @@ class Child extends CI_Controller
         $this->load->view($this->module . 'assign_parent', compact('child_id'));
     }
 
-    public function doAssignParent($daycare_id,$child_id)
+    public function doAssignParent($child_id)
     {        
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
 
         $this->child_id = $child_id;

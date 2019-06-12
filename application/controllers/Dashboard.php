@@ -14,9 +14,9 @@ class Dashboard extends CI_Controller
      */
     function index()
     {            
-        $daycare_id = $this->session->userdata('daycare_id');       
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $this->load->model('my_invoice', 'invoice');
-        if($daycare_id === NULL){                     
+        if($daycare_id === NULL){
             if(is(['super','admin','manager'])) {
                 page('dashboard/home');
     

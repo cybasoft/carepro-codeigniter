@@ -21,8 +21,8 @@ $route['reset/(:any)'] = 'auth/reset/$1';
 //accounting
 $route['new_invoice'] = 'invoice/create_invoice';
 
-// $route['settings/(:any)'] = 'settings/$1';
-$route['(.*)/settings'] = 'settings/index/$1';
+$route['settings/(:any)'] = 'settings/index/$1';
+// $route['(.*)/settings'] = 'settings/index/$1';
 
 //users
 $route['users'] = 'userController/index';
@@ -39,11 +39,13 @@ $route['groups/:num'] = 'userController/edit_group/$1';
 
 //calendar
 // $route['calendar/(:any)'] = 'calendar/$1';
-$route['(.*)/calendar'] = 'calendar/index/$1';
+// $route['(.*)/calendar'] = 'calendar/index/$1';
+$route['calendar'] = 'calendar/index';
 
 //children
 // $route['children/(:any)'] = 'children/$1';
-$route['(.*)/children'] = 'children/index/$1';
+// $route['(.*)/children'] = 'children/index/$1';
+$route['children'] = 'children/index';
 
 //child
 $route['child/register']['post'] = 'child/store';
@@ -53,10 +55,10 @@ $route['child/(:num)']['post'] = 'child/update/$1';
 // $route['(.*)/child/(:num)']['get'] = 'child/index/$1/$2';
 // $route['(.*)/child/(:num)']['post'] = 'child/update/$1';
 $route['child/(:num)/uploadPhoto'] = 'child/uploadPhoto/$1';
-// $route['child/(:num)/assignParent']['get'] = 'child/assignParent/$1';
-// $route['child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1';
-$route['(.*)/child/(:num)/assignParent']['get'] = 'child/assignParent/$1/$2';
-$route['(.*)/child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1/$2';
+$route['child/(:num)/assignParent']['get'] = 'child/assignParent/$1';
+$route['child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1';
+// $route['(.*)/child/(:num)/assignParent']['get'] = 'child/assignParent/$1/$2';
+// $route['(.*)/child/(:num)/assignParent']['post'] = 'child/doAssignParent/$1/$2';
 $route['child/(:num)/(:num)/removeParent'] = 'child/removeParent/$1/$2';
 $route['child/checkInOut/(:num)'] = 'child/checkInOut/$1';
 
@@ -123,7 +125,8 @@ $route['photos/(:any)/:num'] = 'photos/$1';
 //parents
 $route['parents/:any'] = 'parents/index/$1';
 // $route['(.*)/parents'] = 'parents/index/$1';
-$route['(.*)/parents/(:any)/(:any)'] = 'parents/parents/$1/$2/$3';
+// $route['(.*)/parents/(:any)/(:any)'] = 'parents/parents/$1/$2/$3';
+$route['parents/(:any)/(:any)'] = 'parents/parents/$1/$2';
 
 //parent
 $route['parent/(:any)'] = 'ParentController/$1';
@@ -133,7 +136,8 @@ $route['news'] = 'NewsController/index';
 $route['news/(:any)'] = 'NewsController/$1';
 $route['news/(:any)/:num'] = 'NewsController/$1';
 
-$route['(.*)/lockscreen'] = 'dashboard/lockscreen/$1';
+// $route['(.*)/lockscreen'] = 'dashboard/lockscreen/$1';
+$route['lockscreen'] = 'dashboard/lockscreen';
 $route['invoice/(:num)/stripe-pay'] = 'invoice/stripePayment/$1';
 
 //reports
@@ -165,7 +169,7 @@ $route['notes/(:any)/:num'] = 'notes/$1';
 
 //files
 // $route['files'] = 'files/index';
-$route['(.*)/files'] = 'files/index/$1';
+// $route['(.*)/files'] = 'files/index/$1';
 $route['files/(:any)'] = 'files/$1';
 
 //food
@@ -217,18 +221,25 @@ $route['create_parent'] = 'RegistrationController/create_parent';
 
 //send remainder email
 $route['reminder'] = 'EmailreminderController/send_reminder_email';
-$route['(.*)/dashboard'] = 'dashboard/index/$1'; //daycare dashboard
-$route['(.*)/logout'] = 'auth/logout/$1'; //daycare login
+// $route['(.*)/dashboard'] = 'dashboard/index/$1'; //daycare dashboard
+// $route['(.*)/logout'] = 'auth/logout/$1'; //daycare login
 $route['store_stripe'] = 'DaycareController/store_stripe_detail';
 
 //profile route
-$route['(.*)/profile'] = 'Profile/index/$1';
-$route['(.*)/profile/update_user'] = 'Profile/update_user_data/$1';
-$route['(.*)/profile/update_user_email'] = 'profile/update_email/$1';
-$route['(.*)/profile/change_user_password'] = 'profile/change_password/$1';
-$route['(.*)/profile/change_user_pin'] = 'profile/change_pin/$1';
-$route['(.*)/profile/change_reset_password'] = 'profile/reset_password/$1';
+// $route['(.*)/profile'] = 'Profile/index/$1';
+// $route['(.*)/profile/update_user'] = 'Profile/update_user_data/$1';
+// $route['(.*)/profile/update_user_email'] = 'profile/update_email/$1';
+// $route['(.*)/profile/change_user_password'] = 'profile/change_password/$1';
+// $route['(.*)/profile/change_user_pin'] = 'profile/change_pin/$1';
+// $route['(.*)/profile/change_reset_password'] = 'profile/reset_password/$1';
 // $route['(.*)/users/create'] = "UserController/create/$1";
+
+$route['profile'] = 'Profile/index';
+$route['profile/update_user'] = 'Profile/update_user_data';
+$route['profile/update_user_email'] = 'profile/update_email';
+$route['profile/change_user_password'] = 'profile/change_password';
+$route['profile/change_user_pin'] = 'profile/change_pin';
+$route['profile/change_reset_password'] = 'profile/reset_password';
 $route['users/create'] = "UserController/create";
 
 $route['users/view/(.*)/(:num)'] = 'UserController/view/$1/$2';

@@ -26,7 +26,7 @@ class Children extends CI_Controller
      */
     public function index()
     {        
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if (is('parent')) {
             $children = $this->parent->getChildren();
             dashboard_page('parent/parent_dashboard', compact('children'),$daycare_id);

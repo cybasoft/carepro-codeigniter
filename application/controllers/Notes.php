@@ -17,7 +17,7 @@ class notes extends CI_Controller
 
     function index($id)
     {       
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if(!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();

@@ -18,7 +18,7 @@ class UserController extends CI_Controller
     //redirect if needed, otherwise display the user list
     function index()
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         //list the users
         $daycare_details = $this->db->get_where('daycare',array(
               'daycare_id' => $daycare_id
@@ -51,7 +51,7 @@ class UserController extends CI_Controller
     //create a new user
     function create()
     {        
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if($daycare_id !== NULL){
             $daycare_details = $this->db->get_where('daycare',array(
                 'daycare_id' => $daycare_id
@@ -120,7 +120,7 @@ class UserController extends CI_Controller
     //edit a user
     function update($id=NULL)
     {   
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager']);
         $id = $this->input->post('user_id');
         //validate form input
@@ -231,7 +231,7 @@ class UserController extends CI_Controller
     }
     function active_deactive_user($user_status = NULL)
     {              
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $id = $this->input->post('user_id');        
         if($user_status === "deactivate"){
             $this->deactivate($id,$daycare_id,$user_status);           
@@ -266,7 +266,7 @@ class UserController extends CI_Controller
     }
     function change_status($id = NULL){
         $user_status = $this->uri->segment(2);
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $data = array(
             'id' => $id,
             'user_status' => $user_status

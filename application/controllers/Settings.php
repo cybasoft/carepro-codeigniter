@@ -19,8 +19,9 @@ class Settings extends CI_Controller
         $this->title = lang('settings');
     }
 
-    function index($daycare_id = NULL)
+    function index()
     {
+        $daycare_id = $this->session->userdata('owner_daycare_id');        
         if(session('company_demo_mode') ==1){
             allow('super');
         }

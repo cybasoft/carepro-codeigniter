@@ -16,7 +16,7 @@ class Photos extends CI_Controller
 
     function index($id)
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $child = $this->child->first($id);
 
         if(!authorizedToChild($this->user->uid(), $child->id)) {

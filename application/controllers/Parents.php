@@ -17,7 +17,7 @@ class Parents extends CI_Controller
 
     function index()
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $daycare_details = $this->db->get_where('daycare', array(
             'daycare_id' => $daycare_id
         ));
@@ -47,11 +47,12 @@ class Parents extends CI_Controller
     }
 
 
-    function parents($daycare_id = NULL)
+    function parents()
     {
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
         $parents = $this->parent->parents();
-        $child_id = $this->uri->segment(4);
+        $child_id = $this->uri->segment(3);
         $this->load->view('child/assign_parent', compact('parents', 'child_id', 'daycare_id'));
     }
 

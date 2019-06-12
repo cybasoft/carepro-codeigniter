@@ -18,7 +18,7 @@ class BillingController extends CI_Controller
 
     function index($id)
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $child_id = $id;
         $child = $this->child->first($child_id);
         $invoices = $this->invoice->childInvoices($child_id);

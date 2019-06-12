@@ -46,7 +46,7 @@ class Invoice extends CI_Controller
 
     function view($id)
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $invoice = $this->invoice->all($id);   
 
         if(empty($invoice))
@@ -189,7 +189,7 @@ class Invoice extends CI_Controller
      */
     function create($id)
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
         $child = $this->child->first($id);
         page($this->module.'create_invoice', compact('child','daycare_id'));
@@ -197,7 +197,7 @@ class Invoice extends CI_Controller
 
     function store($id)
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
 
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
@@ -279,7 +279,7 @@ class Invoice extends CI_Controller
      */
     function pdf($id)
     {
-        $daycare_id = $this->session->userdata('daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         //get child data
         $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
         $invoice_items = $this->invoice->getInvoiceItems($id);

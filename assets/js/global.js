@@ -211,8 +211,7 @@ $(document).ready(function () {
 
     $('.assign-parent-btn').click(function () {
         var id = $(this).attr('id');
-        var daycare_id = $(this).data('daycare-id');
-        $('.modals-loader').load(site_url + daycare_id +'/parents/parents/' + id).modal('show')
+        $('.modals-loader').load(site_url +'/parents/parents/' + id).modal('show')
     });
 
     new List('conversations', {valueNames: ['name'], page: 10, pagination: true});
