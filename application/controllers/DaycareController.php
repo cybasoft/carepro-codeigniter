@@ -131,9 +131,8 @@ class DaycareController extends CI_Controller
         if($data){
             $email = $data['email'];
             $password = $data['password'];
-            $daycare_id = $data['daycare_id'];
             if ($this->ion_auth->login($email, $password)) {
-                redirect($daycare_id . '/dashboard', 'refresh');
+                redirect('dashboard', 'refresh');
             }
         }
     }

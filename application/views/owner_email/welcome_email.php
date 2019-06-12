@@ -22,7 +22,7 @@
                 <h2 style="color: #03a9f4;margin-bottom:5px;"> Welcome to Daycarepro app</h2>
                 Visit your dashboard from here: <br />
                 <p style="margin-top:28px;">
-                    <a href="<?php echo base_url(); ?><?php echo $daycare_id; ?>/login" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit Dashboard</a><br /><br /></p>
+                    <a href="<?php echo base_url(); ?>/login" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit Dashboard</a><br /><br /></p>
 
                 <p style="font-size: 20px">Features of Daycare:</p>
                 <p style="font-size: 16px;text-align:center">Invite admin, staff and parent</p>

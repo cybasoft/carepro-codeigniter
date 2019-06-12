@@ -26,7 +26,7 @@
                activated for daycarepro app.<br />
                Visit Link: <br />
                <p>
-                  <a href="<?php echo base_url(); ?><?php echo $daycare_id; ?>/login" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit Dashboard</a>
+                  <a href="<?php echo base_url(); ?>/login" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit Dashboard</a>
                </p>
             <?php endif; ?>
          </p>
