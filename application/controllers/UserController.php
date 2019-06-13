@@ -262,6 +262,11 @@ class UserController extends CI_Controller
          $this->email->message($body);        //Send mail
          if ($this->email->send()) {
              $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+         }else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
          }
     }
     function change_status($id = NULL){

@@ -78,6 +78,10 @@ class StripeController extends CI_Controller
             $this->change_owner_status($to,$activation_code);
         }   
         else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";           
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
             $this->session->set_flashdata("subscription_error","Enable to sent verification email. Please try again.");
         }
     }

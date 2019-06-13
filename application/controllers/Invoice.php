@@ -2,7 +2,7 @@
 use Dompdf\Options;
 use Dompdf\FrameReflower\Page;
 
-if(!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @file      : invoice
@@ -25,20 +25,20 @@ class Invoice extends CI_Controller
         $this->payments_db = 'accnt_payments';
         $this->load->model('My_child', 'child');
         $this->load->model('My_invoice', 'invoice');
-        $this->title = lang('child').'-'.lang('invoice');
+        $this->title = lang('child') . '-' . lang('invoice');
     }
 
     function index()
     {
         $child_id = $this->uri->segment(2);
-        if(!authorizedToChild($this->user->uid(),$child_id)) {
+        if (!authorizedToChild($this->user->uid(), $child_id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
         }
 
         $child = $this->child->first($child_id);
         $invoices = $this->invoice->all(null, $child_id);
-        page($this->module.'index', compact('child', 'invoices'));
+        page($this->module . 'index', compact('child', 'invoices'));
     }
 
 
@@ -47,22 +47,22 @@ class Invoice extends CI_Controller
     function view($id)
     {
         $daycare_id = $this->session->userdata('owner_daycare_id');
-        $invoice = $this->invoice->all($id);   
+        $invoice = $this->invoice->all($id);
 
-        if(empty($invoice))
+        if (empty($invoice))
             show_404();
 
-        $item = $this->db->get_where('invoice_items',array(
+        $item = $this->db->get_where('invoice_items', array(
             'invoice_id' => $invoice[0]->id
         ));
         $item_data = $item->result_array();
-              
+
         $child = $this->child->get($invoice[0]->child_id);
 
         $subTotal = $this->invoice->subTotal($invoice[0]->id);
         $amountPaid = $this->invoice->amountPaid($invoice[0]->id);
         $amountDue = $this->invoice->amountDue($invoice[0]->id);
-        page($this->module.'invoice_view', compact('invoice', 'child', 'subTotal', 'amountPaid', 'amountDue' ,'daycare_id'));
+        page($this->module . 'invoice_view', compact('invoice', 'child', 'subTotal', 'amountPaid', 'amountDue', 'daycare_id'));
     }
 
     function views($invoice_id)
@@ -74,7 +74,8 @@ class Invoice extends CI_Controller
         $totalPaid = $this->invoice->amountPaid($invoice->id);
         $totalDue = (float)$subTotal - (float)$totalPaid;
         $totalTax = 0;
-        page($this->module.'invoice_view',
+        page(
+            $this->module . 'invoice_view',
             compact(
                 'invoice',
                 'child',
@@ -83,7 +84,8 @@ class Invoice extends CI_Controller
                 'totalTax',
                 'totalPaid',
                 'totalDue'
-            ));
+            )
+        );
     }
 
     function stripePayment($invoice_id)
@@ -91,10 +93,10 @@ class Invoice extends CI_Controller
         $error = null;
 
         //check whether stripe token is not empty
-        if(!empty($_POST['stripeToken'])) {
+        if (!empty($_POST['stripeToken'])) {
 
             $token = $_POST['stripeToken'];
-            require_once APPPATH."third_party/stripe/init.php";
+            require_once APPPATH . "third_party/stripe/init.php";
 
             $user = $this->user->get(user_id());
 
@@ -105,7 +107,7 @@ class Invoice extends CI_Controller
             $amoutDue = $this->invoice->amountDue($invoice_id);
             $child = $this->child->first($invoice->child_id);
 
-            if(ENVIRONMENT == 'production') {
+            if (ENVIRONMENT == 'production') {
                 $stripeKey = session('stripe_sk_live');
             } else {
                 $stripeKey = session('stripe_sk_test');
@@ -113,7 +115,7 @@ class Invoice extends CI_Controller
             \Stripe\Stripe::setApiKey($stripeKey);
 
             //check if user is already registered
-            if($user->stripe_customer_id == "") {
+            if ($user->stripe_customer_id == "") {
                 //add customer to stripe
                 $customer = $this->invoice->createStripeCustomer($user->email, $this->input->post('stripeToken'));
                 $stripeID = $customer->id;
@@ -122,7 +124,7 @@ class Invoice extends CI_Controller
             }
 
             $charge = $this->invoice->createStripeCharge($token, [
-                'amount' => moneyFormat($amoutDue)*100,
+                'amount' => moneyFormat($amoutDue) * 100,
                 'description' => "Invoice #$invoice_id for $child->first_name $child->last_name",
                 'invoice_id' => $invoice_id
             ]);
@@ -130,10 +132,10 @@ class Invoice extends CI_Controller
             //retrieve charge details
             $chargeJson = $charge->jsonSerialize();
             //check whether the charge is successful
-            if($chargeJson['amount_refunded'] == 0 && empty($chargeJson['failure_code']) && $chargeJson['paid'] == 1 && $chargeJson['captured'] == 1) {
-//                $amount = $chargeJson['amount'];
-//                $balance_transaction = $chargeJson['balance_transaction'];
-//                $currency = $chargeJson['currency'];
+            if ($chargeJson['amount_refunded'] == 0 && empty($chargeJson['failure_code']) && $chargeJson['paid'] == 1 && $chargeJson['captured'] == 1) {
+                //                $amount = $chargeJson['amount'];
+                //                $balance_transaction = $chargeJson['balance_transaction'];
+                //                $currency = $chargeJson['currency'];
                 $status = $chargeJson['status'];
 
                 //insert tansaction data into the database
@@ -146,8 +148,8 @@ class Invoice extends CI_Controller
                     'created_at' => date_stamp(),
                     'date_paid' => date('Y-m-d')
                 ]);
-                if($txn) {
-                    if($this->db->insert_id() && $status == 'succeeded') {
+                if ($txn) {
+                    if ($this->db->insert_id() && $status == 'succeeded') {
                         //$data['insertID'] = $this->db->insert_id();
                         //update status
                         $this->db->where('id', $invoice_id)->update('invoices', ['invoice_status' => "paid"]);
@@ -192,7 +194,7 @@ class Invoice extends CI_Controller
         $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
         $child = $this->child->first($id);
-        page($this->module.'create_invoice', compact('child','daycare_id'));
+        page($this->module . 'create_invoice', compact('child', 'daycare_id'));
     }
 
     function store($id)
@@ -205,9 +207,9 @@ class Invoice extends CI_Controller
         $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean|callback_is_money');
         $this->form_validation->set_rules('invoice_terms', lang('Invoice terms'), 'xss_clean');
 
-        if($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == TRUE) {
             $invoice = $this->invoice->createInvoice($id);
-            if($invoice > 0) {
+            if ($invoice > 0) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -218,17 +220,16 @@ class Invoice extends CI_Controller
             flash('danger');
             redirectPrev();
         }
-        redirect('invoice/'.$invoice.'/view');
+        redirect('invoice/' . $invoice . '/view');
     }
 
     function is_money($money)
     {
-        if(preg_match('/^\s*[$]?\s*((\d+)|(\d{1,3}(\,\d{3})+))(\.\d{2})?\s*$/', $money)) {
+        if (preg_match('/^\s*[$]?\s*((\d+)|(\d{1,3}(\,\d{3})+))(\.\d{2})?\s*$/', $money)) {
             return true;
         } else {
             $this->form_validation->set_message('is_money', "The %s field must contain a price (money) value");
             return false;
-
         }
     }
 
@@ -242,7 +243,7 @@ class Invoice extends CI_Controller
         $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean|callback_is_money');
         $this->form_validation->set_rules('qty', lang('quantity'), 'required|xss_clean');
 
-        if($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == TRUE) {
             $query = $this->db->insert('invoice_items', [
                 'invoice_id' => $id,
                 'item_name' => $this->input->post('item_name'),
@@ -250,7 +251,7 @@ class Invoice extends CI_Controller
                 'qty' => $this->input->post('qty'),
                 'price' => $this->input->post('price'),
             ]);
-            if($query) {
+            if ($query) {
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -269,7 +270,7 @@ class Invoice extends CI_Controller
             'invoice' => $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row(),
             'invoice_items' => $this->invoice->getInvoiceItems($invoice_id)
         );
-        $this->load->view($this->module.'invoice_print', $data);
+        $this->load->view($this->module . 'invoice_print', $data);
     }
 
     /**
@@ -285,7 +286,7 @@ class Invoice extends CI_Controller
         $invoice_items = $this->invoice->getInvoiceItems($id);
         $child = $this->child->first($invoice->child_id);
 
-        $daycare_details = $this->db->get_where('daycare',array(
+        $daycare_details = $this->db->get_where('daycare', array(
             'daycare_id' => $daycare_id
         ));
         $daycare_data = $daycare_details->row_array();
@@ -298,27 +299,27 @@ class Invoice extends CI_Controller
         $options->set('isHtml5ParserEnabled', true);
         $options->set('defaultFont', 'Courier');
 
-        $dompdf = new Dompdf($options);        
-        $dompdf->setPaper('A4', 'portrait');        
+        $dompdf = new Dompdf($options);
+        $dompdf->setPaper('A4', 'portrait');
 
-        $html = $this->load->view($this->module.'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'action', 'send','image'), true);
+        $html = $this->load->view($this->module . 'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'action', 'send', 'image'), true);
 
         $dompdf->loadHtml($html);
         $dompdf->render();
 
-        if(isset($_GET['dl']))
-            $dompdf->stream('invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf');
+        if (isset($_GET['dl']))
+            $dompdf->stream('invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf');
 
-        if(isset($_GET['send'])) {
+        if (isset($_GET['send'])) {
             $output = $dompdf->output();
 
-            $fileName = 'application/temp/invoice-'.$invoice->id.'_'.rand(111, 999).'.pdf';            
+            $fileName = 'application/temp/invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf';
             file_put_contents($fileName, $output);
 
-            $send_email = $this->sendInvoice($child, $fileName,$image);
-            if($send_email !== ""){
-                flash('error', sprintf(lang('No parent assigned to child'), $child->first_name)); 
-            }else{
+            $send_email = $this->sendInvoice($child, $fileName, $image);
+            if ($send_email !== "") {
+                flash('error', sprintf(lang('No parent assigned to child'), $child->first_name));
+            } else {
                 flash('success', sprintf(lang('Invoice has been send to parents of'), $child->first_name));
             }
         }
@@ -326,18 +327,18 @@ class Invoice extends CI_Controller
         redirectPrev();
     }
 
-    function sendInvoice($child, $fileName,$image)
+    function sendInvoice($child, $fileName, $image)
     {
         $this->load->config('email');
         $this->load->library('email');
-        
-        $parents = $this->child->getParents($child->id);
-        $parents_data = $parents->result();       
 
-        if(empty($parents_data)){
+        $parents = $this->child->getParents($child->id);
+        $parents_data = $parents->result();
+
+        if (empty($parents_data)) {
             $error = "no parent";
             return $error;
-        }else{
+        } else {
             foreach ($parents_data as $parent) {
                 // $data = [
                 //     'to' => $parent->email,
@@ -345,12 +346,12 @@ class Invoice extends CI_Controller
                 //     'message' => sprintf(lang('invoice_email_message'), $child->last_name),
                 //     'file' => $fileName
                 // ];
-    
+
                 // $this->mailer->send($data);                
-        
+
                 $email_data = array(
                     'parent_name' => $parent->first_name . ' ' . $parent->last_name,
-                    'child_name' => $child->first_name .' '. $child->last_name,
+                    'child_name' => $child->first_name . ' ' . $child->last_name,
                     'image' => $image,
                 );
                 $this->email->set_mailtype('html');
@@ -360,11 +361,18 @@ class Invoice extends CI_Controller
                 $this->email->to($to);
                 $this->email->subject('Child Invoice');
                 $this->email->attach($fileName);
-                $body= $this->load->view('owner_email/child_invoice_email', $email_data, true);
+                $body = $this->load->view('owner_email/child_invoice_email', $email_data, true);
                 $this->email->message($body);        //Send mail
-                $this->email->send();
+                if ($this->email->send()) {
+                    return true;
+                } else {
+                    $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+                    $logs .= $this->email->print_debugger('message');
+                    $logs .= "\n\r";
+                    file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
+                }
             }
-    
+
             @unlink($fileName);
             $error = "";
             return $error;
@@ -382,7 +390,7 @@ class Invoice extends CI_Controller
         $this->db->where('id', $invoice_id);
         $this->db->delete($this->invoice_db);
 
-        if($this->db->affected_rows() > 0) {
+        if ($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -392,13 +400,13 @@ class Invoice extends CI_Controller
     }
 
     function deleteItem($invoice_id, $item_id)
-    {       
+    {
         allow(['admin', 'manager']);
 
         $this->db->where('id', $item_id);
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
-        if($this->db->affected_rows() > 0) {
+        if ($this->db->affected_rows() > 0) {
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -407,17 +415,17 @@ class Invoice extends CI_Controller
         redirectPrev();
     }
 
-//update status
+    //update status
     function updateStatus($id)
     {
         allow(['admin', 'manager', 'staff']);
 
-        if($_POST) {
+        if ($_POST) {
             $data = array(
                 'invoice_status' => $this->input->post("invoice_status")
             );
             $query = $this->db->where('id', $id)->update($this->invoice_db, $data);
-            if($query) {
+            if ($query) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -429,14 +437,14 @@ class Invoice extends CI_Controller
     function updateTerms()
     {
         allow(['admin', 'manager', 'staff']);
-        if($_POST) {
+        if ($_POST) {
             $data = array(
                 'invoice_terms' => $this->input->post("invoice_terms")
             );
 
             $this->db->where('id', $this->input->post('invoice_id'));
 
-            if($this->db->update($this->invoice_db, $data)) {
+            if ($this->db->update($this->invoice_db, $data)) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
@@ -450,7 +458,7 @@ class Invoice extends CI_Controller
     function payments($child_id)
     {
         $data['payments'] = $this->invoice->payments($child_id);
-        page($this->module.'payments', $data);
+        page($this->module . 'payments', $data);
     }
 
     /**
@@ -463,14 +471,13 @@ class Invoice extends CI_Controller
         $this->form_validation->set_rules('method', lang('payment_method'), 'required|xss_clean');
         $this->form_validation->set_rules('remarks', lang('notes'), 'xss_clean');
 
-        if($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == TRUE) {
 
-            if($this->invoice->makePayment($invoice_id)) {
+            if ($this->invoice->makePayment($invoice_id)) {
                 flash('success', lang('request_success'));
             } else {
                 flash('danger', lang('request_error'));
             }
-
         } else {
             validation_errors();
             flash('danger');

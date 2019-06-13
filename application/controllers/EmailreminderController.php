@@ -65,6 +65,10 @@ class EmailreminderController extends CI_Controller
                                 if ($this->email->send()) {
                                     echo "Success";
                                 } else {
+                                    $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+                                    $logs .= $this->email->print_debugger('message');
+                                    $logs .= "\n\r";
+                                    file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
                                     echo "Error";
                                 }
                             } else if ($users['owner_status'] === 'confirmed') {
@@ -74,6 +78,10 @@ class EmailreminderController extends CI_Controller
                                 if ($this->email->send()) {
                                     echo "Success";
                                 } else {
+                                    $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+                                    $logs .= $this->email->print_debugger('message');
+                                    $logs .= "\n\r";
+                                    file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
                                     echo "Error";
                                 }
                             } elseif ($users['owner_status'] === 'subscribed') {
@@ -83,9 +91,13 @@ class EmailreminderController extends CI_Controller
                                 if ($this->email->send()) {
                                     echo "Success";
                                 } else {
+                                    $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+                                    $logs .= $this->email->print_debugger('message');
+                                    $logs .= "\n\r";
+                                    file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
                                     echo "Error";
                                 }
-                            }else{
+                            } else {
                                 echo "Success";
                             }
                             break;

@@ -83,6 +83,10 @@ class My_parent_registration extends CI_Model
             redirect('login');
         }   
         else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
             $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
             redirect('register');
         }

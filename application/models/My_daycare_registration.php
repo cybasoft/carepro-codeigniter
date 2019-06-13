@@ -156,6 +156,10 @@ class My_daycare_registration extends CI_Model
             return $status;
         }   
         else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";           
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
             $this->session->set_flashdata("subscription_error","Enable to sent welcome email. Please try again.");
         }
     }

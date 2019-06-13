@@ -209,7 +209,7 @@ $route['payment/(:any)'] = "DaycareController/email_verified/$1";
 $route['stripePost/(:any)']['post'] = "StripeController/stripePost/$1";
 
 //daycare login page
-$route['(.*)/login'] = 'Auth/login/$1';
+// $route['(.*)/login'] = 'Auth/login/$1';
 
 //subscription page
 $route['subscription'] = 'RegistrationController/subscription';

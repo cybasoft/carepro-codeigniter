@@ -24,10 +24,10 @@ class My_user_registration extends CI_Model
         $count = $query->num_rows();
         if ($count !== 0) {
             $activation_code = $this->generate_activation_code();
-        }       
+        }
 
         //get plan details
-        $get_plan = $this->db->get_where('subscription_plans',array(
+        $get_plan = $this->db->get_where('subscription_plans', array(
             'plan' => $this->session->userdata('plan'),
         ));
         $selected_plan = $get_plan->result();
@@ -41,11 +41,11 @@ class My_user_registration extends CI_Model
             'email' => $email,
             'password' => $password,
             'activation_code' => $activation_code,
-            'selected_plan' => $selected_plan[0]->id,          
+            'selected_plan' => $selected_plan[0]->id,
             'owner_status' => $owner_status[0]['id'],
             'active' => 0
         );
-        $status = $this->send_confirmation_email($email,$user_name,$activation_code,$data);
+        $status = $this->send_confirmation_email($email, $user_name, $activation_code, $data);
         return $status;
     }
 
@@ -56,7 +56,8 @@ class My_user_registration extends CI_Model
         $activation_code = random_string('alnum', 30);
         return $activation_code;
     }
-    public function insert_user($data, $activation_code){
+    public function insert_user($data, $activation_code)
+    {
         $user_data = array(
             'name' => $data['name'],
             'email' => $data['email'],
@@ -79,7 +80,8 @@ class My_user_registration extends CI_Model
     }
 
     //send confirmation email to owner
-    public function send_confirmation_email($user_email,$user_name, $activation_code,$data){        
+    public function send_confirmation_email($user_email, $user_name, $activation_code, $data)
+    {
         $this->load->config('email');
         $this->load->library('email');
 
@@ -96,23 +98,27 @@ class My_user_registration extends CI_Model
         $this->email->to($to);
         $this->email->subject('Email verification');
 
-        $body= $this->load->view('owner_email/confirm_email', $email_data, true);
-        $this->email->message($body);        //Send mail
-        if($this->email->send()){
-            $this->session->set_flashdata("verify_email","Please check your email to confirm your account.");
-            $this->insert_user($data,$activation_code);
+        $body = $this->load->view('owner_email/confirm_email', $email_data, true);
+        $this->email->message($body);  //Send mail        
+        if ($this->email->send()) {
+            $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+            $this->insert_user($data, $activation_code);
             $status = array(
                 'success' => $user_name,
                 'error' => ''
             );
-            return $status;            
-        }   
-        else{
+            return $status;
+        } else {   
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
             $status = array(
                 'success' => '',
                 'error' => 'error'
             );
-            return $status;            
+
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
+            return $status;
         }
     }
 }
