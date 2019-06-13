@@ -1032,7 +1032,12 @@ class Ion_auth_model extends CI_Model
                     flash('error', lang('login_unsuccessful_not_active'));
                     redirectPrev();
                     return FALSE;
-                }    
+                }
+                $daycare_details = $this->db->get_where('daycare', array(
+                    'id' => $user->daycare_id
+                ));
+                $daycare = $daycare_details->row_array();                
+                $this->session->set_userdata('owner_daycare_id',$daycare['daycare_id']);
                 $this->update_last_login($user->id);
                 $this->set_session($user);
                 $this->clear_login_attempts($identity);

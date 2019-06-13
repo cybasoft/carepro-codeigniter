@@ -55,7 +55,7 @@ class Child extends CI_Controller
             $register = $this->child->register(true,$daycare_id);            
             if (false !== $register) {
                 flash('success', lang('request_success'));
-                redirect($daycare_id.'/child/' . $register);
+                redirect('child/' . $register);
             } else {
                 flash('error', lang('request_error'));
             }
@@ -65,7 +65,7 @@ class Child extends CI_Controller
             validation_errors();
             flash('danger');
         }
-        redirect($daycare_id.'/children', 'refresh');
+        redirect('children', 'refresh');
     }
 
     /*
