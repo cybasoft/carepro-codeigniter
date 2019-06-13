@@ -99,10 +99,10 @@
                                 <img src="../assets/img/daycare/default-user-image.png" alt="daycare logo" class="ui-w-100 img_preview mr-3" id="img_preview">
                                 <div class="media-body" id="img_div">
                                     <label class="btn btn-outline-primary btn-sm change_btn mr-1 mt-4">
-                                        change
+                                        Change
                                         <input type="file" class="user-edit-fileinput" name="logo" value="<?php echo set_value('logo'); ?>" id="avatar" accept="image/*">
                                     </label>
-                                    <button type="button" class="btn btn-default btn-sm md-btn-flat mt-3 reset_btn">reset</button>
+                                    <button type="button" class="btn btn-default btn-sm md-btn-flat mt-3 reset_btn">Reset</button>
                                 </div>
                             </div>
                         </div>
