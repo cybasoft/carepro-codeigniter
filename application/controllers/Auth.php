@@ -49,10 +49,10 @@ class Auth extends CI_Controller
                 $daycare_details = $this->db->get_where('daycare', array(
                     'id' => $users['daycare_id']
                 ));
-                $daycare = $daycare_details->row_array();                
+                $daycare = $daycare_details->row_array();
                 if ($login == "1") {
                     $check_parent = $this->session->userdata("users");
-                    $this->session->set_userdata('owner_daycare_id',$daycare['daycare_id']);
+                    $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
                     $users_details = $this->db->get_where('users', array(
                         'email' => $email,
                     ));
@@ -105,8 +105,10 @@ class Auth extends CI_Controller
             $this->page('login', compact('data'));
         }
     }
-    function register($daycareId = NULL)
+    function register()
     {
+        $daycareId = $this->input->post('daycare');
+        $this->session->set_userdata('parent_daycare', $daycareId);
         if ($this->ion_auth->logged_in()) redirect('dashboard', 'refresh');
 
         $this->refreshCaptcha();
@@ -305,7 +307,7 @@ class Auth extends CI_Controller
     function forgot()
     {
         if (!empty($this->input->post('email'))) {
-            $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');            
+            $this->form_validation->set_rules('email', lang('email'), 'required|valid_email');
             if ($this->form_validation->run() == false) {
                 $this->data['identity_label'] = 'email';
                 validation_errors();

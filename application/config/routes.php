@@ -215,7 +215,7 @@ $route['stripePost/(:any)']['post'] = "StripeController/stripePost/$1";
 $route['subscription'] = 'RegistrationController/subscription';
 
 //parent registration
-$route['(.*)/register'] = 'auth/register/$1';
+// $route['(.*)/register'] = 'auth/register/$1';
 // $route['(.*)/create_parent'] = 'RegistrationController/create_parent/$1';
 $route['create_parent'] = 'RegistrationController/create_parent';
 
@@ -247,3 +247,4 @@ $route['users/view/(.*)/(:num)'] = 'UserController/view/$1/$2';
 $route['users/update/(:num)'] = 'UserController/update/$1';
 // $route['users/delete/(.*)/(:any)'] = 'UserController/delete/$1/$2';
 $route['users/delete/(:any)'] = 'UserController/delete/$1';
+$route['select_daycare'] = 'RegistrationController/select_daycare';

@@ -2,7 +2,7 @@
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">
-           <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
+            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
         </a>
     </div>
     <?php if (!empty($this->session->flashdata('success'))) : ?>
@@ -71,8 +71,8 @@
         </button>
     </div>
     <div class="container-login100-form-btn mt-2">
-            <?php echo anchor('register', lang('Parent Registration'), ['class' => 'login100-form-btn']); ?>
-        </div>
+        <?php echo anchor('select_daycare', lang('Parent Registration'), ['class' => 'login100-form-btn']); ?>
+    </div>
 
     <?php if (session('company_allow_registration') == TRUE) : ?>
         <div class="text-center p-t-46 p-b-20">
