@@ -5,7 +5,17 @@
     }
     #daycare,#daycare:focus {
         border-color: transparent;
-        box-shadow: 0 0 0 0rem rgba(0, 123, 255, .25);
+        box-shadow: 0 0 0 0rem rgba(0, 123, 255, .25) !important;        
+    }
+    .bootstrap-select .dropdown-toggle:focus{
+        outline: transparent !important;
+    }
+    .form-control:focus{
+        border: 1px solid #6675df !important;
+        box-shadow: 0 0 0 0rem rgba(0, 123, 255, .25) !important;
+    }
+    .dropdown-item.active, .dropdown-item:active{
+        background-color: #6675df !important;
     }
 </style>
 <?php echo form_open('register', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
@@ -18,9 +28,9 @@
 <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">
     <span class="focus-input100"></span>
     <span class="label-input100"><?php echo lang('Daycares'); ?></span>
-    <select id="daycare" class="form-control" required="" name="daycare">
+    <select id="daycare" class="form-control selectpicker" required="" name="daycare" data-live-search="true" style="display:block !important">
         <?php foreach ($daycares as $daycare) : ?>
-            <option value="<?php echo $daycare['daycare_id']; ?>"><?php echo $daycare['daycare_id']; ?></option>
+            <option data-tokens="<?php echo $daycare['id']; ?>" value="<?php echo $daycare['daycare_id']; ?>"><?php echo $daycare['name']; ?> (<?php echo $daycare['daycare_id']; ?>)</option>
         <?php endforeach; ?>
     </select>
 </div>

@@ -11,7 +11,9 @@
 
 
 <script src="<?php echo assets('plugins/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo assets('plugins/popper/popper.min.js'); ?>"></script>
 <script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
+<script src="<?php echo assets('plugins/bootstrap-select/js/bootstrap-select.min.js'); ?>"></script>
 <script src="<?php echo assets('js/login.js'); ?>"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/extras/jquery-ui.min.js"></script>
 <script>

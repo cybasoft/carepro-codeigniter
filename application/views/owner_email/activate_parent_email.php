@@ -21,7 +21,7 @@
             <p>
                 <a href="<?php echo base_url(); ?>parents" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit Parent Dashboard</a><br /><br />
             </p>
-            Thanks!<br />
+            Thanks!<br/>
             Daycarepro Team
             </a>
         </div>
