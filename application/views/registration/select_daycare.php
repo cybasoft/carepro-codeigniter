@@ -17,6 +17,9 @@
     .dropdown-item.active, .dropdown-item:active{
         background-color: #6675df !important;
     }
+    .dropdown-toggle,.dropdown-toggle:hover{
+        background: white;
+    }
 </style>
 <?php echo form_open('register', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
 <div class="text-center" style="position:absolute;top:0;right:150px">
