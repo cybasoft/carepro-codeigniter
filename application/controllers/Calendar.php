@@ -84,7 +84,7 @@ class Calendar extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $this->calendar->update_event();
         } else {
-            flash('danger', lang('request_error'));
+			flash('danger');
         }
         redirectPrev();
 

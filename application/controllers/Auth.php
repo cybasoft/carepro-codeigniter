@@ -49,7 +49,7 @@ class Auth extends CI_Controller
                 $daycare_details = $this->db->get_where('daycare', array(
                     'id' => $users['daycare_id']
                 ));
-                $daycare = $daycare_details->row_array();
+                $daycare = $daycare_details->row_array();                
                 if ($login == "1") {
                     $check_parent = $this->session->userdata("users");
                     $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
@@ -64,7 +64,10 @@ class Auth extends CI_Controller
                             redirect('dashboard', 'refresh');
                         }
                     }
-                } else {
+                } else if($login == 'error'){
+                    flash('error', 'Temporarily Locked Out.  Try again later.');
+                    redirect('login');
+                }else{
                     flash('error', 'Username or password is incorrect');
                     redirect('login');
                 }
