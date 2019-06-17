@@ -60,12 +60,15 @@ class My_calendar extends CI_Model
 		} else {
 			$allDay = 'false';
 		}
+		$start_date = date("Y-m-d", strtotime($this->input->post('start')));
+		$end_date = date("Y-m-d", strtotime($this->input->post('end')));
+		
 		// Values received via ajax
 		$data = array(
 			'title' => $this->input->post('title'),
-			'start' => $this->input->post('start'),
+			'start' => $start_date,
 			'start_t' => $this->input->post('start_t'),
-			'end' => $this->input->post('end'),
+			'end' => $end_date,
 			'end_t' => $this->input->post('end_t'),
 			'description' => $this->input->post('desc'),
 			'allDay' => $allDay
