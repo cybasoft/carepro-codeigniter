@@ -108,11 +108,16 @@ class UserController extends CI_Controller
         }
         //user vars
         $user = $this->ion_auth->user($id)->row();
+        $address_details = $this->db->get_where('address',array(
+            'id' => $user->address_id
+        ));
+        $address = $address_details->row();        
         $groups = $this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
         //pass the user to the view
         $myData = array(
             'user' => $user,
+            'address' => $address,
             'groups' => $groups,
             'currentGroups' => $currentGroups,
             'daycare_id' => $daycare_id
@@ -193,6 +198,12 @@ class UserController extends CI_Controller
             $activation = $this->ion_auth->activate($id);
         }
         if($activation) {
+            if($user['name'] === NULL){
+                $name = $user['first_name'] ." ". $user['last_name'];
+            }else{
+                $name = $user['name'];
+            }
+            logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
             //redirect them to the auth page
             flash('success', lang('user_activated'));
         } else {
@@ -222,8 +233,14 @@ class UserController extends CI_Controller
             }
             page($this->module.'deactivate_user', compact('id'));
         } else {
-            if($this->input->post('confirm') == 'yes') {
+            if($this->input->post('confirm') == 'yes') {                
+                if($user['name'] === NULL){
+                    $name = $user['first_name'] ." ". $user['last_name'];
+                }else{
+                    $name = $user['name'];
+                }
                 $this->ion_auth->deactivate($id);  
+                logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
                 $this->send_user_status_email($user,$user_status,$daycare_id);              
                 flash('warning', lang('user_deactivated'));
             } else {

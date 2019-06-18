@@ -766,6 +766,13 @@ class Ion_auth_model extends CI_Model
         } else {
             $active = 1;
         }
+
+        $address_data = array(
+            'phone' => $additional_data['phone']
+        );
+        $this->db->insert('address',$address_data);
+        $address_id = $this->db->insert_id();
+
         // Users table.
         $data = [
             'password' => $password,
@@ -774,6 +781,7 @@ class Ion_auth_model extends CI_Model
             'created_at' => date_stamp(),
             'last_login' => date_stamp(),
             'active' => $active,
+            'address_id' => $address_id
         ];
         // 'active' => ($manual_activation === FALSE ? 1 : 0),
 
@@ -1402,22 +1410,34 @@ class Ion_auth_model extends CI_Model
             return FALSE;
         }
 
+        $address_data = array(
+            'phone' => $data['phone'],
+            'address_line_1' => $data['address'],
+            'zip_code' => $data['pin']
+        );
+        $this->db->update('address',$address_data, ['id' => $user->address_id]);
+
+        $user_data = array(
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+        );
         // Filter the data passed
         $data = $this->_filter_data($this->tables['users'], $data);
 
         if (array_key_exists('password', $data) || array_key_exists('email', $data)) {
             if (array_key_exists('password', $data)) {
                 if (!empty($data['password'])) {
-                    $data['password'] = $this->hash_password($data['password']);
+                    $user_data['password'] = $this->hash_password($data['password']);
                 } else {
                     // unset password so it doesn't effect database entry if no password passed
-                    unset($data['password']);
+                    unset($user_data['password']);
                 }
             }
         }
 
         $this->trigger_events('extra_where');
-        $this->db->update($this->tables['users'], $data, ['id' => $user->id]);
+        $this->db->update($this->tables['users'], $user_data, ['id' => $user->id]);
         logEvent($id=NULL,"User {$data['first_name']} {$data['last_name']} has been updated.");
 
         if ($this->db->trans_status() === FALSE) {

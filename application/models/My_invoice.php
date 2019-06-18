@@ -165,7 +165,7 @@ class My_invoice extends CI_Model
      * @return bool
      */
     function createInvoice($id)
-    {
+    {        
         $data = array(
             'child_id' => $id,
             'date_due' => $this->input->post('date_due'),
@@ -185,6 +185,7 @@ class My_invoice extends CI_Model
             'qty' => $this->input->post('qty')
         );
         if($this->db->insert('invoice_items', $data2)) {
+            logEvent($user_id = NULL,"Invoice has been added for child with {$id}");
             $this->parent->notifyParents($id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $this->child->first($id)->first_name));
             return $invoice_id;
         }

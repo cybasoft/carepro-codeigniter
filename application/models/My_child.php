@@ -377,7 +377,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
 
-            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked out {$child_id} -{$this->child($child_id)->last_name}");
             return TRUE;
         }
         return FALSE;

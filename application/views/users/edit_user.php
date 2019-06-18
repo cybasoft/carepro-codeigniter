@@ -36,7 +36,7 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('Phone'), 'phone');
-                        echo form_input('phone', $user->phone, ['class' => 'form-control', 'required' => '']);
+                        echo form_input('phone', $address->phone, ['class' => 'form-control', 'required' => '']);
                         ?>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('pin'));
-                        echo form_input('pin', $user->pin, ['class' => 'form-control', 'required' => '']);
+                        echo form_input('pin', $address->zip_code, ['class' => 'form-control', 'required' => '']);
                         ?>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('address'));
-                        echo form_textarea('address', $user->address, ['class' => 'form-control']);
+                        echo form_textarea('address', $address->address_line_1, ['class' => 'form-control']);
                         ?>
                     </div>
                 </div>

@@ -252,6 +252,7 @@ class Invoice extends CI_Controller
                 'price' => $this->input->post('price'),
             ]);
             if ($query) {
+                logEvent($user_id = NULL,"Invoice Item has been added to invoice with id {$id}");
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -308,7 +309,7 @@ class Invoice extends CI_Controller
         $dompdf->render();
 
         if (isset($_GET['dl']))
-            $dompdf->stream('invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf');
+            $dompdf->stream('invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf');            
 
         if (isset($_GET['send'])) {
             $output = $dompdf->output();
@@ -391,6 +392,7 @@ class Invoice extends CI_Controller
         $this->db->delete($this->invoice_db);
 
         if ($this->db->affected_rows() > 0) {
+            logEvent($user_id = NULL,"Deleted Invoice with id {$invoice_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -407,6 +409,7 @@ class Invoice extends CI_Controller
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
         if ($this->db->affected_rows() > 0) {
+            logEvent($user_id = NULL,"Deleted Invoice item with id {$item_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

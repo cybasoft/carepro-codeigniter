@@ -46,6 +46,8 @@ class Pickup extends CI_Controller
         $upload_path = './assets/uploads/pickup';
         $this->db->where('id', $id);
         $q = $this->db->get('child_pickup');
+        $q_row = $q->row_array();
+
         foreach ($q->result() as $r) {
             if ($r->photo !== "") :
                 @unlink($upload_path . '/' . $r->photo);
@@ -55,6 +57,7 @@ class Pickup extends CI_Controller
         //delete entry
         $this->db->where('id', $id);
         if ($this->db->delete('child_pickup')) {
+            logEvent($id = NULL,"Removed pickup contact for child {$q_row['first_name']} {$q_row['last_name']}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

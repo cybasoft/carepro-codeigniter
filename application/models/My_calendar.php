@@ -97,7 +97,7 @@ class My_calendar extends CI_Model
 		$this->db->delete('calendar');
 		if($this->db->affected_rows() > 0) { //successful
 			//log event
-			logEvent($id = NULL,"Added calendar event {$this->getEvents($id)->row()->id}");
+			logEvent($user_id = NULL,"Deleted calendar event with id {$id}");
 			return 'true';
 		} else {
 			return 'true';
