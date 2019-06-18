@@ -33,7 +33,7 @@ class DaycareController extends CI_Controller
         if ($user_status === "3") {
             $this->load->view('registration/daycare_register', $data);
         } elseif ($user_status === "4") {
-            redirect('' . $daycare_id . '/login');
+            redirect('login');
         }
     }
 
@@ -122,7 +122,7 @@ class DaycareController extends CI_Controller
         } elseif ($user_status === "3") {
             redirect('daycare/' . $activation_code);
         } elseif ($user_status === "4") {
-            redirect('' . $daycare_id . '/login');
+            redirect('login');
         }
     }
 

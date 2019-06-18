@@ -304,12 +304,16 @@ function logged_in()
 * @param string
 * @return boolean
 */
-function logEvent($event)
+function logEvent($user_id=NULL,$event)
 {
-    $ci = &get_instance();
+    $ci = &get_instance();    
+   
+    if($user_id === NULL){
+        $user_id = $ci->user->uid();
+    }
     $data = [
-        'user_id' => $ci->user->uid(),
-        'date' => time(),
+        'user_id' => $user_id,
+        'date' => date("Y-m-d H:i:s",time()),
         'event' => $event,
     ];
     if ($ci->db->insert('event_log', $data))

@@ -72,16 +72,19 @@ class UserController extends CI_Controller
         $this->form_validation->set_rules('group', '', 'trim');
 
         if($this->form_validation->run() == true) {
+            $firstname = $this->input->post('first_name');
+            $lastname = $this->input->post('last_name');
             $additional_data = array(
                 'email' => strtolower($this->input->post('email')),
                 'password' => $this->input->post('password'),
-                'first_name' => $this->input->post('first_name'),
-                'last_name' => $this->input->post('last_name'),
+                'first_name' => $firstname,
+                'last_name' => $lastname,
                 'phone' => $this->input->post('phone'),
                 'daycare_id' => $owner_id
             );
             $group = $this->input->post('group');
             if($this->ion_auth->register($additional_data, $group)) {
+                logEvent($id = NULL,"User {$firstname} {$lastname} has been added to {$daycare['name']}.");
                 flash('success', lang('request_success'));
             }
         } else {
@@ -283,15 +286,19 @@ class UserController extends CI_Controller
      */
 
     function delete($id = NULL)
-    {        
+    {                
         allow('admin');
 
         $this->db->where('id', $id);
-        $this->db->delete('users');
-        if($this->db->affected_rows() > 0)
+        $this->db->delete('users');  
+        logEvent($user_id = NULL,"User with id {$id} deleted");
+      
+        if($this->db->affected_rows() > 0){
             flash('success', lang('request_success'));
-        else
+        }
+        else{
             flash('danger', lang('request_error'));
+        }
 
         redirect('users', 'refresh');
     }

@@ -44,7 +44,7 @@ class My_calendar extends CI_Model
 		if($this->db->affected_rows() > 0) { //successful
 			flash('success', lang('request_success'));
 			//log event
-			logEvent("Added calendar event {$data['title']}");
+			logEvent($id = NULL,"Added calendar event {$data['title']}");
 		} else {
 			flash('danger', lang('request_error'));
 		}
@@ -80,7 +80,7 @@ class My_calendar extends CI_Model
 		if($this->db->affected_rows() > 0) { //successful
 			flash('success', lang('request_success'));
 			//log event
-			logEvent("Updated calendar event {$data['title']}");
+			logEvent($id = NULL,"Updated calendar event {$data['title']}");
 		} else {
 			flash('danger', lang('request_error'));
 		}
@@ -97,7 +97,7 @@ class My_calendar extends CI_Model
 		$this->db->delete('calendar');
 		if($this->db->affected_rows() > 0) { //successful
 			//log event
-			logEvent("Added calendar event {$this->getEvents($id)->row()->id}");
+			logEvent($id = NULL,"Added calendar event {$this->getEvents($id)->row()->id}");
 			return 'true';
 		} else {
 			return 'true';

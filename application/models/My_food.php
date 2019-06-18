@@ -27,7 +27,7 @@ class My_food extends CI_Model
         );
         if($this->db->insert('child_foodpref', $data)) {
             //log
-            logEvent("Added food pref for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added food pref for child ID: {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_foodpref_subject'), lang('new_foodpref_message'));
             return true;

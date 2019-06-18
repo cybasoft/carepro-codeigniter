@@ -209,7 +209,7 @@ class My_child extends CI_Model
         }
 
         //log event
-        logEvent("Add child {$data['first_name']} {$data['last_name']}");
+        logEvent($id = NULL,"Add child {$data['first_name']} {$data['last_name']}");
 
         if($getID) {
             return $last_id;
@@ -290,7 +290,7 @@ class My_child extends CI_Model
         }       
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Updated child {$data['first_name']} {$data['last_name']}");
+            logEvent($id = NULL,"Updated child {$data['first_name']} {$data['last_name']}");
 
             flash('success', lang('request_success'));
         } else {
@@ -321,7 +321,7 @@ class My_child extends CI_Model
         $insert_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Added pickup contact for child ID {$id}");
+            logEvent($id = NULL,"Added pickup contact for child ID {$id}");
             $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
@@ -350,7 +350,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
 
-            logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}");
             return TRUE;
         }
         return FALSE;
@@ -377,7 +377,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
 
-            logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}");
             return TRUE;
         }
         return FALSE;

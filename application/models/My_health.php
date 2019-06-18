@@ -29,7 +29,7 @@ class my_health extends CI_Model
         $this->db->insert('child_allergy', $data);
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Added allergy for {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added allergy for {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_allergy_subject'), lang('new_allergy_message'));
             return TRUE;
@@ -55,7 +55,7 @@ class my_health extends CI_Model
         $this->db->insert('child_problems', $data);
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Added problem for {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added problem for {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_problem_subject'), lang('new_problem_message'));
             return TRUE;
@@ -81,7 +81,7 @@ class my_health extends CI_Model
         ];
         if($this->db->insert('child_contacts', $data)) {
             //log
-            logEvent("Added contact for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added contact for child ID: {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_contact_subject'), lang('new_contact_message'));
             return TRUE;
@@ -106,7 +106,7 @@ class my_health extends CI_Model
         ];
         if($this->db->insert('child_providers', $data)) {
             //log event
-            logEvent("Added provider for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added provider for child ID: {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_provider_subject'), lang('new_provider_message'));
             return TRUE;

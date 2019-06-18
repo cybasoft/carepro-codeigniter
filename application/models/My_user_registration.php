@@ -77,6 +77,7 @@ class My_user_registration extends CI_Model
             'group_id' => $group_id
         );
         $this->db->insert('users_groups', $users_groups);
+        logEvent($insert_id,"User {$data['name']} added to application");
     }
 
     //send confirmation email to owner

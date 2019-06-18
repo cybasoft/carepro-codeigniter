@@ -32,7 +32,7 @@ class My_meds extends CI_Model
 
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Added med for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added med for child ID: {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_medication_subject'), lang('new_medication_message').' <p><strong>'.$this->input->post('med_name').'</strong></p>');
             return TRUE;
