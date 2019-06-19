@@ -24,7 +24,7 @@
                             <img style="width:200px;height:150px;" src="<?php echo base_url('assets/uploads/meds/'.$medImg->photo); ?>"/>
                             <br/>
                             <?php echo $medImg->name; ?>
-                            <a class="delete" href="/meds/deleteMedicationPhoto/<?php echo $medImg->id; ?>"><i
+                            <a class="delete" href="../../meds/deleteMedicationPhoto/<?php echo $medImg->id; ?>"><i
                                         class="fa fa-trash-alt text-danger"></i> </a>
                         </div>
                     <?php endforeach; ?>

@@ -81,9 +81,14 @@ class Health extends CI_Controller
     function deleteAllergy($id)
     {
         allow(['admin', 'manager', 'staff']);
+        $allergy_detail = $this->db->get_where('child_allergy',array(
+            'id' => $id
+        ));
+        $allergies = $allergy_detail->row();        
         $this->db->where('id', $id);
         $this->db->delete('child_allergy');
         if($this->db->affected_rows() > 0) {
+            logEvent($user_id=NULL,"Deleted allergy ID: {$id} for child ID: {$allergies->child_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -119,7 +124,12 @@ class Health extends CI_Controller
     function deleteContact($id)
     {
         allow(['admin', 'manager', 'staff']);
+        $contact_details = $this->db->get_where('child_contacts',array(
+            'id' => $id
+        ));
+        $contacts = $contact_details->row();       
         if($this->db->where('id', $id)->delete('child_contacts')) {
+            logEvent($user_id = NULL,"Deleted child contact ID: {$id} for child ID: {$contacts->child_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));
@@ -157,7 +167,12 @@ class Health extends CI_Controller
     function deleteProvider($id)
     {
         allow(['admin', 'manager', 'staff']);
+        $providers_detail = $this->db->get_where('child_providers',array(
+            'id' => $id
+        ));
+        $providers = $providers_detail->row();       
         if($this->db->where('id', $id)->delete('child_providers')) {
+            logEvent($user_id = NULL,"Deleted provider ID: {$id} for child ID: {$providers->child_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));
@@ -197,7 +212,12 @@ class Health extends CI_Controller
     function deleteProblem($id)
     {
         allow(['admin', 'manager', 'staff']);
+        $problem_details = $this->db->get_where('child_problems',array(
+            'id' => $id
+        ));
+        $problems = $problem_details->row();       
         if($this->db->where('id', $id)->delete('child_problems')) {
+            logEvent($user_id = NULL,"Deleted child problem ID: {$id} for child ID: {$problems->child_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));

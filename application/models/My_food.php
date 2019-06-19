@@ -65,6 +65,7 @@ class My_food extends CI_Model
             ]);
 
         if($this->db->affected_rows() > 0) {
+            logEvent($user_id = user_id(),"Added food intake record for child ID: {$this->input->post('child_id')}");
             //update attendance
             $data = [
                 'child_id' => $this->input->post('child_id'),
@@ -112,6 +113,7 @@ class My_food extends CI_Model
                 ->where('child_id', $data['child_id'])
                 ->where('created_at', date('Y-m-d'))
                 ->update('form_ny_attendance', $data);
+                logEvent($user_id = NULL,"Food intake updated for child attendance");
         } else {
 
             $mealTimes = $this->mealTimes();
@@ -128,6 +130,7 @@ class My_food extends CI_Model
             $data['created_at'] = date('Y-m-d');
             $data['updated_at'] = date_stamp();
             $this->db->insert('form_ny_attendance', $data);
+            logEvent($user_id = NULL,"Food intake updated for child attendance");
         }
     }
 

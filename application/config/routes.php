@@ -71,7 +71,7 @@ $route['child/addContact'] = 'health/addContact';
 $route['child/addProvider'] = 'health/addProvider';
 $route['child/addProblem'] = 'health/addProblem';
 $route['child/deleteAllergy/(:num)'] = 'health/deleteAllergy/$1';
-
+$route['child/deletePref/(:num)'] = 'food/deletePref';
 $route['child/deleteContact/(:num)'] = 'health/deleteContact/$1';
 $route['child/deleteProvider/(:num)'] = 'health/deleteProvider/$1';
 $route['child/deleteProblem/(:num)'] = 'health/deleteProblem/$1';
