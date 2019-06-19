@@ -57,7 +57,7 @@ class Pickup extends CI_Controller
         //delete entry
         $this->db->where('id', $id);
         if ($this->db->delete('child_pickup')) {
-            logEvent($id = NULL,"Removed pickup contact for child {$q_row['first_name']} {$q_row['last_name']}");
+            logEvent($id = NULL,"Deleted pickup contact ID: {$id} for child {$q_row['child_id']}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

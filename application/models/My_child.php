@@ -209,7 +209,7 @@ class My_child extends CI_Model
         }
 
         //log event
-        logEvent($id = NULL,"Add child {$data['first_name']} {$data['last_name']}");
+        logEvent($id = NULL,"Added child ID: {$last_id}");
 
         if($getID) {
             return $last_id;
@@ -290,7 +290,7 @@ class My_child extends CI_Model
         }       
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Updated child {$data['first_name']} {$data['last_name']}");
+            logEvent($id = NULL,"Updated child ID: {$child_id}");
 
             flash('success', lang('request_success'));
         } else {
@@ -321,7 +321,7 @@ class My_child extends CI_Model
         $insert_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Added pickup contact for child ID {$id}");
+            logEvent($user_id = NULL,"Added pickup contact for child ID {$id}");
             $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {

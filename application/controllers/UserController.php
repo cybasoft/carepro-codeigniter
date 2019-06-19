@@ -23,15 +23,14 @@ class UserController extends CI_Controller
         $daycare_details = $this->db->get_where('daycare',array(
               'daycare_id' => $daycare_id
         ));
-        $daycare = $daycare_details->row_array();
+        $daycare = $daycare_details->row_array();       
 
         $users = $this->db->select('u.*,ug.group_id,g.name as role')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
-            ->get()->result();
-                        
+            ->get()->result();        
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
@@ -73,7 +72,7 @@ class UserController extends CI_Controller
 
         if($this->form_validation->run() == true) {
             $firstname = $this->input->post('first_name');
-            $lastname = $this->input->post('last_name');
+            $lastname = $this->input->post('last_name');            
             $additional_data = array(
                 'email' => strtolower($this->input->post('email')),
                 'password' => $this->input->post('password'),
@@ -84,7 +83,6 @@ class UserController extends CI_Controller
             );
             $group = $this->input->post('group');
             if($this->ion_auth->register($additional_data, $group)) {
-                logEvent($id = NULL,"User {$firstname} {$lastname} has been added to {$daycare['name']}.");
                 flash('success', lang('request_success'));
             }
         } else {
@@ -305,10 +303,10 @@ class UserController extends CI_Controller
     function delete($id = NULL)
     {                
         allow('admin');
-
+        
         $this->db->where('id', $id);
         $this->db->delete('users');  
-        logEvent($user_id = NULL,"User with id {$id} deleted");
+        logEvent($user_id = NULL,"Deleted user ID: {$id}");
       
         if($this->db->affected_rows() > 0){
             flash('success', lang('request_success'));

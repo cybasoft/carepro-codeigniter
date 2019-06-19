@@ -102,7 +102,6 @@ class StripeController extends CI_Controller
         $check_status = $query->row_array();
         $user_status = $check_status['owner_status'];    
         if ($user_status === "3"){
-            logEvent($check_status['id'],"{$check_status['name']} completed payment for {$plan} subscription plan.");
             $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");           
             redirect('daycare/'.$activation_code);
         }

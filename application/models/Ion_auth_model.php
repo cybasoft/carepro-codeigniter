@@ -792,6 +792,7 @@ class Ion_auth_model extends CI_Model
         $this->trigger_events('extra_set');
         $this->db->insert($this->tables['users'], $userData);
         $id = $this->db->insert_id();
+        logEvent($user_id = NULL,"User ID: {$id} has been added.");
 
         //register to group        
         if (!empty($groups)) {
@@ -1438,7 +1439,7 @@ class Ion_auth_model extends CI_Model
 
         $this->trigger_events('extra_where');
         $this->db->update($this->tables['users'], $user_data, ['id' => $user->id]);
-        logEvent($id=NULL,"User {$data['first_name']} {$data['last_name']} has been updated.");
+        logEvent($id=NULL,"Updated user ID: {$user->id}");
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();

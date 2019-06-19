@@ -85,7 +85,7 @@ class My_daycare_registration extends CI_Model
         );
         $this->db->where('email', $email);
         $this->db->update('users', $store_id);
-        logEvent($insert_id,"Daycare {$data['name']} added to the application.");
+        logEvent($insert_id,"Daycare {$insert_id} added to the application.");
         $this->session->set_userdata('daycare_id',$data['daycare_id']);
     }
     
