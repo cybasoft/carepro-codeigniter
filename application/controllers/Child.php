@@ -243,13 +243,8 @@ class Child extends CI_Controller
                 flash('success', lang('request_success'));
 
                 $parent = $this->My_user->first($this->input->post('parent'));
-                $child = $this->child->first($child_id);
-                if($parent->name === NULL){
-                    $parent_name = $parent->first_name . " " .$parent->last_name;
-                }else{
-                    $parent_name  = $parent->name;
-                }
-                logEvent($id = NULL,"Assigned parent {$parent_name} to child {$child->first_name} {$child->last_name}");
+                $child = $this->child->first($child_id);               
+                logEvent($id = NULL,"Assigned parent ID: {$parent->id} to child ID: {$child->id}");
                 $data = [
                     'to' => $parent->email,
                     'subject' => lang('assigned_child_subject'),
@@ -294,7 +289,7 @@ class Child extends CI_Controller
         if ($this->db->where('child_id', $child_id)
             ->where('user_id', $parent_id)
             ->delete('child_parents')) {
-                logEvent($id = NULL,"Removed parent for child with id {$child_id}");
+                logEvent($id = NULL,"Deleted parent ID: {$parent_id} for child ID: {$child_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

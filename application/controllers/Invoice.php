@@ -251,8 +251,9 @@ class Invoice extends CI_Controller
                 'qty' => $this->input->post('qty'),
                 'price' => $this->input->post('price'),
             ]);
+            $last_id = $this->db->insert_id();
             if ($query) {
-                logEvent($user_id = NULL,"Invoice Item has been added to invoice with id {$id}");
+                logEvent($user_id = NULL,"Added invoice Item ID: {$last_id} for invoice ID: {$id}");
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -409,7 +410,7 @@ class Invoice extends CI_Controller
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
         if ($this->db->affected_rows() > 0) {
-            logEvent($user_id = NULL,"Deleted Invoice item with id {$item_id}");
+            logEvent($user_id = NULL,"Deleted Invoice item ID: {$item_id} for invoice ID: {$invoice_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

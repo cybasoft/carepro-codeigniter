@@ -185,7 +185,8 @@ class My_invoice extends CI_Model
             'qty' => $this->input->post('qty')
         );
         if($this->db->insert('invoice_items', $data2)) {
-            logEvent($user_id = NULL,"Invoice has been added for child with {$id}");
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL,"Added Invoice ID: {$last_id} for child ID: {$id}");
             $this->parent->notifyParents($id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $this->child->first($id)->first_name));
             return $invoice_id;
         }
@@ -209,6 +210,8 @@ class My_invoice extends CI_Model
             'created_at' => date_stamp()
         );
         if($this->db->insert('invoice_payments', $data)) {
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL, "Added manual payment of amount {$this->input->post('amount')} for invoice ID: {$invoice_id}");
             $invoice = $this->get($invoice_id);
             $child = $this->child->first($invoice->child_id);
             $this->parent->notifyParents($child->id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $child->first_name));

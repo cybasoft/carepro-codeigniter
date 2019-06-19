@@ -30,8 +30,9 @@ class My_notes extends CI_Model
         $this->db->insert('child_notes', $data);
 
         if($this->db->affected_rows() > 0) {
+            $last_id = $this->db->insert_id();
             //log event
-            logEvent($id = NULL,"Added note for child ID: {$child_id}");
+            logEvent($id = NULL,"Added note ID: {$last_id} for child ID: {$child_id}");
             //notify parents
             $this->parent->notifyParents($child_id, lang('note_created_email_subject'), sprintf(lang('note_created_email_message'), $this->child->first($child_id)->first_name));
             return true;
@@ -96,7 +97,7 @@ class My_notes extends CI_Model
         $noteID = $this->db->insert_id();
 
         if($this->db->affected_rows() > 0) {
-            logEvent($id = NULL,"Added incident report for child ID: {$child_id}");
+            logEvent($id = NULL,"Added incident report ID: {$noteID} for child ID: {$child_id}");
             $this->parent->notifyParents($child_id, lang('incident_email_subject'), sprintf(lang('incident_email_message'), $this->child->get($child_id, 'name')));
             return $noteID;
         }

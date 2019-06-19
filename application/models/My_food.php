@@ -26,8 +26,9 @@ class My_food extends CI_Model
             'user_id' => $this->user->uid()
         );
         if($this->db->insert('child_foodpref', $data)) {
+            $last_id = $this->db->insert_id();
             //log
-            logEvent($id = NULL,"Added food pref for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added food pref ID: {$last_id} for child ID: {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_foodpref_subject'), lang('new_foodpref_message'));
             return true;
@@ -65,7 +66,8 @@ class My_food extends CI_Model
             ]);
 
         if($this->db->affected_rows() > 0) {
-            logEvent($user_id = user_id(),"Added food intake record for child ID: {$this->input->post('child_id')}");
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = user_id(),"Added food intake record ID: {$last_id} for child ID: {$this->input->post('child_id')}");
             //update attendance
             $data = [
                 'child_id' => $this->input->post('child_id'),
@@ -113,7 +115,7 @@ class My_food extends CI_Model
                 ->where('child_id', $data['child_id'])
                 ->where('created_at', date('Y-m-d'))
                 ->update('form_ny_attendance', $data);
-                logEvent($user_id = NULL,"Food intake updated for child attendance");
+                logEvent($user_id = NULL,"Food intake updated for form_ny_attendance of child ID: {$data['child_id']}");
         } else {
 
             $mealTimes = $this->mealTimes();
@@ -130,7 +132,8 @@ class My_food extends CI_Model
             $data['created_at'] = date('Y-m-d');
             $data['updated_at'] = date_stamp();
             $this->db->insert('form_ny_attendance', $data);
-            logEvent($user_id = NULL,"Food intake updated for child attendance");
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL,"Food intake ID: {$last_id} added for form_ny_attendance of child ID: {$data['child_id']}");
         }
     }
 

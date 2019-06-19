@@ -20,6 +20,8 @@ class My_activity extends CI_Model
             'updated_at' => date_stamp(),
         ];
         if($this->db->insert('activity_plan', $data))
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL,"Added activity ID: {$last_id} for room ID:{$this->input->post('room_id')}");
             return TRUE;
         return FALSE;
     }
@@ -35,6 +37,7 @@ class My_activity extends CI_Model
             'updated_at' => date_stamp(),
         ];
         if($this->db->where('id',$id)->update('activity_plan', $data))
+            logEvent($user_id = NULL, "Updated activity ID: {$id} for room ID: {$this->input->post('room_id')}");
             return TRUE;
         return FALSE;
     }
@@ -114,6 +117,8 @@ class My_activity extends CI_Model
                 'updated_at' => date_stamp(),
             ];
             $this->db->insert('activity_plan', $data);
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL, "Copied activity plan ID: {$last_id} to next week for room ID: {$activity->room_id}");
         }
         return TRUE;
     }

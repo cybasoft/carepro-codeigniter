@@ -191,8 +191,9 @@ class notes extends CI_Controller
         $this->form_validation->set_rules('name', lang('Name'), 'required|xss_clean|trim');
         if($this->form_validation->run() == true) {
             $this->db->insert('notes_categories', ['name' => $this->input->post('name')]);
+            $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
-                logEvent($user_id = NULL, "Added category");
+                logEvent($user_id = NULL, "Added category ID: {$last_id}");
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -221,8 +222,9 @@ class notes extends CI_Controller
         $this->form_validation->set_rules('name', lang('Name'), 'required|xss_clean|trim');
         if($this->form_validation->run() == true) {
             $this->db->insert('notes_tags', ['name' => $this->input->post('name')]);
+            $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
-                logEvent($user_id = NULL, "Added tag");
+                logEvent($user_id = NULL, "Added tag ID: {$last_id}");
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));

@@ -29,10 +29,11 @@ class My_meds extends CI_Model
             'user_id' => $this->user->uid(),
         ];
         $this->db->insert('child_meds', $data);
+        $last_id = $this->db->insert_id();
 
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Added med for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added med ID: {$last_id} for child ID: {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_medication_subject'), lang('new_medication_message').' <p><strong>'.$this->input->post('med_name').'</strong></p>');
             return TRUE;

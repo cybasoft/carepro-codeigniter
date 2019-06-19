@@ -244,7 +244,7 @@ class RoomsController extends CI_Controller
         }
 
         $this->db->where('id', $id)->delete('child_room_notes');
-
+        logEvent($user_id = NULL, "Deleted note ID: {$id}");
         flash('success', lang('request_success'));
 
         redirectPrev();

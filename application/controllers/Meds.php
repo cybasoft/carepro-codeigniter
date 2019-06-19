@@ -58,7 +58,7 @@ class Meds extends CI_Controller
         allow(['admin', 'manager', 'staff']);
 
         if($this->meds->deleteMedication($this->uri->segment(3))) {
-            logEvent($user_id = NULL,"Deleted Med for child ID: {$this->uri->segment(3)}");
+            logEvent($user_id = NULL,"Deleted Med ID: {$this->uri->segment(3)} for child ID: {$this->uri->segment(3)}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
