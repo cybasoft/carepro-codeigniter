@@ -44,9 +44,15 @@ class My_notes extends CI_Model
      */
     function destroy()
     {
-        $this->db->where('id', $this->uri->segment(3));
+        $id = $this->uri->segment(3);
+        $notes_detail = $this->db->get_where("child_notes",array(
+            'id' => $id
+        ));
+        $notes = $notes_detail->row();        
+        $this->db->where('id', $id);
         $this->db->delete('child_notes');
         if($this->db->affected_rows() > 0)
+            logEvent($user_id = NULL,"Deleted note ID: {$id} for child ID: {$notes->child_id}");
             return true;
         return false;
     }
@@ -113,11 +119,12 @@ class My_notes extends CI_Model
                 @unlink('./assets/uploads/photos/'.$photo->photo);
             }
             $this->db->where('incident_id', $id)->delete('child_incident_photos');
-
+            logEvent($user_id = NULL, "Deleted child incident ID: {$id}");
         }
         $this->db->where('id', $id);
         $this->db->delete('child_incident');
         if($this->db->affected_rows() > 0)
+            logEvent($user_id = NULL, "Deleted child incident ID: {$id}");
             return true;
         return false;
 
@@ -143,9 +150,11 @@ class My_notes extends CI_Model
         $this->load->library('upload', $config);
         if(!$this->upload->do_upload('file')) {
             $msg = lang('request_error');
-            $type = 'error';
+            $type = 0;
         } else {
             $upload_data = $this->upload->data();
+            // print_r($upload_data['file_name']);
+            // exit();
             $this->db->insert($table, [
                 'incident_id' => $this->input->post('incident_id'),
                 'photo' => $upload_data['file_name'],
@@ -155,10 +164,10 @@ class My_notes extends CI_Model
             ]);
             if($upload_data) {
                 $msg = lang('request_success');
-                $type = 'success';
+                $type = 1;
             } else {
                 $msg = lang('request_error');
-                $type = 'error';
+                $type = 0;
             }
         }
         return json_encode($msg, $type);
