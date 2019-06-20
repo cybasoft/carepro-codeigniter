@@ -19,7 +19,7 @@ $lang['new_user_email_body']='A new user has registered or was registered in you
 $lang['invoice_email_message']='You have an invoice for %s. <br/>Please see attachment. <br/>You will need Adobe PDF reader to view';
 
 $lang['pickup_added_email_subject']='Authorized pickup user added for your child';
-$lang['pickup_added_email_message']  ='%s has been added as an authorized pickup for one of your children. If this is an error, please review your account and contact us.';
+$lang['pickup_added_email_message']  ='%s has been added as an authorized pickup for one of your children.<p>If this is an error, please review your account and contact us.</p>';
 
 $lang['note_added_email_subject']='A has been added for your child';
 $lang['note_added_email_message']='A note has been added for your child %. Please login to your account to view';

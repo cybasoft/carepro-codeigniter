@@ -229,7 +229,7 @@ class Child extends CI_Controller
 
     public function doAssignParent($child_id)
     {        
-        $daycare_id = $this->session->userdata('owner_daycare_id');
+        $daycare_id = $this->session->userdata('owner_daycare_id');        
         allow(['admin', 'manager', 'staff']);
 
         $this->child_id = $child_id;
@@ -245,12 +245,16 @@ class Child extends CI_Controller
                 $parent = $this->My_user->first($this->input->post('parent'));
                 $child = $this->child->first($child_id);               
                 logEvent($id = NULL,"Assigned parent ID: {$parent->id} to child ID: {$child->id}");
-                $data = [
+                
+                $data = [                    
                     'to' => $parent->email,
                     'subject' => lang('assigned_child_subject'),
-                    'message' => sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false)),
+                    'logo' => $this->session->userdata('company_logo'),
+                    'name' => $parent->first_name . " " . $parent->last_name,
                 ];
-                $this->mailer->send($data);
+                $message = sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false));                
+                $data['message'] = $message;
+                send_email($data);
             }
         } else {
             flash('danger');

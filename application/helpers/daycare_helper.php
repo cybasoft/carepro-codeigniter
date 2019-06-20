@@ -175,29 +175,20 @@ function is($group)
     return FALSE;
 }
 
-function send_email()
+function send_email($data)
 {
     $ci = &get_instance();
     $ci->load->config('email');
     $ci->load->library('email');
-
-    $to = 'jyoti@timeloop.in';
-    $subject = "An incident has been added regarding your child";
-    $message = "
-    Hello, Hema 
-    An incident has been added regarding your child kinjal radadiya . Please login to your account to view";
-
-    $email_data = array(        
-        'message' => $message
-    );
+   
     $ci->email->set_mailtype('html');
     $from = $ci->config->item('smtp_user');
-    $to = $to;
+    $to = $data['to'];
     $ci->email->from($from, 'Daycare');
     $ci->email->to($to);
-    $ci->email->subject($subject);
+    $ci->email->subject($data['subject']);
 
-    $body = $ci->load->view('custom_email/report_activity_email', $email_data, true);
+    $body = $ci->load->view('custom_email/report_activity_email', $data, true);
     $ci->email->message($body);  //Send mail        
     if ($ci->email->send()) { }
 }

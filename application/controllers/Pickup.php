@@ -7,7 +7,7 @@ class Pickup extends CI_Controller
         parent::__construct();
         setRedirect();
         $this->module = 'child/';
-        $this->title = lang('child').'-'.lang('pickup');
+        $this->title = lang('child') . '-' . lang('pickup');
     }
 
     /*
@@ -41,7 +41,7 @@ class Pickup extends CI_Controller
      */
     function deletePickup($id)
     {
-        allow(['admin','manager','staff']);
+        allow(['admin', 'manager', 'staff']);
         //delete images
         $upload_path = './assets/uploads/pickup';
         $this->db->where('id', $id);
@@ -57,7 +57,7 @@ class Pickup extends CI_Controller
         //delete entry
         $this->db->where('id', $id);
         if ($this->db->delete('child_pickup')) {
-            logEvent($user_id = NULL,"Deleted pickup contact ID: {$id} for child {$q_row['child_id']}");
+            logEvent($user_id = NULL, "Deleted pickup contact ID: {$id} for child {$q_row['child_id']}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -71,11 +71,12 @@ class Pickup extends CI_Controller
      */
     function uploadPhoto($id = "")
     {
-        $upload_path = APPPATH.'../assets/uploads/pickup/';
+        $upload_path = APPPATH . '../assets/uploads/pickup/';
         $upload_db = 'child_pickup';
 
-        if (!is_dir($upload_path)) {
-            mkdir($upload_path, 755, true);
+        if (!file_exists($upload_path)) {
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
         }
 
         $config = array(
@@ -88,8 +89,16 @@ class Pickup extends CI_Controller
         );
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload('photo')) {
-             flash('error', $this->upload->display_errors());
-            return false;
+            $errors = $this->upload->display_errors();
+            if ($errors = $this->lang->line('upload_no_file_selected')) {
+                $errors = '';
+            }            
+            if($errors == ''){
+                return true;
+            }else{
+                flash('error',$errors);
+                return false;
+            }
         } else {
             //delete if any exists
             $this->db->where('id', $id);
@@ -113,7 +122,7 @@ class Pickup extends CI_Controller
             if ($data) {
                 return true;
             } else {
-                flash('error','Error');
+                flash('error', 'Error');
                 return false;
             }
         }
