@@ -155,6 +155,7 @@ class My_meds extends CI_Model
     {
         $this->db->where('id', $id)->delete('meds_admin');
         if($this->db->affected_rows() > 0)
+            logEvent($user_id = NULL,"Deleted meds ID: {$id}");
             return TRUE;
         return FALSE;
     }

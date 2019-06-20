@@ -22,24 +22,25 @@ class Reports extends CI_Controller
 
     function roster()
     {
+        $logged_user_id = $this->user->uid();
         if(isset($_GET['active'])) { //daily attendance
-            $this->db->where('status', 1);
+            $this->db->where('status', 1)->where('user_id',$logged_user_id);
             $children = $this->db->get('children')->result();
             $this->load->view($this->module.'roster', compact('children'));
-        } else {
-            if(isset($_GET['group']) && $_GET['group'] > 0) {
+        } else {            
+            if(isset($_GET['group']) && $_GET['group'] > 0) {              
                 $this->db->select('*');
                 $this->db->where('child_group.group_id', $_GET['group']);
-                $this->db->from('children');
+                $this->db->from('children')->where('user_id',$logged_user_id);
                 $this->db->join('child_group', 'child_group.child_id=children.id', 'left');
-                $children = $this->db->get()->result();
+                $children = $this->db->get()->result();               
             } else {
                 if(isset($_GET['inactive'])) {
-                    $this->db->where('status', 0);
-                }
+                    $this->db->where('status', 0)->where('user_id',$logged_user_id);
+                }            
+                $this->db->where('user_id',$logged_user_id);
                 $children = $this->db->get('children')->result();
-            }
-
+            }            
             $this->load->view($this->module.'roster', compact('children'));
         }
     }

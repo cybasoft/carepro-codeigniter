@@ -22,7 +22,7 @@
             <div class="flexbin flexbin-margin" id="lightgallery">
                 <?php if(count($photos['results'])): ?>
                 <?php foreach ($photos['results'] as $photo): ?>
-                    <a data-src="<?php echo base_url('assets/uploads/photos/'.$photo->name); ?>?id=<?php echo $photo->id; ?>?route=/photos/destroy">
+                    <a data-src="<?php echo base_url('assets/uploads/photos/'.$photo->name); ?>?id=<?php echo $photo->id; ?>?route=../../photos/destroy">
                         <img src="<?php echo base_url('assets/uploads/photos/'.$photo->name); ?>"/>
                     </a>
                 <?php endforeach; ?>

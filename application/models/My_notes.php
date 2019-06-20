@@ -136,26 +136,28 @@ class My_notes extends CI_Model
      * @return string
      */
     function storeIncidentPhotos($childID)
-    {
+    {        
         $table = 'child_incident_photos';
-        $upload_path = './assets/uploads/photos';
+        $upload_path = './assets/uploads/photos';        
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
-        }
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
+        }  
         $config = array(
             'upload_path' => $upload_path,
             'allowed_types' => 'gif|jpg|png|jpeg|svg',
             'max_size' => '3048',
             'encrypt_name' => true,
         );
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $config);       
         if(!$this->upload->do_upload('file')) {
+            $error = array('error' => $this->upload->display_errors());
+            print_r($error);
+            exit();
             $msg = lang('request_error');
             $type = 0;
         } else {
-            $upload_data = $this->upload->data();
-            // print_r($upload_data['file_name']);
-            // exit();
+            $upload_data = $this->upload->data();            
             $this->db->insert($table, [
                 'incident_id' => $this->input->post('incident_id'),
                 'photo' => $upload_data['file_name'],
@@ -175,7 +177,7 @@ class My_notes extends CI_Model
     }
 
     function deleteIncidentPhoto()
-    {
+    {        
         $photo = $this->db->where('id', $this->input->post('id'))->get('child_incident_photos')->row();
         @unlink('./assets/uploads/photos/'.$photo->photo);
         if($this->db->where('id', $this->input->post('id'))->delete('child_incident_photos'))

@@ -15,9 +15,10 @@ class My_parent extends CI_Model
      */
     public function parents()
     {
+        $daycare_id = $this->session->userdata('daycare_id');        
         $this->db->where('users_groups.group_id', 4);
         $this->db->select('users_groups.user_id,users_groups.group_id,users.*');
-        $this->db->from('users');
+        $this->db->from('users')->where('users.daycare_id',$daycare_id);
         $this->db->join('users_groups', 'users_groups.user_id=users.id');
         return $this->db->get();
     }
