@@ -276,7 +276,7 @@ class UserController extends CI_Controller
          $this->email->to($to);
          $this->email->subject('User Status Change');
 
-         $body = $this->load->view('owner_email/user_status', $email_data, true);
+         $body = $this->load->view('custom_email/user_status', $email_data, true);
          $this->email->message($body);        //Send mail
          if ($this->email->send()) {
              $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");

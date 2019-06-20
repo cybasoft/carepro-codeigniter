@@ -149,7 +149,7 @@ class My_daycare_registration extends CI_Model
         $this->email->to($email);
         $this->email->subject('Daycare register');
 
-        $body= $this->load->view('owner_email/welcome_email', $data, true);
+        $body= $this->load->view('custom_email/welcome_email', $data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){           
             $this->insert_daycare($user_data,$email,$activation_code);

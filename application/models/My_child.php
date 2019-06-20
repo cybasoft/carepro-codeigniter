@@ -281,7 +281,7 @@ class My_child extends CI_Model
                 $this->email->to($to);
                 $this->email->subject('Child Register Successful');
     
-                $body = $this->load->view('owner_email/child_register_email', $email_data, true);
+                $body = $this->load->view('custom_email/child_register_email', $email_data, true);
                 $this->email->message($body);        //Send mail
                 if ($this->email->send()) {
                     $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");

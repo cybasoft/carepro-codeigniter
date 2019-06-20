@@ -823,7 +823,7 @@ class Ion_auth_model extends CI_Model
             $this->email->to($to);
             $this->email->subject('Daycare Invitation');
 
-            $body = $this->load->view('owner_email/register_user_email', $email_data, true);
+            $body = $this->load->view('custom_email/register_user_email', $email_data, true);
             $this->email->message($body);        //Send mail
             if ($this->email->send()) {
                 $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
@@ -1105,7 +1105,7 @@ class Ion_auth_model extends CI_Model
                     $this->email->to($to);
                     $this->email->subject('Failed attempt to login');
 
-                    $body = $this->load->view('owner_email/failed_login', $email_data, true);
+                    $body = $this->load->view('custom_email/failed_login', $email_data, true);
                     $this->email->message($body);  //Send mail        
                     $this->email->send();
                 }

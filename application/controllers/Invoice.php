@@ -363,7 +363,7 @@ class Invoice extends CI_Controller
                 $this->email->to($to);
                 $this->email->subject('Child Invoice');
                 $this->email->attach($fileName);
-                $body = $this->load->view('owner_email/child_invoice_email', $email_data, true);
+                $body = $this->load->view('custom_email/child_invoice_email', $email_data, true);
                 $this->email->message($body);        //Send mail
                 if ($this->email->send()) {
                     return true;

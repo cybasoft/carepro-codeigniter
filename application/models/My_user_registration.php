@@ -98,7 +98,7 @@ class My_user_registration extends CI_Model
         $this->email->to($to);
         $this->email->subject('Email verification');
 
-        $body = $this->load->view('owner_email/confirm_email', $email_data, true);
+        $body = $this->load->view('custom_email/confirm_email', $email_data, true);
         $this->email->message($body);  //Send mail        
         if ($this->email->send()) {
             $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");

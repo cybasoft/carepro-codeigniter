@@ -75,7 +75,7 @@ class My_parent_registration extends CI_Model
         $this->email->to($to);
         $this->email->subject('Parent Activation');
 
-        $body= $this->load->view('owner_email/activate_parent_email', $email_data, true);
+        $body= $this->load->view('custom_email/activate_parent_email', $email_data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
             $this->insert_parent($data);

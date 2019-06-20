@@ -175,6 +175,33 @@ function is($group)
     return FALSE;
 }
 
+function send_email()
+{
+    $ci = &get_instance();
+    $ci->load->config('email');
+    $ci->load->library('email');
+
+    $to = 'jyoti@timeloop.in';
+    $subject = "An incident has been added regarding your child";
+    $message = "
+    Hello, Hema 
+    An incident has been added regarding your child kinjal radadiya . Please login to your account to view";
+
+    $email_data = array(        
+        'message' => $message
+    );
+    $ci->email->set_mailtype('html');
+    $from = $ci->config->item('smtp_user');
+    $to = $to;
+    $ci->email->from($from, 'Daycare');
+    $ci->email->to($to);
+    $ci->email->subject($subject);
+
+    $body = $ci->load->view('custom_email/report_activity_email', $email_data, true);
+    $ci->email->message($body);  //Send mail        
+    if ($ci->email->send()) { }
+}
+
 /**
  * check if authenticated or send to login
  *
@@ -304,16 +331,16 @@ function logged_in()
 * @param string
 * @return boolean
 */
-function logEvent($user_id=NULL,$event)
+function logEvent($user_id = NULL, $event)
 {
-    $ci = &get_instance();    
-   
-    if($user_id === NULL){
+    $ci = &get_instance();
+
+    if ($user_id === NULL) {
         $user_id = $ci->user->uid();
     }
     $data = [
         'user_id' => $user_id,
-        'date' => date("Y-m-d H:i:s",time()),
+        'date' => date("Y-m-d H:i:s", time()),
         'event' => $event,
     ];
     if ($ci->db->insert('event_log', $data))

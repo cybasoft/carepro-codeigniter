@@ -60,7 +60,7 @@ class EmailreminderController extends CI_Controller
                             $this->email->to($to);
                             if ($users['owner_status'] === 'draft') {
                                 $this->email->subject('Email verification');
-                                $body = $this->load->view('owner_email/confirm_email', $email_data, true);
+                                $body = $this->load->view('custom_email/confirm_email', $email_data, true);
                                 $this->email->message($body);
                                 if ($this->email->send()) {
                                     echo "Success";
@@ -73,7 +73,7 @@ class EmailreminderController extends CI_Controller
                                 }
                             } else if ($users['owner_status'] === 'confirmed') {
                                 $this->email->subject('Email verification');
-                                $body = $this->load->view('owner_email/confirm_email', $email_data, true);
+                                $body = $this->load->view('custom_email/confirm_email', $email_data, true);
                                 $this->email->message($body);
                                 if ($this->email->send()) {
                                     echo "Success";
@@ -86,7 +86,7 @@ class EmailreminderController extends CI_Controller
                                 }
                             } elseif ($users['owner_status'] === 'subscribed') {
                                 $this->email->subject('Daycare payment');
-                                $body = $this->load->view('owner_email/payment_success_email', $email_data, true);
+                                $body = $this->load->view('custom_email/payment_success_email', $email_data, true);
                                 $this->email->message($body);
                                 if ($this->email->send()) {
                                     echo "Success";
