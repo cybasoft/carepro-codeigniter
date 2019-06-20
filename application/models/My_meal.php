@@ -17,8 +17,11 @@ class My_meal extends CI_Model
             'created_at' => date_stamp(),
             'updated_at' => date_stamp(),
         ];
-        if($this->db->insert('meal_plan', $data))
+        if($this->db->insert('meal_plan', $data)){
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL, "Added meal ID: {$last_id} for room ID: {$this->input->post('room_id')}");
             return TRUE;
+        }            
         return FALSE;
     }
 
@@ -109,6 +112,8 @@ class My_meal extends CI_Model
                 'updated_at' => date_stamp(),
             ];
             $this->db->insert('meal_plan', $data);
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL, "Copied meal ID: {$last_id} for next week of room ID: {$meal->room_id}");
         }
         return TRUE;
     }

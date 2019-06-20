@@ -42,9 +42,10 @@ class My_calendar extends CI_Model
 		$this->db->insert('calendar', $data); //insert to db
 
 		if($this->db->affected_rows() > 0) { //successful
+			$last_id = $this->db->insert_id();
 			flash('success', lang('request_success'));
 			//log event
-			logEvent($id = NULL,"Added calendar event {$data['title']}");
+			logEvent($id = NULL,"Added calendar event ID: {$last_id}");
 		} else {
 			flash('danger', lang('request_error'));
 		}
@@ -61,8 +62,7 @@ class My_calendar extends CI_Model
 			$allDay = 'false';
 		}
 		$start_date = date("Y-m-d", strtotime($this->input->post('start')));
-		$end_date = date("Y-m-d", strtotime($this->input->post('end')));
-		
+		$end_date = date("Y-m-d", strtotime($this->input->post('end')));		
 		// Values received via ajax
 		$data = array(
 			'title' => $this->input->post('title'),
@@ -79,7 +79,7 @@ class My_calendar extends CI_Model
 		$this->db->update('calendar', $data);
 		if($this->db->affected_rows() > 0) { //successful
 			//log event
-			logEvent($id = NULL,"Updated calendar event {$data['title']}");
+			logEvent($id = NULL,"Updated calendar event ID: {$this->input->post('id')}");
 			flash('success', lang('request_success'));			
 		} else {
 			flash('danger', lang('request_error'));

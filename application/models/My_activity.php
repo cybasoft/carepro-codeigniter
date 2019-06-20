@@ -118,7 +118,7 @@ class My_activity extends CI_Model
             ];
             $this->db->insert('activity_plan', $data);
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Copied activity plan ID: {$last_id} to next week for room ID: {$activity->room_id}");
+            logEvent($user_id = NULL, "Copied activity plan ID: {$last_id} for next week of room ID: {$activity->room_id}");
         }
         return TRUE;
     }
