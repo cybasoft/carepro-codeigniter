@@ -583,7 +583,8 @@ class My_child extends CI_Model
         $upload_path = './assets/uploads/children';
         $upload_db = 'children';
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, TRUE);
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
         }
 
         if($id == '') {

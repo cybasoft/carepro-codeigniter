@@ -389,11 +389,12 @@ class UserController extends CI_Controller
      */
     function uploadPhoto()
     {
-        $id = uri_segment(4);        
+        $id = uri_segment(3);        
         $upload_path = APPPATH.'../assets/uploads/users';
         $upload_db = 'users';
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 0755, true);
+            mkdir($upload_path, 0777, true);
+            chmod($upload_path, 0777);
         }
         if($id == "") { //make sure there are arguments
             flash('danger', lang('request_error'));
