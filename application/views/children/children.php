@@ -3,13 +3,15 @@
         <li class="nav-item">
             <a class="nav-link active show" href="#active" aria-controls="active" role="tab" data-toggle="tab">
                 <span class="badge badge-info">
-                    <?php echo $totalChildren; ?></span>
+                    <?php echo $active; ?></span>
                 <?php echo lang('active_children'); ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#inactive" aria-controls="inactive" role="tab"
                data-toggle="tab">
+               <span class="badge badge-info">
+                    <?php echo $inactive; ?></span>
                 <i class="fa fa-exclamation-triangle"></i>
                 <?php echo lang('inactive_children'); ?>
             </a>

@@ -33,10 +33,12 @@ class Children extends CI_Controller
         } else {
             $checkedInChildren = $this->children->checkedInChildren($daycare_id);
             $checkedOutChildren = $this->children->checkedOutChildren($daycare_id);
-            $inactiveChildren = $this->children->inactiveChildren($daycare_id);
+            $inactiveChildren = $this->children->inactiveChildren($daycare_id);           
 
             $totalChildren = count((array) $checkedInChildren) + count((array) $checkedOutChildren);
-            dashboard_page($this->module . 'children', compact('checkedInChildren', 'checkedOutChildren', 'totalChildren', 'inactiveChildren'), $daycare_id);
+            $inactive = count($inactiveChildren);
+            $active = $totalChildren - $inactive;            
+            dashboard_page($this->module . 'children', compact('checkedInChildren', 'checkedOutChildren', 'inactive', 'active', 'inactiveChildren'), $daycare_id);
         }
     }
 }

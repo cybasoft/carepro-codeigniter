@@ -18,7 +18,7 @@
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],
                     [
-                        'name' => 'rooms',
+                        'name' => 'Rooms',
                         'link' => 'rooms',
                         'icon' => 'groups',
                         'active' => ['rooms', 'room'],
