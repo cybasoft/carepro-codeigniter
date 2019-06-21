@@ -34,7 +34,7 @@ class My_notes extends CI_Model
             //log event
             logEvent($id = NULL,"Added note ID: {$last_id} for child ID: {$child_id}");
             //notify parents
-            $this->parent->notifyParents($child_id, lang('note_created_email_subject'), sprintf(lang('note_created_email_message'), $this->child->first($child_id)->first_name));
+            $this->parent->notifyParents($child_id, lang('note_added_email_subject'), sprintf(lang('note_added_email_message'), $this->child->first($child_id)->first_name));
             return true;
         }
         return false;

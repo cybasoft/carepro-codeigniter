@@ -19,16 +19,16 @@ $lang['new_user_email_body']='A new user has registered or was registered in you
 $lang['invoice_email_message']='You have an invoice for %s. <br/>Please see attachment. <br/>You will need Adobe PDF reader to view';
 
 $lang['pickup_added_email_subject']='Authorized pickup user added for your child';
-$lang['pickup_added_email_message']  ='%s has been added as an authorized pickup for one of your children.<p>If this is an error, please review your account and contact us.</p>';
+$lang['pickup_added_email_message']  ='%s has been added as an authorized pickup for one of your children.<br/>If this is an error, please review your account and contact us.';
 
-$lang['note_added_email_subject']='A has been added for your child';
-$lang['note_added_email_message']='A note has been added for your child %. Please login to your account to view';
+$lang['note_added_email_subject']='A note has been added for your child';
+$lang['note_added_email_message']='A note has been added for your child %. <br/>Please login to your account to view';
 
 $lang['incident_email_subject']='An incident has been added regarding your child';
-$lang['incident_email_message']='An incident has been added regarding your child %s. Please login to your account to view';
+$lang['incident_email_message']='An incident has been added regarding your child %s. <br/>Please login to your account to view';
 
 $lang['new_invoice_subject']='You have a new invoice';
-$lang['new_invoice_message']='An invoice has been created for %s. Please login to your account to review';
+$lang['new_invoice_message']='An invoice has been created for %s.<br/>Please login to your account to review';
 
 $lang['new_medication_subject']='New medication recorded';
 $lang['new_medication_message']='A new medication was recorded for one of your children';
@@ -47,3 +47,6 @@ $lang['new_provider_message']='A new provider was recorded for one of your child
 
 $lang['new_problem_subject']='New health problem recorded';
 $lang['new_problem_message']='A new health problem has been recorded for your child';
+
+$lang['manual_payment_subject'] = 'Manual Payment Entry';
+$lang['manual_payment'] = 'Manual payment of amount $%u is recorded for your child %s.';

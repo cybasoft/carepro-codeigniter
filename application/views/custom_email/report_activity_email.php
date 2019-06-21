@@ -11,9 +11,11 @@
         <div style="background-color:white;padding: 4% 3%;">
             <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
             <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $name; ?>,</p>            
-            <?php echo  $message; ?><br/>
+            <p style="font-size: 15px;"><?php echo  $message; ?></p>
+            <p>
             Thanks!<br/>
             Daycarepro Team
+            </p>
             </a>
         </div>
     </div>

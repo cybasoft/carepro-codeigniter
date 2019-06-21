@@ -830,15 +830,15 @@ class Ion_auth_model extends CI_Model
             }
         }
         //notify admin
-        $email = [
-            'to' => session('company_email'),
-            'from' => session('company_email'),
-            'subject' => lang('new_user_email_subject'),
-            'message' => lang('new_user_email_body'),
-            'template' => 'new_user_notice',
-        ];
-        $data2 = array_merge($data, $email, $additional_data);
-        $this->mailer->send($data2);
+        // $email = [
+        //     'to' => session('company_email'),
+        //     'from' => session('company_email'),
+        //     'subject' => lang('new_user_email_subject'),
+        //     'message' => lang('new_user_email_body'),
+        //     'template' => 'new_user_notice',
+        // ];
+        // $data2 = array_merge($data, $email, $additional_data);
+        // $this->mailer->send($data2);
         return (isset($id)) ? $id : FALSE;
     }
 

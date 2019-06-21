@@ -53,7 +53,7 @@ $lang['child_checked_out_message'] = '%s  was checked out at %s by %s';
 $lang['child_checked_in_subject'] = 'Child check in notice for %s';
 $lang['child_checked_in_message']='%s was checked in at %s by %s';
 $lang['assigned_child_subject'] = 'A child has been assigned to your account';
-$lang['assigned_child_message'] = 'A child has been assigned to your account. <br/> Child name: %s <br/> Date of birth: %s. <p>If this is an error, please contact us</p>';
+$lang['assigned_child_message'] = 'A child has been assigned to your account. <br/> Child name: %s <br/> Date of birth: %s.<br/><br/>If this is an error, please contact us';
 $lang['child_page_heading']='%s\'s Profile';
 
 $lang['problem_list']='Problem list';

@@ -200,9 +200,10 @@ class My_invoice extends CI_Model
      */
     function makePayment($invoice_id)
     {
+        $amount = $this->input->post('amount');
         $data = array(
             'invoice_id' => $invoice_id,
-            'amount' => $this->input->post('amount'),
+            'amount' => $amount,
             'date_paid' => $this->input->post('date_paid'),
             'method' => $this->input->post('method'),
             'remarks' => $this->input->post('remarks'),
@@ -211,10 +212,10 @@ class My_invoice extends CI_Model
         );
         if($this->db->insert('invoice_payments', $data)) {
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Added manual payment of amount {$this->input->post('amount')} for invoice ID: {$invoice_id}");
+            logEvent($user_id = NULL, "Added manual payment of amount {$amount} for invoice ID: {$invoice_id}");
             $invoice = $this->get($invoice_id);
             $child = $this->child->first($invoice->child_id);
-            $this->parent->notifyParents($child->id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $child->first_name));
+            $this->parent->notifyParents($child->id, lang('manual_payment_subject'), sprintf(lang('manual_payment'),$amount, $child->first_name));
             return true;
         } else {
             return false;

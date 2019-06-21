@@ -54,10 +54,10 @@ class My_food extends CI_Model
     {
         $date = date('Y-m-d', strtotime($this->input->post('date')));
         $date = $date.' '.date('H:i:s', strtotime($this->input->post('time')));
-
+        $child_id = $this->input->post('child_id');
         $this->db->insert('child_food_intake',
             [
-                'child_id' => $this->input->post('child_id'),
+                'child_id' => $child_id,
                 'user_id' => user_id(),
                 'taken_at' => $date,
                 'quantity' => $this->input->post('quantity'),
@@ -67,7 +67,9 @@ class My_food extends CI_Model
 
         if($this->db->affected_rows() > 0) {
             $last_id = $this->db->insert_id();
-            logEvent($user_id = user_id(),"Added food intake record ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            logEvent($user_id = user_id(),"Added food intake record ID: {$last_id} for child ID: {$child_id}");
+            $this->parent->notifyParents($child_id, lang('Food Intake'), '<p style="font-size: 15px;">Food intake recorded for one of your child.</p>');
+
             //update attendance
             $data = [
                 'child_id' => $this->input->post('child_id'),
