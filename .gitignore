@@ -34,3 +34,4 @@ application/third_party/codeigniter-debugbar
 
 .ftpquota
 /.project
+application/temp/captcha/*
