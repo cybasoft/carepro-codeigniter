@@ -118,7 +118,6 @@ $(document).ready(function () {
         });
     });
 });
-
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 
@@ -198,7 +197,6 @@ $(document).ready(function () {
             });
         }
     })
-
     //child checkin
     $('.checkin-btn').click(function () {
         var child_id = $(this).attr('id');
@@ -208,12 +206,36 @@ $(document).ready(function () {
         var child_id = $(this).attr('id');
         $('.modals-loader').load(site_url + 'child/checkInOut/' + child_id).modal('show');
     });
-
     $('.assign-parent-btn').click(function () {
         var id = $(this).attr('id');
         $('.modals-loader').load(site_url +'/parents/parents/' + id).modal('show')
     });
-
+    $(".child-assign-room").click(function(){    
+        var child_id = $(this).data("child-id");
+        $.ajax({
+            type: 'POST',
+            url: 'assign_room',
+            dataType: 'json',
+            ContentType: 'application/json; charset=utf-8',
+            success: function(data){
+                var length = data.length;
+                $("#child_id").val(child_id);
+                if(length > 0){
+                    for(var i = 0; i<length; i++){
+                        var create_options = "<option value='"+ data[i].id +"' class='form-control'>"+ data[i].name +"</option>";
+                        if ($('#assign_room option[value="' + data[i].id + '"]').length === 0) {
+                            $("#assign_room").append(create_options);
+                            $("#assign_room").selectpicker('refresh');
+                        }                       
+                    } 
+                }
+            }
+        })
+    });
+    $("#AssignRoomModal").on('hidden.bs.modal',function(){
+        $("#assign_room").val('default');
+        $("#assign_room").selectpicker("refresh");
+    });
     new List('conversations', {valueNames: ['name'], page: 10, pagination: true});
 
     new List('checkedout-children',

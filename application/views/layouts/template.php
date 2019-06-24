@@ -15,6 +15,7 @@
 
     <link href="<?php echo assets('css/print.css'); ?>" rel="stylesheet" media="print">
     <link href="<?php echo assets('plugins/datatables/dataTables.bootstrap.css'); ?>" rel="stylesheet" media="all">
+    <link href="<?php echo assets('plugins/bootstrap-select/css/bootstrap-select.min.css') ?>" rel="stylesheet">
     <link href="<?php echo assets('plugins/fc/fullcalendar.css'); ?>" rel="stylesheet" media="all">
     <link href="<?php echo assets('plugins/fc/fullcalendar.print.css'); ?>" rel="stylesheet" media="print">
     <link href="<?php echo assets('plugins/sweetalert/sweetalert.css'); ?>" rel="stylesheet" media="all">
@@ -37,9 +38,10 @@
     </script>
 
     <script src="<?php echo assets('plugins/jquery/jquery.min.js'); ?>"></script>
-    <script src="<?php echo assets('plugins/extras/jquery-ui.min.js'); ?>" type="text/javascript"></script>
+    <!-- <script src="<?php echo assets('plugins/extras/jquery-ui.min.js'); ?>" type="text/javascript"></script> -->
     <script src="<?php echo assets('plugins/popper/popper.min.js'); ?>"></script>
     <script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
+    <script src="<?php echo assets('plugins/bootstrap-select/js/bootstrap-select.min.js'); ?>"></script>    
 
     <!--    <script src="-->
     <?php //echo assets('plugins/extras/jquery.ui.touch-punch-improved.js'); ?><!--" type="text/javascript"></script>-->

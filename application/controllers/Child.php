@@ -301,6 +301,40 @@ class Child extends CI_Controller
         redirectPrev();
     }
 
+    public function assign_room(){      
+        allow(['admin', 'manager']);
+  
+        $rooms_detail = $this->db->get('child_rooms');
+        $rooms = $rooms_detail->result_array();   
+        print(json_encode($rooms));       
+    }
+
+    public function doassignroom(){
+        allow(['admin', 'manager']);
+
+        $this->form_validation->set_rules('room[]', "Room", 'required|trim|xss_clean');
+        $this->form_validation->set_rules('child_id', "Child", 'required|trim|xss_clean');
+        if($this->form_validation->run() == TRUE) {
+            $child_id = $this->input->post('child_id');
+            foreach ($this->input->post('room') as $room) {
+                $find =$this->db->limit(1)->where('child_id', $child_id)->where('room_id', $room)->count_all_results('child_room');               
+                if($find == 0) {
+                    $this->db->insert('child_room', [
+                        'child_id' => $child_id,
+                        'room_id' => $room,
+                        'created_at' => date_stamp(),
+                    ]);
+                }
+                logEvent($user_id = NULL,"Assigned child ID: {$child_id} for room ID: {$room}");
+            }
+
+            flash('success', lang('request_success'));
+        }else{
+            validation_errors();
+            flash('error');
+        }       
+        redirectPrev();
+    }
 
     protected function _validate_child(){
         $this->form_validation
