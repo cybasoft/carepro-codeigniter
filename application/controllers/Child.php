@@ -29,7 +29,7 @@ class Child extends CI_Controller
      */
     public function index($id)
     {        
-        $daycare_id = $this->session->userdata('owner_daycare_id');       
+        $daycare_id = $this->session->userdata('daycare_id');       
         if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -41,7 +41,7 @@ class Child extends CI_Controller
         $pickups = $this->db->where('child_id', $id)->get('child_pickup')->result();
         if (empty($child)) {
             flash('error', lang('record_not_found'));
-            redirect($daycare_id.'/children');
+            redirect('children');
         }
         dashboard_page($this->module . 'index', compact('child', 'pickups'),$daycare_id);
     }
@@ -304,14 +304,16 @@ class Child extends CI_Controller
     public function assign_room(){      
         allow(['admin', 'manager']);
   
-        $rooms_detail = $this->db->get('child_rooms');
+        $daycare_id = $this->session->userdata('daycare_id');
+        $rooms_detail = $this->db->where('daycare_id',$daycare_id)->get('child_rooms');
         $rooms = $rooms_detail->result_array();   
         print(json_encode($rooms));       
     }
 
     public function doassignroom(){
         allow(['admin', 'manager']);
-
+        
+        $daycare_id = $this->session->userdata('daycare_id');
         $this->form_validation->set_rules('room[]', "Room", 'required|trim|xss_clean');
         $this->form_validation->set_rules('child_id', "Child", 'required|trim|xss_clean');
         if($this->form_validation->run() == TRUE) {
@@ -322,6 +324,7 @@ class Child extends CI_Controller
                     $this->db->insert('child_room', [
                         'child_id' => $child_id,
                         'room_id' => $room,
+                        'daycare_id' => $daycare_id,
                         'created_at' => date_stamp(),
                     ]);
                 }

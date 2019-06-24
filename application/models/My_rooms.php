@@ -12,7 +12,8 @@ class My_rooms extends CI_Model
      */
     function all()
     {
-        $res= $this->db->get($this->table)->result();
+        $daycare_id = $this->session->userdata('daycare_id');       
+        $res= $this->db->where('daycare_id',$daycare_id)->get($this->table)->result();
         foreach($res as $key=>$r){
             $res[$key]->total_children=$this->db->where('room_id',$r->id)->count_all_results('child_room');
             $res[$key]->total_staff = $this->db->where('room_id',$r->id)->count_all_results('child_room_staff');
@@ -63,11 +64,13 @@ class My_rooms extends CI_Model
      */
     function store()
     {
+        $daycare_id = $this->session->userdata('daycare_id');       
         $this->db->insert($this->table,
             [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
                 'created_at' => date_stamp(),
+                'daycare_id' => $daycare_id
             ]
         );
 
