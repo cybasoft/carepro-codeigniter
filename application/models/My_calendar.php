@@ -35,15 +35,17 @@ class My_calendar extends CI_Model
 			'end' => $this->input->post('end'),
 			'end_t' => $this->input->post('end_t'),
 			'description' => $this->input->post('desc'),
+			'user_id' => $this->user->uid(),
 			'allDay' => $allDay
 		);
 
 		$this->db->insert('calendar', $data); //insert to db
 
 		if($this->db->affected_rows() > 0) { //successful
+			$last_id = $this->db->insert_id();
 			flash('success', lang('request_success'));
 			//log event
-			logEvent("Added calendar event {$data['title']}");
+			logEvent($id = NULL,"Added calendar event ID: {$last_id}");
 		} else {
 			flash('danger', lang('request_error'));
 		}
@@ -59,12 +61,14 @@ class My_calendar extends CI_Model
 		} else {
 			$allDay = 'false';
 		}
+		$start_date = date("Y-m-d", strtotime($this->input->post('start')));
+		$end_date = date("Y-m-d", strtotime($this->input->post('end')));		
 		// Values received via ajax
 		$data = array(
 			'title' => $this->input->post('title'),
-			'start' => $this->input->post('start'),
+			'start' => $start_date,
 			'start_t' => $this->input->post('start_t'),
-			'end' => $this->input->post('end'),
+			'end' => $end_date,
 			'end_t' => $this->input->post('end_t'),
 			'description' => $this->input->post('desc'),
 			'allDay' => $allDay
@@ -74,9 +78,9 @@ class My_calendar extends CI_Model
 		$this->db->where('id', $this->input->post('id'));
 		$this->db->update('calendar', $data);
 		if($this->db->affected_rows() > 0) { //successful
-			flash('success', lang('request_success'));
 			//log event
-			logEvent("Updated calendar event {$data['title']}");
+			logEvent($id = NULL,"Updated calendar event ID: {$this->input->post('id')}");
+			flash('success', lang('request_success'));			
 		} else {
 			flash('danger', lang('request_error'));
 		}
@@ -93,7 +97,7 @@ class My_calendar extends CI_Model
 		$this->db->delete('calendar');
 		if($this->db->affected_rows() > 0) { //successful
 			//log event
-			logEvent("Added calendar event {$this->getEvents($id)->row()->id}");
+			logEvent($user_id = NULL,"Deleted calendar event ID: {$id}");
 			return 'true';
 		} else {
 			return 'true';

@@ -748,12 +748,12 @@ class Ion_auth_model extends CI_Model
             'id' => $user_id
         ));
         $users = $user_detail->row_array();
-        
-        $daycare_details = $this->db->get_where('daycare',array(
+
+        $daycare_details = $this->db->get_where('daycare', array(
             'id' => $users['daycare_id']
         ));
         $daycare = $daycare_details->row_array();
-        
+
         $users_group = $this->db->get_where('users_groups', array(
             'user_id' => $user_id
         ));
@@ -761,11 +761,18 @@ class Ion_auth_model extends CI_Model
         $group_details = $users_group->row_array();
         $group_id = $group_details['group_id'];
 
-        if($group_id == 4){
+        if ($group_id == 4) {
             $active = 0;
-        }else{
+        } else {
             $active = 1;
         }
+
+        $address_data = array(
+            'phone' => $additional_data['phone']
+        );
+        $this->db->insert('address',$address_data);
+        $address_id = $this->db->insert_id();
+
         // Users table.
         $data = [
             'password' => $password,
@@ -774,25 +781,27 @@ class Ion_auth_model extends CI_Model
             'created_at' => date_stamp(),
             'last_login' => date_stamp(),
             'active' => $active,
+            'address_id' => $address_id
         ];
         // 'active' => ($manual_activation === FALSE ? 1 : 0),
 
         //filter out any data passed that doesnt have a matching column in the users table
         //and merge the set user data and the additional data        
 
-        $userData = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);        
+        $userData = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);
         $this->trigger_events('extra_set');
         $this->db->insert($this->tables['users'], $userData);
         $id = $this->db->insert_id();
+        logEvent($user_id = NULL,"User ID: {$id} has been added.");
 
-        //register to group
+        //register to group        
         if (!empty($groups)) {
 
             if (is_array($groups)) {
                 foreach ($groups as $group) {
                     $this->add_to_group($group, $id);
                 }
-            } else {
+            } else {                
                 $this->add_to_group($groups, $id);
             }
         }
@@ -814,22 +823,22 @@ class Ion_auth_model extends CI_Model
             $this->email->to($to);
             $this->email->subject('Daycare Invitation');
 
-            $body = $this->load->view('owner_email/register_user_email', $email_data, true);
+            $body = $this->load->view('custom_email/register_user_email', $email_data, true);
             $this->email->message($body);        //Send mail
             if ($this->email->send()) {
                 $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
             }
         }
         //notify admin
-        $email = [
-            'to' => session('company_email'),
-            'from' => session('company_email'),
-            'subject' => lang('new_user_email_subject'),
-            'message' => lang('new_user_email_body'),
-            'template' => 'new_user_notice',
-        ];
-        $data2 = array_merge($data, $email, $additional_data);
-        $this->mailer->send($data2);
+        // $email = [
+        //     'to' => session('company_email'),
+        //     'from' => session('company_email'),
+        //     'subject' => lang('new_user_email_subject'),
+        //     'message' => lang('new_user_email_body'),
+        //     'template' => 'new_user_notice',
+        // ];
+        // $data2 = array_merge($data, $email, $additional_data);
+        // $this->mailer->send($data2);
         return (isset($id)) ? $id : FALSE;
     }
 
@@ -1018,7 +1027,8 @@ class Ion_auth_model extends CI_Model
             $this->trigger_events('post_login_unsuccessful');
             $this->set_error('login_timeout');
 
-            return FALSE;
+            $error = 'error';
+            return $error;
         }
 
         if ($query->num_rows() === 1) {
@@ -1033,7 +1043,11 @@ class Ion_auth_model extends CI_Model
                     redirectPrev();
                     return FALSE;
                 }
-
+                $daycare_details = $this->db->get_where('daycare', array(
+                    'id' => $user->daycare_id
+                ));
+                $daycare = $daycare_details->row_array();
+                $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
                 $this->update_last_login($user->id);
                 $this->set_session($user);
                 $this->clear_login_attempts($identity);
@@ -1042,7 +1056,7 @@ class Ion_auth_model extends CI_Model
 
                 return TRUE;
             }
-        }        
+        }
         //Hash something anyway, just to take up time
         // $this->hash_password($true_password);
         $this->increase_login_attempts($identity);
@@ -1060,7 +1074,6 @@ class Ion_auth_model extends CI_Model
      */
     public function is_time_locked_out($identity)
     {
-
         return $this->is_max_login_attempts_exceeded($identity) && $this->get_last_attempt_time($identity) > time() - $this->config->item('lockout_time', 'ion_auth');
     }
 
@@ -1077,7 +1090,25 @@ class Ion_auth_model extends CI_Model
         if ($this->config->item('track_login_attempts', 'ion_auth')) {
             $max_attempts = $this->config->item('maximum_login_attempts', 'ion_auth');
             if ($max_attempts > 0) {
-                $attempts = $this->get_attempts_num($identity);
+                $attempts = $this->get_attempts_num($identity);                
+                if ($attempts == 3) {
+                    $this->load->config('email');
+                    $this->load->library('email');
+
+                    $email_data = array(
+                        'email' => $identity,
+                    );
+                    $this->email->set_mailtype('html');
+                    $from = $this->config->item('smtp_user');
+                    $to = $identity;
+                    $this->email->from($from, 'Daycare');
+                    $this->email->to($to);
+                    $this->email->subject('Failed attempt to login');
+
+                    $body = $this->load->view('custom_email/failed_login', $email_data, true);
+                    $this->email->message($body);  //Send mail        
+                    $this->email->send();
+                }
                 return $attempts >= $max_attempts;
             }
         }
@@ -1380,22 +1411,35 @@ class Ion_auth_model extends CI_Model
             return FALSE;
         }
 
+        $address_data = array(
+            'phone' => $data['phone'],
+            'address_line_1' => $data['address'],
+            'zip_code' => $data['pin']
+        );
+        $this->db->update('address',$address_data, ['id' => $user->address_id]);
+
+        $user_data = array(
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+        );
         // Filter the data passed
         $data = $this->_filter_data($this->tables['users'], $data);
 
         if (array_key_exists('password', $data) || array_key_exists('email', $data)) {
             if (array_key_exists('password', $data)) {
                 if (!empty($data['password'])) {
-                    $data['password'] = $this->hash_password($data['password']);
+                    $user_data['password'] = $this->hash_password($data['password']);
                 } else {
                     // unset password so it doesn't effect database entry if no password passed
-                    unset($data['password']);
+                    unset($user_data['password']);
                 }
             }
         }
 
         $this->trigger_events('extra_where');
-        $this->db->update($this->tables['users'], $data, ['id' => $user->id]);
+        $this->db->update($this->tables['users'], $user_data, ['id' => $user->id]);
+        logEvent($id=NULL,"Updated user ID: {$user->id}");
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -1448,7 +1492,7 @@ class Ion_auth_model extends CI_Model
         $this->set_message('delete_successful');
 
         //log event
-        logEvent("Deleted {$this->user->get($id, 'email')}");
+        logEvent($id,"Deleted {$this->user->get($id, 'email')}");
 
         return TRUE;
     }

@@ -86,7 +86,8 @@ class My_photos extends CI_Model
     {
         $upload_path = './assets/uploads/photos';
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
         }
         $config = array(
             'upload_path' => $upload_path,

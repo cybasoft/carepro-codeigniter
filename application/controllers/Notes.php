@@ -15,8 +15,9 @@ class notes extends CI_Controller
         $this->title = lang('child').'-'.lang('notes');
     }
 
-    function index($daycare_id,$id)
-    {        
+    function index($id)
+    {       
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if(!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -26,7 +27,7 @@ class notes extends CI_Controller
         $child = $this->db->where('id',$id)->get('children')->row();
         if(empty($child)) {
             flash('error', lang('request_error'));
-            redirect($daycare_id.'/dashboard', 'refresh');
+            redirect('dashboard', 'refresh');
         }
 
         $child->notes = $this->db
@@ -190,7 +191,9 @@ class notes extends CI_Controller
         $this->form_validation->set_rules('name', lang('Name'), 'required|xss_clean|trim');
         if($this->form_validation->run() == true) {
             $this->db->insert('notes_categories', ['name' => $this->input->post('name')]);
+            $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
+                logEvent($user_id = NULL, "Added category ID: {$last_id}");
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -207,6 +210,7 @@ class notes extends CI_Controller
         allow(['admin', 'manager']);
 
         $this->db->where('id', $this->uri->segment(3))->delete('notes_categories');
+        logEvent($user_id = NULL,"Deleted category ID: {$this->uri->segment(3)}");
         flash('success', lang('request_success'));
         redirectPrev('', 'note-categories');
     }
@@ -218,7 +222,9 @@ class notes extends CI_Controller
         $this->form_validation->set_rules('name', lang('Name'), 'required|xss_clean|trim');
         if($this->form_validation->run() == true) {
             $this->db->insert('notes_tags', ['name' => $this->input->post('name')]);
+            $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
+                logEvent($user_id = NULL, "Added tag ID: {$last_id}");
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -235,6 +241,7 @@ class notes extends CI_Controller
         allow(['admin', 'manager']);
 
         $this->db->where('id', $this->uri->segment(3))->delete('notes_tags');
+        logEvent($user_id = NULL, "Deleted tag Id: {$this->uri->segment(3)}");
         flash('success', lang('request_success'));
         redirectPrev('', 'note-categories');
     }

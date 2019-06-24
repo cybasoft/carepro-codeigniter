@@ -15,6 +15,7 @@
 
     <link href="<?php echo assets('css/print.css'); ?>" rel="stylesheet" media="print">
     <link href="<?php echo assets('plugins/datatables/dataTables.bootstrap.css'); ?>" rel="stylesheet" media="all">
+    <link href="<?php echo assets('plugins/bootstrap-select/css/bootstrap-select.min.css') ?>" rel="stylesheet">
     <link href="<?php echo assets('plugins/fc/fullcalendar.css'); ?>" rel="stylesheet" media="all">
     <link href="<?php echo assets('plugins/fc/fullcalendar.print.css'); ?>" rel="stylesheet" media="print">
     <link href="<?php echo assets('plugins/sweetalert/sweetalert.css'); ?>" rel="stylesheet" media="all">
@@ -37,9 +38,10 @@
     </script>
 
     <script src="<?php echo assets('plugins/jquery/jquery.min.js'); ?>"></script>
-    <script src="<?php echo assets('plugins/extras/jquery-ui.min.js'); ?>" type="text/javascript"></script>
+    <!-- <script src="<?php echo assets('plugins/extras/jquery-ui.min.js'); ?>" type="text/javascript"></script> -->
     <script src="<?php echo assets('plugins/popper/popper.min.js'); ?>"></script>
     <script src="<?php echo assets('plugins/bootstrap/js/bootstrap.min.js'); ?>"></script>
+    <script src="<?php echo assets('plugins/bootstrap-select/js/bootstrap-select.min.js'); ?>"></script>    
 
     <!--    <script src="-->
     <?php //echo assets('plugins/extras/jquery.ui.touch-punch-improved.js'); ?><!--" type="text/javascript"></script>-->
@@ -89,14 +91,14 @@
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
                         <h4 class="page-title">
-                            <?php echo isset($this->title) ? $this->title : strtoupper($this->uri->segment(2)); ?>
+                            <?php echo isset($this->title) ? $this->title : strtoupper($this->uri->segment(1)); ?>
                         </h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><?php echo anchor('/', lang('Home')); ?></li>
                                     <li class="breadcrumb-item active"
-                                        aria-current="page"><?php echo ucwords($this->uri->segment(2)); ?></li>
+                                        aria-current="page"><?php echo ucwords($this->uri->segment(1)); ?></li>
                                 </ol>
                             </nav>
                         </div>

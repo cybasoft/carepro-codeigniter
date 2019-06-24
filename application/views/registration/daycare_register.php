@@ -3,55 +3,8 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/daycare.css">
 <script src="<?php echo base_url(); ?>assets/plugins/extras/jquery-ui.min.js"></script>
-<style>
-    .form-control {
-        height: 34px;
-    }
-
-    .stripe_connect:hover {
-        text-decoration: none;
-    }
-
-    .user-edit-fileinput {
-        position: absolute;
-        visibility: hidden;
-        width: 1px;
-        height: 1px;
-        opacity: 0;
-    }
-
-    .img_preview {
-        width: 60px !important;
-        height: 60px !important;
-    }
-
-    .media {
-        margin-left: 12px;
-    }
-
-    .notifictions {
-        z-index: 3000;
-        max-width: 500px;
-        top: 10px;
-        right: 5px;
-        position: absolute !important;
-    }
-    body{
-        overflow-x: hidden;
-    }
-    .loading_div {
-        display: none;
-        position: fixed;
-        background: #fff url('../assets/img/loader.gif') no-repeat 50%;
-        opacity: .5;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        height: 100%;
-    }
-</style>
 </head>
 <body class="transparent-header">
     <div class="loading_div">
@@ -146,10 +99,10 @@
                                 <img src="../assets/img/daycare/default-user-image.png" alt="daycare logo" class="ui-w-100 img_preview mr-3" id="img_preview">
                                 <div class="media-body" id="img_div">
                                     <label class="btn btn-outline-primary btn-sm change_btn mr-1 mt-4">
-                                        change
+                                        Change
                                         <input type="file" class="user-edit-fileinput" name="logo" value="<?php echo set_value('logo'); ?>" id="avatar" accept="image/*">
                                     </label>
-                                    <button type="button" class="btn btn-default btn-sm md-btn-flat mt-3 reset_btn">reset</button>
+                                    <button type="button" class="btn btn-default btn-sm md-btn-flat mt-3 reset_btn">Reset</button>
                                 </div>
                             </div>
                         </div>
@@ -164,45 +117,5 @@
         </div>
     </div>
 </body>
-<script>
-    $(document).ready(function() {
-        $('.daycare_register').submit(function(e) {
-            e.target.checkValidity();
-            $('.loading_div').show();
-        });
-
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('.img_preview').attr('src', e.target.result);
-                    $("#avatar").attr('value', e.target.result);
-                };
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $(".user-edit-fileinput").change(function() {
-            $("#img_preview").attr("src", "");
-            $("#img_preview").removeClass("mr-3");
-            $("#img_preview").addClass("d-block");
-            $("#img_div").addClass("ml-3");
-            $("#edit_image").val('');
-            $("#customer_image").val('');
-            $("#profile_image").val('');
-            readURL(this);
-        });
-        $(".reset_btn").click(function() {
-            $("#avatar").attr('value', '');
-            $("#edit_image").val('');
-            $("#customer_image").val('');
-            $("#profile_image").val('');
-            $("#img_preview").attr('src', '../assets/img/daycare/default-user-image.png');
-        });
-
-        $(".notifictions").delay(2000).hide("slide", {
-            direction: "right"
-        }, 5000);
-    });
-</script>
+<script src="<?php echo base_url(); ?>assets/js/daycare.js"></script>
 </html>

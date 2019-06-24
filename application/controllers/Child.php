@@ -27,8 +27,9 @@ class Child extends CI_Controller
      * default page
      * @return void
      */
-    public function index($daycare_id = NULL,$id)
+    public function index($id)
     {        
+        $daycare_id = $this->session->userdata('owner_daycare_id');       
         if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -45,15 +46,16 @@ class Child extends CI_Controller
         dashboard_page($this->module . 'index', compact('child', 'pickups'),$daycare_id);
     }
 
-    public function store($daycare_id = NULL)
+    public function store()
     {
+        $daycare_id = $this->session->userdata('owner_daycare_id');        
         allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
             $register = $this->child->register(true,$daycare_id);            
             if (false !== $register) {
                 flash('success', lang('request_success'));
-                redirect($daycare_id.'/child/' . $register);
+                redirect('child/' . $register);
             } else {
                 flash('error', lang('request_error'));
             }
@@ -63,7 +65,7 @@ class Child extends CI_Controller
             validation_errors();
             flash('danger');
         }
-        redirect($daycare_id.'/children', 'refresh');
+        redirect('children', 'refresh');
     }
 
     /*
@@ -72,8 +74,9 @@ class Child extends CI_Controller
      * @return void
      */
 
-    public function update($daycare_id = NULL)
+    public function update()
     {      
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
 
         if ($this->_validate_child()) {
@@ -127,8 +130,9 @@ class Child extends CI_Controller
         page($this->module . 'accounting/index', $data);
     }
 
-    public function reports($daycare_id,$id)
-    {       
+    public function reports($id)
+    {   
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if (!authorizedToChild($this->user->uid(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -223,8 +227,9 @@ class Child extends CI_Controller
         $this->load->view($this->module . 'assign_parent', compact('child_id'));
     }
 
-    public function doAssignParent($daycare_id,$child_id)
+    public function doAssignParent($child_id)
     {        
+        $daycare_id = $this->session->userdata('owner_daycare_id');        
         allow(['admin', 'manager', 'staff']);
 
         $this->child_id = $child_id;
@@ -234,17 +239,22 @@ class Child extends CI_Controller
                 'user_id' => $this->input->post('parent'),
                 'child_id' => $child_id,
             ];
-            if ($this->db->insert('child_parents', $data)) {
+            if ($this->db->insert('child_parents', $data)) {                
                 flash('success', lang('request_success'));
 
                 $parent = $this->My_user->first($this->input->post('parent'));
-                $child = $this->child->first($child_id);
-                $data = [
+                $child = $this->child->first($child_id);               
+                logEvent($id = NULL,"Assigned parent ID: {$parent->id} to child ID: {$child->id}");
+                
+                $data = [                    
                     'to' => $parent->email,
                     'subject' => lang('assigned_child_subject'),
-                    'message' => sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false)),
+                    'logo' => $this->session->userdata('company_logo'),
+                    'name' => $parent->first_name . " " . $parent->last_name,
                 ];
-                $this->mailer->send($data);
+                $message = sprintf(lang('assigned_child_message'), $child->first_name . ' ' . $child->last_name, format_date($child->bday, false));                
+                $data['message'] = $message;
+                send_email($data);
             }
         } else {
             flash('danger');
@@ -283,6 +293,7 @@ class Child extends CI_Controller
         if ($this->db->where('child_id', $child_id)
             ->where('user_id', $parent_id)
             ->delete('child_parents')) {
+                logEvent($id = NULL,"Deleted parent ID: {$parent_id} for child ID: {$child_id}");
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -290,6 +301,40 @@ class Child extends CI_Controller
         redirectPrev();
     }
 
+    public function assign_room(){      
+        allow(['admin', 'manager']);
+  
+        $rooms_detail = $this->db->get('child_rooms');
+        $rooms = $rooms_detail->result_array();   
+        print(json_encode($rooms));       
+    }
+
+    public function doassignroom(){
+        allow(['admin', 'manager']);
+
+        $this->form_validation->set_rules('room[]', "Room", 'required|trim|xss_clean');
+        $this->form_validation->set_rules('child_id', "Child", 'required|trim|xss_clean');
+        if($this->form_validation->run() == TRUE) {
+            $child_id = $this->input->post('child_id');
+            foreach ($this->input->post('room') as $room) {
+                $find =$this->db->limit(1)->where('child_id', $child_id)->where('room_id', $room)->count_all_results('child_room');               
+                if($find == 0) {
+                    $this->db->insert('child_room', [
+                        'child_id' => $child_id,
+                        'room_id' => $room,
+                        'created_at' => date_stamp(),
+                    ]);
+                }
+                logEvent($user_id = NULL,"Assigned child ID: {$child_id} for room ID: {$room}");
+            }
+
+            flash('success', lang('request_success'));
+        }else{
+            validation_errors();
+            flash('error');
+        }       
+        redirectPrev();
+    }
 
     protected function _validate_child(){
         $this->form_validation

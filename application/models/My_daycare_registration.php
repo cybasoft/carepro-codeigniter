@@ -63,12 +63,15 @@ class My_daycare_registration extends CI_Model
             'phone' => $data['phone'],
         );
         $this->db->insert('address', $address_data);
-        $address_id = $this->db->insert_id();
+        $user_address = $this->db->insert_id();
+
+        $this->db->insert('address', $address_data);
+        $daycare_address = $this->db->insert_id();        
 
         $daycare_data = array(
             'name' => $data['name'],
             'employee_tax_identifier' => $data['employee_tax_identifier'],
-            'address_id' => $address_id,
+            'address_id' => $daycare_address,
             'daycare_id' => $data['daycare_id'],
             'logo' => $data['logo'],            
         );
@@ -78,9 +81,12 @@ class My_daycare_registration extends CI_Model
         
         $store_id = array(
             'daycare_id' => $insert_id,
+            'address_id' => $user_address
         );
         $this->db->where('email', $email);
-        $this->db->update('users', $store_id);        
+        $this->db->update('users', $store_id);
+        logEvent($insert_id,"Daycare {$insert_id} added to the application.");
+        $this->session->set_userdata('daycare_id',$data['daycare_id']);
     }
     
     //Function to generate unique daycare id
@@ -96,13 +102,10 @@ class My_daycare_registration extends CI_Model
     //function to store daycare logo
     public function store_logo($filename) {
         $upload_folder = './assets/uploads/daycare_logo';        
-        if ( ! is_dir($upload_folder))
-        {
-            if ( ! mkdir ($upload_folder, 0777, TRUE))
-            {
-                die('Failed to create folders...');
-            }
-        }       
+        if(!file_exists($upload_folder)) {
+            mkdir($upload_folder, 0777, TRUE);
+            chmod($upload_folder, 0777);
+        }      
         $config['upload_path'] = $upload_folder;
         $config['allowed_types'] = 'jpeg|jpg|png';
         $config['max_size'] = 2000;
@@ -143,7 +146,7 @@ class My_daycare_registration extends CI_Model
         $this->email->to($email);
         $this->email->subject('Daycare register');
 
-        $body= $this->load->view('owner_email/welcome_email', $data, true);
+        $body= $this->load->view('custom_email/welcome_email', $data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){           
             $this->insert_daycare($user_data,$email,$activation_code);
@@ -151,6 +154,10 @@ class My_daycare_registration extends CI_Model
             return $status;
         }   
         else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";           
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
             $this->session->set_flashdata("subscription_error","Enable to sent welcome email. Please try again.");
         }
     }

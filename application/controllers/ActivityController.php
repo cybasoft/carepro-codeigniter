@@ -62,7 +62,12 @@ class ActivityController extends CI_Controller
     {
         allow(['admin', 'manager', 'staff']);
         $id = uri_segment(3);
+        $activity_details = $this->db->get_where('activity_plan',array(
+            'id' => $id
+        ));
+        $activities = $activity_details->row();        
         $this->db->where('id', $id)->delete('activity_plan');
+        logEvent($user_id = NULL,"Deleted activity ID: {$id} for room ID: {$activities->room_id}");
         flash('success', lang('Activity deleted'));
         redirectPrev(NULL, 'activities');
     }
@@ -79,6 +84,7 @@ class ActivityController extends CI_Controller
     {
         allow(['admin', 'manager', 'staff']);
         $this->activity->clear();
+        logEvent($user_id = NULL, "Activities has been cleared");
         flash('success', lang('Activity plan has been cleared'));
         redirectPrev(NULL, 'activities');
     }

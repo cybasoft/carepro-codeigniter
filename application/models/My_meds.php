@@ -29,10 +29,11 @@ class My_meds extends CI_Model
             'user_id' => $this->user->uid(),
         ];
         $this->db->insert('child_meds', $data);
+        $last_id = $this->db->insert_id();
 
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Added med for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added med ID: {$last_id} for child ID: {$this->input->post('child_id')}");
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_medication_subject'), lang('new_medication_message').' <p><strong>'.$this->input->post('med_name').'</strong></p>');
             return TRUE;
@@ -50,9 +51,9 @@ class My_meds extends CI_Model
         $upload_path = APPPATH.'../assets/uploads/meds/';
 
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, TRUE);
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
         }
-
         $config = [
             'upload_path' => $upload_path,
             'allowed_types' => 'png|jpg|jpeg|svg',
@@ -81,6 +82,7 @@ class My_meds extends CI_Model
             $this->db->insert('med_photos', $data);
 
             if($this->db->affected_rows() > 0)
+                logEvent($user_id = NULL,"Medication Image is added for child");
                 return TRUE;
         }
         return FALSE;
@@ -153,6 +155,7 @@ class My_meds extends CI_Model
     {
         $this->db->where('id', $id)->delete('meds_admin');
         if($this->db->affected_rows() > 0)
+            logEvent($user_id = NULL,"Deleted meds ID: {$id}");
             return TRUE;
         return FALSE;
     }

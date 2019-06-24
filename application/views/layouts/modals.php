@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="registerChildModal" tabindex="-1" role="dialog" aria-labelledby="registerChildModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -8,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?php echo form_open($daycare_id.'/child/register'); ?>
+            <?php echo form_open('child/register'); ?>
 
             <div class="modal-body">
                 <div class="row">
@@ -30,15 +29,15 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('blood_type'));
-                        echo form_dropdown('blood_type', blood_types(), set_value('blood_type'), ['class' => 'form-control', ]);
+                        echo form_dropdown('blood_type', blood_types(), set_value('blood_type'), ['class' => 'form-control',]);
                         echo form_label(lang('status'));
-                        echo form_dropdown('status', [1 => lang('active'), 0 => lang('inactive')], set_value('status'), ['class' => 'form-control', ]);
+                        echo form_dropdown('status', [1 => lang('active'), 0 => lang('inactive')], set_value('status'), ['class' => 'form-control',]);
                         echo form_label(lang('Ethnicity'));
-                        echo form_input('ethnicity', set_value('ethnicity'), ['class' => 'form-control', ]);
+                        echo form_input('ethnicity', set_value('ethnicity'), ['class' => 'form-control',]);
                         echo form_label(lang('religion'));
-                        echo form_input('religion', set_value('religion'), ['class' => 'form-control', ]);
+                        echo form_input('religion', set_value('religion'), ['class' => 'form-control',]);
                         echo form_label(lang('birthplace'));
-                        echo form_input('birthplace', set_value('birthplace'), ['class' => 'form-control', ]);
+                        echo form_input('birthplace', set_value('birthplace'), ['class' => 'form-control',]);
                         ?>
                     </div>
                 </div>
@@ -62,7 +61,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?php echo form_open($daycare_id.'/users/create'); ?>
+            <?php echo form_open('users/create'); ?>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12">
@@ -101,5 +100,29 @@
             </div>
         </div>
         <?php echo form_close(); ?>
+    </div>
+</div>
+<div class="modal fade" id="AssignRoomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><?php echo lang('Assign') . ' ' . lang('Rooms'); ?></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <?php echo form_open('child/doassignroom'); ?>
+            <div class="modal-body">
+                <input type="hidden" value="" name="child_id" id="child_id">                
+                <select class="form-control selectpicker rooms" data-live-search="true" multiple name="room[]" id="assign_room" require>
+                </select>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close'); ?></button>
+                <button class="btn btn-primary"><?php echo lang('Assign'); ?></button>
+            </div>
+            <?php echo form_close(); ?>
+
+        </div>
     </div>
 </div>

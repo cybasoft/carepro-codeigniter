@@ -30,10 +30,11 @@ class My_notes extends CI_Model
         $this->db->insert('child_notes', $data);
 
         if($this->db->affected_rows() > 0) {
+            $last_id = $this->db->insert_id();
             //log event
-            logEvent("Added note for child ID: {$child_id}");
+            logEvent($id = NULL,"Added note ID: {$last_id} for child ID: {$child_id}");
             //notify parents
-            $this->parent->notifyParents($child_id, lang('note_created_email_subject'), sprintf(lang('note_created_email_message'), $this->child->first($child_id)->first_name));
+            $this->parent->notifyParents($child_id, lang('note_added_email_subject'), sprintf(lang('note_added_email_message'), $this->child->first($child_id)->first_name));
             return true;
         }
         return false;
@@ -44,9 +45,15 @@ class My_notes extends CI_Model
      */
     function destroy()
     {
-        $this->db->where('id', $this->uri->segment(3));
+        $id = $this->uri->segment(3);
+        $notes_detail = $this->db->get_where("child_notes",array(
+            'id' => $id
+        ));
+        $notes = $notes_detail->row();        
+        $this->db->where('id', $id);
         $this->db->delete('child_notes');
         if($this->db->affected_rows() > 0)
+            logEvent($user_id = NULL,"Deleted note ID: {$id} for child ID: {$notes->child_id}");
             return true;
         return false;
     }
@@ -90,7 +97,7 @@ class My_notes extends CI_Model
         $noteID = $this->db->insert_id();
 
         if($this->db->affected_rows() > 0) {
-            logEvent("Added incident report for child ID: {$child_id}");
+            logEvent($id = NULL,"Added incident report ID: {$noteID} for child ID: {$child_id}");
             $this->parent->notifyParents($child_id, lang('incident_email_subject'), sprintf(lang('incident_email_message'), $this->child->get($child_id, 'name')));
             return $noteID;
         }
@@ -113,11 +120,12 @@ class My_notes extends CI_Model
                 @unlink('./assets/uploads/photos/'.$photo->photo);
             }
             $this->db->where('incident_id', $id)->delete('child_incident_photos');
-
+            logEvent($user_id = NULL, "Deleted child incident ID: {$id}");
         }
         $this->db->where('id', $id);
         $this->db->delete('child_incident');
         if($this->db->affected_rows() > 0)
+            logEvent($user_id = NULL, "Deleted child incident ID: {$id}");
             return true;
         return false;
 
@@ -128,24 +136,28 @@ class My_notes extends CI_Model
      * @return string
      */
     function storeIncidentPhotos($childID)
-    {
+    {        
         $table = 'child_incident_photos';
-        $upload_path = './assets/uploads/photos';
+        $upload_path = './assets/uploads/photos';        
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
-        }
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
+        }  
         $config = array(
             'upload_path' => $upload_path,
             'allowed_types' => 'gif|jpg|png|jpeg|svg',
             'max_size' => '3048',
             'encrypt_name' => true,
         );
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $config);       
         if(!$this->upload->do_upload('file')) {
+            $error = array('error' => $this->upload->display_errors());
+            print_r($error);
+            exit();
             $msg = lang('request_error');
-            $type = 'error';
+            $type = 0;
         } else {
-            $upload_data = $this->upload->data();
+            $upload_data = $this->upload->data();            
             $this->db->insert($table, [
                 'incident_id' => $this->input->post('incident_id'),
                 'photo' => $upload_data['file_name'],
@@ -155,17 +167,17 @@ class My_notes extends CI_Model
             ]);
             if($upload_data) {
                 $msg = lang('request_success');
-                $type = 'success';
+                $type = 1;
             } else {
                 $msg = lang('request_error');
-                $type = 'error';
+                $type = 0;
             }
         }
         return json_encode($msg, $type);
     }
 
     function deleteIncidentPhoto()
-    {
+    {        
         $photo = $this->db->where('id', $this->input->post('id'))->get('child_incident_photos')->row();
         @unlink('./assets/uploads/photos/'.$photo->photo);
         if($this->db->where('id', $this->input->post('id'))->delete('child_incident_photos'))

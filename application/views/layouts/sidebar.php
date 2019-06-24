@@ -5,21 +5,21 @@
                 <?php $sidebar = [
                     [
                         'name' => 'Dashboard',
-                        'link' => $daycare_id.'/dashboard',
+                        'link' => 'dashboard',
                         'icon' => 'dash',
                         'active' => 'dashboard',
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],
                     [
                         'name' => 'Children',
-                        'link' => $daycare_id.'/children',
+                        'link' => 'children',
                         'icon' => 'children',
                         'active' => ['children', 'child'],
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],
                     [
-                        'name' => 'rooms',
-                        'link' => $daycare_id.'/rooms',
+                        'name' => 'Rooms',
+                        'link' => 'rooms',
                         'icon' => 'groups',
                         'active' => ['rooms', 'room'],
                         'users' => ['admin', 'manager', 'staff'],
@@ -27,46 +27,46 @@
                     ],
                     [
                         'name' => 'Users',
-                        'link' => $daycare_id.'/users',
+                        'link' => 'users',
                         'icon' => 'users',
                         'active' => ['users', 'user'],
                         'allow' => ['admin', 'manager'],
                     ],
                     [
                         'name' => 'Parents',
-                        'link' => $daycare_id.'/parents',
+                        'link' => 'parents',
                         'icon' => 'parents',
                         'active' => 'parents',
                         'allow' => ['admin', '/manager'],
                     ],
                     [
                         'name' => 'Calendar',
-                        'link' => $daycare_id.'/calendar',
+                        'link' => 'calendar',
                         'icon' => 'calendar',
                         'active' => 'calendar',
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],
                     [
                         'name' => 'Files',
-                        'link' => $daycare_id.'/files',
+                        'link' => 'files',
                         'icon' => 'folder',
                         'active' => 'folder',
                         'allow' => ['admin', 'manager', 'staff'],
                     ], [
                         'name' => 'News',
-                        'link' => $daycare_id.'/news',
+                        'link' => 'news',
                         'icon' => 'news',
                         'active' => ['news', 'article'],
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ], [
                         'name' => 'Settings',
-                        'link' => $daycare_id.'/settings',
+                        'link' => 'settings',
                         'icon' => 'settings',
                         'active' => ['settings'],
                         'allow' => ['admin'],
                     ], [
                         'name' => 'Logout',
-                        'link' => $daycare_id.'/logout',
+                        'link' => 'logout',
                         'icon' => 'exit',
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],
@@ -83,7 +83,7 @@
                            aria-expanded="false">
                             <!--                        <i class="mdi mdi-view-dashboard"></i>-->
                             <img style="width:35px;height:26px;"
-                                 src="<?php echo assets('img/content/'.$sb['icon'].'.svg'); ?>"/>&nbsp;&nbsp;
+                                src="<?php echo assets('img/content/'.$sb['icon'].'.svg'); ?>"/>&nbsp;&nbsp;
                             <span class="hide-menu"><?php echo $sb['name']; ?></span>
                         </a>
                     </li>

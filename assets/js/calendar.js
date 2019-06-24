@@ -52,8 +52,8 @@
                     $('input#event_title').val(calEvent.title);
 
                     //populate input fields (currently disabled)
-//                    $('input#start_date').attr('type', 'text').val(start_d);
-//                    $('input#end_date').attr('type', 'text').val(end_d);
+                   $('input#start_date').attr('type', 'text').val(start_d);
+                   $('input#end_date').attr('type', 'text').val(end_d);
 
                     $('input#start_time').attr('type', 'text').val(start_t);
                     $('input#end_time').attr('type', 'text').val(end_t);

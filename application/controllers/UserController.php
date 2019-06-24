@@ -16,21 +16,21 @@ class UserController extends CI_Controller
     }
 
     //redirect if needed, otherwise display the user list
-    function index($daycare_id = NULL)
+    function index()
     {
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         //list the users
         $daycare_details = $this->db->get_where('daycare',array(
               'daycare_id' => $daycare_id
         ));
-        $daycare = $daycare_details->row_array();
+        $daycare = $daycare_details->row_array();       
 
         $users = $this->db->select('u.*,ug.group_id,g.name as role')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
-            ->get()->result();
-                        
+            ->get()->result();        
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
@@ -48,8 +48,9 @@ class UserController extends CI_Controller
     }
 
     //create a new user
-    function create($daycare_id = NULL)
+    function create()
     {        
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if($daycare_id !== NULL){
             $daycare_details = $this->db->get_where('daycare',array(
                 'daycare_id' => $daycare_id
@@ -70,11 +71,13 @@ class UserController extends CI_Controller
         $this->form_validation->set_rules('group', '', 'trim');
 
         if($this->form_validation->run() == true) {
+            $firstname = $this->input->post('first_name');
+            $lastname = $this->input->post('last_name');            
             $additional_data = array(
                 'email' => strtolower($this->input->post('email')),
                 'password' => $this->input->post('password'),
-                'first_name' => $this->input->post('first_name'),
-                'last_name' => $this->input->post('last_name'),
+                'first_name' => $firstname,
+                'last_name' => $lastname,
                 'phone' => $this->input->post('phone'),
                 'daycare_id' => $owner_id
             );
@@ -103,11 +106,16 @@ class UserController extends CI_Controller
         }
         //user vars
         $user = $this->ion_auth->user($id)->row();
+        $address_details = $this->db->get_where('address',array(
+            'id' => $user->address_id
+        ));
+        $address = $address_details->row();        
         $groups = $this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
         //pass the user to the view
         $myData = array(
             'user' => $user,
+            'address' => $address,
             'groups' => $groups,
             'currentGroups' => $currentGroups,
             'daycare_id' => $daycare_id
@@ -116,8 +124,9 @@ class UserController extends CI_Controller
     }
 
     //edit a user
-    function update($daycare_id = NULL,$id=NULL)
-    {       
+    function update($id=NULL)
+    {   
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager']);
         $id = $this->input->post('user_id');
         //validate form input
@@ -187,6 +196,12 @@ class UserController extends CI_Controller
             $activation = $this->ion_auth->activate($id);
         }
         if($activation) {
+            if($user['name'] === NULL){
+                $name = $user['first_name'] ." ". $user['last_name'];
+            }else{
+                $name = $user['name'];
+            }
+            logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
             //redirect them to the auth page
             flash('success', lang('user_activated'));
         } else {
@@ -194,7 +209,7 @@ class UserController extends CI_Controller
             flash('danger', lang('request_error'));
         }
         $this->send_user_status_email($user,$user_status,$daycare_id);
-        redirect($daycare_id."/users", 'refresh');
+        redirect("users", 'refresh');
     }
 
     //deactivate the user
@@ -216,18 +231,25 @@ class UserController extends CI_Controller
             }
             page($this->module.'deactivate_user', compact('id'));
         } else {
-            if($this->input->post('confirm') == 'yes') {
+            if($this->input->post('confirm') == 'yes') {                
+                if($user['name'] === NULL){
+                    $name = $user['first_name'] ." ". $user['last_name'];
+                }else{
+                    $name = $user['name'];
+                }
                 $this->ion_auth->deactivate($id);  
+                logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
                 $this->send_user_status_email($user,$user_status,$daycare_id);              
                 flash('warning', lang('user_deactivated'));
             } else {
                 flash('info', lang('action_cancelled'));
             }
-            redirect($daycare_id."/users", 'refresh');
+            redirect("users", 'refresh');
         }
     }
-    function active_deactive_user($daycare_id = NULL, $user_status = NULL){              
-
+    function active_deactive_user($user_status = NULL)
+    {              
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $id = $this->input->post('user_id');        
         if($user_status === "deactivate"){
             $this->deactivate($id,$daycare_id,$user_status);           
@@ -254,13 +276,20 @@ class UserController extends CI_Controller
          $this->email->to($to);
          $this->email->subject('User Status Change');
 
-         $body = $this->load->view('owner_email/user_status', $email_data, true);
+         $body = $this->load->view('custom_email/user_status', $email_data, true);
          $this->email->message($body);        //Send mail
          if ($this->email->send()) {
              $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+         }else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
          }
     }
-    function change_status($daycare_id = NULL,$user_status = NULL,$id = NULL){
+    function change_status($id = NULL){
+        $user_status = $this->uri->segment(2);
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $data = array(
             'id' => $id,
             'user_status' => $user_status
@@ -271,18 +300,22 @@ class UserController extends CI_Controller
      * ensure all tables exist
      */
 
-    function delete($daycare_id = NULL,$id = NULL)
-    {        
+    function delete($id = NULL)
+    {                
         allow('admin');
-
+        
         $this->db->where('id', $id);
-        $this->db->delete('users');
-        if($this->db->affected_rows() > 0)
+        $this->db->delete('users');  
+        logEvent($user_id = NULL,"Deleted user ID: {$id}");
+      
+        if($this->db->affected_rows() > 0){
             flash('success', lang('request_success'));
-        else
+        }
+        else{
             flash('danger', lang('request_error'));
+        }
 
-        redirect($daycare_id.'/users', 'refresh');
+        redirect('users', 'refresh');
     }
 
     // create a new group
@@ -356,11 +389,12 @@ class UserController extends CI_Controller
      */
     function uploadPhoto()
     {
-        $id = uri_segment(4);        
+        $id = uri_segment(3);        
         $upload_path = APPPATH.'../assets/uploads/users';
         $upload_db = 'users';
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 0755, true);
+            mkdir($upload_path, 0777, true);
+            chmod($upload_path, 0777);
         }
         if($id == "") { //make sure there are arguments
             flash('danger', lang('request_error'));

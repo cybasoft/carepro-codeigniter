@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header box-border">
                     <h3 class="card-title">
-                        <a href="<?php echo site_url( $daycare_id.'/child/'.$child->id); ?>">
+                        <a href="<?php echo site_url( 'child/'.$child->id); ?>">
                             <?php echo $child->first_name.' '.$child->last_name; ?>
                         </a>
                     </h3>

@@ -73,7 +73,7 @@ class MY_profile extends CI_Model
             $this->email->to($to);
             $this->email->subject('Password Reset Successful');
     
-            $body= $this->load->view('owner_email/reset_password_email', $email_data, true);
+            $body= $this->load->view('custom_email/reset_password_email', $email_data, true);
             $this->email->message($body);        //Send mail
             if($this->email->send()){           
             }   

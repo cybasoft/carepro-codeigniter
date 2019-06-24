@@ -1,0 +1,31 @@
+.pricing-table .list-group-item {
+    padding-left: 35px !important;
+}
+
+.list-group-item {
+    border: none
+}
+.pricing-name{
+    z-index: 10 !important;
+}
+.circle-button:hover,.btn:not(.btn-border):hover{
+    border-color: #EB6C6A !important;
+    background-color: #ffffff !important;
+    color: #EB6C6A;
+}
+.pricing-table .pricing-price.list-group-item{
+    font-size: 55px;
+}
+.circle-button{
+    border-color: #EB6C6A;
+    background-color: #EB6C6A !important;
+}
+.pricing-table .pricing-price span:first-child{
+    color: #5584ff;
+}
+.fas{
+    color: #EB6C6A;
+}
+.pricing-table .btn{
+    padding: 10px 80px;
+}

@@ -12,10 +12,11 @@ class Dashboard extends CI_Controller
     /*
      * default pagek
      */
-    function index($daycare_id = NULL)
+    function index()
     {            
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         $this->load->model('my_invoice', 'invoice');
-        if($daycare_id === NULL){                     
+        if($daycare_id === NULL){
             if(is(['super','admin','manager'])) {
                 page('dashboard/home');
     
@@ -29,11 +30,17 @@ class Dashboard extends CI_Controller
             } else {
                 $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
             }
-        }else{
+        }else{           
             $daycare_details = $this->db->get_where('daycare', array(
                 'daycare_id' => $daycare_id
             ));
             $daycare = $daycare_details->row_array();
+            
+            $address_details = $this->db->get_where('address', array(
+                'id' => $daycare['address_id']
+            ));
+            $address = $address_details->row_array();
+                        
             if($daycare['logo'] !== ''){
                 $logo = $daycare['logo'];
             }else{
@@ -41,14 +48,14 @@ class Dashboard extends CI_Controller
             }     
             $this->session->set_userdata('company_logo',$logo);
             if(is(['super','admin','manager'])) {
-                dashboard_page('dashboard/home',$data = [],$daycare_id);
+                dashboard_page('dashboard/home',compact('daycare','address'),$daycare_id);
     
             } elseif(is('parent')) {
                 $children = $this->parent->getChildren();
                 dashboard_page('parent/parent_dashboard',compact('children'),$daycare_id);
     
             } elseif(is('staff')) {
-                redirect($daycare_id.'/rooms');
+                redirect('rooms');
             } else {                
                 dashboard_page('dashboard/pending',$data = [],$daycare_id);
             }

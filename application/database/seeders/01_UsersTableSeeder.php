@@ -39,6 +39,8 @@ class UsersTableSeeder extends CI_Model
                 'pin' => rand(1111, 9999),
                 'active' => 1,
                 'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'daycare_id' => $i + 5,
+                'address_id' => $i + 5,
             ];
             $this->db->insert('users', $data);
 
@@ -70,6 +72,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'daycare_id' => 1,
+                'address_id' => 1
             ],
             [
                 'first_name' => 'Admin',
@@ -80,6 +84,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'daycare_id' => 2,
+                'address_id' => 2
             ],
             [
                 'first_name' => 'Manager',
@@ -90,6 +96,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'daycare_id' => 3,
+                'address_id' => 3
             ],
             [
                 'first_name' => 'Staff',
@@ -100,6 +108,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'daycare_id' => 4,
+                'address_id' => 4
             ],
             [
                 'first_name' => 'Parent',
@@ -110,6 +120,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'daycare_id' => 5,
+                'address_id' => 5
             ],
         ];
         foreach ($users as $user) {

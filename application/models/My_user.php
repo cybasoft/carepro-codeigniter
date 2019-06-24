@@ -168,21 +168,25 @@ class MY_user extends CI_Model
 
 
     function getCount($group = NULL)
-    {
-        if($group == NULL)
-            return $this->db->count_all_results('users');
+    {        
+        $daycare_id = $this->session->userdata('daycare_id');
+
+        if($group == NULL)          
+            return $this->db->where('daycare_id',$daycare_id)->count_all_results('users');
 
         $query = "SELECT g.name, count(*) AS total 
                   FROM users AS u
                   JOIN users_groups AS ug ON ug.user_id = u.id
                   JOIN groups AS g
                   ON g.id = ug.group_id
+                  WHERE u.daycare_id = $daycare_id
                   GROUP BY g.name;";
-        $results = $this->db->query($query)->result();
 
+        $results = $this->db->query($query)->result();
+       
         foreach ($results as $result) {
-            if($result->name == $group)
-                return $result->total;
+            if($result->name == $group)                 
+                return $result->total;                                         
         }
 
     }

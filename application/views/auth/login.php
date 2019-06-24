@@ -1,12 +1,8 @@
-<form action="<?php echo site_url($data['daycare_id'].'/login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
+<form action="<?php echo site_url('login'); ?>" id="loginForm" method="post" class="login100-form validate-form">
 
     <div class="text-center" style="position:absolute;top:0;right:150px">
         <a href="<?php echo site_url(); ?>">
-            <?php if ($data['logo'] !== "") { ?>
-                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $data['logo']; ?>" alt="Logo">
-            <?php } else { ?>
-                <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
-            <?php } ?>
+            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
         </a>
     </div>
     <?php if (!empty($this->session->flashdata('success'))) : ?>
@@ -63,7 +59,7 @@
         </div>
         <?php if (session('company_allow_reset_password')) : ?>
             <div>
-                <?php echo anchor($data['daycare_id'].'/forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading'), ['class' => 'txt1']); ?>
+                <?php echo anchor('forgot', '<span class="fa fa-key"></span> ' . lang('forgot_password_heading'), ['class' => 'txt1']); ?>
             </div>
         <?php endif; ?>
     </div>
@@ -74,16 +70,9 @@
             <?php echo lang('Login'); ?>
         </button>
     </div>
-    <?php if ($data['daycare'] === 'no') : ?>
-        <div class="container-login100-form-btn mt-2">
-            <?php echo anchor('subscription', lang('register'), ['class' => 'login100-form-btn']); ?>
-        </div>
-    <?php elseif ($data['daycare'] === 'yes') : ?>
-        <div class="container-login100-form-btn mt-2">
-            <?php echo anchor($data['daycare_id'] . '/register', lang('Parent Registration'), ['class' => 'login100-form-btn']); ?>
-        </div>
-    <?php endif; ?>
-
+    <div class="container-login100-form-btn mt-2">
+        <?php echo anchor('select_daycare', lang('Parent Registration'), ['class' => 'login100-form-btn']); ?>
+    </div>
 
     <?php if (session('company_allow_registration') == TRUE) : ?>
         <div class="text-center p-t-46 p-b-20">

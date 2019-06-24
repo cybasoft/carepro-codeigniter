@@ -33,7 +33,7 @@ class DaycareController extends CI_Controller
         if ($user_status === "3") {
             $this->load->view('registration/daycare_register', $data);
         } elseif ($user_status === "4") {
-            redirect('' . $daycare_id . '/login');
+            redirect('login');
         }
     }
 
@@ -82,6 +82,23 @@ class DaycareController extends CI_Controller
         $get_status = $this->db->get('user_status');
         $result = $get_status->result_array();
 
+        $query = $this->db->get_where('subscription_plans', array(
+            'id' => $selected_plan
+        ));
+        $plan_details = $query->row_array();
+        $plan_data = array(
+            'plan' => $plan_details['plan'],
+            'children' => $plan_details['children'],
+            'staff_members' => $plan_details['staff_members'],
+            'calender_events' => $plan_details['calender_events'],
+            'news_module' => $plan_details['news_module'],
+            'rooms' => $plan_details['rooms'],
+            'invoices' => $plan_details['invoices'],
+            'files' => $plan_details['files'],
+            'price' => $plan_details['price'],
+            'activation_code' => $activation_code
+        );
+
         if ($user_status === "1") {
 
             $owner_status = $result[1]['id'];
@@ -89,7 +106,8 @@ class DaycareController extends CI_Controller
                 'owner_status' => $owner_status,
             );
             $this->db->where('activation_code', $activation_code);
-            $this->db->update('users', $data);
+            $this->db->update('users', $data);            
+            $this->load->view('stripe_payment/index', $plan_data);
         }
         if ($daycare !== NULL) {
             $daycare_details = $this->db->get_where('daycare', array(
@@ -99,28 +117,12 @@ class DaycareController extends CI_Controller
             $daycare_id = $daycare_data['daycare_id'];
         }
 
-        if ($user_status === "2") {
-            $query = $this->db->get_where('subscription_plans', array(
-                'id' => $selected_plan
-            ));
-            $plan_details = $query->row_array();
-            $data1 = array(
-                'plan' => $plan_details['plan'],
-                'children' => $plan_details['children'],
-                'staff_members' => $plan_details['staff_members'],
-                'calender_events' => $plan_details['calender_events'],
-                'news_module' => $plan_details['news_module'],
-                'rooms' => $plan_details['rooms'],
-                'invoices' => $plan_details['invoices'],
-                'files' => $plan_details['files'],
-                'price' => $plan_details['price'],
-                'activation_code' => $activation_code
-            );
-            $this->load->view('stripe_payment/index', $data1);
+        if ($user_status === "2") {            
+            $this->load->view('stripe_payment/index', $plan_data);
         } elseif ($user_status === "3") {
             redirect('daycare/' . $activation_code);
         } elseif ($user_status === "4") {
-            redirect('' . $daycare_id . '/login');
+            redirect('login');
         }
     }
 
@@ -129,9 +131,8 @@ class DaycareController extends CI_Controller
         if($data){
             $email = $data['email'];
             $password = $data['password'];
-            $daycare_id = $data['daycare_id'];
             if ($this->ion_auth->login($email, $password)) {
-                redirect($daycare_id . '/dashboard', 'refresh');
+                redirect('dashboard', 'refresh');
             }
         }
     }

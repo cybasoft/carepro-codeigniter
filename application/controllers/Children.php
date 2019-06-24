@@ -24,18 +24,21 @@ class Children extends CI_Controller
      * default page
      * @return void
      */
-    public function index($daycare_id = NULL)
+    public function index()
     {        
+        $daycare_id = $this->session->userdata('owner_daycare_id');
         if (is('parent')) {
             $children = $this->parent->getChildren();
             dashboard_page('parent/parent_dashboard', compact('children'),$daycare_id);
         } else {
             $checkedInChildren = $this->children->checkedInChildren($daycare_id);
             $checkedOutChildren = $this->children->checkedOutChildren($daycare_id);
-            $inactiveChildren = $this->children->inactiveChildren($daycare_id);
+            $inactiveChildren = $this->children->inactiveChildren($daycare_id);           
 
             $totalChildren = count((array) $checkedInChildren) + count((array) $checkedOutChildren);
-            dashboard_page($this->module . 'children', compact('checkedInChildren', 'checkedOutChildren', 'totalChildren', 'inactiveChildren'), $daycare_id);
+            $inactive = count($inactiveChildren);
+            $active = $totalChildren - $inactive;            
+            dashboard_page($this->module . 'children', compact('checkedInChildren', 'checkedOutChildren', 'inactive', 'active', 'inactiveChildren'), $daycare_id);
         }
     }
 }

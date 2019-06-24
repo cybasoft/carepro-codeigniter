@@ -3,11 +3,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-center">
-                    <h3><?php echo session('company_name'); ?></h3>
+                    <h3><?php echo $daycare['name']; ?></h3>
                     <em><?php echo session('company_slogan'); ?></em>
-                    <br/>
+                    <br />
                     <?php echo session('company_street'); ?>
-                    <br/>
+                    <br />
                     <?php echo session('company_city'); ?>
                     <?php echo session('company_state'); ?>,
                     <?php echo session('company_postal_code'); ?>
@@ -20,19 +20,19 @@
                 <table class="table">
                     <tr>
                         <td><?php echo lang('Facility ID'); ?>:</td>
-                        <td><?php echo session('company_facility_id'); ?></td>
+                        <td><?php echo $daycare['daycare_id']; ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('Tax ID'); ?>:</td>
-                        <td><?php echo session('company_tax_id'); ?></td>
+                        <td><?php echo $daycare['employee_tax_identifier']; ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('email'); ?>:</td>
-                        <td><?php echo session('company_email') ?></td>
+                        <td><?php echo $this->session->userdata('email') ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('phone'); ?>:</td>
-                        <td><?php echo session('company_phone') ?></td>
+                        <td><?php echo $address['phone'] ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('fax'); ?>:</td>
@@ -51,13 +51,13 @@
                 <span class="badge">
                     <?php echo $this->db->where('invoice_status', 2)->get('invoices')->num_rows(); ?>
                 </span>
-                <h2><?php echo session('company_currency_symbol').$this->invoice->getTotalDue(); ?></h2>
+                <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
             </div>
         </div>
         <div class="card">
             <ul class="nav nav-pills nav-stacked">
                 <li class="active">
-                    <?php echo anchor('reports/roster?daily&date='.date('Y-m-d'), '<i class="fa fa-print"></i> Children Roster', 'target="_blank" class="bg-blue text-white"'); ?>
+                    <?php echo anchor('reports/roster?daily&date=' . date('Y-m-d'), '<i class="fa fa-print"></i> Children Roster', 'target="_blank" class="bg-blue text-white"'); ?>
                 </li>
             </ul>
         </div>
@@ -65,8 +65,7 @@
 
     <div class="col-lg-9 col-md-8 col-sm-8">
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12 cursor"
-                 onclick="location.href='<?php echo site_url('children'); ?>'">
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('children'); ?>'">
                 <div class="info-box">
                     <span class="info-box-icon bg-maroon"><i class="fa fa-user-alt"></i></span>
                     <div class="info-box-content">
@@ -75,13 +74,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-12 cursor"
-                 onclick="location.href='<?php echo site_url('parents'); ?>'">
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('parents'); ?>'">
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"><?php echo lang('parents'); ?></span>
-                        <span class="info-box-number"><?php echo $this->user->getCount('parent'); ?></span>
+                        <span class="info-box-number">
+                            <?php if ($this->user->getCount('parent') == '') {
+                                echo 0;
+                            } else {
+                                echo $this->user->getCount('parent');
+                            }
+                            ?>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -99,7 +104,14 @@
                     <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"><?php echo lang('Managers'); ?></span>
-                        <span class="info-box-number"><?php echo $this->user->getCount('manager'); ?></span>
+                        <span class="info-box-number">
+                            <?php if ($this->user->getCount('manager') == '') {
+                                echo 0;
+                            } else {
+                                echo $this->user->getCount('manager');
+                            }
+                            ?>
+                        </span>
                     </div>
                 </div>
             </div>

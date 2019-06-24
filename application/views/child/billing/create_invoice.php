@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
 
-                <?php echo form_open($daycare_id.'/child/'.$child->id.'/createInvoice', 'id="myForm"'); ?>
+                <?php echo form_open('child/'.$child->id.'/createInvoice', 'id="myForm"'); ?>
               <div class="row">
                   <div class="col-sm-6">
                       <label><?php echo lang('date'); ?></label>

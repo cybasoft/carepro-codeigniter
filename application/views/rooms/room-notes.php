@@ -36,7 +36,7 @@
                         <div class="ml-auto">
                             <?php if(is(['admin', 'manager']) || $note->user_id == user_id()): ?>
                                 <a class="delete"
-                                   href="/rooms/deleteNote/<?php echo $note->id; ?>">
+                                   href="../../rooms/deleteNote/<?php echo $note->id; ?>">
                                     <i class="fa fa-trash-alt text-danger"></i>
                                 </a>
                             <?php endif; ?>

@@ -9,7 +9,7 @@
                 <h4 class="card-title btn-block"><?php echo lang('Invoices'); ?>
 
                 <?php if(!is('parent')): ?>
-                    <a href="<?php echo site_url($daycare_id.'/child/'.$child->id.'/newInvoice'); ?>"
+                    <a href="<?php echo site_url('child/'.$child->id.'/newInvoice'); ?>"
                        class="btn btn-info btn-sm card-tools">
                         <i class="fa fa-plus"></i>
                         <?php echo lang('new_Invoice'); ?>
@@ -34,7 +34,7 @@
                     <tbody>
                     <?php foreach ($invoices as $invoice): ?>
                         <tr>
-                            <td><?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/view', ($invoice->id < 10) ? '000'.$invoice->id : $invoice->id); ?></td>
+                            <td><?php echo anchor('invoice/'.$invoice->id.'/view', ($invoice->id < 10) ? '000'.$invoice->id : $invoice->id); ?></td>
                             <td><?php echo lang($invoice->invoice_status); ?></td>
                             <td><?php echo moneyFormat($invoice->amount, TRUE); ?></td>
                             <td><?php echo moneyFormat($invoice->totalPaid, TRUE); ?></td>
@@ -46,9 +46,9 @@
                                             aria-haspopup="true" aria-expanded="false"><?php echo lang('Actions'); ?>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/view', icon('folder-open').' '.lang('Open'), 'class="dropdown-item"'); ?>
-                                        <?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/download?dl', icon('file-pdf').' '.lang('Download'), 'class="dropdown-item"'); ?>
-                                        <?php echo anchor($daycare_id.'/invoice/'.$invoice->id.'/download?send', icon('envelope').' '.lang('send_to_parent'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor('invoice/'.$invoice->id.'/view', icon('folder-open').' '.lang('Open'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor('invoice/'.$invoice->id.'/download?dl', icon('file-pdf').' '.lang('Download'), 'class="dropdown-item"'); ?>
+                                        <?php echo anchor('invoice/'.$invoice->id.'/download?send', icon('envelope').' '.lang('send_to_parent'), 'class="dropdown-item"'); ?>
                                         <?php echo anchor('invoice/'.$invoice->id.'/preview', icon('print').' '.lang('Print'), 'target="_blank" class="dropdown-item"'); ?>
                                         <?php if(!is('parent')): ?>
                                             <div class="dropdown-divider"></div>

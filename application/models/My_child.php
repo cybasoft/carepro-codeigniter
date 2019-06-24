@@ -50,7 +50,8 @@ class My_child extends CI_Model
      */
     public function children()
     {
-        return $this->db->get('children');
+        $daycare_id = $this->session->userdata('daycare_id');
+        return $this->db->where('daycare_id',$daycare_id)->get('children');
     }
 
     /**
@@ -208,7 +209,7 @@ class My_child extends CI_Model
         }
 
         //log event
-        logEvent("Add child {$data['first_name']} {$data['last_name']}");
+        logEvent($id = NULL,"Added child ID: {$last_id}");
 
         if($getID) {
             return $last_id;
@@ -280,7 +281,7 @@ class My_child extends CI_Model
                 $this->email->to($to);
                 $this->email->subject('Child Register Successful');
     
-                $body = $this->load->view('owner_email/child_register_email', $email_data, true);
+                $body = $this->load->view('custom_email/child_register_email', $email_data, true);
                 $this->email->message($body);        //Send mail
                 if ($this->email->send()) {
                     $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
@@ -289,7 +290,7 @@ class My_child extends CI_Model
         }       
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Updated child {$data['first_name']} {$data['last_name']}");
+            logEvent($id = NULL,"Updated child ID: {$child_id}");
 
             flash('success', lang('request_success'));
         } else {
@@ -320,7 +321,7 @@ class My_child extends CI_Model
         $insert_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent("Added pickup contact for child ID {$id}");
+            logEvent($user_id = NULL,"Added pickup contact ID: {$insert_id} for child ID: {$id}");
             $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
@@ -349,7 +350,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
 
-            logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}");
             return TRUE;
         }
         return FALSE;
@@ -376,7 +377,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
 
-            logEvent("Added checked in {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked out {$child_id} -{$this->child($child_id)->last_name}");
             return TRUE;
         }
         return FALSE;
@@ -582,7 +583,8 @@ class My_child extends CI_Model
         $upload_path = './assets/uploads/children';
         $upload_db = 'children';
         if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, TRUE);
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
         }
 
         if($id == '') {

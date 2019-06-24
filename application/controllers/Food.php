@@ -50,9 +50,10 @@ class Food extends CI_Controller
 
         if($id !== "" & is_numeric($id)) {
             //make sure its the parent authorized or admin
-            $childID = $this->db->where('id', $id)->get('child_foodpref')->row();
+            $childID = $this->db->where('id', $id)->get('child_foodpref')->row();           
             if(is(['staff', 'admin','manager']) || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
                 if($this->db->where('id', $id)->delete('child_foodpref')) {
+                    logEvent($user_id = NULL,"Deleted foodpref ID: {$id} for child ID: {$childID->child_id}");
                     flash('success', lang('request_success'));
                 } else {
                     flash('danger', lang('request_error'));
@@ -62,7 +63,7 @@ class Food extends CI_Controller
             }
 
         }
-        redirectPrev(null, 'food');
+        redirectPrev("", 'food');
     }
 
     function recordIntake()
@@ -89,8 +90,12 @@ class Food extends CI_Controller
         allow(['admin','manager','staff']);
 
         $id = $this->uri->segment(3);
-
+        $intake_details = $this->db->get_where('child_food_intake',array(
+            'id' => $id
+        ));
+        $intakes = $intake_details->row();       
         if($this->db->where('id',$id)->delete('child_food_intake')){
+            logEvent($user_id = NULL,"Deleted food intake ID: {$id} for Child ID: {$intakes->child_id}");
             flash('success',lang('request_success'));
         }else{
             flash('error',lang('request_error'));

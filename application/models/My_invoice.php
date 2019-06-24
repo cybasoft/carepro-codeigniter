@@ -165,7 +165,7 @@ class My_invoice extends CI_Model
      * @return bool
      */
     function createInvoice($id)
-    {
+    {        
         $data = array(
             'child_id' => $id,
             'date_due' => $this->input->post('date_due'),
@@ -185,6 +185,8 @@ class My_invoice extends CI_Model
             'qty' => $this->input->post('qty')
         );
         if($this->db->insert('invoice_items', $data2)) {
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL,"Added Invoice ID: {$last_id} for child ID: {$id}");
             $this->parent->notifyParents($id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $this->child->first($id)->first_name));
             return $invoice_id;
         }
@@ -198,9 +200,10 @@ class My_invoice extends CI_Model
      */
     function makePayment($invoice_id)
     {
+        $amount = $this->input->post('amount');
         $data = array(
             'invoice_id' => $invoice_id,
-            'amount' => $this->input->post('amount'),
+            'amount' => $amount,
             'date_paid' => $this->input->post('date_paid'),
             'method' => $this->input->post('method'),
             'remarks' => $this->input->post('remarks'),
@@ -208,9 +211,11 @@ class My_invoice extends CI_Model
             'created_at' => date_stamp()
         );
         if($this->db->insert('invoice_payments', $data)) {
+            $last_id = $this->db->insert_id();
+            logEvent($user_id = NULL, "Added manual payment of amount {$amount} for invoice ID: {$invoice_id}");
             $invoice = $this->get($invoice_id);
             $child = $this->child->first($invoice->child_id);
-            $this->parent->notifyParents($child->id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $child->first_name));
+            $this->parent->notifyParents($child->id, lang('manual_payment_subject'), sprintf(lang('manual_payment'),$amount, $child->first_name));
             return true;
         } else {
             return false;

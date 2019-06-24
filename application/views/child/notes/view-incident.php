@@ -88,7 +88,7 @@ if(count((array)$incident) > 0):
             <div class="flexbin flexbin-margin" id="lightgallery">
                 <?php if(count($photos['results']) > 0): ?>
                 <?php foreach ($photos['results'] as $photo): ?>
-                    <a id="incident-img" data-src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>?id=<?php echo $photo->id; ?>&route=/notes/deleteIncidentPhoto">
+                    <a id="incident-img" data-src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>?id=<?php echo $photo->id; ?>&route=../../notes/deleteIncidentPhoto">
                         <img src="<?php echo base_url('assets/uploads/photos/'.$photo->photo); ?>"/>
                     </a>
                 <?php endforeach; ?>

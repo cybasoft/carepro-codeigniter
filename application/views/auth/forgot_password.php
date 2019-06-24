@@ -1,11 +1,7 @@
-<?php echo form_open($daycare_id . "/forgot", ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
+<?php echo form_open("forgot", ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
 <div class="text-center" style="position:absolute;top:0;right:150px">
-    <a href="<?php echo site_url(); ?>">
-        <?php if ($logo !== "") : ?>
-            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Logo">
-        <?php else : ?>
-            <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
-        <?php endif; ?>
+    <a href="<?php echo site_url(); ?>">        
+        <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">        
     </a>
 </div>
 

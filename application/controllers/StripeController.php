@@ -41,6 +41,7 @@ class StripeController extends CI_Controller
         $to = $user_data['email'];
 
         $selected_plan = $user_data['selected_plan'];
+        //get subscription detail
         $get_plan_details = $this->db->get_where('subscription_plans',array(
             'id' => $selected_plan
         ));
@@ -48,7 +49,9 @@ class StripeController extends CI_Controller
         $price = $plans['price'];
         $plan = $plans['plan'];
       
+        //get stripe secret key
         \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
+        //stripe make payment
         \Stripe\Charge::create([
             "amount" => $price * 100,
             "currency" => "usd",
@@ -72,17 +75,22 @@ class StripeController extends CI_Controller
         $this->email->to($to);
         $this->email->subject('Daycare payment');
 
-        $body= $this->load->view('owner_email/payment_success_email', $data, true);
-        $this->email->message($body);        //Send mail
+        $body= $this->load->view('custom_email/payment_success_email', $data, true);
+        $this->email->message($body);        //Send mail on successful payment
         if($this->email->send()){
-            $this->change_owner_status($to,$activation_code);
+            $this->change_owner_status($to,$activation_code,$plan);
         }   
         else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";           
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND); //log error if any unable to send email.
             $this->session->set_flashdata("subscription_error","Enable to sent verification email. Please try again.");
         }
     }
 
-    public function change_owner_status($to,$activation_code){
+    //change user status to subscribed if payment completed.
+    public function change_owner_status($to,$activation_code,$plan){
         $get_status = $this->db->get('user_status');
         $result = $get_status->result_array();
         $owner_status = $result[2]['id'];
@@ -96,7 +104,7 @@ class StripeController extends CI_Controller
             'email' => $to
         ));
         $check_status = $query->row_array();
-        $user_status = $check_status['owner_status'];       
+        $user_status = $check_status['owner_status'];    
         if ($user_status === "3"){
             $this->session->set_flashdata("message","Payment completed successfully. Thank you for subscription.");           
             redirect('daycare/'.$activation_code);

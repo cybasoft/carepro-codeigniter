@@ -5,7 +5,8 @@
 class My_parent_registration extends CI_Model
 {
     //store parent
-    public function store_parent($daycare_id){
+    public function store_parent($daycare_id)
+    {        
         $this->load->model('ion_auth_model');
         $query = $this->db->get_where('daycare', array(
             'daycare_id' => $daycare_id
@@ -74,16 +75,20 @@ class My_parent_registration extends CI_Model
         $this->email->to($to);
         $this->email->subject('Parent Activation');
 
-        $body= $this->load->view('owner_email/activate_parent_email', $email_data, true);
+        $body= $this->load->view('custom_email/activate_parent_email', $email_data, true);
         $this->email->message($body);        //Send mail
         if($this->email->send()){
             $this->insert_parent($data);
             $this->session->set_flashdata("success","Parent registered successfully.");
-            redirect($daycare_id.'/login');
+            redirect('login');
         }   
         else{
+            $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+            $logs .= $this->email->print_debugger('message');
+            $logs .= "\n\r";
+            file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
             $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
-            redirect($daycare_id.'/register');
+            redirect('register');
         }
     }
 }

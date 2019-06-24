@@ -15,7 +15,7 @@ class RegistrationController extends CI_Controller
         $this->load->helper('url_helper');
     }
     public function index()
-    {        
+    {
         $this->load->view('registration/index');
     }
 
@@ -37,24 +37,17 @@ class RegistrationController extends CI_Controller
         $tables = $this->config->item('tables', 'ion_auth');
 
         $this->form_validation->set_rules('name', lang('name'), 'required|xss_clean|min_length[2]');
-        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]',array('is_unique', 'This Email is already registered.'));
+        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]', array('is_unique', 'This Email is already registered.'));
         $this->form_validation->set_rules('password', lang('password'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');
-        $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
-        $this->form_validation->set_rules('address_line_1', lang('address_line_1'), 'required|xss_clean');
-        $this->form_validation->set_rules('city', lang('city'), 'required|xss_clean');
-        $this->form_validation->set_rules('state', lang('state'), 'required|xss_clean');
-        $this->form_validation->set_rules('zip_code', lang('zip_code'), 'required|xss_clean');
-        $this->form_validation->set_rules('country', lang('country'), 'required|xss_clean');
-        $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
 
         if ($this->form_validation->run() == true) {
-            $status = $this->My_user_registration->store_user();            
-            if($status['success'] !== ''){
-                $this->load->view('registration/success' ,$status);
-            }elseif($status['error'] !== ''){
-                $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
-            redirect('user/register');
+            $status = $this->My_user_registration->store_user();
+            if ($status['success'] !== '') {
+                $this->load->view('registration/success', $status);
+            } elseif ($status['error'] !== '') {
+                $this->session->set_flashdata("verify_email_error", "Unable to send verification Email. Please try again.");
+                $this->load->view('registration/index');
             }
         } else {
             set_flash(['email', 'name', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone', 'password']);
@@ -67,18 +60,31 @@ class RegistrationController extends CI_Controller
     //subscription  page
     public function subscription()
     {
-        $this->output->cache(0);        
+        $this->output->cache(0);
         $this->load->view('registration/subscription_page');
     }
 
-    //create parent
-    public function create_parent($daycare_id = NULL)
+    public function select_daycare()
     {
+        $daycare_details = $this->db->get('daycare');
+        $daycares = $daycare_details->result_array();
+        $data = array(
+            'daycares' => $daycares
+        );
+        $this->load->view('auth/header');
+        $this->load->view('registration/select_daycare', $data);
+        $this->load->view('auth/footer');
+    }
+
+    //create parent
+    public function create_parent()
+    {
+        $daycare_id = $this->session->userdata('parent_daycare');
         $tables = $this->config->item('tables', 'ion_auth');
 
         $this->form_validation->set_rules('first_name', lang('first_name'), 'required|xss_clean|min_length[2]');
         $this->form_validation->set_rules('last_name', lang('last_name'), 'required|xss_clean|min_length[2]');
-        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]',array('is_unique', 'This Email is already registered.'));
+        $this->form_validation->set_rules('email', lang('email'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]', array('is_unique', 'This Email is already registered.'));
         $this->form_validation->set_rules('phone', lang('phone'), 'required|xss_clean');
         $this->form_validation->set_rules('password', lang('password'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', lang('password_confirm'), 'required');
@@ -89,7 +95,7 @@ class RegistrationController extends CI_Controller
             set_flash(['email', 'first_name', 'last_name', 'phone', 'password']);
             validation_errors();
             flash('danger');
-            redirect($daycare_id . '/register');
+            redirect('register');
         }
     }
 }

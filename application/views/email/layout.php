@@ -355,7 +355,7 @@
 
                 <table>
                     <tr>
-                        <td><img  src="<?php echo base_url('assets/uploads/content/'.session('company_logo')); ?>" style="width:150px;"/> </td>
+                        <td><img  src="<?php echo base_url('assets/uploads/daycare_logo/'.session('company_logo')); ?>" style="width:150px;"/> </td>
                     </tr>
                 </table>
                 <table class="main">
