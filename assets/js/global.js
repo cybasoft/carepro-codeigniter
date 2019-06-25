@@ -62,13 +62,11 @@ $(document).ready(function () {
     var lockTimer = 1320000 * lockScreenTimer;
 
     $('.lock-screen').click(function () {
-        var daycare_id = $(this).data("daycare_id");
-        startLockscreen(daycare_id);
+        startLockscreen();
     });
 
     setTimeout(function () {
-        var daycare_id = $('.lock-screen').data("daycare_id");
-        startLockscreen(daycare_id);
+        startLockscreen();
     }, lockTimer);
 
 

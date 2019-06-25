@@ -30,7 +30,22 @@ class My_parent_registration extends CI_Model
     }
     //insert parent to database
     public function insert_parent($data){
-        $this->db->insert('users', $data);
+        $address_data = array(
+            'phone' => $data['phone']
+        );
+        $this->db->insert('address',$address_data);
+        $address_id = $this->db->insert_id();
+
+        $user_data = array(
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'active' => $data['active'],
+            'daycare_id' => $data['daycare_id'],
+            'address_id' => $address_id
+        );
+        $this->db->insert('users', $user_data);
 
         $insert_id = $this->db->insert_id();
         $group_id = 4;

@@ -93,7 +93,7 @@ class UserController extends CI_Controller
         redirectPrev();
     }
 
-    function view($daycare_id = NULL,$id = NULL)
+    function view($id = NULL)
     {
         disable_debug();
 
@@ -118,8 +118,7 @@ class UserController extends CI_Controller
             'address' => $address,
             'groups' => $groups,
             'currentGroups' => $currentGroups,
-            'daycare_id' => $daycare_id
-        );
+        );       
         $this->load->view($this->module.'edit_user', $myData);
     }
 
@@ -303,18 +302,25 @@ class UserController extends CI_Controller
     function delete($id = NULL)
     {                
         allow('admin');
-        
-        $this->db->where('id', $id);
-        $this->db->delete('users');  
-        logEvent($user_id = NULL,"Deleted user ID: {$id}");
-      
-        if($this->db->affected_rows() > 0){
-            flash('success', lang('request_success'));
-        }
-        else{
-            flash('danger', lang('request_error'));
-        }
-
+        $child_parent = $this->db->where('user_id',$id)->get('child_parents')->result_array();
+       if(empty($child_parent)){
+         if($id !== $this->user->uid()){
+            $this->db->where('id', $id);
+            $this->db->delete('users'); 
+            logEvent($user_id = NULL,"Deleted user ID: {$id}");
+          
+            if($this->db->affected_rows() > 0){
+                flash('success', lang('request_success'));
+            }
+            else{
+                flash('danger', lang('request_error'));
+            }
+         }else{
+            flash('danger', "You cannot delete yourself.");
+         }
+       }else{
+           flash('danger', "This user cannot be deleted because a child is assigned to it.");
+       }
         redirect('users', 'refresh');
     }
 

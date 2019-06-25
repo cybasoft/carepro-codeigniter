@@ -62,16 +62,12 @@ class Dashboard extends CI_Controller
         }
     }
 
-    function lockscreen($daycare_id = NULL)
+    function lockscreen()
     {       
         $this->conf->setTimer(1);
-        if(auth(true)) {
-            $data = array(
-                'daycare_id' => $daycare_id
-            );
-
+        if(auth(true)) {        
             //check cookie
-            $this->load->view('dashboard/lockscreen',$data);
+            $this->load->view('dashboard/lockscreen');
         }
     }
 
@@ -83,8 +79,9 @@ class Dashboard extends CI_Controller
         if($this->form_validation->run() == true) {
             $pin = $this->input->post('pin');
             $this->db->where('id', $this->user->uid());
-            $this->db->where('pin', $pin);
-            if($this->db->get('users')->num_rows()>0) {
+            $users = $this->db->get('users')->row_array();
+            $user_password = $users['password'];    
+            if(password_verify($pin,$user_password)) {
                 $msg = lang('Welcome back');
                 $status = 'success';
                 $this->conf->setTimer(0);

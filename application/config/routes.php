@@ -242,7 +242,7 @@ $route['profile/change_user_pin'] = 'profile/change_pin';
 $route['profile/change_reset_password'] = 'profile/reset_password';
 $route['users/create'] = "UserController/create";
 
-$route['users/view/(.*)/(:num)'] = 'UserController/view/$1/$2';
+$route['users/view/(:num)'] = 'UserController/view/$1';
 // $route['users/update/(.*)/(:num)'] = 'UserController/update/$1/$2';
 $route['users/update/(:num)'] = 'UserController/update/$1';
 // $route['users/delete/(.*)/(:any)'] = 'UserController/delete/$1/$2';
