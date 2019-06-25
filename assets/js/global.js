@@ -181,7 +181,7 @@ $(document).ready(function () {
 
             $.ajax({
                 url: site_url + '/messaging/get_users',
-                data: {user: user}, //$('form').serialize(),
+                data: { user: user }, //$('form').serialize(),
                 type: 'POST',
                 success: function (response) {
                     var users = JSON.parse(response);
@@ -208,43 +208,54 @@ $(document).ready(function () {
     });
     $('.assign-parent-btn').click(function () {
         var id = $(this).attr('id');
-        $('.modals-loader').load(site_url +'/parents/parents/' + id).modal('show')
+        $('.modals-loader').load(site_url + '/parents/parents/' + id).modal('show')
     });
-    $(".child-assign-room").click(function(){    
+    $(".child-assign-room").click(function () {
         var child_id = $(this).data("child-id");
         $.ajax({
             type: 'POST',
             url: 'assign_room',
             dataType: 'json',
             ContentType: 'application/json; charset=utf-8',
-            success: function(data){
-                var length = data.length;
+            data: { 'child_id': child_id },
+            success: function (data) {
+                var rooms_length = data.all_rooms.length;
+                var selected_length = data.selected_rooms.length;
+                var room_ids = [];
                 $("#child_id").val(child_id);
-                if(length > 0){
-                    for(var i = 0; i<length; i++){
-                        var create_options = "<option value='"+ data[i].id +"' class='form-control'>"+ data[i].name +"</option>";
-                        if ($('#assign_room option[value="' + data[i].id + '"]').length === 0) {
+                if (rooms_length > 0) {
+                    for (var i = 0; i < rooms_length; i++) {
+                        var create_options = "<option value='" + data.all_rooms[i].id + "' class='form-control'>" + data.all_rooms[i].name + "</option>";
+                        if ($('#assign_room option[value="' + data.all_rooms[i].id + '"]').length === 0) {
                             $("#assign_room").append(create_options);
                             $("#assign_room").selectpicker('refresh');
-                        }                       
-                    } 
+                        }
+                    }
+                }
+                if (selected_length > 0) {
+                    for (var i = 0; i < selected_length; i++) {
+                        var id = data.selected_rooms[i].room_id;
+                        room_ids.push(id);
+                    }
+                    $('#assign_room').selectpicker('val', room_ids);
+                    $('#assign_room').selectpicker('refresh');
                 }
             }
         })
     });
-    $("#AssignRoomModal").on('hidden.bs.modal',function(){
+    $("#AssignRoomModal").on('hidden.bs.modal', function () {
         $("#assign_room").val('default');
         $("#assign_room").selectpicker("refresh");
     });
-    new List('conversations', {valueNames: ['name'], page: 10, pagination: true});
+    new List('conversations', { valueNames: ['name'], page: 10, pagination: true });
 
     new List('checkedout-children',
-        {valueNames: ['name', 'born', 'nid'], page: 10, pagination: true}
+        { valueNames: ['name', 'born', 'nid'], page: 10, pagination: true }
     );
 
-    new List('room-staff', {valueNames: ['staffname']});
+    new List('room-staff', { valueNames: ['staffname'] });
 
-    new List('room-children', {valueNames: ['childname']});
+    new List('room-children', { valueNames: ['childname'] });
 
     new List('room-notes', {
         valueNames: ['room-note', 'room-note-date'],
@@ -293,7 +304,7 @@ $(document).ready(function () {
                     var url = site_url + 'meds/deleteHistory/' + id;
                     $.ajax({
                         url: url,
-                        data: {id: id}, //$('form').serialize(),
+                        data: { id: id }, //$('form').serialize(),
                         type: 'POST',
                         success: function (response) {
                             swal({

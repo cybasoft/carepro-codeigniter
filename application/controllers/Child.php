@@ -303,10 +303,15 @@ class Child extends CI_Controller
 
     public function assign_room(){      
         allow(['admin', 'manager']);
-  
+
+        $child_id = $this->input->post('child_id');       
         $daycare_id = $this->session->userdata('daycare_id');
         $rooms_detail = $this->db->where('daycare_id',$daycare_id)->get('child_rooms');
-        $rooms = $rooms_detail->result_array();   
+
+        $selected_rooms = $this->db->select('room_id')->where('child_id',$child_id)->get('child_room');
+        $assigned_rooms = $selected_rooms->result_array();
+        $rooms['all_rooms'] = $rooms_detail->result_array();
+        $rooms['selected_rooms'] = $assigned_rooms;
         print(json_encode($rooms));       
     }
 
@@ -318,6 +323,7 @@ class Child extends CI_Controller
         $this->form_validation->set_rules('child_id', "Child", 'required|trim|xss_clean');
         if($this->form_validation->run() == TRUE) {
             $child_id = $this->input->post('child_id');
+            $this->db->where('child_id',$child_id)->delete('child_room');
             foreach ($this->input->post('room') as $room) {
                 $find =$this->db->limit(1)->where('child_id', $child_id)->where('room_id', $room)->count_all_results('child_room');               
                 if($find == 0) {
@@ -327,10 +333,9 @@ class Child extends CI_Controller
                         'daycare_id' => $daycare_id,
                         'created_at' => date_stamp(),
                     ]);
-                }
+                }                    
                 logEvent($user_id = NULL,"Assigned child ID: {$child_id} for room ID: {$room}");
             }
-
             flash('success', lang('request_success'));
         }else{
             validation_errors();
