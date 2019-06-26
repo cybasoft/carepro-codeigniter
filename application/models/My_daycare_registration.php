@@ -86,7 +86,7 @@ class My_daycare_registration extends CI_Model
         $this->db->where('email', $email);
         $this->db->update('users', $store_id);
         logEvent($insert_id,"Daycare {$insert_id} added to the application.");
-        $this->session->set_userdata('daycare_id',$data['daycare_id']);
+        $this->session->set_userdata('daycare_id',$insert_id);
     }
     
     //Function to generate unique daycare id
@@ -180,42 +180,8 @@ class My_daycare_registration extends CI_Model
         $check_status = $query->row_array();
         $registered = $check_status['owner_status'];
         if ($registered === "4"){            
-            $this->session->set_userdata('daycare_id',$daycare_id);
             $status = "success";
             return $status;
         }
-    }
-    public function stripe_store(){        
-        $code = $this->input->get('code');
-         \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
-        $resp = \Stripe\OAuth::token([
-            'grant_type' => 'authorization_code',
-            'code' => $code,
-        ]);
-        $daycare_id = $this->session->userdata['daycare_id'];
-        $daycare_details = $this->db->get_where('daycare',array(
-            'daycare_id' => $daycare_id
-        ));
-        $daycare = $daycare_details->row_array();
-        $data = array(
-            'daycare_id' => $daycare['id'],
-            'stripe_user_id' => $resp['stripe_user_id'],
-            'stripe_publishable_key' => $resp['stripe_publishable_key']
-        );
-
-        $this->db->insert('stripe_connect_detail', $data);        
-
-        $user_details = $this->db->get_where('users', array(
-            'daycare_id' => $daycare['id']
-        ));
-        $users = $user_details->row_array();       
-        $email = $users['email'];
-        $password = $users['password'];
-        $send_data = array(
-            'email' => $email,
-            'password' => $password,
-            'daycare_id' => $daycare_id
-        );
-        return $send_data;
-    }
+    }   
 }

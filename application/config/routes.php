@@ -223,7 +223,6 @@ $route['create_parent'] = 'RegistrationController/create_parent';
 $route['reminder'] = 'EmailreminderController/send_reminder_email';
 // $route['(.*)/dashboard'] = 'dashboard/index/$1'; //daycare dashboard
 // $route['(.*)/logout'] = 'auth/logout/$1'; //daycare login
-$route['store_stripe'] = 'DaycareController/store_stripe_detail';
 
 //profile route
 // $route['(.*)/profile'] = 'Profile/index/$1';
