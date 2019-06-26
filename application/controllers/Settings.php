@@ -31,12 +31,13 @@ class Settings extends CI_Controller
         $payMethods = $this->db->get('payment_methods')->result();
         $settings = $this->db->get('options')->result_array();
 
+        $event_logs = $this->db->get('event_log')->result_array();
         $option=array();
         foreach($settings as $key=>$val){
              $option[$val['option_name']]=$val['option_value'];
         }
 
-        dashboard_page($this->module.'settings', compact('payMethods','option'), $daycare_id);
+        dashboard_page($this->module.'settings', compact('payMethods','option', 'event_logs'), $daycare_id);
     }
 
     /**

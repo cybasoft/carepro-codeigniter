@@ -17,6 +17,8 @@
                 echo form_input('facility_id', $option['facility_id'], ['class' => 'form-control']);
                 echo form_label(lang('Tax ID'), 'facility_id');
                 echo form_input('tax_id', $option['tax_id'], ['class' => 'form-control']);
+                echo form_label(lang('Daycare ID'));
+                echo form_input('daycare_id', "", ['class' => 'form-control','readonly'=>'true']);
                 echo "<hr/>";
                 echo form_label(lang('email'));
                 echo form_input('email', $option['email'], ['class' => 'form-control', 'required' => 'required']);
@@ -67,8 +69,8 @@
                 echo form_input('google_analytics', $option['google_analytics'], ['class' => 'form-control']);
                 echo form_label(lang('date_format'));
                 echo form_input('date_format', $option['date_format'], ['class' => 'form-control', 'required' => 'required']);
-                echo form_label(lang('Lockscreen timer (mins)'));
-                echo form_input(['type' => 'number', 'step' => 'any', 'name' => 'lockscreen_timer'], $option['lockscreen_timer'], ['class' => 'form-control']);
+                // echo form_label(lang('Lockscreen timer (mins)'));
+                // echo form_input(['type' => 'number', 'step' => 'any', 'name' => 'lockscreen_timer'], $option['lockscreen_timer'], ['class' => 'form-control']);
                 echo form_label(lang('Business hours'), 'hours_start');
 
                 ?>
@@ -87,7 +89,7 @@
                     </div>
                 </div>
                 <hr/>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('daily_checkin', 0); ?>
                         <?php echo form_checkbox('daily_checkin', 1, $option['daily_checkin']); ?>
@@ -97,8 +99,8 @@
                            data-toggle="tooltip"
                            title="<?php echo lang('Uncheck to calculate time accross days instead of just daily'); ?>"></i>
                     </div>
-                </div>
-                <div class="row">
+                </div> -->
+                <!-- <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('allow_registration', 0); ?>
                         <?php echo form_checkbox('allow_registration', 1, $option['allow_registration']); ?>
@@ -111,8 +113,8 @@
                         <?php echo form_checkbox('allow_reset_password', 1, $option['allow_reset_password']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Allow resetting password'); ?></div>
-                </div>
-                <div class="row">
+                </div> -->
+                <!-- <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('enable_captcha', 0); ?>
                         <?php echo form_checkbox('enable_captcha', 1, $option['enable_captcha']); ?>
@@ -125,15 +127,15 @@
                         <?php echo form_checkbox('demo_mode', 1, $option['demo_mode']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Demo mode'); ?></div>
-                </div>
-                <div class="row">
+                </div> -->
+                <!-- <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('maintenance_mode', 0); ?>
                         <?php echo form_checkbox('maintenance_mode', 1, $option['maintenance_mode']); ?>
                     </div>
                     <div class="col-md-10"><?php echo lang('Maintenance mode'); ?></div>
-                </div>
-                <div class="row">
+                </div> -->
+                <!-- <div class="row">
                     <div class="col-md-1">
                         <?php echo form_hidden('use_smtp', 0); ?>
                         <?php echo form_checkbox('use_smtp', 1, $option['use_smtp']); ?>
@@ -165,7 +167,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
                 <hr/>
                 <button class="btn btn-default"><?php echo lang('update'); ?></button>
 

@@ -54,7 +54,7 @@ $(document).ready(function () {
             'pdf'
         ]
     });
-
+    $('#logs').DataTable();
     //lockscreen
     if (lockScreenTimer === undefined || lockScreenTimer === "")
         lockScreenTimer = 5;

@@ -22,6 +22,9 @@
         </div>
         <div class="tab-pane" id="backup">
             <?php $this->load->view('admin/backup'); ?>
+        </div>       
+        <div class="tab-pane" id="event_log">
+            <?php $this->load->view('admin/event_log'); ?>
         </div>
         <div class="tab-pane" id="support">
             <div class="card">
