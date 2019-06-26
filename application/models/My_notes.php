@@ -192,10 +192,19 @@ class My_notes extends CI_Model
     {
         $noteId = $this->input->post('note_id');
         $note = $this->db->where('id', $noteId)->get('child_notes')->row();
+        $users_detail = $this->db->get_where('users',array(
+            'id' => $note->user_id
+        ));
+        $users = $users_detail->row();
+        if($users->first_name != ''){
+            $name = $users->first_name .' ' .$users->last_name;
+        }else{
+            $name = $users->name;
+        }
         $data = [
             'title' => $note->title,
             'content' => htmlspecialchars_decode($note->content),
-            'user' => '<strong>'.lang('Staff').':</strong> '.$this->user->get($note->user_id, 'name'),
+            'user' => '<strong>'.lang('Staff').':</strong> '. $name,
             'created_at' => format_date($note->created_at),
             'category' => '<strong>'.lang('Category').':</strong> '.$this->notes->category($note->category_id),
             'tags' => '<strong>'.lang('Tags').':</strong> '.$this->getTags($note->tags)

@@ -74,6 +74,7 @@ class My_child extends CI_Model
         $this->db->where('child_parents.child_id', $child_id);
         $this->db->select('*');
         $this->db->from('users');
+        $this->db->join('address','users.address_id=address.id');
         $this->db->join('child_parents', 'child_parents.user_id=users.id');
         return $this->db->get();
     }
