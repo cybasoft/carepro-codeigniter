@@ -29,24 +29,30 @@ class Settings extends CI_Controller
         $this->load->model('My_backup', 'backup');
 
         $payMethods = $this->db->get('payment_methods')->result();
-        $settings = $this->db->where('daycare_id',$this->session->userdata('daycare_id'))->get('daycare_settings')->result_array();
+        $settings = $this->db
+                   ->select('cs.*,ds.*')
+                   ->where('daycare_id',$this->session->userdata('daycare_id'))
+                   ->from('company_settings as cs')
+                   ->join('daycare_settings as ds','ds.company_id=cs.id')
+                   ->get()->row();                 
+        // $settings = $this->db->get('options')->result_array();
 
         $event_logs = $this->db->get('event_log')->result_array();
-        $option=array();
-        foreach($settings as $key=>$val){
-             $option[$val['option_name']]=$val['option_value'];
-        }
+        // $option=array();
+        // foreach($settings as $key=>$val){
+        //      $option[$val['option_name']]=$val['option_value'];
+        // }
 
-        dashboard_page($this->module.'settings', compact('payMethods','option', 'event_logs'), $daycare_id);
+        dashboard_page($this->module.'settings', compact('payMethods','settings', 'event_logs'), $daycare_id);
     }
 
     /**
      * update settings
      */
     function update()
-    {
+    {        
         allow('admin');
-        foreach ($_POST as $field => $value) {
+        foreach ($_POST as $field => $value) {           
             $this->form_validation->set_rules($field, lang($field), 'xss_clean|trim');
         }
         if($this->form_validation->run() == true) {

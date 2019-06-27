@@ -98,18 +98,20 @@ class My_daycare_registration extends CI_Model
             'country' => $data['country'],
             'logo' => $data['logo'],
             'tax_id' => $data['employee_tax_identifier'],
-            'invoice_logo' => $data['logo'],
-            'daycare_id' => $data['daycare_id']
+            'daycare_unquie_id' => $data['daycare_id'],
+            'daycare_id' => $insert_id
         );
-        foreach(special_options() as $options){
-            $this->db->insert('daycare_settings', ['option_name' => $options,'daycare_id' => $insert_id]);
-            foreach($setting_data as $settings=>$value){
-               if($options === $settings){
-                $this->db->where('option_name', $options);
-                $this->db->update('daycare_settings', ['option_value' => $value]); 
-               }
-            }
-        }
+        // foreach(special_options() as $options){
+            $this->db->insert('company_settings', $setting_data);
+            $last_id = $this->db->insert_id();
+            $this->db->insert('daycare_settings',['invoice_logo' => $data['logo'],'company_id' => $last_id]);
+            // foreach($setting_data as $settings=>$value){
+            //    if($options === $settings){
+            //     $this->db->where('option_name', $options);
+            //     $this->db->update('daycare_settings', ['option_value' => $value]); 
+            //    }
+            // }
+        // }
         logEvent($insert_id,"Daycare {$insert_id} added to the application.");
         $this->session->set_userdata('daycare_id',$insert_id);
     }

@@ -26,8 +26,8 @@ class UserStatusSeeder extends CI_Migration
         foreach ($user_status as $user) {
             $this->db->insert('user_status', $user);
         }
-        foreach (special_options() as $option) {
-            $this->db->insert('options', ['option_name' => $option]);
-        }
+        // foreach (special_options() as $option) {
+        //     $this->db->insert('options', ['option_name' => $option]);
+        // }
     }
 }

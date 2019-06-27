@@ -583,6 +583,8 @@ function time_difference($in, $out)
 function sensitive_options()
 {
     return [
+        'smtp_user' => '', 'smtp_pass' => '',
+        'stripe_pk_live' => '', 'stripe_sk_live' => '', 'stripe_pk_test' => '', 'stripe_sk_test' => '',
         'smtp_user', 'smtp_pass',
         'stripe_pk_live', 'stripe_sk_live', 'stripe_pk_test', 'stripe_sk_test',
     ];
@@ -591,47 +593,46 @@ function sensitive_options()
 function general_options()
 {
     return [
-        'name',
-        'daycare_id',
-        'slogan',
-        'email',
-        'phone',
-        'fax',
-        'street',
-        'street2',
-        'city',
-        'state',
-        'postal_code',
-        'country',
-        'timezone',
-        'google_analytics',
-        'currency_symbol',
-        'currency_abbreviation',
-        'date_format',
-        'allow_registration',
-        'allow_reset_password',
-        'enable_captcha',
-        'demo_mode',
-        'maintenance_mode',
-        'use_smtp',
-        'smtp_host',
-        'smtp_port',
-        'logo',
-        'invoice_logo',
-        'paypal_email',
-        'paypal_locale',
-        'page',
-        'daily_checkin',
-        'tawkto_embed_url',
-        'login_bg_image',
-        'invoice_terms',
-        'facility_id',
-        'tax_id',
-        'lockscreen_timer',
-        'custom_css',
-        'hours_start',
-        'hours_end',
-        'stripe_enabled',
+        'name' => 'DaycarePRO',
+        'slogan' => 'daycare management',
+        'email' => 'app@admin.com',
+        'phone' => '',
+        'fax' => '',
+        'street' => '',
+        'street2' => '',
+        'city' => '',
+        'state' => '',
+        'postal_code' => '',
+        'country' => 'USA',
+        'timezone' => 'America/New_York',
+        'google_analytics' => '',
+        'currency_symbol' => '$',
+        'currency_abbreviation' => 'USD',
+        'date_format' => 'm/d/Y h:ia',
+        'allow_registration' => 0,
+        'allow_reset_password' => 1,
+        'enable_captcha' => 0,
+        'demo_mode' => 0,
+        'maintenance_mode' => 0,
+        'use_smtp' => 0,
+        'smtp_host' => '',
+        'smtp_port' => '',
+        'logo' => 'logo.png',
+        'invoice_logo' => 'invoice_logo.png',
+        'paypal_email' => '',
+        'paypal_locale' => 'US',
+        'page' => 'settings',
+        'daily_checkin' => 1,
+        'tawkto_embed_url' => '',
+        'login_bg_image' => 'login-bg-02.jpg',
+        'invoice_terms' => 'Invoice due on receipt. Thank you for your business',
+        'facility_id' => '',
+        'tax_id' => '',
+        'lockscreen_timer' => '',
+        'custom_css' => '',
+        'hours_start' => '',
+        'hours_end' => '',
+        'stripe_enabled' => 0,
     ];
 }
 
@@ -887,11 +888,12 @@ function session($item, $opts = '')
         $ci->session->set_userdata($item);
         return TRUE;
     }
-
     $ci = &get_instance();
 
-    if (!empty($item) && array_key_exists(str_replace('company_', '', $item), general_options()))
+    if (!empty($item) && array_key_exists(str_replace('company_', '', $item), general_options())){
+        
         return $ci->session->userdata($item);
+    }
 
     elseif (!empty($item) && array_key_exists(str_replace('company_', '', $item), sensitive_options()))
         return get_option($item);
