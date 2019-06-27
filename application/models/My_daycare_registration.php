@@ -35,7 +35,7 @@ class My_daycare_registration extends CI_Model
                 'phone' => $this->input->post('phone'),
                 'daycare_id' => $daycare_id,
                 'logo' => $image
-            );
+            );                        
             $status = $this->send_welcome_email($daycare_id,$activation_code,$data,$image);
             $result = array(
                 'success' => $status,
@@ -85,6 +85,31 @@ class My_daycare_registration extends CI_Model
         );
         $this->db->where('email', $email);
         $this->db->update('users', $store_id);
+
+        $setting_data = array(
+            'name' => $data['name'],
+            'email' => $email,
+            'phone' => $data['phone'],
+            'street' => $data['address_line_1'],
+            'street2' => $data['address_line_2'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'postal_code' => $data['zip'],
+            'country' => $data['country'],
+            'logo' => $data['logo'],
+            'tax_id' => $data['employee_tax_identifier'],
+            'invoice_logo' => $data['logo'],
+            'daycare_id' => $data['daycare_id']
+        );
+        foreach(special_options() as $options){
+            $this->db->insert('daycare_settings', ['option_name' => $options,'daycare_id' => $insert_id]);
+            foreach($setting_data as $settings=>$value){
+               if($options === $settings){
+                $this->db->where('option_name', $options);
+                $this->db->update('daycare_settings', ['option_value' => $value]); 
+               }
+            }
+        }
         logEvent($insert_id,"Daycare {$insert_id} added to the application.");
         $this->session->set_userdata('daycare_id',$insert_id);
     }

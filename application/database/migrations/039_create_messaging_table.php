@@ -10,7 +10,7 @@ class Migration_Create_messaging_table extends CI_Migration
      */
     public function up()
     {
-        $this->db->query("UPDATE options SET option_value='name' WHERE option_name='company_name';");
+        // $this->db->query("UPDATE options SET option_value='name' WHERE option_name='company_name';");
         $this->dbforge->add_field(
             [
                 'id' => [

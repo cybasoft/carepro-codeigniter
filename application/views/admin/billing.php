@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-header">
                 <h4 class="card-title">
                     <?php echo lang('Currency'); ?>
@@ -18,9 +18,9 @@
                 echo form_close('demo');
                 ?>
             </div>
-        </div>
+        </div> -->
 
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-header">
                 <h4 class="card-title">
                     <?php echo lang('PayPal'); ?>
@@ -40,7 +40,7 @@
                 echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
                 echo form_close('demo'); ?>
             </div>
-        </div>
+        </div> -->
 
         <div class="card">
             <div class="card-header">

@@ -18,7 +18,7 @@
                 echo form_label(lang('Tax ID'), 'facility_id');
                 echo form_input('tax_id', $option['tax_id'], ['class' => 'form-control']);
                 echo form_label(lang('Daycare ID'));
-                echo form_input('daycare_id', "", ['class' => 'form-control','readonly'=>'true']);
+                echo form_input('daycare_id', $option['daycare_id'], ['class' => 'form-control','readonly'=>'true']);
                 echo "<hr/>";
                 echo form_label(lang('email'));
                 echo form_input('email', $option['email'], ['class' => 'form-control', 'required' => 'required']);

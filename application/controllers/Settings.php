@@ -29,7 +29,7 @@ class Settings extends CI_Controller
         $this->load->model('My_backup', 'backup');
 
         $payMethods = $this->db->get('payment_methods')->result();
-        $settings = $this->db->get('options')->result_array();
+        $settings = $this->db->where('daycare_id',$this->session->userdata('daycare_id'))->get('daycare_settings')->result_array();
 
         $event_logs = $this->db->get('event_log')->result_array();
         $option=array();

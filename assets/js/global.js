@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    $('#logs').DataTable();
     //Enable sidebar toggle
 
 
@@ -54,7 +55,6 @@ $(document).ready(function () {
             'pdf'
         ]
     });
-    $('#logs').DataTable();
     //lockscreen
     if (lockScreenTimer === undefined || lockScreenTimer === "")
         lockScreenTimer = 5;

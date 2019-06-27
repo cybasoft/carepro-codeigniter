@@ -29,25 +29,11 @@ class Migration_version_212 extends CI_Migration
                     'constraint' => 191,
                     'unique' => true,
                     'null' => false
-                ),
-                'option_value' => array(
-                    'type' => 'LONGTEXT',
-                    'null' => true
-                ),
-                'autoload' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 20,
-                    'null' => true
                 )
             ]
         );
         $this->dbforge->add_key("id", TRUE);
         $this->dbforge->create_table('options', TRUE);
-
-        //initiatialize fields
-        foreach (special_options() as $option=>$value) {
-            $this->db->insert('options', ['option_name' => $option, 'option_value' =>$value]);
-        }
 
         //add dates to child problems
         $this->db->query('ALTER TABLE child_problems ADD first_event DATE NULL;');
