@@ -157,9 +157,10 @@ class Settings extends CI_Controller
     function upload_logo()
     {
         allow('admin');
-        $upload_path = './assets/uploads/content/';
-        if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
+        $upload_path = './assets/uploads/daycare_logo/';
+        if (!file_exists($upload_path)) {
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
         }
         $filename = $_FILES["logo"]["name"];
         $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -170,18 +171,19 @@ class Settings extends CI_Controller
             'max_width' => '500',
             'max_height' => '112',
             'encrypt_name' => false,
-            'file_name' => 'logo.'.$file_ext,
+            'file_name' => $_POST['daycare_unquie_id'].'.'.$file_ext,
             'overwrite' => true
         );
+        @unlink($upload_path.$config['file_name']);
         $this->load->library('upload', $config);
         if(!$this->upload->do_upload('logo')) {
             $errors['errors'] = $this->upload->display_errors();
-            flash('danger', lang('request_error').implode('', $errors));
+            flash('danger', implode('', $errors));
         } else {
             $upload_data = $this->upload->data();
-            $data = array('upload_data' => $upload_data);
+            $data = array('upload_data' => $upload_data);            
             if($data) {
-                update_option('logo', 'logo.png', true);
+                $this->db->where('id',$_POST['daycare_id'])->update('daycare',['logo' => $data['upload_data']['file_name']]);
                 flash('success', lang('Settings have been updated'));
             } else {
                 flash('danger', lang('request_error'));
@@ -198,8 +200,9 @@ class Settings extends CI_Controller
     {
         allow('admin');
         $upload_path = './assets/uploads/content/';
-        if(!file_exists($upload_path)) {
-            mkdir($upload_path, 755, true);
+        if (!file_exists($upload_path)) {
+            mkdir($upload_path, 0777, TRUE);
+            chmod($upload_path, 0777);
         }
         $filename = $_FILES["invoice_logo"]["name"];
         $file_ext = pathinfo($filename, PATHINFO_EXTENSION);

@@ -83,6 +83,10 @@
                     setTimeout(function() {
                         window.location.reload();
                     }, 2000)
+                }else{                    
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000)
                 }
             },
             error: function(error) {

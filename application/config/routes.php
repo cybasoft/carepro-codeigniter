@@ -248,3 +248,4 @@ $route['users/update/(:num)'] = 'UserController/update/$1';
 $route['users/delete/(:any)'] = 'UserController/delete/$1';
 $route['select_daycare'] = 'RegistrationController/select_daycare';
 $route['update'] = 'Settings/update';
+$route['upload_logo'] = 'Settings/upload_logo';

@@ -9,13 +9,16 @@
                 <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('company_logo'))): ?>
                     <img style="width:100%" src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
                 <?php endif; ?>
+                <img style="width:100%" src="<?php echo base_url().'assets/uploads/daycare_logo/'.$settings->logo; ?>"/>
                 <hr/>
 
                 <div class="alert alert-warning">
                     <?php echo lang('logo_instructions'); ?>
                 </div>
 
-                <?php echo form_open_multipart('settings/upload_logo', 'class="input-group"'); ?>
+                <?php 
+                $hidden = array('daycare_id' => $settings->daycare_id,'daycare_unquie_id' => $settings->daycare_unquie_id);
+                echo form_open_multipart('upload_logo', 'class="input-group"',$hidden); ?>
                 <input class="form-control" type="file" required name="logo"/>
                 <span class="input-group-btn">
                             <button class="btn btn-default">
