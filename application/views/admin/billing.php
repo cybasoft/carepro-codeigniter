@@ -8,7 +8,7 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
+                echo form_open('update', ['class' => 'settings', 'demo' => 1]);
                 echo form_label(lang('currency_abbreviation'));
                 echo form_input('currency_abbreviation', $option['currency_abbreviation'], ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('currency_symbol'));
@@ -31,7 +31,7 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]);
+                echo form_open('update', ['class' => 'settings', 'demo' => 1]);
                 echo form_label(lang('PayPal locale'));
                 echo form_input('paypal_locale', $option['paypal_locale'], ['class' => 'form-control']);
                 echo form_label(lang('PayPal  email'));
@@ -54,7 +54,8 @@
             <div class="card-body">
                 <?php
                 if(session('company_demo_mode') == 0) {
-                    echo form_open('settings/update', ['class' => 'settings']);
+                    $hidden = array('setting_id' => $settings->setting_id);
+                    echo form_open('update', ['class' => 'settings'],$hidden);
                     echo form_label(lang('Stripe test public key'));
                     echo form_input('stripe_pk_test', $settings->stripe_pk_test, ['class' => 'form-control']);
                     echo form_label(lang('Stripe test secret key'));
@@ -120,7 +121,8 @@
             </div>
             <div class="card-body">
                 <?php
-                echo form_open('settings/update', ['class' => 'settings']);
+                $hidden = array('setting_id' => $settings->setting_id);
+                echo form_open('update', ['class' => 'settings'], $hidden);
                 echo form_label(lang('Invoice terms'), 'invoice_terms');
                 echo form_textarea('invoice_terms', $settings->invoice_terms, ['class' => 'form-control']);
                 //                        echo form_label(lang('Invoice notes'), 'invoice_notes');
