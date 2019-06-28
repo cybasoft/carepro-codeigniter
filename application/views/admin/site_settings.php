@@ -169,12 +169,18 @@
                     </div>
                 </div> -->
                 <hr/>
-                <button class="btn btn-default"><?php echo lang('update'); ?></button>
-
+                <!-- <button type="submit" class="btn btn-default"><?php echo lang('update'); ?></button> -->
+                <?php
+                    echo form_button(
+                        [
+                            'type' => 'submit',
+                            'class' => 'btn btn-default',
+                        ], lang('update'));
+                ?>
             </div>
         </div>
         <hr/>
 
-        <?php echo form_close('demo'); ?>
+        <?php echo form_close(); ?>
     </div>
 </div>

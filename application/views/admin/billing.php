@@ -56,17 +56,17 @@
                 if(session('company_demo_mode') == 0) {
                     echo form_open('settings/update', ['class' => 'settings']);
                     echo form_label(lang('Stripe test public key'));
-                    echo form_input('stripe_pk_test', $option['stripe_pk_test'], ['class' => 'form-control']);
+                    echo form_input('stripe_pk_test', $settings->stripe_pk_test, ['class' => 'form-control']);
                     echo form_label(lang('Stripe test secret key'));
-                    echo form_password('stripe_sk_test', $option['stripe_sk_test'], ['class' => 'form-control']);
+                    echo form_password('stripe_sk_test', $settings->stripe_sk_test, ['class' => 'form-control']);
                     echo "<br/>";
                     echo form_label(lang('Stripe live public key'));
-                    echo form_input('stripe_pk_live', $option['stripe_pk_live'], ['class' => 'form-control']);
+                    echo form_input('stripe_pk_live', $settings->stripe_pk_live, ['class' => 'form-control']);
                     echo form_label(lang('Stripe live secret key'));
-                    echo form_password('stripe_sk_live', $option['stripe_sk_live'], ['class' => 'form-control']);
+                    echo form_password('stripe_sk_live', $settings->stripe_sk_live, ['class' => 'form-control']);
                     echo '<br/>';
                     echo form_label(lang('Enabled'), 'stripe_enabled');
-                    echo form_dropdown('stripe_enabled', [0 => lang('No'), 1 => lang('Yes')], $option['stripe_enabled'], ['class' => 'form-control']);
+                    echo form_dropdown('stripe_enabled', [0 => lang('No'), 1 => lang('Yes')], $settings->stripe_enabled, ['class' => 'form-control']);
                     echo '<br/>';
                     echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));
                     echo form_close('demo');
@@ -122,7 +122,7 @@
                 <?php
                 echo form_open('settings/update', ['class' => 'settings']);
                 echo form_label(lang('Invoice terms'), 'invoice_terms');
-                echo form_textarea('invoice_terms', $option['invoice_terms'], ['class' => 'form-control']);
+                echo form_textarea('invoice_terms', $settings->invoice_terms, ['class' => 'form-control']);
                 //                        echo form_label(lang('Invoice notes'), 'invoice_notes');
                 //                        echo form_textarea('invoice_notes',$option['invoice_notes'], ['class' => 'form-control']);
                 echo '<br/>';

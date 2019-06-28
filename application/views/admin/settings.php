@@ -67,23 +67,26 @@
 </div>
 
 <script>
-    $('.settings').on('submit', function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            type: 'POST',
-            success: function (response) {
-                swal({type: 'success', 'title': ''})
-                setTimeout(function () {
-                    window.location.reload();
-                }, 2000)
-            },
-            error: function (error) {
-                swal({type: 'error', 'title': ''})
-            }
-        });
-    });
+    // $('.settings').on('submit', function (e) {
+    //     e.preventDefault();
+    //     var formData = $(this).serialize();
+    //     var url = $(this).attr('action');
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: url,
+    //         data: {formData: formData},
+    //         success: function (response) {
+    //             debugger;
+    //             swal({type: 'success', 'title': ''})
+    //             setTimeout(function () {
+    //                 window.location.reload();
+    //             }, 2000)
+    //         },
+    //         error: function (error) {
+    //             swal({type: 'error', 'title': ''})
+    //         }
+    //     });
+    // });
     $("input[name=login_bg_image]").click(function () {
         var img = $(this).val();
         $('.currentLoginImg').attr('src', '<?php echo base_url(); ?>' + 'assets/uploads/content/login/' + img)

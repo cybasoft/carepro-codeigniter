@@ -52,32 +52,35 @@ class Settings extends CI_Controller
      * update settings
      */
     function update()
-    {        
-        allow('admin');
-        foreach ($_POST as $field => $value) {           
-            $this->form_validation->set_rules($field, lang($field), 'xss_clean|trim');
-        }
-        if($this->form_validation->run() == true) {
-            $error = 0;
-            foreach ($_POST as $field => $value) {
-                if($value == "") {
-                    empty_option($field);
-                } else {
-                    if(!update_option($field, $value, true)) {
-                        $error++;
-                    }
-                }
-            }
-            flash('success', lang('request_error'));
-        } else {
-            validation_errors();
-            flash('error');
-            echo 'error';
-            exit;
-        }
+    {
+        print_r("Hello");
+        exit();
+        // allow('admin');
+        // foreach ($_POST as $field => $value) {           
+        //     $this->form_validation->set_rules($field, lang($field), 'xss_clean|trim');
+        // }
+        // if($this->form_validation->run() == true) {
+        //     $error = 0;
+        //     foreach ($_POST as $field => $value) {
+        //         // if($value == "") {
+        //         //     empty_option($field);
+        //         // } else {
+        //         //     if(!update_option($field, $value, true)) {
+        //         //         $error++;
+        //         //     }
+        //         // }
+        //         return $field;
+        //     }             
+        //     flash('success', lang('request_error'));
+        // } else {
+        //     validation_errors();
+        //     flash('error');
+        //     echo 'error';
+        //     exit;
+        // }
 
-        reload_company();
-        echo 'success';
+        // reload_company();
+        // echo 'success';
     }
 
     /*
