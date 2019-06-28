@@ -5,20 +5,23 @@
         </div>
     </div>
     <div class="card-body">
-        <?php echo form_open('settings/update', ['class' => 'settings', 'demo' => 1]); ?>
+        <?php echo form_open('update', ['class' => 'settings', 'demo' => 1]); ?>
         <div class="row">
             <div class="col-md-6">
+                <input type="hidden" value="<?php echo $settings->daycare_id ?>" name="id">
+                <input type="hidden" value="<?php echo $settings->address_id ?>" name="address_id">
+                <input type="hidden" value="<?php echo $settings->setting_id ?>" name="setting_id">
                 <?php
                 echo form_label(lang('name'));
                 echo form_input('name', $settings->name, ['class' => 'form-control', 'required' => 'required']);
                 echo form_label(lang('slogan'));
-                echo form_input('slogan', $settings->slogan, ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('slogan', $settings->slogan, ['class' => 'form-control']);
                 echo form_label(lang('Facility ID'), 'facility_id');
                 echo form_input('facility_id',$settings->facility_id, ['class' => 'form-control']);
                 echo form_label(lang('Tax ID'), 'facility_id');
-                echo form_input('tax_id', $settings->employee_tax_identifier, ['class' => 'form-control']);
+                echo form_input('employee_tax_identifier', $settings->employee_tax_identifier, ['class' => 'form-control']);
                 echo form_label(lang('Daycare ID'));
-                echo form_input('daycare_id', $settings->daycare_unquie_id, ['class' => 'form-control','readonly'=>'true']);
+                echo form_input('daycare_unquie_id', $settings->daycare_unquie_id, ['class' => 'form-control','readonly'=>'true']);
                 echo "<hr/>";
                 echo form_label(lang('email'));
                 echo form_input('email', $settings->email, ['class' => 'form-control', 'required' => 'required']);
@@ -27,10 +30,10 @@
                 echo form_label(lang('fax'));
                 echo form_input('fax', $settings->fax, ['class' => 'form-control']);
                 echo form_label(lang('street'));
-                echo form_input('street', $settings->address_line_1, ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('address_line_1', $settings->address_line_1, ['class' => 'form-control', 'required' => 'required']);
                 echo "<br/>";
                 echo form_label(lang('street2'));
-                echo form_input('street2', $settings->address_line_2, ['class' => 'form-control']);
+                echo form_input('address_line_2', $settings->address_line_2, ['class' => 'form-control']);
                 ?>
                 <div class="row">
                     <div class="col-md-6">
@@ -50,7 +53,7 @@
                     <div class="col-md-6">
                         <?php
                         echo form_label(lang('postal_code'));
-                        echo form_input('postal_code',$settings->zip_code, ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('zip_code',$settings->zip_code, ['class' => 'form-control', 'required' => 'required']);
                         ?>
                     </div>
                     <div class="col-md-6">
@@ -65,8 +68,8 @@
                 <?php
                 echo form_label(lang('timezone'));
                 echo form_input('timezone', $settings->timezone, ['class' => 'form-control', 'required' => 'required']);
-                echo form_label(lang('google_analytics'));
-                echo form_input('google_analytics', $settings->google_analytics, ['class' => 'form-control']);
+                // echo form_label(lang('google_analytics'));
+                // echo form_input('google_analytics', $settings->google_analytics, ['class' => 'form-control']);
                 echo form_label(lang('date_format'));
                 echo form_input('date_format', $settings->date_format, ['class' => 'form-control', 'required' => 'required']);
                 // echo form_label(lang('Lockscreen timer (mins)'));
@@ -78,13 +81,13 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label('Start time');
-                        echo form_time('hours_start', $settings->start_time, ['class' => 'form-control']);
+                        echo form_time('start_time', $settings->start_time, ['class' => 'form-control']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
                         echo form_label('End time');
-                        echo form_time('hours_end', $settings->end_time, ['class' => 'form-control']);
+                        echo form_time('end_time', $settings->end_time, ['class' => 'form-control']);
                         ?>
                     </div>
                 </div>

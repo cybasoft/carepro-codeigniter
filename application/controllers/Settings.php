@@ -30,12 +30,12 @@ class Settings extends CI_Controller
 
         $payMethods = $this->db->get('payment_methods')->result();       
         $settings = $this->db
-                   ->select('d.*,ds.*,add.*,d.daycare_id as daycare_unquie_id')
+                   ->select('d.*,ds.*,add.*,d.daycare_id as daycare_unquie_id,ds.id as setting_id')
                    ->where('d.id',$this->session->userdata('daycare_id'))
                    ->from('daycare as d')
                    ->join('daycare_settings as ds','ds.daycare_id=d.id')
                    ->join('address as add','add.id=d.address_id')
-                   ->get()->row();
+                   ->get()->row();                   
         $settings->email = $this->session->userdata('email');                                          
         // $settings = $this->db->get('options')->result_array();
 
@@ -53,31 +53,57 @@ class Settings extends CI_Controller
      */
     function update()
     {
-        print_r("Hello");
-        exit();
-        // allow('admin');
-        // foreach ($_POST as $field => $value) {           
-        //     $this->form_validation->set_rules($field, lang($field), 'xss_clean|trim');
-        // }
-        // if($this->form_validation->run() == true) {
-        //     $error = 0;
-        //     foreach ($_POST as $field => $value) {
-        //         // if($value == "") {
-        //         //     empty_option($field);
-        //         // } else {
-        //         //     if(!update_option($field, $value, true)) {
-        //         //         $error++;
-        //         //     }
-        //         // }
-        //         return $field;
-        //     }             
-        //     flash('success', lang('request_error'));
-        // } else {
-        //     validation_errors();
-        //     flash('error');
-        //     echo 'error';
-        //     exit;
-        // }
+        allow('admin');
+        foreach ($_POST as $field => $value) {
+            $this->form_validation->set_rules($field, lang($field), 'xss_clean|trim');
+        }
+        if($this->form_validation->run() == true) {            
+            // $error = 0;            
+            // foreach ($_POST as $field => $value) {
+            //     if($value == "") {
+            //         empty_option($field);
+            //     } else {
+            //         if(!update_option($field, $value, true)) {
+            //             $error++;
+            //         }
+            //     }
+            //     return $field;
+            // }
+            $address_data = array(
+                'phone' => $_POST['phone'],
+                'fax' => $_POST['fax'],
+                'address_line_1' => $_POST['address_line_1'],
+                'address_line_2' => $_POST['address_line_2'],
+                'city' => $_POST['city'],
+                'state' => $_POST['state'],
+                'zip_code' => $_POST['zip_code'],
+                'country' => $_POST['country']
+            );
+            $this->db->where('id',$_POST['address_id'])->update('address',$address_data);
+            $setting_data = array(
+                'timezone' => $_POST['timezone'],
+                'date_format' => $_POST['date_format'],
+                'start_time' => $_POST['start_time'],
+                'end_time' => $_POST['end_time']
+            );
+            $this->db->where('id',$_POST['setting_id'])->update('daycare_settings',$setting_data);
+
+            $daycare_data = array(
+                'name' => $_POST['name'],
+                'slogan' => $_POST['slogan'],
+                'facility_id' => $_POST['facility_id'],
+                'employee_tax_identifier' => $_POST['employee_tax_identifier'],
+                'daycare_id' => $_POST['daycare_unquie_id'],
+            );
+            $this->db->where('id',$_POST['id'])->update('daycare',$daycare_data);
+            echo "success";
+            flash('success',"Settings updated successfully.");
+        } else {
+            validation_errors();
+            flash('error');
+            echo 'error';
+            exit;
+        }
 
         // reload_company();
         // echo 'success';

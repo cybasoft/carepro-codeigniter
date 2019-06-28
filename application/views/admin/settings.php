@@ -22,7 +22,7 @@
         </div>
         <div class="tab-pane" id="backup">
             <?php $this->load->view('admin/backup'); ?>
-        </div>       
+        </div>
         <div class="tab-pane" id="event_log">
             <?php $this->load->view('admin/event_log'); ?>
         </div>
@@ -49,9 +49,7 @@
                                     <input type="hidden" name="cmd" value="_s-xclick">
                                     <input type="hidden" name="hosted_button_id" value="Q3N6CNB3RRJBJ">
                                     <button class="btn btn-primary btn-block"><i class="fa fa-paypal"></i> DONATE</button>
-                                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif"
-                                         width="1"
-                                         height="1">
+                                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                                 </form>
 
                                 <h3>Join our mailing list for the latest updates</h3>
@@ -67,27 +65,35 @@
 </div>
 
 <script>
-    // $('.settings').on('submit', function (e) {
-    //     e.preventDefault();
-    //     var formData = $(this).serialize();
-    //     var url = $(this).attr('action');
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: url,
-    //         data: {formData: formData},
-    //         success: function (response) {
-    //             debugger;
-    //             swal({type: 'success', 'title': ''})
-    //             setTimeout(function () {
-    //                 window.location.reload();
-    //             }, 2000)
-    //         },
-    //         error: function (error) {
-    //             swal({type: 'error', 'title': ''})
-    //         }
-    //     });
-    // });
-    $("input[name=login_bg_image]").click(function () {
+    $('.settings').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var url = $(this).attr('action');
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            success: function(response) {
+                debugger;
+                if (response == "success") {
+                    swal({
+                        type: 'success',
+                        'title': ''
+                    })
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 2000)
+                }
+            },
+            error: function(error) {
+                swal({
+                    type: 'error',
+                    'title': ''
+                })
+            }
+        });
+    });
+    $("input[name=login_bg_image]").click(function() {
         var img = $(this).val();
         $('.currentLoginImg').attr('src', '<?php echo base_url(); ?>' + 'assets/uploads/content/login/' + img)
     })
