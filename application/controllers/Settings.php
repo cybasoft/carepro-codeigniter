@@ -28,13 +28,15 @@ class Settings extends CI_Controller
 
         $this->load->model('My_backup', 'backup');
 
-        $payMethods = $this->db->get('payment_methods')->result();
+        $payMethods = $this->db->get('payment_methods')->result();       
         $settings = $this->db
-                   ->select('cs.*,ds.*')
-                   ->where('daycare_id',$this->session->userdata('daycare_id'))
-                   ->from('company_settings as cs')
-                   ->join('daycare_settings as ds','ds.company_id=cs.id')
-                   ->get()->row();                 
+                   ->select('d.*,ds.*,add.*,d.daycare_id as daycare_unquie_id')
+                   ->where('d.id',$this->session->userdata('daycare_id'))
+                   ->from('daycare as d')
+                   ->join('daycare_settings as ds','ds.daycare_id=d.id')
+                   ->join('address as add','add.id=d.address_id')
+                   ->get()->row();
+        $settings->email = $this->session->userdata('email');                                          
         // $settings = $this->db->get('options')->result_array();
 
         $event_logs = $this->db->get('event_log')->result_array();

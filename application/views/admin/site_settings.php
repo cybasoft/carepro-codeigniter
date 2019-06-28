@@ -16,7 +16,7 @@
                 echo form_label(lang('Facility ID'), 'facility_id');
                 echo form_input('facility_id',$settings->facility_id, ['class' => 'form-control']);
                 echo form_label(lang('Tax ID'), 'facility_id');
-                echo form_input('tax_id', $settings->tax_id, ['class' => 'form-control']);
+                echo form_input('tax_id', $settings->employee_tax_identifier, ['class' => 'form-control']);
                 echo form_label(lang('Daycare ID'));
                 echo form_input('daycare_id', $settings->daycare_unquie_id, ['class' => 'form-control','readonly'=>'true']);
                 echo "<hr/>";
@@ -27,10 +27,10 @@
                 echo form_label(lang('fax'));
                 echo form_input('fax', $settings->fax, ['class' => 'form-control']);
                 echo form_label(lang('street'));
-                echo form_input('street', $settings->street, ['class' => 'form-control', 'required' => 'required']);
+                echo form_input('street', $settings->address_line_1, ['class' => 'form-control', 'required' => 'required']);
                 echo "<br/>";
                 echo form_label(lang('street2'));
-                echo form_input('street2', $settings->street2, ['class' => 'form-control']);
+                echo form_input('street2', $settings->address_line_2, ['class' => 'form-control']);
                 ?>
                 <div class="row">
                     <div class="col-md-6">
@@ -50,7 +50,7 @@
                     <div class="col-md-6">
                         <?php
                         echo form_label(lang('postal_code'));
-                        echo form_input('postal_code',$settings->postal_code, ['class' => 'form-control', 'required' => 'required']);
+                        echo form_input('postal_code',$settings->zip_code, ['class' => 'form-control', 'required' => 'required']);
                         ?>
                     </div>
                     <div class="col-md-6">

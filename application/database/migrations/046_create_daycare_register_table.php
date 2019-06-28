@@ -23,7 +23,15 @@ class Migration_create_daycare_register_table extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 100
             ),
+            'slogan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
             'employee_tax_identifier' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'facility_id' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100
             ),
@@ -41,12 +49,6 @@ class Migration_create_daycare_register_table extends CI_Migration
                 'constraint' => 200,
             ),
             'created_at' => [
-                'type' => 'TIMESTAMP',
-            ],
-            'updated_at' => [
-                'type' => 'TIMESTAMP',
-            ],
-            'deleted_at' => [
                 'type' => 'TIMESTAMP',
             ]
         ));

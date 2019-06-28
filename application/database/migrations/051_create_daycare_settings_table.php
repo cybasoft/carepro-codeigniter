@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_create_company_setting_table extends CI_Migration
+class Migration_create_daycare_settings_table extends CI_Migration
 {
 
     /**
@@ -17,86 +17,79 @@ class Migration_create_company_setting_table extends CI_Migration
                 'constraint' => 11,
                 'auto_increment'=>TRUE,
                 'unsigned'=>TRUE
-            ),
-            'daycare_id' => array(
+            ),   
+            'daycare_id' =>  array(
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned'=>TRUE
-            ),
-            'daycare_unquie_id'  => array(
-                'type' => 'VARCHAR',
-                'constraint' => 191,
-                'null' => false
-            ),
-            'name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 191,
-                'null' => false
-            ),
-            'slogan' => array(
+            ),   
+            'timezone' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
                 'null' => true
             ),
-            'email' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 191,
-            ),
-            'facility_id' => array(
+            'google_analytics' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
                 'null' => true
             ),
-            'tax_id' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 191,                
-            ),
-            'phone' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 191,
-            ),
-            'fax' => array(
+            'date_format' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
                 'null' => true
             ),
-            'street' => array(
-                'type' => 'VARCHAR',
-                'constraint' => 191,
+            'start_time' => array(
+                'type' => 'TIME',
+                'null' => true
             ),
-            'street2' => array(
+            'end_time' => array(
+                'type' => 'TIME',
+                'null' => true
+            ),         
+            'stripe_pk_test' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
+                'null' => true
             ),
-            'city' => array(
+            'stripe_sk_test' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
+                'null' => true
             ),
-            'state' => array(
+            'stripe_pk_live' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
+                'null' => true
             ),
-            'postal_code' => array(
+            'stripe_sk_live' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
+                'null' => true
             ),
-            'country' => array(
+            'stripe_enabled' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
+                'null' => true
             ),
-            'logo' => array(
+            'invoice_terms' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
-            )                        
+                'null' => true
+            ),
+            'invoice_logo' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 191,
+                'null' => true
+            ),
         ));       
 
         // Add Primary Key.
         $this->dbforge->add_key("id", TRUE);
 
         // Create Table users
-        $this->dbforge->create_table("company_settings", TRUE);
+        $this->dbforge->create_table("daycare_settings", TRUE);
 
-        $this->db->query('ALTER TABLE `company_settings` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
+        $this->db->query('ALTER TABLE `daycare_settings` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 
     /**
@@ -106,7 +99,7 @@ class Migration_create_company_setting_table extends CI_Migration
      */
     public function down()
     {
-        $this->dbforge->drop_table("company_settings", TRUE);
+        $this->dbforge->drop_table("daycare_settings", TRUE);
     }
 
 }
