@@ -201,12 +201,41 @@ class My_child extends CI_Model
         }
 
         //assign child to user if this user is parent
-        if(is('parent')) {
+        if(is('parent')) {            
             $data2 = [
                 'child_id' => $last_id,
                 'user_id' => $this->user->uid(),
             ];
             $this->db->insert('child_parents', $data2);
+            $user_details = $this->db->get_where('users',array(
+                'daycare_id' => $daycare['id']
+            ));
+            $users = $user_details->result();
+    
+            $child_name = $this->input->post('first_name') . " " .$this->input->post('last_name');
+            foreach ($users as $row) {
+                if($row->name == ''){
+                    $name = $this->session->userdata('first_name') . " " . $this->session->userdata('last_name');
+                }else{
+                    $name = $row->name;
+                }
+                $user_group = $this->db->get_where('users_groups',array(
+                    'user_id' => $row->id
+                ));
+                $group_row = $user_group->row();
+                $group = $group_row->group_id;
+                if($group == 1 || $group == 2){
+                    $message = "A child " . $child_name . " added to daycare by parent " . $name .".";
+                    $data = [
+                        'subject' => 'Child Register',
+                        'to' => $row->email,
+                        'message' => $message,
+                        'logo' => $this->session->userdata('company_logo'),
+                        'name' => $row->first_name,
+                    ];
+                    send_email($data);
+                }
+            }
         }
 
         //log event

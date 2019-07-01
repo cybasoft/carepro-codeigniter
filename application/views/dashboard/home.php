@@ -4,14 +4,18 @@
             <div class="card-body">
                 <div class="text-center">
                     <h3><?php echo $daycare['name']; ?></h3>
-                    <em><?php echo session('company_slogan'); ?></em>
+                    <?php if($daycare['slogan'] === ''): ?>
+                      <em><?php echo session('company_slogan'); ?></em>
+                    <?php else: ?>
+                      <em><?php echo $daycare['slogan']; ?></em>
+                    <?php endif; ?>
                     <br />
-                    <?php echo session('company_street'); ?>
+                    <?php echo $address['address_line_1']; ?>
                     <br />
-                    <?php echo session('company_city'); ?>
-                    <?php echo session('company_state'); ?>,
-                    <?php echo session('company_postal_code'); ?>
-                    <?php echo session('company_country'); ?>
+                    <?php echo $address['city']; ?>
+                    <?php echo $address['state']; ?>,
+                    <?php echo $address['zip_code']; ?>
+                    <?php echo $address['country']; ?>
                 </div>
             </div>
         </div>

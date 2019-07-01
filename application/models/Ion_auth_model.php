@@ -1421,6 +1421,7 @@ class Ion_auth_model extends CI_Model
         $user_data = array(
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'phone2' => $data['phone2'],
             'email' => $data['email'],
         );
         // Filter the data passed
