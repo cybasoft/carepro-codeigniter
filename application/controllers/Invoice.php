@@ -194,7 +194,12 @@ class Invoice extends CI_Controller
         $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
         $child = $this->child->first($id);
-        page($this->module . 'create_invoice', compact('child', 'daycare_id'));
+        $settings_data = $this->db->get_where('daycare_settings',array(
+            'daycare_id' => $this->session->userdata('daycare_id')
+        ));
+        $settings = $settings_data->row();       
+        $invoice_terms = $settings->invoice_terms;
+        page($this->module . 'create_invoice', compact('child', 'daycare_id', 'invoice_terms'));
     }
 
     function store($id)

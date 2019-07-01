@@ -29,7 +29,7 @@
                             <?php else: ?>
                                 <img class="img-circle img-responsive img-thumbnail"
                                      style="width:150px;height:150px"
-                                     src="<?php echo base_url(); ?>assets/img/content/no-image.png"/>;
+                                     src="<?php echo base_url(); ?>assets/img/content/no-image.png"/>
                             <?php endif; ?>
                         </div>
 

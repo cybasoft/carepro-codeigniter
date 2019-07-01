@@ -87,7 +87,7 @@
             </div>
             <div class="card-body">
                 <?php echo lang('Add a payment method'); ?>
-                <?php echo form_open('settings/paymentMethods', ['class' => 'settings', 'demo' => 1]);
+                <?php echo form_open('paymentMethods', ['class' => 'settings', 'demo' => 1]);
                 echo '<div class="input-group">';
                 echo form_input('title', NULL, ['class' => 'form-control', 'required' => '']);
                 echo '<span class="input-group-btn">';

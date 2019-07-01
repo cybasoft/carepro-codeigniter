@@ -243,12 +243,12 @@ class Settings extends CI_Controller
             $this->db->insert('payment_methods', array(
                 'title' => $this->input->post('title')
             ));
-            flash('success', lang('Settings have been updated'));
+            flash('success', lang('Payment Methods has been added successfully.'));
         } else {
             flash('error');
             validation_errors();
         }
-        redirectPrev('', '#paymentMethods');
+        redirectPrev('', 'paymentMethods');
     }
 
     function deletePaymentMethod($id)
