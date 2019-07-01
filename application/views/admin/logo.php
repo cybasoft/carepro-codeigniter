@@ -6,9 +6,9 @@
             </div>
             <div class="card-body">
 
-                <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('company_logo'))): ?>
+                <!-- <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('company_logo'))): ?>
                     <img style="width:100%" src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
-                <?php endif; ?>
+                <?php endif; ?> -->
                 <img style="width:100%" src="<?php echo base_url().'assets/uploads/daycare_logo/'.$settings->logo; ?>"/>
                 <hr/>
 
@@ -37,12 +37,12 @@
                     <?php echo lang('invoice logo'); ?>
                 </div>
             </div>
-            <div class="card-body">
-                <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('company_invoice_logo'))): ?>
-                    <img style="width:100%" src="<?php echo base_url().'assets/uploads/content/'.session('company_invoice_logo'); ?>"/>
-                <?php endif;
+            <div class="card-body">    
+            <img style="width:100%" src="<?php echo base_url().'assets/uploads/invoice_logo/'.$settings->invoice_logo; ?>"/>            
+                <?php
                 echo '<hr/>';
-                echo form_open_multipart('settings/upload_invoice_logo', 'class="input-group"');
+                $hidden = array('daycare_unquie_id' => $settings->daycare_unquie_id,'settings_id' => $settings->setting_id);
+                echo form_open_multipart('invoice_logo', 'class="input-group"',$hidden);
                 echo form_input(['type' => 'file', 'name' => 'invoice_logo', 'required' => '', 'class' => 'form-control']);
                 echo '<span class="input-group-btn">';
                 echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('Update'));

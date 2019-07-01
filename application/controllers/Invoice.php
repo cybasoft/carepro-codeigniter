@@ -268,9 +268,14 @@ class Invoice extends CI_Controller
     function preview()
     {
         $invoice_id = $this->uri->segment(2);
+        $settings = $this->db->get_where('daycare_settings',array(
+            'daycare_id' => $this->session->userdata('daycare_id')
+        ));
+        $invoice_logo = $settings->row()->invoice_logo;        
         $data = array(
             'invoice' => $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row(),
-            'invoice_items' => $this->invoice->getInvoiceItems($invoice_id)
+            'invoice_items' => $this->invoice->getInvoiceItems($invoice_id),
+            'invoice_logo' => $invoice_logo
         );
         $this->load->view($this->module . 'invoice_print', $data);
     }
@@ -288,11 +293,11 @@ class Invoice extends CI_Controller
         $invoice_items = $this->invoice->getInvoiceItems($id);
         $child = $this->child->first($invoice->child_id);
 
-        $daycare_details = $this->db->get_where('daycare', array(
-            'daycare_id' => $daycare_id
+        $settings_details = $this->db->get_where('daycare_settings', array(
+            'daycare_id' => $this->session->userdata('daycare_id')
         ));
-        $daycare_data = $daycare_details->row_array();
-        $image = $daycare_data['logo'];
+        $settings = $settings_details->row_array();
+        $image = $settings['invoice_logo'];
         //format pdf
         $this->load->library('PDF');
 
