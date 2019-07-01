@@ -81,7 +81,7 @@
                             <div class="form-group">
                                 <p for="country">Country *</p>
                                 <select id="country" class="form-control" required="" name="country" value="<?php echo set_value('country'); ?>">
-                                    <option value="1">United States</option>
+                                    <option value="USA">United States</option>
                                 </select>
                             </div>
                         </div>

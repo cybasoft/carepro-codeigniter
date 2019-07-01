@@ -14,7 +14,7 @@
                     <br />
                     <?php echo $address['city']; ?>
                     <?php echo $address['state']; ?>,
-                    <?php echo $address['zip_code']; ?>
+                    <?php echo $address['zip_code']; ?>,
                     <?php echo $this->session->userdata('company_country'); ?>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <table class="table">
                     <tr>
                         <td><?php echo lang('Facility ID'); ?>:</td>
-                        <td><?php echo $daycare['daycare_id']; ?></td>
+                        <td><?php echo $daycare['facility_id']; ?></td>
                     </tr>
                     <tr>
                         <td><?php echo lang('Tax ID'); ?>:</td>
