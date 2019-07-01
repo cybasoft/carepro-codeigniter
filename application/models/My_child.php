@@ -167,8 +167,7 @@ class My_child extends CI_Model
         $daycare_details = $this->db->get_where('daycare',array(
             'daycare_id' => $daycare_id
         ));      
-        $daycare = $daycare_details->row_array();
-
+        $daycare = $daycare_details->row_array(); 
         if(is('parent')){
             $status = 0;
         }else{
@@ -213,11 +212,19 @@ class My_child extends CI_Model
             $users = $user_details->result();
     
             $child_name = $this->input->post('first_name') . " " .$this->input->post('last_name');
+            $parent_id = $this->session->userdata('user_id');
             foreach ($users as $row) {
-                if($row->name == ''){
-                    $name = $this->session->userdata('first_name') . " " . $this->session->userdata('last_name');
-                }else{
+                if($parent_id == $row->id){
+                    if($row->first_name == ''){
+                        $parent_name = $row->name;
+                    }else{
+                        $parent_name = $row->first_name;
+                    }
+                }
+                if($row->first_name == ''){
                     $name = $row->name;
+                }else{
+                    $name = $row->first_name . " " . $row->last_name;
                 }
                 $user_group = $this->db->get_where('users_groups',array(
                     'user_id' => $row->id
@@ -225,13 +232,13 @@ class My_child extends CI_Model
                 $group_row = $user_group->row();
                 $group = $group_row->group_id;
                 if($group == 1 || $group == 2){
-                    $message = "A child " . $child_name . " added to daycare by parent " . $name .".";
+                    $message = "A child " . $child_name . " added to daycare by parent " . $parent_name .".";
                     $data = [
                         'subject' => 'Child Register',
                         'to' => $row->email,
                         'message' => $message,
                         'logo' => $this->session->userdata('company_logo'),
-                        'name' => $row->first_name,
+                        'name' => $name,
                     ];
                     send_email($data);
                 }

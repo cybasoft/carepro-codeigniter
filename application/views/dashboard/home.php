@@ -15,7 +15,7 @@
                     <?php echo $address['city']; ?>
                     <?php echo $address['state']; ?>,
                     <?php echo $address['zip_code']; ?>,
-                    <?php echo $this->session->userdata('company_country'); ?>
+                    <?php echo $address['country']; ?>
                 </div>
             </div>
         </div>
