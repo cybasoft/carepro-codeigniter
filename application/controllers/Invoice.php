@@ -288,6 +288,11 @@ class Invoice extends CI_Controller
     function pay()
     {
         $daycare_id = $this->session->userdata('daycare_id');
+        $users_details = $this->db->get_where('users',array(
+            'daycare_id' => $daycare_id
+        ));
+        $users = $users_details->result();
+
         $stripe_details = $this->db->get_where('daycare_settings',array(
             'daycare_id' => $daycare_id
         ));
@@ -319,6 +324,35 @@ class Invoice extends CI_Controller
                 'created_at' => date_stamp()
             );
             $this->db->insert('invoice_payments',$data);
+
+            foreach($users as $user){
+                if($user->first_name == ''){
+                    $name = $user->name;
+                }else{
+                    $name = $user->first_name . " " . $user->last_name;
+                }
+                $user_group = $this->db->get_where('users_groups',array(
+                    'user_id' => $user->id
+                ));
+                $group_row = $user_group->row();
+                $group = $group_row->group_id;
+                if($group !== 3){
+                    if($group == 4){
+                        $message = "A Invoice of amount $". $due_amount ." is paid successfully.";
+                    }else{
+                        $message = "A Invoice of amount $". $due_amount ." is paid successfully by parent " . $parent_name;
+                    }
+                    $data = [
+                        'subject' => 'Invoice paid',
+                        'to' => $user->email,
+                        'message' => $message,
+                        'logo' => $this->session->userdata('company_logo'),
+                        'name' => $name,
+                    ];
+                    send_email($data);
+                }
+            }
+            flash('success',"Invoice paid successfully.");
             redirectPrev();
         }
     }
