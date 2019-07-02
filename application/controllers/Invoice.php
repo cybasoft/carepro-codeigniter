@@ -299,14 +299,17 @@ class Invoice extends CI_Controller
         $stripe = $stripe_details->row();
 
         $due_amount = $this->input->post("invoice_amount");
-        $test_key = $stripe->stripe_sk_test;
-        $live_key = $stripe->stripe_sk_live;
 
         $amount = $due_amount * 100;
         $parent_name = $this->session->userdata('first_name');     
         $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for Daycare.";   
-        if($test_key !== '' || $live_key !== ''){
-            \Stripe\Stripe::setApiKey($stripe->stripe_sk_test);
+        if($stripe->stripe_pk_live == ''){
+            $key = $stripe->stripe_pk_test;
+        }else{
+            $key = $stripe->stripe_pk_live;
+        }
+        if($key !== ''){
+            \Stripe\Stripe::setApiKey($key);
             //stripe make payment
             \Stripe\Charge::create([
                 "amount" => $amount,
@@ -325,6 +328,8 @@ class Invoice extends CI_Controller
             );
             $this->db->insert('invoice_payments',$data);
 
+            logEvent($user_id = NULl,"");
+
             foreach($users as $user){
                 if($user->first_name == ''){
                     $name = $user->name;
@@ -340,7 +345,7 @@ class Invoice extends CI_Controller
                     if($group == 4){
                         $message = "A Invoice of amount $". $due_amount ." is paid successfully.";
                     }else{
-                        $message = "A Invoice of amount $". $due_amount ." is paid successfully by parent " . $parent_name;
+                        $message = "A Invoice of amount $". $due_amount ." is paid successfully by parent " . $parent_name . ".";
                     }
                     $data = [
                         'subject' => 'Invoice paid',

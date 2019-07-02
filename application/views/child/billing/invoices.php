@@ -48,7 +48,7 @@
                                             <?php echo anchor('invoice/' . $invoice->id . '/download?dl', icon('file-pdf') . ' ' . lang('Download'), 'class="dropdown-item"'); ?>
                                             <?php echo anchor('invoice/' . $invoice->id . '/download?send', icon('envelope') . ' ' . lang('send_to_parent'), 'class="dropdown-item"'); ?>
                                             <?php echo anchor('invoice/' . $invoice->id . '/preview', icon('print') . ' ' . lang('Print'), 'target="_blank" class="dropdown-item"'); ?>
-                                            <?php if ($stripe->stripe_enabled == 1 && $invoice->totalDue != 0) : ?>
+                                            <?php if ($stripe->stripe_enabled == 1 && $invoice->totalDue != 0 && $key != '') : ?>
                                                 <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#stripe_pay" class="dropdown-item pay_button" data-due-amount="<?php echo $invoice->totalDue; ?>"><i class="fab fa-cc-stripe"></i> Pay</a>
                                             <?php endif; ?>
                                             <?php if (!is('parent')) : ?>
@@ -70,7 +70,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form role="form" action="../../invoice/<?php echo $invoice->id; ?>/pay" method="post" class="require-validation payment_form" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $stripe->stripe_pk_test ?>" id="payment-form">
+                            <form role="form" action="../../invoice/<?php echo $invoice->id; ?>/pay" method="post" class="require-validation payment_form" data-cc-on-file="false" data-stripe-publishable-key="<?php echo $key; ?>" id="payment-form">
                                 <div class="modal-body">
                                     <input type="hidden" name="invoice_amount" id="invoice_amount">
                                     <div class='form-row row'>
