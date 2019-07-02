@@ -339,5 +339,59 @@ $(document).ready(function () {
         var url = site_url + 'meds/destroy/' + $(this).attr('id');
         if (confirm('Are you sure?'))
             window.location.href = url;
-    })
+    });
+    $(".pay_button").click(function(){
+        var due_amount = $(this).data("due-amount");
+        $("#invoice_amount").val(due_amount);
+    });
+    var $form = $(".require-validation");
+    $('form.require-validation').bind('submit', function (e) {
+        var $form = $(".require-validation"),
+            inputSelector = ['input[type=email]', 'input[type=password]',
+                'input[type=text]', 'input[type=file]',
+                'textarea'
+            ].join(', '),
+            $inputs = $form.find('.required').find(inputSelector),
+            $errorMessage = $form.find('div.error'),
+            valid = true;
+        $errorMessage.addClass('d-none');
+
+        $('.has-error').removeClass('has-error');
+        $inputs.each(function (i, el) {
+            var $input = $(el);
+            if ($input.val() === '') {
+                $input.parent().addClass('has-error');
+                $errorMessage.removeClass('d-none');
+                e.preventDefault();
+            } else {
+                $('.loading_div').show();
+            }
+        });
+
+        if (!$form.data('cc-on-file')) {
+            e.preventDefault();
+            Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+            Stripe.createToken({
+                number: $('.card-number').val(),
+                cvc: $('.card-cvc').val(),
+                exp_month: $('.card-expiry-month').val(),
+                exp_year: $('.card-expiry-year').val()
+            }, stripeResponseHandler);
+        }
+
+    });
+
+    function stripeResponseHandler(status, response) {
+        if (response.error) {
+            $('.error')
+                .removeClass('d-none')
+                .find('.alert')
+                .text(response.error.message);
+        } else {
+            var token = response['id'];
+            $form.find('input[type=text]').empty();
+            $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+            $form.get(0).submit();
+        }
+    }
 })

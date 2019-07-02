@@ -148,6 +148,7 @@
 <script src="<?php echo assets('js/waves.js'); ?>"></script>
 <script src="<?php echo assets('js/sidebarmenu.js'); ?>"></script>
 <script src="<?php echo assets('js/custom.js'); ?>"></script>
+<script src="<?php echo assets('js/user_register/stripe.js'); ?>"></script>
 
 <script src="<?php echo assets('plugins/listjs/list.min.js'); ?>" type="text/javascript"></script>
 

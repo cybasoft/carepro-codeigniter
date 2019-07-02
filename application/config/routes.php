@@ -102,6 +102,7 @@ $route['invoice/(:num)/addItem'] = 'invoice/addItem/$1';
 $route['invoice/(:num)/deleteItem/(:num)'] = 'invoice/deleteItem/$1/$2';
 $route['invoice/(:num)/makePayment'] = 'invoice/makePayment/$1';
 $route['invoice/(:num)/preview'] = 'invoice/preview/$1';
+$route['invoice/(:num)/pay'] = 'invoice/pay/$1';
 
 // $route['(.*)/invoice/(:num)/download'] = 'invoice/pdf/$1/$2';
 $route['invoice/(:num)/download'] = 'invoice/pdf/$1';

@@ -14,9 +14,13 @@
             <div class="card">
                 <div class="card-header box-border">
                     <h3 class="card-title">
+                    <?php if($child->status == 1): ?>
                         <a href="<?php echo site_url( 'child/'.$child->id); ?>">
                             <?php echo $child->first_name.' '.$child->last_name; ?>
                         </a>
+                    <?php else: ?>
+                        <?php echo $child->first_name.' '.$child->last_name; ?>
+                    <?php endif; ?>
                     </h3>
                 </div>
                 <div class="card-body">
@@ -47,7 +51,7 @@
                             <?php echo lang('status'); ?>
                             <?php echo ($child->status == 1) ? lang('active_status') : lang('inactive_status'); ?>
                         </div>
-
+                        <?php if($child->status == 1): ?>
                         <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-4">
@@ -82,6 +86,7 @@
 
 
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

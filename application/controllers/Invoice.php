@@ -285,6 +285,44 @@ class Invoice extends CI_Controller
         $this->load->view($this->module . 'invoice_print', $data);
     }
 
+    function pay()
+    {
+        $daycare_id = $this->session->userdata('daycare_id');
+        $stripe_details = $this->db->get_where('daycare_settings',array(
+            'daycare_id' => $daycare_id
+        ));
+        $stripe = $stripe_details->row();
+
+        $due_amount = $this->input->post("invoice_amount");
+        $test_key = $stripe->stripe_sk_test;
+        $live_key = $stripe->stripe_sk_live;
+
+        $amount = $due_amount * 100;
+        $parent_name = $this->session->userdata('first_name');     
+        $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for Daycare.";   
+        if($test_key !== '' || $live_key !== ''){
+            \Stripe\Stripe::setApiKey($stripe->stripe_sk_test);
+            //stripe make payment
+            \Stripe\Charge::create([
+                "amount" => $amount,
+                "currency" => "usd",
+                "source" => $this->input->post('stripeToken'),
+                "description" => $description
+            ]);
+            $data = array(
+                'invoice_id' => $this->uri->segment(2),
+                'amount' => $due_amount,
+                'method' => 'Stripe',
+                'user_id' => $this->session->userdata('user_id'),
+                'remarks' => $description,
+                'date_paid' => date('Y-m-d'),
+                'created_at' => date_stamp()
+            );
+            $this->db->insert('invoice_payments',$data);
+            redirectPrev();
+        }
+    }
+
     /**
      * @param        $id
      * @param string $action
