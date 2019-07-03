@@ -19,7 +19,7 @@ class My_meal extends CI_Model
         ];
         if($this->db->insert('meal_plan', $data)){
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Added meal ID: {$last_id} for room ID: {$this->input->post('room_id')}");
+            logEvent($user_id = NULL, "Added meal ID: {$last_id} for room ID: {$this->input->post('room_id')}",$care_id = NULL);
             return TRUE;
         }            
         return FALSE;
@@ -113,7 +113,7 @@ class My_meal extends CI_Model
             ];
             $this->db->insert('meal_plan', $data);
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Copied meal ID: {$last_id} for next week of room ID: {$meal->room_id}");
+            logEvent($user_id = NULL, "Copied meal ID: {$last_id} for next week of room ID: {$meal->room_id}",$care_id = NULL);
         }
         return TRUE;
     }

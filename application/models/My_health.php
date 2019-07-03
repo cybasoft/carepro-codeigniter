@@ -30,7 +30,7 @@ class my_health extends CI_Model
         $last_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Added allergy ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added allergy ID: {$last_id} for child ID: {$this->input->post('child_id')}",$care_id = NULL);
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_allergy_subject'), lang('new_allergy_message'));
             return TRUE;
@@ -57,7 +57,7 @@ class my_health extends CI_Model
         if($this->db->affected_rows() > 0) {
             $last_id = $this->db->insert_id();
             //log event
-            logEvent($id = NULL,"Added problem ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added problem ID: {$last_id} for child ID: {$this->input->post('child_id')}",$care_id = NULL);
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_problem_subject'), lang('new_problem_message'));
             return TRUE;
@@ -84,7 +84,7 @@ class my_health extends CI_Model
         if($this->db->insert('child_contacts', $data)) {
             $last_id = $this->db->insert_id();
             //log
-            logEvent($id = NULL,"Added contact ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added contact ID: {$last_id} for child ID: {$this->input->post('child_id')}",$care_id = NULL);
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_contact_subject'), lang('new_contact_message'));
             return TRUE;
@@ -110,7 +110,7 @@ class my_health extends CI_Model
         if($this->db->insert('child_providers', $data)) {
             $last_id = $this->db->insert_id();
             //log event
-            logEvent($id = NULL,"Added provider ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added provider ID: {$last_id} for child ID: {$this->input->post('child_id')}",$care_id = NULL);
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_provider_subject'), lang('new_provider_message'));
             return TRUE;

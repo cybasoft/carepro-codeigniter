@@ -193,7 +193,7 @@ class notes extends CI_Controller
             $this->db->insert('notes_categories', ['name' => $this->input->post('name')]);
             $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
-                logEvent($user_id = NULL, "Added category ID: {$last_id}");
+                logEvent($user_id = NULL, "Added category ID: {$last_id}",$care_id = NULL);
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -210,7 +210,7 @@ class notes extends CI_Controller
         allow(['admin', 'manager']);
 
         $this->db->where('id', $this->uri->segment(3))->delete('notes_categories');
-        logEvent($user_id = NULL,"Deleted category ID: {$this->uri->segment(3)}");
+        logEvent($user_id = NULL,"Deleted category ID: {$this->uri->segment(3)}",$care_id = NULL);
         flash('success', lang('request_success'));
         redirectPrev('', 'note-categories');
     }
@@ -224,7 +224,7 @@ class notes extends CI_Controller
             $this->db->insert('notes_tags', ['name' => $this->input->post('name')]);
             $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
-                logEvent($user_id = NULL, "Added tag ID: {$last_id}");
+                logEvent($user_id = NULL, "Added tag ID: {$last_id}",$care_id = NULL);
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -241,7 +241,7 @@ class notes extends CI_Controller
         allow(['admin', 'manager']);
 
         $this->db->where('id', $this->uri->segment(3))->delete('notes_tags');
-        logEvent($user_id = NULL, "Deleted tag Id: {$this->uri->segment(3)}");
+        logEvent($user_id = NULL, "Deleted tag Id: {$this->uri->segment(3)}",$care_id = NULL);
         flash('success', lang('request_success'));
         redirectPrev('', 'note-categories');
     }

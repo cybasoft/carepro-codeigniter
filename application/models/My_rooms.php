@@ -76,7 +76,7 @@ class My_rooms extends CI_Model
 
         if($this->db->affected_rows() > 0)
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL,"Added room ID: {$last_id}");
+            logEvent($user_id = NULL,"Added room ID: {$last_id}",$care_id = NULL);
             return TRUE;
 
         return FALSE;
@@ -97,7 +97,7 @@ class My_rooms extends CI_Model
         );
 
         if($this->db->affected_rows() > 0)
-            logEvent($user_id = NULL, "Updated room ID: {$this->input->post('room_id')}");
+            logEvent($user_id = NULL, "Updated room ID: {$this->input->post('room_id')}",$care_id = NULL);
             return TRUE;
 
         return FALSE;
@@ -189,7 +189,7 @@ class My_rooms extends CI_Model
 
         if($this->db->affected_rows() > 0)
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Added note ID: {$last_id} for room ID: {$this->input->post('room_id')}");
+            logEvent($user_id = NULL, "Added note ID: {$last_id} for room ID: {$this->input->post('room_id')}",$care_id = NULL);
             return TRUE;
 
         return FALSE;

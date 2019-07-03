@@ -88,7 +88,7 @@ class My_daycare_registration extends CI_Model
        
         $this->db->insert('daycare_settings',['invoice_logo' => $data['logo'],'daycare_id' => $insert_id]);            
 
-        logEvent($insert_id,"Daycare {$insert_id} added to the application.");
+        logEvent($insert_id,"Daycare {$insert_id} added to the application.",$care_id = $insert_id);
         $this->session->set_userdata('daycare_id',$insert_id);
     }
     

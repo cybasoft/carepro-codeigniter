@@ -53,7 +53,7 @@ class Food extends CI_Controller
             $childID = $this->db->where('id', $id)->get('child_foodpref')->row();           
             if(is(['staff', 'admin','manager']) || $this->child->belongsTo($this->user->uid(), $childID->child_id)) {
                 if($this->db->where('id', $id)->delete('child_foodpref')) {
-                    logEvent($user_id = NULL,"Deleted foodpref ID: {$id} for child ID: {$childID->child_id}");
+                    logEvent($user_id = NULL,"Deleted foodpref ID: {$id} for child ID: {$childID->child_id}",$care_id = NULL);
                     flash('success', lang('request_success'));
                 } else {
                     flash('danger', lang('request_error'));
@@ -95,7 +95,7 @@ class Food extends CI_Controller
         ));
         $intakes = $intake_details->row();       
         if($this->db->where('id',$id)->delete('child_food_intake')){
-            logEvent($user_id = NULL,"Deleted food intake ID: {$id} for Child ID: {$intakes->child_id}");
+            logEvent($user_id = NULL,"Deleted food intake ID: {$id} for Child ID: {$intakes->child_id}",$care_id = NULL);
             flash('success',lang('request_success'));
         }else{
             flash('error',lang('request_error'));

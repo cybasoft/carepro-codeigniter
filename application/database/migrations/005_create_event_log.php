@@ -22,6 +22,10 @@ class Migration_create_event_log extends CI_Migration
                 'type' => 'INT',
                 'constraint' => '11',
             ),
+            'daycare_id' => array(
+                'type' => 'INT',
+                'constraint' => '11',
+            ),
             'date' => array(
                 'type' => 'DATETIME'
             ),

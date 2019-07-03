@@ -322,16 +322,20 @@ function logged_in()
 * @param string
 * @return boolean
 */
-function logEvent($user_id = NULL, $event)
+function logEvent($user_id = NULL, $event, $daycare_id = NULL)
 {
     $ci = &get_instance();
 
     if ($user_id === NULL) {
         $user_id = $ci->user->uid();
     }
+    if($daycare_id === NULL){
+        $daycare_id = $ci->session->userdata('daycare_id');
+    }
     $data = [
         'user_id' => $user_id,
         'date' => date("Y-m-d H:i:s", time()),
+        'daycare_id' => $daycare_id,
         'event' => $event,
     ];
     if ($ci->db->insert('event_log', $data))

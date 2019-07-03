@@ -74,7 +74,6 @@
             url: url,
             data: formData,
             success: function(response) {
-                debugger;
                 if (response == "success") {
                     swal({
                         type: 'success',

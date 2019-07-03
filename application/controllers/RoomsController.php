@@ -125,7 +125,7 @@ class RoomsController extends CI_Controller
 
         $this->db->where('room_id', $id)->delete('child_room');
         $this->db->where('id', $id)->delete('child_rooms');
-        logEvent($user_id = NULL, "Deleted room ID: {$id}");
+        logEvent($user_id = NULL, "Deleted room ID: {$id}",$care_id = NULL);
         flash('success', lang('Room has been deleted'));
 
         redirect('rooms');
@@ -150,7 +150,7 @@ class RoomsController extends CI_Controller
                         'created_at' => date_stamp(),
                     ]);
                 }
-                logEvent($user_id = NULL,"Assigned child ID: {$child} for room ID: {$room}");
+                logEvent($user_id = NULL,"Assigned child ID: {$child} for room ID: {$room}",$care_id = NULL);
             }
 
             flash('success', lang('request_success'));
@@ -183,7 +183,7 @@ class RoomsController extends CI_Controller
                         'created_at' => date_stamp(),
                     ]);
                 }                
-                logEvent($user_id = NULL, "Assigned staff user ID: {$user   } for room ID: {$room}");
+                logEvent($user_id = NULL, "Assigned staff user ID: {$user} for room ID: {$room}",$care_id = NULL);
             }
 
             flash('success', lang('request_success'));
@@ -246,7 +246,7 @@ class RoomsController extends CI_Controller
         }
 
         $this->db->where('id', $id)->delete('child_room_notes');
-        logEvent($user_id = NULL, "Deleted note ID: {$id} for room ID: {$room_notes->room_id}");
+        logEvent($user_id = NULL, "Deleted note ID: {$id} for room ID: {$room_notes->room_id}",$care_id = NULL);
         flash('success', lang('request_success'));
 
         redirectPrev();
@@ -258,7 +258,7 @@ class RoomsController extends CI_Controller
         $user_id = uri_segment(4);
         $room_id = uri_segment(3);
         $this->db->where('room_id', $room_id)->where('user_id', $user_id)->delete('child_room_staff');
-        logEvent($id = NULL,"Detached staff user ID: {$user_id} for room ID: {$room_id}");
+        logEvent($id = NULL,"Detached staff user ID: {$user_id} for room ID: {$room_id}",$care_id = NULL);
         flash('success', lang('request_success'));
 
         redirectPrev();
@@ -270,7 +270,7 @@ class RoomsController extends CI_Controller
         $room_id = uri_segment(3);
         $child_id = uri_segment(4);
         $this->db->where('room_id', $room_id)->where('child_id', $child_id)->delete('child_room');
-        logEvent($user_id = NULL, "Detached child ID: {$child_id} for room ID: {$room_id}");
+        logEvent($user_id = NULL, "Detached child ID: {$child_id} for room ID: {$room_id}",$care_id = NULL);
         flash('success', lang('request_success'));
 
         redirectPrev();

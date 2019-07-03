@@ -258,7 +258,7 @@ class Invoice extends CI_Controller
             ]);
             $last_id = $this->db->insert_id();
             if ($query) {
-                logEvent($user_id = NULL,"Added invoice Item ID: {$last_id} for invoice ID: {$id}");
+                logEvent($user_id = NULL,"Added invoice Item ID: {$last_id} for invoice ID: {$id}",$care_id = NULL);
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -328,7 +328,7 @@ class Invoice extends CI_Controller
             );
             $this->db->insert('invoice_payments',$data);
 
-            logEvent($user_id = NULl,"");
+            logEvent($user_id = NULl,"Invoice of amount " . $due_amount . " paid successfully.",$care_id = NULL);
 
             foreach($users as $user){
                 if($user->first_name == ''){
@@ -480,7 +480,7 @@ class Invoice extends CI_Controller
         $this->db->delete($this->invoice_db);
 
         if ($this->db->affected_rows() > 0) {
-            logEvent($user_id = NULL,"Deleted Invoice with id {$invoice_id}");
+            logEvent($user_id = NULL,"Deleted Invoice with id {$invoice_id}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -497,7 +497,7 @@ class Invoice extends CI_Controller
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
         if ($this->db->affected_rows() > 0) {
-            logEvent($user_id = NULL,"Deleted Invoice item ID: {$item_id} for invoice ID: {$invoice_id}");
+            logEvent($user_id = NULL,"Deleted Invoice item ID: {$item_id} for invoice ID: {$invoice_id}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

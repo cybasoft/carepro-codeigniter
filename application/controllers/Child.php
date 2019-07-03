@@ -244,7 +244,7 @@ class Child extends CI_Controller
 
                 $parent = $this->My_user->first($this->input->post('parent'));
                 $child = $this->child->first($child_id);               
-                logEvent($id = NULL,"Assigned parent ID: {$parent->id} to child ID: {$child->id}");
+                logEvent($id = NULL,"Assigned parent ID: {$parent->id} to child ID: {$child->id}",$care_id = NULL);
                 
                 $data = [                    
                     'to' => $parent->email,
@@ -293,7 +293,7 @@ class Child extends CI_Controller
         if ($this->db->where('child_id', $child_id)
             ->where('user_id', $parent_id)
             ->delete('child_parents')) {
-                logEvent($id = NULL,"Deleted parent ID: {$parent_id} for child ID: {$child_id}");
+                logEvent($id = NULL,"Deleted parent ID: {$parent_id} for child ID: {$child_id}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -334,7 +334,7 @@ class Child extends CI_Controller
                         'created_at' => date_stamp(),
                     ]);
                 }                    
-                logEvent($user_id = NULL,"Assigned child ID: {$child_id} for room ID: {$room}");
+                logEvent($user_id = NULL,"Assigned child ID: {$child_id} for room ID: {$room}",$care_id = NULL);
             }
             flash('success', lang('request_success'));
         }else{

@@ -200,7 +200,7 @@ class UserController extends CI_Controller
             }else{
                 $name = $user['name'];
             }
-            logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
+            logEvent($id = NULL,"User {$name} has been {$user_status} successfully.",$care_id = NULL);
             //redirect them to the auth page
             flash('success', lang('user_activated'));
         } else {
@@ -237,7 +237,7 @@ class UserController extends CI_Controller
                     $name = $user['name'];
                 }
                 $this->ion_auth->deactivate($id);  
-                logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
+                logEvent($id = NULL,"User {$name} has been {$user_status} successfully.",$care_id = NULL);
                 $this->send_user_status_email($user,$user_status,$daycare_id);              
                 flash('warning', lang('user_deactivated'));
             } else {
@@ -307,7 +307,7 @@ class UserController extends CI_Controller
          if($id !== $this->user->uid()){
             $this->db->where('id', $id);
             $this->db->delete('users'); 
-            logEvent($user_id = NULL,"Deleted user ID: {$id}");
+            logEvent($user_id = NULL,"Deleted user ID: {$id}",$care_id = NULL);
           
             if($this->db->affected_rows() > 0){
                 flash('success', lang('request_success'));

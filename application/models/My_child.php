@@ -246,7 +246,7 @@ class My_child extends CI_Model
         }
 
         //log event
-        logEvent($id = NULL,"Added child ID: {$last_id}");
+        logEvent($id = NULL,"Added child ID: {$last_id}",$care_id = NULL);
 
         if($getID) {
             return $last_id;
@@ -327,7 +327,7 @@ class My_child extends CI_Model
         }       
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Updated child ID: {$child_id}");
+            logEvent($id = NULL,"Updated child ID: {$child_id}",$care_id = NULL);
 
             flash('success', lang('request_success'));
         } else {
@@ -358,7 +358,7 @@ class My_child extends CI_Model
         $insert_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($user_id = NULL,"Added pickup contact ID: {$insert_id} for child ID: {$id}");
+            logEvent($user_id = NULL,"Added pickup contact ID: {$insert_id} for child ID: {$id}",$care_id = NULL);
             $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
@@ -387,7 +387,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
 
-            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}",$care_id = NULL);
             return TRUE;
         }
         return FALSE;
@@ -414,7 +414,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
 
-            logEvent($id = NULL,"Added checked out {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked out {$child_id} -{$this->child($child_id)->last_name}",$care_id = NULL);
             return TRUE;
         }
         return FALSE;

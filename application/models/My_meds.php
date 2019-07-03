@@ -33,7 +33,7 @@ class My_meds extends CI_Model
 
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Added med ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added med ID: {$last_id} for child ID: {$this->input->post('child_id')}",$care_id = NULL);
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_medication_subject'), lang('new_medication_message').' <p><strong>'.$this->input->post('med_name').'</strong></p>');
             return TRUE;
@@ -82,7 +82,7 @@ class My_meds extends CI_Model
             $this->db->insert('med_photos', $data);
 
             if($this->db->affected_rows() > 0)
-                logEvent($user_id = NULL,"Medication Image is added for child");
+                logEvent($user_id = NULL,"Medication Image is added for child",$care_id = NULL);
                 return TRUE;
         }
         return FALSE;
@@ -155,7 +155,7 @@ class My_meds extends CI_Model
     {
         $this->db->where('id', $id)->delete('meds_admin');
         if($this->db->affected_rows() > 0)
-            logEvent($user_id = NULL,"Deleted meds ID: {$id}");
+            logEvent($user_id = NULL,"Deleted meds ID: {$id}",$care_id = NULL);
             return TRUE;
         return FALSE;
     }
