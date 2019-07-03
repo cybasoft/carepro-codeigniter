@@ -1,4 +1,4 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * @file      : settings.php
@@ -21,43 +21,72 @@ class Settings extends CI_Controller
 
     function index()
     {
-        $daycare_id = $this->session->userdata('owner_daycare_id');        
-        if(session('company_demo_mode') ==1){
+        $daycare_id = $this->session->userdata('owner_daycare_id');
+        if (session('company_demo_mode') == 1) {
             allow('super');
         }
 
         $this->load->model('My_backup', 'backup');
 
-        $payMethods = $this->db->get('payment_methods')->result();       
+        $payMethods = $this->db->get('payment_methods')->result();
         $settings = $this->db
-                   ->select('d.*,ds.*,add.*,d.daycare_id as daycare_unquie_id,ds.id as setting_id')
-                   ->where('d.id',$this->session->userdata('daycare_id'))
-                   ->from('daycare as d')
-                   ->join('daycare_settings as ds','ds.daycare_id=d.id')
-                   ->join('address as add','add.id=d.address_id')
-                   ->get()->row();                   
+            ->select('d.*,ds.*,add.*,d.daycare_id as daycare_unquie_id,ds.id as setting_id')
+            ->where('d.id', $this->session->userdata('daycare_id'))
+            ->from('daycare as d')
+            ->join('daycare_settings as ds', 'ds.daycare_id=d.id')
+            ->join('address as add', 'add.id=d.address_id')
+            ->get()->row();
         $settings->email = $this->session->userdata('email');
         // $settings = $this->db->get('options')->result_array();
 
-        $event_logs = $this->db->get('event_log')->result_array();
+        $event_logs = $this->db->get_where('event_log', array(
+            'daycare_id' => $this->session->userdata('daycare_id')
+        ))->result_array();
+        // print_r($event_logs);
+        // exit();
         // $option=array();
         // foreach($settings as $key=>$val){
         //      $option[$val['option_name']]=$val['option_value'];
         // }
 
-        dashboard_page($this->module.'settings', compact('payMethods','settings', 'event_logs'), $daycare_id);
+        dashboard_page($this->module . 'settings', compact('payMethods', 'settings', 'event_logs'), $daycare_id);
     }
 
+    function logs()
+    {
+        $this->load->model("My_settings");
+        $fetch_data = $this->My_settings->make_datatables();
+        $data = array();
+        foreach ($fetch_data as $row) {
+            $sub_array = array();
+            $sub_array[] = $row->id;
+            $sub_array[] = $row->user_id;
+            $sub_array[] = $row->daycare_id;
+            $sub_array[] = $row->event;
+            $sub_array[] = $row->date;
+            $data[] = $sub_array;
+        }
+
+        $output = array(
+            "draw" => intval($_POST["draw"]),
+            "recordsTotal" => $this->My_settings->get_all_data(),
+            "recordsFiltered" => $this->My_settings->get_filtered_data(),
+            "data" => $data,
+        );
+
+        echo json_encode($output);
+        exit();
+    }
     /**
      * update settings
      */
     function update()
     {
         allow('admin');
-        foreach ($_POST as $field => $value) {         
+        foreach ($_POST as $field => $value) {
             $this->form_validation->set_rules($field, lang($field), 'xss_clean|trim');
-        }       
-        if($this->form_validation->run() == true) {            
+        }
+        if ($this->form_validation->run() == true) {
             // $error = 0;            
             // foreach ($_POST as $field => $value) {
             //     if($value == "") {
@@ -69,7 +98,7 @@ class Settings extends CI_Controller
             //     }
             //     return $field;
             // }
-            if(array_key_exists('name',$_POST)){
+            if (array_key_exists('name', $_POST)) {
                 $address_data = array(
                     'phone' => $_POST['phone'],
                     'fax' => $_POST['fax'],
@@ -80,15 +109,15 @@ class Settings extends CI_Controller
                     'zip_code' => $_POST['zip_code'],
                     'country' => $_POST['country']
                 );
-                $this->db->where('id',$_POST['address_id'])->update('address',$address_data);
+                $this->db->where('id', $_POST['address_id'])->update('address', $address_data);
                 $setting_data = array(
                     'timezone' => $_POST['timezone'],
                     'date_format' => $_POST['date_format'],
                     'start_time' => $_POST['start_time'],
                     'end_time' => $_POST['end_time']
                 );
-                $this->db->where('id',$_POST['setting_id'])->update('daycare_settings',$setting_data);
-    
+                $this->db->where('id', $_POST['setting_id'])->update('daycare_settings', $setting_data);
+
                 $daycare_data = array(
                     'name' => $_POST['name'],
                     'slogan' => $_POST['slogan'],
@@ -96,11 +125,10 @@ class Settings extends CI_Controller
                     'employee_tax_identifier' => $_POST['employee_tax_identifier'],
                     'daycare_id' => $_POST['daycare_unquie_id'],
                 );
-                $this->db->where('id',$_POST['id'])->update('daycare',$daycare_data);
+                $this->db->where('id', $_POST['id'])->update('daycare', $daycare_data);
                 echo "success";
-                flash('success',"Settings updated successfully.");
-            }
-            else if(array_key_exists('stripe_pk_test',$_POST)){
+                flash('success', "Settings updated successfully.");
+            } else if (array_key_exists('stripe_pk_test', $_POST)) {
                 $setting_data = array(
                     'stripe_pk_test' => $_POST['stripe_pk_test'],
                     'stripe_sk_test' => $_POST['stripe_sk_test'],
@@ -108,14 +136,14 @@ class Settings extends CI_Controller
                     'stripe_sk_live' => $_POST['stripe_sk_live'],
                     'stripe_enabled' => $_POST['stripe_enabled']
                 );
-                $this->db->where('id',$_POST['setting_id'])->update('daycare_settings',$setting_data);
+                $this->db->where('id', $_POST['setting_id'])->update('daycare_settings', $setting_data);
                 echo "success";
-                flash('success',"Billing Settings updated successfully.");
-            }else if(array_key_exists('invoice_terms',$_POST)){
-                $this->db->where('id',$_POST['setting_id'])->update('daycare_settings',['invoice_terms' => $_POST['invoice_terms']]);
+                flash('success', "Billing Settings updated successfully.");
+            } else if (array_key_exists('invoice_terms', $_POST)) {
+                $this->db->where('id', $_POST['setting_id'])->update('daycare_settings', ['invoice_terms' => $_POST['invoice_terms']]);
                 echo "success";
-                flash('success',"Invoice terms settings updated successfully.");
-            }          
+                flash('success', "Invoice terms settings updated successfully.");
+            }
         } else {
             validation_errors();
             flash('error');
@@ -132,7 +160,7 @@ class Settings extends CI_Controller
      */
     function purge_payments()
     {
-        page($this->module.'purge_payments');
+        page($this->module . 'purge_payments');
     }
 
     /*
@@ -140,7 +168,7 @@ class Settings extends CI_Controller
      */
     function purge_charges()
     {
-        page($this->module.'purge_charges');
+        page($this->module . 'purge_charges');
     }
 
     /*
@@ -148,7 +176,7 @@ class Settings extends CI_Controller
      */
     function purge_child()
     {
-        page($this->module.'purge_child');
+        page($this->module . 'purge_child');
     }
 
     /**
@@ -171,27 +199,26 @@ class Settings extends CI_Controller
             'max_width' => '500',
             'max_height' => '112',
             'encrypt_name' => false,
-            'file_name' => $_POST['daycare_unquie_id'].'.'.$file_ext,
+            'file_name' => $_POST['daycare_unquie_id'] . '.' . $file_ext,
             'overwrite' => true
         );
-        @unlink($upload_path.$config['file_name']);
+        @unlink($upload_path . $config['file_name']);
         $this->load->library('upload', $config);
-        if(!$this->upload->do_upload('logo')) {
+        if (!$this->upload->do_upload('logo')) {
             $errors['errors'] = $this->upload->display_errors();
             flash('danger', implode('', $errors));
         } else {
             $upload_data = $this->upload->data();
-            $data = array('upload_data' => $upload_data);            
-            if($data) {
-                $this->db->where('id',$_POST['daycare_id'])->update('daycare',['logo' => $data['upload_data']['file_name']]);
-                $this->session->set_userdata('company_logo',$data['upload_data']['file_name']);
+            $data = array('upload_data' => $upload_data);
+            if ($data) {
+                $this->db->where('id', $_POST['daycare_id'])->update('daycare', ['logo' => $data['upload_data']['file_name']]);
+                $this->session->set_userdata('company_logo', $data['upload_data']['file_name']);
                 flash('success', lang('Logo has been updated successfully.'));
             } else {
                 flash('danger', lang('request_error'));
             }
         }
         redirectPrev('', 'logo');
-
     }
 
     /**
@@ -214,18 +241,18 @@ class Settings extends CI_Controller
             'max_width' => '500',
             'max_height' => '112',
             'encrypt_name' => false,
-            'file_name' => 'invoice_logo_'.$_POST['daycare_unquie_id'].'.'.$file_ext,
+            'file_name' => 'invoice_logo_' . $_POST['daycare_unquie_id'] . '.' . $file_ext,
             'overwrite' => true
         );
         $this->load->library('upload', $config);
-        if(!$this->upload->do_upload('invoice_logo')) {
+        if (!$this->upload->do_upload('invoice_logo')) {
             $errors['errors'] = $this->upload->display_errors();
-            flash('danger', lang('request_error').implode('', $errors));
+            flash('danger', lang('request_error') . implode('', $errors));
         } else {
             $upload_data = $this->upload->data();
             $data = array('upload_data' => $upload_data);
-            if($data) {
-                $this->db->where('id',$_POST['settings_id'])->update('daycare_settings',['invoice_logo' => $data['upload_data']['file_name']]);
+            if ($data) {
+                $this->db->where('id', $_POST['settings_id'])->update('daycare_settings', ['invoice_logo' => $data['upload_data']['file_name']]);
                 flash('success', lang('Invoice logo has been updated successfully.'));
             } else {
                 flash('danger', lang('request_error'));
@@ -239,7 +266,7 @@ class Settings extends CI_Controller
         allow('admin');
         $this->form_validation->set_rules('title', lang('payment_method'), 'required|trim|xss_clean');
 
-        if($this->form_validation->run() == TRUE) {
+        if ($this->form_validation->run() == TRUE) {
             $this->db->insert('payment_methods', array(
                 'title' => $this->input->post('title')
             ));
@@ -258,5 +285,4 @@ class Settings extends CI_Controller
         flash('success', lang('Settings have been updated'));
         redirectPrev('', '#paymentMethods');
     }
-
 }

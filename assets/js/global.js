@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('#logs').DataTable();
+    // $('#logs').DataTable();
     //Enable sidebar toggle
 
 
@@ -394,4 +394,15 @@ $(document).ready(function () {
             $form.get(0).submit();
         }
     }
+
+    var table = $('#logs').DataTable( {
+       "processing": true,
+       "serverSide": true,
+       "order": [],
+       "ajax": {
+         "url": "settings/logs",
+         "type": "POST",
+         "dataSrc": "" 
+       }
+     });    
 })

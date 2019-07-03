@@ -303,10 +303,10 @@ class Invoice extends CI_Controller
         $amount = $due_amount * 100;
         $parent_name = $this->session->userdata('first_name');     
         $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for Daycare.";   
-        if($stripe->stripe_pk_live == ''){
-            $key = $stripe->stripe_pk_test;
+        if($stripe->stripe_sk_live == ''){
+            $key = $stripe->stripe_sk_test;
         }else{
-            $key = $stripe->stripe_pk_live;
+            $key = $stripe->stripe_sk_live;
         }
         if($key !== ''){
             \Stripe\Stripe::setApiKey($key);
