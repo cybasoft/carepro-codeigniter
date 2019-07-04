@@ -341,6 +341,12 @@ class My_child extends CI_Model
 
     public function createPickup($id)
     {
+        if($_FILES['photo']['name'] !== ''){
+            $photo = $this->pickup_photo();
+            $image = $photo['photo']['file_name'];
+        }else{
+            $image = '';
+        }
         $data = [
             'child_id' => $id,
             'first_name' => $this->input->post('first_name'),
@@ -349,11 +355,11 @@ class My_child extends CI_Model
             'other_phone' => $this->input->post('other_phone'),
             'address' => $this->input->post('address'),
             'pin' => $this->input->post('pin'),
+            'photo' => $image,
             'relation' => $this->input->post('relation'),
             'user_id' => $this->user->uid(),
             'created_at' => date_stamp(),
-        ];
-
+        ];        
         $this->db->insert('child_pickup', $data);
         $insert_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
@@ -363,6 +369,29 @@ class My_child extends CI_Model
             return $insert_id;
         } else {
             return FALSE;
+        }
+    }
+
+    public function pickup_photo(){
+        $upload_folder = './assets/uploads/pickup';        
+        if(!file_exists($upload_folder)) {
+            mkdir($upload_folder, 0777, TRUE);
+            chmod($upload_folder, 0777);
+        }      
+        $config['upload_path'] = $upload_folder;
+        $config['allowed_types'] = 'jpeg|jpg|png';
+        $config['max_size'] = 2000;
+        $config['max_width'] = 1500;
+        $config['max_height'] = 1500;    
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);        
+        if (!$this->upload->do_upload('photo')) {
+            $error = array('error' => $this->upload->display_errors());            
+            return $error;
+        }else {
+            $data = array('photo' => $this->upload->data());
+            return $data;
         }
     }
 

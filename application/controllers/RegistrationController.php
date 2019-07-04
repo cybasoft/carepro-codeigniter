@@ -59,8 +59,10 @@ class RegistrationController extends CI_Controller
 
     //subscription  page
     public function subscription()
-    {
-        $this->output->cache(0);
+    {        
+        if ($this->ion_auth->logged_in()) {
+            redirect('dashboard', 'refresh');
+        }
         $this->load->view('registration/subscription_page');
     }
 

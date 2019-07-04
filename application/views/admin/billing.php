@@ -55,7 +55,8 @@
                 <?php
                 if(session('company_demo_mode') == 0) {
                     $hidden = array('setting_id' => $settings->setting_id);
-                    echo form_open('update', ['class' => 'settings'],$hidden);
+                    $attributes = array('class' => 'settings','autocomplete' => 'off');
+                    echo form_open('update', $attributes,$hidden);
                     echo form_label(lang('Stripe test public key'));
                     echo form_input('stripe_pk_test', $settings->stripe_pk_test, ['class' => 'form-control']);
                     echo form_label(lang('Stripe test secret key'));
