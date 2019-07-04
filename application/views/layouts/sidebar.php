@@ -46,19 +46,20 @@
                         'active' => 'calendar',
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],
+                    // [
+                    //     'name' => 'Files',
+                    //     'link' => 'files',
+                    //     'icon' => 'folder',
+                    //     'active' => 'folder',
+                    //     'allow' => ['admin', 'manager', 'staff'],
+                    // ], [
+                    //     'name' => 'News',
+                    //     'link' => 'news',
+                    //     'icon' => 'news',
+                    //     'active' => ['news', 'article'],
+                    //     'allow' => ['admin', 'manager', 'staff', 'parent'],
+                    // ], 
                     [
-                        'name' => 'Files',
-                        'link' => 'files',
-                        'icon' => 'folder',
-                        'active' => 'folder',
-                        'allow' => ['admin', 'manager', 'staff'],
-                    ], [
-                        'name' => 'News',
-                        'link' => 'news',
-                        'icon' => 'news',
-                        'active' => ['news', 'article'],
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
-                    ], [
                         'name' => 'Settings',
                         'link' => 'settings',
                         'icon' => 'settings',
