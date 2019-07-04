@@ -29,41 +29,58 @@
     <div class="card-body">
         <table class="table table-bordered table-hover table-striped" id="users">
             <thead>
-            <tr align="center">
-                <th></th>
-                <th></th>
-                <th><?php echo lang('Name'); ?></th>
-                <th><?php echo lang('Email'); ?></th>
-                <th><?php echo lang('Phone'); ?></th>
-                <th><?php echo lang('Role'); ?></th>
-                <th><?php echo lang('Status'); ?></th>
-                <th data-orderable="false"></th>
-            </tr>
+                <tr align="center">
+                    <th></th>
+                    <th></th>
+                    <th><?php echo lang('Name'); ?></th>
+                    <th><?php echo lang('Email'); ?></th>
+                    <th><?php echo lang('Phone'); ?></th>
+                    <th><?php echo lang('Role'); ?></th>
+                    <th><?php echo lang('Status'); ?></th>
+                    <th data-orderable="false"></th>
+                </tr>
             </thead>
-            <?php foreach ($users as $user): ?>
+            <?php foreach ($users as $user) : ?>
                 <tr>
                     <td><?php echo $user->id; ?></td>
                     <td>
-                        <img class="img-circle" style="height:50px;width:50px;"
-                             src="<?php echo $this->user->photo($user->photo); ?>">
+                        <img class="img-circle" style="height:50px;width:50px;" src="<?php echo $this->user->photo($user->photo); ?>">
                     </td>
-                    <td><?php if($user->first_name !== ''){ echo $user->first_name.' '.$user->last_name;}else{ echo $user->name; } ?></td>
+                    <td><?php if ($user->first_name !== '') {
+                            echo $user->first_name . ' ' . $user->last_name;
+                        } else {
+                            echo $user->name;
+                        } ?></td>
                     <td><?php echo $user->email; ?></td>
                     <td><?php echo $user->phone; ?></td>
                     <td>
                         <span class="label label-<?php echo g_decor($user->role); ?>"><?php echo $user->role; ?></span>
                     </td>
                     <td align="center" valign="top">
-                        <?php echo ($user->active) ? anchor("users/deactivate/".$user->id, '<span class="text-primary">'
-                            .lang('index_active_link').'</span>') : anchor("users/activate/".$user->id, '<span class="text-danger">'
-                            .lang('index_inactive_link').'</span>'); ?>
+                        <?php echo ($user->active) ? anchor("users/deactivate/" . $user->id, '<span class="text-primary">'
+                            . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->id, '<span class="text-danger">'
+                            . lang('index_inactive_link') . '</span>'); ?>
                     </td>
                     <td style="width:75px;" class="text-right">
-                        <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
-                    <span class="btn btn-default btn-xs">
-                        <i class="fa fa-pencil-alt"></i></span>
-                        </a>
-                        <?php echo anchor("users/delete/".$user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
+                        <?php if (is('manager')) : ?>
+                            <?php if ($user->group_id == 3 || $user->group_id == 4) : ?>
+                                <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
+                                    <span class="btn btn-default btn-xs">
+                                        <i class="fa fa-pencil-alt"></i></span>
+                                </a>
+                                <?php if ($user->id != $this->session->userdata('user_id')) {
+                                    echo anchor("users/delete/" . $user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"');
+                                } ?>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
+                                <span class="btn btn-default btn-xs">
+                                    <i class="fa fa-pencil-alt"></i></span>
+                            </a>
+                            <?php if ($user->id != $this->session->userdata('user_id')) {
+                                echo anchor("users/delete/" . $user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"');
+                            } ?>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php

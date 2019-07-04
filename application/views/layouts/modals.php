@@ -85,10 +85,25 @@
                         <div class="col-lg-6">
                             <?php echo form_label(lang('roles')); ?>
                             <?php foreach ($this->db->get('groups')->result() as $group) : ?>
-                                <label class="check"><?php echo lang($group->name); ?>
-                                    <?php echo form_radio('group', $group->id, set_radio('group', $group->id, true)); ?>
-                                    <span class="checkmark"></span>
-                                </label>
+                                <?php if (is('admin')) : ?>
+                                    <label class="check"><?php echo lang($group->name); ?>
+                                        <?php echo form_radio('group', $group->id, set_radio('group', $group->id, true)); ?>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                <?php elseif (is('manager')) : ?>
+                                    <?php if ($group->id == 3 || $group->id == 4) :
+                                        if ($group->id == 3) {
+                                            $check = true;
+                                        } else {
+                                            $check = false;
+                                        }
+                                        ?>
+                                        <label class="check"><?php echo lang($group->name); ?>
+                                            <?php echo form_radio('group', $group->id, set_radio('group', $group->id, $check)); ?>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    <?php endif; ?>
+                                <?php endif; ?>
                             <?php endforeach ?>
                         </div>
                     </div>
@@ -112,7 +127,7 @@
             </div>
             <?php echo form_open('child/doassignroom'); ?>
             <div class="modal-body">
-                <input type="hidden" value="" name="child_id" id="child_id">                
+                <input type="hidden" value="" name="child_id" id="child_id">
                 <select class="form-control selectpicker rooms" data-live-search="true" multiple name="room[]" id="assign_room" require>
                 </select>
                 <br />

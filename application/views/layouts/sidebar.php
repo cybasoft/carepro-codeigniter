@@ -37,7 +37,7 @@
                         'link' => 'parents',
                         'icon' => 'parents',
                         'active' => 'parents',
-                        'allow' => ['admin', '/manager'],
+                        'allow' => ['admin', 'manager'],
                     ],
                     [
                         'name' => 'Calendar',

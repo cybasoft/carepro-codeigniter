@@ -30,14 +30,14 @@ class UserController extends CI_Controller
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
-            ->get()->result();        
+            ->get()->result();
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id')
             ->join('groups as g','g.id=ug.group_id')
             ->group_by('g.name')
-            ->get()->result();            
+            ->get()->result();
        $role=[];
 
         for($i=0; $i<count((array)$groups); $i++){
@@ -186,7 +186,7 @@ class UserController extends CI_Controller
             'id' => $id
         ));
         $user = $user_details->row_array();
-        allow('admin');
+        allow(['admin','manager']);
         // $id = uri_segment(3);
         $code = "";
         if(!empty($code)) {
@@ -218,7 +218,7 @@ class UserController extends CI_Controller
             'id' => $id
         ));
         $user = $user_details->row_array();
-        allow('admin');
+        allow(['admin','manager']);
         
         // $id = (int)$this->uri->segment(3);
         $this->load->library('form_validation');

@@ -341,8 +341,12 @@ class My_child extends CI_Model
 
     public function createPickup($id)
     {
+        $photo = $this->pickup_photo();
+        if(isset($photo['error'])){           
+            $error =  $photo['error'];
+            return $error;
+        }
         if($_FILES['photo']['name'] !== ''){
-            $photo = $this->pickup_photo();
             $image = $photo['photo']['file_name'];
         }else{
             $image = '';

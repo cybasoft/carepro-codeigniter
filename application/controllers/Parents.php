@@ -23,20 +23,20 @@ class Parents extends CI_Controller
         ));
         $daycare = $daycare_details->row_array();
         $users = $this->db
-            ->select('u.*', 'groups.name')
+            ->select('u.*,u.id as user_id,g.id as g_id,ug.id as ug_id,ad.*,ad.id as add_id')
             ->from('users as u')
+            ->join('users_groups as ug', 'ug.user_id=u.id')
+            ->join('groups as g', 'g.id=ug.group_id')
+            ->join('address as ad', 'ad.id=u.address_id')
             ->where([
                 'u.daycare_id'=> $daycare['id'],
                 'g.name' => 'parent'
                 ])
-            ->join('users_groups as ug', 'ug.user_id=u.id')
-            ->join('groups as g', 'g.id=ug.group_id')
-            ->get()->result_array();           
-
+            ->get()->result_array();
         foreach ($users as $i => $user) {
             $this->db->select('c.*');
             $this->db->from('children as c');
-            $this->db->where('cp.user_id', $user['id']);
+            $this->db->where('cp.user_id', $user['user_id']);
             $this->db->join('child_parents as cp', 'cp.child_id=c.id', 'left');
             $users[$i]['children'] = $this->db->get()->result_array();
         }

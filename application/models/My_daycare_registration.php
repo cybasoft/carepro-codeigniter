@@ -14,7 +14,7 @@ class My_daycare_registration extends CI_Model
             $image = 'error';            
         }else if(isset($file['logo'])) {
             $image = $file['logo']['file_name'];
-        }        
+        }
         $query = $this->db->get_where('daycare', array(
             'daycare_id' => $daycare_id
         ));

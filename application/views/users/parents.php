@@ -10,8 +10,8 @@
                          src="<?php echo is_file(APPPATH.'../assets/uploads/users/'.$user['photo']) ? base_url('assets/uploads/users/'.$user['photo']) : base_url('assets/img/content/no-image.png'); ?>">
                     <div class="text-center">
                         <br/>
-                        <?php echo ($user['active']) ? anchor('users/deactivate/'.$user['id'], '<span class="label label-info">'
-                            .lang('index_active_link').'</span>') : anchor('users/activate/'.$user['id'], '<span class="label label-danger">'
+                        <?php echo ($user['active']) ? anchor('users/deactivate/'.$user['user_id'], '<span class="label label-info">'
+                            .lang('index_active_link').'</span>') : anchor('users/activate/'.$user['user_id'], '<span class="label label-danger">'
                             .lang('index_inactive_link').'</span>'); ?>
                     </div>
                 </div>
@@ -42,12 +42,12 @@
                     </div>
                     <hr/>
                     <div class="info-box-more">
-                        <a id="<?php echo $user['id']; ?>" onclick="editUser('<?php echo $user['id']; ?>')"
+                        <a id="<?php echo $user['user_id']; ?>" onclick="editUser('<?php echo $user['user_id']; ?>')"
                            class="cursor">
                 <span class="btn btn-default btn-xs">
                     <i class="fa fa-pencil-alt"></i></span>
                         </a>
-                        <?php echo anchor('users/delete/'.$user['id'], '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
+                        <?php echo anchor('users/delete/'.$user['user_id'], '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
                     </div>
                 </div>
             </div>
