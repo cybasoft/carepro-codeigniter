@@ -396,13 +396,19 @@ $(document).ready(function () {
     }
 
     var table = $('#logs').DataTable( {
-       "processing": true,
-       "serverSide": true,
-       "order": [],
+        processing: true,
+        serverSide: true,
+        dataType : 'json',
        "ajax": {
-         "url": "settings/logs",
-         "type": "POST",
-         "dataSrc": "" 
+        url: "settings/logs",
+        type: "POST",    
+        columns: [
+            { "data": "id" },
+            { "data": "user_id" },
+            { "data": "daycare_id" },
+            { "data": "event" },
+            { "data": "date" },
+        ]
        }
      });    
 })

@@ -56,26 +56,32 @@ class Settings extends CI_Controller
     {
         $this->load->model("My_settings");
         $fetch_data = $this->My_settings->make_datatables();
+        $output = array(
+            "draw" => 1,
+            "recordsTotal" => $this->My_settings->get_all_data(),
+            "recordsFiltered" => $this->My_settings->get_filtered_data(),            
+        );
         $data = array();
         foreach ($fetch_data as $row) {
-            $sub_array = array();
-            $sub_array[] = $row->id;
-            $sub_array[] = $row->user_id;
-            $sub_array[] = $row->daycare_id;
-            $sub_array[] = $row->event;
-            $sub_array[] = $row->date;
-            $data[] = $sub_array;
+            // $sub_array = array();
+            // $sub_array[] = $row->id;
+            // $sub_array[] = $row->user_id;
+            // $sub_array[] = $row->daycare_id;
+            // $sub_array[] = $row->event;
+            // $sub_array[] = $row->date;
+            // $data[] = $sub_array;
+
+            $output['data'][] = array(
+                'id' => $row->id,
+                'user_id' => $row->user_id,
+                'daycare_id' => $row->daycare_id,
+                'event' => $row->event,
+                'date' => $row->date,            
+            );  
         }
+              
 
-        $output = array(
-            "draw" => intval($_POST["draw"]),
-            "recordsTotal" => $this->My_settings->get_all_data(),
-            "recordsFiltered" => $this->My_settings->get_filtered_data(),
-            "data" => $data,
-        );
-
-        echo json_encode($output);
-        exit();
+        echo $output;       
     }
     /**
      * update settings

@@ -13,22 +13,22 @@ class My_settings extends CI_Model
     {
         $this->db->select($this->select_column);
         $this->db->from($this->table);
-        if (isset($_POST["search"]["value"])) {
-            $this->db->like("event", $_POST["search"]["value"]);
-        }
-        if (isset($_POST["order"])) {
-            $this->db->order_by($this->order_column[$_POST['order'][0]['column']], $_POST['order'][0]['dir']);
-        } else {
-            $this->db->order_by("id", "DESC");
-        }
+        // if (isset($_POST["search"]["value"])) {
+        //     $this->db->like("event", $_POST["search"]["value"]);
+        // }
+        // if (isset($_POST["order"])) {
+        //     $this->db->order_by($this->order_column[$_POST['order'][0]['column']], $_POST['order'][0]['dir']);
+        // } else {
+        //     $this->db->order_by("id", "DESC");
+        // }
     }
 
     function make_datatables()
     {
         $this->make_query();
-        if ($_POST["length"] != -1) {
-            $this->db->limit($_POST["length"], $_POST["start"]);
-        }
+        // if ($_POST["length"] != -1) {
+        //     $this->db->limit($_POST["length"], $_POST["start"]);
+        // }
         $query = $this->db->get();
         return $query->result();
     }

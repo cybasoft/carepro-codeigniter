@@ -252,3 +252,4 @@ $route['update'] = 'Settings/update';
 $route['upload_logo'] = 'Settings/upload_logo';
 $route['invoice_logo'] = 'Settings/upload_invoice_logo';
 $route['paymentMethods'] = 'Settings/paymentMethods';
+$route['logs'] = 'Settings/logs';
