@@ -5,10 +5,10 @@
                 <h4 class="modal-title" id="myModalLabel"><?php echo $user->last_name; ?></h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
-                    <span  class="sr-only"><?php echo lang('close'); ?></span>
+                    <span class="sr-only"><?php echo lang('close'); ?></span>
                 </button>
             </div>
-            <?php echo form_open_multipart('users/update/'.$user->id); ?>
+            <?php echo form_open_multipart('users/update/' . $user->id); ?>
 
             <?php echo form_hidden('user_id', $user->id); ?>
             <div class="modal-body">
@@ -62,57 +62,69 @@
                         ?>
                     </div>
                 </div>
-                <hr/>
+                <hr />
                 <div class="row">
                     <div class="col-sm-6">
                         <h3>
                             <?php echo lang('Role'); ?>
                         </h3>
                         <?php
-                        foreach ($groups as $group) : ?>
-
-                            <label class="check">
-                                <?php
-                                echo $group['name'];
-                                $gID = $group['id'];
-                                $checked = null;
-                                $item = null;
-                                $type = 'checkbox';
-                                $g_name = $group['name'];
-                                foreach ($currentGroups as $grp) {
-                                    if($gID == $grp->id) {
-                                        $checked = ' checked="checked"';
-                                        break;
-                                    }
+                        foreach ($groups as $group) :
+                            $gID = $group['id'];
+                            $checked = null;
+                            $item = null;
+                            $type = 'checkbox';
+                            $g_name = $group['name'];
+                            foreach ($currentGroups as $grp) {
+                                if ($gID == $grp->id) {
+                                    $checked = ' checked="checked"';
+                                    break;
                                 }
-                                if(in_group($this->user->uid(), 'admin') && $group['id'] == 1) {
-                                    $type = 'disabled"';
-                                } else {
-                                    $type = 'disabled"';
-                                }
-                                ?>
-                                <input type="radio" <?php echo $type; ?> name="groups[]"
-                                       value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
-                                <span class="checkmark"></span>
-                            </label>
+                            }
+                            if (in_group($this->user->uid(), 'admin') && $group['id'] == user_roles()['admin']) {
+                                $type = 'disabled"';
+                            } else {
+                                $type = 'disabled"';
+                            }
+                            if (is('admin')) : ?>
+                                <label class="check">
+                                    <?php echo $group['name']; ?>
+                                    <input type="radio" <?php echo $type; ?> name="groups[]" value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
+                                    <span class="checkmark"></span>
+                                </label>
+                            <?php elseif (is('manager')) : ?>
+                                <?php if ($user->id == $this->user->uid() && $group['id'] == user_roles()['manager']) : ?>
+                                    <label class="check">
+                                        <?php echo $group['name']; ?>
+                                        <input type="radio" <?php echo $type; ?> name="groups[]" value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                <?php elseif ($group['id'] == user_roles()['staff'] || $group['id'] == user_roles()['parent']) : ?>
+                                    <label class="check">
+                                        <?php echo $group['name']; ?>
+                                        <input type="radio" <?php echo $type; ?> name="groups[]" value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
                     <div class="col-sm-6">
                         <h3 class="text-center"><?php echo lang('Update photo'); ?></h3>
                         <div class="text-center">
                             <?php
-                            if(is_file(APPPATH.'../assets/uploads/users/'.$user->photo)) {
+                            if (is_file(APPPATH . '../assets/uploads/users/' . $user->photo)) {
                                 echo '<img class="img-circle" style="height:100px;width: 200px;"
-                                   src="'.base_url().'assets/uploads/users/'.$user->photo.'"/>';
+                                   src="' . base_url() . 'assets/uploads/users/' . $user->photo . '"/>';
                             }
                             ?>
                         </div>
-                        <input class="form-control" type="file" name="userfile" size="20"/>
+                        <input class="form-control" type="file" name="userfile" size="20" />
 
                     </div>
                 </div>
 
-                <hr/>
+                <hr />
 
                 <h3><?php echo lang('Change password'); ?></h3>
                 <div class="row">

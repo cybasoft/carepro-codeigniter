@@ -91,8 +91,8 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 <?php elseif (is('manager')) : ?>
-                                    <?php if ($group->id == 3 || $group->id == 4) :
-                                        if ($group->id == 3) {
+                                    <?php if ($group->id == user_roles()['staff'] || $group->id == user_roles()['parent']) :
+                                        if ($group->id == user_roles()['staff']) {
                                             $check = true;
                                         } else {
                                             $check = false;

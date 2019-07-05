@@ -119,6 +119,18 @@ function last_page()
 }
 
 /**
+ * roles of users
+ */
+function user_roles(){
+    $roles = array(
+        'admin' => 1,
+        'manager' => 2,
+        'staff' =>3,
+        'parent' => 4
+    );
+    return $roles;
+}
+/**
  * redirect to previous page
  */
 function redirectPrev($msg = [], $tab = '', $type = 'info')

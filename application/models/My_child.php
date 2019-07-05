@@ -341,7 +341,7 @@ class My_child extends CI_Model
 
     public function createPickup($id)
     {
-        $photo = $this->pickup_photo();
+        $photo = $this->pickup_photo();        
         if(isset($photo['error'])){           
             $error =  $photo['error'];
             return $error;
@@ -392,7 +392,15 @@ class My_child extends CI_Model
         $this->load->library('upload', $config);        
         if (!$this->upload->do_upload('photo')) {
             $error = array('error' => $this->upload->display_errors());            
-            return $error;
+            if ($errors = $this->lang->line('upload_no_file_selected')) {
+                $errors = '';
+            }
+            if ($errors == '') {
+                return true;
+            } else {
+                flash('error', $errors);
+                return false;
+            }
         }else {
             $data = array('photo' => $this->upload->data());
             return $data;
