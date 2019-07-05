@@ -52,10 +52,14 @@ class Child extends CI_Controller
         allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
-            $register = $this->child->register(true,$daycare_id);            
+            $register = $this->child->register(true,$daycare_id);         
             if (false !== $register) {
                 flash('success', lang('request_success'));
-                redirect('child/' . $register);
+                if(is('parent')){
+                    redirect('children', 'refresh');
+                }else{
+                    redirect('child/' . $register);
+                }
             } else {
                 flash('error', lang('request_error'));
             }

@@ -220,28 +220,28 @@ class My_child extends CI_Model
                     }else{
                         $parent_name = $row->first_name;
                     }
-                }
-                if($row->first_name == ''){
-                    $name = $row->name;
-                }else{
-                    $name = $row->first_name . " " . $row->last_name;
-                }
-                $user_group = $this->db->get_where('users_groups',array(
-                    'user_id' => $row->id
-                ));
-                $group_row = $user_group->row();
-                $group = $group_row->group_id;
-                if($group == 1 || $group == 2){
-                    $message = "A child " . $child_name . " added to daycare by parent " . $parent_name .".";
-                    $data = [
-                        'subject' => 'Child Register',
-                        'to' => $row->email,
-                        'message' => $message,
-                        'logo' => $this->session->userdata('company_logo'),
-                        'name' => $name,
-                    ];
-                    send_email($data);
-                }
+                    if($row->first_name == ''){
+                        $name = $row->name;
+                    }else{
+                        $name = $row->first_name . " " . $row->last_name;
+                    }
+                    $user_group = $this->db->get_where('users_groups',array(
+                        'user_id' => $row->id
+                    ));
+                    $group_row = $user_group->row();
+                    $group = $group_row->group_id;
+                    if($group == 1 || $group == 2){
+                        $message = "A child " . $child_name . " added to daycare by parent " . $parent_name .".";
+                        $data = [
+                            'subject' => 'Child Register',
+                            'to' => $row->email,
+                            'message' => $message,
+                            'logo' => $this->session->userdata('company_logo'),
+                            'name' => $name,
+                        ];
+                        send_email($data);
+                    }
+                }                
             }
         }
 
