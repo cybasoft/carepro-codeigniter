@@ -144,9 +144,9 @@ class UserController extends CI_Controller
             'phone2' => $this->input->post('phone2'),
             'address' => $this->input->post('address')
         );
-        if(is('admin')) : //only admin can assign roles
+        if(is(['admin','manager'])) : //only admin can assign roles
             //Update the groups user belongs to
-            $groupData = $this->input->post('groups');
+            $groupData = $this->input->post('groups');            
             if(isset($groupData) && !empty($groupData)) {
                 $this->ion_auth->remove_from_group('', $id);
                 foreach ($groupData as $grp) {
@@ -301,7 +301,7 @@ class UserController extends CI_Controller
 
     function delete($id = NULL)
     {                
-        allow('admin');
+        allow(['admin','manager']);
         $child_parent = $this->db->where('user_id',$id)->get('child_parents')->result_array();
        if(empty($child_parent)){
          if($id !== $this->user->uid()){

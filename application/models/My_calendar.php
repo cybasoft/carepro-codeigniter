@@ -22,6 +22,7 @@ class My_calendar extends CI_Model
 	 */
 	function add_event()
 	{
+		$daycare_id = $this->session->userdata('daycare_id');
 		if($this->input->post('allDay') == 1) {
 			$allDay = 'true';
 		} else {
@@ -36,6 +37,7 @@ class My_calendar extends CI_Model
 			'end_t' => $this->input->post('end_t'),
 			'description' => $this->input->post('desc'),
 			'user_id' => $this->user->uid(),
+			'daycare_id' => $daycare_id,
 			'allDay' => $allDay
 		);
 
