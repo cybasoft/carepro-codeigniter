@@ -394,21 +394,21 @@ $(document).ready(function () {
             $form.get(0).submit();
         }
     }
-
-    var table = $('#logs').DataTable( {
-        processing: true,
-        serverSide: true,
-        dataType : 'json',
-       "ajax": {
-        url: "settings/logs",
-        type: "POST",    
-        columns: [
-            { "data": "id" },
-            { "data": "user_id" },
-            { "data": "daycare_id" },
-            { "data": "event" },
-            { "data": "date" },
-        ]
-       }
-     });    
+    $('#logs').DataTable();
+    // var table = $('#logs').DataTable( {
+    //     processing: true,
+    //     serverSide: true,
+    //     dataType : 'json',
+    //    "ajax": {
+    //     url: "settings/logs",
+    //     type: "POST",    
+    //     columns: [
+    //         { "data": "id" },
+    //         { "data": "user_id" },
+    //         { "data": "daycare_id" },
+    //         { "data": "event" },
+    //         { "data": "date" },
+    //     ]
+    //    }
+    //  });    
 })

@@ -45,7 +45,7 @@
                 echo form_label(lang('Country'));
                 ?>
                 <select id="country" class="form-control" required="" name="country" value="<?php echo set_value('country'); ?>">
-                  <option value="1">United States</option>
+                  <option value="USA">United States</option>
                 </select>
             <?php
                 echo '<br/>';

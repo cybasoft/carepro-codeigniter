@@ -63,7 +63,7 @@
                     </td>
                     <td style="width:75px;" class="text-right">
                         <?php if (is('manager')) : ?>
-                            <?php if ($user->group_id == 3 || $user->group_id == 4) : ?>
+                            <?php if ($user->group_id == 3 || $user->group_id == 4 || $user->id == $this->user->uid()) : ?>
                                 <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
                                     <span class="btn btn-default btn-xs">
                                         <i class="fa fa-pencil-alt"></i></span>
