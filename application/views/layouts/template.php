@@ -114,6 +114,7 @@
                 </div>
             </div>
         </div>
+        <div class="error_msg msg"></div>
         <?php if(!empty($this->session->flashdata('type'))) : ?>
             <div id="msg" class="msg">
                 <?php echo $this->session->flashdata('message'); ?>

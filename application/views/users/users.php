@@ -57,9 +57,31 @@
                         <span class="label label-<?php echo g_decor($user->role); ?>"><?php echo $user->role; ?></span>
                     </td>
                     <td align="center" valign="top">
-                        <?php echo ($user->active) ? anchor("users/deactivate/" . $user->id, '<span class="text-primary">'
-                            . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->id, '<span class="text-danger">'
-                            . lang('index_inactive_link') . '</span>'); ?>
+                        <?php if (is('admin')) : ?>
+                            <?php echo ($user->active) ? anchor("users/deactivate/" . $user->id, '<span class="text-primary">'
+                                . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->id, '<span class="text-danger">'
+                                . lang('index_inactive_link') . '</span>'); ?>
+                        <?php elseif (is('manager')) : ?>
+                            <?php if ($user->group_id == user_roles()['staff'] || $user->group_id == user_roles()['parent']) : ?>
+                                <?php echo ($user->active) ? anchor("users/deactivate/" . $user->id, '<span class="text-primary">'
+                                    . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->id, '<span class="text-danger">'
+                                    . lang('index_inactive_link') . '</span>'); ?>
+                            <?php else : ?>
+                                <?php if ($user->active) : ?>
+                                    <a href="javascript:void(0)" class="manager_status">
+                                        <span class="text-primary">
+                                            <?php echo lang('index_active_link'); ?>
+                                        </span>
+                                    </a>
+                                <?php else : ?>
+                                    <a href="javascript:void(0)" class="manager_status">
+                                        <span class="text-primary">
+                                            <?php echo lang('index_inactive_link'); ?>
+                                        </span>
+                                    </a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     </td>
                     <td style="width:75px;" class="text-right">
                         <?php if (is('manager')) : ?>
@@ -72,7 +94,7 @@
                                     echo anchor("users/delete/" . $user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"');
                                 } ?>
                             <?php endif; ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
                                 <span class="btn btn-default btn-xs">
                                     <i class="fa fa-pencil-alt"></i></span>

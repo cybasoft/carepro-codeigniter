@@ -96,8 +96,14 @@ class MY_user extends CI_Model
         if($query->num_rows() > 0) {
             $user = $query->row();
 
-            if($item == 'name')
-                return $user->first_name.' '.$user->last_name;
+            if($item == 'name'){
+                if($user->first_name == ''){
+                    $name = $user->name;
+                }else{
+                    $name = $user->first_name.' '.$user->last_name;
+                }
+                return $name;
+            }
 
             if($item !== '')
                 return $user->$item;

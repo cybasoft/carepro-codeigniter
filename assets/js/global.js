@@ -340,7 +340,7 @@ $(document).ready(function () {
         if (confirm('Are you sure?'))
             window.location.href = url;
     });
-    $(".pay_button").click(function(){
+    $(".pay_button").click(function () {
         var due_amount = $(this).data("due-amount");
         $("#invoice_amount").val(due_amount);
     });
@@ -411,4 +411,13 @@ $(document).ready(function () {
     //     ]
     //    }
     //  });    
+    $(".manager_status").click(function () {
+        $(".error_msg").text("");
+        $(".error_msg").css("display", "block").addClass('alert alert-danger alert-dismissable');
+        $(".error_msg").append('<span class="fa fa-info"></span>Access denied');
+
+        setTimeout(function () {
+            $('.error_msg').slideUp('slow');
+        }, 6000);
+    });
 })
