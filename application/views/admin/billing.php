@@ -57,14 +57,14 @@
                     $hidden = array('setting_id' => $settings->setting_id);
                     $attributes = array('class' => 'settings','autocomplete' => 'off');
                     echo form_open('update', $attributes,$hidden);
-                    echo form_label(lang('Stripe test public key'));
-                    echo form_input('stripe_pk_test', $settings->stripe_pk_test, ['class' => 'form-control']);
-                    echo form_label(lang('Stripe test secret key'));
-                    echo form_password('stripe_sk_test', $settings->stripe_sk_test, ['class' => 'form-control']);
-                    echo "<br/>";
-                    echo form_label(lang('Stripe live public key'));
+                    // echo form_label(lang('Stripe test public key'));
+                    // echo form_input('stripe_pk_test', $settings->stripe_pk_test, ['class' => 'form-control']);
+                    // echo form_label(lang('Stripe test secret key'));
+                    // echo form_password('stripe_sk_test', $settings->stripe_sk_test, ['class' => 'form-control']);
+                    // echo "<br/>";
+                    echo form_label(lang('Stripe public key'));
                     echo form_input('stripe_pk_live', $settings->stripe_pk_live, ['class' => 'form-control']);
-                    echo form_label(lang('Stripe live secret key'));
+                    echo form_label(lang('Stripe secret key'));
                     echo form_password('stripe_sk_live', $settings->stripe_sk_live, ['class' => 'form-control']);
                     echo '<br/>';
                     echo form_label(lang('Enabled'), 'stripe_enabled');
@@ -125,7 +125,11 @@
                 $hidden = array('setting_id' => $settings->setting_id);
                 echo form_open('update', ['class' => 'settings'], $hidden);
                 echo form_label(lang('Invoice terms'), 'invoice_terms');
-                echo form_textarea('invoice_terms', $settings->invoice_terms, ['class' => 'form-control']);
+                if($settings->invoice_terms == ''){
+                    echo form_textarea('invoice_terms',session('company_invoice_terms'), ['class' => 'form-control']);
+                }else{
+                    echo form_textarea('invoice_terms',$settings->invoice_terms, ['class' => 'form-control']);
+                }
                 //                        echo form_label(lang('Invoice notes'), 'invoice_notes');
                 //                        echo form_textarea('invoice_notes',$option['invoice_notes'], ['class' => 'form-control']);
                 echo '<br/>';

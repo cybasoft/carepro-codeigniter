@@ -32,6 +32,9 @@
                         </div>
                     <?php endif; ?>
                     <?php echo form_open_multipart("daycare/store/$activation_code", ['class' => 'form-box daycare_register']); ?>
+                    <div class="alert alert-warning">
+                    <?php echo lang('logo_instructions'); ?>
+                </div>
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>

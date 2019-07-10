@@ -299,15 +299,18 @@ class Invoice extends CI_Controller
         $stripe = $stripe_details->row();
 
         $due_amount = $this->input->post("invoice_amount");
+        $invoice_id = $this->uri->segment(2);
 
+        $invoice_details = $this->db->select('invoice.child_id,children.first_name,children.last_name')
+                           ->where('invoice.id', $invoice_id)
+                           ->from('invoices as invoice')
+                           ->join('children', 'children.id = invoice.child_id')
+                           ->get()->row_array();
+        $child_name = $invoice_details['first_name'] ." " . $invoice_details['last_name'];                        
         $amount = $due_amount * 100;
         $parent_name = $this->session->userdata('first_name');     
-        $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for Daycare.";   
-        if($stripe->stripe_sk_live == ''){
-            $key = $stripe->stripe_sk_test;
-        }else{
-            $key = $stripe->stripe_sk_live;
-        }
+        $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for child " . $child_name;       
+        $key = $stripe->stripe_sk_live;      
         if($key !== ''){
             \Stripe\Stripe::setApiKey($key);
             //stripe make payment
@@ -317,8 +320,8 @@ class Invoice extends CI_Controller
                 "source" => $this->input->post('stripeToken'),
                 "description" => $description
             ]);
-            $data = array(
-                'invoice_id' => $this->uri->segment(2),
+            $payment_data = array(
+                'invoice_id' => $invoice_id,
                 'amount' => $due_amount,
                 'method' => 'Stripe',
                 'user_id' => $this->session->userdata('user_id'),
@@ -326,9 +329,14 @@ class Invoice extends CI_Controller
                 'date_paid' => date('Y-m-d'),
                 'created_at' => date_stamp()
             );
-            $this->db->insert('invoice_payments',$data);
+            $this->db->insert('invoice_payments',$payment_data);
 
-            logEvent($user_id = NULl,"Invoice of amount " . $due_amount . " paid successfully.",$care_id = NULL);
+            $invoice_data = array(
+                'invoice_status' => 'paid'
+            );
+            $this->db->where('id',$invoice_id)->update('invoices',$invoice_data);
+
+            logEvent($user_id = NULl,"Invoice of amount " . $due_amount . " paid successfully for child " . $child_name,$care_id = NULL);
 
             foreach($users as $user){
                 if($user->first_name == ''){
@@ -343,9 +351,9 @@ class Invoice extends CI_Controller
                 $group = $group_row->group_id;
                 if($group !== 3){
                     if($group == 4){
-                        $message = "A Invoice of amount $". $due_amount ." is paid successfully.";
+                        $message = "A Invoice of amount $". $due_amount ." is paid successfully for child " . $child_name;
                     }else{
-                        $message = "A Invoice of amount $". $due_amount ." is paid successfully by parent " . $parent_name . ".";
+                        $message = "A Invoice of amount $". $due_amount ." is paid successfully by parent " . $parent_name ." for child " . $child_name;
                     }
                     $data = [
                         'subject' => 'Invoice paid',

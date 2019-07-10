@@ -134,10 +134,8 @@ class Settings extends CI_Controller
                 $this->db->where('id', $_POST['id'])->update('daycare', $daycare_data);
                 echo "success";
                 flash('success', "Settings updated successfully.");
-            } else if (array_key_exists('stripe_pk_test', $_POST)) {
-                $setting_data = array(
-                    'stripe_pk_test' => $_POST['stripe_pk_test'],
-                    'stripe_sk_test' => $_POST['stripe_sk_test'],
+            } else if (array_key_exists('stripe_pk_live', $_POST)) {
+                $setting_data = array(                    
                     'stripe_pk_live' => $_POST['stripe_pk_live'],
                     'stripe_sk_live' => $_POST['stripe_sk_live'],
                     'stripe_enabled' => $_POST['stripe_enabled']

@@ -39,8 +39,11 @@
             </div>
             <div class="card-body">    
             <img style="width:100%" src="<?php echo base_url().'assets/uploads/invoice_logo/'.$settings->invoice_logo; ?>"/>            
-                <?php
-                echo '<hr/>';
+            <hr/>
+            <div class="alert alert-warning">
+                    <?php echo lang('logo_instructions'); ?>
+                </div>
+                <?php                
                 $hidden = array('daycare_unquie_id' => $settings->daycare_unquie_id,'settings_id' => $settings->setting_id);
                 echo form_open_multipart('invoice_logo', 'class="input-group"',$hidden);
                 echo form_input(['type' => 'file', 'name' => 'invoice_logo', 'required' => '', 'class' => 'form-control']);

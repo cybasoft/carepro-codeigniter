@@ -108,13 +108,17 @@ class My_daycare_registration extends CI_Model
         if(!file_exists($upload_folder)) {
             mkdir($upload_folder, 0777, TRUE);
             chmod($upload_folder, 0777);
-        }      
-        $config['upload_path'] = $upload_folder;
-        $config['allowed_types'] = 'jpeg|jpg|png';
-        $config['max_size'] = 2000;
-        $config['max_width'] = 1500;
-        $config['max_height'] = 1500;    
-        $config['file_name'] = $filename;
+        }
+        $config = array(
+            'upload_path' => $upload_folder,
+            'allowed_types' => 'png|jpg|jpeg|png|svg',
+            'max_size' => '2048',
+            'max_width' => '500',
+            'max_height' => '112',
+            'encrypt_name' => false,
+            'file_name' => $filename,
+            'overwrite' => true
+        );
 
         $this->load->library('upload', $config);        
         if (!$this->upload->do_upload('logo')) {
