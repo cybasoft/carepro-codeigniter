@@ -391,7 +391,7 @@ class Invoice extends CI_Controller
         $dompdf = new Dompdf($options);
         $dompdf->setPaper('A4', 'portrait');
 
-        $html = $this->load->view($this->module . 'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'action', 'send', 'image'), true);
+        $html = $this->load->view($this->module . 'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'image'), true);
 
         $dompdf->loadHtml($html);
         $dompdf->render();
@@ -406,7 +406,7 @@ class Invoice extends CI_Controller
             file_put_contents($fileName, $output);
 
             $send_email = $this->sendInvoice($child, $fileName, $image);
-            if ($send_email !== "") {
+            if ($send_email != "") {
                 flash('error', sprintf(lang('No parent assigned to child'), $child->first_name));
             } else {
                 flash('success', sprintf(lang('Invoice has been send to parents of'), $child->first_name));
@@ -453,7 +453,7 @@ class Invoice extends CI_Controller
                 $body = $this->load->view('custom_email/child_invoice_email', $email_data, true);
                 $this->email->message($body);        //Send mail
                 if ($this->email->send()) {
-                    return true;
+                    // return true;
                 } else {
                     $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
                     $logs .= $this->email->print_debugger('message');

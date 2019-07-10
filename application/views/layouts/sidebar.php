@@ -15,7 +15,7 @@
                         'link' => 'children',
                         'icon' => 'children',
                         'active' => ['children', 'child'],
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                        'allow' => ['admin', 'manager', 'staff'],
                     ],
                     [
                         'name' => 'Rooms',

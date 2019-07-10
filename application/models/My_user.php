@@ -243,7 +243,8 @@ class MY_user extends CI_Model
         $staff = $this->db->select('users.id,users.daycare_id,users.name,users.first_name,users.last_name,users_groups.group_id')
             ->where([
                 'daycare_id' => $daycare_id,
-                'users_groups.group_id' => 3
+                'users_groups.group_id' => 3,
+                'active' => 1
             ])
             ->from('users')
             ->join('users_groups', 'users_groups.user_id=users.id')
