@@ -10,21 +10,15 @@
             <table class="table table-bordered table-hover table-striped" id="logs">
             <thead>
             <tr align="center">
-                <th></th>
-                <th><?php echo lang('User ID'); ?></th>
-                <th><?php echo lang('Daycare ID'); ?></th>
+                <th><?php echo lang('Date'); ?></th>
                 <th><?php echo lang('Event'); ?></th>
-                <th><?php echo lang('Updated at'); ?></th>          
             </tr>
             </thead>  
             <tbody>
             <?php foreach($event_logs as $logs): ?>
                <tr>
-                 <td><?php echo $logs->id ?></td>
-                 <td><?php echo $logs->user_name ?></td>
-                 <td><?php echo $logs->daycare_id ?></td>
-                 <td><?php echo $logs->event ?></td>
-                 <td><?php echo $logs->date ?></td>
+                 <td><?php echo event_log_date($logs->date); ?></td>
+                 <td><span class="font-weight-bold"><?php echo $logs->user_name; ?></span><br/><?php echo $logs->event ?></td>
                </tr>
             <?php endforeach; ?>
             </tbody>

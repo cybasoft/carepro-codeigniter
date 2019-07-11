@@ -384,6 +384,15 @@ function allow($group)
     }
 }
 
+//convert date format to 4 june 2019 and time to am pm format
+function event_log_date($log_date){
+    $time = new DateTime($log_date);
+    $date = $time->format('n-j-Y');
+    $dateObj = DateTime::createFromFormat('m-d-Y', $date);
+    $date_time = $dateObj->format('d M Y') ." ". $time->format('g:ia');
+    return $date_time;
+}
+
 function page($page, $data = [])
 {
     $ci = &get_instance();

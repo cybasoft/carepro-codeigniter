@@ -42,8 +42,7 @@ class Settings extends CI_Controller
         $event_logs = $this->db->get_where('event_log', array(
             'daycare_id' => $this->session->userdata('daycare_id')
         ))->result();
-        // print_r($event_logs);
-        // exit();
+        
         // $option=array();
         // foreach($settings as $key=>$val){
         //      $option[$val['option_name']]=$val['option_value'];
