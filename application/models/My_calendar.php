@@ -29,8 +29,9 @@ class My_calendar extends CI_Model
 			$allDay = 'false';
 		}
 		// Values received via ajax
+		$title = $this->input->post('title');
 		$data = array(
-			'title' => $this->input->post('title'),
+			'title' => $title,
 			'start' => $this->input->post('start'),
 			'start_t' => $this->input->post('start_t'),
 			'end' => $this->input->post('end'),
@@ -44,10 +45,9 @@ class My_calendar extends CI_Model
 		$this->db->insert('calendar', $data); //insert to db
 
 		if($this->db->affected_rows() > 0) { //successful
-			$last_id = $this->db->insert_id();
 			flash('success', lang('request_success'));
 			//log event
-			logEvent($id = NULL,"Added calendar event ID: {$last_id}",$care_id = NULL);
+			logEvent($id = NULL,"Added calendar event {$title}",$care_id = NULL);
 		} else {
 			flash('danger', lang('request_error'));
 		}
@@ -66,8 +66,9 @@ class My_calendar extends CI_Model
 		$start_date = date("Y-m-d", strtotime($this->input->post('start')));
 		$end_date = date("Y-m-d", strtotime($this->input->post('end')));		
 		// Values received via ajax
+		$title = $this->input->post('title');
 		$data = array(
-			'title' => $this->input->post('title'),
+			'title' => $title,
 			'start' => $start_date,
 			'start_t' => $this->input->post('start_t'),
 			'end' => $end_date,
@@ -81,7 +82,7 @@ class My_calendar extends CI_Model
 		$this->db->update('calendar', $data);
 		if($this->db->affected_rows() > 0) { //successful
 			//log event
-			logEvent($id = NULL,"Updated calendar event ID: {$this->input->post('id')}",$care_id = NULL);
+			logEvent($id = NULL,"Updated calendar event {$title}",$care_id = NULL);
 			flash('success', lang('request_success'));			
 		} else {
 			flash('danger', lang('request_error'));
@@ -95,11 +96,12 @@ class My_calendar extends CI_Model
 	{
 		$id=$this->input->post('event_id');
 
+		$calendar_details = $this->db->get_where('calendar',array('id'=>$id))->row();
 		$this->db->where('id', $id);
 		$this->db->delete('calendar');
 		if($this->db->affected_rows() > 0) { //successful
 			//log event
-			logEvent($user_id = NULL,"Deleted calendar event ID: {$id}",$care_id = NULL);
+			logEvent($user_id = NULL,"Deleted calendar event {$calendar_details->title}",$care_id = NULL);
 			return 'true';
 		} else {
 			return 'true';

@@ -21,6 +21,11 @@ class My_rooms extends CI_Model
         return $res;
     }
 
+    function rooms($id){
+        $room = $this->db->where('id', $id)->get('child_rooms')->row();
+        return $room;
+    }
+
     function getRoom($id)
     {
         $room = $this->db->where('id', $id)->get('child_rooms')->row();
@@ -76,7 +81,7 @@ class My_rooms extends CI_Model
 
         if($this->db->affected_rows() > 0)
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL,"Added room ID: {$last_id}",$care_id = NULL);
+            logEvent($user_id = NULL,"Added room {$this->input->post('name')}",$care_id = NULL);
             return TRUE;
 
         return FALSE;
@@ -97,7 +102,7 @@ class My_rooms extends CI_Model
         );
 
         if($this->db->affected_rows() > 0)
-            logEvent($user_id = NULL, "Updated room ID: {$this->input->post('room_id')}",$care_id = NULL);
+            logEvent($user_id = NULL, "Updated room {$this->input->post('name')}",$care_id = NULL);
             return TRUE;
 
         return FALSE;
@@ -179,17 +184,19 @@ class My_rooms extends CI_Model
      */
     function addNote()
     {
+        $room_id = $this->input->post('room_id');
+        $content = $this->input->post('notes');
         $data = [
             'user_id' => $this->user->uid(),
-            'room_id' => $this->input->post('room_id'),
-            'content' => $this->input->post('notes'),
+            'room_id' => $room_id,
+            'content' => $content,
             'created_at' => date_stamp(),
         ];
         $this->db->insert('child_room_notes', $data);
-
+        
         if($this->db->affected_rows() > 0)
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Added note ID: {$last_id} for room ID: {$this->input->post('room_id')}",$care_id = NULL);
+            logEvent($user_id = NULL, "Added note {$content} for room {$this->rooms->rooms($room_id)->name}",$care_id = NULL);
             return TRUE;
 
         return FALSE;

@@ -248,7 +248,7 @@ class Child extends CI_Controller
 
                 $parent = $this->My_user->first($this->input->post('parent'));
                 $child = $this->child->first($child_id);               
-                logEvent($id = NULL,"Assigned parent ID: {$parent->id} to child ID: {$child->id}",$care_id = NULL);
+                logEvent($id = NULL,"Assigned parent {$parent->first_name} to child {$child->first_name}",$care_id = NULL);
                 
                 $data = [                    
                     'to' => $parent->email,
@@ -294,10 +294,14 @@ class Child extends CI_Controller
     {
         allow(['admin', 'manager', 'staff']);
 
+        $parent_details = $this->db->get_where('users',array(
+            'id' => $parent_id
+        ));
+        $parent = $parent_details->row_array();
         if ($this->db->where('child_id', $child_id)
             ->where('user_id', $parent_id)
             ->delete('child_parents')) {
-                logEvent($id = NULL,"Deleted parent ID: {$parent_id} for child ID: {$child_id}",$care_id = NULL);
+                logEvent($id = NULL,"Deleted parent {$parent['first_name']} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -328,6 +332,7 @@ class Child extends CI_Controller
         if($this->form_validation->run() == TRUE) {
             $child_id = $this->input->post('child_id');
             $this->db->where('child_id',$child_id)->delete('child_room');
+            
             foreach ($this->input->post('room') as $room) {
                 $find =$this->db->limit(1)->where('child_id', $child_id)->where('room_id', $room)->count_all_results('child_room');               
                 if($find == 0) {
@@ -337,8 +342,8 @@ class Child extends CI_Controller
                         'daycare_id' => $daycare_id,
                         'created_at' => date_stamp(),
                     ]);
-                }                    
-                logEvent($user_id = NULL,"Assigned child ID: {$child_id} for room ID: {$room}",$care_id = NULL);
+                }                  
+                logEvent($user_id = NULL,"Assigned child {$this->child->child($child_id)->first_name} for room {$this->rooms->rooms($room)->name}",$care_id = NULL);
             }
             flash('success', lang('request_success'));
         }else{

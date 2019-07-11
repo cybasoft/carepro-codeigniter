@@ -16,10 +16,10 @@ class My_notes extends CI_Model
     function store()
     {
         $child_id = $this->input->post('child_id');
-
+        $title = $this->input->post('title');
         $data = array(
             'child_id' => $child_id,
-            'title' => $this->input->post('title'),
+            'title' => $title,
             'content' => htmlspecialchars($this->input->post('note-content')),
             'category_id' => $this->input->post('category_id'),
             'tags' => implode(',', $this->input->post('tags')),
@@ -32,7 +32,7 @@ class My_notes extends CI_Model
         if($this->db->affected_rows() > 0) {
             $last_id = $this->db->insert_id();
             //log event
-            logEvent($id = NULL,"Added note ID: {$last_id} for child ID: {$child_id}",$care_id = NULL);
+            logEvent($id = NULL,"Added note {$title} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             //notify parents
             $this->parent->notifyParents($child_id, lang('note_added_email_subject'), sprintf(lang('note_added_email_message'), $this->child->first($child_id)->first_name));
             return true;
@@ -46,14 +46,14 @@ class My_notes extends CI_Model
     function destroy()
     {
         $id = $this->uri->segment(3);
-        $notes_detail = $this->db->get_where("child_notes",array(
+        $notes_detail = $this->db->get_where('child_notes',array(
             'id' => $id
         ));
-        $notes = $notes_detail->row();        
+        $notes = $notes_detail->row();     
         $this->db->where('id', $id);
         $this->db->delete('child_notes');
         if($this->db->affected_rows() > 0)
-            logEvent($user_id = NULL,"Deleted note ID: {$id} for child ID: {$notes->child_id}",$care_id = NULL);
+            logEvent($user_id = NULL,"Deleted note {$notes->title} for child {$this->child->child($notes->child_id)->first_name}",$care_id = NULL);
             return true;
         return false;
     }
@@ -80,9 +80,10 @@ class My_notes extends CI_Model
     {
         $child_id = $this->input->post('child_id');
         $date_occurred = $this->input->post('date').' '.$this->input->post('time');
+        $title = $this->input->post('title');
         $data = array(
             'child_id' => $child_id,
-            'title' => $this->input->post('title'),
+            'title' => $title,
             'location' => $this->input->post('location'),
             'incident_type' => $this->input->post('incident_type'),
             'description' => $this->input->post('description'),
@@ -97,7 +98,7 @@ class My_notes extends CI_Model
         $noteID = $this->db->insert_id();
 
         if($this->db->affected_rows() > 0) {
-            logEvent($id = NULL,"Added incident report ID: {$noteID} for child ID: {$child_id}",$care_id = NULL);
+            logEvent($id = NULL,"Added incident report {$title} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             $this->parent->notifyParents($child_id, lang('incident_email_subject'), sprintf(lang('incident_email_message'), $this->child->get($child_id, 'name')));
             return $noteID;
         }
@@ -114,18 +115,19 @@ class My_notes extends CI_Model
 
         //delete photos
         $photos = $this->db->where('incident_id', $id)->get('child_incident_photos');
+        $incidents = $this->db->where('id', $id)->get('child_incident')->row();
         if($photos->num_rows() > 0) {
 
             foreach ($photos->result() as $photo) {
                 @unlink('./assets/uploads/photos/'.$photo->photo);
             }
             $this->db->where('incident_id', $id)->delete('child_incident_photos');
-            logEvent($user_id = NULL, "Deleted child incident ID: {$id}",$care_id = NULL);
+            logEvent($user_id = NULL, "Deleted child incident photo",$care_id = NULL);
         }
         $this->db->where('id', $id);
         $this->db->delete('child_incident');
         if($this->db->affected_rows() > 0)
-            logEvent($user_id = NULL, "Deleted child incident ID: {$id}",$care_id = NULL);
+            logEvent($user_id = NULL, "Deleted child incident {$incidents->title}",$care_id = NULL);
             return true;
         return false;
 

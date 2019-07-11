@@ -246,7 +246,7 @@ class My_child extends CI_Model
         }
 
         //log event
-        logEvent($id = NULL,"Added child ID: {$last_id}",$care_id = NULL);
+        logEvent($id = NULL,"Added child {$this->input->post('first_name')} {$this->input->post('last_name')}",$care_id = NULL);
 
         if($getID) {
             return $last_id;
@@ -272,9 +272,10 @@ class My_child extends CI_Model
         $children = $child_details->row_array();
 
         $status = $this->input->post('status');
+        $first_name = $this->input->post('first_name');
         $data = [
             'nickname' => $this->input->post('nickname'),
-            'first_name' => $this->input->post('first_name'),
+            'first_name' => $first_name,
             'last_name' => $this->input->post('last_name'),
             'bday' => $this->input->post('bday'),
             'national_id' => encrypt($this->input->post('national_id')),
@@ -306,7 +307,7 @@ class My_child extends CI_Model
                 $email_data = array(
                     'first_name' => $parent['first_name'],
                     'last_name' => $parent['last_name'],
-                    'child_first_name' => $this->input->post('first_name'),
+                    'child_first_name' => $first_name,
                     'child_last_name' => $this->input->post('last_name'),
                     'daycare_id'     => $daycare_id,
                     'child_status' => $status
@@ -327,7 +328,7 @@ class My_child extends CI_Model
         }       
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Updated child ID: {$child_id}",$care_id = NULL);
+            logEvent($id = NULL,"Updated child {$first_name}",$care_id = NULL);
 
             flash('success', lang('request_success'));
         } else {
@@ -351,9 +352,10 @@ class My_child extends CI_Model
         }else{
             $image = '';
         }
+        $first_name = $this->input->post('first_name');
         $data = [
             'child_id' => $id,
-            'first_name' => $this->input->post('first_name'),
+            'first_name' => $first_name,
             'last_name' => $this->input->post('last_name'),
             'cell' => $this->input->post('cell'),
             'other_phone' => $this->input->post('other_phone'),
@@ -368,7 +370,7 @@ class My_child extends CI_Model
         $insert_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($user_id = NULL,"Added pickup contact ID: {$insert_id} for child ID: {$id}",$care_id = NULL);
+            logEvent($user_id = NULL,"Added pickup contact {$first_name} for child {$this->child->child($id)->first_name}",$care_id = NULL);
             $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
@@ -428,7 +430,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
 
-            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}",$care_id = NULL);
+            logEvent($id = NULL,"Added checked in for {$this->child($child_id)->first_name}",$care_id = NULL);
             return TRUE;
         }
         return FALSE;
@@ -455,7 +457,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
 
-            logEvent($id = NULL,"Added checked out {$child_id} -{$this->child($child_id)->last_name}",$care_id = NULL);
+            logEvent($id = NULL,"Added checked out for {$this->child($child_id)->first_name}",$care_id = NULL);
             return TRUE;
         }
         return FALSE;

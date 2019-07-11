@@ -242,7 +242,7 @@ class Invoice extends CI_Controller
      * @param $id
      */
     function addItem($id)
-    {
+    {        
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('description'), 'required|xss_clean');
         $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean|callback_is_money');
@@ -258,7 +258,8 @@ class Invoice extends CI_Controller
             ]);
             $last_id = $this->db->insert_id();
             if ($query) {
-                logEvent($user_id = NULL,"Added invoice Item ID: {$last_id} for invoice ID: {$id}",$care_id = NULL);
+                $child_id = $this->invoice->get($id)->child_id;
+                logEvent($user_id = NULL,"Added invoice Item {$this->input->post('item_name')} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -479,6 +480,7 @@ class Invoice extends CI_Controller
     function delete($invoice_id)
     {
         allow(['admin', 'manager']);
+        $child_id = $this->invoice->get($invoice_id)->child_id;
         //delete items
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
@@ -488,7 +490,7 @@ class Invoice extends CI_Controller
         $this->db->delete($this->invoice_db);
 
         if ($this->db->affected_rows() > 0) {
-            logEvent($user_id = NULL,"Deleted Invoice with id {$invoice_id}",$care_id = NULL);
+            logEvent($user_id = NULL,"Deleted Invoice for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -501,11 +503,17 @@ class Invoice extends CI_Controller
     {
         allow(['admin', 'manager']);
 
+        $items_details = $this->db->get_where('invoice_items',array(
+            'id' => $item_id,
+            'invoice_id' => $invoice_id
+        ));
+        $items = $items_details->row_array();
         $this->db->where('id', $item_id);
         $this->db->where('invoice_id', $invoice_id);
         $this->db->delete('invoice_items');
         if ($this->db->affected_rows() > 0) {
-            logEvent($user_id = NULL,"Deleted Invoice item ID: {$item_id} for invoice ID: {$invoice_id}",$care_id = NULL);
+            $child_id = $this->invoice->get($invoice_id)->child_id;
+            logEvent($user_id = NULL,"Deleted Invoice item {$items['item_name']} for invoice of child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

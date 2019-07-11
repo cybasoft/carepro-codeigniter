@@ -8,10 +8,12 @@ class My_meal extends CI_Model
      */
     function insert()
     {
+        $room_id = $this->input->post('room_id');
+        $name = $this->input->post('name');
         $data = [
-            'room_id' => $this->input->post('room_id'),
+            'room_id' => $room_id,
             'meal_type' => $this->input->post('meal_type'),
-            'name' => $this->input->post('name'),
+            'name' => $name,
             'meal_date' => $this->input->post('meal_date'),
             'user_id' => user_id(),
             'created_at' => date_stamp(),
@@ -19,7 +21,7 @@ class My_meal extends CI_Model
         ];
         if($this->db->insert('meal_plan', $data)){
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Added meal ID: {$last_id} for room ID: {$this->input->post('room_id')}",$care_id = NULL);
+            logEvent($user_id = NULL, "Added meal {$name} for room {$this->rooms->rooms($room_id)->name}",$care_id = NULL);
             return TRUE;
         }            
         return FALSE;
@@ -113,7 +115,7 @@ class My_meal extends CI_Model
             ];
             $this->db->insert('meal_plan', $data);
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Copied meal ID: {$last_id} for next week of room ID: {$meal->room_id}",$care_id = NULL);
+            logEvent($user_id = NULL, "Copied meal {$meal->name} for next week of room {$this->rooms->rooms($meal->room_id)->name}",$care_id = NULL);
         }
         return TRUE;
     }

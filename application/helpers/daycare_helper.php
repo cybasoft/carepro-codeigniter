@@ -339,13 +339,18 @@ function logEvent($user_id = NULL, $event, $daycare_id = NULL)
     $ci = &get_instance();
 
     if ($user_id === NULL) {
-        $user_id = $ci->user->uid();
+        $first_name = $ci->session->userdata('first_name');
+        if($first_name == ''){
+            $user_id = $ci->session->userdata('name');
+        }else{
+            $user_id = $ci->session->userdata('first_name') . " " . $user_id = $ci->session->userdata('last_name');
+        }
     }
     if($daycare_id === NULL){
         $daycare_id = $ci->session->userdata('daycare_id');
     }
     $data = [
-        'user_id' => $user_id,
+        'user_name' => $user_id,
         'date' => date("Y-m-d H:i:s", time()),
         'daycare_id' => $daycare_id,
         'event' => $event,
