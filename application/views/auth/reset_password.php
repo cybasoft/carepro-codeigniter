@@ -10,16 +10,27 @@
     <span class="login100-form-title p-b-43"><?php echo lang('reset_password_heading'); ?></span>
 
     <div class="wrap-input100 validate-input" data-validate="<?php echo lang('This field is required'); ?>">
-        <?php echo sprintf(lang('reset_password_new_password_label'), $min_password_length); ?>
-        <?php echo form_input($new_password); ?>
-
+        <?php echo form_input([
+            'name' => 'new',
+            'id' => 'new',
+            'type' => 'password',
+            'class' => 'input100',
+            'required' => 'required',
+            'pattern' => '^.{8}.*$'
+        ]); ?>
         <span class="focus-input100"></span>
         <span class="label-input100"><?php echo lang('reset_password_new_password_label'); ?></span>
     </div>
 
     <div class="wrap-input100 validate-input" data-validate="<?php echo lang('This field is required'); ?>">
-        <?php echo lang('reset_password_new_password_confirm_label', 'new_password_confirm'); ?>
-        <?php echo form_input($new_password_confirm); ?>
+    <?php echo form_input([
+            'name' => 'new_confirm',
+            'type' => 'password',
+            'class' => 'input100',
+            'id' => 'new_confirm',
+            'required' => 'required',
+            'pattern' => '^.{8}.*$'
+        ]); ?>
 
         <span class="focus-input100"></span>
         <span class="label-input100"><?php echo lang('reset_password_new_password_confirm_label'); ?></span>
