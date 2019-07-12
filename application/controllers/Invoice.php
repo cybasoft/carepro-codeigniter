@@ -388,11 +388,19 @@ class Invoice extends CI_Controller
         $invoice_items = $this->invoice->getInvoiceItems($id);
         $child = $this->child->first($invoice->child_id);
 
-        $settings_details = $this->db->get_where('daycare_settings', array(
-            'daycare_id' => $this->session->userdata('daycare_id')
-        ));
-        $settings = $settings_details->row_array();
-        $image = $settings['invoice_logo'];
+        // $settings_details = $this->db->get_where('daycare_settings', array(
+        //     'daycare_id' => $this->session->userdata('daycare_id')
+        // ));
+        // $settings = $settings_details->row_array();
+        $settings =  $this->db
+                     ->select('ds.*,daycare.logo')
+                     ->where('ds.daycare_id',$this->session->userdata('daycare_id'))
+                     ->from('daycare_settings as ds')
+                     ->join('daycare', 'daycare.id = ds.daycare_id')
+                     ->get()->row_array();
+        
+        $daycare_logo = $settings['logo'];
+        $image = $settings['invoice_logo'];        
         //format pdf
         $this->load->library('PDF');
 
@@ -418,7 +426,7 @@ class Invoice extends CI_Controller
             $fileName = 'application/temp/invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf';
             file_put_contents($fileName, $output);
 
-            $send_email = $this->sendInvoice($child, $fileName, $image);
+            $send_email = $this->sendInvoice($child, $fileName, $image, $daycare_logo);
             if ($send_email != "") {
                 flash('error', sprintf(lang('No parent assigned to child'), $child->first_name));
             } else {
@@ -429,7 +437,7 @@ class Invoice extends CI_Controller
         redirectPrev();
     }
 
-    function sendInvoice($child, $fileName, $image)
+    function sendInvoice($child, $fileName, $image, $daycare_logo)
     {
         $this->load->config('email');
         $this->load->library('email');
@@ -455,6 +463,7 @@ class Invoice extends CI_Controller
                     'parent_name' => $parent->first_name . ' ' . $parent->last_name,
                     'child_name' => $child->first_name . ' ' . $child->last_name,
                     'image' => $image,
+                    'daycare_logo' => $daycare_logo
                 );
                 $this->email->set_mailtype('html');
                 $from = $this->config->item('smtp_user');

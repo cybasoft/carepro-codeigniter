@@ -11,17 +11,18 @@
     <div style="width: 93%;background: #60aff4a8;height: 100%;padding: 4% 3%;font-family:'Poppins-Regular, Sans-serif, serif'">
         <div style="background-color:white;width:90%,margin-left: 2%;">
             <div style="background:#eb6c6ab3">
-                 <p style="margin:0;font-size:40px;color:#ffffff;line-height:2.5;padding:1% 2%">
+                 <p style="margin:0;font-size:35px;color:#ffffff;padding:1% 2%">
                      <span>Invoice</span>
-                    <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 150px; height: 100px;" align="right">
                 </p>            
             </div>
             <div style="padding: 4% 3%;padding-top:0;text-align:center">
-                <?php if ($image === '') : ?>
-                    <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 150px; height: 100px">
+                <!-- <?php if ($image == NULL) : ?>
+                    <img src="<?php echo base_url(); ?>assets/uploads/content/<?php echo $this->session->userdata('company_invoice_logo') ?>" alt="Daycare logo" style="width: 150px; height: 100px">
                 <?php else : ?>
-                    <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $image; ?>" alt="Daycare logo" style="width: 150px; height: 100px">
-                <?php endif; ?>
+                    <img src="<?php echo base_url(); ?>assets/uploads/invoice_logo/<?php echo $image; ?>" alt="Daycare logo" style="width: 150px; height: 100px">
+                <?php endif; ?> -->
+                <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $daycare_logo; ?>" alt="Daycare logo" style="width: 200px;margin-top: 20px">
+
                 <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $parent_name; ?>,</p>
                 <p>
                     You have an invoice for your child <?php echo $child_name; ?>.

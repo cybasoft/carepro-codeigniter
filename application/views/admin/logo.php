@@ -9,7 +9,7 @@
                 <!-- <?php if(is_file(APPPATH.'../assets/uploads/content/'.session('company_logo'))): ?>
                     <img style="width:100%" src="<?php echo base_url().'assets/uploads/content/'.session('company_logo'); ?>"/>
                 <?php endif; ?> -->
-                <img style="width:100%" src="<?php echo base_url().'assets/uploads/daycare_logo/'.$settings->logo; ?>"/>
+                <img src="<?php echo base_url().'assets/uploads/daycare_logo/'.$settings->logo; ?>" style="width:200px;margin-top:20px;"/>
                 <hr/>
 
                 <div class="alert alert-warning">
@@ -39,9 +39,9 @@
             </div>
             <div class="card-body">    
                 <?php if($settings->invoice_logo == NULL):?>
-                <img style="width:100%" src="<?php echo base_url().'assets/uploads/content/'.$this->session->userdata('company_invoice_logo'); ?>"/>
+                <img src="<?php echo base_url().'assets/uploads/content/'.$this->session->userdata('company_invoice_logo'); ?>"/>
             <?php else: ?>
-            <img style="width:100%" src="<?php echo base_url().'assets/uploads/invoice_logo/'.$settings->invoice_logo; ?>"/>
+            <img src="<?php echo base_url().'assets/uploads/invoice_logo/'.$settings->invoice_logo; ?>"/>
             <?php endif; ?>
             <hr/>
             <div class="alert alert-warning">
