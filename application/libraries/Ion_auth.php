@@ -145,25 +145,49 @@ class Ion_auth
      * @author Mathew
      **/
     public function forgotten_password($identity) //changed $email to $identity
-
     {
+        $this->load->config('email');
+        $this->load->library('email');
         if ($this->ion_auth_model->forgotten_password($identity)) //changed
         {
             // Get user information
             $user = $this->where($this->config->item('identity', 'ion_auth'), $identity)->where('active', 1)->users()->row(); //changed to get_user_by_identity from email
-
+            $user_details = $this->db->select('us.*,d.logo')
+                        ->where('email',$identity)
+                        ->from('users as us')
+                        ->join('daycare as d','d.id = us.daycare_id')
+                        ->get()->row_array();           
             if ($user) {
-                $mail = array(
-                    'to' => $user->email,
-                    'subject' => session('company_name') . ' - ' . $this->lang->line('email_forgotten_password_subject'),
+                // $mail = array(
+                //     'to' => $user->email,
+                //     'subject' => session('company_name') . ' - ' . $this->lang->line('email_forgotten_password_subject'),
 
-                    'template' => 'forgot_password',
-                    'salute' => $user->first_name,
+                //     'template' => 'forgot_password',
+                //     'salute' => $user->first_name,
+                //     'forgotten_password_code' => $user->forgotten_password_code,
+                //     'identity' => $user->email,
+                // );
+                // $m = $this->mailer->send($mail); 
+                if($user_details['first_name'] == NULL){
+                    $name = $user_details['name'];
+                }else{
+                    $name = $user_details['first_name'];
+                }
+                $data = array(
+                    'name' => $name,
+                    'email' => $identity,
+                    'logo' => $user_details['logo'],
                     'forgotten_password_code' => $user->forgotten_password_code,
-                    'identity' => $user->email,
                 );
-                $m = $this->mailer->send($mail);
-                if ($m) {
+                $this->email->set_mailtype('html');
+                $from = $this->config->item('smtp_user');
+                $this->email->from($from, 'Daycare');
+                $this->email->to($identity);
+                $this->email->subject('Forgot Password');
+        
+                $body= $this->load->view('email/forgot_password', $data, true);               
+                $this->email->message($body);
+                if ($this->email->send()) {
                     $this->set_message('forgot_password_successful');
                     return true;
                 } else {
