@@ -134,11 +134,19 @@ class Settings extends CI_Controller
                 echo "success";
                 flash('success', "Settings updated successfully.");
             } else if (array_key_exists('stripe_pk_live', $_POST)) {
+                if(empty($_POST['stripe_toggle'])){
+                    $toggle = 0;                    
+                }else{             
+                    $toggle = 1;
+                }
                 $setting_data = array(                    
                     'stripe_pk_live' => $_POST['stripe_pk_live'],
                     'stripe_sk_live' => $_POST['stripe_sk_live'],
-                    'stripe_enabled' => $_POST['stripe_enabled']
-                );
+                    'stripe_pk_test' => $_POST['stripe_pk_test'],
+                    'stripe_sk_test' => $_POST['stripe_sk_test'],
+                    'stripe_enabled' => $_POST['stripe_enabled'],
+                    'stripe_toggle' => $toggle
+                );            
                 $this->db->where('id', $_POST['setting_id'])->update('daycare_settings', $setting_data);
                 echo "success";
                 flash('success', "Billing Settings updated successfully.");

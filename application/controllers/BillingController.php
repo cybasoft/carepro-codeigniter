@@ -27,7 +27,11 @@ class BillingController extends CI_Controller
             'daycare_id' => $daycare_id
         ));
         $stripe = $stripe_details->row();
-        $key = $stripe->stripe_pk_live;
+        if($stripe->stripe_toggle == 1){
+            $key = $stripe->stripe_pk_test;
+        }else{
+            $key = $stripe->stripe_pk_live;
+        }   
         page($this->module.'invoices', compact('child','invoices','daycare_id','stripe','key'));
     }
 }

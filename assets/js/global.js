@@ -401,7 +401,7 @@ $(document).ready(function () {
     //     dataType : 'json',
     //    "ajax": {
     //     url: "settings/logs",
-    //     type: "POST",    
+    //     type: "POST",
     //     columns: [
     //         { "data": "id" },
     //         { "data": "user_id" },

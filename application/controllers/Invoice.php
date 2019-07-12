@@ -310,8 +310,12 @@ class Invoice extends CI_Controller
         $child_name = $invoice_details['first_name'] ." " . $invoice_details['last_name'];                        
         $amount = $due_amount * 100;
         $parent_name = $this->session->userdata('first_name');     
-        $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for child " . $child_name;       
-        $key = $stripe->stripe_sk_live;      
+        $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for child " . $child_name;
+        if($stripe->stripe_toggle == 1){
+            $key = $stripe->stripe_sk_test;
+        }else{
+            $key = $stripe->stripe_sk_live;    
+        }
         if($key !== ''){
             \Stripe\Stripe::setApiKey($key);
             //stripe make payment

@@ -38,7 +38,11 @@
                 </div>
             </div>
             <div class="card-body">    
-            <img style="width:100%" src="<?php echo base_url().'assets/uploads/invoice_logo/'.$settings->invoice_logo; ?>"/>            
+                <?php if($settings->invoice_logo == NULL):?>
+                <img style="width:100%" src="<?php echo base_url().'assets/uploads/content/'.$this->session->userdata('company_invoice_logo'); ?>"/>
+            <?php else: ?>
+            <img style="width:100%" src="<?php echo base_url().'assets/uploads/invoice_logo/'.$settings->invoice_logo; ?>"/>
+            <?php endif; ?>
             <hr/>
             <div class="alert alert-warning">
                     <?php echo lang('logo_instructions'); ?>

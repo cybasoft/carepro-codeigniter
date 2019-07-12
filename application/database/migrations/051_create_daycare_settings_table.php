@@ -61,6 +61,11 @@ class Migration_create_daycare_settings_table extends CI_Migration
                 'constraint' => 191,
                 'null' => true
             ),
+            'stripe_toggle' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ),
             'stripe_enabled' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,
