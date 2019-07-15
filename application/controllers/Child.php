@@ -55,7 +55,7 @@ class Child extends CI_Controller
             $register = $this->child->register(true,$daycare_id);         
             if (false !== $register) {
                 flash('success', lang('request_success'));
-                if(is('parent')){
+                if(is('parent') || is('staff')){
                     redirect('children', 'refresh');
                 }else{
                     redirect('child/' . $register);

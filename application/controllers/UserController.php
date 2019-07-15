@@ -18,6 +18,7 @@ class UserController extends CI_Controller
     //redirect if needed, otherwise display the user list
     function index()
     {
+        allow('admin','manager');
         $daycare_id = $this->session->userdata('owner_daycare_id');
         //list the users
         $daycare_details = $this->db->get_where('daycare',array(
@@ -97,7 +98,7 @@ class UserController extends CI_Controller
     {
         disable_debug();
 
-        allow(['admin', 'manager']);
+        allow(['admin', 'manager', 'staff']);
 
         // $id = $this->uri->segment(3);
 

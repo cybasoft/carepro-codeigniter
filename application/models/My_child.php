@@ -168,7 +168,7 @@ class My_child extends CI_Model
             'daycare_id' => $daycare_id
         ));      
         $daycare = $daycare_details->row_array(); 
-        if(is('parent')){
+        if(is('parent') || is('staff')){
             $status = 0;
         }else{
             $status = 1;
