@@ -41,10 +41,20 @@ class Calendar extends CI_Controller
         $this->db->order_by('id');
         $active_user = $this->user->uid();
         $daycare_id = $this->session->userdata('daycare_id');
-        $query = $this->db
+        if(is('admin') || is('manager')){
+            $query = $this->db
             ->select('*,start as start_date,end as end_date')
             ->where('daycare_id',$daycare_id)
-            ->get('calendar')->result();      
+            ->get('calendar')->result();
+        }else if(is('staff')){
+            $query = $this->db
+            ->select('*,start as start_date,end as end_date')
+            ->where([
+                'daycare_id' => $daycare_id,
+                'user_id' => user_id()
+             ])
+            ->get('calendar')->result();
+        }     
         // sending the encoded result to success page
         echo json_encode($query);
     }

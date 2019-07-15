@@ -761,7 +761,7 @@ class Ion_auth_model extends CI_Model
         $group_details = $users_group->row_array();
         $group_id = $group_details['group_id'];
 
-        if ($group_id == 4) {
+        if ($group_id == 4 || $group_id == 3) {
             $active = 0;
         } else {
             $active = 1;

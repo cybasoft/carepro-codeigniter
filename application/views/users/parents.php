@@ -47,7 +47,7 @@
                 <span class="btn btn-default btn-xs">
                     <i class="fa fa-pencil-alt"></i></span>
                         </a>
-                        <?php echo anchor('users/delete/'.$user['user_id'], '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); ?>
+                        <?php if(!is('staff')): echo anchor('users/delete/'.$user['user_id'], '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"'); endif;?>
                     </div>
                 </div>
             </div>

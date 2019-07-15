@@ -103,6 +103,13 @@
                                             <span class="checkmark"></span>
                                         </label>
                                     <?php endif; ?>
+                                <?php elseif(is('staff')): ?>
+                                    <?php if ($group->id == user_roles()['parent']):?>
+                                    <label class="check"><?php echo lang($group->name); ?>
+                                            <?php echo form_radio('group', $group->id, set_radio('group', $group->id)); ?>
+                                            <span class="checkmark"></span>
+                                        </label>                                    
+                                    <?php endif; ?>                                     
                                 <?php endif; ?>
                             <?php endforeach ?>
                         </div>

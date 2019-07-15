@@ -106,6 +106,14 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 <?php endif; ?>
+                            <?php elseif (is('staff')) : ?>
+                                <?php if ($group['id'] == user_roles()['parent']) : ?>
+                                    <label class="check">
+                                        <?php echo $group['name']; ?>
+                                        <input type="radio" <?php echo $type; ?> name="groups[]" value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>

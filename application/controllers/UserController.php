@@ -126,7 +126,7 @@ class UserController extends CI_Controller
     function update($id=NULL)
     {   
         $daycare_id = $this->session->userdata('owner_daycare_id');
-        allow(['admin', 'manager']);
+        allow(['admin', 'manager', 'staff']);
         $id = $this->input->post('user_id');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('edit_user_validation_first_name_label'), 'required|xss_clean');
@@ -144,7 +144,7 @@ class UserController extends CI_Controller
             'phone2' => $this->input->post('phone2'),
             'address' => $this->input->post('address')
         );
-        if(is(['admin','manager'])) : //only admin can assign roles
+        if(is(['admin','manager','staff'])) : //only admin can assign roles
             //Update the groups user belongs to
             $groupData = $this->input->post('groups');            
             if(isset($groupData) && !empty($groupData)) {

@@ -7,8 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title btn-block"><?php echo lang('Invoices'); ?>
-
-                    <?php if (!is('parent')) : ?>
+                    <?php if (is('admin') || is('manager')):?>
                         <a href="<?php echo site_url('child/' . $child->id . '/newInvoice'); ?>" class="btn btn-info btn-sm card-tools">
                             <i class="fa fa-plus"></i>
                             <?php echo lang('new_Invoice'); ?>
@@ -51,7 +50,7 @@
                                             <?php if ($stripe->stripe_enabled == 1 && $invoice->totalDue != 0 && $key != '') : ?>
                                                 <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#stripe_pay" class="dropdown-item pay_button" data-due-amount="<?php echo $invoice->totalDue; ?>"><i class="fab fa-cc-stripe"></i> Pay</a>
                                             <?php endif; ?>
-                                            <?php if (!is('parent')) : ?>
+                                            <?php if (is('admin') || is('manager')) : ?>
                                                 <div class="dropdown-divider"></div>
                                                 <?php echo anchor('invoice/' . $invoice->id . '/delete', icon('trash-alt') . ' ' . lang('Delete'), 'class="delete dropdown-item text-danger"'); ?>
                                             <?php endif; ?>
