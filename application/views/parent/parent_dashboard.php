@@ -85,12 +85,12 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="row callout callout-warning">
+                                    <div class="row callout callout-warning pr-2">
                                         <div class="col-sm-12">
                                             <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
                                         </div>
                                         <div class="col-sm-12">
-                                            <strong class="h4"><?php echo lang('invoice'); ?></strong><br/>
+                                            <strong class="h4"><?php echo lang('Due Amount'); ?></strong><br/>
                                         </div>
                                     </div>
                                 </div>
