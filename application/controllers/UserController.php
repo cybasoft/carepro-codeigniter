@@ -14,7 +14,6 @@ class UserController extends CI_Controller
         $this->module = 'users/';
         $this->title = lang('users');
     }
-
     //redirect if needed, otherwise display the user list
     function index()
     {

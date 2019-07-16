@@ -825,7 +825,10 @@ class Ion_auth_model extends CI_Model
                 'staff_firstname' => $users['first_name'],
                 'staff_lastname' => $users['last_name'],
                 'name' => $users['name'],
-                'daycare_id' => $daycare['daycare_id']
+                'daycare_id' => $daycare['daycare_id'],
+                'user_name' => $additional_data['email'],
+                'password' => $additional_data['password'],
+                'daycare_name' => $daycare['name']
             );
             $this->email->set_mailtype('html');
             $from = $this->config->item('smtp_user');
