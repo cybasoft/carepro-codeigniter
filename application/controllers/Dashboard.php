@@ -25,7 +25,8 @@ class Dashboard extends CI_Controller
                 page('parent/parent_dashboard', compact('children'));
     
             } elseif(is('staff')) {
-                redirect('rooms');
+                // redirect('rooms');
+                page('parent/parent_dashboard', compact('children'));
     
             } else {
                 $this->dashboard_page('dashboard/pending',$data = [],$daycare_id);
@@ -55,7 +56,9 @@ class Dashboard extends CI_Controller
                 dashboard_page('parent/parent_dashboard',compact('children'),$daycare_id);
     
             } elseif(is('staff')) {
-                redirect('rooms');
+                // redirect('rooms');
+                dashboard_page('dashboard/home',compact('daycare','address'),$daycare_id);
+
             } else {                
                 dashboard_page('dashboard/pending',$data = [],$daycare_id);
             }

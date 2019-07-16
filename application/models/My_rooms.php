@@ -26,6 +26,17 @@ class My_rooms extends CI_Model
         return $room;
     }
 
+    function room_count($id){
+        $res= $this->db
+            ->select('*')
+            ->from('child_rooms AS cr')
+            ->join('child_room_staff AS crs', 'crs.room_id=cr.id','inner')
+            ->where('crs.user_id', $id)
+            ->get()
+            ->result();
+       return count($res);
+    }
+
     function getRoom($id)
     {
         $room = $this->db->where('id', $id)->get('child_rooms')->row();

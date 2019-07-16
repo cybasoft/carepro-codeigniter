@@ -19,6 +19,7 @@
                 </div>
             </div>
         </div>
+        <?php if(!is('staff')):?>
         <div class="card">
             <div class="card-body">
                 <table class="table">
@@ -45,7 +46,6 @@
                 </table>
             </div>
         </div>
-
         <div class="card">
             <div class="card-header with-border">
                 <div class="card-title"><i class="fa fa-money"></i> <?php echo lang('invoices_due'); ?></div>
@@ -65,6 +65,24 @@
                 </li>
             </ul>
         </div>
+        <?php else: ?>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title"><i class="fa fa-money"></i>List of Rooms</div>
+            </div>
+            <div class="card-body">
+            <table class="table">
+                   <?php $rooms = $this->user->rooms(user_id());
+                       foreach($rooms as $room):
+                   ?>
+                    <tr>                    
+                        <td><a href="rooms/view/<?php echo $room->id; ?>"><?php echo  $room->name;?></a></td>
+                    </tr>
+                    <?php endforeach;?>
+            </table>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 
     <div class="col-lg-9 col-md-8 col-sm-8">
@@ -78,6 +96,7 @@
                     </div>
                 </div>
             </div>
+            <?php if(!is('staff')):?>
             <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('parents'); ?>'">
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
@@ -119,6 +138,17 @@
                     </div>
                 </div>
             </div>
+            <?php else: ?>
+            <div class="col-md-3 col-sm-6 col-xs-12 cursor" onclick="location.href='<?php echo site_url('rooms'); ?>'">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-user-alt"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><?php echo lang('Rooms'); ?></span>
+                        <span class="info-box-number"><?php echo $this->rooms->room_count(user_id());?></span>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
         <div class="row hidden-sm-up">
             <section class="col-sm-12 connectedSortable">
