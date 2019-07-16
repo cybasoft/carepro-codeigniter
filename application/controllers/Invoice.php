@@ -391,7 +391,7 @@ class Invoice extends CI_Controller
             'id' => $admin['address_id']
         ))->row_array();
         //get child data
-        $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
+        $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();        
         $invoice_items = $this->invoice->getInvoiceItems($id);
         $child = $this->child->first($invoice->child_id);
 
@@ -432,8 +432,9 @@ class Invoice extends CI_Controller
 
             $fileName = 'application/temp/invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf';
             file_put_contents($fileName, $output);
-
-            $send_email = $this->sendInvoice($child, $fileName, $image, $daycare_logo);
+            $created_date = date("d/m/Y", strtotime($invoice->created_at));
+            $due_date = date("d/m/Y", strtotime($invoice->date_due));
+            $send_email = $this->sendInvoice($child, $fileName, $image, $daycare_logo,$created_date,$due_date);
             if ($send_email != "") {
                 flash('error', sprintf(lang('No parent assigned to child'), $child->first_name));
             } else {
@@ -444,7 +445,7 @@ class Invoice extends CI_Controller
         redirectPrev();
     }
 
-    function sendInvoice($child, $fileName, $image, $daycare_logo)
+    function sendInvoice($child, $fileName, $image, $daycare_logo,$created_date,$due_date)
     {
         $this->load->config('email');
         $this->load->library('email');
@@ -470,7 +471,9 @@ class Invoice extends CI_Controller
                     'parent_name' => $parent->first_name . ' ' . $parent->last_name,
                     'child_name' => $child->first_name . ' ' . $child->last_name,
                     'image' => $image,
-                    'daycare_logo' => $daycare_logo
+                    'daycare_logo' => $daycare_logo,
+                    'created_date' => $created_date,
+                    'due_date' => $due_date
                 );
                 $this->email->set_mailtype('html');
                 $from = $this->config->item('smtp_user');
