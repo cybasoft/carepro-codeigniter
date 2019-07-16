@@ -754,6 +754,12 @@ class Ion_auth_model extends CI_Model
         ));
         $daycare = $daycare_details->row_array();
 
+        $managers = $this->db->select('us.*,ug.*')
+                    ->where('daycare_id', $users['daycare_id'])
+                    ->from('users as us')
+                    ->join('users_groups as ug', 'ug.user_id = us.id')
+                    ->get()->result_array();        
+
         $users_group = $this->db->get_where('users_groups', array(
             'user_id' => $user_id
         ));
@@ -792,7 +798,12 @@ class Ion_auth_model extends CI_Model
         $this->trigger_events('extra_set');
         $this->db->insert($this->tables['users'], $userData);
         $id = $this->db->insert_id();
-        logEvent($user_id = NULL,"User {$additional_data['first_name']} {$additional_data['last_name']} has been added.",$care_id = NULL);
+        if($users['first_name'] == NULL){
+            $user_name = $users['name'];
+        }else{
+            $user_name = $users['first_name'] . " " . $users['last_name'];
+        }
+        logEvent($user_name = $user_name,"User {$additional_data['first_name']} {$additional_data['last_name']} has been added.",$care_id = NULL);
 
         //register to group        
         if (!empty($groups)) {
@@ -827,6 +838,23 @@ class Ion_auth_model extends CI_Model
             $this->email->message($body);        //Send mail
             if ($this->email->send()) {
                 $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+            }
+        }
+
+        if(is('staff')){
+            foreach($managers as $mg){
+                if($mg['group_id'] == 2){
+                    $data = [                    
+                        'to' => $mg['email'],
+                        'subject' => lang('parent_subject'),
+                        'logo' => $this->session->userdata('company_logo'),
+                        'name' => $mg['first_name'] . " " . $mg['last_name'],
+                    ];
+                    $parent_name = $additional_data['first_name'] . " " . $additional_data['last_name'];
+                    $message = sprintf(lang('assigned_parent'),$parent_name);     
+                    $data['message'] = $message;
+                    send_email($data);
+                }
             }
         }
         //notify admin

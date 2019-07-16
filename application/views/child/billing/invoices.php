@@ -45,7 +45,7 @@
                                         <div class="dropdown-menu">
                                             <?php echo anchor('invoice/' . $invoice->id . '/view', icon('folder-open') . ' ' . lang('Open'), 'class="dropdown-item"'); ?>
                                             <?php echo anchor('invoice/' . $invoice->id . '/download?dl', icon('file-pdf') . ' ' . lang('Download'), 'class="dropdown-item"'); ?>
-                                            <?php echo anchor('invoice/' . $invoice->id . '/download?send', icon('envelope') . ' ' . lang('send_to_parent'), 'class="dropdown-item"'); ?>
+                                            <?php if(!is('parent')): echo anchor('invoice/' . $invoice->id . '/download?send', icon('envelope') . ' ' . lang('send_to_parent'), 'class="dropdown-item"'); endif;?>
                                             <?php echo anchor('invoice/' . $invoice->id . '/preview', icon('print') . ' ' . lang('Print'), 'target="_blank" class="dropdown-item"'); ?>
                                             <?php if ($stripe->stripe_enabled == 1 && $invoice->totalDue != 0 && $key != '') : ?>
                                                 <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#stripe_pay" class="dropdown-item pay_button" data-due-amount="<?php echo $invoice->totalDue; ?>"><i class="fab fa-cc-stripe"></i> Pay</a>

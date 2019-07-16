@@ -106,7 +106,7 @@
                                 <?php elseif(is('staff')): ?>
                                     <?php if ($group->id == user_roles()['parent']):?>
                                     <label class="check"><?php echo lang($group->name); ?>
-                                            <?php echo form_radio('group', $group->id, set_radio('group', $group->id)); ?>
+                                            <?php echo form_radio('group', $group->id, set_radio('group', $group->id,TRUE)); ?>
                                             <span class="checkmark"></span>
                                         </label>                                    
                                     <?php endif; ?>                                     

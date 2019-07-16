@@ -168,6 +168,11 @@ class My_child extends CI_Model
             'daycare_id' => $daycare_id
         ));      
         $daycare = $daycare_details->row_array(); 
+        $managers = $this->db->select('us.*,ug.*')
+                    ->where('daycare_id', $daycare['id'])
+                    ->from('users as us')
+                    ->join('users_groups as ug', 'ug.user_id = us.id')
+                    ->get()->result_array();                    
         if(is('parent') || is('staff')){
             $status = 0;
         }else{
@@ -198,7 +203,22 @@ class My_child extends CI_Model
         } else {
             return FALSE;
         }
-
+        if(is('staff')){
+            foreach($managers as $mg){
+                if($mg['group_id'] == 2){
+                    $data = [                    
+                        'to' => $mg['email'],
+                        'subject' => lang('child_subject'),
+                        'logo' => $this->session->userdata('company_logo'),
+                        'name' => $mg['first_name'] . " " . $mg['last_name'],
+                    ];
+                    $child_name = $this->input->post('first_name') . " " . $this->input->post('last_name');
+                    $message = sprintf(lang('assigned_child'),$child_name);     
+                    $data['message'] = $message;
+                    send_email($data);
+                }
+            }
+        }
         //assign child to user if this user is parent
         if(is('parent')) {            
             $data2 = [
