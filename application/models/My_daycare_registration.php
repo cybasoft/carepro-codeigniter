@@ -35,7 +35,8 @@ class My_daycare_registration extends CI_Model
                 'phone' => $this->input->post('phone'),
                 'daycare_id' => $daycare_id,
                 'logo' => $image
-            );                        
+            );  
+            $this->session->set_userdata('company_name',$this->input->post('name'));                      
             $status = $this->send_welcome_email($daycare_id,$activation_code,$data,$image);
             $result = array(
                 'success' => $status,

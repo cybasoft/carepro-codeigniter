@@ -48,6 +48,7 @@ class Dashboard extends CI_Controller
                 $logo = '';        
             }     
             $this->session->set_userdata('company_logo',$logo);
+            $this->session->set_userdata('company_name',$daycare['name']);
             if(is(['super','admin','manager'])) {
                 dashboard_page('dashboard/home',compact('daycare','address'),$daycare_id);
     
