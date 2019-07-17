@@ -25,7 +25,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item"><?php echo anchor('messaging', icon('envelope') . ' ' . lang('Messages'), 'class="nav-link"'); ?></li>
+                <!-- <li class="nav-item"><?php echo anchor('messaging', icon('envelope') . ' ' . lang('Messages'), 'class="nav-link"'); ?></li> -->
                 <?php if (is(['manager', 'admin', 'staff', 'parent'])) : ?>
                     <li class="nav-item">
                         <a class="nav-link" title="Register Child" href="#" data-toggle="modal" data-target="#registerChildModal">

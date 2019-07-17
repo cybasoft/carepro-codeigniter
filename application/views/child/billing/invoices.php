@@ -65,7 +65,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">Invoice Stripe Payment</h4>
+                                <h4 class="modal-title" id="myModalLabel">Invoice Payment</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -104,6 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <a href="javascript:void(0)" class="mr-auto">Powered by Stripe</a>
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close'); ?></button>
                                     <button class="btn btn-primary"><?php echo lang('Pay'); ?></button>
                                 </div>

@@ -17,7 +17,7 @@
         font-weight: 700;
     }
     .card-body{
-        font-family: Poppins-Regular, Sans-serif, serif;
+        font-family: Verdana;
     }
 </style>
 </head>

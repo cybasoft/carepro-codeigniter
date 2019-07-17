@@ -22,6 +22,7 @@
         <?php if(!is('staff')):?>
         <div class="card">
             <div class="card-body">
+                <div class="table-responsive">
                 <table class="table">
                     <tr>
                         <td><?php echo lang('Facility ID'); ?>:</td>
@@ -44,6 +45,7 @@
                         <td><?php echo session('company_fax'); ?></td>
                     </tr>
                 </table>
+                </div>
             </div>
         </div>
         <div class="card">
