@@ -24,7 +24,7 @@
              <span><strong>Password:</strong> <?php echo $password; ?></span>
          </p>
         Visit <?php echo $daycare_name; ?>:
-        <p><a href="<?php echo base_url(); ?>/dashboard" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">
+        <p><a href="<?php echo base_url(); ?>dashboard" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">
          Visit Dashboard</a><br/><br/>
          <span>Please change your password after first login.</span>
         </p>

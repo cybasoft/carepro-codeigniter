@@ -168,7 +168,7 @@ class RoomsController extends CI_Controller
     {
         allow(['admin', 'manager']);
 
-        $this->form_validation->set_rules('user_id[]', lang('children'), 'required|trim|xss_clean');
+        $this->form_validation->set_rules('user_id[]', lang('staff'), 'required|trim|xss_clean');
         $this->form_validation->set_rules('room_id', lang('room'), 'required|trim|xss_clean');
         if($this->form_validation->run() == TRUE) {
 

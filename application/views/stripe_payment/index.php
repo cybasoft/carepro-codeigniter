@@ -220,6 +220,7 @@
                     .removeClass('d-none')
                     .find('.alert')
                     .text(response.error.message);
+                    $('.loading_div').hide();
             } else {
                 var token = response['id'];
                 $form.find('input[type=text]').empty();

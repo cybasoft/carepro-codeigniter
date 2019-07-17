@@ -176,7 +176,7 @@ class My_child extends CI_Model
         if(is('parent') || is('staff')){
             $status = 0;
         }else{
-            $status = 1;
+            $status = $this->input->post('status');
         }
         $data = [
             'nickname' => $this->input->post('nickname'),
