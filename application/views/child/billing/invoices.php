@@ -97,7 +97,7 @@
                                     </div>
                                     <div class='form-row row'>
                                         <div class='col-md-12 error form-group d-none'>
-                                            <div class='alert-danger alert'>
+                                            <div class='alert-danger alert ml-0'>
                                                 <?php echo lang('Please correct the errors and try again.'); ?>
                                             </div>
                                         </div>

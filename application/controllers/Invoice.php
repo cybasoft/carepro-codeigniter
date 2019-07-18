@@ -1,4 +1,6 @@
-<?php use Dompdf\Dompdf;
+<?php
+
+use Dompdf\Dompdf;
 use Dompdf\Options;
 use Dompdf\FrameReflower\Page;
 
@@ -72,7 +74,7 @@ class Invoice extends CI_Controller
         $child = $this->child->first($invoice->child_id);
         $subTotal = $this->invoice->subTotal($invoice_id);
         $totalPaid = $this->invoice->amountPaid($invoice->id);
-        $totalDue = (float)$subTotal - (float)$totalPaid;
+        $totalDue = (float) $subTotal - (float) $totalPaid;
         $totalTax = 0;
         page(
             $this->module . 'invoice_view',
@@ -194,10 +196,10 @@ class Invoice extends CI_Controller
         $daycare_id = $this->session->userdata('owner_daycare_id');
         allow(['admin', 'manager', 'staff']);
         $child = $this->child->first($id);
-        $settings_data = $this->db->get_where('daycare_settings',array(
+        $settings_data = $this->db->get_where('daycare_settings', array(
             'daycare_id' => $this->session->userdata('daycare_id')
         ));
-        $settings = $settings_data->row();       
+        $settings = $settings_data->row();
         $invoice_terms = $settings->invoice_terms;
         page($this->module . 'create_invoice', compact('child', 'daycare_id', 'invoice_terms'));
     }
@@ -242,7 +244,7 @@ class Invoice extends CI_Controller
      * @param $id
      */
     function addItem($id)
-    {        
+    {
         $this->form_validation->set_rules('item_name', lang('item'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('description'), 'required|xss_clean');
         $this->form_validation->set_rules('price', lang('price'), 'required|xss_clean|callback_is_money');
@@ -259,7 +261,7 @@ class Invoice extends CI_Controller
             $last_id = $this->db->insert_id();
             if ($query) {
                 $child_id = $this->invoice->get($id)->child_id;
-                logEvent($user_id = NULL,"Added invoice Item {$this->input->post('item_name')} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
+                logEvent($user_id = NULL, "Added invoice Item {$this->input->post('item_name')} for child {$this->child->child($child_id)->first_name}", $care_id = NULL);
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -274,10 +276,25 @@ class Invoice extends CI_Controller
     function preview()
     {
         $invoice_id = $this->uri->segment(2);
-        $settings = $this->db->get_where('daycare_settings',array(
+        $settings = $this->db->get_where('daycare_settings', array(
             'daycare_id' => $this->session->userdata('daycare_id')
         ));
-        $invoice_logo = $settings->row()->invoice_logo;        
+        $invoice_logo = $settings->row()->invoice_logo;
+        $admin = $this->db->select('us.*,ug.*')
+            ->where('daycare_id', $this->session->userdata('daycare_id'))
+            ->from('users as us')
+            ->join('users_groups as ug', 'ug.user_id = us.id')
+            ->get()->result();
+        foreach ($admin as $ad) {
+            if ($ad->group_id == 1) {
+                $admin_email = $ad->email;
+                $admin_address = $ad->address_id;
+            }
+        }
+        $address = $this->db->get_where('address',array(
+            'id' => $admin_address
+        ))->row_array();
+
         $data = array(
             'invoice' => $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row(),
             'invoice_items' => $this->invoice->getInvoiceItems($invoice_id),
@@ -289,12 +306,12 @@ class Invoice extends CI_Controller
     function pay()
     {
         $daycare_id = $this->session->userdata('daycare_id');
-        $users_details = $this->db->get_where('users',array(
+        $users_details = $this->db->get_where('users', array(
             'daycare_id' => $daycare_id
         ));
         $users = $users_details->result();
 
-        $stripe_details = $this->db->get_where('daycare_settings',array(
+        $stripe_details = $this->db->get_where('daycare_settings', array(
             'daycare_id' => $daycare_id
         ));
         $stripe = $stripe_details->row();
@@ -302,21 +319,22 @@ class Invoice extends CI_Controller
         $due_amount = $this->input->post("invoice_amount");
         $invoice_id = $this->uri->segment(2);
 
-        $invoice_details = $this->db->select('invoice.child_id,children.first_name,children.last_name')
-                           ->where('invoice.id', $invoice_id)
-                           ->from('invoices as invoice')
-                           ->join('children', 'children.id = invoice.child_id')
-                           ->get()->row_array();
-        $child_name = $invoice_details['first_name'] ." " . $invoice_details['last_name'];                        
+        $invoice_details = $this->db->select('invoice.child_id,children.first_name,children.last_name,cp.*')
+            ->where('invoice.id', $invoice_id)
+            ->from('invoices as invoice')
+            ->join('children', 'children.id = invoice.child_id')
+            ->join('child_parents as cp','cp.child_id = invoice.child_id')
+            ->get()->row_array();         
+        $child_name = $invoice_details['first_name'] . " " . $invoice_details['last_name'];
         $amount = $due_amount * 100;
-        $parent_name = $this->session->userdata('first_name');     
+        $parent_name = $this->session->userdata('first_name');
         $description = "Invoice amount of " . $due_amount . " paid by "  . $parent_name . " for child " . $child_name;
-        if($stripe->stripe_toggle == 1){
+        if ($stripe->stripe_toggle == 1) {
             $key = $stripe->stripe_sk_test;
-        }else{
-            $key = $stripe->stripe_sk_live;    
+        } else {
+            $key = $stripe->stripe_sk_live;
         }
-        if($key !== ''){
+        if ($key !== '') {
             \Stripe\Stripe::setApiKey($key);
             //stripe make payment
             \Stripe\Charge::create([
@@ -334,43 +352,53 @@ class Invoice extends CI_Controller
                 'date_paid' => date('Y-m-d'),
                 'created_at' => date_stamp()
             );
-            $this->db->insert('invoice_payments',$payment_data);
+            $this->db->insert('invoice_payments', $payment_data);
 
             $invoice_data = array(
                 'invoice_status' => 'paid'
             );
-            $this->db->where('id',$invoice_id)->update('invoices',$invoice_data);
+            $this->db->where('id', $invoice_id)->update('invoices', $invoice_data);
 
-            logEvent($user_id = NULl,"Invoice of amount " . $due_amount . " paid successfully for child " . $child_name,$care_id = NULL);
+            logEvent($user_id = NULl, "Invoice of amount " . $due_amount . " paid successfully for child " . $child_name, $care_id = NULL);
 
-            foreach($users as $user){
-                if($user->first_name == ''){
+            foreach ($users as $user) {
+                if ($user->first_name == '') {
                     $name = $user->name;
-                }else{
+                } else {
                     $name = $user->first_name . " " . $user->last_name;
                 }
-                $user_group = $this->db->get_where('users_groups',array(
+                $user_group = $this->db->get_where('users_groups', array(
                     'user_id' => $user->id
                 ));
                 $group_row = $user_group->row();
                 $group = $group_row->group_id;
-                if($group !== 3){
-                    if($group == 4){
-                        $message = "A Invoice of amount $". $due_amount ." is paid successfully for child " . $child_name;
-                    }else{
-                        $message = "A Invoice of amount $". $due_amount ." is paid successfully by parent " . $parent_name ." for child " . $child_name;
-                    }
-                    $data = [
-                        'subject' => 'Invoice paid',
-                        'to' => $user->email,
-                        'message' => $message,
-                        'logo' => $this->session->userdata('company_logo'),
-                        'name' => $name,
-                    ];
-                    send_email($data);
+                if (($group != 3)) {                                    
+                    if ($group == 4) {
+                        $message = "A Invoice of amount $" . $due_amount . " is paid successfully for child " . $child_name;
+                        if($user->id == $invoice_details['user_id']){       
+                            $data = [
+                                'subject' => 'Invoice paid',
+                                'to' => $user->email,
+                                'message' => $message,
+                                'logo' => $this->session->userdata('company_logo'),
+                                'name' => $name,
+                            ];
+                            send_email($data);
+                        }
+                    } else {                        
+                        $message = "A Invoice of amount $" . $due_amount . " is paid successfully by parent " . $parent_name . " for child " . $child_name;
+                        $data = [
+                            'subject' => 'Invoice paid',
+                            'to' => $user->email,
+                            'message' => $message,
+                            'logo' => $this->session->userdata('company_logo'),
+                            'name' => $name,
+                        ];
+                        send_email($data);
+                    }                    
                 }
             }
-            flash('success',"Invoice paid successfully.");
+            flash('success', "Invoice paid successfully.");
             redirectPrev();
         }
     }
@@ -384,14 +412,14 @@ class Invoice extends CI_Controller
     {
         $daycare_id = $this->session->userdata('owner_daycare_id');
 
-        $admin = $this->db->get_where('users',array(
+        $admin = $this->db->get_where('users', array(
             'daycare_id' => $this->session->userdata('daycare_id')
         ))->row_array();
-        $address = $this->db->get_where('address',array(
+        $address = $this->db->get_where('address', array(
             'id' => $admin['address_id']
         ))->row_array();
         //get child data
-        $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();        
+        $invoice = $this->db->query("SELECT * FROM invoices WHERE id={$id}")->row();
         $invoice_items = $this->invoice->getInvoiceItems($id);
         $child = $this->child->first($invoice->child_id);
 
@@ -400,14 +428,14 @@ class Invoice extends CI_Controller
         // ));
         // $settings = $settings_details->row_array();
         $settings =  $this->db
-                     ->select('ds.*,daycare.logo')
-                     ->where('ds.daycare_id',$this->session->userdata('daycare_id'))
-                     ->from('daycare_settings as ds')
-                     ->join('daycare', 'daycare.id = ds.daycare_id')
-                     ->get()->row_array();
-        
+            ->select('ds.*,daycare.logo')
+            ->where('ds.daycare_id', $this->session->userdata('daycare_id'))
+            ->from('daycare_settings as ds')
+            ->join('daycare', 'daycare.id = ds.daycare_id')
+            ->get()->row_array();
+
         $daycare_logo = $settings['logo'];
-        $image = $settings['invoice_logo'];        
+        $image = $settings['invoice_logo'];
         //format pdf
         $this->load->library('PDF');
 
@@ -419,13 +447,13 @@ class Invoice extends CI_Controller
         $dompdf = new Dompdf($options);
         $dompdf->setPaper('A4', 'portrait');
 
-        $html = $this->load->view($this->module . 'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'image','admin','address'), true);
+        $html = $this->load->view($this->module . 'invoice_pdf', compact('invoice', 'invoice_items', 'child', 'image', 'admin', 'address'), true);
 
         $dompdf->loadHtml($html);
         $dompdf->render();
 
         if (isset($_GET['dl']))
-            $dompdf->stream('invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf');            
+            $dompdf->stream('invoice-' . $invoice->id . '_' . rand(111, 999) . '.pdf');
 
         if (isset($_GET['send'])) {
             $output = $dompdf->output();
@@ -434,7 +462,7 @@ class Invoice extends CI_Controller
             file_put_contents($fileName, $output);
             $created_date = date("d/m/Y", strtotime($invoice->created_at));
             $due_date = date("d/m/Y", strtotime($invoice->date_due));
-            $send_email = $this->sendInvoice($child, $fileName, $image, $daycare_logo,$created_date,$due_date);
+            $send_email = $this->sendInvoice($child, $fileName, $image, $daycare_logo, $created_date, $due_date);
             if ($send_email != "") {
                 flash('error', sprintf(lang('No parent assigned to child'), $child->first_name));
             } else {
@@ -445,7 +473,7 @@ class Invoice extends CI_Controller
         redirectPrev();
     }
 
-    function sendInvoice($child, $fileName, $image, $daycare_logo,$created_date,$due_date)
+    function sendInvoice($child, $fileName, $image, $daycare_logo, $created_date, $due_date)
     {
         $this->load->config('email');
         $this->load->library('email');
@@ -487,7 +515,7 @@ class Invoice extends CI_Controller
                 if ($this->email->send()) {
                     // return true;
                 } else {
-                    $logs = "[".date('m/d/Y h:i:s A', time())."]"."\n\r";
+                    $logs = "[" . date('m/d/Y h:i:s A', time()) . "]" . "\n\r";
                     $logs .= $this->email->print_debugger('message');
                     $logs .= "\n\r";
                     file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
@@ -513,7 +541,7 @@ class Invoice extends CI_Controller
         $this->db->delete($this->invoice_db);
 
         if ($this->db->affected_rows() > 0) {
-            logEvent($user_id = NULL,"Deleted Invoice for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
+            logEvent($user_id = NULL, "Deleted Invoice for child {$this->child->child($child_id)->first_name}", $care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -526,7 +554,7 @@ class Invoice extends CI_Controller
     {
         allow(['admin', 'manager']);
 
-        $items_details = $this->db->get_where('invoice_items',array(
+        $items_details = $this->db->get_where('invoice_items', array(
             'id' => $item_id,
             'invoice_id' => $invoice_id
         ));
@@ -536,7 +564,7 @@ class Invoice extends CI_Controller
         $this->db->delete('invoice_items');
         if ($this->db->affected_rows() > 0) {
             $child_id = $this->invoice->get($invoice_id)->child_id;
-            logEvent($user_id = NULL,"Deleted Invoice item {$items['item_name']} for invoice of child {$this->child->child($child_id)->first_name}",$care_id = NULL);
+            logEvent($user_id = NULL, "Deleted Invoice item {$items['item_name']} for invoice of child {$this->child->child($child_id)->first_name}", $care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));

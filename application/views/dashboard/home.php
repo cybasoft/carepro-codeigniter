@@ -55,7 +55,7 @@
             <div class="card-body">
                 <?php echo lang('total'); ?>
                 <span class="badge">
-                    <?php echo $this->db->where('invoice_status', 2)->get('invoices')->num_rows(); ?>
+                    <?php echo $this->db->where('invoice_status', 'paid')->get('invoices')->num_rows(); ?>
                 </span>
                 <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
             </div>

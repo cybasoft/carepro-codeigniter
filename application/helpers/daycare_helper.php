@@ -126,7 +126,8 @@ function user_roles(){
         'admin' => 1,
         'manager' => 2,
         'staff' =>3,
-        'parent' => 4
+        'parent' => 4,
+        'owner' => 5
     );
     return $roles;
 }

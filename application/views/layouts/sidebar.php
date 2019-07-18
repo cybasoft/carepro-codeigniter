@@ -8,7 +8,7 @@
                         'link' => 'dashboard',
                         'icon' => 'dash',
                         'active' => 'dashboard',
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                        'allow' => ['admin', 'manager', 'staff', 'parent','owner'],
                     ],
                     [
                         'name' => 'Children',
