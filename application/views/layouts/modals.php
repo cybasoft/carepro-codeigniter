@@ -85,12 +85,12 @@
                         <div class="col-lg-6">
                             <?php echo form_label(lang('roles')); ?>
                             <?php foreach ($this->db->get('groups')->result() as $group) : ?>
-                                <?php if (is('admin')) : ?>
+                                <?php if (is('admin')) : if($group->id != 5):?>
                                     <label class="check"><?php echo lang($group->name); ?>
                                         <?php echo form_radio('group', $group->id, set_radio('group', $group->id, true)); ?>
                                         <span class="checkmark"></span>
                                     </label>
-                                <?php elseif (is('manager')) : ?>
+                                    <?php endif; elseif (is('manager')) : ?>
                                     <?php if ($group->id == user_roles()['staff'] || $group->id == user_roles()['parent']) :
                                         if ($group->id == user_roles()['staff']) {
                                             $check = true;

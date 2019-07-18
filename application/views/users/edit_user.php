@@ -86,13 +86,13 @@
                             } else {
                                 $type = 'disabled"';
                             }
-                            if (is('admin')) : ?>
+                            if (is('admin')) : if($group['id'] != 5):?>
                                 <label class="check">
                                     <?php echo $group['name']; ?>
                                     <input type="radio" <?php echo $type; ?> name="groups[]" value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
                                     <span class="checkmark"></span>
                                 </label>
-                            <?php elseif (is('manager')) : ?>
+                        <?php endif; elseif (is('manager')) : ?>
                                 <?php if ($user->id == $this->user->uid() && $group['id'] == user_roles()['manager']) : ?>
                                     <label class="check">
                                         <?php echo $group['name']; ?>
