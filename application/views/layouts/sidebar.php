@@ -69,7 +69,7 @@
                         'name' => 'Logout',
                         'link' => 'logout',
                         'icon' => 'exit',
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                        'allow' => ['admin', 'manager', 'staff', 'parent', 'owner'],
                     ],
                 ];
 

@@ -11,6 +11,7 @@
             <div id="daycare_<?php echo $daycare['id'] ?>" class="collapse <?php if($daycare['id'] == 1){ echo "show"; } ?>" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card-body">
                     <p style="font-weight: 700;">Admin Details:</p>
+                    <div class="table-responsive">
                     <table class="table">
                     <?php foreach ($all_users as $user): if($user['daycare_id'] == $daycare['id'] && $user['group_id'] == 1):?>
                          <tr align="center">
@@ -23,6 +24,7 @@
                         </tr>
                     <?php endif; endforeach; ?>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
