@@ -6,7 +6,11 @@
 <?php echo form_open('create_parent', ['id' => 'loginForm', 'class' => 'login100-form validate-form']); ?>
 <div class="text-center" style="position:absolute;top:0;right:150px">
     <a href="<?php echo site_url(); ?>">
+        <?php if($data['logo'] == ''):?>
         <img class="logo" src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Logo">
+        <?php else: ?>
+        <img class="logo" src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $data['logo']; ?>" alt="Logo">
+        <?php endif; ?>
     </a>
 </div>
 
