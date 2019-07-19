@@ -394,7 +394,9 @@ $(document).ready(function () {
             $form.get(0).submit();
         }
     }
-    $('#logs').DataTable();
+    $('#logs').DataTable({
+        order: [[0, 'desc']],
+    });
     // var table = $('#logs').DataTable( {
     //     processing: true,
     //     serverSide: true,

@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <td><?php echo lang('fax'); ?>:</td>
-                        <td><?php echo session('company_fax'); ?></td>
+                        <td><?php echo $address['fax']; ?></td>
                     </tr>
                 </table>
                 </div>
@@ -54,9 +54,9 @@
             </div>
             <div class="card-body">
                 <?php echo lang('total'); ?>
-                <span class="badge">
+                <!-- <span class="badge">
                     <?php echo $this->db->where('invoice_status', 'paid')->get('invoices')->num_rows(); ?>
-                </span>
+                </span> -->
                 <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
             </div>
         </div>

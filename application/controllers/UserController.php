@@ -25,12 +25,13 @@ class UserController extends CI_Controller
         ));
         $daycare = $daycare_details->row_array();       
 
-        $users = $this->db->select('u.*,ug.group_id,g.name as role')
+        $users = $this->db->select('u.*,ug.group_id,g.name as role,ad.*')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
-            ->get()->result();
+            ->join('address as ad', 'ad.id=u.address_id')
+            ->get()->result();          
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
