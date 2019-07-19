@@ -1444,7 +1444,12 @@ class Ion_auth_model extends CI_Model
 
         $address_data = array(
             'phone' => $data['phone'],
-            'address_line_1' => $data['address'],
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'fax' => $data['fax'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'country' => $data['country'],
             'zip_code' => $data['pin']
         );
         $this->db->update('address',$address_data, ['id' => $user->address_id]);

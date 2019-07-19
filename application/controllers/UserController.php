@@ -143,7 +143,12 @@ class UserController extends CI_Controller
             'pin' => $this->input->post('pin'),
             'phone' => $this->input->post('phone'),
             'phone2' => $this->input->post('phone2'),
-            'address' => $this->input->post('address')
+            'address_line_1' => $this->input->post('address_line_1'),
+            'address_line_2' => $this->input->post('address_line_2'),
+            'fax' => $this->input->post('fax'),
+            'city' => $this->input->post('city'),
+            'state' => $this->input->post('state'),
+            'country' => $this->input->post('country')
         );
         if(is(['admin','manager','staff'])) : //only admin can assign roles
             //Update the groups user belongs to

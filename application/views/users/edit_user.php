@@ -57,9 +57,45 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('address'));
-                        echo form_textarea('address', $address->address_line_1, ['class' => 'form-control']);
+                        echo form_label(lang('address line 1'));
+                        echo form_input('address_line_1', $address->address_line_1, ['class' => 'form-control', 'required' => '']);
                         ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('address line 2'));
+                        echo form_input('address_line_2', $address->address_line_2, ['class' => 'form-control']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('fax'));
+                        echo form_input('fax', $address->fax, ['class' => 'form-control']);
+                        ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('city'));
+                        echo form_input('city', $address->city, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('state'));
+                        echo form_input('state', $address->state, ['class' => 'form-control', 'required' => '']);
+                        ?>
+                    </div>
+                    <div class="col-sm-6">
+                        <?php
+                        echo form_label(lang('country'));
+                        ?>
+                        <select id="country" class="form-control" required="" name="country" value="<?php echo $address->country; ?>">
+                            <option value="USA">United States</option>
+                        </select>
                     </div>
                 </div>
                 <hr />
