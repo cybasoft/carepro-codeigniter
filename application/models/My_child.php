@@ -327,6 +327,7 @@ class My_child extends CI_Model
                 $email_data = array(
                     'first_name' => $parent['first_name'],
                     'last_name' => $parent['last_name'],
+                    'logo' => $this->session->userdata('company_logo'),
                     'child_first_name' => $first_name,
                     'child_last_name' => $this->input->post('last_name'),
                     'daycare_id'     => $daycare_id,
@@ -448,7 +449,7 @@ class My_child extends CI_Model
             //mark as checked in
             $this->db->where('id', $child_id)->update('children', ['checkin_status' => 1]);
 
-            $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
+            $this->parent->notify_check_in($child_id, $this->input->post('in_guardian'));
 
             logEvent($id = NULL,"Added checked in for {$this->child($child_id)->first_name}",$care_id = NULL);
             return TRUE;

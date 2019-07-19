@@ -8,7 +8,7 @@
 <body>
     <div style="width: 93%;background: #D5F2F4 !important;height: 100%;padding: 4% 3%;font-family:Verdana">
         <div style="background-color:white;padding: 4% 3%;">
-        <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">   
+        <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">   
         <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $first_name . ' ' . $last_name; ?>,</p>
         <p>
         <p>Your child <?php echo $child_first_name . ' '; ?><?php echo $child_last_name; ?>
