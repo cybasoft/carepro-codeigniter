@@ -10,6 +10,7 @@
         <div style="background-color:white !important;padding: 4% 4%;width:90%;margin-left: 1%;">
         <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">   
         <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $first_name.' '.$last_name; ?>,</p>
+        <?php if($staff_firstname !== "" || $name !== ""): ?>
         <p>
         <?php if($staff_firstname !== ""): ?>
         <?php echo $staff_firstname.' '.$staff_lastname; ?>
@@ -18,6 +19,10 @@
         <?php endif; ?>
         has invited you to <?php echo $daycare_name; ?> dashboard.
          </p>
+<?php else:?>
+    <p>You have registered successfully for <?php echo $daycare_name; ?>.</p>
+    <p>Your account still need to be activated.<br/>Once it is done we will notify you.</p>
+<?php endif; ?>
          <p>
              Your login credentials are:<br/>
              <span><strong>Email:</strong> <?php echo $user_name; ?></span><br/>

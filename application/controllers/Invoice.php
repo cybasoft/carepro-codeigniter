@@ -283,22 +283,22 @@ class Invoice extends CI_Controller
         $admin = $this->db->select('us.*,ug.*')
             ->where('daycare_id', $this->session->userdata('daycare_id'))
             ->from('users as us')
+            ->group_by('us.daycare_id')
             ->join('users_groups as ug', 'ug.user_id = us.id')
-            ->get()->result();
-        foreach ($admin as $ad) {
-            if ($ad->group_id == 1) {
-                $admin_email = $ad->email;
-                $admin_address = $ad->address_id;
-            }
-        }
+            ->get()->row_array();
+            if ($admin['group_id'] == 1) {
+                $admin_email = $admin['email'];
+                $admin_address = $admin['address_id'];
+            }        
         $address = $this->db->get_where('address',array(
             'id' => $admin_address
         ))->row_array();
-
         $data = array(
             'invoice' => $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row(),
             'invoice_items' => $this->invoice->getInvoiceItems($invoice_id),
-            'invoice_logo' => $invoice_logo
+            'invoice_logo' => $invoice_logo,
+            'address' => $address,
+            'admin' => $admin
         );
         $this->load->view($this->module . 'invoice_print', $data);
     }
