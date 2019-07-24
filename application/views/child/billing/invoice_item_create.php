@@ -10,13 +10,13 @@
             </div>
             <?php echo form_open('invoice/'.$invoice[0]->id.'/addItem'); ?>
             <div class="modal-body">
-                <label><?php echo lang('item_name'); ?></label>
+                <label><?php echo lang('item_name'); ?><span class="field_required"> *</span></label>
                 <input type="text" name="item_name" class="form-control" required/>
-                <label><?php echo lang('description'); ?></label>
+                <label><?php echo lang('description'); ?><span class="field_required"> *</span></label>
                 <input type="text" name="description" class="form-control" required/>
-                <label><?php echo lang('price'); ?></label>
+                <label><?php echo lang('price'); ?><span class="field_required"> *</span></label>
                 <input type="text" name="price" class="form-control" required/>
-                <label><?php echo lang('quantity'); ?></label>
+                <label><?php echo lang('quantity'); ?><span class="field_required"> *</span></label>
                 <input type="number" name="qty" class="form-control" required/>
             </div>
             <div class="modal-footer">

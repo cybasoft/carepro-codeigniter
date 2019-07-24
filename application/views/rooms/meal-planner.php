@@ -237,7 +237,7 @@
                 <label><?php echo lang('Date'); ?></label>
                 <?php echo form_date('meal_date', date('Y-m-d'), 'class="form-control"'); ?>
 
-                <label><?php echo lang('Food item'); ?></label>
+                <label><?php echo lang('Food item'); ?><span class="field_required"> *</span></label>
                 <?php echo form_input('name', NULL, 'class="form-control" required="required"'); ?>
             </div>
             <div class="modal-footer">

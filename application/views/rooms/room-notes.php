@@ -62,8 +62,8 @@
             <?php echo form_open('rooms/addNote'); ?>
             <?php echo form_hidden('room_id', $room->id); ?>
             <div class="modal-body">
-                <?php echo form_label(lang('Notes'));
-                echo form_textarea('notes', '', ['class' => 'form-control']);
+                <?php echo form_label(lang('Notes'), 'notes', ['class' => 'required']);
+                echo form_textarea('notes', '', ['class' => 'form-control', 'id' =>'notes']);
                 ?>
             </div>
             <div class="modal-footer">

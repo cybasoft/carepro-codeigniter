@@ -40,10 +40,10 @@
                 <table class="table  table-bordered" id="invoice-form">
                     <thead>
                         <tr>
-                            <th><?php echo lang('item_name'); ?></th>
-                            <th><?php echo lang('description'); ?></th>
-                            <th><?php echo lang('item_price'); ?></th>
-                            <th><?php echo lang('item_quantity'); ?></th>
+                            <th><?php echo lang('item_name'); ?><span class="field_required"> *</span></th>
+                            <th><?php echo lang('description'); ?><span class="field_required"> *</span></th>
+                            <th><?php echo lang('item_price'); ?><span class="field_required"> *</span></th>
+                            <th><?php echo lang('item_quantity'); ?><span class="field_required"> *</span></th>
                             <th><?php echo lang('total'); ?></th>
                         </tr>
                     </thead>

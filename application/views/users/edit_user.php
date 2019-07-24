@@ -15,28 +15,28 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('first_name'));
-                        echo form_input('first_name', $user->first_name, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('first_name'),'first_name',['class' => 'required']);
+                        echo form_input('first_name', $user->first_name, ['class' => 'form-control', 'required' => '', 'id' => 'first_name']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('last_name'));
-                        echo form_input('last_name', $user->last_name, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('last_name'),'last_name', ['class' => 'required']);
+                        echo form_input('last_name', $user->last_name, ['class' => 'form-control', 'required' => '', 'id' => 'last_name']);
                         ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('email'));
-                        echo form_input('email', $user->email, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('email'),'email',['class' => 'required']);
+                        echo form_input('email', $user->email, ['class' => 'form-control', 'required' => '', 'id' => 'email']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('Phone'), 'phone');
-                        echo form_input('phone', $address->phone, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('Phone'), 'phone', ['class' => 'required']);
+                        echo form_input('phone', $address->phone, ['class' => 'form-control', 'required' => '', 'id' => 'phone']);
                         ?>
                     </div>
                 </div>
@@ -49,16 +49,16 @@
                     </div>
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('pin'));
-                        echo form_input('pin', $address->zip_code, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('pin'),'pin',['class' => 'required']);
+                        echo form_input('pin', $address->zip_code, ['class' => 'form-control', 'required' => '', 'id' => 'pin']);
                         ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('address line 1'));
-                        echo form_input('address_line_1', $address->address_line_1, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('address line 1'), 'address_line_1', ['class' => 'required']);
+                        echo form_input('address_line_1', $address->address_line_1, ['class' => 'form-control', 'required' => '', 'id' => 'address_line_1']);
                         ?>
                     </div>
                     <div class="col-sm-6">
@@ -77,16 +77,16 @@
                     </div>
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('city'));
-                        echo form_input('city', $address->city, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('city'), 'city', ['class' => 'required']);
+                        echo form_input('city', $address->city, ['class' => 'form-control', 'required' => '', 'id' => 'city']);
                         ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('state'));
-                        echo form_input('state', $address->state, ['class' => 'form-control', 'required' => '']);
+                        echo form_label(lang('state'), 'state', ['class' => 'required']);
+                        echo form_input('state', $address->state, ['class' => 'form-control', 'required' => '', 'id' => 'state']);
                         ?>
                     </div>
                     <div class="col-sm-6">

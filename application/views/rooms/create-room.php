@@ -16,8 +16,8 @@
                 <?php echo form_open('rooms/store'); ?>
                 <div class="modal-body">
                     <?php
-                    echo form_label(lang('name'), 'name');
-                    echo form_input('name', NULL, ['class' => 'form-control', 'required' => 'required']);
+                    echo form_label(lang('name'), 'name', ['class' => 'required']);
+                    echo form_input('name', NULL, ['class' => 'form-control', 'required' => 'required', 'id' => 'name']);
 
                     echo form_label(lang('description'), 'description');
                     echo form_input('description', NULL, ['class' => 'form-control']);

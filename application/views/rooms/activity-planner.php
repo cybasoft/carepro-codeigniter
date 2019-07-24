@@ -128,7 +128,7 @@
             <?php echo form_hidden('room_id', $room->id); ?>
 
             <div class="modal-body">
-                <label><?php echo lang('Activity'); ?></label>
+                <label><?php echo lang('Activity'); ?><span class="field_required"> *</span></label>
                 <?php echo form_input('name', NULL, 'class="form-control" required="required" required="required"'); ?>
 
                 <div class="row">

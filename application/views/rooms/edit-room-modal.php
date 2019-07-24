@@ -14,8 +14,8 @@
             <?php echo form_hidden('room_id', $room->id); ?>
             <div class="modal-body">
                 <?php
-                echo form_label(lang('name'), 'name');
-                echo form_input('name', $room->name, ['class' => 'form-control']);
+                echo form_label(lang('name'), 'name', ['class' => 'required']);
+                echo form_input('name', $room->name, ['class' => 'form-control', 'id' => 'name']);
 
                 echo form_label(lang('description'), 'descriptoin');
                 echo form_input('description', $room->description, ['class' => 'form-control']);
