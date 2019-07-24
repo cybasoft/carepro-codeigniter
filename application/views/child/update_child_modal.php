@@ -16,16 +16,16 @@
                     <div class="col-sm-6">
                         <?php echo form_label(lang('nickname'));
                         echo form_input('nickname', $child->nickname, ['class' => 'form-control' ]);
-                        echo form_label(lang('first_name'));
-                        echo form_input('first_name', $child->first_name, ['class' => 'form-control','required'=>'']);
-                        echo form_label(lang('last_name'));
-                        echo form_input('last_name', $child->last_name, ['class' => 'form-control', 'required'=>'']);
+                        echo form_label(lang('first_name'), 'first_name', ['class' => 'required']);
+                        echo form_input('first_name', $child->first_name, ['class' => 'form-control','required'=>'', 'id' => 'first_name']);
+                        echo form_label(lang('last_name'), 'last_name', ['class' => 'required']);
+                        echo form_input('last_name', $child->last_name, ['class' => 'form-control', 'required'=>'', 'id' => 'last_name']);
                         echo form_label(lang('birthday'));
                         echo form_date('bday', date('Y-m-d', strtotime($child->bday)), ['class' => 'form-control']);
                         echo form_label(lang('gender'));
                         echo form_dropdown('gender', ['male'=>lang('male'),'female'=>lang('female'),'other'=>lang('other')],$child->gender, ['class' => 'form-control', 'required'=>'']);
-                        echo form_label('ID');
-                        echo form_input('national_id', decrypt($child->national_id), ['class' => 'form-control', 'required'=>'' ]);
+                        echo form_label('ID', 'national_id', ['class' => 'required']);
+                        echo form_input('national_id', decrypt($child->national_id), ['class' => 'form-control', 'required'=> '', 'id' => 'national_id']);
                         ?>
                     </div>
                     <div class="col-sm-6">

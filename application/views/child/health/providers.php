@@ -51,14 +51,18 @@
             <?php echo form_open('child/addProvider'); ?>
             <div class="modal-body">
                 <?php echo form_hidden('child_id', $child->id); ?>
-                <input type="text" name="name" class="form-control" required placeholder="<?php echo lang('name'); ?>"/>
+                <span class="field_required">*</span>
+                <input type="text" name="name" class="form-control" required placeholder="<?php echo lang('name'); ?>"/>                
                 <br/>
+                <span class="field_required">*</span>
                 <input type="text" name="type_role" class="form-control" required
                        placeholder="<?php echo lang('type_role_help'); ?>"/>
                 <br/>
+                <span class="field_required">*</span>
                 <input type="text" name="phone" class="form-control" required
                        placeholder="<?php echo lang('phone'); ?>"/>
                 <br/>
+                <span class="field_required">*</span>
                 <input type="text" name="address" class="form-control" required
                        placeholder="<?php echo lang('address'); ?>"/>
                 <br/>

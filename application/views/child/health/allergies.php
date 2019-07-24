@@ -63,8 +63,8 @@
             <?php echo form_hidden('child_id', $child->id); ?>
             <div class="modal-body">
                 <?php
-                echo form_label(lang('name'), 'allergy');
-                echo form_input('allergy', null, ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('name'), 'allergy', ['class' => 'required']);
+                echo form_input('allergy', null, ['class' => 'form-control', 'required' => '', 'id' => 'allergy']);
 
                 echo form_label(lang('reaction'), 'reaction');
                 echo form_input('reaction', null, ['class' => 'form-control']);

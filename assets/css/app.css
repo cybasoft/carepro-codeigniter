@@ -1,20 +1,24 @@
 .custom-switch {
     padding-left: 2.25rem;
 }
+
 .custom-control-label {
     position: relative;
     margin-bottom: 0;
     vertical-align: top;
 }
+
 .custom-switch .custom-control-label::before {
     left: -2.25rem;
     width: 1.75rem;
     pointer-events: all;
     border-radius: .5rem;
 }
+
 .custom-control-label::before, .custom-file-label, .custom-select {
-    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+
 .custom-control-label::before {
     position: absolute;
     top: .25rem;
@@ -27,6 +31,7 @@
     background-color: #fff;
     border: #adb5bd solid 1px;
 }
+
 .custom-switch .custom-control-label::after {
     top: calc(.25rem + 2px);
     left: calc(-2.25rem + 2px);
@@ -34,10 +39,11 @@
     height: calc(1rem - 4px);
     background-color: #adb5bd;
     border-radius: .5rem;
-    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-transform .15s ease-in-out;
-    transition: transform .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: transform .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-transform .15s ease-in-out;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-transform .15s ease-in-out;
+    transition: transform .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: transform .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-transform .15s ease-in-out;
 }
+
 .custom-control-label::after {
     position: absolute;
     top: .25rem;
@@ -48,13 +54,20 @@
     content: "";
     background: no-repeat 50%/50% 50%;
 }
+
 .custom-control-input:checked~.custom-control-label::before {
     color: #fff;
     border-color: #007bff;
     background-color: #007bff;
 }
+
 .custom-switch .custom-control-input:checked~.custom-control-label::after {
     background-color: #fff;
     -webkit-transform: translateX(.75rem);
     transform: translateX(.75rem);
+}
+
+label.required:after,.field_required{
+    content: " *";
+    color: #d02323;
 }

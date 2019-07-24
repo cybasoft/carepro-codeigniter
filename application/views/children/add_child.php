@@ -13,8 +13,9 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-6">
-                        <?php echo form_label(lang('nickname'));
-                        echo form_input('nickname', set_value('nickname'), ['class' => 'form-control' ]);
+                        <?php
+                        echo form_label(lang('nickname'));
+                        echo form_input('nickname', set_value('nickname'), ['class' => 'form-control', 'id' => 'nickname' ]);
                         echo form_label(lang('first_name'));
                         echo form_input('first_name',set_value('first_name'), ['class' => 'form-control','required'=>'']);
                         echo form_label(lang('last_name'));

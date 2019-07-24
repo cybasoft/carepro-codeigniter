@@ -12,8 +12,8 @@
             <?php echo form_open_multipart('meds/addMedicationToChild'); ?>
             <div class="modal-body">
                 <?php echo form_hidden('child_id', '');
-                echo form_label(lang('medication'), 'med_name');
-                echo form_input('med_name', null, ['class' => 'form-control','required'=>'']);
+                echo form_label(lang('medication'), 'med_name' , ['class' => 'required']);
+                echo form_input('med_name', null, ['class' => 'form-control','required'=>'','id' => 'med_name']);
                 echo form_label(lang('notes'), 'med_notes');
                 echo form_input('med_notes', null, ['class' => 'form-control']);
                 echo form_label(lang('Medication photo'), 'photo');

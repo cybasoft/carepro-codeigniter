@@ -78,20 +78,20 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <?php echo form_label(lang('first_name'));
-                        echo form_input('first_name', null, ['class' => 'form-control', 'required' => '']);
+                        <?php echo form_label(lang('first_name'),'first_name',['class' => 'required']);
+                        echo form_input('first_name', null, ['class' => 'form-control', 'required' => '', 'id' => 'first_name']);
                         ?>
                     </div>
                     <div class="col-md-6">
-                        <?php echo form_label(lang('last_name'));
-                        echo form_input('last_name', null, ['class' => 'form-control', 'required' => '']);
+                        <?php echo form_label(lang('last_name'), 'last_name', ['class' => 'required']);
+                        echo form_input('last_name', null, ['class' => 'form-control', 'required' => '', 'id' => 'last_name']);
                         ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <?php echo form_label(lang('cellphone'));
-                        echo form_input('cell', null, ['class' => 'form-control', 'required' => '']);
+                        <?php echo form_label(lang('cellphone'), 'cellphone', ['class' => 'required']);
+                        echo form_input('cell', null, ['class' => 'form-control', 'required' => '', 'id' => 'cellphone']);
                         ?>
                     </div>
                     <div class="col-md-6">
@@ -102,13 +102,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <?php echo form_label(lang('relation'));
-                        echo form_input('relation', null, ['class' => 'form-control', 'required' => '']);
+                        <?php echo form_label(lang('relation'), 'relation', ['class' => 'required']);
+                        echo form_input('relation', null, ['class' => 'form-control', 'required' => '', 'id' => 'relation']);
                         ?>
                     </div>
                     <div class="col-md-6">
-                        <?php echo form_label(lang('pin'));
-                        echo form_input('pin', null, ['class' => 'form-control', 'required' => '']);
+                        <?php echo form_label(lang('pin'), 'pin',['class' => 'required']);
+                        echo form_input('pin', null, ['class' => 'form-control', 'required' => '', 'id' => 'pin']);
                         ?>
                     </div>
                 </div>

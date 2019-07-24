@@ -280,18 +280,14 @@ class Invoice extends CI_Controller
             'daycare_id' => $this->session->userdata('daycare_id')
         ));
         $invoice_logo = $settings->row()->invoice_logo;
-        $admin = $this->db->select('us.*,ug.*')
-            ->where('daycare_id', $this->session->userdata('daycare_id'))
-            ->from('users as us')
+        $admin = $this->db->select('dy.*,us.email')
+            ->where('dy.id', $this->session->userdata('daycare_id'))
+            ->from('daycare as dy')
+            ->join('users as us', 'us.daycare_id = dy.id')
             ->group_by('us.daycare_id')
-            ->join('users_groups as ug', 'ug.user_id = us.id')
-            ->get()->row_array();
-            if ($admin['group_id'] == 1) {
-                $admin_email = $admin['email'];
-                $admin_address = $admin['address_id'];
-            }        
+            ->get()->row_array();     
         $address = $this->db->get_where('address',array(
-            'id' => $admin_address
+            'id' => $admin['address_id']
         ))->row_array();
         $data = array(
             'invoice' => $this->db->query("SELECT * FROM invoices WHERE id={$invoice_id}")->row(),

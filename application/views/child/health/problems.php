@@ -66,16 +66,16 @@
             <?php echo form_open('child/addProblem'); ?>
             <?php echo form_hidden('child_id', $child->id); ?>
             <div class="modal-body">
-                <?php echo form_label(lang('Problem name'));
-                echo form_input('name', '', ['class' => 'form-control', 'required' => '']);
+                <?php echo form_label(lang('Problem name'),'name',['class' => 'required']);
+                echo form_input('name', '', ['class' => 'form-control', 'required' => '', 'id' => 'name']);
                 ?>
 
-                <?php echo form_label(lang('Notes'));
-                echo form_input('notes', '', ['class' => 'form-control']);
+                <?php echo form_label(lang('Notes'), 'notes', ['class' => 'required']);
+                echo form_input('notes', '', ['class' => 'form-control', 'id' => 'notes']);
                 ?>
 
-                <?php echo form_label(lang('Date first occurred'));
-                echo form_date('first_event', '', ['class' => 'form-control', 'required' => '']);
+                <?php echo form_label(lang('Date first occurred'), 'first_event', ['class' => 'required']);
+                echo form_date('first_event', '', ['class' => 'form-control', 'required' => '', 'id' => 'first_event']);
                 ?>
 
                 <?php echo form_label(lang('Date last occurred'));

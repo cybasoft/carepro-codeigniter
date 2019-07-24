@@ -27,7 +27,7 @@
             </div>
             <div class="modal-body">
                 <?php echo form_open_multipart('child/'.$child->id.'/uploadPhoto', 'class="input-group"'); ?>
-
+                <span class="field_required mr-1">*</span>
                 <input class="form-control" type="file" name="userfile" size="20"/>
                 <button class="btn btn-info input-group-btn" type="submit">
                     <?php echo lang('upload'); ?></button>

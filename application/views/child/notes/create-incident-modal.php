@@ -11,28 +11,28 @@
             <?php echo form_hidden('child_id', $child->id); ?>
             <div class="modal-body">
                 <?php
-                echo form_label(lang('title'));
-                echo form_input('title', set_value('title'), ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('title'), 'title', ['class' => 'required']);
+                echo form_input('title', set_value('title'), ['class' => 'form-control', 'required' => '', 'id' => 'title']);
                 //
                 echo '<div class="row">';
                 echo '<div class="col-md-6">';
-                echo form_label(lang('date'));
-                echo form_date('date', set_value('date',date('Y-m-d')), ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('date'), 'date', ['class' => 'required']);
+                echo form_date('date', set_value('date',date('Y-m-d')), ['class' => 'form-control', 'required' => '', 'id' => 'date']);
                 echo '</div>';
                 echo '<div class="col-md-6">';
-                echo form_label(lang('time'));
-                echo form_time('time', set_value('time',date('H:i')), ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('time'), 'time', ['class' => 'required']);
+                echo form_time('time', set_value('time',date('H:i')), ['class' => 'form-control', 'required' => '', 'id' => 'time']);
                 echo '</div>';
                 echo '</div>';
                 //
                 echo '<div class="row">';
                 echo '<div class="col-md-6">';
-                echo form_label(lang('location'));
-                echo form_input('location', set_value('location'), ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('location'), 'location', ['class' => 'required']);
+                echo form_input('location', set_value('location'), ['class' => 'form-control', 'required' => '', 'id' => 'location']);
                 echo '</div>';
                 echo '<div class="col-md-6">';
-                echo form_label(lang('incident_type'));
-                echo form_input('incident_type', set_value('incident_type'), ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('incident_type'),'incident_type',['class' => 'required']);
+                echo form_input('incident_type', set_value('incident_type'), ['class' => 'form-control', 'required' => '', 'id' => 'incident_type']);
                 echo '</div>';
                 echo '</div>';
                 //
@@ -40,8 +40,8 @@
                 echo form_textarea('actions_taken', set_value('actions_taken'), ['class' => 'form-control']);
                 echo form_label(lang('Description'));
                 echo form_textarea('description', htmlspecialchars_decode(set_value('description')), ['class' => 'form-control editor']);
-                echo form_label(lang('Witntesses'));
-                echo form_textarea('witnesses', set_value('witnesses'), ['class' => 'form-control','required'=>'']);
+                echo form_label(lang('Witntesses'), 'witnesses', ['class' => 'required']);
+                echo form_textarea('witnesses', set_value('witnesses'), ['class' => 'form-control','required'=>'', 'id' => 'witnesses']);
                 echo form_label(lang('Remarks'));
                 echo form_input('remarks', set_value('remarks'), ['class' => 'form-control']);
                 ?>
