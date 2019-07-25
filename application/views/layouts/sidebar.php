@@ -52,13 +52,14 @@
                     //     'icon' => 'folder',
                     //     'active' => 'folder',
                     //     'allow' => ['admin', 'manager', 'staff'],
-                    // ], [
-                    //     'name' => 'News',
-                    //     'link' => 'news',
-                    //     'icon' => 'news',
-                    //     'active' => ['news', 'article'],
-                    //     'allow' => ['admin', 'manager', 'staff', 'parent'],
                     // ], 
+                    [
+                        'name' => 'News',
+                        'link' => 'news',
+                        'icon' => 'news',
+                        'active' => ['news', 'article'],
+                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                    ], 
                     [
                         'name' => 'Settings',
                         'link' => 'settings',
