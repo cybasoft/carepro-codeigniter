@@ -21,7 +21,11 @@
                 <?php else : ?>
                     <img src="<?php echo base_url(); ?>assets/uploads/invoice_logo/<?php echo $image; ?>" alt="Daycare logo" style="width: 150px; height: 100px">
                 <?php endif; ?> -->
+                <?php if($daycare_logo == ''): ?>
+                <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 200px;margin-top: 20px">
+                <?php else: ?>
                 <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $daycare_logo; ?>" alt="Daycare logo" style="width: 200px;margin-top: 20px">
+                <?php endif; ?>
 
                 <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $parent_name; ?>,</p>
                 <p>

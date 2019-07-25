@@ -5,9 +5,10 @@
             <a class="navbar-brand" href="<?php echo site_url(); ?>">
                 <b class="logo-icon p-l-10">
                     <?php if (session('company_logo') == '') : ?>
-                        <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000"><?php echo session('company_name'); ?></span>
+                        <!-- <span class="" style="position: absolute; top:-7px; left:45px; z-index: 3000"><?php echo session('company_name'); ?></span>
                         <span class="" style="position: absolute; top:13px; left:50px;
-			            z-index: 3000; font-size: 12px; color: #ffff00; font-family: monospace"><?php echo session('company_slogan'); ?></span>
+                        z-index: 3000; font-size: 12px; color: #ffff00; font-family: monospace"><?php echo session('company_slogan'); ?></span> -->
+                        <img class="light-logo" src="<?php echo base_url() . 'assets/uploads/content/logo.png' ?>" />
                     <?php else : ?>
                         <img class="light-logo" src="<?php echo base_url() . 'assets/uploads/daycare_logo/' . session('company_logo'); ?>" />
 

@@ -10,7 +10,11 @@
 <body>
    <div style="width: 93%;background: #D5F2F4 !important;height: 100%;padding: 4% 3%;font-family:Verdana">
       <div style="background-color:white;padding: 4% 3%;">
-         <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
+      <?php if($logo != ''): ?>
+           <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">   
+        <?php else: ?>
+           <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
+        <?php endif; ?>
          <?php if ($first_name !== '') : ?>
             <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $first_name . ' ' . $last_name;  ?>,</p>
          <?php else : ?>

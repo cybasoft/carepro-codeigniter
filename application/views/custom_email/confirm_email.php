@@ -12,7 +12,7 @@
         <h2 style="color: #03a9f4;">Verify Your Email Address</h2>
         <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $user_name ?>,</p>
         <?php if ($registered_success !== '') : ?>
-                        <p style="font-weight: 700; font-size: 16px"><?php echo $registered_success; ?></p>
+            <p style="font-weight: 700; font-size: 16px"><?php echo $registered_success; ?></p>
         <?php endif; ?>
         <p style="margin-bottom: 30px;">          
             Please confirm your email.<br>

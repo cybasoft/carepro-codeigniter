@@ -8,7 +8,11 @@
 <body>
     <div style="width: 93%;background: #D5F2F4 !important;height: 100%;padding: 4% 3%;font-family:Verdana">
         <div style="background-color:white;padding: 4% 3%;">
+        <?php if($image == ''): ?>
             <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
+        <?php else: ?>
+            <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $image; ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
+        <?php endif; ?>
             <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $user_name; ?>,</p>
             <?php echo $parent_name; ?> has requested for activation of the account.<br />
             <p>Firstname: <?php echo $firstname; ?></p>

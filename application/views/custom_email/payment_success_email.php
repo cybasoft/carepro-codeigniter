@@ -11,7 +11,7 @@
         <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">   
         <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $user_name; ?>,</p>
         <?php if($payment_success !== ''): ?>
-               <p style="font-weight: 700; font-size: 16px"><?php echo $payment_success; ?></p>
+            <p style="font-weight: 700; font-size: 16px"><?php echo $payment_success; ?></p>
         <?php endif; ?>
         Your payment of $<?php echo $price; ?> completed successfully.<br/>
         Thank you for subscription to daycare <?php echo $plan; ?> plan!<br/><br/>

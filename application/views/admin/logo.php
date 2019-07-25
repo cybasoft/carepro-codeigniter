@@ -9,7 +9,11 @@
                 <!-- <?php if (is_file(APPPATH . '../assets/uploads/content/' . session('company_logo'))) : ?>
                                     <img style="width:100%" src="<?php echo base_url() . 'assets/uploads/content/' . session('company_logo'); ?>"/>
                 <?php endif; ?> -->
-                <img src="<?php echo base_url() . 'assets/uploads/daycare_logo/' . $settings->logo; ?>" />
+                <?php if($settings->logo != ''): ?>
+                    <img src="<?php echo base_url() . 'assets/uploads/daycare_logo/' . $settings->logo; ?>" style="width:100%"/>
+                <?php else: ?>
+                    <img src="<?php echo base_url() . 'assets/uploads/content/logo.png' ?>" style="width:100%"/>
+                <?php endif;?>
                 <hr />
 
                 <div class="alert alert-warning">

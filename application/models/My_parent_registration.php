@@ -93,10 +93,10 @@ class My_parent_registration extends CI_Model
         $daycare_details = $this->db->get_where('daycare',array(
             'daycare_id' => $daycare_id
         ));
-        $daycare = $daycare_details->result_array();        
+        $daycare = $daycare_details->row_array();  
 
         $user_details = $this->db->get_where('users',array(
-            'daycare_id' => $daycare[0]['id']
+            'daycare_id' => $daycare['id']
         ));
 
         $users = $user_details->row_array();       
@@ -110,7 +110,8 @@ class My_parent_registration extends CI_Model
             'lastname' => $data['last_name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'daycare_id' => $daycare_id
+            'daycare_id' => $daycare_id,
+            'image' => $daycare['logo']
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
