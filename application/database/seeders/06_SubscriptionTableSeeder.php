@@ -14,8 +14,8 @@ class SubscriptionTableSeeder extends CI_Migration
                 'children' => 10,
                 'staff_members' => 5,
                 'calender_events' => 20,
-                'news_module' => 'No',
-                'rooms' => 'No',
+                'news_module' => 'YEs',
+                'rooms' => 'Yes',
                 'invoices' => 30,
                 'files' => 'No',
                 'price' => 35
@@ -26,7 +26,7 @@ class SubscriptionTableSeeder extends CI_Migration
                 'staff_members' => 10,
                 'calender_events' => 50,
                 'news_module' => 'Yes',
-                'rooms' => 'No',
+                'rooms' => 'Yes',
                 'invoices' => 100,
                 'files' => '250MB',
                 'price' => 59.99

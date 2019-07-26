@@ -29,3 +29,22 @@
 .pricing-table .btn{
     padding: 10px 80px;
 }
+.login_button{
+    float: right;
+    padding: 5px 54px;
+    border-radius: 25px;
+    margin-top: 20px;
+}
+.header_section{
+    height: 90px;
+    padding: 0px 20px;
+    background: #3A4254;
+}
+.container .main_section{
+    padding-top: 55px !important;
+    padding-bottom: 0 !important;
+}
+.logo{
+    padding-top: 10px;
+    width: 200px;
+}

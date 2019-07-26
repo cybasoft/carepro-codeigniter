@@ -1079,7 +1079,11 @@ class Ion_auth_model extends CI_Model
                     'id' => $user->daycare_id
                 ));
                 $daycare = $daycare_details->row_array();
+                $plans = $this->db->get_where('subscription_plans',array(
+                    'id' => $user->selected_plan
+                ))->row_array();
                 $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
+                $this->session->set_userdata('plan',$plans);
                 $this->update_last_login($user->id);
                 $this->set_session($user);
                 $this->clear_login_attempts($identity);
