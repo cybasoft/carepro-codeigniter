@@ -53,6 +53,7 @@ class Auth extends CI_Controller
                 $this->session->set_userdata('company_logo',$daycare['logo']);
                 if ($login == "1") {
                     $check_parent = $this->session->userdata("users");
+                    $this->session->set_userdata('company_name',$daycare['name']);
                     $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
                     $users_details = $this->db->get_where('users', array(
                         'email' => $email,

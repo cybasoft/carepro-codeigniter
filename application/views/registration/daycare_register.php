@@ -97,7 +97,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <p for="avatar">Logo *</p>
+                            <p for="avatar">Logo</p>
                             <div class="media align-items-center form-group ml-0">
                                 <img src="<?php echo base_url(); ?>assets/img/daycare/default-user-image.png" alt="daycare logo" class="ui-w-100 img_preview mr-3" id="img_preview">
                                 <div class="media-body" id="img_div">

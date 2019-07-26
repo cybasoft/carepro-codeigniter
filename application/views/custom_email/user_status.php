@@ -24,10 +24,10 @@
          <p>
             Your acccount has been
             <?php if ($user_status == "deactivate") : ?>
-               deactivated for daycarepro app.<br />
+               deactivated for <?php echo $this->session->userdata('company_name'); ?>.<br />
                Ask your manager to activate it again.
             <?php else : ?>
-               activated for daycarepro app.<br />
+               activated for <?php echo $this->session->userdata('company_name'); ?>.<br />
                Visit Link: <br />
                <p>
                   <a href="<?php echo base_url(); ?>/login" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit Dashboard</a>
