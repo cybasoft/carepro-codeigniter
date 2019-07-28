@@ -73,7 +73,9 @@
     <div class="container-login100-form-btn mt-2">
         <?php echo anchor('select_daycare', lang('Parent Registration'), ['class' => 'login100-form-btn']); ?>
     </div>
-
+    <div class="container-login100-form-btn mt-3">
+    <span>Need an account? <?php echo anchor('/', lang('Register your Daycare')); ?></span>
+    </div>
     <?php if (session('company_allow_registration') == TRUE) : ?>
         <div class="text-center p-t-46 p-b-20">
             <?php echo anchor('auth/register', '<span class="fa fa-user"></span> ' . lang('register'), ['class' => 'txt2']); ?>

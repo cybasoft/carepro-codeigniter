@@ -49,7 +49,8 @@ class Auth extends CI_Controller
                 $daycare_details = $this->db->get_where('daycare', array(
                     'id' => $users['daycare_id']
                 ));
-                $daycare = $daycare_details->row_array();                
+                $daycare = $daycare_details->row_array();          
+                $this->session->set_userdata('company_logo',$daycare['logo']);
                 if ($login == "1") {
                     $check_parent = $this->session->userdata("users");
                     $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
@@ -86,25 +87,6 @@ class Auth extends CI_Controller
                 'placeholder' => 'Captcha'
             );
             $data['captcha_image'] = $captcha['image'];
-
-            //daycare logo
-            // if ($daycare_id !== Null) {
-            //     $query = $this->db->get_where('daycare', array(
-            //         'daycare_id' => $daycare_id
-            //     ));
-            //     $result = $query->result();
-            //     $logo = $result[0]->logo;
-            //     $image = $logo;
-            //     $daycare = 'yes';
-            // } else {
-            //     $logo = '';
-            //     $image = "";
-            //     $daycare = 'no';
-            // }
-            // $this->session->set_userdata('company_logo', $logo);
-            // $data['logo'] = $image;
-            // $data['daycare'] = $daycare;
-            // $data['daycare_id'] =  $daycare_id;
             $this->page('login', compact('data'));
         }
     }

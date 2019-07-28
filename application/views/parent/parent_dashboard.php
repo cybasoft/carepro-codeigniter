@@ -14,9 +14,13 @@
             <div class="card">
                 <div class="card-header box-border">
                     <h3 class="card-title">
+                    <?php if($child->status == 1): ?>
                         <a href="<?php echo site_url( 'child/'.$child->id); ?>">
                             <?php echo $child->first_name.' '.$child->last_name; ?>
                         </a>
+                    <?php else: ?>
+                        <?php echo $child->first_name.' '.$child->last_name; ?>
+                    <?php endif; ?>
                     </h3>
                 </div>
                 <div class="card-body">
@@ -29,7 +33,7 @@
                             <?php else: ?>
                                 <img class="img-circle img-responsive img-thumbnail"
                                      style="width:150px;height:150px"
-                                     src="<?php echo base_url(); ?>assets/img/content/no-image.png"/>;
+                                     src="<?php echo base_url(); ?>assets/img/content/no-image.png"/>
                             <?php endif; ?>
                         </div>
 
@@ -47,41 +51,54 @@
                             <?php echo lang('status'); ?>
                             <?php echo ($child->status == 1) ? lang('active_status') : lang('inactive_status'); ?>
                         </div>
-
+                        <?php if($child->status == 1): ?>
                         <div class="col-sm-7">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="row callout callout-info">
-                                        <div class="col-sm-2 h2">
+                                        <div class="col-sm-2">
                                             <h2><?php echo $this->child->totalRecords('child_notes', $child->id); ?></h2>
                                         </div>
-                                        <div class="col-sm-10"><?php echo lang('notes'); ?></div>
+                                        <div class="col-sm-10">
+                                        <strong class="h4"><?php echo lang('notes'); ?></strong><br/>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-sm-4">
-                                    <div class="row callout callout-warning">
+                                <div class="col-sm-3">
+                                    <div class="row callout callout-success">
                                         <div class="col-sm-2">
-                                            <h2><?php echo $this->child->totalrecords('child_meds', $child->id); ?></h2>
+                                            <h2><?php echo $this->child->totalRecords('child_notes', $child->id); ?></h2>
                                         </div>
                                         <div class="col-sm-10">
-                                            <strong class="h4"><?php echo lang('medications'); ?></strong><br/>
+                                        <strong class="h4"><?php echo lang('medications'); ?></strong><br/>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="row callout callout-danger">
                                         <div class="col-sm-2">
                                             <h2><?php echo $this->child->totalRecords('child_allergy', $child->id); ?></h2>
                                         </div>
-                                        <div class="col-sm-10"> <?php echo lang('allergies'); ?></div>
+                                        <div class="col-sm-10"> 
+                                        <strong class="h4"><?php echo lang('allergies'); ?></strong><br/>
+                                     </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="row callout callout-warning">
+                                        <div class="col-sm-12">
+                                            <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <strong class="h4"><?php echo lang('invoice'); ?></strong><br/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
 
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

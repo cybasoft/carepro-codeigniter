@@ -53,7 +53,7 @@
                     <?php endif; ?>
                 </h3>
 
-                <?php $rooms = $this->db->where('child_id', $child->id)->from('child_rooms')->join('child_room', 'child_room.room_id=child_rooms.id')->get(); ?>
+                <?php $rooms = $this->db->where('child_id', $child->id)->from('child_room')->join('child_rooms', '(child_room.room_id=child_rooms.id)')->get();?>
                 <?php foreach ($rooms->result() as $room) : ?>
                     <a href="<?php echo site_url('rooms/view/' . $room->id); ?>" class="label label-info"><?php echo $room->name; ?></a>
                 <?php endforeach; ?>

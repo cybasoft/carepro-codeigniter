@@ -12,12 +12,18 @@ class My_rooms extends CI_Model
      */
     function all()
     {
-        $res= $this->db->get($this->table)->result();
+        $daycare_id = $this->session->userdata('daycare_id');       
+        $res= $this->db->where('daycare_id',$daycare_id)->get($this->table)->result();
         foreach($res as $key=>$r){
             $res[$key]->total_children=$this->db->where('room_id',$r->id)->count_all_results('child_room');
             $res[$key]->total_staff = $this->db->where('room_id',$r->id)->count_all_results('child_room_staff');
         }
         return $res;
+    }
+
+    function rooms($id){
+        $room = $this->db->where('id', $id)->get('child_rooms')->row();
+        return $room;
     }
 
     function getRoom($id)
@@ -63,17 +69,19 @@ class My_rooms extends CI_Model
      */
     function store()
     {
+        $daycare_id = $this->session->userdata('daycare_id');       
         $this->db->insert($this->table,
             [
                 'name' => $this->input->post('name'),
                 'description' => $this->input->post('description'),
                 'created_at' => date_stamp(),
+                'daycare_id' => $daycare_id
             ]
         );
 
         if($this->db->affected_rows() > 0)
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL,"Added room ID: {$last_id}");
+            logEvent($user_id = NULL,"Added room {$this->input->post('name')}",$care_id = NULL);
             return TRUE;
 
         return FALSE;
@@ -94,7 +102,7 @@ class My_rooms extends CI_Model
         );
 
         if($this->db->affected_rows() > 0)
-            logEvent($user_id = NULL, "Updated room ID: {$this->input->post('room_id')}");
+            logEvent($user_id = NULL, "Updated room {$this->input->post('name')}",$care_id = NULL);
             return TRUE;
 
         return FALSE;
@@ -176,17 +184,19 @@ class My_rooms extends CI_Model
      */
     function addNote()
     {
+        $room_id = $this->input->post('room_id');
+        $content = $this->input->post('notes');
         $data = [
             'user_id' => $this->user->uid(),
-            'room_id' => $this->input->post('room_id'),
-            'content' => $this->input->post('notes'),
+            'room_id' => $room_id,
+            'content' => $content,
             'created_at' => date_stamp(),
         ];
         $this->db->insert('child_room_notes', $data);
-
+        
         if($this->db->affected_rows() > 0)
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Added note ID: {$last_id} for room ID: {$this->input->post('room_id')}");
+            logEvent($user_id = NULL, "Added note {$content} for room {$this->rooms->rooms($room_id)->name}",$care_id = NULL);
             return TRUE;
 
         return FALSE;

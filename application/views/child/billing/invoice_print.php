@@ -47,8 +47,13 @@
 <body onload="javascript:print()">
 <div class="container" style="font-family: courier, monospace">
     <div class="text-center">
+    <?php if($invoice_logo === NULL): ?>
         <img style="width:200px;"
              src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_invoice_logo'); ?>"/>
+    <?php else: ?>
+        <img style="width:200px;"
+             src="<?php echo base_url(); ?>assets/uploads/invoice_logo/<?php echo $invoice_logo; ?>"/>
+    <?php endif; ?>
     </div>
     <h1 class="text-center"><?php echo lang('INVOICE'); ?></h1>
     <hr/>

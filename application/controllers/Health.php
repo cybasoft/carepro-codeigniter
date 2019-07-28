@@ -88,7 +88,7 @@ class Health extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('child_allergy');
         if($this->db->affected_rows() > 0) {
-            logEvent($user_id=NULL,"Deleted allergy ID: {$id} for child ID: {$allergies->child_id}");
+            logEvent($user_id=NULL,"Deleted allergy {$allergies->allergy} for child {$this->child->child($allergies->child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -129,7 +129,7 @@ class Health extends CI_Controller
         ));
         $contacts = $contact_details->row();       
         if($this->db->where('id', $id)->delete('child_contacts')) {
-            logEvent($user_id = NULL,"Deleted child contact ID: {$id} for child ID: {$contacts->child_id}");
+            logEvent($user_id = NULL,"Deleted child contact {$contacts->contact_name} for child {$this->child->child($contacts->child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));
@@ -172,7 +172,7 @@ class Health extends CI_Controller
         ));
         $providers = $providers_detail->row();       
         if($this->db->where('id', $id)->delete('child_providers')) {
-            logEvent($user_id = NULL,"Deleted provider ID: {$id} for child ID: {$providers->child_id}");
+            logEvent($user_id = NULL,"Deleted provider {$providers->provider_name} for child {$this->child->child($providers->child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));
@@ -217,7 +217,7 @@ class Health extends CI_Controller
         ));
         $problems = $problem_details->row();       
         if($this->db->where('id', $id)->delete('child_problems')) {
-            logEvent($user_id = NULL,"Deleted child problem ID: {$id} for child ID: {$problems->child_id}");
+            logEvent($user_id = NULL,"Deleted child problem {$problems->name} for child {$this->child->child($problems->child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_danger'));

@@ -51,7 +51,7 @@ class My_child extends CI_Model
     public function children()
     {
         $daycare_id = $this->session->userdata('daycare_id');
-        return $this->db->where('daycare_id',$daycare_id)->get('children');
+        return $this->db->where(['daycare_id'=>$daycare_id,'status' => 1])->get('children');
     }
 
     /**
@@ -74,6 +74,7 @@ class My_child extends CI_Model
         $this->db->where('child_parents.child_id', $child_id);
         $this->db->select('*');
         $this->db->from('users');
+        $this->db->join('address','users.address_id=address.id');
         $this->db->join('child_parents', 'child_parents.user_id=users.id');
         return $this->db->get();
     }
@@ -166,8 +167,7 @@ class My_child extends CI_Model
         $daycare_details = $this->db->get_where('daycare',array(
             'daycare_id' => $daycare_id
         ));      
-        $daycare = $daycare_details->row_array();
-
+        $daycare = $daycare_details->row_array(); 
         if(is('parent')){
             $status = 0;
         }else{
@@ -200,16 +200,53 @@ class My_child extends CI_Model
         }
 
         //assign child to user if this user is parent
-        if(is('parent')) {
+        if(is('parent')) {            
             $data2 = [
                 'child_id' => $last_id,
                 'user_id' => $this->user->uid(),
             ];
             $this->db->insert('child_parents', $data2);
+            $user_details = $this->db->get_where('users',array(
+                'daycare_id' => $daycare['id']
+            ));
+            $users = $user_details->result();
+    
+            $child_name = $this->input->post('first_name') . " " .$this->input->post('last_name');
+            $parent_id = $this->session->userdata('user_id');
+            foreach ($users as $row) {
+                if($parent_id == $row->id){
+                    if($row->first_name == ''){
+                        $parent_name = $row->name;
+                    }else{
+                        $parent_name = $row->first_name;
+                    }
+                    if($row->first_name == ''){
+                        $name = $row->name;
+                    }else{
+                        $name = $row->first_name . " " . $row->last_name;
+                    }
+                    $user_group = $this->db->get_where('users_groups',array(
+                        'user_id' => $row->id
+                    ));
+                    $group_row = $user_group->row();
+                    $group = $group_row->group_id;
+                    if($group == 1 || $group == 2){
+                        $message = "A child " . $child_name . " added to daycare by parent " . $parent_name .".";
+                        $data = [
+                            'subject' => 'Child Register',
+                            'to' => $row->email,
+                            'message' => $message,
+                            'logo' => $this->session->userdata('company_logo'),
+                            'name' => $name,
+                        ];
+                        send_email($data);
+                    }
+                }                
+            }
         }
 
         //log event
-        logEvent($id = NULL,"Added child ID: {$last_id}");
+        logEvent($id = NULL,"Added child {$this->input->post('first_name')} {$this->input->post('last_name')}",$care_id = NULL);
 
         if($getID) {
             return $last_id;
@@ -235,9 +272,10 @@ class My_child extends CI_Model
         $children = $child_details->row_array();
 
         $status = $this->input->post('status');
+        $first_name = $this->input->post('first_name');
         $data = [
             'nickname' => $this->input->post('nickname'),
-            'first_name' => $this->input->post('first_name'),
+            'first_name' => $first_name,
             'last_name' => $this->input->post('last_name'),
             'bday' => $this->input->post('bday'),
             'national_id' => encrypt($this->input->post('national_id')),
@@ -269,7 +307,7 @@ class My_child extends CI_Model
                 $email_data = array(
                     'first_name' => $parent['first_name'],
                     'last_name' => $parent['last_name'],
-                    'child_first_name' => $this->input->post('first_name'),
+                    'child_first_name' => $first_name,
                     'child_last_name' => $this->input->post('last_name'),
                     'daycare_id'     => $daycare_id,
                     'child_status' => $status
@@ -290,7 +328,7 @@ class My_child extends CI_Model
         }       
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Updated child ID: {$child_id}");
+            logEvent($id = NULL,"Updated child {$first_name}",$care_id = NULL);
 
             flash('success', lang('request_success'));
         } else {
@@ -304,28 +342,70 @@ class My_child extends CI_Model
 
     public function createPickup($id)
     {
+        $photo = $this->pickup_photo();        
+        if(isset($photo['error'])){           
+            $error =  $photo['error'];
+            return $error;
+        }
+        if($_FILES['photo']['name'] !== ''){
+            $image = $photo['photo']['file_name'];
+        }else{
+            $image = '';
+        }
+        $first_name = $this->input->post('first_name');
         $data = [
             'child_id' => $id,
-            'first_name' => $this->input->post('first_name'),
+            'first_name' => $first_name,
             'last_name' => $this->input->post('last_name'),
             'cell' => $this->input->post('cell'),
             'other_phone' => $this->input->post('other_phone'),
             'address' => $this->input->post('address'),
             'pin' => $this->input->post('pin'),
+            'photo' => $image,
             'relation' => $this->input->post('relation'),
             'user_id' => $this->user->uid(),
             'created_at' => date_stamp(),
-        ];
-
+        ];        
         $this->db->insert('child_pickup', $data);
         $insert_id = $this->db->insert_id();
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($user_id = NULL,"Added pickup contact ID: {$insert_id} for child ID: {$id}");
+            logEvent($user_id = NULL,"Added pickup contact {$first_name} for child {$this->child->child($id)->first_name}",$care_id = NULL);
             $this->parent->notifyParents($id, lang('pickup_added_email_subject'), sprintf(lang('pickup_added_email_message'), $data['first_name'].' '.$data['last_name']));
             return $insert_id;
         } else {
             return FALSE;
+        }
+    }
+
+    public function pickup_photo(){
+        $upload_folder = './assets/uploads/pickup';        
+        if(!file_exists($upload_folder)) {
+            mkdir($upload_folder, 0777, TRUE);
+            chmod($upload_folder, 0777);
+        }      
+        $config['upload_path'] = $upload_folder;
+        $config['allowed_types'] = 'jpeg|jpg|png';
+        $config['max_size'] = 2000;
+        $config['max_width'] = 1500;
+        $config['max_height'] = 1500;    
+        $config['encrypt_name'] = TRUE;
+
+        $this->load->library('upload', $config);        
+        if (!$this->upload->do_upload('photo')) {
+            $error = array('error' => $this->upload->display_errors());            
+            if ($errors = $this->lang->line('upload_no_file_selected')) {
+                $errors = '';
+            }
+            if ($errors == '') {
+                return true;
+            } else {
+                flash('error', $errors);
+                return false;
+            }
+        }else {
+            $data = array('photo' => $this->upload->data());
+            return $data;
         }
     }
 
@@ -350,7 +430,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
 
-            logEvent($id = NULL,"Added checked in {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked in for {$this->child($child_id)->first_name}",$care_id = NULL);
             return TRUE;
         }
         return FALSE;
@@ -377,7 +457,7 @@ class My_child extends CI_Model
 
             $this->parent->notify_check_out($child_id, $this->input->post('out_guardian'));
 
-            logEvent($id = NULL,"Added checked out {$child_id} -{$this->child($child_id)->last_name}");
+            logEvent($id = NULL,"Added checked out for {$this->child($child_id)->first_name}",$care_id = NULL);
             return TRUE;
         }
         return FALSE;

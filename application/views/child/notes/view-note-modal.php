@@ -10,7 +10,7 @@
             <div class="modal-body" style="max-height:700px">
                 <div class="row h4 text-purple">
                     <div class="col-xs-4 note-cat"></div>
-                    <div class="col-xs-4 note-user"></div>
+                    <div class="col-xs-4 note-user mr-1"></div>
                     <div class="col-xs-4 note-date"></div>
                 </div>
                 <hr/>

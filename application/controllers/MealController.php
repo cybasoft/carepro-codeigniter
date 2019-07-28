@@ -45,7 +45,7 @@ class MealController extends CI_Controller
         ));
         $meal_plan = $meal_details->row();
         $this->db->where('id',$id)->delete('meal_plan');
-        logEvent($user_id = NULL,"Meals plan ID: {$id} for room ID: {$meal_plan->room_id}");
+        logEvent($user_id = NULL,"Deleted meal plan {$meal_plan->name} for room {$this->rooms->rooms($meal_plan->room_id)->name}",$care_id = NULL);
         flash('success',lang('Meal deleted'));
         redirectPrev(null,'meal');
     }
@@ -60,7 +60,7 @@ class MealController extends CI_Controller
     function clear(){
         allow(['admin', 'manager', 'staff']);
         $this->meal->clear();
-        logEvent($user_id = NULL,"Meal plan has been cleared");
+        logEvent($user_id = NULL,"Meal plan has been cleared",$care_id = NULL);
         flash('success',lang('Meal plan has been cleared'));
         redirectPrev(null,'meal');
     }

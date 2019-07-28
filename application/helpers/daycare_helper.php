@@ -119,6 +119,18 @@ function last_page()
 }
 
 /**
+ * roles of users
+ */
+function user_roles(){
+    $roles = array(
+        'admin' => 1,
+        'manager' => 2,
+        'staff' =>3,
+        'parent' => 4
+    );
+    return $roles;
+}
+/**
  * redirect to previous page
  */
 function redirectPrev($msg = [], $tab = '', $type = 'info')
@@ -322,16 +334,25 @@ function logged_in()
 * @param string
 * @return boolean
 */
-function logEvent($user_id = NULL, $event)
+function logEvent($user_id = NULL, $event, $daycare_id = NULL)
 {
     $ci = &get_instance();
 
     if ($user_id === NULL) {
-        $user_id = $ci->user->uid();
+        $first_name = $ci->session->userdata('first_name');
+        if($first_name == ''){
+            $user_id = $ci->session->userdata('name');
+        }else{
+            $user_id = $ci->session->userdata('first_name') . " " . $user_id = $ci->session->userdata('last_name');
+        }
+    }
+    if($daycare_id === NULL){
+        $daycare_id = $ci->session->userdata('daycare_id');
     }
     $data = [
-        'user_id' => $user_id,
+        'user_name' => $user_id,
         'date' => date("Y-m-d H:i:s", time()),
+        'daycare_id' => $daycare_id,
         'event' => $event,
     ];
     if ($ci->db->insert('event_log', $data))
@@ -361,6 +382,15 @@ function allow($group)
         redirectPrev();
         exit();
     }
+}
+
+//convert date format to 4 june 2019 and time to am pm format
+function event_log_date($log_date){
+    $time = new DateTime($log_date);
+    $date = $time->format('n-j-Y');
+    $dateObj = DateTime::createFromFormat('m-d-Y', $date);
+    $date_time = $dateObj->format('d M Y') ." ". $time->format('g:ia');
+    return $date_time;
 }
 
 function page($page, $data = [])
@@ -585,6 +615,8 @@ function sensitive_options()
     return [
         'smtp_user' => '', 'smtp_pass' => '',
         'stripe_pk_live' => '', 'stripe_sk_live' => '', 'stripe_pk_test' => '', 'stripe_sk_test' => '',
+        'smtp_user', 'smtp_pass',
+        'stripe_pk_live', 'stripe_sk_live', 'stripe_pk_test', 'stripe_sk_test',
     ];
 }
 
@@ -886,11 +918,12 @@ function session($item, $opts = '')
         $ci->session->set_userdata($item);
         return TRUE;
     }
-
     $ci = &get_instance();
 
-    if (!empty($item) && array_key_exists(str_replace('company_', '', $item), general_options()))
+    if (!empty($item) && array_key_exists(str_replace('company_', '', $item), general_options())){
+        
         return $ci->session->userdata($item);
+    }
 
     elseif (!empty($item) && array_key_exists(str_replace('company_', '', $item), sensitive_options()))
         return get_option($item);

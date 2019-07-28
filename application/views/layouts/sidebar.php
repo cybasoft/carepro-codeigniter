@@ -15,7 +15,7 @@
                         'link' => 'children',
                         'icon' => 'children',
                         'active' => ['children', 'child'],
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                        'allow' => ['admin', 'manager', 'staff'],
                     ],
                     [
                         'name' => 'Rooms',
@@ -37,7 +37,7 @@
                         'link' => 'parents',
                         'icon' => 'parents',
                         'active' => 'parents',
-                        'allow' => ['admin', '/manager'],
+                        'allow' => ['admin', 'manager'],
                     ],
                     [
                         'name' => 'Calendar',
@@ -46,19 +46,20 @@
                         'active' => 'calendar',
                         'allow' => ['admin', 'manager', 'staff', 'parent'],
                     ],
+                    // [
+                    //     'name' => 'Files',
+                    //     'link' => 'files',
+                    //     'icon' => 'folder',
+                    //     'active' => 'folder',
+                    //     'allow' => ['admin', 'manager', 'staff'],
+                    // ], [
+                    //     'name' => 'News',
+                    //     'link' => 'news',
+                    //     'icon' => 'news',
+                    //     'active' => ['news', 'article'],
+                    //     'allow' => ['admin', 'manager', 'staff', 'parent'],
+                    // ], 
                     [
-                        'name' => 'Files',
-                        'link' => 'files',
-                        'icon' => 'folder',
-                        'active' => 'folder',
-                        'allow' => ['admin', 'manager', 'staff'],
-                    ], [
-                        'name' => 'News',
-                        'link' => 'news',
-                        'icon' => 'news',
-                        'active' => ['news', 'article'],
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
-                    ], [
                         'name' => 'Settings',
                         'link' => 'settings',
                         'icon' => 'settings',

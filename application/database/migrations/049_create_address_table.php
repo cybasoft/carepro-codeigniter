@@ -26,6 +26,10 @@ class Migration_create_address_table extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 50,
             ),
+            'fax' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+            ),
             'city' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 191,                
@@ -45,9 +49,6 @@ class Migration_create_address_table extends CI_Migration
             'created_at' => array(
                 'type' => 'TIMESTAMP',
                 'default' => 'CURRENT_TIMESTAMP',
-            ),
-            'updated_at' => array(
-                'type' => 'TIMESTAMP',
             )
         ));
 

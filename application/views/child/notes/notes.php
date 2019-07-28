@@ -41,11 +41,13 @@
                 <br/>
                 <div class="card">
                     <div class="card-header">
+                    <?php if(is(['admin', 'manager', 'staff'])): ?>
                         <button type="button" class="btn btn-primary btn-flat btn-sm" data-toggle="modal"
                                 data-target="#newNoteModal">
                             <i class="fa fa-plus-circle"></i>
                             <span class="hidden-sm-up"><?php echo lang('new_note'); ?> </span>
                         </button>
+                    <?php endif; ?>
                     </div>
                     <div class="card-body">
                         <?php foreach ($child->notes as $note): ?>
@@ -171,6 +173,7 @@
             type: 'POST',
             success: function (response) {
                 res = JSON.parse(response);
+                console.log(res);
                 modal.find('.modal-title').html(res.title);
                 modal.find('.note-content').html(decodeHtml(res.content));
                 modal.find('.note-user').html(res.user);

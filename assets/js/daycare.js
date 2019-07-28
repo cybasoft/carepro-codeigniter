@@ -35,4 +35,19 @@ $(document).ready(function() {
     $(".notifictions").delay(2000).hide("slide", {
         direction: "right"
     }, 5000);
+
+    $("#stripe_toggle").click(function(){
+        var checkBoxes = $("input[name=stripe_toggle]");
+        if(checkBoxes.prop("checked") == false){
+            if($(".live_stripe").hasClass('d-none')){
+                $(".live_stripe").removeClass('d-none');
+                $(".test_stripe").addClass('d-none');
+            }
+        }else if(checkBoxes.prop("checked") == true){
+            if($(".test_stripe").hasClass('d-none')){
+                $(".test_stripe").removeClass('d-none');
+                $(".live_stripe").addClass('d-none');
+            }
+        }
+    });
 });

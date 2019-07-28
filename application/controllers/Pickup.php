@@ -21,11 +21,13 @@ class Pickup extends CI_Controller
         $this->form_validation->set_rules('pin', lang('pin'), 'required|integer|trim|xss_clean');
         if ($this->form_validation->run() == TRUE) {
             $pickup = $this->child->createPickup($id);
-            if ($pickup > 0) {
-
-                flash('success', lang('request_success'));
-                //upload photo
-                $this->uploadPhoto($pickup);
+            if ($pickup !== '') {
+                if ($pickup > 0) {
+                    flash('success', lang('request_success'));
+                    $this->uploadPhoto($pickup);
+                } else {
+                    flash('danger', $pickup);
+                }
             } else {
                 flash('warning', lang('request_error'));
             }
@@ -54,10 +56,15 @@ class Pickup extends CI_Controller
             endif;
         }
 
+        $pickup_details = $this->db->get_where('child_pickup',array(
+            'id' => $id
+        ));
+        $pickups = $pickup_details->row();
         //delete entry
         $this->db->where('id', $id);
         if ($this->db->delete('child_pickup')) {
-            logEvent($user_id = NULL, "Deleted pickup contact ID: {$id} for child {$q_row['child_id']}");
+            $child_id = $q_row['child_id'];
+            logEvent($user_id = NULL, "Deleted pickup contact {$pickups->first_name} for child {$this->child->child($child_id)->first_name}", $care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -92,11 +99,11 @@ class Pickup extends CI_Controller
             $errors = $this->upload->display_errors();
             if ($errors = $this->lang->line('upload_no_file_selected')) {
                 $errors = '';
-            }            
-            if($errors == ''){
+            }
+            if ($errors == '') {
                 return true;
-            }else{
-                flash('error',$errors);
+            } else {
+                flash('error', $errors);
                 return false;
             }
         } else {

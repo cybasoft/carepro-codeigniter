@@ -31,12 +31,9 @@
         <?php echo lang('reset_password_submit_btn'); ?>
     </button>
 </div>
+<div class="text-center p-t-46 p-b-20">
+    <?php echo anchor('login', '<span class="fa fa-user"></span> ' . lang('Login'), ['class' => 'txt2']); ?>
+</div>
 
-<?php if (session('company_allow_registration') == TRUE) : ?>
-    <div class="text-center p-t-46 p-b-20">
-        <?php echo anchor($daycare_id . '/login', '<span class="fa fa-user"></span> ' . lang('Login'), ['class' => 'txt2']); ?>
-    </div>
-
-<?php endif; ?>
 
 <?php echo form_close(); ?>

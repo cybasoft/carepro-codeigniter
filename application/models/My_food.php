@@ -17,9 +17,11 @@ class My_food extends CI_Model
      */
     function newPref()
     {
+        $food = $this->input->post('food');
+        $child_id = $this->input->post('child_id');
         $data = array(
-            'child_id' => $this->input->post('child_id'),
-            'food' => $this->input->post('food'),
+            'child_id' => $child_id,
+            'food' => $food,
             'food_time' => $this->input->post('food_time'),
             'comment' => $this->input->post('comment'),
             'created_at' => date_stamp(),
@@ -28,7 +30,7 @@ class My_food extends CI_Model
         if($this->db->insert('child_foodpref', $data)) {
             $last_id = $this->db->insert_id();
             //log
-            logEvent($id = NULL,"Added food pref ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            logEvent($id = NULL,"Added food pref {$food} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_foodpref_subject'), lang('new_foodpref_message'));
             return true;
@@ -55,19 +57,20 @@ class My_food extends CI_Model
         $date = date('Y-m-d', strtotime($this->input->post('date')));
         $date = $date.' '.date('H:i:s', strtotime($this->input->post('time')));
         $child_id = $this->input->post('child_id');
+        $meal_time = $this->input->post('meal_time');
         $this->db->insert('child_food_intake',
             [
                 'child_id' => $child_id,
                 'user_id' => user_id(),
                 'taken_at' => $date,
                 'quantity' => $this->input->post('quantity'),
-                'meal_time' => $this->input->post('meal_time'),
+                'meal_time' => $meal_time,
                 'remarks' => $this->input->post('remarks')
             ]);
 
         if($this->db->affected_rows() > 0) {
             $last_id = $this->db->insert_id();
-            logEvent($user_id = user_id(),"Added food intake record ID: {$last_id} for child ID: {$child_id}");
+            logEvent($user_id = NULL,"Added food intake recorded for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             $this->parent->notifyParents($child_id, lang('Food Intake'), '<p style="font-size: 15px;">Food intake recorded for one of your child.</p>');
 
             //update attendance
@@ -117,7 +120,7 @@ class My_food extends CI_Model
                 ->where('child_id', $data['child_id'])
                 ->where('created_at', date('Y-m-d'))
                 ->update('form_ny_attendance', $data);
-                logEvent($user_id = NULL,"Food intake updated for form_ny_attendance of child ID: {$data['child_id']}");
+                logEvent($user_id = NULL,"Food intake updated for form_ny_attendance of child {$this->child->child($data['child_id'])->first_name}",$care_id = NULL);
         } else {
 
             $mealTimes = $this->mealTimes();
@@ -135,7 +138,7 @@ class My_food extends CI_Model
             $data['updated_at'] = date_stamp();
             $this->db->insert('form_ny_attendance', $data);
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL,"Food intake ID: {$last_id} added for form_ny_attendance of child ID: {$data['child_id']}");
+            logEvent($user_id = NULL,"Food intake {$data['food']} added for form_ny_attendance of child {$this->child->child($data['child_id'])->first_name}",$care_id = NULL);
         }
     }
 

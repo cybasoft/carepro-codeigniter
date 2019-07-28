@@ -15,9 +15,9 @@
             <img src="<?php echo $this->user->photo(session('photo')); ?>"/>
         </div>
         <div class="lockscreen-credentials">
-            <?php echo form_open(uri_string()); ?>
+            <?php echo form_open($this->session->userdata('last_page')); ?>
             <div class="input-group">
-                <input type="password" class="form-control" name="pin" placeholder="pin"/>
+                <input type="password" class="form-control" name="pin" id="pin" placeholder="pin"/>
                 <div class="input-group-btn">
                     <button class="btn btn-flat"><i class="fa fa-arrow-right text-muted"></i></button>
                 </div>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="lockscreen-link">
-        <a class="lockscreen-name label label-success" href="<?php echo site_url($daycare_id.'/logout'); ?>">
+        <a class="lockscreen-name label label-success" href="<?php echo site_url('logout'); ?>">
             <?php echo lang('switch_user'); ?>
         </a>
     </div>
@@ -39,7 +39,7 @@
             history.pushState(null, document.title, location.href);
         });
         $('.lockscreen-credentials').find('form').on('submit', function (e) {
-            e.preventDefault();
+            e.preventDefault();         
             $.ajax({
                 url: 'dashboard/login',
                 type: 'post',
@@ -48,7 +48,7 @@
                    window.location.reload();
                 },
                 error: function( jqXhr, textStatus, errorThrown ){
-                    window.location.href=site_url+$daycare_id+'/logout';
+                    window.location.href=site_url+'/logout';
                 }
             });
         })

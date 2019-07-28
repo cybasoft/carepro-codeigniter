@@ -102,6 +102,7 @@ $route['invoice/(:num)/addItem'] = 'invoice/addItem/$1';
 $route['invoice/(:num)/deleteItem/(:num)'] = 'invoice/deleteItem/$1/$2';
 $route['invoice/(:num)/makePayment'] = 'invoice/makePayment/$1';
 $route['invoice/(:num)/preview'] = 'invoice/preview/$1';
+// $route['invoice/(:num)/pay'] = 'invoice/pay/$1';
 
 // $route['(.*)/invoice/(:num)/download'] = 'invoice/pdf/$1/$2';
 $route['invoice/(:num)/download'] = 'invoice/pdf/$1';
@@ -223,7 +224,6 @@ $route['create_parent'] = 'RegistrationController/create_parent';
 $route['reminder'] = 'EmailreminderController/send_reminder_email';
 // $route['(.*)/dashboard'] = 'dashboard/index/$1'; //daycare dashboard
 // $route['(.*)/logout'] = 'auth/logout/$1'; //daycare login
-$route['store_stripe'] = 'DaycareController/store_stripe_detail';
 
 //profile route
 // $route['(.*)/profile'] = 'Profile/index/$1';
@@ -242,9 +242,14 @@ $route['profile/change_user_pin'] = 'profile/change_pin';
 $route['profile/change_reset_password'] = 'profile/reset_password';
 $route['users/create'] = "UserController/create";
 
-$route['users/view/(.*)/(:num)'] = 'UserController/view/$1/$2';
+$route['users/view/(:num)'] = 'UserController/view/$1';
 // $route['users/update/(.*)/(:num)'] = 'UserController/update/$1/$2';
 $route['users/update/(:num)'] = 'UserController/update/$1';
 // $route['users/delete/(.*)/(:any)'] = 'UserController/delete/$1/$2';
 $route['users/delete/(:any)'] = 'UserController/delete/$1';
 $route['select_daycare'] = 'RegistrationController/select_daycare';
+$route['update'] = 'Settings/update';
+$route['upload_logo'] = 'Settings/upload_logo';
+$route['invoice_logo'] = 'Settings/upload_invoice_logo';
+$route['paymentMethods'] = 'Settings/paymentMethods';
+$route['logs'] = 'Settings/logs';

@@ -96,8 +96,14 @@ class MY_user extends CI_Model
         if($query->num_rows() > 0) {
             $user = $query->row();
 
-            if($item == 'name')
-                return $user->first_name.' '.$user->last_name;
+            if($item == 'name'){
+                if($user->first_name == ''){
+                    $name = $user->name;
+                }else{
+                    $name = $user->first_name.' '.$user->last_name;
+                }
+                return $name;
+            }
 
             if($item !== '')
                 return $user->$item;
@@ -233,11 +239,13 @@ class MY_user extends CI_Model
      */
     function staff()
     {
-        $staff = $this->db->select('users.id,users.first_name,users.last_name,users_groups.group_id')
-            ->where('group_id', 1)
-            ->or_where('group_id', 2)
-            ->or_where('group_id', 3)
-            ->or_where('group_id', 4)
+        $daycare_id = $this->session->userdata('daycare_id');       
+        $staff = $this->db->select('users.id,users.daycare_id,users.name,users.first_name,users.last_name,users_groups.group_id')
+            ->where([
+                'daycare_id' => $daycare_id,
+                'users_groups.group_id' => 3,
+                'active' => 1
+            ])
             ->from('users')
             ->join('users_groups', 'users_groups.user_id=users.id')
             ->get()->result();

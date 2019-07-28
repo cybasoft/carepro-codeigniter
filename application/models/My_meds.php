@@ -2,6 +2,12 @@
 
 class My_meds extends CI_Model
 {
+    function getMeds($id){
+        $meds = $this->db->get_where('child_meds',array(
+            'id' => $id
+        ))->row();
+        return $meds;
+    }
 
     function medPhoto($photo_id)
     {
@@ -20,9 +26,10 @@ class My_meds extends CI_Model
      */
     function addMedicationToChild()
     {
+        $med_name = $this->input->post('med_name');
         $data = [
             'child_id' => $this->input->post('child_id'),
-            'med_name' => $this->input->post('med_name'),
+            'med_name' => $med_name,
             'med_notes' => $this->input->post('med_notes'),
             'photo_id' => $this->input->post('photo_id'),
             'created_at' => date_stamp(),
@@ -33,7 +40,8 @@ class My_meds extends CI_Model
 
         if($this->db->affected_rows() > 0) {
             //log event
-            logEvent($id = NULL,"Added med ID: {$last_id} for child ID: {$this->input->post('child_id')}");
+            $child_id = $this->input->post('child_id');
+            logEvent($id = NULL,"Added med {$med_name} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             //notify parent
             $this->parent->notifyParents($data['child_id'], lang('new_medication_subject'), lang('new_medication_message').' <p><strong>'.$this->input->post('med_name').'</strong></p>');
             return TRUE;
@@ -82,7 +90,7 @@ class My_meds extends CI_Model
             $this->db->insert('med_photos', $data);
 
             if($this->db->affected_rows() > 0)
-                logEvent($user_id = NULL,"Medication Image is added for child");
+                logEvent($user_id = NULL,"Medication Image {$name} is added for child",$care_id = NULL);
                 return TRUE;
         }
         return FALSE;
@@ -118,18 +126,20 @@ class My_meds extends CI_Model
     function administerMed()
     {
         $date = $this->input->post('date').' '.$this->input->post('time');
+        $child_id = $this->input->post('child_id');
         $this->db->insert('meds_admin',
             [
                 'given_at' => $date,
                 'user_id' => user_id(),
                 'med_id' => $this->input->post('med_id'),
-                'child_id' => $this->input->post('child_id'),
+                'child_id' => $child_id,
                 'remarks' => $this->input->post('remarks'),
                 'staff_only' => $this->input->post('staff_only') || 0,
                 'created_at' => date_stamp(),
             ]
         );
         if($this->db->affected_rows() > 0)
+            logEvent($user_name = NULL,"Added meds admin for child {$this->child->child($child_id)->first_name}");
             return TRUE;
         return FALSE;
     }
@@ -153,9 +163,10 @@ class My_meds extends CI_Model
 
     function deleteHistory($id)
     {
+        $meds_admin = $this->db->get_where('meds_admin',array('id' => $id))->row();
         $this->db->where('id', $id)->delete('meds_admin');
         if($this->db->affected_rows() > 0)
-            logEvent($user_id = NULL,"Deleted meds ID: {$id}");
+            logEvent($user_id = NULL,"Deleted meds admin {$this->getMeds($meds_admin->med_id)->med_name}",$care_id = NULL);
             return TRUE;
         return FALSE;
     }

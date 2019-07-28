@@ -193,7 +193,7 @@ class notes extends CI_Controller
             $this->db->insert('notes_categories', ['name' => $this->input->post('name')]);
             $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
-                logEvent($user_id = NULL, "Added category ID: {$last_id}");
+                logEvent($user_id = NULL, "Added notes category {$this->input->post('name')}",$care_id = NULL);
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -209,8 +209,13 @@ class notes extends CI_Controller
     {
         allow(['admin', 'manager']);
 
-        $this->db->where('id', $this->uri->segment(3))->delete('notes_categories');
-        logEvent($user_id = NULL,"Deleted category ID: {$this->uri->segment(3)}");
+        $category_id = $this->uri->segment(3);
+        $category_details = $this->db->get_where('notes_categories',array(
+            'id' => $category_id
+        ));
+        $categorys = $category_details->row();
+        $this->db->where('id', $category_id)->delete('notes_categories');
+        logEvent($user_id = NULL,"Deleted category {$categorys->name}",$care_id = NULL);
         flash('success', lang('request_success'));
         redirectPrev('', 'note-categories');
     }
@@ -224,7 +229,7 @@ class notes extends CI_Controller
             $this->db->insert('notes_tags', ['name' => $this->input->post('name')]);
             $last_id = $this->db->insert_id();
             if($this->db->affected_rows() > 0) {
-                logEvent($user_id = NULL, "Added tag ID: {$last_id}");
+                logEvent($user_id = NULL, "Added notes tag {$this->input->post('name')}",$care_id = NULL);
                 flash('success', lang('request_success'));
             } else {
                 flash('error', lang('request_error'));
@@ -240,8 +245,13 @@ class notes extends CI_Controller
     {
         allow(['admin', 'manager']);
 
-        $this->db->where('id', $this->uri->segment(3))->delete('notes_tags');
-        logEvent($user_id = NULL, "Deleted tag Id: {$this->uri->segment(3)}");
+        $tag_id = $this->uri->segment(3);
+        $tag_details = $this->db->get_where('notes_tags',array(
+            'id' => $tag_id
+        ));
+        $tags = $tag_details->row();
+        $this->db->where('id', $tag_id)->delete('notes_tags');
+        logEvent($user_id = NULL, "Deleted notes tag {$tags->name}",$care_id = NULL);
         flash('success', lang('request_success'));
         redirectPrev('', 'note-categories');
     }

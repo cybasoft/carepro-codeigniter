@@ -28,7 +28,7 @@
                                     <input type="checkbox"
                                            name="user_id[]"
                                            value="<?php echo $s->id; ?>"/>
-                                <span class="staffname"><?php echo $s->first_name.' '.$s->last_name; ?></span>
+                                <span class="staffname"><?php if($s->first_name !== ''){echo $s->first_name.' '.$s->last_name;}else{ echo $s->name;} ?></span>
                             </label>
                             <br/>
                         <?php endforeach; ?>

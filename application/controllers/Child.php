@@ -29,7 +29,7 @@ class Child extends CI_Controller
      */
     public function index($id)
     {        
-        $daycare_id = $this->session->userdata('owner_daycare_id');       
+        $daycare_id = $this->session->userdata('daycare_id');       
         if (!authorizedToChild(user_id(), $id)) {
             flash('error', lang('You do not have permission to view this child\'s profile'));
             redirectPrev();
@@ -41,7 +41,7 @@ class Child extends CI_Controller
         $pickups = $this->db->where('child_id', $id)->get('child_pickup')->result();
         if (empty($child)) {
             flash('error', lang('record_not_found'));
-            redirect($daycare_id.'/children');
+            redirect('children');
         }
         dashboard_page($this->module . 'index', compact('child', 'pickups'),$daycare_id);
     }
@@ -52,10 +52,14 @@ class Child extends CI_Controller
         allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
-            $register = $this->child->register(true,$daycare_id);            
+            $register = $this->child->register(true,$daycare_id);         
             if (false !== $register) {
                 flash('success', lang('request_success'));
-                redirect('child/' . $register);
+                if(is('parent')){
+                    redirect('children', 'refresh');
+                }else{
+                    redirect('child/' . $register);
+                }
             } else {
                 flash('error', lang('request_error'));
             }
@@ -244,7 +248,7 @@ class Child extends CI_Controller
 
                 $parent = $this->My_user->first($this->input->post('parent'));
                 $child = $this->child->first($child_id);               
-                logEvent($id = NULL,"Assigned parent ID: {$parent->id} to child ID: {$child->id}");
+                logEvent($id = NULL,"Assigned parent {$parent->first_name} to child {$child->first_name}",$care_id = NULL);
                 
                 $data = [                    
                     'to' => $parent->email,
@@ -290,10 +294,14 @@ class Child extends CI_Controller
     {
         allow(['admin', 'manager', 'staff']);
 
+        $parent_details = $this->db->get_where('users',array(
+            'id' => $parent_id
+        ));
+        $parent = $parent_details->row_array();
         if ($this->db->where('child_id', $child_id)
             ->where('user_id', $parent_id)
             ->delete('child_parents')) {
-                logEvent($id = NULL,"Deleted parent ID: {$parent_id} for child ID: {$child_id}");
+                logEvent($id = NULL,"Deleted parent {$parent['first_name']} for child {$this->child->child($child_id)->first_name}",$care_id = NULL);
             flash('success', lang('request_success'));
         } else {
             flash('danger', lang('request_error'));
@@ -303,31 +311,40 @@ class Child extends CI_Controller
 
     public function assign_room(){      
         allow(['admin', 'manager']);
-  
-        $rooms_detail = $this->db->get('child_rooms');
-        $rooms = $rooms_detail->result_array();   
+
+        $child_id = $this->input->post('child_id');       
+        $daycare_id = $this->session->userdata('daycare_id');
+        $rooms_detail = $this->db->where('daycare_id',$daycare_id)->get('child_rooms');
+
+        $selected_rooms = $this->db->select('room_id')->where('child_id',$child_id)->get('child_room');
+        $assigned_rooms = $selected_rooms->result_array();
+        $rooms['all_rooms'] = $rooms_detail->result_array();
+        $rooms['selected_rooms'] = $assigned_rooms;
         print(json_encode($rooms));       
     }
 
     public function doassignroom(){
         allow(['admin', 'manager']);
-
+        
+        $daycare_id = $this->session->userdata('daycare_id');
         $this->form_validation->set_rules('room[]', "Room", 'required|trim|xss_clean');
         $this->form_validation->set_rules('child_id', "Child", 'required|trim|xss_clean');
         if($this->form_validation->run() == TRUE) {
             $child_id = $this->input->post('child_id');
+            $this->db->where('child_id',$child_id)->delete('child_room');
+            
             foreach ($this->input->post('room') as $room) {
                 $find =$this->db->limit(1)->where('child_id', $child_id)->where('room_id', $room)->count_all_results('child_room');               
                 if($find == 0) {
                     $this->db->insert('child_room', [
                         'child_id' => $child_id,
                         'room_id' => $room,
+                        'daycare_id' => $daycare_id,
                         'created_at' => date_stamp(),
                     ]);
-                }
-                logEvent($user_id = NULL,"Assigned child ID: {$child_id} for room ID: {$room}");
+                }                  
+                logEvent($user_id = NULL,"Assigned child {$this->child->child($child_id)->first_name} for room {$this->rooms->rooms($room)->name}",$care_id = NULL);
             }
-
             flash('success', lang('request_success'));
         }else{
             validation_errors();

@@ -1,4 +1,4 @@
-<?php foreach ($this->child->getParents($child->id)->result() as $u) : ?>
+<?php foreach ($this->child->getParents($child->id)->result() as $u):?>
     <div class="list list-group">
         <div class="list-group-item">
             <div class="media">
@@ -13,7 +13,7 @@
                         </a>
                         <small class="text-muted room-note-date">
                             <span class="fa fa-lock"></span>
-                            <?php echo $this->user->get($u->id, 'pin'); ?>
+                            <?php echo $u->zip_code; ?>
                         </small>
                     </p>
                     <div class="text-sm room-note">
@@ -21,16 +21,16 @@
                         <br/>
                         <span class="fa fa-inbox"></span> <?php echo $u->email; ?>
                         <br/>
-                        <?php if(!empty($u->address)): ?>
+                        <?php if(!empty($u->address_line_1)): ?>
                             <span class="fa fa-envelope"></span>
-                            <span class="parent-address"><?php echo $u->address; ?></span>
+                            <span class="parent-address"><?php echo $u->address_line_1; ?></span>
                             <br/>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="ml-auto">
                     <?php if(!is('parent')): ?>
-                        <a href="<?php echo site_url('child/'.$child->id.'/'.$u->id.'/removeParent'); ?>"
+                        <a href="<?php echo site_url('child/'.$child->id.'/'.$u->user_id.'/removeParent'); ?>"
                            class="btn btn-danger btn-xs delete pull-right">
                             <span class="fa fa-unlink"></span>
                         </a>

@@ -30,14 +30,14 @@ class UserController extends CI_Controller
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
-            ->get()->result();        
+            ->get()->result();
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id')
             ->join('groups as g','g.id=ug.group_id')
             ->group_by('g.name')
-            ->get()->result();            
+            ->get()->result();
        $role=[];
 
         for($i=0; $i<count((array)$groups); $i++){
@@ -93,7 +93,7 @@ class UserController extends CI_Controller
         redirectPrev();
     }
 
-    function view($daycare_id = NULL,$id = NULL)
+    function view($id = NULL)
     {
         disable_debug();
 
@@ -118,8 +118,7 @@ class UserController extends CI_Controller
             'address' => $address,
             'groups' => $groups,
             'currentGroups' => $currentGroups,
-            'daycare_id' => $daycare_id
-        );
+        );       
         $this->load->view($this->module.'edit_user', $myData);
     }
 
@@ -145,9 +144,9 @@ class UserController extends CI_Controller
             'phone2' => $this->input->post('phone2'),
             'address' => $this->input->post('address')
         );
-        if(is('admin')) : //only admin can assign roles
+        if(is(['admin','manager'])) : //only admin can assign roles
             //Update the groups user belongs to
-            $groupData = $this->input->post('groups');
+            $groupData = $this->input->post('groups');            
             if(isset($groupData) && !empty($groupData)) {
                 $this->ion_auth->remove_from_group('', $id);
                 foreach ($groupData as $grp) {
@@ -187,7 +186,7 @@ class UserController extends CI_Controller
             'id' => $id
         ));
         $user = $user_details->row_array();
-        allow('admin');
+        allow(['admin','manager']);
         // $id = uri_segment(3);
         $code = "";
         if(!empty($code)) {
@@ -201,7 +200,7 @@ class UserController extends CI_Controller
             }else{
                 $name = $user['name'];
             }
-            logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
+            logEvent($id = NULL,"User {$name} has been {$user_status}d successfully.",$care_id = NULL);
             //redirect them to the auth page
             flash('success', lang('user_activated'));
         } else {
@@ -219,7 +218,7 @@ class UserController extends CI_Controller
             'id' => $id
         ));
         $user = $user_details->row_array();
-        allow('admin');
+        allow(['admin','manager']);
         
         // $id = (int)$this->uri->segment(3);
         $this->load->library('form_validation');
@@ -238,7 +237,7 @@ class UserController extends CI_Controller
                     $name = $user['name'];
                 }
                 $this->ion_auth->deactivate($id);  
-                logEvent($id = NULL,"User {$name} has been {$user_status} successfully.");
+                logEvent($id = NULL,"User {$name} has been {$user_status}d successfully.",$care_id = NULL);
                 $this->send_user_status_email($user,$user_status,$daycare_id);              
                 flash('warning', lang('user_deactivated'));
             } else {
@@ -302,19 +301,27 @@ class UserController extends CI_Controller
 
     function delete($id = NULL)
     {                
-        allow('admin');
-        
-        $this->db->where('id', $id);
-        $this->db->delete('users');  
-        logEvent($user_id = NULL,"Deleted user ID: {$id}");
-      
-        if($this->db->affected_rows() > 0){
-            flash('success', lang('request_success'));
-        }
-        else{
-            flash('danger', lang('request_error'));
-        }
-
+        allow(['admin','manager']);
+        $child_parent = $this->db->where('user_id',$id)->get('child_parents')->result_array();
+       if(empty($child_parent)){
+         if($id !== $this->user->uid()){
+            $user_name = $this->user->first($id)->first_name;
+            $this->db->where('id', $id);
+            $this->db->delete('users'); 
+          
+            if($this->db->affected_rows() > 0){
+                logEvent($user_id = NULL,"Deleted user {$user_name}",$care_id = NULL);
+                flash('success', lang('request_success'));
+            }
+            else{
+                flash('danger', lang('request_error'));
+            }
+         }else{
+            flash('danger', "You cannot delete yourself.");
+         }
+       }else{
+           flash('danger', "This user cannot be deleted because a child is assigned to it.");
+       }
         redirect('users', 'refresh');
     }
 

@@ -22,6 +22,7 @@
 
     <link href="<?php echo assets('css/theme-style.css'); ?>" rel="stylesheet">
     <link href="<?php echo assets('css/theme-colors.css'); ?>" rel="stylesheet">
+    <link href="<?php echo assets('css/app.css'); ?>" rel="stylesheet">
 
     <?php if(!empty(session('company_custom_css'))): ?>
         <style type="text/css">
@@ -114,6 +115,7 @@
                 </div>
             </div>
         </div>
+        <div class="error_msg msg"></div>
         <?php if(!empty($this->session->flashdata('type'))) : ?>
             <div id="msg" class="msg">
                 <?php echo $this->session->flashdata('message'); ?>
@@ -148,6 +150,8 @@
 <script src="<?php echo assets('js/waves.js'); ?>"></script>
 <script src="<?php echo assets('js/sidebarmenu.js'); ?>"></script>
 <script src="<?php echo assets('js/custom.js'); ?>"></script>
+<script src="<?php echo assets('js/daycare.js'); ?>"></script>
+<script src="<?php echo assets('js/user_register/stripe.js'); ?>"></script>
 
 <script src="<?php echo assets('plugins/listjs/list.min.js'); ?>" type="text/javascript"></script>
 

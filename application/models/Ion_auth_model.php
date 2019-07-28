@@ -792,7 +792,7 @@ class Ion_auth_model extends CI_Model
         $this->trigger_events('extra_set');
         $this->db->insert($this->tables['users'], $userData);
         $id = $this->db->insert_id();
-        logEvent($user_id = NULL,"User ID: {$id} has been added.");
+        logEvent($user_id = NULL,"User {$additional_data['first_name']} {$additional_data['last_name']} has been added.",$care_id = NULL);
 
         //register to group        
         if (!empty($groups)) {
@@ -1421,6 +1421,7 @@ class Ion_auth_model extends CI_Model
         $user_data = array(
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'phone2' => $data['phone2'],
             'email' => $data['email'],
         );
         // Filter the data passed
@@ -1439,7 +1440,7 @@ class Ion_auth_model extends CI_Model
 
         $this->trigger_events('extra_where');
         $this->db->update($this->tables['users'], $user_data, ['id' => $user->id]);
-        logEvent($id=NULL,"Updated user ID: {$user->id}");
+        logEvent($id=NULL,"Updated user {$data['first_name']}",$care_id = NULL);
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -1492,7 +1493,7 @@ class Ion_auth_model extends CI_Model
         $this->set_message('delete_successful');
 
         //log event
-        logEvent($id,"Deleted {$this->user->get($id, 'email')}");
+        logEvent($id,"Deleted {$this->user->get($id, 'email')}",$care_id = NULL);
 
         return TRUE;
     }

@@ -8,9 +8,11 @@ class My_activity extends CI_Model
      */
     function insert()
     {
+        $activity_name = $this->input->post('name');
+        $room_id = $this->input->post('room_id');
         $data = [
-            'room_id' => $this->input->post('room_id'),
-            'name' => $this->input->post('name'),
+            'room_id' => $room_id,
+            'name' => $activity_name,
             'activity_date' => $this->input->post('activity_date'),
             'activity_start' => $this->input->post('activity_start'),
             'activity_end' => $this->input->post('activity_end'),
@@ -19,17 +21,18 @@ class My_activity extends CI_Model
             'created_at' => date_stamp(),
             'updated_at' => date_stamp(),
         ];
-        if($this->db->insert('activity_plan', $data))
-            $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL,"Added activity ID: {$last_id} for room ID:{$this->input->post('room_id')}");
+        if($this->db->insert('activity_plan', $data))            
+            logEvent($user_id = NULL,"Added activity {$activity_name} for room {$this->rooms->rooms($room_id)->name}",$care_id = NULL);
             return TRUE;
         return FALSE;
     }
 
 
     function update($id){
+        $activity_name = $this->input->post('name');
+        $room_id = $this->input->post('room_id');
         $data = [
-            'name' => $this->input->post('name'),
+            'name' => $activity_name,
             'activity_date' => $this->input->post('activity_date'),
             'activity_start' => $this->input->post('activity_start'),
             'activity_end' => $this->input->post('activity_end'),
@@ -37,7 +40,7 @@ class My_activity extends CI_Model
             'updated_at' => date_stamp(),
         ];
         if($this->db->where('id',$id)->update('activity_plan', $data))
-            logEvent($user_id = NULL, "Updated activity ID: {$id} for room ID: {$this->input->post('room_id')}");
+            logEvent($user_id = NULL, "Updated activity {$activity_name} for room {$this->rooms->rooms($room_id)->name}",$care_id = NULL);
             return TRUE;
         return FALSE;
     }
@@ -118,7 +121,7 @@ class My_activity extends CI_Model
             ];
             $this->db->insert('activity_plan', $data);
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Copied activity plan ID: {$last_id} for next week of room ID: {$activity->room_id}");
+            logEvent($user_id = NULL, "Copied activity plan {$activity->name} for next week of room {$this->rooms->rooms($activity->room_id)->name}",$care_id = NULL);
         }
         return TRUE;
     }

@@ -177,16 +177,17 @@ class My_invoice extends CI_Model
         if(!$this->db->insert('invoices', $data))
             return false;
         $invoice_id = $this->db->insert_id();
+        $item_name = $this->input->post('item_name');
         $data2 = array(
             'invoice_id' => $invoice_id,
-            'item_name' => $this->input->post('item_name'),
+            'item_name' => $item_name,
             'description' => $this->input->post('description'),
             'price' => $this->input->post('price'),
             'qty' => $this->input->post('qty')
         );
         if($this->db->insert('invoice_items', $data2)) {
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL,"Added Invoice ID: {$last_id} for child ID: {$id}");
+            logEvent($user_id = NULL,"Added Invoice {$item_name} for child {$this->child->child($id)->first_name}",$care_id = NULL);
             $this->parent->notifyParents($id, lang('new_invoice_subject'), sprintf(lang('new_invoice_message'), $this->child->first($id)->first_name));
             return $invoice_id;
         }
@@ -212,7 +213,7 @@ class My_invoice extends CI_Model
         );
         if($this->db->insert('invoice_payments', $data)) {
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL, "Added manual payment of amount {$amount} for invoice ID: {$invoice_id}");
+            logEvent($user_id = NULL, "Added manual payment of amount {$amount} for invoice",$care_id = NULL);
             $invoice = $this->get($invoice_id);
             $child = $this->child->first($invoice->child_id);
             $this->parent->notifyParents($child->id, lang('manual_payment_subject'), sprintf(lang('manual_payment'),$amount, $child->first_name));

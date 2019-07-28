@@ -50,8 +50,13 @@
             <?php echo $invoice->id; ?>
         </td>
         <td rowspan="5" style="text-align: right;">
-            <img style="width:200px"
-                 src="<?php echo base_url(); ?>/assets/uploads/daycare_logo/<?php echo $image; ?>"/>
+           <?php if($image === NULL): ?>
+                <img style="width:200px"
+                src="<?php echo base_url(); ?>assets/uploads/content/<?php echo session('company_invoice_logo'); ?>"/>
+           <?php else: ?>
+                <img style="width:200px"
+                 src="<?php echo base_url(); ?>/assets/uploads/invoice_logo/<?php echo $image; ?>"/>
+           <?php endif; ?>
             <br/>
             <strong><?php echo session('company_name'); ?></strong><br/>
             <?php

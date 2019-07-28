@@ -23,7 +23,15 @@ class Migration_create_daycare_register_table extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => 100
             ),
+            'slogan' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
             'employee_tax_identifier' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'facility_id' => array(
                 'type' => 'VARCHAR',
                 'constraint' => 100
             ),
@@ -42,12 +50,6 @@ class Migration_create_daycare_register_table extends CI_Migration
             ),
             'created_at' => [
                 'type' => 'TIMESTAMP',
-            ],
-            'updated_at' => [
-                'type' => 'TIMESTAMP',
-            ],
-            'deleted_at' => [
-                'type' => 'TIMESTAMP',
             ]
         ));
 
@@ -58,7 +60,7 @@ class Migration_create_daycare_register_table extends CI_Migration
         $this->dbforge->create_table("daycare", TRUE);
         $this->db->query('ALTER TABLE `users` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->db->query('ALTER TABLE `children` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
-
+        $this->db->query('ALTER TABLE `calendar` ADD FOREIGN KEY (`daycare_id`) REFERENCES daycare(`id`) ON DELETE CASCADE ON UPDATE CASCADE');
     }
 
     /**

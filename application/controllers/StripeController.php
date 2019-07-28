@@ -56,7 +56,7 @@ class StripeController extends CI_Controller
             "amount" => $price * 100,
             "currency" => "usd",
             "source" => $this->input->post('stripeToken'),
-            "description" => "Test payment from Jyoti."
+            "description" => "Payment of $ ". $price ." for " . $plan . " subscription plan completed."
         ]);    
         $this->load->config('email');
         $this->load->library('email');

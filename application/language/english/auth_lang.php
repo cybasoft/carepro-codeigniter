@@ -177,7 +177,7 @@ $lang['email_activate_link']       = 'Activate Your Account';
 // Forgot Password Email
 $lang['email_forgotten_password_subject']    = 'Forgotten Password Verification';
 $lang['email_forgot_password_heading']    = 'Reset Password for %s';
-$lang['email_forgot_password_message'] = 'We have received your request to reset password for %s. Click on the link below to reset.';
+$lang['email_forgot_password_message'] = 'We have received your request to reset password for %s.<br/> Click on the link below to reset.';
 $lang['email_forgot_password_link']       = 'Reset Your Password';
 
 // New Password Email

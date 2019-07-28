@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    // $('#logs').DataTable();
     //Enable sidebar toggle
 
 
@@ -54,7 +55,6 @@ $(document).ready(function () {
             'pdf'
         ]
     });
-
     //lockscreen
     if (lockScreenTimer === undefined || lockScreenTimer === "")
         lockScreenTimer = 5;
@@ -62,13 +62,11 @@ $(document).ready(function () {
     var lockTimer = 1320000 * lockScreenTimer;
 
     $('.lock-screen').click(function () {
-        var daycare_id = $(this).data("daycare_id");
-        startLockscreen(daycare_id);
+        startLockscreen();
     });
 
     setTimeout(function () {
-        var daycare_id = $('.lock-screen').data("daycare_id");
-        startLockscreen(daycare_id);
+        startLockscreen();
     }, lockTimer);
 
 
@@ -181,7 +179,7 @@ $(document).ready(function () {
 
             $.ajax({
                 url: site_url + '/messaging/get_users',
-                data: {user: user}, //$('form').serialize(),
+                data: { user: user }, //$('form').serialize(),
                 type: 'POST',
                 success: function (response) {
                     var users = JSON.parse(response);
@@ -208,43 +206,54 @@ $(document).ready(function () {
     });
     $('.assign-parent-btn').click(function () {
         var id = $(this).attr('id');
-        $('.modals-loader').load(site_url +'/parents/parents/' + id).modal('show')
+        $('.modals-loader').load(site_url + '/parents/parents/' + id).modal('show')
     });
-    $(".child-assign-room").click(function(){    
+    $(".child-assign-room").click(function () {
         var child_id = $(this).data("child-id");
         $.ajax({
             type: 'POST',
             url: 'assign_room',
             dataType: 'json',
             ContentType: 'application/json; charset=utf-8',
-            success: function(data){
-                var length = data.length;
+            data: { 'child_id': child_id },
+            success: function (data) {
+                var rooms_length = data.all_rooms.length;
+                var selected_length = data.selected_rooms.length;
+                var room_ids = [];
                 $("#child_id").val(child_id);
-                if(length > 0){
-                    for(var i = 0; i<length; i++){
-                        var create_options = "<option value='"+ data[i].id +"' class='form-control'>"+ data[i].name +"</option>";
-                        if ($('#assign_room option[value="' + data[i].id + '"]').length === 0) {
+                if (rooms_length > 0) {
+                    for (var i = 0; i < rooms_length; i++) {
+                        var create_options = "<option value='" + data.all_rooms[i].id + "' class='form-control'>" + data.all_rooms[i].name + "</option>";
+                        if ($('#assign_room option[value="' + data.all_rooms[i].id + '"]').length === 0) {
                             $("#assign_room").append(create_options);
                             $("#assign_room").selectpicker('refresh');
-                        }                       
-                    } 
+                        }
+                    }
+                }
+                if (selected_length > 0) {
+                    for (var i = 0; i < selected_length; i++) {
+                        var id = data.selected_rooms[i].room_id;
+                        room_ids.push(id);
+                    }
+                    $('#assign_room').selectpicker('val', room_ids);
+                    $('#assign_room').selectpicker('refresh');
                 }
             }
         })
     });
-    $("#AssignRoomModal").on('hidden.bs.modal',function(){
+    $("#AssignRoomModal").on('hidden.bs.modal', function () {
         $("#assign_room").val('default');
         $("#assign_room").selectpicker("refresh");
     });
-    new List('conversations', {valueNames: ['name'], page: 10, pagination: true});
+    new List('conversations', { valueNames: ['name'], page: 10, pagination: true });
 
     new List('checkedout-children',
-        {valueNames: ['name', 'born', 'nid'], page: 10, pagination: true}
+        { valueNames: ['name', 'born', 'nid'], page: 10, pagination: true }
     );
 
-    new List('room-staff', {valueNames: ['staffname']});
+    new List('room-staff', { valueNames: ['staffname'] });
 
-    new List('room-children', {valueNames: ['childname']});
+    new List('room-children', { valueNames: ['childname'] });
 
     new List('room-notes', {
         valueNames: ['room-note', 'room-note-date'],
@@ -293,7 +302,7 @@ $(document).ready(function () {
                     var url = site_url + 'meds/deleteHistory/' + id;
                     $.ajax({
                         url: url,
-                        data: {id: id}, //$('form').serialize(),
+                        data: { id: id }, //$('form').serialize(),
                         type: 'POST',
                         success: function (response) {
                             swal({
@@ -330,5 +339,85 @@ $(document).ready(function () {
         var url = site_url + 'meds/destroy/' + $(this).attr('id');
         if (confirm('Are you sure?'))
             window.location.href = url;
-    })
+    });
+    $(".pay_button").click(function () {
+        var due_amount = $(this).data("due-amount");
+        $("#invoice_amount").val(due_amount);
+    });
+    var $form = $(".require-validation");
+    $('form.require-validation').bind('submit', function (e) {
+        var $form = $(".require-validation"),
+            inputSelector = ['input[type=email]', 'input[type=password]',
+                'input[type=text]', 'input[type=file]',
+                'textarea'
+            ].join(', '),
+            $inputs = $form.find('.required').find(inputSelector),
+            $errorMessage = $form.find('div.error'),
+            valid = true;
+        $errorMessage.addClass('d-none');
+
+        $('.has-error').removeClass('has-error');
+        $inputs.each(function (i, el) {
+            var $input = $(el);
+            if ($input.val() === '') {
+                $input.parent().addClass('has-error');
+                $errorMessage.removeClass('d-none');
+                e.preventDefault();
+            } else {
+                $('.loading_div').show();
+            }
+        });
+
+        if (!$form.data('cc-on-file')) {
+            e.preventDefault();
+            Stripe.setPublishableKey($form.data('stripe-publishable-key'));
+            Stripe.createToken({
+                number: $('.card-number').val(),
+                cvc: $('.card-cvc').val(),
+                exp_month: $('.card-expiry-month').val(),
+                exp_year: $('.card-expiry-year').val()
+            }, stripeResponseHandler);
+        }
+
+    });
+
+    function stripeResponseHandler(status, response) {
+        if (response.error) {
+            $('.error')
+                .removeClass('d-none')
+                .find('.alert')
+                .text(response.error.message);
+        } else {
+            var token = response['id'];
+            $form.find('input[type=text]').empty();
+            $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+            $form.get(0).submit();
+        }
+    }
+    $('#logs').DataTable();
+    // var table = $('#logs').DataTable( {
+    //     processing: true,
+    //     serverSide: true,
+    //     dataType : 'json',
+    //    "ajax": {
+    //     url: "settings/logs",
+    //     type: "POST",
+    //     columns: [
+    //         { "data": "id" },
+    //         { "data": "user_id" },
+    //         { "data": "daycare_id" },
+    //         { "data": "event" },
+    //         { "data": "date" },
+    //     ]
+    //    }
+    //  });    
+    $(".manager_status").click(function () {
+        $(".error_msg").text("");
+        $(".error_msg").css("display", "block").addClass('alert alert-danger alert-dismissable');
+        $(".error_msg").append('<span class="fa fa-info"></span>Access denied');
+
+        setTimeout(function () {
+            $('.error_msg').slideUp('slow');
+        }, 6000);
+    });
 })

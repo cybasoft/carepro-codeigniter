@@ -18,7 +18,11 @@ class Migration_create_event_log extends CI_Migration
                 'constraint' => 11,
                 'auto_increment' => TRUE
             ),
-            'user_id' => array(
+            'user_name' => array(
+                'type' => 'VARCHAR',
+                'constraint' => 100
+            ),
+            'daycare_id' => array(
                 'type' => 'INT',
                 'constraint' => '11',
             ),
