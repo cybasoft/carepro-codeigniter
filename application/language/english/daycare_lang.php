@@ -570,3 +570,4 @@ $lang['Business hours'] = 'Business hours';
 $lang['Start time'] = 'Start time';
 $lang['End time'] = 'End time';
 $lang['Enabled'] = 'Enabled';
+$lang['upgrade_plan'] = 'Upgrade your subscription plan to add more %s.';

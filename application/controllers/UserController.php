@@ -87,7 +87,7 @@ class UserController extends CI_Controller
             if($register != "error") {
                 flash('success', lang('request_success'));
             }else{
-                flash('error', "Upgrade your subscription plan to add more staff.");
+                flash('error', sprintf(lang('upgrade_plan'),'staff'));
                 redirect('users', 'refresh');
             }
         } else {
@@ -209,7 +209,7 @@ class UserController extends CI_Controller
             }
             redirectPrev();
         }else{
-            flash('error', "Upgrade your subscription plan to add more staff.");
+            flash('error', sprintf(lang('upgrade_plan'),'child'));
             redirect('users', 'refresh');
         }
     }

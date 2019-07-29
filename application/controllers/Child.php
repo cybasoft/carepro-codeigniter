@@ -59,7 +59,7 @@ class Child extends CI_Controller
                     redirect('children', 'refresh');
                 }else{
                     if($register == 'error'){
-                        flash('error', "Upgrade your subscription plan to add more child.");
+                        flash('error', sprintf(lang('upgrade_plan'),'child'));
                         redirect('children', 'refresh');
                     }else{
                         redirect('child/' . $register);
