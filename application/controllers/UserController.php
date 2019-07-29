@@ -83,8 +83,12 @@ class UserController extends CI_Controller
                 'daycare_id' => $owner_id
             );
             $group = $this->input->post('group');
-            if($this->ion_auth->register($additional_data, $group)) {
+            $register = $this->ion_auth->register($additional_data, $group);
+            if($register != "error") {
                 flash('success', lang('request_success'));
+            }else{
+                flash('error', "Upgrade your subscription plan to add more staff.");
+                redirect('users', 'refresh');
             }
         } else {
             set_flash(['email', 'first_name', 'last_name', 'phone', 'group']);
@@ -127,8 +131,22 @@ class UserController extends CI_Controller
     function update($id=NULL)
     {   
         $daycare_id = $this->session->userdata('owner_daycare_id');
+        $UNLIMITED = "Unlimited";
+        $admin_role = 1;
+        $staff_role = 3;
+        $active_daycare_id = $this->session->userdata('daycare_id');
         allow(['admin', 'manager', 'staff']);
         $id = $this->input->post('user_id');
+                         
+        $daycare_admin = $this->ion_auth->getUserByRole($active_daycare_id, $admin_role)->row_array(); //daycare admin
+        $selected_plan = $daycare_admin['selected_plan'];
+        $plans = $this->db->get_where('subscription_plans', array(
+            'id' => $selected_plan
+        ))->row_array(); //daycare plan
+        $staff_users = $this->ion_auth->getUserByRole($active_daycare_id, $staff_role)->result_array(); //daycare admin
+        $staff_count = count($staff_users); //staff count
+        $plan_staff_count = $plans['staff_members']; //plan staff count
+
         //validate form input
         $this->form_validation->set_rules('first_name', lang('edit_user_validation_first_name_label'), 'required|xss_clean');
         $this->form_validation->set_rules('last_name', lang('edit_user_validation_last_name_label'), 'required|xss_clean');
@@ -154,39 +172,46 @@ class UserController extends CI_Controller
             'state' => $this->input->post('state'),
             'country' => $this->input->post('country')
         );
-        if(is(['admin','manager','staff'])) : //only admin can assign roles
-            //Update the groups user belongs to
-            $groupData = $this->input->post('groups');            
-            if(isset($groupData) && !empty($groupData)) {
-                $this->ion_auth->remove_from_group('', $id);
-                foreach ($groupData as $grp) {
-                    $this->ion_auth->add_to_group($grp, $id);
+        $groupData = $this->input->post('groups');        
+        if($groupData[0] == 1 || $groupData[0] == 2 || $groupData[0] == 4 || 
+          ($groupData[0] == 3 && ($staff_count < $plan_staff_count || $plan_staff_count == $UNLIMITED))
+          ){
+            if(is(['admin','manager','staff'])) : //only admin can assign roles
+                //Update the groups user belongs to
+                if(isset($groupData) && !empty($groupData)) {
+                    $this->ion_auth->remove_from_group('', $id);
+                    foreach ($groupData as $grp){
+                       $this->ion_auth->add_to_group($grp, $id);                   
+                    }
                 }
+            endif;
+    
+            //update the password if it was posted
+            if($this->input->post('password')) {
+                $this->form_validation->set_rules('password', lang('edit_user_validation_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[password_confirm]');
+                $this->form_validation->set_rules('password_confirm', lang('edit_user_validation_password_confirm_label'), 'required');
+    
+                $data['password'] = $this->input->post('password');
             }
-        endif;
-
-        //update the password if it was posted
-        if($this->input->post('password')) {
-            $this->form_validation->set_rules('password', lang('edit_user_validation_password_label'), 'required|min_length['.$this->config->item('min_password_length', 'ion_auth').']|max_length['.$this->config->item('max_password_length', 'ion_auth').']|matches[password_confirm]');
-            $this->form_validation->set_rules('password_confirm', lang('edit_user_validation_password_confirm_label'), 'required');
-
-            $data['password'] = $this->input->post('password');
-        }
-        if($this->form_validation->run() === TRUE) {
-            if($this->ion_auth->update($id, $data)) {
-                //update photo if available
-                flash('success', lang('request_success'));
-                if(!empty($_FILES['userfile']['name'])) {
-                    $this->uploadPhoto($id);
+            if($this->form_validation->run() === TRUE) {
+                if($this->ion_auth->update($id, $data)) {
+                    //update photo if available
+                    flash('success', lang('request_success'));
+                    if(!empty($_FILES['userfile']['name'])) {
+                        $this->uploadPhoto($id);
+                    }
+                } else {
+                    flash('danger', lang('request_error'));
                 }
             } else {
-                flash('danger', lang('request_error'));
+                validation_errors();
+                flash('danger');
             }
-        } else {
-            validation_errors();
-            flash('danger');
+            redirectPrev();
+        }else{
+            flash('error', "Upgrade your subscription plan to add more staff.");
+            redirect('users', 'refresh');
         }
-        redirectPrev();
     }
 
     //activate the user

@@ -721,8 +721,21 @@ class Ion_auth_model extends CI_Model
      * @return bool
      * @author Mathew
      **/
+    public function getUserByRole($daycare_id, $role_id)
+    {
+        $daycare_admin = $this->db->select('us.*,ug.*')
+            ->where('daycare_id', $daycare_id)
+            ->from('users as us')
+            ->join('users_groups as ug', 'ug.user_id = us.id')
+            ->where('ug.group_id', $role_id)
+            ->get();
+        return $daycare_admin;
+    }
     public function register($additional_data = [], $groups = [])
     {
+        $UNLIMITED = "Unlimited";
+        $admin_role = 1;
+        $staff_role = 3;
         $this->load->config('email');
         $this->load->library('email');
 
@@ -732,7 +745,6 @@ class Ion_auth_model extends CI_Model
         $this->trigger_events('pre_register');
 
         $manual_activation = $this->config->item('manual_activation', 'ion_auth');
-
         if ($this->identity_column == 'email' && $this->email_check($email)) {
             $this->set_error('account_creation_duplicate_email');
             return FALSE;
@@ -741,9 +753,7 @@ class Ion_auth_model extends CI_Model
         $ip_address = $this->_prepare_ip($this->input->ip_address());
         $password = $this->hash_password($password);
 
-
         $user_id = $this->user->uid();
-
         $user_detail = $this->db->get_where('users', array(
             'id' => $user_id
         ));
@@ -754,11 +764,22 @@ class Ion_auth_model extends CI_Model
         ));
         $daycare = $daycare_details->row_array();
 
+        $daycare_admin = $this->getUserByRole($daycare['id'], $admin_role)->row_array(); //daycare admin
+        $selected_plan = $daycare_admin['selected_plan'];
+
+        $plans = $this->db->get_where('subscription_plans', array(
+            'id' => $selected_plan
+        ))->row_array(); //daycare plan
+
+        $staff_users = $this->getUserByRole($daycare['id'], $staff_role)->result_array(); //daycare admin
+        $staff_count = count($staff_users); //staff count
+        $plan_staff_count = $plans['staff_members']; //plan staff count
+
         $managers = $this->db->select('us.*,ug.*')
-                    ->where('daycare_id', $users['daycare_id'])
-                    ->from('users as us')
-                    ->join('users_groups as ug', 'ug.user_id = us.id')
-                    ->get()->result_array();        
+            ->where('daycare_id', $users['daycare_id'])
+            ->from('users as us')
+            ->join('users_groups as ug', 'ug.user_id = us.id')
+            ->get()->result_array();  //managers detail
 
         $users_group = $this->db->get_where('users_groups', array(
             'user_id' => $user_id
@@ -772,106 +793,103 @@ class Ion_auth_model extends CI_Model
         } else {
             $active = 1;
         }
-
-        $address_data = array(
-            'phone' => $additional_data['phone']
-        );
-        $this->db->insert('address',$address_data);
-        $address_id = $this->db->insert_id();
-
-        // Users table.
-        $data = [
-            'password' => $password,
-            'email' => $email,
-            'ip_address' => $ip_address,
-            'created_at' => date_stamp(),
-            'last_login' => date_stamp(),
-            'active' => $active,
-            'address_id' => $address_id
-        ];
-        // 'active' => ($manual_activation === FALSE ? 1 : 0),
-
-        //filter out any data passed that doesnt have a matching column in the users table
-        //and merge the set user data and the additional data        
-
-        $userData = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);
-        $this->trigger_events('extra_set');
-        $this->db->insert($this->tables['users'], $userData);
-        $id = $this->db->insert_id();
-        if($users['first_name'] == NULL){
-            $user_name = $users['name'];
-        }else{
-            $user_name = $users['first_name'] . " " . $users['last_name'];
-        }
-        logEvent($user_name = $user_name,"User {$additional_data['first_name']} {$additional_data['last_name']} has been added.",$care_id = NULL);
-
-        //register to group        
-        if (!empty($groups)) {
-
-            if (is_array($groups)) {
-                foreach ($groups as $group) {
-                    $this->add_to_group($group, $id);
-                }
-            } else {                
-                $this->add_to_group($groups, $id);
-            }
-        }
-
-        $this->trigger_events('post_register');
-        if ($group_id != 4) {
-            $email_data = array(
-                'first_name' => $additional_data['first_name'],
-                'last_name' => $additional_data['last_name'],
-                'staff_firstname' => $users['first_name'],
-                'staff_lastname' => $users['last_name'],
-                'name' => $users['name'],
-                'logo' => $this->session->userdata('company_logo'),
-                'daycare_id' => $daycare['daycare_id'],
-                'user_name' => $additional_data['email'],
-                'password' => $additional_data['password'],
-                'daycare_name' => $daycare['name']
+        if ($groups == 4 || $groups == 2 || $groups == 1 ||
+             ($groups == 3 && ($staff_count < $plan_staff_count) || ($plan_staff_count == $UNLIMITED))
+           )
+        {
+            $address_data = array(
+                'phone' => $additional_data['phone']
             );
-            $this->email->set_mailtype('html');
-            $from = $this->config->item('smtp_user');
-            $to = $email;
-            $this->email->from($from, 'Daycare');
-            $this->email->to($to);
-            $this->email->subject('Daycare Invitation');
-
-            $body = $this->load->view('custom_email/register_user_email', $email_data, true);
-            $this->email->message($body);        //Send mail
-            if ($this->email->send()) {
-                $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+            $this->db->insert('address', $address_data);
+            $address_id = $this->db->insert_id();
+    
+            // Users table.
+            $data = [
+                'password' => $password,
+                'email' => $email,
+                'ip_address' => $ip_address,
+                'created_at' => date_stamp(),
+                'last_login' => date_stamp(),
+                'active' => $active,
+                'address_id' => $address_id
+            ];
+            // 'active' => ($manual_activation === FALSE ? 1 : 0),
+    
+            //filter out any data passed that doesnt have a matching column in the users table
+            //and merge the set user data and the additional data        
+    
+            $userData = array_merge($this->_filter_data($this->tables['users'], $additional_data), $data);
+            $this->trigger_events('extra_set');
+            $this->db->insert($this->tables['users'], $userData);
+            $id = $this->db->insert_id();
+            if ($users['first_name'] == NULL) {
+                $user_name = $users['name'];
+            } else {
+                $user_name = $users['first_name'] . " " . $users['last_name'];
             }
-        }
-
-        if(is('staff')){
-            foreach($managers as $mg){
-                if($mg['group_id'] == 2){
-                    $data = [                    
-                        'to' => $mg['email'],
-                        'subject' => lang('parent_subject'),
-                        'logo' => $this->session->userdata('company_logo'),
-                        'name' => $mg['first_name'] . " " . $mg['last_name'],
-                    ];
-                    $parent_name = $additional_data['first_name'] . " " . $additional_data['last_name'];
-                    $message = sprintf(lang('assigned_parent'),$parent_name);     
-                    $data['message'] = $message;
-                    send_email($data);
+            logEvent($user_name = $user_name, "User {$additional_data['first_name']} {$additional_data['last_name']} has been added.", $care_id = NULL);
+    
+            //register to group        
+            if (!empty($groups)) {
+    
+                if (is_array($groups)) {
+                    foreach ($groups as $group) {
+                        $this->add_to_group($group, $id);
+                    }
+                } else {
+                    $this->add_to_group($groups, $id);
                 }
             }
+    
+            $this->trigger_events('post_register');
+            if ($group_id != 4) {
+                $email_data = array(
+                    'first_name' => $additional_data['first_name'],
+                    'last_name' => $additional_data['last_name'],
+                    'staff_firstname' => $users['first_name'],
+                    'staff_lastname' => $users['last_name'],
+                    'name' => $users['name'],
+                    'logo' => $this->session->userdata('company_logo'),
+                    'daycare_id' => $daycare['daycare_id'],
+                    'user_name' => $additional_data['email'],
+                    'password' => $additional_data['password'],
+                    'daycare_name' => $daycare['name']
+                );
+                $this->email->set_mailtype('html');
+                $from = $this->config->item('smtp_user');
+                $to = $email;
+                $this->email->from($from, 'Daycare');
+                $this->email->to($to);
+                $this->email->subject('Daycare Invitation');
+    
+                $body = $this->load->view('custom_email/register_user_email', $email_data, true);
+                $this->email->message($body);        //Send mail
+                if ($this->email->send()) {
+                    $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+                }
+            }
+    
+            if (is('staff')) {
+                foreach ($managers as $mg) {
+                    if ($mg['group_id'] == 2) {
+                        $data = [
+                            'to' => $mg['email'],
+                            'subject' => lang('parent_subject'),
+                            'logo' => $this->session->userdata('company_logo'),
+                            'name' => $mg['first_name'] . " " . $mg['last_name'],
+                        ];
+                        $parent_name = $additional_data['first_name'] . " " . $additional_data['last_name'];
+                        $message = sprintf(lang('assigned_parent'), $parent_name);
+                        $data['message'] = $message;
+                        send_email($data);
+                    }
+                }
+            }
+            return (isset($id)) ? $id : FALSE;
+        }else{
+            $error = "error";
+            return $error;
         }
-        //notify admin
-        // $email = [
-        //     'to' => session('company_email'),
-        //     'from' => session('company_email'),
-        //     'subject' => lang('new_user_email_subject'),
-        //     'message' => lang('new_user_email_body'),
-        //     'template' => 'new_user_notice',
-        // ];
-        // $data2 = array_merge($data, $email, $additional_data);
-        // $this->mailer->send($data2);
-        return (isset($id)) ? $id : FALSE;
     }
 
     /**
@@ -922,10 +940,9 @@ class Ion_auth_model extends CI_Model
     public function add_to_group($group_id, $user_id = FALSE)
     {
         $this->trigger_events('add_to_group');
-
         if (!is_numeric($group_id)) {
             $user_group = $this->db->where('name', $group_id)->get('groups')->row();
-            if (count((array)$user_group) > 1) {
+            if (count((array) $user_group) > 1) {
                 $group_id = $user_group->id;
             } else {
                 return FALSE;
@@ -938,8 +955,8 @@ class Ion_auth_model extends CI_Model
         //check if unique - num_rows() > 0 means row found
         if ($this->db->where(
             [
-                $this->join['groups'] => (int)$group_id,
-                $this->join['users'] => (int)$user_id,
+                $this->join['groups'] => (int) $group_id,
+                $this->join['users'] => (int) $user_id,
             ]
         )
             ->get($this->tables['users_groups'])
@@ -949,8 +966,8 @@ class Ion_auth_model extends CI_Model
         if ($return = $this->db->insert(
             $this->tables['users_groups'],
             [
-                $this->join['groups'] => (int)$group_id,
-                $this->join['users'] => (int)$user_id,
+                $this->join['groups'] => (int) $group_id,
+                $this->join['users'] => (int) $user_id,
             ]
         )) {
             if (isset($this->_cache_groups[$group_id])) {
@@ -1079,11 +1096,11 @@ class Ion_auth_model extends CI_Model
                     'id' => $user->daycare_id
                 ));
                 $daycare = $daycare_details->row_array();
-                $plans = $this->db->get_where('subscription_plans',array(
+                $plans = $this->db->get_where('subscription_plans', array(
                     'id' => $user->selected_plan
                 ))->row_array();
                 $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
-                $this->session->set_userdata('plan',$plans);
+                $this->session->set_userdata('plan', $plans);
                 $this->update_last_login($user->id);
                 $this->set_session($user);
                 $this->clear_login_attempts($identity);
@@ -1126,7 +1143,7 @@ class Ion_auth_model extends CI_Model
         if ($this->config->item('track_login_attempts', 'ion_auth')) {
             $max_attempts = $this->config->item('maximum_login_attempts', 'ion_auth');
             if ($max_attempts > 0) {
-                $attempts = $this->get_attempts_num($identity);                
+                $attempts = $this->get_attempts_num($identity);
                 if ($attempts == 3) {
                     $this->load->config('email');
                     $this->load->library('email');
@@ -1226,7 +1243,7 @@ class Ion_auth_model extends CI_Model
         unset($user->id);
         unset($user->password);
 
-        $this->session->set_userdata((array)$user);
+        $this->session->set_userdata((array) $user);
 
         $this->trigger_events('post_set_session');
 
@@ -1457,7 +1474,7 @@ class Ion_auth_model extends CI_Model
             'country' => $data['country'],
             'zip_code' => $data['pin']
         );
-        $this->db->update('address',$address_data, ['id' => $user->address_id]);
+        $this->db->update('address', $address_data, ['id' => $user->address_id]);
 
         $user_data = array(
             'first_name' => $data['first_name'],
@@ -1481,7 +1498,7 @@ class Ion_auth_model extends CI_Model
 
         $this->trigger_events('extra_where');
         $this->db->update($this->tables['users'], $user_data, ['id' => $user->id]);
-        logEvent($id=NULL,"Updated user {$data['first_name']}",$care_id = NULL);
+        logEvent($id = NULL, "Updated user {$data['first_name']}", $care_id = NULL);
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -1534,7 +1551,7 @@ class Ion_auth_model extends CI_Model
         $this->set_message('delete_successful');
 
         //log event
-        logEvent($id,"Deleted {$this->user->get($id, 'email')}",$care_id = NULL);
+        logEvent($id, "Deleted {$this->user->get($id, 'email')}", $care_id = NULL);
 
         return TRUE;
     }
@@ -1561,7 +1578,7 @@ class Ion_auth_model extends CI_Model
             }
 
             foreach ($group_ids as $group_id) {
-                $this->db->delete($this->tables['users_groups'], [$this->join['groups'] => (int)$group_id, $this->join['users'] => (int)$user_id]);
+                $this->db->delete($this->tables['users_groups'], [$this->join['groups'] => (int) $group_id, $this->join['users'] => (int) $user_id]);
                 if (isset($this->_cache_user_in_group[$user_id]) && isset($this->_cache_user_in_group[$user_id][$group_id])) {
                     unset($this->_cache_user_in_group[$user_id][$group_id]);
                 }
@@ -1570,7 +1587,7 @@ class Ion_auth_model extends CI_Model
             $return = TRUE;
         } // otherwise remove user from all groups
         else {
-            if ($return = $this->db->delete($this->tables['users_groups'], [$this->join['users'] => (int)$user_id])) {
+            if ($return = $this->db->delete($this->tables['users_groups'], [$this->join['users'] => (int) $user_id])) {
                 $this->_cache_user_in_group[$user_id] = [];
             }
         }
