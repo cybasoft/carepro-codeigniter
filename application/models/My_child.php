@@ -170,15 +170,7 @@ class My_child extends CI_Model
         ));
         $daycare = $daycare_details->row_array();
 
-        $daycare_admin = $this->db->where(
-            'daycare_id', $daycare['id']
-        )->group_by('daycare_id')->get('users')->row_array(); //daycare admin
-        $selected_plan = $daycare_admin['selected_plan'];
-
-        $plans = $this->db->get_where('subscription_plans',array(
-            'id' => $selected_plan
-        ))->row_array();
-
+        $plans = $this->session->userdata('plans');
         $managers = $this->db->select('us.*,ug.*')
                     ->where('daycare_id', $daycare['id'])
                     ->from('users as us')

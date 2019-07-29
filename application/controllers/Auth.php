@@ -1,4 +1,5 @@
 <?php
+
 use phpDocumentor\Reflection\Types\Null_;
 
 defined('BASEPATH') or exit('No direct script access allowed');
@@ -26,6 +27,7 @@ class Auth extends CI_Controller
 
     function login()
     {
+        $admin_role = 1;
         if ($this->ion_auth->logged_in()) {
             redirect('dashboard', 'refresh');
         }
@@ -49,11 +51,22 @@ class Auth extends CI_Controller
                 $daycare_details = $this->db->get_where('daycare', array(
                     'id' => $users['daycare_id']
                 ));
-                $daycare = $daycare_details->row_array();          
-                $this->session->set_userdata('company_logo',$daycare['logo']);
+                $daycare = $daycare_details->row_array();
+
+                $daycare_admin = $this->ion_auth->getUserByRole($daycare['id'], $admin_role)->row_array(); //daycare admin
+                $selected_plan = $daycare_admin['selected_plan'];
+                $calendar = $this->db->get_where('calendar', array(
+                    'daycare_id' => $daycare['id']
+                ))->result_array();
+                $plans = $this->db->get_where('subscription_plans', array(
+                    'id' => $selected_plan
+                ))->row_array();
+
+                $this->session->set_userdata('plans', $plans);
+                $this->session->set_userdata('company_logo', $daycare['logo']);
                 if ($login == "1") {
                     $check_parent = $this->session->userdata("users");
-                    $this->session->set_userdata('company_name',$daycare['name']);
+                    $this->session->set_userdata('company_name', $daycare['name']);
                     $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
                     $users_details = $this->db->get_where('users', array(
                         'email' => $email,
@@ -66,10 +79,10 @@ class Auth extends CI_Controller
                             redirect('dashboard', 'refresh');
                         }
                     }
-                } else if($login == 'error'){
+                } else if ($login == 'error') {
                     flash('error', 'Temporarily Locked Out.  Try again later.');
                     redirect('login');
-                }else{
+                } else {
                     flash('error', 'Username or password is incorrect');
                     redirect('login');
                 }
@@ -199,12 +212,12 @@ class Auth extends CI_Controller
                 ));
                 $result = $query->row_array();
                 $logo = $result['logo'];
-                $this->session->set_userdata('company_name',$result['name']);
+                $this->session->set_userdata('company_name', $result['name']);
                 $image = $logo;
             } else {
                 $image = "";
             }
-            $this->session->set_userdata('company_logo',$image);
+            $this->session->set_userdata('company_logo', $image);
             $data['logo'] = $image;
             $data['captcha_image'] = $captcha['image'];
             $data['daycare_id'] = $daycareId;
@@ -214,7 +227,7 @@ class Auth extends CI_Controller
 
     public function validate_captcha($captcha)
     {
-        if ((int)$captcha !== (int)$this->session->flashdata('captcha')) {
+        if ((int) $captcha !== (int) $this->session->flashdata('captcha')) {
             $this->form_validation->set_message('validate_captcha', lang('invalid_captcha'));
             return false;
         } else {

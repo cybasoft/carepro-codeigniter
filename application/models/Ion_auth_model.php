@@ -764,13 +764,7 @@ class Ion_auth_model extends CI_Model
         ));
         $daycare = $daycare_details->row_array();
 
-        $daycare_admin = $this->getUserByRole($daycare['id'], $admin_role)->row_array(); //daycare admin
-        $selected_plan = $daycare_admin['selected_plan'];
-
-        $plans = $this->db->get_where('subscription_plans', array(
-            'id' => $selected_plan
-        ))->row_array(); //daycare plan
-
+        $plans = $this->session->userdata('plans');
         $staff_users = $this->getUserByRole($daycare['id'], $staff_role)->result_array(); //daycare admin
         $staff_count = count($staff_users); //staff count
         $plan_staff_count = $plans['staff_members']; //plan staff count

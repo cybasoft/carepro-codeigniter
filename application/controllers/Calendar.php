@@ -72,7 +72,11 @@ class Calendar extends CI_Controller
         $this->form_validation->set_rules('desc', lang('details'), 'required|trim|xss_clean');
 
         if ($this->form_validation->run() == TRUE) {
-            $this->calendar->add_event();
+            $calender = $this->calendar->add_event();
+            if($calender == "error"){
+                flash('danger', sprintf(lang('upgrade_plan'),'Calender Events'));
+                redirect('calendar');
+            }
         } else {
             validation_errors();
             flash('danger');

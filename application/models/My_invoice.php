@@ -173,12 +173,8 @@ class My_invoice extends CI_Model
             'created_at' => date_stamp()
         );
         $daycare_id = $this->session->userdata('daycare_id');
-        $daycare_admin = $this->ion_auth->getUserByRole($daycare_id, $admin_role)->row_array(); //daycare admin
-        $selected_plan = $daycare_admin['selected_plan'];
-
-        $plans = $this->db->get_where('subscription_plans', array(
-            'id' => $selected_plan
-        ))->row_array(); //daycare plan
+        $plans = $this->session->userdata('plans');
+        
         $plan_invoices_events = $plans['invoices']; //plan invoices count
 
         $invoices = $this->db
