@@ -9,6 +9,7 @@
             <?php echo form_open('child/'.$child_id.'/assignParent'); ?>
             <div class="modal-body">                
                 <div class="pull-left">
+                <span class="field_required"> *</span>
                     <select class="form-control" name="parent">
                         <option value="">--<?php echo ucwords(lang('select')); ?>--</option>
                         <?php
@@ -16,7 +17,7 @@
                             <option class="form-control"
                                     value="<?php echo $row->user_id; ?>"><?php echo $row->first_name.' '.$row->last_name; ?></option>
                         <?php endforeach; ?>
-                    </select>
+                    </select>                    
                 </div>
                 <br/>
             </div>

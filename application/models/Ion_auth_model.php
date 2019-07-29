@@ -754,6 +754,12 @@ class Ion_auth_model extends CI_Model
         ));
         $daycare = $daycare_details->row_array();
 
+        $managers = $this->db->select('us.*,ug.*')
+                    ->where('daycare_id', $users['daycare_id'])
+                    ->from('users as us')
+                    ->join('users_groups as ug', 'ug.user_id = us.id')
+                    ->get()->result_array();        
+
         $users_group = $this->db->get_where('users_groups', array(
             'user_id' => $user_id
         ));
@@ -761,7 +767,7 @@ class Ion_auth_model extends CI_Model
         $group_details = $users_group->row_array();
         $group_id = $group_details['group_id'];
 
-        if ($group_id == 4) {
+        if ($group_id == 4 || $group_id == 3) {
             $active = 0;
         } else {
             $active = 1;
@@ -792,7 +798,12 @@ class Ion_auth_model extends CI_Model
         $this->trigger_events('extra_set');
         $this->db->insert($this->tables['users'], $userData);
         $id = $this->db->insert_id();
-        logEvent($user_id = NULL,"User {$additional_data['first_name']} {$additional_data['last_name']} has been added.",$care_id = NULL);
+        if($users['first_name'] == NULL){
+            $user_name = $users['name'];
+        }else{
+            $user_name = $users['first_name'] . " " . $users['last_name'];
+        }
+        logEvent($user_name = $user_name,"User {$additional_data['first_name']} {$additional_data['last_name']} has been added.",$care_id = NULL);
 
         //register to group        
         if (!empty($groups)) {
@@ -814,7 +825,11 @@ class Ion_auth_model extends CI_Model
                 'staff_firstname' => $users['first_name'],
                 'staff_lastname' => $users['last_name'],
                 'name' => $users['name'],
-                'daycare_id' => $daycare['daycare_id']
+                'logo' => $this->session->userdata('company_logo'),
+                'daycare_id' => $daycare['daycare_id'],
+                'user_name' => $additional_data['email'],
+                'password' => $additional_data['password'],
+                'daycare_name' => $daycare['name']
             );
             $this->email->set_mailtype('html');
             $from = $this->config->item('smtp_user');
@@ -827,6 +842,23 @@ class Ion_auth_model extends CI_Model
             $this->email->message($body);        //Send mail
             if ($this->email->send()) {
                 $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+            }
+        }
+
+        if(is('staff')){
+            foreach($managers as $mg){
+                if($mg['group_id'] == 2){
+                    $data = [                    
+                        'to' => $mg['email'],
+                        'subject' => lang('parent_subject'),
+                        'logo' => $this->session->userdata('company_logo'),
+                        'name' => $mg['first_name'] . " " . $mg['last_name'],
+                    ];
+                    $parent_name = $additional_data['first_name'] . " " . $additional_data['last_name'];
+                    $message = sprintf(lang('assigned_parent'),$parent_name);     
+                    $data['message'] = $message;
+                    send_email($data);
+                }
             }
         }
         //notify admin
@@ -1047,7 +1079,11 @@ class Ion_auth_model extends CI_Model
                     'id' => $user->daycare_id
                 ));
                 $daycare = $daycare_details->row_array();
+                $plans = $this->db->get_where('subscription_plans',array(
+                    'id' => $user->selected_plan
+                ))->row_array();
                 $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
+                $this->session->set_userdata('plan',$plans);
                 $this->update_last_login($user->id);
                 $this->set_session($user);
                 $this->clear_login_attempts($identity);
@@ -1413,7 +1449,12 @@ class Ion_auth_model extends CI_Model
 
         $address_data = array(
             'phone' => $data['phone'],
-            'address_line_1' => $data['address'],
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'fax' => $data['fax'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'country' => $data['country'],
             'zip_code' => $data['pin']
         );
         $this->db->update('address',$address_data, ['id' => $user->address_id]);

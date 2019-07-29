@@ -116,8 +116,8 @@
 
             <div class="modal-body">
                 <?php
-                echo form_label(lang('Food name'));
-                echo form_input('food', null, ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('Food name'),'food', ['class' => 'required']);
+                echo form_input('food', null, ['class' => 'form-control', 'required' => '','id' => 'food']);
 
                 echo form_label(lang('Meal time'));
                 echo form_dropdown('food_time',
@@ -177,14 +177,14 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('Date'), 'date');
-                        echo form_date('date', date('Y-m-d'), ['class' => 'form-control']);
+                        echo form_label(lang('Date'), 'date',['class' => 'required']);
+                        echo form_date('date', date('Y-m-d'), ['class' => 'form-control', 'id' => 'date']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('Time'), 'time');
-                        echo form_time('time', date('H:i:s'), ['class' => 'form-control']);
+                        echo form_label(lang('Time'), 'time', ['class' => 'required']);
+                        echo form_time('time', date('H:i:s'), ['class' => 'form-control', 'id' => 'time']);
                         ?>
                     </div>
                 </div>

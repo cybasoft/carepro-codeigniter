@@ -8,7 +8,7 @@
             </div>
             <?php echo ($action == "checkin") ? form_open('child/' . $child_id . '/checkIn') : form_open('child/' . $child_id . '/checkOut'); ?>
             <div class="modal-body">
-                <div class="alert alert-warning text-left">
+                <div class="alert alert-warning text-left ml-0">
                     <?php echo lang('check_in_out_notice'); ?>
                 </div>
                 <?php if (empty($parents)) : ?>

@@ -26,7 +26,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <?php if(!is('parent') && $invoice[0]->invoice_status !== "paid"): ?>
+                            <?php if((is('admin') || is('manager')) && $invoice[0]->invoice_status !== "paid"): ?>
                                 <a class="btn btn-default btn-sm card-tools" data-toggle="modal"
                                    data-target="#newItemModal">
                                     <i class="fa fa-plus"></i> <?php echo lang('add_item'); ?>
@@ -37,7 +37,7 @@
                                class="btn btn-default btn-sm card-tools">
                                 <i class="fa fa-print"></i> <?php echo lang('print'); ?>
                             </a>
-                            <?php if(!is('parent') && $invoice[0]->invoice_status !== "paid"): ?>
+                            <?php if((is('admin') || is('manager')) && $invoice[0]->invoice_status !== "paid"): ?>
                                 <a class="btn btn-default btn-sm card-tools" data-toggle="modal"
                                    data-target="#payModal">
                                     <span class="fa fa-credit-card"></span>
@@ -127,7 +127,7 @@
                                                            name="item_sub_total"
                                                            value="<?php echo moneyFormat($item->qty * $item->price, TRUE); ?>"/>
                                                 </td>
-                                                <?php if(!is('parent')): ?>
+                                                <?php if(is('admin') || is('manager')): ?>
                                                     <td>
                                                         <a href="<?php echo site_url('invoice/'.$invoice[0]->id.'/deleteItem/'.$item->item_id); ?>"
                                                            class="delete">

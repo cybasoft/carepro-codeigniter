@@ -66,7 +66,7 @@ class Parents extends CI_Controller
         } else {
             if ($term == 0) {
                 $query = $this->invoice->getInvoices();
-            } else {
+            } else {    
                 $this->db->where('invoice_status', $term);
                 $query = $this->invoice->getInvoices();
             }

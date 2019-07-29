@@ -118,7 +118,7 @@
                 </h4>
             </div>
             <div class="card-body">
-                <?php echo lang('Add a payment method'); ?>
+                <?php echo lang('Add a payment method'); ?> <span class="field_required"> *</span>
                 <?php echo form_open('paymentMethods', ['class' => 'settings', 'demo' => 1]);
                 echo '<div class="input-group">';
                 echo form_input('title', NULL, ['class' => 'form-control', 'required' => '']);

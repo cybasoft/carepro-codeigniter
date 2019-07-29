@@ -58,13 +58,13 @@
                  src="<?php echo base_url(); ?>/assets/uploads/invoice_logo/<?php echo $image; ?>"/>
            <?php endif; ?>
             <br/>
-            <strong><?php echo session('company_name'); ?></strong><br/>
+            <strong><?php echo $this->session->userdata('company_name'); ?></strong><br/>
             <?php
-            $street = session('company_street');
-            $street2 = session('company_street2');
-            $city = session('company_city');
-            $state = session('company_state');
-            $zip = session('company_postal_code');
+            $street = $address['address_line_1'];
+            $street2 = $address['address_line_2'];
+            $city = $address['city'];
+            $state = $address['state'];
+            $zip = $address['zip_code'];
             ?>
             <?php
             echo !empty($street) ? $street.'<br/>' : ''; ?>
@@ -72,8 +72,8 @@
             <?php echo !empty($city) ? $city.',' : ''; ?>
             <?php echo !empty($state) ? $state : ','; ?>
             <?php echo !empty($zip) ? $zip.'<br/>' : '';
-            echo session('company_phone'); ?><br/>
-            <?php echo session('company_email'); ?><br/>
+            echo $address['phone']; ?><br/>
+            <?php echo $admin['email']; ?><br/>
             <?php echo site_url(); ?>
         </td>
     </tr>

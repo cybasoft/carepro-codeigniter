@@ -13,7 +13,7 @@
                 <?php echo form_open('invoice/' . $invoice[0]->id.'/makePayment'); ?>
                 <div class="row">
                     <div class="col-sm-6">
-                        <?php echo lang('amount'); ?>
+                        <?php echo lang('amount'); ?><span class="field_required"> *</span>
                     </div>
                     <div class="col-sm-6">
                         <input type="number" step="0.01" name="amount" value="" class="form-control" required=""/>

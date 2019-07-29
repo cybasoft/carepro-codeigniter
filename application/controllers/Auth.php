@@ -53,6 +53,7 @@ class Auth extends CI_Controller
                 $this->session->set_userdata('company_logo',$daycare['logo']);
                 if ($login == "1") {
                     $check_parent = $this->session->userdata("users");
+                    $this->session->set_userdata('company_name',$daycare['name']);
                     $this->session->set_userdata('owner_daycare_id', $daycare['daycare_id']);
                     $users_details = $this->db->get_where('users', array(
                         'email' => $email,
@@ -196,12 +197,14 @@ class Auth extends CI_Controller
                 $query = $this->db->get_where('daycare', array(
                     'daycare_id' => $daycareId
                 ));
-                $result = $query->result();
-                $logo = $result[0]->logo;
+                $result = $query->row_array();
+                $logo = $result['logo'];
+                $this->session->set_userdata('company_name',$result['name']);
                 $image = $logo;
             } else {
                 $image = "";
             }
+            $this->session->set_userdata('company_logo',$image);
             $data['logo'] = $image;
             $data['captcha_image'] = $captcha['image'];
             $data['daycare_id'] = $daycareId;

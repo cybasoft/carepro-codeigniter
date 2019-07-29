@@ -25,11 +25,12 @@ $(document).ready(function() {
         readURL(this);
     });
     $(".reset_btn").click(function() {
+        var base_url = $(this).data("site-url");
         $("#avatar").attr('value', '');
         $("#edit_image").val('');
         $("#customer_image").val('');
         $("#profile_image").val('');
-        $("#img_preview").attr('src', '../assets/img/daycare/default-user-image.png');
+        $("#img_preview").attr('src', base_url + 'assets/img/daycare/default-user-image.png');
     });
 
     $(".notifictions").delay(2000).hide("slide", {

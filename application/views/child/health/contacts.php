@@ -54,14 +54,14 @@
 
                 echo form_hidden('child_id', $child->id);
 
-                echo form_label(lang('name'));
-                echo form_input('name', null, ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('name'),'name',['class' => 'required']);
+                echo form_input('name', null, ['class' => 'form-control', 'required' => '', 'id' => 'name']);
 
-                echo form_label(lang('Relation'));
-                echo form_input('relation', null, ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('Relation'), 'relation', ['class' => 'required']);
+                echo form_input('relation', null, ['class' => 'form-control', 'required' => '', 'id' => 'relation']);
 
-                echo form_label(lang('Phone'));
-                echo form_input('phone', null, ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('Phone'), 'phone', ['class' => 'required']);
+                echo form_input('phone', null, ['class' => 'form-control', 'required' => '', 'id' => 'phone']);
 
                 echo form_label(lang('Address'));
                 echo form_textarea('address', null, ['class' => 'form-control']);

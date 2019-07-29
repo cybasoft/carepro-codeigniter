@@ -163,15 +163,39 @@ class My_child extends CI_Model
      */
 
     public function register($getID = FALSE,$daycare_id)
-    {
-        $daycare_details = $this->db->get_where('daycare',array(
+    {        
+        $UNLIMITED = "Unlimited";
+        $daycare_details = $this->db->get_where('daycare',array(   //daycare details
             'daycare_id' => $daycare_id
-        ));      
-        $daycare = $daycare_details->row_array(); 
-        if(is('parent')){
+        ));
+        $daycare = $daycare_details->row_array();
+
+        $daycare_admin = $this->db->where(
+            'daycare_id', $daycare['id']
+        )->group_by('daycare_id')->get('users')->row_array(); //daycare admin
+        $selected_plan = $daycare_admin['selected_plan'];
+
+        $plans = $this->db->get_where('subscription_plans',array(
+            'id' => $selected_plan
+        ))->row_array();
+
+        $managers = $this->db->select('us.*,ug.*')
+                    ->where('daycare_id', $daycare['id'])
+                    ->from('users as us')
+                    ->join('users_groups as ug', 'ug.user_id = us.id')
+                    ->get()->result_array(); //get all managers of daycare
+
+        $childs = $this->db->get_where('children',array(
+            'daycare_id' => $daycare['id']
+        ))->result_array(); // get all childrenof daycare
+        
+        $child_count = count($childs); //child count
+        $plan_child_count = $plans['children']; //child number in plan
+
+        if(is('parent') || is('staff')){
             $status = 0;
         }else{
-            $status = 1;
+            $status = $this->input->post('status');
         }
         $data = [
             'nickname' => $this->input->post('nickname'),
@@ -190,69 +214,90 @@ class My_child extends CI_Model
             'birthplace' => $this->input->post('birthplace'),
             'blood_type' => $this->input->post('blood_type'),
         ];
-        $this->db->insert('children', $data);
-        $last_id = $this->db->insert_id();
-
-        if($this->db->affected_rows() > 0) {
-            flash('success', lang('request_success'));
-        } else {
-            return FALSE;
-        }
-
-        //assign child to user if this user is parent
-        if(is('parent')) {            
-            $data2 = [
-                'child_id' => $last_id,
-                'user_id' => $this->user->uid(),
-            ];
-            $this->db->insert('child_parents', $data2);
-            $user_details = $this->db->get_where('users',array(
-                'daycare_id' => $daycare['id']
-            ));
-            $users = $user_details->result();
-    
-            $child_name = $this->input->post('first_name') . " " .$this->input->post('last_name');
-            $parent_id = $this->session->userdata('user_id');
-            foreach ($users as $row) {
-                if($parent_id == $row->id){
-                    if($row->first_name == ''){
-                        $parent_name = $row->name;
-                    }else{
-                        $parent_name = $row->first_name;
-                    }
-                    if($row->first_name == ''){
-                        $name = $row->name;
-                    }else{
-                        $name = $row->first_name . " " . $row->last_name;
-                    }
-                    $user_group = $this->db->get_where('users_groups',array(
-                        'user_id' => $row->id
-                    ));
-                    $group_row = $user_group->row();
-                    $group = $group_row->group_id;
-                    if($group == 1 || $group == 2){
-                        $message = "A child " . $child_name . " added to daycare by parent " . $parent_name .".";
-                        $data = [
-                            'subject' => 'Child Register',
-                            'to' => $row->email,
-                            'message' => $message,
+        
+        //check subscription plan
+        if(($child_count < $plan_child_count) || ($plan_child_count == $UNLIMITED)){
+            $this->db->insert('children', $data);
+            $last_id = $this->db->insert_id();
+            if($this->db->affected_rows() > 0) {
+                flash('success', lang('request_success'));
+            } else {
+                return FALSE;
+            }
+            if(is('staff')){
+                foreach($managers as $mg){
+                    if($mg['group_id'] == 2){
+                        $data = [                    
+                            'to' => $mg['email'],
+                            'subject' => lang('child_subject'),
                             'logo' => $this->session->userdata('company_logo'),
-                            'name' => $name,
+                            'name' => $mg['first_name'] . " " . $mg['last_name'],
                         ];
+                        $child_name = $this->input->post('first_name') . " " . $this->input->post('last_name');
+                        $message = sprintf(lang('assigned_child'),$child_name);     
+                        $data['message'] = $message;
                         send_email($data);
                     }
-                }                
+                }
             }
-        }
-
-        //log event
-        logEvent($id = NULL,"Added child {$this->input->post('first_name')} {$this->input->post('last_name')}",$care_id = NULL);
-
-        if($getID) {
-            return $last_id;
-        }
-
-        return TRUE;
+            //assign child to user if this user is parent
+            if(is('parent')) {            
+                $data2 = [
+                    'child_id' => $last_id,
+                    'user_id' => $this->user->uid(),
+                ];
+                $this->db->insert('child_parents', $data2);
+                $user_details = $this->db->get_where('users',array(
+                    'daycare_id' => $daycare['id']
+                ));
+                $users = $user_details->result();
+        
+                $child_name = $this->input->post('first_name') . " " .$this->input->post('last_name');
+                $parent_id = $this->session->userdata('user_id');
+                foreach ($users as $row) {
+                    if($parent_id == $row->id){
+                        if($row->first_name == ''){
+                            $parent_name = $row->name;
+                        }else{
+                            $parent_name = $row->first_name;
+                        }
+                        if($row->first_name == ''){
+                            $name = $row->name;
+                        }else{
+                            $name = $row->first_name . " " . $row->last_name;
+                        }
+                        $user_group = $this->db->get_where('users_groups',array(
+                            'user_id' => $row->id
+                        ));
+                        $group_row = $user_group->row();
+                        $group = $group_row->group_id;
+                        if($group == 1 || $group == 2){
+                            $message = "A child " . $child_name . " added to daycare by parent " . $parent_name .".";
+                            $data = [
+                                'subject' => 'Child Register',
+                                'to' => $row->email,
+                                'message' => $message,
+                                'logo' => $this->session->userdata('company_logo'),
+                                'name' => $name,
+                            ];
+                            send_email($data);
+                        }
+                    }                
+                }
+            }
+    
+            //log event
+            logEvent($id = NULL,"Added child {$this->input->post('first_name')} {$this->input->post('last_name')}",$care_id = NULL);
+    
+            if($getID) {
+                return $last_id;
+            }
+    
+            return TRUE;
+        }else{
+            $error = 'error';
+            return $error;
+        }  
     }
 
     /*
@@ -307,6 +352,7 @@ class My_child extends CI_Model
                 $email_data = array(
                     'first_name' => $parent['first_name'],
                     'last_name' => $parent['last_name'],
+                    'logo' => $this->session->userdata('company_logo'),
                     'child_first_name' => $first_name,
                     'child_last_name' => $this->input->post('last_name'),
                     'daycare_id'     => $daycare_id,
@@ -428,7 +474,7 @@ class My_child extends CI_Model
             //mark as checked in
             $this->db->where('id', $child_id)->update('children', ['checkin_status' => 1]);
 
-            $this->parent->notify_check_out($child_id, $this->input->post('in_guardian'));
+            $this->parent->notify_check_in($child_id, $this->input->post('in_guardian'));
 
             logEvent($id = NULL,"Added checked in for {$this->child($child_id)->first_name}",$care_id = NULL);
             return TRUE;

@@ -10,8 +10,10 @@
             </div>
             <div class="modal-body">
                 <?php echo form_open_multipart('meds/uploadMedPhoto'); ?>
+                <span class="field_required">*</span>
                 <?php echo form_input('med_name', NULL, ['class' => 'form-control', 'placeholder' => lang('Medication name'), 'required' => '']); ?>
                 <br/>
+                <span class="field_required">*</span>
                 <?php echo form_upload('photo', ['class' => 'form-control', 'required' => 'required']); ?>
                 <br/>
                 <?php echo form_button(['type' => 'submit'], lang('Submit'), ['class' => 'btn btn-primary']); ?>

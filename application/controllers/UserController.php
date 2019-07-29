@@ -14,10 +14,10 @@ class UserController extends CI_Controller
         $this->module = 'users/';
         $this->title = lang('users');
     }
-
     //redirect if needed, otherwise display the user list
     function index()
     {
+        allow(['admin','manager']);
         $daycare_id = $this->session->userdata('owner_daycare_id');
         //list the users
         $daycare_details = $this->db->get_where('daycare',array(
@@ -25,12 +25,13 @@ class UserController extends CI_Controller
         ));
         $daycare = $daycare_details->row_array();       
 
-        $users = $this->db->select('u.*,ug.group_id,g.name as role')
+        $users = $this->db->select('u.*,u.id as user_id,ad.id as add_id,ug.group_id,g.name as role,ad.*')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
             ->join('users_groups as ug','ug.user_id=u.id','left')
             ->join('groups as g','g.id=ug.group_id')
-            ->get()->result();
+            ->join('address as ad', 'ad.id=u.address_id')
+            ->get()->result();     
         $groups = $this->db->select('g.name, count(*) AS total')
             ->from('users as u')
             ->where('u.daycare_id',$daycare['id'])
@@ -97,7 +98,7 @@ class UserController extends CI_Controller
     {
         disable_debug();
 
-        allow(['admin', 'manager']);
+        allow(['admin', 'manager', 'staff']);
 
         // $id = $this->uri->segment(3);
 
@@ -126,7 +127,7 @@ class UserController extends CI_Controller
     function update($id=NULL)
     {   
         $daycare_id = $this->session->userdata('owner_daycare_id');
-        allow(['admin', 'manager']);
+        allow(['admin', 'manager', 'staff']);
         $id = $this->input->post('user_id');
         //validate form input
         $this->form_validation->set_rules('first_name', lang('edit_user_validation_first_name_label'), 'required|xss_clean');
@@ -134,7 +135,11 @@ class UserController extends CI_Controller
         $this->form_validation->set_rules('email', lang('email'), 'required|xss_clean|valid_email');
         $this->form_validation->set_rules('groups', lang('edit_user_validation_groups_label'), 'xss_clean');
         $this->form_validation->set_rules('pin', lang('pin'), 'required|xss_clean|trim|integer');
-        $this->form_validation->set_rules('address', lang('address'), 'xss_clean|trim');
+        $this->form_validation->set_rules('address_line_1', lang('address line 1'), 'required|xss_clean|trim');
+        $this->form_validation->set_rules('city', lang('city'), 'required|xss_clean|trim');
+        $this->form_validation->set_rules('state', lang('state'), 'required|xss_clean|trim');
+        $this->form_validation->set_rules('country', lang('country'), 'required|xss_clean|trim');
+
         $data = array(
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
@@ -142,9 +147,14 @@ class UserController extends CI_Controller
             'pin' => $this->input->post('pin'),
             'phone' => $this->input->post('phone'),
             'phone2' => $this->input->post('phone2'),
-            'address' => $this->input->post('address')
+            'address_line_1' => $this->input->post('address_line_1'),
+            'address_line_2' => $this->input->post('address_line_2'),
+            'fax' => $this->input->post('fax'),
+            'city' => $this->input->post('city'),
+            'state' => $this->input->post('state'),
+            'country' => $this->input->post('country')
         );
-        if(is(['admin','manager'])) : //only admin can assign roles
+        if(is(['admin','manager','staff'])) : //only admin can assign roles
             //Update the groups user belongs to
             $groupData = $this->input->post('groups');            
             if(isset($groupData) && !empty($groupData)) {
@@ -266,7 +276,8 @@ class UserController extends CI_Controller
             'last_name' => $user['last_name'],
             'username' => $user['name'],
             'user_status' => $user_status,
-            'daycare_id' => $daycare_id
+            'daycare_id' => $daycare_id,
+            'logo' => $this->session->userdata('company_logo')
          );
          $this->email->set_mailtype('html');
          $from = $this->config->item('smtp_user');
@@ -435,6 +446,9 @@ class UserController extends CI_Controller
                 'photo' => $upload_data['file_name']
             );
             $this->db->where('id', $id)->update($upload_db, $data_ary);
+            if($id == $this->user->uid()){
+                $this->session->set_userdata('photo',$upload_data['file_name']);
+            }
             $data = array('upload_data' => $upload_data);
             if($data) {
                 flash('success', lang('request_success'));

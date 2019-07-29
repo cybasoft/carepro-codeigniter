@@ -42,7 +42,7 @@
             </thead>
             <?php foreach ($users as $user) : ?>
                 <tr>
-                    <td><?php echo $user->id; ?></td>
+                    <td><?php echo $user->user_id; ?></td>
                     <td>
                         <img class="img-circle" style="height:50px;width:50px;" src="<?php echo $this->user->photo($user->photo); ?>">
                     </td>
@@ -58,13 +58,13 @@
                     </td>
                     <td align="center" valign="top">
                         <?php if (is('admin')) : ?>
-                            <?php echo ($user->active) ? anchor("users/deactivate/" . $user->id, '<span class="text-primary">'
-                                . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->id, '<span class="text-danger">'
+                            <?php echo ($user->active) ? anchor("users/deactivate/" . $user->user_id, '<span class="text-primary">'
+                                . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->user_id, '<span class="text-danger">'
                                 . lang('index_inactive_link') . '</span>'); ?>
                         <?php elseif (is('manager')) : ?>
                             <?php if ($user->group_id == user_roles()['staff'] || $user->group_id == user_roles()['parent']) : ?>
-                                <?php echo ($user->active) ? anchor("users/deactivate/" . $user->id, '<span class="text-primary">'
-                                    . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->id, '<span class="text-danger">'
+                                <?php echo ($user->active) ? anchor("users/deactivate/" . $user->user_id, '<span class="text-primary">'
+                                    . lang('index_active_link') . '</span>') : anchor("users/activate/" . $user->user_id, '<span class="text-danger">'
                                     . lang('index_inactive_link') . '</span>'); ?>
                             <?php else : ?>
                                 <?php if ($user->active) : ?>
@@ -85,22 +85,22 @@
                     </td>
                     <td style="width:75px;" class="text-right">
                         <?php if (is('manager')) : ?>
-                            <?php if ($user->group_id == user_roles()['staff'] || $user->group_id == user_roles()['parent'] || $user->id == $this->user->uid()) : ?>
-                                <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
+                            <?php if ($user->group_id == user_roles()['staff'] || $user->group_id == user_roles()['parent'] || $user->user_id == $this->user->uid()) : ?>
+                                <a id="<?php echo $user->user_id; ?>" onclick="editUser('<?php echo $user->user_id; ?>')" class="cursor">
                                     <span class="btn btn-default btn-xs">
                                         <i class="fa fa-pencil-alt"></i></span>
                                 </a>
-                                <?php if ($user->id != $this->session->userdata('user_id')) {
-                                    echo anchor("users/delete/" . $user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"');
+                                <?php if ($user->user_id != $this->session->userdata('user_id')) {
+                                    echo anchor("users/delete/" . $user->user_id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"');
                                 } ?>
                             <?php endif; ?>
                         <?php else : ?>
-                            <a id="<?php echo $user->id; ?>" onclick="editUser('<?php echo $user->id; ?>')" class="cursor">
+                            <a id="<?php echo $user->user_id; ?>" onclick="editUser('<?php echo $user->user_id; ?>')" class="cursor">
                                 <span class="btn btn-default btn-xs">
                                     <i class="fa fa-pencil-alt"></i></span>
                             </a>
-                            <?php if ($user->id != $this->session->userdata('user_id')) {
-                                echo anchor("users/delete/" . $user->id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"');
+                            <?php if ($user->user_id != $this->session->userdata('user_id')) {
+                                echo anchor("users/delete/" . $user->user_id, '<span class="btn btn-danger btn-xs"><i class="fa fa-trash-alt"></i></span>', 'class="delete"');
                             } ?>
                         <?php endif; ?>
                     </td>

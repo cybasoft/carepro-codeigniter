@@ -8,7 +8,7 @@
                         'link' => 'dashboard',
                         'icon' => 'dash',
                         'active' => 'dashboard',
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                        'allow' => ['admin', 'manager', 'staff', 'parent','owner'],
                     ],
                     [
                         'name' => 'Children',
@@ -37,7 +37,7 @@
                         'link' => 'parents',
                         'icon' => 'parents',
                         'active' => 'parents',
-                        'allow' => ['admin', 'manager'],
+                        'allow' => ['admin', 'manager', 'staff'],
                     ],
                     [
                         'name' => 'Calendar',
@@ -52,13 +52,14 @@
                     //     'icon' => 'folder',
                     //     'active' => 'folder',
                     //     'allow' => ['admin', 'manager', 'staff'],
-                    // ], [
-                    //     'name' => 'News',
-                    //     'link' => 'news',
-                    //     'icon' => 'news',
-                    //     'active' => ['news', 'article'],
-                    //     'allow' => ['admin', 'manager', 'staff', 'parent'],
                     // ], 
+                    [
+                        'name' => 'News',
+                        'link' => 'news',
+                        'icon' => 'news',
+                        'active' => ['news', 'article'],
+                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                    ], 
                     [
                         'name' => 'Settings',
                         'link' => 'settings',
@@ -69,7 +70,7 @@
                         'name' => 'Logout',
                         'link' => 'logout',
                         'icon' => 'exit',
-                        'allow' => ['admin', 'manager', 'staff', 'parent'],
+                        'allow' => ['admin', 'manager', 'staff', 'parent', 'owner'],
                     ],
                 ];
 

@@ -7,10 +7,10 @@
             </div>
             <div class="card-body">
                 <?php echo form_open('notes/storeCategory');
-                echo form_label(lang('Name'), 'name');
+                echo form_label(lang('Name'), 'name', ['class' => 'required']);
                 ?>
                 <div class="input-group">
-                    <?php echo form_input('name', NULL, ['class' => 'form-control']); ?>
+                    <?php echo form_input('name', NULL, ['class' => 'form-control', 'id' => 'name']); ?>
                     <span class="input-group-btn">
                 <?php echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit')); ?>
             </span>
@@ -32,10 +32,10 @@
         	</div>
         	<div class="card-body">
                 <?php echo form_open('notes/storeTag');
-                echo form_label(lang('Name'), 'name');
+                echo form_label(lang('Name'), 'name', ['class' => 'required']);
                 ?>
                 <div class="input-group">
-                    <?php echo form_input('name', NULL, ['class' => 'form-control']); ?>
+                    <?php echo form_input('name', NULL, ['class' => 'form-control', 'id' => 'name']); ?>
                     <span class="input-group-btn">
                 <?php echo form_button(['type' => 'submit', 'class' => 'btn btn-primary'], lang('submit')); ?>
             </span>

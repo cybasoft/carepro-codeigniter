@@ -21,7 +21,16 @@
                     <?php echo form_open('users/'.$user_status.'/status'); ?>
                     <input type="hidden" name="user_id" value="<?php echo $id ?>">
                     <input type="hidden" name="confirm" value="yes" />
-                    <?php echo anchor('users', lang('Cancel'), 'class="btn btn-default"'); ?>
+                    <?php 
+                        if(is('staff')){
+                            $url = 'parents';
+                        }else{
+                            $url = 'users';
+                        }
+                        echo anchor($url,
+                             lang('Cancel'), 
+                             'class="btn btn-default"'); 
+                    ?>
                     <button class="btn btn-primary"><?php echo lang('Yes'); ?></button>
                     <?php echo form_close(); ?>
                 <?php endif; ?>

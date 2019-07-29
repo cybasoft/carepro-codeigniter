@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div style="width: 93%;background: #D5F2F4 !important;height: 100%;padding: 4% 3%;font-family:'Poppins-Regular, Sans-serif, serif'">
+    <div style="width: 93%;background: #D5F2F4 !important;height: 100%;padding: 4% 3%;font-family:Verdana">
         <div style="background-color:white;padding: 4% 3%;">
         <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">   
         <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $user_name; ?>,</p>
         <?php if($payment_success !== ''): ?>
-               <p style="font-weight: 700; font-size: 16px"><?php echo $payment_success; ?></p>
+            <p style="font-weight: 700; font-size: 16px"><?php echo $payment_success; ?></p>
         <?php endif; ?>
         Your payment of $<?php echo $price; ?> completed successfully.<br/>
         Thank you for subscription to daycare <?php echo $plan; ?> plan!<br/><br/>

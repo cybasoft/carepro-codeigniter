@@ -22,6 +22,7 @@ class My_parent_registration extends CI_Model
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
             'password' => $password,
+            'true_password' => $this->input->post('password'),
             'active' => 0,
             'daycare_id' => $owner_id
         );
@@ -55,8 +56,36 @@ class My_parent_registration extends CI_Model
             'group_id' => $group_id
         );
         $this->db->insert('users_groups',$users_groups);
+        $this->send_email($data);
     }
 
+    //send email to registered parent
+    public function send_email($data){
+        $this->load->config('email');
+        $this->load->library('email');
+        $email_data = array(
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'logo' => $this->session->userdata('company_logo'),            
+            'user_name' => $data['email'],
+            'password' => $data['true_password'],
+            'staff_firstname' => '',
+            'name' => '',
+            'daycare_name' => $this->session->userdata('company_name')
+        );
+        $this->email->set_mailtype('html');
+        $from = $this->config->item('smtp_user');
+        $to = $data['email'];
+        $this->email->from($from, 'Daycare');
+        $this->email->to($to);
+        $this->email->subject('Daycare Invitation');
+
+        $body = $this->load->view('custom_email/register_user_email', $email_data, true);
+        $this->email->message($body);        //Send mail
+        if ($this->email->send()) {
+            $this->session->set_flashdata("verify_email", "Please check your email to confirm your account.");
+        }
+    }
     //send activation email to owner for parent self registration
     public function send_activation_email($data,$daycare_id,$parent_name){
         $this->load->config('email');
@@ -64,10 +93,10 @@ class My_parent_registration extends CI_Model
         $daycare_details = $this->db->get_where('daycare',array(
             'daycare_id' => $daycare_id
         ));
-        $daycare = $daycare_details->result_array();        
+        $daycare = $daycare_details->row_array();  
 
         $user_details = $this->db->get_where('users',array(
-            'daycare_id' => $daycare[0]['id']
+            'daycare_id' => $daycare['id']
         ));
 
         $users = $user_details->row_array();       
@@ -81,7 +110,8 @@ class My_parent_registration extends CI_Model
             'lastname' => $data['last_name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'daycare_id' => $daycare_id
+            'daycare_id' => $daycare_id,
+            'image' => $daycare['logo']
         );
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');

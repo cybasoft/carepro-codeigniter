@@ -64,7 +64,7 @@ $end_time = array(
                 <table class="table table-hover ">
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('title'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('title'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td>
                             <?php echo form_input($title); ?>
@@ -72,7 +72,7 @@ $end_time = array(
                     </tr>
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('start'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('start'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td class="input-group">
                             <?php echo form_input($start); ?>
@@ -82,7 +82,7 @@ $end_time = array(
                     </tr>
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('end'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('end'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td class="input-group">
                             <?php echo form_input($end); ?>
@@ -92,7 +92,7 @@ $end_time = array(
                     </tr>
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('details'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('details'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td>
 							<textarea class="form-control" name="desc" rows="10" id="editor2"></textarea>

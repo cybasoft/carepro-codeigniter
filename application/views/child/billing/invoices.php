@@ -7,8 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title btn-block"><?php echo lang('Invoices'); ?>
-
-                    <?php if (!is('parent')) : ?>
+                    <?php if (is('admin') || is('manager')):?>
                         <a href="<?php echo site_url('child/' . $child->id . '/newInvoice'); ?>" class="btn btn-info btn-sm card-tools">
                             <i class="fa fa-plus"></i>
                             <?php echo lang('new_Invoice'); ?>
@@ -46,12 +45,12 @@
                                         <div class="dropdown-menu">
                                             <?php echo anchor('invoice/' . $invoice->id . '/view', icon('folder-open') . ' ' . lang('Open'), 'class="dropdown-item"'); ?>
                                             <?php echo anchor('invoice/' . $invoice->id . '/download?dl', icon('file-pdf') . ' ' . lang('Download'), 'class="dropdown-item"'); ?>
-                                            <?php echo anchor('invoice/' . $invoice->id . '/download?send', icon('envelope') . ' ' . lang('send_to_parent'), 'class="dropdown-item"'); ?>
+                                            <?php if(!is('parent')): echo anchor('invoice/' . $invoice->id . '/download?send', icon('envelope') . ' ' . lang('send_to_parent'), 'class="dropdown-item"'); endif;?>
                                             <?php echo anchor('invoice/' . $invoice->id . '/preview', icon('print') . ' ' . lang('Print'), 'target="_blank" class="dropdown-item"'); ?>
                                             <?php if ($stripe->stripe_enabled == 1 && $invoice->totalDue != 0 && $key != '') : ?>
                                                 <a href="javascript:void(0)" target="_blank" data-toggle="modal" data-target="#stripe_pay" class="dropdown-item pay_button" data-due-amount="<?php echo $invoice->totalDue; ?>"><i class="fab fa-cc-stripe"></i> Pay</a>
                                             <?php endif; ?>
-                                            <?php if (!is('parent')) : ?>
+                                            <?php if (is('admin') || is('manager')) : ?>
                                                 <div class="dropdown-divider"></div>
                                                 <?php echo anchor('invoice/' . $invoice->id . '/delete', icon('trash-alt') . ' ' . lang('Delete'), 'class="delete dropdown-item text-danger"'); ?>
                                             <?php endif; ?>
@@ -66,7 +65,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myModalLabel">Invoice Stripe Payment</h4>
+                                <h4 class="modal-title" id="myModalLabel">Invoice Payment</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -98,13 +97,14 @@
                                     </div>
                                     <div class='form-row row'>
                                         <div class='col-md-12 error form-group d-none'>
-                                            <div class='alert-danger alert'>
+                                            <div class='alert-danger alert ml-0'>
                                                 <?php echo lang('Please correct the errors and try again.'); ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <a href="javascript:void(0)" class="mr-auto">Powered by Stripe</a>
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('Close'); ?></button>
                                     <button class="btn btn-primary"><?php echo lang('Pay'); ?></button>
                                 </div>

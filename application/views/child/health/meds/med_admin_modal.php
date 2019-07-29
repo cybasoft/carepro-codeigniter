@@ -18,14 +18,14 @@
                 <p class="medNotes"></p>
                 <div class="row">
                     <div class="col-sm-6">
-                        <?php echo form_label(lang('Date'), 'date');
-                        echo form_date('date', date('Y-m-d'), ['class' => 'form-control']);
+                        <?php echo form_label(lang('Date'), 'date',['class' => 'required']);
+                        echo form_date('date', date('Y-m-d'), ['class' => 'form-control', 'id' => 'date']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('Time'), 'time');
-                        echo form_time('time', date('H:i'), ['class' => 'form-control']);
+                        echo form_label(lang('Time'), 'time', ['class' => 'required']);
+                        echo form_time('time', date('H:i'), ['class' => 'form-control', 'id' => 'time']);
                         ?>
                     </div>
                 </div>

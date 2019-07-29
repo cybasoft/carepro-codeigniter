@@ -63,7 +63,11 @@ class RegistrationController extends CI_Controller
         if ($this->ion_auth->logged_in()) {
             redirect('dashboard', 'refresh');
         }
-        $this->load->view('registration/subscription_page');
+        $plans = $this->db->get('subscription_plans')->result_array();
+        $data = array(
+            'plans' => $plans
+        );
+        $this->load->view('registration/subscription_page',$data);
     }
 
     public function select_daycare()

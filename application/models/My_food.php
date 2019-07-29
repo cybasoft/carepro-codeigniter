@@ -138,7 +138,7 @@ class My_food extends CI_Model
             $data['updated_at'] = date_stamp();
             $this->db->insert('form_ny_attendance', $data);
             $last_id = $this->db->insert_id();
-            logEvent($user_id = NULL,"Food intake {$data['food']} added for form_ny_attendance of child {$this->child->child($data['child_id'])->first_name}",$care_id = NULL);
+            logEvent($user_id = NULL,"Food intake added for form_ny_attendance of child {$this->child->child($data['child_id'])->first_name}",$care_id = NULL);
         }
     }
 

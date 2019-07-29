@@ -14,7 +14,7 @@
                 <table class="table  no-border">
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('title'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('title'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td>
                             <?php echo form_input(
@@ -31,7 +31,7 @@
                     </tr>
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('start'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('start'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td class="input-group">
                             <?php echo form_input(
@@ -59,7 +59,7 @@
                     </tr>
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('end'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('end'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td class="input-group">
                             <?php echo form_input(
@@ -87,7 +87,7 @@
                     </tr>
                     <tr>
                         <td class="text-right">
-                            <span class="label-text text-info"><?php echo lang('details'); ?></span>
+                            <span class="label-text text-info"><?php echo lang('details'); ?></span><span class="field_required"> *</span>
                         </td>
                         <td>
                             <?php echo form_textarea('desc',set_value('desc'),['class'=>'form-control']); ?>

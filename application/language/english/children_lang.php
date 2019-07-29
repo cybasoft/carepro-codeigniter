@@ -64,3 +64,7 @@ $lang['birthplace']='Place of birth';
 $lang['photos']='Photos';
 $lang['active_children']='Active children';
 $lang['inactive_children']='Inactive children';
+$lang['assigned_parent'] = 'A Parent %s has been registered to daycare. <br/>';
+$lang['parent_subject'] = 'Parent registered';
+$lang['child_subject'] = 'Child registered';
+$lang['assigned_child'] = 'A Child %s has been registered to daycare.';

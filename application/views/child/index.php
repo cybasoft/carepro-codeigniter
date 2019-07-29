@@ -48,7 +48,7 @@
 
                 <h3>
                     <?php echo lang('Rooms'); ?>
-                    <?php if (!is('parent')) : ?>
+                    <?php if (is('admin') || is('manager')) : ?>
                         <span class="text-sm"><a href="javascript:void(0)" class="child-assign-room" data-child-id="<?php echo $child->id ?>" data-toggle="modal" data-target="#AssignRoomModal"><?php echo lang('Assign to room'); ?></a></span>
                     <?php endif; ?>
                 </h3>

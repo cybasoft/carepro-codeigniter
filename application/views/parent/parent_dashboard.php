@@ -55,42 +55,42 @@
                         <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <div class="row callout callout-info">
+                                    <div class="row callout callout-info pr-0">
                                         <div class="col-sm-2">
                                             <h2><?php echo $this->child->totalRecords('child_notes', $child->id); ?></h2>
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-12 m-0 p-0">
                                         <strong class="h4"><?php echo lang('notes'); ?></strong><br/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="row callout callout-success">
+                                    <div class="row callout callout-success pr-0">
                                         <div class="col-sm-2">
                                             <h2><?php echo $this->child->totalRecords('child_notes', $child->id); ?></h2>
                                         </div>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-12 m-0 p-0">
                                         <strong class="h4"><?php echo lang('medications'); ?></strong><br/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="row callout callout-danger">
+                                    <div class="row callout callout-danger pr-0">
                                         <div class="col-sm-2">
                                             <h2><?php echo $this->child->totalRecords('child_allergy', $child->id); ?></h2>
                                         </div>
-                                        <div class="col-sm-10"> 
+                                        <div class="col-sm-12 m-0 p-0"> 
                                         <strong class="h4"><?php echo lang('allergies'); ?></strong><br/>
                                      </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="row callout callout-warning">
+                                    <div class="row callout callout-warning pr-0">
                                         <div class="col-sm-12">
                                             <h2><?php echo session('company_currency_symbol') . $this->invoice->getTotalDue(); ?></h2>
                                         </div>
-                                        <div class="col-sm-12">
-                                            <strong class="h4"><?php echo lang('invoice'); ?></strong><br/>
+                                        <div class="col-sm-12 m-0 p-0">
+                                            <strong class="h4"><?php echo lang('Due Amount'); ?></strong><br/>
                                         </div>
                                     </div>
                                 </div>

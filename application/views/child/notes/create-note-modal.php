@@ -14,8 +14,8 @@
             <div class="modal-body">
                 <?php
 
-                echo form_label(lang('Title'));
-                echo form_input('title', set_value('title'), ['class' => 'form-control', 'required' => '']);
+                echo form_label(lang('Title'), 'title', ['class' => 'required']);
+                echo form_input('title', set_value('title'), ['class' => 'form-control', 'required' => '', 'id' => 'title']);
 
                 echo form_label(lang('Category'));
 
@@ -41,8 +41,8 @@
                 echo '</div>';
                 echo '<div class="clearfix"></div>';
 
-                echo form_label(lang('Notes'));
-                echo form_textarea('note-content', htmlspecialchars_decode(set_value('note-content')), ['class' => 'form-control editor']);
+                echo form_label(lang('Notes'), 'note-content', ['class' => 'required']);
+                echo form_textarea('note-content', htmlspecialchars_decode(set_value('note-content')), ['class' => 'form-control editor', 'id' => 'note-content']);
 
                 ?>
             </div>
