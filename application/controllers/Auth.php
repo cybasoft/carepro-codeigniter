@@ -54,10 +54,7 @@ class Auth extends CI_Controller
                 $daycare = $daycare_details->row_array();
 
                 $daycare_admin = $this->ion_auth->getUserByRole($daycare['id'], $admin_role)->row_array(); //get daycare owner details
-                $selected_plan = $daycare_admin['selected_plan'];
-                $calendar = $this->db->get_where('calendar', array(
-                    'daycare_id' => $daycare['id']
-                ))->result_array();
+                $selected_plan = $daycare_admin['selected_plan'];                
                 $plans = $this->db->get_where('subscription_plans', array(
                     'id' => $selected_plan
                 ))->row_array(); //get subscription plan detail

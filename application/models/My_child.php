@@ -183,7 +183,7 @@ class My_child extends CI_Model
         
         $child_count = count($childs); //child count
         $plan_child_count = $plans['children']; //child number in plan
-
+        
         if(is('parent') || is('staff')){
             $status = 0;
         }else{

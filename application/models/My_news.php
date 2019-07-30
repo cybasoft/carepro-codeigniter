@@ -19,6 +19,7 @@ class My_news extends CI_Model
 
     function articles($opts=array())
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         if(!empty($opts)){
             foreach($opts as $opt=>$val){
                 if(is_array($val))
@@ -27,7 +28,7 @@ class My_news extends CI_Model
                     $this->db->$opt($val);
             }
         }
-        $this->db->order_by('publish_date','DESC');
+        $this->db->where('daycare_id',$daycare_id)->order_by('publish_date','DESC');
         $articles = $this->db->get('news')->result();
 
         return $articles;
@@ -57,6 +58,7 @@ class My_news extends CI_Model
 
     protected function _fillable($id = NULL)
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         if($this->input->post('category')) {
             $categories=$this->db->where('id', $this->input->post('category_id'))->get('news_categories');
             if($categories->num_rows() == 0) {
@@ -74,6 +76,7 @@ class My_news extends CI_Model
         $time = date('H:i:s',strtotime($this->input->post('publish_time')));
         $data['publish_date'] = $this->input->post('publish_date').' '.$time;
         $data['category_id'] = $category;
+        $data['daycare_id'] = $daycare_id;
 
         if($id == NULL) {
             $data['user_id'] = $this->user->uid();
