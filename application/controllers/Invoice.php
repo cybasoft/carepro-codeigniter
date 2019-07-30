@@ -220,7 +220,11 @@ class Invoice extends CI_Controller
                 flash('success', lang('request_success'));
             } else {
                 if($invoice == "error"){
-                    flash('danger', sprintf(lang('upgrade_plan'),'invoices'));
+                    if(is('admin')){
+                        flash('error', sprintf(lang('upgrade_plan'),'staff'));
+                    }else{
+                        flash('error', lang('upgrade_plan_for_parent'));
+                    }
                     redirect('child/' . $id . '/billing');
                 }else{
                     flash('danger', lang('request_error'));

@@ -283,11 +283,10 @@ class My_child extends CI_Model
     
             if($getID) {
                 return $last_id;
-            }
-    
+            }    
             return TRUE;
         }else{
-            $error = 'error';
+            $error = "error";
             return $error;
         }  
     }

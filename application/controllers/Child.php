@@ -52,18 +52,28 @@ class Child extends CI_Controller
         allow(['admin', 'manager', 'staff', 'parent']);
 
         if ($this->_validate_child()) {
-            $register = $this->child->register(true,$daycare_id);    
+            $register = $this->child->register(true,$daycare_id);
             if (false !== $register) {
-                flash('success', lang('request_success'));
-                if(is('parent') || is('staff')){
-                    redirect('children', 'refresh');
-                }else{
-                    if($register == 'error'){
-                        flash('error', sprintf(lang('upgrade_plan'),'child'));
-                        redirect('children', 'refresh');
+                if($register == "error"){
+                    if(is('parent')){
+                        flash('error', lang('upgrade_plan_for_parent'));
+                        redirect('dashboard', 'refresh');
                     }else{
-                        redirect('child/' . $register);
+                        if(is('admin')){
+                            flash('error', sprintf(lang('upgrade_plan'),'child'));
+                        }else{
+                            flash('error', lang('upgrade_plan_for_parent'));
+                        }
+                        redirect('children', 'refresh');
                     }
+                }
+                flash('success', lang('request_success'));
+                if(is('parent')){
+                    redirect('dashboard', 'refresh');
+                }else if(is('staff')){
+                    redirect('children', 'refresh');
+                }else{                    
+                    redirect('child/' . $register);                    
                 }
             } else {               
                 flash('error', lang('request_error'));                

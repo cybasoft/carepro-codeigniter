@@ -1,3 +1,4 @@
+
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
@@ -74,7 +75,11 @@ class Calendar extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $calender = $this->calendar->add_event();
             if($calender == "error"){
-                flash('danger', sprintf(lang('upgrade_plan'),'Calender Events'));
+                if(is('admin')){
+                    flash('error', sprintf(lang('upgrade_plan'),'staff'));
+                }else{
+                    flash('error', lang('upgrade_plan_for_parent'));
+                }
                 redirect('calendar');
             }
         } else {

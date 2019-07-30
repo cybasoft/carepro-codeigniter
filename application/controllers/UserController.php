@@ -87,7 +87,11 @@ class UserController extends CI_Controller
             if($register != "error") {
                 flash('success', lang('request_success'));
             }else{
-                flash('error', sprintf(lang('upgrade_plan'),'staff'));
+                if(is('admin')){
+                    flash('error', sprintf(lang('upgrade_plan'),'staff'));
+                }else{
+                    flash('error', lang('upgrade_plan_for_parent'));
+                }
                 redirect('users', 'refresh');
             }
         } else {
@@ -203,7 +207,11 @@ class UserController extends CI_Controller
             }
             redirectPrev();
         }else{
-            flash('error', sprintf(lang('upgrade_plan'),'child'));
+            if(is('admin')){
+                flash('error', sprintf(lang('upgrade_plan'),'staff'));
+            }else{
+                flash('error', lang('upgrade_plan_for_parent'));
+            }
             redirect('users', 'refresh');
         }
     }

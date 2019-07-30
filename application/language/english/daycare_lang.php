@@ -571,3 +571,4 @@ $lang['Start time'] = 'Start time';
 $lang['End time'] = 'End time';
 $lang['Enabled'] = 'Enabled';
 $lang['upgrade_plan'] = 'Upgrade your subscription plan to add more %s.';
+$lang['upgrade_plan_for_parent'] = "You have reached the limit of the plan. Please ask your daycare owner to upgrade their plans.";
