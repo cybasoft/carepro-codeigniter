@@ -35,7 +35,7 @@ class newsController extends CI_Controller
         $page = 0;
 
         $this->_pagination($perPage);
-
+        
         if(isset($_GET['page']))
             $page = $_GET['page'];
 

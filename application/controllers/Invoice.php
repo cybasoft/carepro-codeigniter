@@ -221,7 +221,7 @@ class Invoice extends CI_Controller
             } else {
                 if($invoice == "error"){
                     if(is('admin')){
-                        flash('error', sprintf(lang('upgrade_plan'),'staff'));
+                        flash('error', sprintf(lang('upgrade_plan'),'Invoices'));
                     }else{
                         flash('error', lang('upgrade_plan_for_parent'));
                     }

@@ -76,7 +76,7 @@ class Calendar extends CI_Controller
             $calender = $this->calendar->add_event();
             if($calender == "error"){
                 if(is('admin')){
-                    flash('error', sprintf(lang('upgrade_plan'),'staff'));
+                    flash('error', sprintf(lang('upgrade_plan'),'Calender Events'));
                 }else{
                     flash('error', lang('upgrade_plan_for_parent'));
                 }
