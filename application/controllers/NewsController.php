@@ -46,7 +46,7 @@ class newsController extends CI_Controller
             ]
         );
 
-        dashboard_page($this->module.'news', compact('articles'), $daycare_id);
+        dashboard_page($this->module.'news', compact('articles'), $daycare_id , $page);
     }
 
     function create()
@@ -151,9 +151,9 @@ class newsController extends CI_Controller
 
         $config['base_url'] = site_url('news');
         $config['total_rows'] = $this->news->count('published');
-        $config['per_page'] = $perPage;
+        $config['per_page'] = $perPage;        
         $config['reuse_query_string'] = TRUE;
-//        $config['enable_query_strings']=false;
+    //    $config['enable_query_strings'] = false;
         $config['page_query_string'] = TRUE;
         $config['query_string_segment'] = 'page';
 

@@ -174,7 +174,6 @@ class My_invoice extends CI_Model
         );
         $daycare_id = $this->session->userdata('daycare_id');
         $plans = $this->session->userdata('plans');
-        
         $plan_invoices_events = $plans['invoices']; //plan invoices count
 
         $invoices = $this->db

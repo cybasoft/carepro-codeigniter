@@ -24,6 +24,7 @@ class Dashboard extends CI_Controller
                      ->from('users as us')
                      ->join('users_groups as ug','ug.user_id = us.id')
                      ->get()->result_array();
+                
         if ($daycare_id === NULL) {
             if (is(['super', 'admin', 'manager'])) {
                 page('dashboard/home');

@@ -20,9 +20,12 @@
                </div>
            </div>
         <?php endforeach; ?>
-
         <div>
-            <?php echo $this->pagination->create_links(); ?>
+            <?php
+               if(count($articles) >= 15){
+                   echo $this->pagination->create_links();
+               }
+            ?>
         </div>
     </div>
     <div class="col-sm-3">

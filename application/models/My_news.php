@@ -76,14 +76,12 @@ class My_news extends CI_Model
         $time = date('H:i:s',strtotime($this->input->post('publish_time')));
         $data['publish_date'] = $this->input->post('publish_date').' '.$time;
         $data['category_id'] = $category;
-        $data['daycare_id'] = $daycare_id;
 
         if($id == NULL) {
             $data['user_id'] = $this->user->uid();
+            $data['daycare_id'] = $daycare_id;
         }
-
         return $data;
-
     }
 
     function create()
