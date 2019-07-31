@@ -22,11 +22,13 @@ class My_news extends CI_Model
         $daycare_id = $this->session->userdata('daycare_id');
         if(!empty($opts)){
             foreach($opts as $opt=>$val){
-                if(is_array($val))
+                if(is_array($val)){
                     $this->db->$opt($val[0],$val[1]);
-                else
+                }
+                else{
                     $this->db->$opt($val);
-            }
+                }
+            }            
         }
         $this->db->where('daycare_id',$daycare_id)->order_by('publish_date','DESC');
         $articles = $this->db->get('news')->result();

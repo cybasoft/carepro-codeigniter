@@ -39,14 +39,19 @@ class newsController extends CI_Controller
         if(isset($_GET['page']))
             $page = $_GET['page'];
 
+        $articles_details = $this->news->articles(
+            [
+                'where'=>['status','published']
+            ]
+        );
+        $article_count = count($articles_details);
         $articles = $this->news->articles(
             [
                 'limit' => [$perPage, $page],
                 'where'=>['status','published']
             ]
         );
-
-        dashboard_page($this->module.'news', compact('articles'), $daycare_id , $page);
+        dashboard_page($this->module.'news', compact('articles','article_count'), $daycare_id);
     }
 
     function create()

@@ -22,9 +22,9 @@
         <?php endforeach; ?>
         <div>
             <?php
-               if(count($articles) >= 15){
+                if($article_count > 15){
                    echo $this->pagination->create_links();
-               }
+                }
             ?>
         </div>
     </div>
