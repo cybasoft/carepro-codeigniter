@@ -49,7 +49,7 @@ class My_news extends CI_Model
 //        $article->category=$this->db->where('id',$article->category_id)->get('news_categories')->row();
 
         $article = $this->db
-            ->select('n.*,u.first_name,u.last_name,u.email,nc.name as category_name')
+            ->select('n.*,u.first_name,u.last_name,u.name,u.email,nc.name as category_name')
             ->where('n.id',$id)
             ->from('news as n')
             ->join('users as u','u.id=n.user_id')

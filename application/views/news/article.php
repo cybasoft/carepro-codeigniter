@@ -26,7 +26,7 @@
                     <em>
                         <?php echo format_date($article->publish_date); ?>
                         |
-                        <?php echo $article->first_name; ?>
+                        <?php if($article->first_name != ''){ echo $article->first_name;}else{ echo $article->name; } ?>
                     </em>
                     <br/>
                     <br/>
