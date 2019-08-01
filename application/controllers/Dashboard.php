@@ -19,12 +19,12 @@ class Dashboard extends CI_Controller
         $all_daycares = $this->db->select('dy.*,us.email')
                         ->from('daycare as dy')
                         ->join('users as us','us.daycare_id = dy.id')->group_by('dy.id')
-                        ->get()->result_array();
+                        ->get()->result_array();                       
         $all_users = $this->db->select('us.*,ug.*')
                      ->from('users as us')
                      ->join('users_groups as ug','ug.user_id = us.id')
+                     ->where('group_id', 1)
                      ->get()->result_array();
-                
         if ($daycare_id === NULL) {
             if (is(['super', 'admin', 'manager'])) {
                 page('dashboard/home');

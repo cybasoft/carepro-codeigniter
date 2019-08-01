@@ -14,17 +14,13 @@
                     <div class="table-responsive">
                     <table class="table">
                     <?php foreach ($all_users as $user):
-                         if($user['daycare_id'] == $daycare['id'] && $user['group_id'] == 1):
+                         if($user['daycare_id'] == $daycare['id'] && $user['group_id'] == 1):                           
                     ?>
                         <tr align="center">
                             <td><?php if($user['first_name'] == ''){ echo $user['name']; }else{ echo $user['first_name'] ." " . $user['last_name']; } ?></td>
                             <td><?php echo $user['email'] ?></td>
                         </tr>
-                        <?php elseif($user['daycare_id'] == $daycare['id'] && $user['group_id'] == 2 && $user['group_id'] == 3 && $user['group_id'] == 4): ?>
-                        <tr align="center">
-                            <td>No admin details found</td>
-                        </tr>
-                    <?php endif; endforeach; ?>
+                    <?php endif; endforeach;?>
                     </table>
                     </div>
                 </div>

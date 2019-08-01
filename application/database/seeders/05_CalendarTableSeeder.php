@@ -28,6 +28,7 @@ class CalendarTableSeeder extends CI_Model
                 'start_t' => $hour.":00",
                 'end_t' => ($hour+1).":00",
                 'user_id' => 2,
+                'daycare_id' => 2,
                 'description' => $faker->sentence(7),
                 'created_at' => date_stamp(),
 

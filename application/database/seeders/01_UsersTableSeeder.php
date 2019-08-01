@@ -24,30 +24,30 @@ class UsersTableSeeder extends CI_Model
             }
         }
 
-        for ($i = 1; $i <= $limit; $i++) {
-            if ($i % 2 == 0) {
-                $g = 'male';
-            } else {
-                $g = 'female';
-            }
+        // for ($i = 1; $i <= $limit; $i++) {
+        //     if ($i % 2 == 0) {
+        //         $g = 'male';
+        //     } else {
+        //         $g = 'female';
+        //     }
 
-            $data = [
-                'first_name' => $faker->firstName($g),
-                'last_name' => $faker->lastName,
-                'email' => $faker->email,
-                'password' => password_hash('password', PASSWORD_BCRYPT),
-                'pin' => rand(1111, 9999),
-                'active' => 1,
-                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
-                'daycare_id' => $i + 5,
-                'address_id' => $i + 5,
-            ];
-            $this->db->insert('users', $data);
+        //     $data = [
+        //         'first_name' => $faker->firstName($g),
+        //         'last_name' => $faker->lastName,
+        //         'email' => $faker->email,
+        //         'password' => password_hash('password', PASSWORD_BCRYPT),
+        //         'pin' => rand(1111, 9999),
+        //         'active' => 1,
+        //         'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+        //         'daycare_id' => $i + 5,
+        //         'address_id' => $i + 5,
+        //     ];
+        //     $this->db->insert('users', $data);
 
-            $id = $this->db->insert_id();
+        //     $id = $this->db->insert_id();
 
-            $this->db->insert('users_groups', ['group_id' => rand(1, 4), 'user_id' => $id]);
-        }
+        //     $this->db->insert('users_groups', ['group_id' => rand(1, 4), 'user_id' => $id]);
+        // }
     }
 
     public function seedDefaultUsers()
@@ -71,7 +71,7 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
-                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'photo' => '',
                 'daycare_id' => 1,
                 'address_id' => 1
             ],
@@ -83,7 +83,7 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
-                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'photo' => '',
                 'daycare_id' => 2,
                 'address_id' => 2
             ],
@@ -95,9 +95,9 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
-                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
-                'daycare_id' => 3,
-                'address_id' => 3
+                'photo' => '',
+                'daycare_id' => 2,
+                'address_id' => 2
             ],
             [
                 'first_name' => 'Staff',
@@ -107,9 +107,9 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
-                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
-                'daycare_id' => 4,
-                'address_id' => 4
+                'photo' => '',
+                'daycare_id' => 2,
+                'address_id' => 2
             ],
             [
                 'first_name' => 'Parent',
@@ -119,16 +119,27 @@ class UsersTableSeeder extends CI_Model
                 'active' => 1,
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
-                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
-                'daycare_id' => 5,
-                'address_id' => 5
+                'photo' => '',
+                'daycare_id' => 2,
+                'address_id' => 2
             ],
         ];
         foreach ($users as $user) {
             $this->db->insert('users', $user);
             $id = $this->db->insert_id();
+            if($id == 1){
+                $group_id = 5;
+            }else if($id == 2){
+                 $group_id = 1;
+            }else if($id == 3){
+                $group_id = 2;
+            }else if($id == 4){
+                $group_id = 3;
+            }else if($id == 5){
+                $group_id = 4;
+            }
             $data = [
-                'group_id' => 5,
+                'group_id' => $group_id,
                 'user_id' => $id,
             ];
             $query = $this->db->insert('users_groups', $data);

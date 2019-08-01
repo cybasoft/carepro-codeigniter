@@ -24,7 +24,8 @@ class RoomsTableSeeder extends CI_Model
         for ($i = 1; $i <= $limit; $i++) {
             $this->db->insert('child_rooms',[
                 'name'=>$faker->word.' '.$faker->word,
-                'description'=>$faker->sentence(7)
+                'description'=>$faker->sentence(7),
+                'daycare_id' => 2
             ]);
         }
 
@@ -36,7 +37,8 @@ class RoomsTableSeeder extends CI_Model
                 'child_id'=>$child->id,
                 'room_id'=>rand(1,$rooms),
                 'created_at'=>date_stamp(),
-                'updated_at'=>date_stamp()
+                'updated_at'=>date_stamp(),
+                'daycare_id' => 2
             ]);
         }
 
