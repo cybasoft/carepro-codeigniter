@@ -62,19 +62,7 @@ class UsersTableSeeder extends CI_Model
             }
         }
 
-        $users = [
-            [
-                'first_name' => 'Super',
-                'last_name' => 'Super',
-                'email' => 'super@app.com',
-                'password' => password_hash('password', PASSWORD_DEFAULT),
-                'active' => 1,
-                'created_at' => date_stamp(),
-                'pin' => rand(1111, 9999),
-                'photo' => '',
-                'daycare_id' => 1,
-                'address_id' => 1
-            ],
+        $users = [            
             [
                 'first_name' => 'Admin',
                 'last_name' => 'Admin',
@@ -84,8 +72,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => '',
-                'daycare_id' => 2,
-                'address_id' => 2
+                'daycare_id' => 1,
+                'address_id' => 1
             ],
             [
                 'first_name' => 'Manager',
@@ -96,8 +84,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => '',
-                'daycare_id' => 2,
-                'address_id' => 2
+                'daycare_id' => 1,
+                'address_id' => 1
             ],
             [
                 'first_name' => 'Staff',
@@ -108,8 +96,8 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => '',
-                'daycare_id' => 2,
-                'address_id' => 2
+                'daycare_id' => 1,
+                'address_id' => 1
             ],
             [
                 'first_name' => 'Parent',
@@ -120,29 +108,32 @@ class UsersTableSeeder extends CI_Model
                 'created_at' => date_stamp(),
                 'pin' => rand(1111, 9999),
                 'photo' => '',
+                'daycare_id' => 1,
+                'address_id' => 1
+            ],
+            [
+                'first_name' => 'Super',
+                'last_name' => 'Super',
+                'email' => 'super@app.com',
+                'password' => password_hash('password', PASSWORD_DEFAULT),
+                'active' => 1,
+                'created_at' => date_stamp(),
+                'pin' => rand(1111, 9999),
+                'photo' => '',
                 'daycare_id' => 2,
                 'address_id' => 2
-            ],
+            ]
         ];
+        $group_id = 1;
         foreach ($users as $user) {
             $this->db->insert('users', $user);
-            $id = $this->db->insert_id();
-            if($id == 1){
-                $group_id = 5;
-            }else if($id == 2){
-                 $group_id = 1;
-            }else if($id == 3){
-                $group_id = 2;
-            }else if($id == 4){
-                $group_id = 3;
-            }else if($id == 5){
-                $group_id = 4;
-            }
+            $id = $this->db->insert_id();            
             $data = [
                 'group_id' => $group_id,
                 'user_id' => $id,
             ];
             $query = $this->db->insert('users_groups', $data);
+            $group_id++;
             if (!$query) {
                 show_error('Unable to seed');
             }

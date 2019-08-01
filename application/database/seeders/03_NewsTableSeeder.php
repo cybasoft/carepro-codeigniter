@@ -3,11 +3,11 @@
 class NewsTableSeeder extends CI_Model
 {
 
-    public function __construct($limit = 25)
+    public function __construct($limit = 5)
     {
     }
 
-    public function run($limit = 25)
+    public function run($limit = 5)
     {
 
         $faker = Faker\Factory::create();
@@ -41,8 +41,8 @@ class NewsTableSeeder extends CI_Model
                     'publish_date' => date_stamp(),
                     'created_at' => date_stamp(),
                     'status' => 'published',
-                    'user_id' => 2,
-                    'daycare_id' => 2
+                    'user_id' => 1,
+                    'daycare_id' => 1
                 ]
             );
         }
