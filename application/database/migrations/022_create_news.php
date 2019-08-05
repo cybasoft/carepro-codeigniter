@@ -24,6 +24,11 @@ class Migration_create_news extends CI_Migration
                 'constraint' => 11,
                 'unsigned'=>TRUE
             ),
+            'daycare_id' => array(
+                'type' => 'INT',
+                'constraint' => 11,
+                'unsigned'=>TRUE
+            ),
             'article_name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '50',

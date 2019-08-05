@@ -35,18 +35,23 @@ class newsController extends CI_Controller
         $page = 0;
 
         $this->_pagination($perPage);
-
+        
         if(isset($_GET['page']))
             $page = $_GET['page'];
 
+        $articles_details = $this->news->articles(
+            [
+                'where'=>['status','published']
+            ]
+        );
+        $article_count = count($articles_details);
         $articles = $this->news->articles(
             [
                 'limit' => [$perPage, $page],
                 'where'=>['status','published']
             ]
         );
-
-        dashboard_page($this->module.'news', compact('articles'), $daycare_id);
+        dashboard_page($this->module.'news', compact('articles','article_count'), $daycare_id);
     }
 
     function create()
@@ -151,9 +156,9 @@ class newsController extends CI_Controller
 
         $config['base_url'] = site_url('news');
         $config['total_rows'] = $this->news->count('published');
-        $config['per_page'] = $perPage;
+        $config['per_page'] = $perPage;        
         $config['reuse_query_string'] = TRUE;
-//        $config['enable_query_strings']=false;
+    //    $config['enable_query_strings'] = false;
         $config['page_query_string'] = TRUE;
         $config['query_string_segment'] = 'page';
 

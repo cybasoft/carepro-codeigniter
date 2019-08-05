@@ -36,6 +36,7 @@ class Settings extends CI_Controller
             ->join('daycare_settings as ds', 'ds.daycare_id=d.id')
             ->join('address as add', 'add.id=d.address_id')
             ->get()->row();
+        
         $settings->email = $this->session->userdata('email');
         // $settings = $this->db->get('options')->result_array();
 

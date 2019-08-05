@@ -19,15 +19,18 @@ class My_news extends CI_Model
 
     function articles($opts=array())
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         if(!empty($opts)){
             foreach($opts as $opt=>$val){
-                if(is_array($val))
+                if(is_array($val)){
                     $this->db->$opt($val[0],$val[1]);
-                else
+                }
+                else{
                     $this->db->$opt($val);
-            }
+                }
+            }            
         }
-        $this->db->order_by('publish_date','DESC');
+        $this->db->where('daycare_id',$daycare_id)->order_by('publish_date','DESC');
         $articles = $this->db->get('news')->result();
 
         return $articles;
@@ -46,7 +49,7 @@ class My_news extends CI_Model
 //        $article->category=$this->db->where('id',$article->category_id)->get('news_categories')->row();
 
         $article = $this->db
-            ->select('n.*,u.first_name,u.last_name,u.email,nc.name as category_name')
+            ->select('n.*,u.first_name,u.last_name,u.name,u.email,nc.name as category_name')
             ->where('n.id',$id)
             ->from('news as n')
             ->join('users as u','u.id=n.user_id')
@@ -57,6 +60,7 @@ class My_news extends CI_Model
 
     protected function _fillable($id = NULL)
     {
+        $daycare_id = $this->session->userdata('daycare_id');
         if($this->input->post('category')) {
             $categories=$this->db->where('id', $this->input->post('category_id'))->get('news_categories');
             if($categories->num_rows() == 0) {
@@ -77,10 +81,9 @@ class My_news extends CI_Model
 
         if($id == NULL) {
             $data['user_id'] = $this->user->uid();
+            $data['daycare_id'] = $daycare_id;
         }
-
         return $data;
-
     }
 
     function create()

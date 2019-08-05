@@ -3,11 +3,11 @@
 class DaycareTableSeeder extends CI_Model
 {
 
-    public function __construct($limit = 30)
+    public function __construct($limit = 2)
     {
     }
 
-    public function run($limit = 30)
+    public function run($limit = 2)
     {
 
         $faker = Faker\Factory::create();
@@ -16,19 +16,8 @@ class DaycareTableSeeder extends CI_Model
 
         $this->db->truncate('daycare');
         $this->db->truncate('address');
-
-        $photos = [];
-        foreach (scandir(APPPATH.'../assets/uploads/children') as $file) {
-            if(pathinfo($file, PATHINFO_EXTENSION) == 'jpg' || pathinfo($file, PATHINFO_EXTENSION) == 'png') {
-                //delete
-//                @unlink(APPPATH.'../assets/uploads/children/'.$file);
-                //reuse
-                $photos[] = $file;
-            }
-        }
-
-        echo 'Generating data...'.PHP_EOL;
-
+        $this->db->truncate('daycare_settings');
+        
         for ($i = 1; $i <= $limit; $i++) {
             $address_data = [
                 'address_line_1' => $faker->streetAddress,
@@ -47,15 +36,27 @@ class DaycareTableSeeder extends CI_Model
             $pin = mt_rand(1000, 9999);
             $daycare_id = $year . "-" . $month . "-" .$pin;
 
+            if($i == 1){
+                $name = "Daycarepro";
+            }else{
+                $name = "Careproapp";
+            }
             $data = [
-                'name' => $faker->company,
-                'employee_tax_identifier' => $faker->firstName,                
+                'name' => $name,
+                'employee_tax_identifier' => '12345',                
                 'daycare_id' => $daycare_id,
                 'logo' => '',
                 'address_id' => $address_id          
             ];
 
-            $this->db->insert('daycare', $data);            
+            $this->db->insert('daycare', $data);
+            $insert_id = $this->db->insert_id();
+
+            $setting_data = [
+                'daycare_id' => $insert_id,              
+            ];
+            $this->db->insert('daycare_settings',$setting_data);
+
         }
     }
 }

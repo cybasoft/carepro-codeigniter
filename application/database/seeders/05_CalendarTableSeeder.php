@@ -3,11 +3,11 @@
 class CalendarTableSeeder extends CI_Model
 {
 
-    public function __construct($limit = 30)
+    public function __construct($limit = 5)
     {
     }
 
-    public function run($limit =30)
+    public function run($limit = 5)
     {
 
         $faker = Faker\Factory::create();
@@ -27,7 +27,8 @@ class CalendarTableSeeder extends CI_Model
                 'end' => $end,
                 'start_t' => $hour.":00",
                 'end_t' => ($hour+1).":00",
-                'user_id' => 2,
+                'user_id' => 1,
+                'daycare_id' => 1,
                 'description' => $faker->sentence(7),
                 'created_at' => date_stamp(),
 

@@ -3,11 +3,11 @@
 class ChildrenTableSeeder extends CI_Model
 {
 
-    public function __construct($limit = 25)
+    public function __construct($limit = 5)
     {
     }
 
-    public function run($limit = 25)
+    public function run($limit = 5)
     {
 
         $faker = Faker\Factory::create();
@@ -53,7 +53,8 @@ class ChildrenTableSeeder extends CI_Model
                 'status' => 1,
                 'created_at' => date_stamp(),
                 'user_id' => 1,
-                'photo' => count($photos) > 0 ? $photos[rand(0, count($photos)-1)] : '',
+                'daycare_id' => 1,
+                'photo' => '',
             ];
 
             $this->db->insert('children', $data);
