@@ -73,7 +73,8 @@ class UsersTableSeeder extends CI_Model
                 'pin' => rand(1111, 9999),
                 'photo' => '',
                 'daycare_id' => 1,
-                'address_id' => 1
+                'address_id' => 1,
+                'selected_plan' => 3
             ],
             [
                 'first_name' => 'Manager',
