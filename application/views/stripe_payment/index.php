@@ -9,9 +9,6 @@
           type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet"
           type="text/css"/>
-
-    <link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet"
-          type="text/css"/>
     <link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
     <style>
         body {
