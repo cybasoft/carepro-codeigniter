@@ -1,4 +1,7 @@
-<?php $this->load->view("custom_layouts/header");  ?>
+<?php $this->load->view("registration/header");  ?>
+
+
+<body>
 <style>
     .card-header {
         background-color: #5CBDEA;
@@ -20,10 +23,7 @@
         font-family: Verdana;
     }
 </style>
-</head>
-
-<body>
-    <div class="container">
+<div class="container">
         <div class="row mt-5 pt-3">
             <div class="card offset-sm-3 col-sm-6 mt-5 p-0">
                 <div class="card-header text-center">
@@ -43,4 +43,4 @@
     </div>
 </body>
 
-</html>
+<?php $this->load->view("registration/footer");  ?>

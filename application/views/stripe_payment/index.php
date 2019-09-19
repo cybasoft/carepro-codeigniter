@@ -1,5 +1,4 @@
-<?php $this->load->view("custom_layouts/header");  ?>
-<link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
+<?php $this->load->view("registration/header");  ?>
 <link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
 <style>
     body {

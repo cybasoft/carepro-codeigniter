@@ -1,10 +1,5 @@
-<?php $this->load->view("custom_layouts/header");  ?>
-<script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/daycare.css">
-</head>
+<?php $this->load->view("registration/header");  ?>
+
 <body class="transparent-header">
     <div class="loading_div">
     </div>
@@ -71,4 +66,5 @@
         });
     });
 </script>
-</html>
+
+<?php $this->load->view("registration/footer");  ?>

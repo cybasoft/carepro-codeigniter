@@ -6,31 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div style="width: 93%;background: #D5F2F4 !important;height: 100%;padding: 4% 3%;font-family:Verdana">
-        <div style="background-color:white;padding: 4% 3%;">
+<div style="width: 100%;background: #e6e3e3;height: 100%;padding: 3%;font-family:Verdana,sans-serif;margin:0 auto">
+    <div style="background-color:white;max-width:680px;margin:0 auto;padding:20px;box-shadow: 7px 7px 7px #655656;border-radius: 10px">
         <?php if($logo != ''): ?>
-              <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
-        <?php else:?>
-              <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
+            <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo; ?>" alt="Daycare logo"
+                 style="width: 200px;margin-bottom: 1%;">
+        <?php else: ?>
+            <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo"
+                 style="width: 200px;margin-bottom: 1%;">
         <?php endif; ?>
-        <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $first_name . ' ' . $last_name; ?>,</p>
+        <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $first_name.' '.$last_name; ?>,</p>
         <p>
-        <p>Your child <?php echo $child_first_name . ' '; ?><?php echo $child_last_name; ?>
+        <p>Your child <?php echo $child_first_name.' '; ?><?php echo $child_last_name; ?>
 
-            <?php if ($child_status == 1) : ?>
-                has been registered sucessfully for Daycarepro app. <br />
-                Visit Daycarecarepro:
-                 <p><a href="<?php echo base_url(); ?>/dashboard" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">
-                    Visit Dashboard</a></p>
-            <?php else : ?>
-                has been deactivated from daycarepro app.<br />
-                Ask manager to activate it again.
-            <?php endif; ?>
-        </p>
-        Thanks!<br />
-        Daycarepro Team
-        </a>
-        </div>
+            <?php if($child_status == 1) : ?>
+            has been registered sucessfully for Daycarepro app. <br/>
+            Visit Daycarecarepro:
+        <p><a href="<?php echo base_url(); ?>/dashboard"
+              style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">
+                Visit Dashboard</a></p>
+    <?php else : ?>
+        has been deactivated from daycarepro app.<br/>
+        Ask manager to activate it again.
+    <?php endif; ?>
+
+
+        Thanks!<br/>
+        Your Daycare Team
+
     </div>
+</div>
 </body>
 </html>

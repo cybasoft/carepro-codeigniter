@@ -1,10 +1,5 @@
-<?php $this->load->view("custom_layouts/header");  ?>
-<link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/frontend/style.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/frontend/content-box.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/frontend/skin.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/subscription_page.css">
-</head>
+<?php $this->load->view("registration/header");  ?>
+
 <body>
     <div class="header_section">
         <img src="assets/uploads/content/logo.png" align="left" class="logo">
@@ -87,3 +82,5 @@
         </div>
     </div>
 </body>
+
+<?php $this->load->view("registration/footer");  ?>

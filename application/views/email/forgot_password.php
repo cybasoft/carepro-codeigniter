@@ -1,6 +1,7 @@
 <div style="width: 93%;background: #D5F2F4 !important;height: 100%;padding: 4% 3%;font-family:Verdana">
     <div style="background-color:white;padding: 4% 3%;">
-        <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $logo ?>" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">
+
+<!--        <img src="--><?php //echo base_url(); ?><!--assets/uploads/daycare_logo/--><?php //echo $logo ?><!--" alt="Daycare logo" style="width: 200px;margin-bottom: 1%;">-->
         <p style="font-size: 20px;font-weight: 600;">
             Hello <?php echo $name ?>,
         </p>
@@ -20,7 +21,7 @@
            <?php echo site_url('auth/reset/' . $forgotten_password_code); ?>
         </a><br/><br/>
         Thanks!<br/>
-        Daycarepro Team
-        </a>
+        Your Daycare Team
+
     </div>
 </div>

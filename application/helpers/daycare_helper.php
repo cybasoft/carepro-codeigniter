@@ -26,21 +26,21 @@ function date_stamp()
  */
 function format_date($date, $time = TRUE, $timestamp = FALSE)
 {
-    if ($timestamp == TRUE)
+    if($timestamp == TRUE)
         $date = date('Y-m-d H:i:s', $date);
 
     $format = session('company_date_format');
-    if ($format == "")
+    if($format == "")
         return date('d M Y H:ia', strtotime($date));
 
-    if ($time == FALSE)
+    if($time == FALSE)
         return date('d M Y', strtotime($date));
     return date($format, strtotime($date));
 }
 
 function format_time($time, $timestamp = FALSE)
 {
-    if ($timestamp == FALSE)
+    if($timestamp == FALSE)
         $time = strtotime($time);
 
     return date('h:ia', $time);
@@ -71,18 +71,19 @@ function flash($type = "", $msg = "")
             $icon = 'info';
             break;
     }
-    if ($type == "error")
+    if($type == "error")
         $type = "danger";
     $ci = &get_instance();
-    if (validation_errors()) {
-        if ($msg == "") {
+    if(validation_errors()) {
+        if($msg == "") {
             $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-exclamation-triangle"></span>', '</div>');
             $msg = $e;
             $type = 'error';
             $icon = 'danger';
         }
-    } else {
-        $msg = '<div class="alert alert-' . $type . ' alert-dismissable"><span class="fa fa-info"></span>' . $msg . '</div>';
+    }
+    else {
+        $msg = '<div class="alert alert-'.$type.' alert-dismissable"><span class="fa fa-info"></span>'.$msg.'</div>';
     }
 
     $ci->session->set_flashdata('message', $msg);
@@ -103,9 +104,10 @@ function flash($type = "", $msg = "")
 function setRedirect()
 {
     $ci = &get_instance();
-    if (isset($_SERVER['HTTP_REFERER'])) {
+    if(isset($_SERVER['HTTP_REFERER'])) {
         $ci->session->set_userdata('last_page', $_SERVER['HTTP_REFERER']);
-    } else {
+    }
+    else {
         $ci->session->set_userdata('last_page', base_url());
     }
 }
@@ -121,16 +123,18 @@ function last_page()
 /**
  * roles of users
  */
-function user_roles(){
-    $roles = array(
-        'admin' => 1,
+function user_roles()
+{
+    $roles = [
+        'admin'   => 1,
         'manager' => 2,
-        'staff' =>3,
-        'parent' => 4,
-        'owner' => 5
-    );
+        'staff'   => 3,
+        'parent'  => 4,
+        'owner'   => 5,
+    ];
     return $roles;
 }
+
 /**
  * redirect to previous page
  */
@@ -138,18 +142,19 @@ function redirectPrev($msg = [], $tab = '', $type = 'info')
 {
     $ci = &get_instance();
 
-    if (!empty($msg)) {
+    if(!empty($msg)) {
         flash($type, $msg);
     }
 
     //dont redirect if json
-    if ($ci->input->is_ajax_request()) {
+    if($ci->input->is_ajax_request()) {
         die();
-    } else {
-        if (!empty($tab))
-            $tab = '#' . $tab;
+    }
+    else {
+        if(!empty($tab))
+            $tab = '#'.$tab;
 
-        redirect($ci->session->userdata('last_page') . $tab);
+        redirect($ci->session->userdata('last_page').$tab);
     }
 }
 
@@ -181,8 +186,8 @@ function is($group)
     //    }
 
     //session has failed so we continue
-    if (logged_in())
-        if ($ci->ion_auth->in_group($group))
+    if(logged_in())
+        if($ci->ion_auth->in_group($group))
             return TRUE;
 
     return FALSE;
@@ -193,7 +198,7 @@ function send_email($data)
     $ci = &get_instance();
     $ci->load->config('email');
     $ci->load->library('email');
-   
+
     $ci->email->set_mailtype('html');
     $from = $ci->config->item('smtp_user');
     $to = $data['to'];
@@ -201,9 +206,10 @@ function send_email($data)
     $ci->email->to($to);
     $ci->email->subject($data['subject']);
 
-    $body = $ci->load->view('custom_email/report_activity_email', $data, true);
+    $body = $ci->load->view('custom_email/report_activity_email', $data, TRUE);
     $ci->email->message($body);  //Send mail        
-    if ($ci->email->send()) { }
+    if($ci->email->send()) {
+    }
 }
 
 /**
@@ -215,13 +221,14 @@ function auth($redirect = FALSE)
 {
     $ci = &get_instance();
     $parent = $ci->uri->segment(1);
-    if ($parent === "parents") {
+    if($parent === "parents") {
         $ci->session->set_userdata("users", "parent");
     }
-    if (logged_in() == TRUE) {
+    if(logged_in() == TRUE) {
         return TRUE;
-    } else {
-        if ($redirect) {
+    }
+    else {
+        if($redirect) {
             redirect('auth/login', 'refresh');
         }
         return FALSE;
@@ -247,7 +254,7 @@ function in_group($id, $group)
         ->join('users_groups', 'users_groups.group_id=groups.id')
         ->count_all_results();
 
-    if ($query > 0)
+    if($query > 0)
         return TRUE;
     return FALSE;
 }
@@ -260,7 +267,7 @@ function in_group($id, $group)
  */
 function selected_option($option, $value)
 {
-    if ($option == $value) {
+    if($option == $value) {
         return 'selected';
     }
     return FALSE;
@@ -274,7 +281,7 @@ function selected_option($option, $value)
  */
 function checked_option($option, $value)
 {
-    if ($option == $value) {
+    if($option == $value) {
         return 'checked';
     }
     return FALSE;
@@ -284,9 +291,9 @@ function related($db, $field1, $value1, $field2, $value2)
 {
     $ci = &get_instance();
     $res = $ci->db->where($field1, $value1)
-        ->where($field2, $value2)
-        ->get($db)->result();
-    if (count((array)$res) > 0) {
+                  ->where($field2, $value2)
+                  ->get($db)->result();
+    if(count((array)$res) > 0) {
         return TRUE;
     }
     return FALSE;
@@ -324,7 +331,7 @@ function decrypt($msg)
 function logged_in()
 {
     $ci = &get_instance();
-    if ($ci->ion_auth->logged_in() == TRUE)
+    if($ci->ion_auth->logged_in() == TRUE)
         return TRUE;
     return FALSE;
 }
@@ -339,24 +346,25 @@ function logEvent($user_id = NULL, $event, $daycare_id = NULL)
 {
     $ci = &get_instance();
 
-    if ($user_id === NULL) {
+    if($user_id === NULL) {
         $first_name = $ci->session->userdata('first_name');
-        if($first_name == ''){
+        if($first_name == '') {
             $user_id = $ci->session->userdata('name');
-        }else{
-            $user_id = $ci->session->userdata('first_name') . " " . $user_id = $ci->session->userdata('last_name');
+        }
+        else {
+            $user_id = $ci->session->userdata('first_name')." ".$user_id = $ci->session->userdata('last_name');
         }
     }
-    if($daycare_id === NULL){
+    if($daycare_id === NULL) {
         $daycare_id = $ci->session->userdata('daycare_id');
     }
     $data = [
-        'user_name' => $user_id,
-        'date' => date("Y-m-d H:i:s", time()),
+        'user_name'  => $user_id,
+        'date'       => date("Y-m-d H:i:s", time()),
         'daycare_id' => $daycare_id,
-        'event' => $event,
+        'event'      => $event,
     ];
-    if ($ci->db->insert('event_log', $data))
+    if($ci->db->insert('event_log', $data))
         return TRUE;
     return FALSE;
 }
@@ -373,11 +381,12 @@ function allow($group)
     $ci = &get_instance();
     auth(TRUE);
 
-    if ($ci->ion_auth->in_group($group)) {
+    if($ci->ion_auth->in_group($group)) {
         return TRUE;
-    } else {
+    }
+    else {
         flash('danger', lang('access_denied'));
-        if ($ci->input->is_ajax_request()) {
+        if($ci->input->is_ajax_request()) {
             return 'error';
         }
         redirectPrev();
@@ -386,11 +395,12 @@ function allow($group)
 }
 
 //convert date format to 4 june 2019 and time to am pm format
-function event_log_date($log_date){
+function event_log_date($log_date)
+{
     $time = new DateTime($log_date);
     $date = $time->format('n-j-Y');
     $dateObj = DateTime::createFromFormat('m-d-Y', $date);
-    $date_time = $dateObj->format('d M Y') ." ". $time->format('g:ia');
+    $date_time = $dateObj->format('d M Y')." ".$time->format('g:ia');
     return $date_time;
 }
 
@@ -398,9 +408,10 @@ function page($page, $data = [])
 {
     $ci = &get_instance();
     $data['page'] = $page;
-    if (is('parent')) {
+    if(is('parent')) {
         $ci->load->view('layouts/template', $data);
-    } else {
+    }
+    else {
         $ci->load->view('layouts/template', $data);
     }
 }
@@ -410,9 +421,10 @@ function dashboard_page($page, $data = [], $daycare_id)
     $ci = &get_instance();
     $data['page'] = $page;
     $data['daycare_id'] = $daycare_id;
-    if (is('parent')) {
+    if(is('parent')) {
         $ci->load->view('layouts/template', $data);
-    } else {
+    }
+    else {
         $ci->load->view('layouts/template', $data);
     }
 }
@@ -447,28 +459,29 @@ function demo()
         $seg4,
     ];
 
-    if ($ci->user->uid() > 0) {
-        if (session('company_demo_mode') == 1) {
+    if($ci->user->uid() > 0) {
+        if(session('company_demo_mode') == 1) {
             $ci->load->helper('language');
 
             //prevent all post methods
-            if (!is('super')) {
-                if ($ci->input->server('REQUEST_METHOD') == 'POST') {
+            if(!is('super')) {
+                if($ci->input->server('REQUEST_METHOD') == 'POST') {
 
-                    if (in_array($seg1, $allowed_demo_routes)) {
+                    if(in_array($seg1, $allowed_demo_routes)) {
                         //good
-                    } else {
+                    }
+                    else {
                         flash('danger', lang('feature_disabled_in_demo'));
                         redirectPrev();
                     }
                 }
 
                 //prevent delete
-                if (in_array('delete', $deleteLinks)) {
+                if(in_array('delete', $deleteLinks)) {
                     flash('danger', lang('feature_disabled_in_demo'));
                     redirectPrev();
                 }
-                if (
+                if(
                     strstr($seg1, 'delete')
                     || strstr($seg2, 'delete')
                     || strstr($seg3, 'delete')
@@ -492,15 +505,15 @@ function maintenance()
 {
     $ci = &get_instance();
 
-    if (session('company_maintenance_mode') == 1 && !is('admin')) {
+    if(session('company_maintenance_mode') == 1 && !is('admin')) {
         $ci->load->helper('language');
         die('<div style="color:red; font-size:26px; text-align:center; font-family:Tahoma; width: 600px; margin: 0 auto;">'
-            . lang('maintenance_mode') . '
+            .lang('maintenance_mode').'
 </div>');
     }
 }
 
-if (!function_exists('ddo')) {
+if(!function_exists('ddo')) {
     /**
      * dump and die
      *
@@ -532,9 +545,9 @@ function uri_segment($num)
 function set_active($page)
 {
     $uri = uri_string();
-    if (is_array($page)) {
+    if(is_array($page)) {
         $uri = uri_segment(1);
-        if (in_array($uri, $page))
+        if(in_array($uri, $page))
             return 'active';
     }
     return ($page == $uri) ? 'active' : '';
@@ -545,15 +558,18 @@ function moneyFormat($amount, $symbol = FALSE)
     $amount = str_replace(',', '', $amount);
     $amount = str_replace(session('company_currency_symbol'), '', $amount);
 
-    if ($symbol == TRUE)
-        return session('company_currency_symbol') . number_format((float)$amount, 2);
+    if($symbol == TRUE)
+        return session('company_currency_symbol').number_format((float)$amount, 2);
 
     return number_format((float)$amount, 2);
 }
 
 function authorizedToChild($staff_id, $child_id)
 {
-    if (is(['admin', 'manager']))
+    if(is([
+        'admin',
+        'manager',
+    ]))
         return TRUE;
     $ci = &get_instance();
 
@@ -565,15 +581,15 @@ function authorizedToChild($staff_id, $child_id)
         ->where('child_room.child_id', $child_id)
         ->count_all_results();
 
-    if ($staff > 0)
+    if($staff > 0)
         return TRUE;
 
     //test parent
     $parent = $ci->db->from('child_parents')
-        ->where('child_id', $child_id)
-        ->where('user_id', $staff_id)
-        ->count_all_results();
-    if ($parent > 0)
+                     ->where('child_id', $child_id)
+                     ->where('user_id', $staff_id)
+                     ->count_all_results();
+    if($parent > 0)
         return TRUE;
 
     return FALSE;
@@ -600,7 +616,7 @@ function checkinTimer($in, $out)
     $timeDiff = $end->diff($start);
     //    $strDiff    = $timeDiff->h . " Hours, " . $timeDiff->i . " Minutes";
 
-    if ($timeDiff->d > 0)
+    if($timeDiff->d > 0)
         $timeDiff->h = $timeDiff->h + (2 * 24);
 
     return $timeDiff;
@@ -614,56 +630,64 @@ function time_difference($in, $out)
 function sensitive_options()
 {
     return [
-        'smtp_user' => '', 'smtp_pass' => '',
-        'stripe_pk_live' => '', 'stripe_sk_live' => '', 'stripe_pk_test' => '', 'stripe_sk_test' => '',
-        'smtp_user', 'smtp_pass',
-        'stripe_pk_live', 'stripe_sk_live', 'stripe_pk_test', 'stripe_sk_test',
+        'smtp_user'      => '',
+        'smtp_pass'      => '',
+        'stripe_pk_live' => '',
+        'stripe_sk_live' => '',
+        'stripe_pk_test' => '',
+        'stripe_sk_test' => '',
+        'smtp_user',
+        'smtp_pass',
+        'stripe_pk_live',
+        'stripe_sk_live',
+        'stripe_pk_test',
+        'stripe_sk_test',
     ];
 }
 
 function general_options()
 {
     return [
-        'name' => 'DaycarePRO',
-        'slogan' => 'daycare management',
-        'email' => 'app@admin.com',
-        'phone' => '',
-        'fax' => '',
-        'street' => '',
-        'street2' => '',
-        'city' => '',
-        'state' => '',
-        'postal_code' => '',
-        'country' => 'USA',
-        'timezone' => 'America/New_York',
-        'google_analytics' => '',
-        'currency_symbol' => '$',
+        'name'                  => 'DaycarePRO',
+        'slogan'                => 'daycare management',
+        'email'                 => 'app@admin.com',
+        'phone'                 => '',
+        'fax'                   => '',
+        'street'                => '',
+        'street2'               => '',
+        'city'                  => '',
+        'state'                 => '',
+        'postal_code'           => '',
+        'country'               => 'USA',
+        'timezone'              => 'America/New_York',
+        'google_analytics'      => '',
+        'currency_symbol'       => '$',
         'currency_abbreviation' => 'USD',
-        'date_format' => 'm/d/Y h:ia',
-        'allow_registration' => 0,
-        'allow_reset_password' => 1,
-        'enable_captcha' => 0,
-        'demo_mode' => 0,
-        'maintenance_mode' => 0,
-        'use_smtp' => 0,
-        'smtp_host' => '',
-        'smtp_port' => '',
-        'logo' => 'logo.png',
-        'invoice_logo' => 'invoice_logo.png',
-        'paypal_email' => '',
-        'paypal_locale' => 'US',
-        'page' => 'settings',
-        'daily_checkin' => 1,
-        'tawkto_embed_url' => '',
-        'login_bg_image' => 'login-bg-02.jpg',
-        'invoice_terms' => 'Invoice due on receipt. Thank you for your business',
-        'facility_id' => '',
-        'tax_id' => '',
-        'lockscreen_timer' => '',
-        'custom_css' => '',
-        'hours_start' => '',
-        'hours_end' => '',
-        'stripe_enabled' => 0,
+        'date_format'           => 'm/d/Y h:ia',
+        'allow_registration'    => 0,
+        'allow_reset_password'  => 1,
+        'enable_captcha'        => 0,
+        'demo_mode'             => 0,
+        'maintenance_mode'      => 0,
+        'use_smtp'              => 0,
+        'smtp_host'             => '',
+        'smtp_port'             => '',
+        'logo'                  => 'logo.png',
+        'invoice_logo'          => 'invoice_logo.png',
+        'paypal_email'          => '',
+        'paypal_locale'         => 'US',
+        'page'                  => 'settings',
+        'daily_checkin'         => 1,
+        'tawkto_embed_url'      => '',
+        'login_bg_image'        => 'login-bg-02.jpg',
+        'invoice_terms'         => 'Invoice due on receipt. Thank you for your business',
+        'facility_id'           => '',
+        'tax_id'                => '',
+        'lockscreen_timer'      => '',
+        'custom_css'            => '',
+        'hours_start'           => '',
+        'hours_end'             => '',
+        'stripe_enabled'        => 0,
     ];
 }
 
@@ -674,7 +698,7 @@ function special_options()
 
 function protected_special_option($option)
 {
-    if (in_array($option, special_options())) {
+    if(in_array($option, special_options())) {
         return TRUE;
     }
     return FALSE;
@@ -691,22 +715,24 @@ function get_option($name, $default = '')
 {
     $ci = &get_instance();
     $name = trim($name);
-    if ($ci->db->table_exists('options')) {
+    if($ci->db->table_exists('options')) {
         $res = $ci->db->where('option_name', $name)
-            ->limit(1)
-            ->get('options');
-    } else {
+                      ->limit(1)
+                      ->get('options');
+    }
+    else {
         return '';
     }
-    if ($res->num_rows() > 0) {
+    if($res->num_rows() > 0) {
         $value = $res->row()->option_value;
-        if (empty($value))
+        if(empty($value))
             return $default;
 
         $data = @unserialize($value);
-        if ($value === 'b:0;' || $data !== FALSE) {
+        if($value === 'b:0;' || $data !== FALSE) {
             return unserialize($value);
-        } else {
+        }
+        else {
             return $value;
         }
     }
@@ -723,26 +749,26 @@ function get_option($name, $default = '')
  */
 function add_option($name, $value, $special = FALSE)
 {
-    if (empty($name))
+    if(empty($name))
         return FALSE;
 
-    if ($special == FALSE && protected_special_option($name)) {
+    if($special == FALSE && protected_special_option($name)) {
         flash('error', sprintf(lang('You are using a protected option'), $name));
         return FALSE;
     }
 
-    if (is_object($value))
+    if(is_object($value))
         $value = clone $value;
 
-    if (is_array($value))
+    if(is_array($value))
         $value = serialize($value);
 
     $ci = &get_instance();
     $ci->db->insert('options', [
-        'option_name' => $name,
+        'option_name'  => $name,
         'option_value' => $value,
     ]);
-    if ($ci->db->affected_rows() > 0) {
+    if($ci->db->affected_rows() > 0) {
         reload_company();
         return TRUE;
     }
@@ -759,26 +785,27 @@ function add_option($name, $value, $special = FALSE)
  */
 function update_option($name, $value, $special = FALSE)
 {
-    if (empty($name))
+    if(empty($name))
         return FALSE;
 
-    if (is_object($value))
+    if(is_object($value))
         $value = clone $value;
 
-    if (is_array($value))
+    if(is_array($value))
         $value = serialize($value);
 
     $ci = &get_instance();
     $test = $ci->db->where('option_name', $name)->from('options')->count_all_results();
 
-    if ($test > 0) {
+    if($test > 0) {
         $ci->db->where('option_name', $name)->update('options', ['option_value' => $value]);
 
-        if ($ci->db->affected_rows() > 0) {
+        if($ci->db->affected_rows() > 0) {
             reload_company();
             return TRUE;
         }
-    } else {
+    }
+    else {
 
         add_option($name, $value, $special);
     }
@@ -792,10 +819,10 @@ function update_option($name, $value, $special = FALSE)
  */
 function remove_option($name)
 {
-    if (empty($name))
+    if(empty($name))
         return FALSE;
 
-    if (protected_special_option($name)) {
+    if(protected_special_option($name)) {
         flash('error', sprintf(lang('You are using a protected option'), $name));
         return FALSE;
     }
@@ -837,7 +864,14 @@ function g_decor($name)
 function blood_types()
 {
     $types = [
-        'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+',
+        'A-',
+        'A+',
+        'B-',
+        'B+',
+        'AB-',
+        'AB+',
+        'O-',
+        'O+',
     ];
     $res = [];
     foreach ($types as $type) {
@@ -846,10 +880,10 @@ function blood_types()
     return $res;
 }
 
-if (!function_exists('assets()')) {
+if(!function_exists('assets()')) {
     function assets($item = '')
     {
-        return base_url() . 'assets/' . $item;
+        return base_url().'assets/'.$item;
     }
 }
 
@@ -863,11 +897,12 @@ function set_flash($fields)
 {
     $ci = &get_instance();
 
-    if (is_array($fields)) {
+    if(is_array($fields)) {
         foreach ($fields as $field) {
             $ci->session->set_flashdata($field, $ci->input->post($field));
         }
-    } else {
+    }
+    else {
         $ci->session->set_flashdata($fields, $ci->input->post($fields));
     }
 }
@@ -876,12 +911,12 @@ function is_checked_in($id, $date = FALSE, $checkedOut = FALSE)
 {
     $ci = &get_instance();
 
-    if ($checkedOut == FALSE)
+    if($checkedOut == FALSE)
         $ci->db->where('time_out', NULL);
 
-    if ($date !== FALSE) {
+    if($date !== FALSE) {
 
-        if (valid_date($date)) {
+        if(valid_date($date)) {
             $d = new DateTime($date);
             $date = $d->format('Y-m-d ');
             $ci->db->where('DATE(time_in)', $date);
@@ -891,17 +926,18 @@ function is_checked_in($id, $date = FALSE, $checkedOut = FALSE)
     $ci->db->where('child_id', $id);
     $ci->db->from('child_checkin');
     $query = $ci->db->count_all_results();
-    if (empty($query)) { //child is out
+    if(empty($query)) { //child is out
         return FALSE;
-    } else { //child is in
+    }
+    else { //child is in
         return TRUE;
     }
 }
 
-if (!function_exists('str_replace_first')) {
+if(!function_exists('str_replace_first')) {
     function str_replace_first($from, $to, $content)
     {
-        $from = '/' . preg_quote($from, '/') . '/';
+        $from = '/'.preg_quote($from, '/').'/';
 
         return preg_replace($from, $to, $content, 1);
     }
@@ -914,19 +950,19 @@ if (!function_exists('str_replace_first')) {
  */
 function session($item, $opts = '')
 {
-    if (is_array($item)) { //means we are requesting setting session
+    if(is_array($item)) { //means we are requesting setting session
         $ci = &get_instance();
         $ci->session->set_userdata($item);
         return TRUE;
     }
     $ci = &get_instance();
 
-    if (!empty($item) && array_key_exists(str_replace('company_', '', $item), general_options())){
-        
+    if(!empty($item) && array_key_exists(str_replace('company_', '', $item), general_options())) {
+
         return $ci->session->userdata($item);
     }
 
-    elseif (!empty($item) && array_key_exists(str_replace('company_', '', $item), sensitive_options()))
+    elseif(!empty($item) && array_key_exists(str_replace('company_', '', $item), sensitive_options()))
         return get_option($item);
 
     else return $ci->session->userdata($item);
@@ -938,11 +974,12 @@ function session($item, $opts = '')
 function unset_userdata($item)
 {
     $ci = &get_instance();
-    if (is_array($item)) {
+    if(is_array($item)) {
         foreach ($item as $i) {
             $ci->session->unset_userdata($i);
         }
-    } else {
+    }
+    else {
         $ci->session->unset_userdata($item);
     }
 }
@@ -964,7 +1001,7 @@ function default_payment_methods()
 
 function icon($name)
 {
-    return '<i class="fa fa-' . $name . '"></i>';
+    return '<i class="fa fa-'.$name.'"></i>';
 }
 
 function enable_debug()
@@ -991,26 +1028,28 @@ function reload_company()
 
 function init_company()
 {
-    if (session('init_company') !== 1) {
+    if(session('init_company') !== 1) {
 
         //query db once
         $company_data = [];
         foreach (general_options() as $opt => $val) {
 
-            $value = get_option(str_replace('company_' . $opt, '', $opt));
+            $value = get_option(str_replace('company_'.$opt, '', $opt));
 
-            if (empty($value))
+            if(empty($value))
                 continue;
 
-            $company_data['company_' . $opt] = $value;
+            $company_data['company_'.$opt] = $value;
         }
-        if (empty($company_data)) {
-            if (is_cli()) {
+        if(empty($company_data)) {
+            if(is_cli()) {
                 session_start();
-            } else {
+            }
+            else {
                 die('Please complete installation');
             }
-        } else {
+        }
+        else {
             session(['init_company' => 1]);
 
             session($company_data);
@@ -1020,5 +1059,13 @@ function init_company()
 
 function gravatar($email, $size = 50)
 {
-    return "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "&s=" . $size;
+    return "https://www.gravatar.com/avatar/".md5(strtolower(trim($email)))."&s=".$size;
+}
+
+function is_childs_parent($user_id, $child_id)
+{
+    $db = &get_instance();
+    $res = $db->db->where('user_id', $user_id)->where('child_id', $child_id)->get('child_parents')->row();
+    if(empty($res)) return FALSE;
+    return TRUE;
 }

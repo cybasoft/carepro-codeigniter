@@ -294,7 +294,7 @@ class Invoice extends CI_Controller
             ->from('daycare as dy')
             ->join('users as us', 'us.daycare_id = dy.id')
             ->group_by('us.daycare_id')
-            ->get()->row_array();     
+            ->get()->row_array();
         $address = $this->db->get_where('address',array(
             'id' => $admin['address_id']
         ))->row_array();
@@ -329,7 +329,7 @@ class Invoice extends CI_Controller
             ->from('invoices as invoice')
             ->join('children', 'children.id = invoice.child_id')
             ->join('child_parents as cp','cp.child_id = invoice.child_id')
-            ->get()->row_array();         
+            ->get()->row_array();
         $child_name = $invoice_details['first_name'] . " " . $invoice_details['last_name'];
         $amount = $due_amount * 100;
         $parent_name = $this->session->userdata('first_name');
@@ -342,12 +342,20 @@ class Invoice extends CI_Controller
         if ($key !== '') {
             \Stripe\Stripe::setApiKey($key);
             //stripe make payment
-            \Stripe\Charge::create([
-                "amount" => $amount,
-                "currency" => "usd",
-                "source" => $this->input->post('stripeToken'),
-                "description" => $description
-            ]);
+
+            try{
+               $charge= \Stripe\Charge::create([
+                    "amount" => $amount,
+                    "currency" => "usd",
+                    "source" => $this->input->post('stripeToken'),
+                    "description" => $description
+                ]);
+            }catch (\Stripe\Error\Base $e){
+                print_r($e->getMessage());
+                flash('error', $e->getMessage());
+                redirectPrev();
+            }
+
             $payment_data = array(
                 'invoice_id' => $invoice_id,
                 'amount' => $due_amount,
@@ -367,41 +375,36 @@ class Invoice extends CI_Controller
             logEvent($user_id = NULl, "Invoice of amount " . $due_amount . " paid successfully for child " . $child_name, $care_id = NULL);
 
             foreach ($users as $user) {
-                if ($user->first_name == '') {
-                    $name = $user->name;
-                } else {
-                    $name = $user->first_name . " " . $user->last_name;
-                }
+                //send to parent and daycare owner and manager
                 $user_group = $this->db->get_where('users_groups', array(
                     'user_id' => $user->id
                 ));
+
                 $group_row = $user_group->row();
                 $group = $group_row->group_id;
-                if (($group != 3)) {                                    
-                    if ($group == 4) {
-                        $message = "A Invoice of amount $" . $due_amount . " is paid successfully for child " . $child_name;
-                        if($user->id == $invoice_details['user_id']){       
-                            $data = [
-                                'subject' => 'Invoice paid',
-                                'to' => $user->email,
-                                'message' => $message,
-                                'logo' => $this->session->userdata('company_logo'),
-                                'name' => $name,
-                            ];
-                            send_email($data);
-                        }
-                    } else {                        
-                        $message = "A Invoice of amount $" . $due_amount . " is paid successfully by parent " . $parent_name . " for child " . $child_name;
+
+                if(is_childs_parent($user->id,$invoice_details['child_id']) || $group ==1){
+                    if ($user->first_name == '') {
+                        $name = $user->name;
+                    } else {
+                        $name = $user->first_name . " " . $user->last_name;
+                    }
+
+                    $message = "An invoice of amount $" . $due_amount . " is paid successfully for child " . $child_name;
+                    $message .='<br/><br/><p><a href="'.$charge['receipt_url'].'">View invoice</a></p>';
+
+                    if($user->id == $invoice_details['user_id']){
                         $data = [
-                            'subject' => 'Invoice paid',
+                            'subject' => 'Daycare Alert: Invoice Paid for '.$child_name,
                             'to' => $user->email,
                             'message' => $message,
                             'logo' => $this->session->userdata('company_logo'),
                             'name' => $name,
                         ];
                         send_email($data);
-                    }                    
-                }
+                    }
+
+                } //end child_parent
             }
             flash('success', "Invoice paid successfully.");
             redirectPrev();
@@ -498,7 +501,7 @@ class Invoice extends CI_Controller
                 //     'file' => $fileName
                 // ];
 
-                // $this->mailer->send($data);                
+                // $this->mailer->send($data);
 
                 $email_data = array(
                     'parent_name' => $parent->first_name . ' ' . $parent->last_name,

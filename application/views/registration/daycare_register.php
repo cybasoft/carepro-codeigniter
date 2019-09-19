@@ -1,11 +1,5 @@
-<?php $this->load->view("custom_layouts/header");  ?>
-<script src="<?php echo base_url(); ?>assets/js/user_register/script.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/style.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/skin.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/contact-form.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/user_register/daycare.css">
-<script src="<?php echo base_url(); ?>assets/plugins/extras/jquery-ui.min.js"></script>
-</head>
+<?php $this->load->view("registration/header");  ?>
+
 <body class="transparent-header">
     <div class="loading_div">
     </div>
@@ -32,9 +26,7 @@
                         </div>
                     <?php endif; ?>
                     <?php echo form_open_multipart("daycare/store/$activation_code", ['class' => 'form-box daycare_register']); ?>
-                    <div class="alert alert-warning">
-                    <?php echo lang('logo_instructions'); ?>
-                </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <p>Name *</p>
@@ -108,6 +100,9 @@
                                     <button type="button" class="btn btn-default btn-sm md-btn-flat mt-3 reset_btn" data-site-url="<?php echo base_url(); ?>">Reset</button>
                                 </div>
                             </div>
+                            <div class="alert alert-warning">
+                                <?php echo lang('logo_instructions'); ?>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mt-2">
@@ -120,5 +115,5 @@
         </div>
     </div>
 </body>
-<script src="<?php echo base_url(); ?>assets/js/daycare.js"></script>
-</html>
+
+<?php $this->load->view("registration/footer");  ?>
