@@ -15,13 +15,13 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('first_name'),'first_name',['class' => 'required']);
+                        echo form_label(lang('first_name'), 'first_name', ['class' => 'required']);
                         echo form_input('first_name', $user->first_name, ['class' => 'form-control', 'required' => '', 'id' => 'first_name']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('last_name'),'last_name', ['class' => 'required']);
+                        echo form_label(lang('last_name'), 'last_name', ['class' => 'required']);
                         echo form_input('last_name', $user->last_name, ['class' => 'form-control', 'required' => '', 'id' => 'last_name']);
                         ?>
                     </div>
@@ -29,28 +29,23 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('email'),'email',['class' => 'required']);
+                        echo form_label(lang('email'), 'email', ['class' => 'required']);
                         echo form_input('email', $user->email, ['class' => 'form-control', 'required' => '', 'id' => 'email']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('Phone'), 'phone', ['class' => 'required']);
-                        echo form_input('phone', $address->phone, ['class' => 'form-control', 'required' => '', 'id' => 'phone']);
+                        echo form_input('phone', !empty($address) ? $address->phone : '', ['class' => 'form-control', 'required' => '', 'id' => 'phone']);
                         ?>
                     </div>
                 </div>
                 <div class="row">
+
                     <div class="col-sm-6">
                         <?php
-                        echo form_label(lang('Alt. Phone'), 'phone2');
-                        echo form_input('phone2', $user->phone2, ['class' => 'form-control']);
-                        ?>
-                    </div>
-                    <div class="col-sm-6">
-                        <?php
-                        echo form_label(lang('pin'),'pin',['class' => 'required']);
-                        echo form_input('pin', $address->zip_code, ['class' => 'form-control', 'required' => '', 'id' => 'pin']);
+                        echo form_label(lang('pin'), 'pin', ['class' => 'required']);
+                        echo form_input('pin', $user->pin, ['class' => 'form-control', 'required' => '', 'id' => 'pin']);
                         ?>
                     </div>
                 </div>
@@ -58,13 +53,13 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('address line 1'), 'address_line_1', ['class' => 'required']);
-                        echo form_input('address_line_1', $address->address_line_1, ['class' => 'form-control', 'required' => '', 'id' => 'address_line_1']);
+                        echo form_input('address_line_1', !empty($address) ? $address->address_line_1 : '', ['class' => 'form-control', 'required' => '', 'id' => 'address_line_1']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('address line 2'));
-                        echo form_input('address_line_2', $address->address_line_2, ['class' => 'form-control']);
+                        echo form_input('address_line_2', !empty($address) ? $address->address_line_2 : '', ['class' => 'form-control']);
                         ?>
                     </div>
                 </div>
@@ -72,13 +67,13 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('fax'));
-                        echo form_input('fax', $address->fax, ['class' => 'form-control']);
+                        echo form_input('fax', !empty($address) ? $address->fax : '', ['class' => 'form-control']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('city'), 'city', ['class' => 'required']);
-                        echo form_input('city', $address->city, ['class' => 'form-control', 'required' => '', 'id' => 'city']);
+                        echo form_input('city', !empty($address) ? $address->city : '', ['class' => 'form-control', 'required' => '', 'id' => 'city']);
                         ?>
                     </div>
                 </div>
@@ -86,14 +81,14 @@
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('state'), 'state', ['class' => 'required']);
-                        echo form_input('state', $address->state, ['class' => 'form-control', 'required' => '', 'id' => 'state']);
+                        echo form_input('state', !empty($address) ? $address->state : '', ['class' => 'form-control', 'required' => '', 'id' => 'state']);
                         ?>
                     </div>
                     <div class="col-sm-6">
                         <?php
                         echo form_label(lang('country'));
                         ?>
-                        <select id="country" class="form-control" required="" name="country" value="<?php echo $address->country; ?>">
+                        <select id="country" class="form-control" required="" name="country" value="<?php echo !empty($address) ? $address->country : ''; ?>">
                             <option value="USA">United States</option>
                         </select>
                     </div>
@@ -122,13 +117,14 @@
                             } else {
                                 $type = 'disabled"';
                             }
-                            if (is('admin')) : if($group['id'] != 5):?>
-                                <label class="check">
-                                    <?php echo $group['name']; ?>
-                                    <input type="radio" <?php echo $type; ?> name="groups[]" value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
-                                    <span class="checkmark"></span>
-                                </label>
-                        <?php endif; elseif (is('manager')) : ?>
+                            if (is('admin')) : if ($group['id'] != 5) : ?>
+                                    <label class="check">
+                                        <?php echo $group['name']; ?>
+                                        <input type="radio" <?php echo $type; ?> name="groups[]" value="<?php echo $group['id']; ?>" <?php echo $checked; ?>>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                <?php endif;
+                                    elseif (is('manager')) : ?>
                                 <?php if ($user->id == $this->user->uid() && $group['id'] == user_roles()['manager']) : ?>
                                     <label class="check">
                                         <?php echo $group['name']; ?>
