@@ -58,6 +58,7 @@
         </div>
     </div>
 </body>
+<?php $this->load->view("registration/footer");  ?>
 <script>
     $(document).ready(function() {
         $('.user_register').submit(function(e) {
@@ -67,4 +68,3 @@
     });
 </script>
 
-<?php $this->load->view("registration/footer");  ?>

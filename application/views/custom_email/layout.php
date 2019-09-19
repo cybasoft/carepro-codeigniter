@@ -360,17 +360,6 @@
         <td class="container">
             <div class="content">
 
-                <?php if($image === '') : ?>
-                    <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png" alt="Daycare logo"
-                         style="width: 150px; height: 100px">
-                <?php else : ?>
-                    <img src="<?php echo base_url(); ?>assets/uploads/daycare_logo/<?php echo $image; ?>"
-                         alt="Daycare logo" style="width: 150px; height: 100px">
-                <?php endif; ?>
-                <div style="text-align:center;background:#60aff470">
-                    <img src="<?php echo base_url(); ?>assets/img/daycare/gif-img.gif" alt="Daycare logo"
-                         style="width: 200px;margin-top: 2%;"><br/><br/>
-                </div>
                 <!-- START CENTERED WHITE CONTAINER -->
                 <table role="presentation" class="main">
 
@@ -380,35 +369,39 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <!--content-->
-
-                                        <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $user_name ?>,</p>
-                                        <h2 style="color: #03a9f4;margin-bottom:5px;"> Welcome to Daycarepro app</h2>
-                                        Visit your dashboard from here: <br/>
-                                        <p style="margin-top:28px;">
-                                            <a href="<?php echo base_url(); ?>/login"
-                                               style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Visit
-                                                Dashboard</a><br/><br/></p>
-
-                                        <p style="font-size: 20px">Features of Daycare:</p>
-                                        <p style="font-size: 16px;text-align:center">Invite admin, staff and parent</p>
-                                        <p><img src="<?php echo base_url(); ?>assets/img/daycare/1.png"
-                                                alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
-                                        <p style="font-size: 16px;text-align:center">Customise your rooms and
-                                            invoices</p>
-                                        <p><img src="<?php echo base_url(); ?>assets/img/daycare/2.png"
-                                                alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
-                                        <p style="font-size: 16px;text-align:center">Stay update about upcoming
-                                            events</p>
-                                        <p><img src="<?php echo base_url(); ?>assets/img/daycare/3.png"
-                                                alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
+                                        <p>Hello, <?php echo isset($salute) ? $salute : ''; ?>,</p>
+                                        <p>
+                                            <?php echo isset($content) ? $content : ''; ?>
+                                        </p>
+                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                                               class="btn btn-primary">
+                                            <tbody>
+                                            <tr>
+                                                <td align="left">
+                                                    <table role="presentation" border="0" cellpadding="0"
+                                                           cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <?php if(isset($button)): ?>
+                                                                    <a href="<?php $button['link']; ?>"><?php echo $button['title']; ?></a>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <p>
+                                            <?php echo isset($more) ? $more : ''; ?>
+                                        </p>
+                                        <p></p>
                                         <p>
                                             Thanks!<br/>
-                                            Daycarepro Team<br/>
-                                            <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png"
-                                                 alt="Daycare logo" style="width: 200px;">
+                                            Your Daycare Team
                                         </p>
-                                        <!--end content-->
                                     </td>
                                 </tr>
                             </table>
@@ -456,3 +449,4 @@
     </tr>
 </table>
 </body>
+</html>

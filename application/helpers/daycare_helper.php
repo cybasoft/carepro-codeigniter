@@ -1064,8 +1064,22 @@ function gravatar($email, $size = 50)
 
 function is_childs_parent($user_id, $child_id)
 {
-    $db = &get_instance();
-    $res = $db->db->where('user_id', $user_id)->where('child_id', $child_id)->get('child_parents')->row();
+    $ci = &get_instance();
+    $res = $ci->db->where('user_id', $user_id)->where('child_id', $child_id)->get('child_parents')->row();
     if(empty($res)) return FALSE;
     return TRUE;
+}
+
+function daycare($id, $item = '')
+{
+    $ci = &get_instance();
+    $daycare = $ci->db->where('daycare.id', $id)
+                      ->select('daycare.*,a.address_line_1,a.addresss_line_2,a.phone,a.fax,a.city,a.state,a.zip_code,a.country')
+                      ->join('address as a', 'a.id', 'daycare.address_id', 'left')
+                      ->get('daycare')->row();
+//    $daycare->address=$ci->db->where('id',$daycare['address_id'])->get('address');
+    if(empty($item))
+        return $daycare;
+
+    return $daycare->{$item};
 }
