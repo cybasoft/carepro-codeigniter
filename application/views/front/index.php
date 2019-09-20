@@ -42,7 +42,7 @@
                         <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
                         <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#price">Pricing</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
