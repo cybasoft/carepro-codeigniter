@@ -31,7 +31,7 @@
                 <div class="single_feature">
                     <div class="feature_head">
                         <span class="lnr lnr-screen"></span>
-                        <h4>Track progress</h4>
+                        <h4>Progress tracking</h4>
                     </div>
                     <div class="feature_content">
                         <p></p>
@@ -42,6 +42,16 @@
                     <div class="feature_head">
                         <span class="lnr lnr-screen"></span>
                         <h4>Reports</h4>
+                    </div>
+                    <div class="feature_content">
+                        <p></p>
+                    </div>
+                </div>
+                <!-- single features -->
+                <div class="single_feature">
+                    <div class="feature_head">
+                        <span class="lnr lnr-screen"></span>
+                        <h4>Child Sign in/out</h4>
                     </div>
                     <div class="feature_content">
                         <p></p>
