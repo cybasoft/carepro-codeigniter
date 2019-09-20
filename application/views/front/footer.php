@@ -25,7 +25,7 @@
                     <p>Stay updated with our latest trends</p>
                     <div id="mc_embed_signup">
                         <form target="_blank"
-                              action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                              action="https://careproapp.us19.list-manage.com/subscribe/post?u=4dd121ac3de42399dec43de20&amp;id=a606a12408"
                               method="get" class="subscribe_form relative">
                             <div class="input-group d-flex flex-row">
                                 <input name="EMAIL" placeholder="Enter email address" onfocus="this.placeholder = ''"
@@ -78,3 +78,4 @@
 </body>
 
 </html>
+
