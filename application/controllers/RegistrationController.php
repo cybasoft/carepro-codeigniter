@@ -44,10 +44,10 @@ class RegistrationController extends CI_Controller
         if ($this->form_validation->run() == true) {
             $status = $this->My_user_registration->store_user();
             if ($status['success'] !== '') {
-                $this->load->view('registration/success', $status);
+                $this->load->view('front/registration/success', $status);
             } elseif ($status['error'] !== '') {
                 $this->session->set_flashdata("verify_email_error", "Unable to send verification Email. Please try again.");
-                $this->load->view('registration/index');
+                $this->load->view('front/registration/index');
             }
         } else {
             set_flash(['email', 'name', 'address_line_1', 'address_line_2', 'city', 'state', 'zip_code', 'country', 'phone', 'password']);
@@ -78,7 +78,7 @@ class RegistrationController extends CI_Controller
             'daycares' => $daycares
         );
         $this->load->view('auth/header');
-        $this->load->view('registration/select_daycare', $data);
+        $this->load->view('front/registration/select_daycare', $data);
         $this->load->view('auth/footer');
     }
 
