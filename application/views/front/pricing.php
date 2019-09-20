@@ -46,13 +46,13 @@
                                     <li>
                                         <a href="#">
                                             <span><i class="fa fa-newspaper-o"></i></span>
-                                            <span><?php echo lang('yes News Module'); ?></span>
+                                            <span><?php echo lang('News Module'); ?></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
                                             <span><i class="fa fa-home"></i></span>
-                                            <span><?php echo lang('yes Rooms'); ?></span>
+                                            <span><?php echo lang('Rooms'); ?></span>
                                         </a>
                                     </li>
                                     <li>
