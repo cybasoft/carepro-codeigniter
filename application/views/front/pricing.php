@@ -3,10 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <div class="main_title">
-                    <p class="top_title">Features Specifications</p>
-                    <h2>Amazing Features That make it Awesome!</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                    <p class="top_title">Affordable Pricing</p>
+                    <h2></h2>
+                    <p>Choose a package that fits your business</p>
                 </div>
             </div>
         </div>
