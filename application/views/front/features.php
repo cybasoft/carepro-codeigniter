@@ -1,4 +1,4 @@
-<section class="section_gap features_area">
+<section class="section_gap features_area" id="features">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">

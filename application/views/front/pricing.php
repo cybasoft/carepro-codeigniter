@@ -1,4 +1,4 @@
-<section class="price_area section_gap">
+<section class="price_area section_gap" id="pricing">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
