@@ -71,3 +71,8 @@
 <script src="/assets/frontend/vendors/counter-up/jquery.counterup.min.js"></script>
 <script src="/assets/frontend/js/mail-script.js"></script>
 <script src="/assets/frontend/js/theme.js"></script>
+
+
+</body>
+
+</html>
