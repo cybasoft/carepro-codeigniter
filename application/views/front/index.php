@@ -60,7 +60,7 @@
         <div class="impress_inner">
             <h2>Want to see it in action?</h2>
             <p></p>
-            <a class="primary_btn" href="#demo"><span>Request Free Demo</span></a>
+            <a class="primary_btn" href="#contact"><span>Request Free Demo</span></a>
         </div>
     </div>
 </section>
