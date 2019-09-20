@@ -1,5 +1,11 @@
 <?php $this->load->view("registration/header");  ?>
 
+<?php if (!empty($this->session->flashdata('error'))) : ?>
+    <div class="alert alert-danger alert-dismissable">
+        <?php echo $this->session->flashdata('error'); ?>
+    </div>
+<?php endif; ?>
+
 <body class="transparent-header">
     <div class="loading_div">
     </div>

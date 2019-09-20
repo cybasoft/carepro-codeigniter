@@ -1,0 +1,61 @@
+body {
+    line-height: 24px;
+    font-size: 16px;
+    font-family: $primary-font;
+    font-weight: normal;
+    color: $text-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    //font-family: $title-font;
+    font-family: $secondary-font;
+    font-weight: 600;
+}
+
+.list {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        outline: none;
+    }
+}
+
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.mt-25 {
+    margin-top: 25px;
+}
+
+.p0 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.white_bg {
+    background: #fff !important;
+}
+.btn-purple{
+    min-width: 145px;
+    background-image: linear-gradient(to right, #8252fa 0%, #eca2f1 100%), radial-gradient(circle at top left, #8252fa, #eca2f1);
+    background-image: -webkit-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -webkit-radial-gradient(circle at top left, #8252fa, #eca2f1);
+    background-image: -moz-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -moz-radial-gradient(circle at top left, #8252fa, #eca2f1);
+    background-image: -ms-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -ms-radial-gradient(circle at top left, #8252fa, #eca2f1);
+    background-image: -o-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -o-radial-gradient(circle at top left, #8252fa, #eca2f1);
+    color: #fff;
+}

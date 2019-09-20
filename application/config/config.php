@@ -1,23 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$config['email_config'] = array(
-    'protocol' => 'sendmail', //sendmail, smtp, mail
+$config['stripe_key'] = '';
 
-    //no need to complete these if using sendmail
-    'smtp_host' => '',
-    'smtp_user' => '',
-    'smtp_pass' => '',
-    'smtp_port' => '',
-    'mailtype' => 'html', //html, text
-    //do not change
-    'crlf' => "\r\n",
-    'newline' => "\r\n"
-);
-
-$config['stripe_key'] = 'pk_test_qetTlwEqbj7ojcfNGytBW4uF005r8sQ744';
-
-$config['stripe_secret'] = 'sk_test_DaiHsoELxk7AKx2CV5iKPc84009Len8HVy';
+$config['stripe_secret'] = '';
 
 /*
 |--------------------------------------------------------------------------

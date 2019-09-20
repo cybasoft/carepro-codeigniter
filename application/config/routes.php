@@ -3,7 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 //generate migration tables (!)
 $route['migration/(:any)'] = 'migration/$1';
 
-$route['default_controller'] = 'RegistrationController/subscription';
+//$route['default_controller'] = 'RegistrationController/subscription';
+$route['default_controller'] = 'Homepage/index';
 $route['404_override'] = 'landing/error404';
 $route['translate_uri_dashes'] = FALSE;
 

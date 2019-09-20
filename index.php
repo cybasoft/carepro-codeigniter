@@ -1,7 +1,7 @@
 <?php
 //development, staging, production
 
-$APP_ENV = 'production';
+$APP_ENV = 'development';
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT ($APP_ENV)
