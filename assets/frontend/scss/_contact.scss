@@ -164,9 +164,8 @@
             font-size: 16px;
             line-height: 24px;
             color: $primary-font;
-            font-weight: bold;
-            margin-bottom: 0px;
-			color: $title-color;
+            font-weight: normal;
+            margin-bottom: 0;
             a{
                 color: $title-color;
             }
@@ -174,7 +173,7 @@
         p{
             font-size: 14px;
             line-height: 24px;
-            padding: 2px 0px;
+            padding: 2px 0;
         }
     }
 }
@@ -205,9 +204,7 @@
         }
     }
     .primary_btn{
-        margin-top: 20px;
 		cursor: pointer;
-		border: none;
 		background-image: linear-gradient(to right, $primary-color 0%, $primary-color2 100%), radial-gradient(circle at top left, $primary-color,$primary-color2);
         background-image: -webkit-linear-gradient(to right, $primary-color 0%, $primary-color2 100%), -webkit-radial-gradient(circle at top left, $primary-color,$primary-color2);
         background-image: -moz-linear-gradient(to right, $primary-color 0%, $primary-color2 100%), -moz-radial-gradient(circle at top left, $primary-color,$primary-color2);
@@ -217,6 +214,8 @@
         box-shadow: 0px 10px 30px rgba(130, 82, 250, 0.2);
 		border: 2px solid transparent;
 		padding: 0;
+		min-width: 135px;
+		margin-top:-35px !important;
 		@include transition();
 		&:hover{
 			border: double 2px transparent;

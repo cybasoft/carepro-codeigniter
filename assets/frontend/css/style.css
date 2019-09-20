@@ -1430,15 +1430,14 @@ button:focus {
     font-size: 16px;
     line-height: 24px;
     color: "Roboto", sans-serif;
-    font-weight: bold;
-    margin-bottom: 0px;
-    color: #222222; }
+    font-weight: normal;
+    margin-bottom: 0; }
     .contact_info .info_item h6 a {
       color: #222222; }
   .contact_info .info_item p {
     font-size: 14px;
     line-height: 24px;
-    padding: 2px 0px; }
+    padding: 2px 0; }
 
 .contact_form .form-group {
   margin-bottom: 10px; }
@@ -1467,9 +1466,7 @@ button:focus {
       height: 134px; }
 
 .contact_form .primary_btn {
-  margin-top: 20px;
   cursor: pointer;
-  border: none;
   background-image: linear-gradient(to right, #8252fa 0%, #eca2f1 100%), radial-gradient(circle at top left, #8252fa, #eca2f1);
   background-image: -webkit-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -webkit-radial-gradient(circle at top left, #8252fa, #eca2f1);
   background-image: -moz-linear-gradient(to right, #8252fa 0%, #eca2f1 100%), -moz-radial-gradient(circle at top left, #8252fa, #eca2f1);
@@ -1479,6 +1476,8 @@ button:focus {
   box-shadow: 0px 10px 30px rgba(130, 82, 250, 0.2);
   border: 2px solid transparent;
   padding: 0;
+  min-width: 135px;
+  margin-top: -35px !important;
   -webkit-transition: all 0.4s ease 0s;
   -moz-transition: all 0.4s ease 0s;
   -o-transition: all 0.4s ease 0s;

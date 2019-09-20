@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="/assets/frontend/img/favicon.png" type="image/png">
-    <title><?php echo config_item('app.name'); ?></title>
+    <title><?php echo config('company', 'name'); ?></title>
     <link rel="stylesheet" href="/assets/frontend/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/frontend/vendors/linericon/style.css">
     <link rel="stylesheet" href="/assets/frontend/css/font-awesome.min.css">
@@ -64,8 +64,6 @@
 <?php endif; ?>
 <?php if(!empty($this->session->flashdata('type')) || !empty($this->session->flashdata('message'))) : ?>
 <div style="max-width:500px;margin:0 auto">
-    <div class="alert alert-info alert-dismissable">
-        <?php echo $this->session->flashdata('message'); ?>
-    </div>
+    <?php echo $this->session->flashdata('message'); ?>
 </div>
 <?php endif; ?>

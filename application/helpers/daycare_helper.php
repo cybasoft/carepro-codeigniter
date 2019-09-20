@@ -200,16 +200,20 @@ function send_email($data)
     $ci->load->library('email');
 
     $ci->email->set_mailtype('html');
-    $from = $ci->config->item('smtp_user');
-    $to = $data['to'];
-    $ci->email->from($from, 'Daycare');
-    $ci->email->to($to);
+
+    $ci->email->from(isset($data['from']) ? $data['from'] : config('company','email'), 'Daycare');
+    $ci->email->to(isset($data['to']) ? $data['to'] : config('company','email'));
     $ci->email->subject($data['subject']);
 
-    $body = $ci->load->view('custom_email/report_activity_email', $data, TRUE);
-    $ci->email->message($body);  //Send mail        
+    $template = isset($data['template']) ? $data['template'] : 'report_activity_email';
+
+    $body = $ci->load->view('custom_email/'.$template, $data, TRUE);
+
+    $ci->email->message($body);
     if($ci->email->send()) {
+       return true;
     }
+    return FALSE;
 }
 
 /**
@@ -1082,4 +1086,30 @@ function daycare($id, $item = '')
         return $daycare;
 
     return $daycare->{$item};
+}
+
+function config($item, $value = '', $separator = '  ')
+{
+    $ci = &get_instance();
+    if(is_array($value)) {
+        $items = $ci->config->item($item);
+
+        $res = '';
+        if(is_array($items)) {
+            foreach ($value as $v) {
+                $res .= $items[$v].$separator.' ';
+            }
+        }
+
+        return substr($res, 0, -2);
+    }
+
+    $items = $ci->config->item($item);
+
+    if(is_array($items) && !empty($value)) {
+        return $ci->config->item($item)[$value];
+    }
+    else {
+        return $ci->config->item($item);
+    }
 }

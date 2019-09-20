@@ -369,33 +369,34 @@
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <p>Hello, <?php echo isset($salute) ? $salute : ''; ?>,</p>
+                                        <p>Hello, <?php echo isset($salute) ? $salute : ''; ?></p>
                                         <p>
-                                            <?php echo isset($content) ? $content : ''; ?>
+                                            <?php echo isset($message) ? $message : ''; ?>
                                         </p>
-                                        <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-                                               class="btn btn-primary">
-                                            <tbody>
-                                            <tr>
-                                                <td align="left">
-                                                    <table role="presentation" border="0" cellpadding="0"
-                                                           cellspacing="0">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <?php if(isset($button)): ?>
+                                        <?php if(isset($button)): ?>
+                                            <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                                                   class="btn btn-primary">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="left">
+                                                        <table role="presentation" border="0" cellpadding="0"
+                                                               cellspacing="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
                                                                     <a href="<?php $button['link']; ?>"><?php echo $button['title']; ?></a>
-                                                                <?php endif; ?>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        <?php endif; ?>
                                         <p>
-                                            <?php echo isset($more) ? $more : ''; ?>
+                                            <?php echo isset($message2) ? $message2 : ''; ?>
                                         </p>
                                         <p></p>
                                         <p>

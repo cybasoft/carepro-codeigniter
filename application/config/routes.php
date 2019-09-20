@@ -5,6 +5,8 @@ $route['migration/(:any)'] = 'migration/$1';
 
 //$route['default_controller'] = 'RegistrationController/subscription';
 $route['default_controller'] = 'Homepage/index';
+$route['contact']='Homepage/contact';
+
 $route['404_override'] = 'landing/error404';
 $route['translate_uri_dashes'] = FALSE;
 
