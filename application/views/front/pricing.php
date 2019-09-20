@@ -4,7 +4,7 @@
             <div class="col-lg-8 text-center">
                 <div class="main_title">
                     <p class="top_title">Affordable Pricing</p>
-                    <h2></h2>
+                    <h2>Pricing</h2>
                     <p>Choose a package that fits your business</p>
                 </div>
             </div>
