@@ -55,15 +55,17 @@
 </header>
 
 
-<?php if (!empty($this->session->flashdata('error'))) : ?>
-<div style="max-width:500px;margin:0 auto">
-    <div class="alert alert-danger alert-dismissable">
-        <?php echo $this->session->flashdata('error'); ?>
-    </div>
-</div>
-<?php endif; ?>
-<?php if(!empty($this->session->flashdata('type'))) : ?>
+<?php if(!empty($this->session->flashdata('error'))) : ?>
     <div style="max-width:500px;margin:0 auto">
+        <div class="alert alert-danger alert-dismissable">
+            <?php echo $this->session->flashdata('error'); ?>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if(!empty($this->session->flashdata('type')) || !empty($this->session->flashdata('message'))) : ?>
+<div style="max-width:500px;margin:0 auto">
+    <div class="alert alert-info alert-dismissable">
         <?php echo $this->session->flashdata('message'); ?>
     </div>
+</div>
 <?php endif; ?>

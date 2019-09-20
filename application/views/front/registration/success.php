@@ -1,4 +1,4 @@
-<?php $this->load->view("registration/header");  ?>
+<?php $this->load->view("front/registration/header");  ?>
 
 
 <body>
@@ -43,4 +43,4 @@
     </div>
 </body>
 
-<?php $this->load->view("registration/footer");  ?>
+<?php $this->load->view("front/registration/footer");  ?>

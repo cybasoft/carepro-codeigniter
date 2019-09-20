@@ -1,51 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title><?php echo session('company_name'); ?></title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo assets('img/favicon.ico'); ?>">
-    <link href="<?php echo base_url(); ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="<?php echo base_url(); ?>assets/css/icons/font-awesome/css/all.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
-    <style>
-        body {
-            position: relative;
-        }
+<?php $this->load->view('front/header'); ?>
+<link href="<?php echo base_url(); ?>assets/css/user_register/payment.css" type="text/css" rel="stylesheet">
+<style>
+    body {
+        position: relative;
+    }
 
-        .loading_div {
-            display: none;
-            position: fixed;
-            background: #fff url('../assets/img/loader.gif') no-repeat 50%;
-            opacity: .5;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            height: 100%;
-        }
+    .loading_div {
+        display: none;
+        position: fixed;
+        background: #fff url('../assets/img/loader.gif') no-repeat 50%;
+        opacity: .5;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 100%;
+    }
 
-        .btn_div {
-            margin-left: 20%;
-        }
+    .btn_div {
+        margin-left: 20%;
+    }
 
-        .fas {
-            color: #EB6C6A;
-        }
+    .fa {
+        color: #EB6C6A;
+    }
 
-    </style>
-</head>
+</style>
 
-<body>
 <div class="loading_div"></div>
 <div class="container">
-    <div class="row pt-5">
-        <div class="offset-4">
-            <img src="../assets/img/logo.png" class="w-50 mb-3 offset-1">
-            <p class="subscribe_text offset-1"><?php echo lang('Subscribe to Daycarepro Plan'); ?></p>
+    <div class="row mt-4">
+        <div class="col-sm-12 text-center">
+            <h4 class="text-success">Last step... Almost done!</h4>
         </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-6 offset-1 mt-5">
+            <h3 class="subscribe_text">Complete subscription</h3>
+            <p>Enter your payment method below to complete your subscription</p>
+        </div>
+    </div>
+    <div class="row pt-6">
+
         <div class="col-md-6 offset-1">
             <div class="card credit-card-box mt-3">
                 <div class="card-header display-table">
@@ -122,7 +118,7 @@
             <div class="plan_div ml-5 pl-5">
                 <div class="row">
                     <p class="col-md-1">
-                        <span><i class="fas fa-child"></i></span>
+                        <span><i class="fa fa-child"></i></span>
                     </p>
                     <p class="col-md-10">
                         <?php echo $children; ?><?php echo lang(' Children'); ?>
@@ -130,7 +126,7 @@
                 </div>
                 <div class="row">
                     <p class="col-md-1">
-                        <span><i class="fas fa-chalkboard-teacher"></i></span>
+                        <span><i class="fa fa-user"></i></span>
                     </p>
                     <p class="col-md-10">
                         <?php echo $staff_members; ?><?php echo lang(' Staff members'); ?>
@@ -138,7 +134,7 @@
                 </div>
                 <div class="row">
                     <p class="col-md-1">
-                        <span><i class="fas fa-calendar"></i></span>
+                        <span><i class="fa fa-calendar"></i></span>
                     </p>
                     <p class="col-md-10">
                         <?php echo $calender_events; ?><?php echo lang(' Calender events '); ?>
@@ -146,7 +142,7 @@
                 </div>
                 <div class="row">
                     <p class="col-md-1">
-                        <span><i class="fas fa-newspaper"></i></span>
+                        <span><i class="fa fa-newspaper-o"></i></span>
                     </p>
                     <p class="col-md-10">
                         <?php echo $news_module; ?><?php echo lang(' News Module'); ?>
@@ -154,40 +150,40 @@
                 </div>
                 <div class="row">
                     <p class="col-md-1">
-                        <span><i class="fas fa-home"></i></span>
+                        <span><i class="fa fa-home"></i></span>
                     </p>
                     <p class="col-md-10">
-                        <?php echo $rooms; ?><?php echo lang(' Rooms'); ?>
+                        <?php echo $rooms; ?><?php echo lang('Rooms'); ?>
                     </p>
                 </div>
                 <div class="row">
                     <p class="col-md-1">
-                        <span><i class="fas fa-file-invoice"></i></span>
+                        <span><i class="fa fa-money"></i></span>
                     </p>
                     <p class="col-md-10">
-                        <?php echo $invoices; ?><?php echo lang(' Invoices'); ?>
+                        <?php echo $invoices; ?><?php echo lang('Invoices'); ?>
                     </p>
                 </div>
-                <div class="row">
-                    <p class="col-md-1">
-                        <span><i class="fas fa-file-upload"></i></span>
-                    </p>
-                    <p class="col-md-10">
-                        <?php echo $files; ?><?php echo lang(' Files'); ?>
-                    </p>
-                </div>
+                <!--                <div class="row">-->
+                <!--                    <p class="col-md-1">-->
+                <!--                        <span><i class="fa fa-file-upload"></i></span>-->
+                <!--                    </p>-->
+                <!--                    <p class="col-md-10">-->
+                <!--                        --><?php //echo $files; ?><!----><?php //echo lang(' Files'); ?>
+                <!--                    </p>-->
+                <!--                </div>-->
             </div>
-            <p class="mb-0 amount_to_pay text-center">$<?php echo $price; ?> / month</p>
+            <hr/>
+            <p class="mb-0 amount_to_pay text-center">$<?php echo $price; ?> /mo</p>
         </div>
         <div class="col-3 mt-3 btn_div">
-            <button class="btn btn-primary btn-lg btn-block" type="submit" id="buy_now">Buy Now</button>
+            <button class="btn btn-purple btn-block" type="submit" id="buy_now">Submit</button>
         </div>
     </div>
 </div>
 
-</body>
 
-<?php $this->load->view("registration/footer"); ?>
+<?php $this->load->view("front/footer"); ?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/user_register/stripe.js"></script>
 
 <script type="text/javascript">
@@ -249,4 +245,3 @@
     });
 </script>
 
-</html>

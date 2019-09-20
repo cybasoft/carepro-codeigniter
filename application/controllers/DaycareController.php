@@ -113,7 +113,7 @@ class DaycareController extends CI_Controller
             );
             $this->db->where('activation_code', $activation_code);
             $this->db->update('users', $data);            
-            $this->load->view('stripe_payment/index', $plan_data);
+            $this->load->view('front/registration/subscribe', $plan_data);
         }
         if ($daycare !== NULL) {
             $daycare_details = $this->db->get_where('daycare', array(
@@ -124,7 +124,7 @@ class DaycareController extends CI_Controller
         }
 
         if ($user_status === "2") {            
-            $this->load->view('stripe_payment/index', $plan_data);
+            $this->load->view('front/registration/subscribe', $plan_data);
         } elseif ($user_status === "3") {
             redirect('daycare/' . $activation_code);
         } elseif ($user_status === "4") {

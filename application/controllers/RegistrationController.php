@@ -16,7 +16,7 @@ class RegistrationController extends CI_Controller
     }
     public function index()
     {
-        $this->load->view('registration/index');
+        $this->load->view('front/registration/index');
     }
 
     public function plan()
@@ -67,7 +67,7 @@ class RegistrationController extends CI_Controller
         $data = array(
             'plans' => $plans
         );
-        $this->load->view('registration/subscription_page',$data);
+        $this->load->view('front/registration/subscription_page',$data);
     }
 
     public function select_daycare()

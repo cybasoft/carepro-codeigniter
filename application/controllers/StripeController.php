@@ -30,7 +30,7 @@ class StripeController extends CI_Controller
     public
     function index()
     {
-        $this->load->view('stripe_payment/index');
+        $this->load->view('front/registration/subscribe');
     }
 
     /**
