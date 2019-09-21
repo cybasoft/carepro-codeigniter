@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
- * @package     daycarepro app
+ * @package     carepro app
  * @copyright   2018 A&M Digital Technologies
  * @author      John Muchiri
  * @link        https://amdtllc.com

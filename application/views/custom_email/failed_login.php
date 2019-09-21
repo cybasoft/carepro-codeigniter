@@ -373,7 +373,7 @@
                                         <!--content-->
 
                                         <p style="font-size: 20px;font-weight: 600;">Hello,</p>
-                                        <p>This message is to notify you if your 5th login attempt to your daycarepro-app fails then your account with email <?php echo $email; ?> will be blocked for daycarepro-app.</p>
+                                        <p>This message is to notify you if your 5th login attempt to your carepro-app fails then your account with email <?php echo $email; ?> will be blocked for carepro-app.</p>
                                         <p style="margin-bottom: 30px;">Forgot password for <?php echo $email; ?>,then reset it from here:</p>
                                         <a href="<?php echo base_url(); ?>forgot" style="background-color: #EB6C6A;color: white;text-decoration: none;padding: 11px 35px;font-weight: 600;font-size: 13px;border-radius: 21px;">Reset Password</a>
                                         <p style="margin-top:30px">

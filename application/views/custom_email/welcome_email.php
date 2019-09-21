@@ -383,7 +383,7 @@
                                         <!--content-->
 
                                         <p style="font-size: 20px;font-weight: 600;">Hello <?php echo $user_name ?>,</p>
-                                        <h2 style="color: #03a9f4;margin-bottom:5px;"> Welcome to Daycarepro app</h2>
+                                        <h2 style="color: #03a9f4;margin-bottom:5px;"> Welcome to CarePRO</h2>
                                         Visit your dashboard from here: <br/>
                                         <p style="margin-top:28px;">
                                             <a href="<?php echo base_url(); ?>/login"
@@ -404,7 +404,7 @@
                                                 alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
                                         <p>
                                             Thanks!<br/>
-                                            Daycarepro Team<br/>
+                                            CarePRO Team<br/>
                                             <img src="<?php echo base_url(); ?>assets/img/logo.png"
                                                  alt="Daycare logo" style="width: 200px;">
                                         </p>

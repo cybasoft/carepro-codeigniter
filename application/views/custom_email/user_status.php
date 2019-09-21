@@ -404,7 +404,7 @@
                                     <?php endif; ?>
 
                                         Thanks!<br/>
-                                        Daycarepro Team
+                                        Daycare Team
                                         <!--end content-->
                                     </td>
                                 </tr>

@@ -5,7 +5,7 @@
     <title><?php echo session('company_name'); ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="DaycarePRO - Daycare management system">
+    <meta name="description" content="CarePRO - Daycare management system">
     <meta name="author" content="A&M Digital Technologies">
     <link rel="icon" type="image/png" href="<?php echo assets('favicon/favicon.icon'); ?>"/>
     <link href="<?php echo assets('plugins/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet"/>

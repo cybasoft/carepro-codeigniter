@@ -37,9 +37,9 @@ class DaycareTableSeeder extends CI_Model
             $daycare_id = $year . "-" . $month . "-" .$pin;
 
             if($i == 1){
-                $name = "Daycarepro";
+                $name = "CarePRO";
             }else{
-                $name = "Careproapp";
+                $name = "CarePRO";
             }
             $data = [
                 'name' => $name,

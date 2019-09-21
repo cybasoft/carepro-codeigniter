@@ -327,7 +327,7 @@ class UserController extends CI_Controller
         $this->email->set_mailtype('html');
         $from = $this->config->item('smtp_user');
         $to = $user['email'];
-        $this->email->from($from, 'Daycarepro');
+        $this->email->from($from, 'CarePRO');
         $this->email->to($to);
         $this->email->subject('User Status Change');
 

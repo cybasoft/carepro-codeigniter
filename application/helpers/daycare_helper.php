@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     daycarepro
+ * @package     carepro
  * @copyright   2017 A&M Digital Technologies
  * @author      John Muchiri
  * @link        https://amdtllc.com
@@ -652,7 +652,7 @@ function sensitive_options()
 function general_options()
 {
     return [
-        'name'                  => 'DaycarePRO',
+        'name'                  => 'CarePRO',
         'slogan'                => 'daycare management',
         'email'                 => 'app@admin.com',
         'phone'                 => '',

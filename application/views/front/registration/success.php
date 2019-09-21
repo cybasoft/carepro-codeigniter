@@ -31,12 +31,12 @@
                 </div>
                 <div class="card-body">
                     <h5>Hello <?php echo $user_name ?>,</h5>
-                    <p>Thanks for signing up for Daycarepro. We're very excited to have you on board.<br />
+                    <p>Thanks for signing up for CarePRO. We're very excited to have you on board.<br />
                         To get started, </p>
 
                     <h5 class="text-center">Please check your email to confirm your account.</h5><br />
                     Thanks,<br />
-                    <span>Team Daycarepro</span>
+                    <span>Daycare Team</span>
                 </div>
             </div>
         </div>
