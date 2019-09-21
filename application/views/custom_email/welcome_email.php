@@ -368,7 +368,7 @@
                          alt="Daycare logo" style="width: 150px; height: 100px">
                 <?php endif; ?>
                 <div style="text-align:center;background:#60aff470">
-                    <img src="<?php echo base_url(); ?>assets/img/daycare/gif-img.gif" alt="Daycare logo"
+                    <img src="<?php echo base_url(); ?>assets/img/content/gif-img.gif" alt="Daycare logo"
                          style="width: 200px;margin-top: 2%;"><br/><br/>
                 </div>
                 <!-- START CENTERED WHITE CONTAINER -->
@@ -392,20 +392,20 @@
 
                                         <p style="font-size: 20px">Features of Daycare:</p>
                                         <p style="font-size: 16px;text-align:center">Invite admin, staff and parent</p>
-                                        <p><img src="<?php echo base_url(); ?>assets/img/daycare/1.png"
+                                        <p><img src="<?php echo base_url(); ?>assets/img/screenshots/1.png"
                                                 alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
                                         <p style="font-size: 16px;text-align:center">Customise your rooms and
                                             invoices</p>
-                                        <p><img src="<?php echo base_url(); ?>assets/img/daycare/2.png"
+                                        <p><img src="<?php echo base_url(); ?>assets/img/screenshots/2.png"
                                                 alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
                                         <p style="font-size: 16px;text-align:center">Stay update about upcoming
                                             events</p>
-                                        <p><img src="<?php echo base_url(); ?>assets/img/daycare/3.png"
+                                        <p><img src="<?php echo base_url(); ?>assets/img/screenshots/3.png"
                                                 alt="Daycare logo" style="width: 200px;margin-top: 1%;"></p>
                                         <p>
                                             Thanks!<br/>
                                             Daycarepro Team<br/>
-                                            <img src="<?php echo base_url(); ?>assets/uploads/content/logo.png"
+                                            <img src="<?php echo base_url(); ?>assets/img/logo.png"
                                                  alt="Daycare logo" style="width: 200px;">
                                         </p>
                                         <!--end content-->

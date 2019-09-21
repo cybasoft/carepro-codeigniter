@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="DaycarePRO - Daycare management system">
     <meta name="author" content="A&M Digital Technologies">
-    <link rel="icon" type="image/png" href="<?php echo base_url('assets/img/favicon.ico'); ?>"/>
+    <link rel="icon" type="image/png" href="<?php echo assets('favicon/favicon.icon'); ?>"/>
     <link href="<?php echo assets('plugins/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet"/>
-    <link href="<?php echo base_url(); ?>assets/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="<?php echo assets('css/icons/font-awesome/css/all.min.css'); ?>" rel="stylesheet"/>
+    <link href="<?php echo assets('plugins/bootstrap-select/css/bootstrap-select.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo assets('fonts/font-awesome/css/all.min.css'); ?>" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="<?php echo assets('css/login.css'); ?>"/>
     <link rel="stylesheet" type="text/css" href="<?php echo assets('css/login-utils.css'); ?>"/>
 

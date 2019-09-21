@@ -47,7 +47,7 @@
                 <div class="card-header display-table">
                     <div class="row display-tr">
                         <div class="display-td float-right">
-                            <img class="img-responsive float-right" src="../assets/img/daycare/card_img.png">
+                            <img class="img-responsive float-right" src="/assets/img/content/card_img.png">
                         </div>
                     </div>
                 </div>

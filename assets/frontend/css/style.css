@@ -456,7 +456,7 @@ button:focus {
 ============================================================================================ */
 .home_banner_area {
   z-index: 1;
-  background: url(../img/banner/home-banner.png) no-repeat right center;
+  background: url(../img/home-banner.png) no-repeat right center;
   background-size: cover; }
   .home_banner_area .banner_inner {
     width: 100%; }
@@ -507,7 +507,7 @@ button:focus {
     min-height: 780px;
     z-index: 1; }
     .blog_banner .banner_inner .overlay {
-      background: url(../img/banner/banner-2.jpg) no-repeat scroll center center;
+      background: url(../img/banner-2.jpg) no-repeat scroll center center;
       opacity: .5;
       height: 125%;
       position: absolute;
@@ -546,7 +546,7 @@ button:focus {
     overflow: hidden;
     width: 100%;
     min-height: 400px;
-    background-image: url(../img/banner/common-banner.png);
+    background-image: url(../img/common-banner.png);
     background-size: cover;
     z-index: 1; }
     .banner_area .banner_inner .banner_content h2 {

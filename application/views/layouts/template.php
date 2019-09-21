@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo assets('img/favicon.ico'); ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo assets('favicon/favicon.ico'); ?>">
     <title><?php echo session('company_name'); ?>
         <?php echo (isset($this->title)) ? ' - '.$this->title : ''; ?>
     </title>

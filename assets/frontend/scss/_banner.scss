@@ -3,7 +3,7 @@
 
 .home_banner_area {
     z-index: 1;
-    background: url(../img/banner/home-banner.png) no-repeat right center;
+    background: url(../img/home-banner.png) no-repeat right center;
     background-size: cover;
     .banner_inner {
         width: 100%;
@@ -66,7 +66,7 @@
         min-height: 780px;
         z-index: 1;
         .overlay {
-            background: url(../img/banner/banner-2.jpg) no-repeat scroll center center;
+            background: url(../img/banner-2.jpg) no-repeat scroll center center;
             opacity: .5;
             height: 125%;
             position: absolute;
@@ -113,11 +113,11 @@
         overflow: hidden;
         width: 100%;
         min-height: 400px;
-        background-image: url(../img/banner/common-banner.png);
+        background-image: url(../img/common-banner.png);
         background-size: cover;
         z-index: 1;
         //		.overlay{
-        //			background: url(../img/banner/banner.jpg) no-repeat scroll center center;
+        //			background: url(../img/banner.jpg) no-repeat scroll center center;
         //			position: absolute;
         //			left: 0;
         //			right: 0;

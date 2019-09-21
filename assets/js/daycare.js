@@ -30,7 +30,7 @@ $(document).ready(function() {
         $("#edit_image").val('');
         $("#customer_image").val('');
         $("#profile_image").val('');
-        $("#img_preview").attr('src', base_url + 'assets/img/daycare/default-user-image.png');
+        $("#img_preview").attr('src', base_url + 'assets/img/content/default-user-image.png');
     });
 
     $(".notifictions").delay(2000).hide("slide", {

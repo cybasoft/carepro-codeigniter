@@ -27,7 +27,7 @@
         <div class="row mt-5 pt-3">
             <div class="card offset-sm-3 col-sm-6 mt-5 p-0">
                 <div class="card-header text-center">
-                    <img src="../assets/img/daycare/mail-1454731_960_720.png" class="email_img">
+                    <img src="/assets/img/content/mail-1454731_960_720.png" class="email_img">
                 </div>
                 <div class="card-body">
                     <h5>Hello <?php echo $user_name ?>,</h5>

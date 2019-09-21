@@ -14623,7 +14623,7 @@ label {
 .error-box {
     height: 100%;
     position: fixed;
-    background: url(../../../assets/img/background/error-bg.jpg) center center no-repeat #fff;
+    /*background: url(../img/content/background/error-bg.jpg) center center no-repeat #fff;*/
     width: 100%
 }
 

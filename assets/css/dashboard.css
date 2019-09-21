@@ -378,7 +378,7 @@ input[type=checkbox], input[type=radio] {
     width: 101px;
     height: 66px;
     border-radius: 140px / 100px;
-    background: #EEEEEE url('../img/wheel.gif') 1px -15px no-repeat;
+    background: #EEEEEE url('../img/loader.gif') 1px -15px no-repeat;
 }
 
 .no-border {
