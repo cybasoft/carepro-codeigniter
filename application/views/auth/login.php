@@ -14,7 +14,7 @@
 
     <?php if(!empty($this->session->flashdata('type'))) : ?>
         <div style="">
-            <?php echo $this->session->flashdata('message'); ?>
+            <?php echo $this->session->flashdata('notice'); ?>
         </div>
     <?php endif; ?>
     <div class="wrap-input100 validate-input"

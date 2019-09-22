@@ -9,7 +9,7 @@
 <span class="login100-form-title p-b-43"><?php echo lang('reset_password_heading'); ?></span>
 <?php if (!empty($this->session->flashdata('type'))) : ?>
     <div style="">
-        <?php echo $this->session->flashdata('message'); ?>
+        <?php echo $this->session->flashdata('notice'); ?>
     </div>
 <?php endif; ?>
 

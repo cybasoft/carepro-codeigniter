@@ -21,6 +21,7 @@ class Homepage extends CI_Controller
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('phone', 'Phone', 'required');
         $this->form_validation->set_rules('message', 'Message', 'required');
+        $this->form_validation->set_rules('recaptcha_response', 'Captcha', 'required');
 
         if($this->form_validation->run() == TRUE) {
             $message = 'Email: '.$this->input->post('email').'<br/>';
@@ -31,6 +32,12 @@ class Homepage extends CI_Controller
                 'subject'  => 'Message from CarePro Contact',
                 'template' => 'layout',
             ];
+
+            if(verify_captcha($this->input->post('recaptcha_response'))){
+                set_flash(['email', 'name', 'phone', 'message']);
+                redirectBack('Invalid captcha','error','contact');
+            }
+
             if(send_email($data)) {
                 flash('success', 'Thank you! We will get back to you soon');
             }
@@ -39,10 +46,11 @@ class Homepage extends CI_Controller
             }
         }
         else {
+            set_flash(['email', 'name', 'phone', 'message']);
             validation_errors();
             flash('error');
         }
-        redirectPrev();
+        redirectBack();
 
     }
 }

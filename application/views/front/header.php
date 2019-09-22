@@ -32,18 +32,19 @@
     <meta name="msapplication-config" content="/img/browserconfig.xml">
     <meta name="theme-color" content="#3C366B">
 
-    <meta name="description" content="A daycare management software for busy daycare owners who want a simple yet powerfull tool to manage their daycare">
+    <meta name="description"
+          content="A daycare management software for busy daycare owners who want a simple yet powerfull tool to manage their daycare">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@careproapp">
     <meta name="twitter:title" content="Daycare management software - careproapp.com">
     <meta name="twitter:description" content="Take your daycare to the cloud and manage it with ease - careproapp">
     <meta name="twitter:image" content="/img/content/card.png">
     <meta name="twitter:creator" content="@careproapp">
-    <meta property="og:url" content="https://careproapp.com/" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Daycare management software - careproapp.com" />
-    <meta property="og:description" content="Take your daycare to the cloud and manage it with ease - careproapp" />
-    <meta property="og:image" content="/img/content/card.png" />
+    <meta property="og:url" content="https://careproapp.com/"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Daycare management software - careproapp.com"/>
+    <meta property="og:description" content="Take your daycare to the cloud and manage it with ease - careproapp"/>
+    <meta property="og:image" content="/img/content/card.png"/>
 </head>
 
 <body>
@@ -83,16 +84,8 @@
     </div>
 </header>
 
-
-<?php if(!empty($this->session->flashdata('error'))) : ?>
-    <div style="max-width:500px;margin:0 auto">
-        <div class="alert alert-danger alert-dismissable">
-            <?php echo $this->session->flashdata('error'); ?>
-        </div>
-    </div>
-<?php endif; ?>
-<?php if(!empty($this->session->flashdata('type')) || !empty($this->session->flashdata('message'))) : ?>
-<div style="max-width:500px;margin:0 auto">
-    <?php echo $this->session->flashdata('message'); ?>
-</div>
-<?php endif; ?>
+<?php
+if(!empty($this->session->flashdata('type')) || !empty($this->session->flashdata('notice'))) {
+    echo $this->session->flashdata('notice');
+}
+?>

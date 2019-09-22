@@ -9,16 +9,7 @@
                     <div class="text-center">
                         <h2 style="padding-bottom:15px;">Daycare Registration</h2>
                     </div>
-                    <?php if(!empty($this->session->flashdata('type'))) : ?>
-                        <div style="">
-                            <?php echo $this->session->flashdata('message'); ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if(!empty($this->session->flashdata('error'))) : ?>
-                        <div class="alert alert-danger alert-dismissable">
-                            <?php echo $this->session->flashdata('error'); ?>
-                        </div>
-                    <?php endif; ?>
+
                     <?php echo form_open_multipart("daycare/store/$activation_code", ['class' => 'form-box daycare_register']); ?>
 
                     <div class="row">

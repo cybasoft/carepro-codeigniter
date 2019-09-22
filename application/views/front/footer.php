@@ -74,6 +74,16 @@
 <script src="/assets/frontend/js/jquery.validate.min.js"></script>
 <script src="/assets/frontend/js/contact.js"></script>
 
+<script src="https://www.google.com/recaptcha/api.js?render=<?php echo config('recaptcha','site'); ?>"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('<?php echo config("recaptcha","site"); ?>', {action: 'homepage'}).then(function(token) {
+            var recaptchaResponse = document.getElementById('recaptchaResponse');
+            recaptchaResponse.value = token;
+        });
+    });
+
+</script>
 
 </body>
 

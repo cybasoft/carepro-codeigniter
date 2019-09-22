@@ -15154,3 +15154,14 @@ label {
     display: block
 }
 
+
+.notice{
+    position: fixed;
+    top: 82px;
+    right: 0px;
+    z-index: 10000;
+    width: 360px;
+    -webkit-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+}

@@ -124,7 +124,7 @@ class My_parent_registration extends CI_Model
         $this->email->message($body);        //Send mail
         if($this->email->send()){
             $this->insert_parent($data);
-            $this->session->set_flashdata("success","Parent registered successfully.");
+            flash("success","Parent registered successfully.");
             redirect('login');
         }   
         else{
@@ -132,7 +132,7 @@ class My_parent_registration extends CI_Model
             $logs .= $this->email->print_debugger('message');
             $logs .= "\n\r";
             file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
-            $this->session->set_flashdata("verify_email_error","Unable to send verification Email. Please try again.");
+            flash('error',"Unable to send verification Email. Please try again.");
             redirect('register');
         }
     }

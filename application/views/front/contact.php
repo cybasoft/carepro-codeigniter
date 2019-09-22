@@ -42,32 +42,34 @@
             <div class="col-lg-5 offset-lg-2">
                 <div class="common_style">
                     <form method="post" class="contact_form" id="contactForm" action="/contact">
+                        <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+
                         <div>
                             <label>Name</label>
-                            <input type="text" class="form-control" required name="name" placeholder="Your name"/>
+                            <input type="text" class="form-control" required name="name"
+                                   value="<?php echo set_value('name'); ?>" placeholder="Your name"/>
                         </div>
                         <div class="mt-2">
-                           <div class="row">
-                               <div class="col-sm-6">
-                                   <label>Email</label>
-                                   <input type="email" name="email" class="form-control" required placeholder="Your email"/>
-                               </div>
-                               <div class="col-sm-6">
-                                   <label>Phone</label>
-                                   <input type="number" name="phone" class="form-control" required placeholder="Your Phone"/>
-                               </div>
-                           </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Email</label>
+                                    <input type="email" name="email" class="form-control" required
+                                           value="<?php echo set_value('email'); ?>" placeholder="Your email"/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Phone</label>
+                                    <input type="number" name="phone" class="form-control" required
+                                           value="<?php echo set_value('phone'); ?>" placeholder="Your Phone"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-2">
                             <label>Message</label>
-                            <textarea name="message" class="form-control" placeholder="Your message"
-                                      required></textarea>
-                        </div>
-
-                        <div class="row col-4 mt-2">
-                            <label>Captcha</label>
-                            <input type="hidden" id="captcha_valid" value="11" name="captcha_valid"/>
-                            <input type="number" name="captcha" class="form-control" required placeholder="9+2=?"/>
+                            <textarea
+                                    name="message"
+                                    class="form-control"
+                                    placeholder="Your message"
+                                    required><?php echo set_value('message'); ?></textarea>
                         </div>
                         <br/>
                         <button class="primary_btn">Send</button>

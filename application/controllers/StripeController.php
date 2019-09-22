@@ -100,7 +100,7 @@ class StripeController extends CI_Controller
             $logs .= $this->email->print_debugger('message');
             $logs .= "\n\r";
             file_put_contents('./application/logs/log_'.date("j.n.Y").'.log', $logs, FILE_APPEND); //log error if any unable to send email.
-            $this->session->set_flashdata("subscription_error", "Unable to send verification email. Please try again.");
+           flash('error', "Unable to send verification email. Please try again.");
         }
     }
 
@@ -123,7 +123,7 @@ class StripeController extends CI_Controller
         $check_status = $query->row_array();
         $user_status = $check_status['owner_status'];
         if($user_status === "3") {
-            $this->session->set_flashdata("message", "Payment completed successfully. Thank you for subscription.");
+            flash("success", "Payment completed successfully. Thank you for subscription.");
             redirect('daycare/'.$activation_code);
         }
     }

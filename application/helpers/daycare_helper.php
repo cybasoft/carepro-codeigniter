@@ -56,6 +56,7 @@ function flash($type = "", $msg = "")
 {
     switch ($type) {
         case 'danger':
+        case 'error':
             $icon = 'exclamation';
             break;
         case 'success':
@@ -71,31 +72,27 @@ function flash($type = "", $msg = "")
             $icon = 'info';
             break;
     }
-    if($type == "error")
-        $type = "danger";
+    if($type == "error") $type = "danger";
+
     $ci = &get_instance();
     if(validation_errors()) {
         if($msg == "") {
-            $e = validation_errors('<div class="alert alert-danger alert-dismissable"><span class="fa fa-exclamation-triangle"></span>', '</div>');
-            $msg = $e;
-            $type = 'error';
+            $e = validation_errors('<div class="notice alert alert-danger alert-dismissable fade show" role="alert"> <span class="fa fa-exclamation-triangle"></span> ', '</div>');
+            $notice = $e;
+            $type = 'danger';
             $icon = 'danger';
         }
     }
     else {
-        $msg = '<div class="alert alert-'.$type.' alert-dismissable"><span class="fa fa-info"></span>'.$msg.'</div>';
+        $notice = '<div class="notice alert alert-'.$type.' alert-dismissable fade show" role="alert">';
+        $notice .='<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
+        $notice .= '<span class="fa fa-info"></span> '.$msg;
+        $notice .= '</div>';
     }
 
-    $ci->session->set_flashdata('message', $msg);
+    $ci->session->set_flashdata('notice', $notice);
     $ci->session->set_flashdata('type', $type);
     $ci->session->set_flashdata('icon', $icon);
-
-    //        $tempdata = array(
-    //            'message' => $msg,
-    //            'type' =>$type,
-    //            'icon'=>$icon);
-    //
-    //        $ci->session->set_tempdata($tempdata, NULL, 4);
 }
 
 /**
@@ -158,6 +155,11 @@ function redirectPrev($msg = [], $tab = '', $type = 'info')
     }
 }
 
+function redirectBack($msg = [], $type = 'info', $tab = '')
+{
+    redirectPrev($msg, $tab, $type);
+}
+
 /**
  * Check if user is in a group
  *
@@ -201,8 +203,8 @@ function send_email($data)
 
     $ci->email->set_mailtype('html');
 
-    $ci->email->from(isset($data['from']) ? $data['from'] : config('company','email'), 'Daycare');
-    $ci->email->to(isset($data['to']) ? $data['to'] : config('company','email'));
+    $ci->email->from(isset($data['from']) ? $data['from'] : config('company', 'email'), 'Daycare');
+    $ci->email->to(isset($data['to']) ? $data['to'] : config('company', 'email'));
     $ci->email->subject($data['subject']);
 
     $template = isset($data['template']) ? $data['template'] : 'report_activity_email';
@@ -211,7 +213,7 @@ function send_email($data)
 
     $ci->email->message($body);
     if($ci->email->send()) {
-       return true;
+        return TRUE;
     }
     return FALSE;
 }
@@ -1112,4 +1114,20 @@ function config($item, $value = '', $separator = '  ')
     else {
         return $ci->config->item($item);
     }
+}
+
+function verify_captcha($response)
+{
+    if(empty($response) && isset($_POST['recaptcha_response']) && !empty($_POST['recaptcha_response'])) {
+        $response = $_POST['recaptcha_response'];
+    }
+
+    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+    $recaptcha_secret = config('recaptcha', 'secret');
+
+    $recaptcha = file_get_contents($recaptcha_url.'?secret='.$recaptcha_secret.'&response='.$response);
+    $recaptcha = json_decode($recaptcha);
+
+    if($recaptcha->success && $recaptcha->score >= 0.5) return TRUE;
+    return FALSE;
 }

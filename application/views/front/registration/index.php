@@ -9,11 +9,6 @@
                 <div class="text-center">
                     <h2 style="padding-bottom:15px;">Register</h2>
                 </div>
-                <?php if(!empty($this->session->flashdata('verify_email_error'))) : ?>
-                    <div class="alert alert-danger alert-dismissable">
-                        <?php echo $this->session->flashdata('verify_email_error'); ?>
-                    </div>
-                <?php endif; ?>
                 <?php echo form_open('user/create', ['class' => 'form-box user_register']); ?>
                 <div class="row">
                     <div class="col-sm-12">

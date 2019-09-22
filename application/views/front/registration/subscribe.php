@@ -56,17 +56,6 @@
                       data-stripe-publishable-key="<?php echo $this->config->item('stripe_key') ?>" id="payment-form">
                     <div class="card-body">
 
-                        <?php if($this->session->flashdata('success')) { ?>
-                            <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                                <p class="m-0"><?php echo $this->session->flashdata('success'); ?></p>
-                            </div>
-                        <?php } ?>
-                        <?php if(!empty($this->session->flashdata('subscription_error'))) : ?>
-                            <div class="alert alert-danger alert-dismissable">
-                                <?php echo $this->session->flashdata('subscription_error'); ?>
-                            </div>
-                        <?php endif; ?>
                         <div class='form-row row'>
                             <div class='col-12 form-group required'>
                                 <label class='control-label'><?php echo lang('Name on Card'); ?> *</label> <input

@@ -183,7 +183,7 @@ class My_daycare_registration extends CI_Model
             $logs .= $this->email->print_debugger('message');
             $logs .= "\n\r";
             file_put_contents('./application/logs/log_' . date("j.n.Y") . '.log', $logs, FILE_APPEND);
-            $this->session->set_flashdata("subscription_error", "Enable to sent welcome email. Please try again.");
+            flash('error', "Unable to sent welcome email. Please try again.");
         }
     }
 

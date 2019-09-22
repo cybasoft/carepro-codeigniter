@@ -123,7 +123,7 @@
         <div class="error_msg msg"></div>
         <?php if(!empty($this->session->flashdata('type'))) : ?>
             <div id="msg" class="msg">
-                <?php echo $this->session->flashdata('message'); ?>
+                <?php echo $this->session->flashdata('notice'); ?>
             </div>
         <?php endif; ?>
         <footer class="footer text-center">

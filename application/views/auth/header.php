@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="CarePRO - Daycare management system">
     <meta name="author" content="A&M Digital Technologies">
-    <link rel="icon" type="image/png" href="<?php echo assets('favicon/favicon.icon'); ?>"/>
+    <link rel="icon" type="image/png" href="<?php echo assets('favicon/favicon.ico'); ?>"/>
     <link href="<?php echo assets('plugins/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet"/>
     <link href="<?php echo assets('plugins/bootstrap-select/css/bootstrap-select.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo assets('fonts/font-awesome/css/all.min.css'); ?>" rel="stylesheet"/>
@@ -32,13 +32,14 @@
         ga('send', 'pageview');
     </script>
     <style>
-    .login100-form-btn:hover {
-        color: #ffffff;
-    }
-    body{
-        overflow-x: hidden;
-    }
-</style>
+        .login100-form-btn:hover {
+            color: #ffffff;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 
 <body style="background-color: #666666;">

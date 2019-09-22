@@ -46,7 +46,7 @@ class RegistrationController extends CI_Controller
             if ($status['success'] !== '') {
                 $this->load->view('front/registration/success', $status);
             } elseif ($status['error'] !== '') {
-                $this->session->set_flashdata("verify_email_error", "Unable to send verification Email. Please try again.");
+                flash('error', "Unable to send verification Email. Please try again.");
                 $this->load->view('front/registration/index');
             }
         } else {

@@ -28,10 +28,6 @@ $(document).ready(function () {
                     message: {
                         required: true,
                         minlength: 20
-                    },
-                    captcha:{
-                        required:true,
-                        equalTo:'#captcha_valid'
                     }
                 },
                 messages: {
@@ -50,10 +46,6 @@ $(document).ready(function () {
                     message: {
                         required: "<strong class='text-danger'>Please enter a message</strong>",
                         minlength: "<span class='text-danger'>Message is too short</span>'"
-                    },
-                    captcha:{
-                        required:"<strong class='text-danger'>Enter captcha</strong>",
-                        equalTo:'<span class="text-danger">Invalid captcha</span>'
                     }
                 },
                 submitHandler: function (form) {

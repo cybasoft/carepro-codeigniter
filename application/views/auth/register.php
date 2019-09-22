@@ -21,14 +21,7 @@
     <!-- <?php echo lang('register_form_notice'); ?> -->
 
     <?php if (!empty($this->session->flashdata('type'))) : ?>
-        <div style="">
-            <?php echo $this->session->flashdata('message'); ?>
-        </div>
-    <?php endif; ?>
-    <?php if (!empty($this->session->flashdata('verify_email_error'))) : ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php echo $this->session->flashdata('verify_email_error'); ?>
-        </div>
+            <?php echo $this->session->flashdata('notice'); ?>
     <?php endif; ?>
 
     <div class="wrap-input100 validate-input" data-validate="<?php echo lang('Field is required'); ?>">

@@ -63,7 +63,7 @@ class DaycareController extends CI_Controller
                 }  
             }elseif($success_status['error'] !== ''){
                 $data['activation_code'] = $activation_code;
-                $this->session->set_flashdata("error", $success_status['error']);
+                flash("error", $success_status['error']);
                 $this->load->view('registration/daycare_register', $data);
             }
             

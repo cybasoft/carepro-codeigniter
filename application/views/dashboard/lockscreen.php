@@ -1,10 +1,6 @@
 <div class="center">
-    <?php if(!empty($this->session->flashdata('message'))) : ?>
-        <div id="msg"
-             class="msg alert alert-<?php echo $this->session->flashdata('type'); ?> alert-dismissable">
-            <span class="fa fa-<?php echo $this->session->flashdata('icon'); ?>"></span>
-            <?php echo $this->session->flashdata('message'); ?>
-        </div>
+    <?php if(!empty($this->session->flashdata('notice'))) : ?>
+            <?php echo $this->session->flashdata('notice'); ?>
     <?php endif; ?>
     <div class="headline text-center" id="time"></div>
     <div class="lockscreen-name">
