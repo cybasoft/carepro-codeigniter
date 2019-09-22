@@ -1537,6 +1537,9 @@ button:focus {
     .modal-message .modal-dialog .modal-content .modal-header p {
       display: block; }
 
+.grecaptcha-badge {
+  display: none !important; }
+
 /* End Contact Success and error Area css
 ============================================================================================ */
 /*---------------------------------------------------- */

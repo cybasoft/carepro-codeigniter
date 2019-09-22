@@ -33,9 +33,14 @@ class Homepage extends CI_Controller
                 'template' => 'layout',
             ];
 
-            if(verify_captcha($this->input->post('recaptcha_response'))){
-                set_flash(['email', 'name', 'phone', 'message']);
-                redirectBack('Invalid captcha','error','contact');
+            if(!verify_captcha($this->input->post('recaptcha_response'))) {
+                set_flash([
+                    'email',
+                    'name',
+                    'phone',
+                    'message',
+                ]);
+                redirectBack('Invalid captcha', 'error', 'contact');
             }
 
             if(send_email($data)) {
@@ -46,7 +51,12 @@ class Homepage extends CI_Controller
             }
         }
         else {
-            set_flash(['email', 'name', 'phone', 'message']);
+            set_flash([
+                'email',
+                'name',
+                'phone',
+                'message',
+            ]);
             validation_errors();
             flash('error');
         }

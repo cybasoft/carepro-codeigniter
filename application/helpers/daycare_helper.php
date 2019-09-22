@@ -1129,5 +1129,6 @@ function verify_captcha($response)
     $recaptcha = json_decode($recaptcha);
 
     if($recaptcha->success && $recaptcha->score >= 0.5) return TRUE;
+
     return FALSE;
 }

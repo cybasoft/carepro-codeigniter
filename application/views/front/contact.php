@@ -27,12 +27,12 @@
                                 </div>
                                 <div class="info_item">
                                     <i class="lnr lnr-phone-handset"></i>
-                                    <h6><?php echo config('company', 'phone'); ?></h6>
+                                    <h6><?php echo str_replace('-','<code>-</code>',config('company', 'phone')); ?></h6>
                                     <p></p>
                                 </div>
                                 <div class="info_item">
                                     <i class="lnr lnr-envelope"></i>
-                                    <h6><?php echo config('company', 'email'); ?></h6>
+                                    <h6><?php echo str_replace('@','<code>&#64;</code>',config('company', 'email')); ?></h6>
                                 </div>
                             </div>
                         </div>
