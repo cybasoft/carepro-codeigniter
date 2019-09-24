@@ -129,8 +129,7 @@
         <footer class="footer text-center">
 
             <?php echo config_item('copyright'); ?>
-            <?php echo config_item('version'); ?> |
-            <a href="//amdtllc.com/support" target="_blank">Open support ticket</a>
+            <?php echo config_item('version'); ?>
         </footer>
     </div>
 </div>
