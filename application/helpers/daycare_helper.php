@@ -387,6 +387,11 @@ function allow($group)
     $ci = &get_instance();
     auth(TRUE);
 
+    //check demo
+    if(session('daycare_id')==1){
+        demo(true);
+    }
+
     if($ci->ion_auth->in_group($group)) {
         return TRUE;
     }
@@ -399,6 +404,7 @@ function allow($group)
         exit();
     }
 }
+
 
 //convert date format to 4 june 2019 and time to am pm format
 function event_log_date($log_date)
@@ -441,7 +447,7 @@ function parents_page($page, $data = [])
     $data['page'] = $page;
 }
 
-function demo()
+function demo($state=false)
 {
     $allowed_demo_routes = [
         'child',
@@ -466,7 +472,7 @@ function demo()
     ];
 
     if($ci->user->uid() > 0) {
-        if(session('company_demo_mode') == 1) {
+        if($state==true) {
             $ci->load->helper('language');
 
             //prevent all post methods
