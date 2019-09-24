@@ -128,8 +128,8 @@
         <?php endif; ?>
         <footer class="footer text-center">
 
+            <?php echo config_item('copyright'); ?>
             <?php echo config_item('version'); ?> |
-            <?php echo config_item('copyright'); ?> |
             <a href="//amdtllc.com/support" target="_blank">Open support ticket</a>
         </footer>
     </div>
