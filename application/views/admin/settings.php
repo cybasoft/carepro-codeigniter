@@ -65,37 +65,6 @@
 </div>
 
 <script>
-    $('.settings').on('submit', function(e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
-        var url = $(this).attr('action');
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: formData,
-            success: function(response) {
-                if (response == "success") {
-                    swal({
-                        type: 'success',
-                        'title': ''
-                    })
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 2000)
-                }else{                    
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 2000)
-                }
-            },
-            error: function(error) {
-                swal({
-                    type: 'error',
-                    'title': ''
-                })
-            }
-        });
-    });
     $("input[name=login_bg_image]").click(function() {
         var img = $(this).val();
         $('.currentLoginImg').attr('src', '<?php echo base_url(); ?>' + 'assets/uploads/content/login/' + img)

@@ -143,7 +143,7 @@ function form_open($action = '', $attributes = array(), $hidden = array())
     if(!is('admin')) {
         if(is_array($attributes)
             && !empty($attributes)
-            && session('company_demo_mode') == 1
+            && session('daycare_id') == 1
             && array_key_exists('demo', $attributes))
             return ''; //disable form in demo
     }

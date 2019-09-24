@@ -85,7 +85,7 @@ function flash($type = "", $msg = "")
     }
     else {
         $notice = '<div class="notice alert alert-'.$type.' alert-dismissable fade show" role="alert">';
-        $notice .='<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
+        $notice .= '<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
         $notice .= '<span class="fa fa-info"></span> '.$msg;
         $notice .= '</div>';
     }
@@ -388,8 +388,8 @@ function allow($group)
     auth(TRUE);
 
     //check demo
-    if(session('daycare_id')==1){
-        demo(true);
+    if(session('daycare_id') == 1 && ENVIRONMENT == 'production') {
+        demo(TRUE);
     }
 
     if($ci->ion_auth->in_group($group)) {
@@ -404,7 +404,6 @@ function allow($group)
         exit();
     }
 }
-
 
 //convert date format to 4 june 2019 and time to am pm format
 function event_log_date($log_date)
@@ -447,7 +446,7 @@ function parents_page($page, $data = [])
     $data['page'] = $page;
 }
 
-function demo($state=false)
+function demo($state = FALSE)
 {
     $allowed_demo_routes = [
         'child',
@@ -472,7 +471,7 @@ function demo($state=false)
     ];
 
     if($ci->user->uid() > 0) {
-        if($state==true) {
+        if($state == TRUE) {
             $ci->load->helper('language');
 
             //prevent all post methods
@@ -1082,14 +1081,20 @@ function is_childs_parent($user_id, $child_id)
     return TRUE;
 }
 
-function daycare($id, $item = '')
+function daycare($id = '', $item = '')
 {
     $ci = &get_instance();
+    if(!is_numeric($id) && !empty(session('daycare_id'))) {
+        $item = $id;
+        $id = session('daycare_id');
+    }
+
     $daycare = $ci->db->where('daycare.id', $id)
-                      ->select('daycare.*,a.address_line_1,a.addresss_line_2,a.phone,a.fax,a.city,a.state,a.zip_code,a.country')
-                      ->join('address as a', 'a.id', 'daycare.address_id', 'left')
+                      ->select('daycare.*,ds.*, a.address_line_1,a.address_line_2,a.phone,a.fax,a.city,a.state,a.zip_code,a.country')
+                      ->join('daycare_settings as ds', 'daycare.id = ds.daycare_id', 'left')
+                      ->join('address as a', 'daycare.address_id = a.id', 'left')
                       ->get('daycare')->row();
-//    $daycare->address=$ci->db->where('id',$daycare['address_id'])->get('address');
+
     if(empty($item))
         return $daycare;
 

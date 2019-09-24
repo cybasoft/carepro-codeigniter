@@ -44,6 +44,6 @@ function editUser(id) {
 }
 
 function startLockscreen() {
-    $('body').load(site_url + '/lockscreen');
-    $('html').addClass('lockscreen');
+    //$('body').load(site_url + '/lockscreen');
+   // $('html').addClass('lockscreen');
 }

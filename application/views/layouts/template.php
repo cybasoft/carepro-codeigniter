@@ -160,14 +160,14 @@
 
 <script src="<?php echo assets('plugins/listjs/list.min.js'); ?>" type="text/javascript"></script>
 
-<?php if(!empty(session('company_tawkto_embed_url'))): ?>
+<?php if(!empty(daycare('tawkto_embed_url'))): ?>
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
         var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
         (function () {
             var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
             s1.async = true;
-            s1.src = '<?php echo session('company_tawkto_embed_url'); ?>';
+            s1.src = '<?php echo daycare('tawkto_embed_url'); ?>';
             s1.charset = 'UTF-8';
             s1.setAttribute('crossorigin', '*');
             s0.parentNode.insertBefore(s1, s0);
@@ -175,8 +175,8 @@
     </script>
     <!--End of Tawk.to Script-->
 <?php endif; ?>
-<?php if(ENVIRONMENT !== "development" && $this->input->cookie('timer') > 0): ?>
-    <script>startLockscreen()</script>
+<?php if(ENVIRONMENT == "production" && $this->input->cookie('timer') > 0): ?>
+<!--    <script>startLockscreen()</script>-->
 <?php endif; ?>
 
 <?php $this->load->view('partials/editor'); ?>

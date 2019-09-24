@@ -20,11 +20,11 @@
                 <span class="hidden-sm-up "><?php echo lang('theme'); ?></span>
             </a>
         </li> -->
-        <!-- <li>
+        <li>
             <a href="#integrations" data-toggle="tab"><i class="fa fa-link"></i>
                 <span class="hidden-sm-up "><?php echo lang('Integrations'); ?></span>
             </a>
-        </li> -->
+        </li>
         <li>
             <a href="#event_log" data-toggle="tab"><i class="fas fa-search"></i>
                 <span class="hidden-sm-up "><?php echo lang('Event Log'); ?></span>

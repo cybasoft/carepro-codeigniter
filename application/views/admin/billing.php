@@ -10,7 +10,6 @@
                 <?php
         echo form_open('update', [
             'class' => 'settings',
-            'demo'  => 1,
         ]);
         echo form_label(lang('currency_abbreviation'));
         echo form_input('currency_abbreviation', $option['currency_abbreviation'], [
@@ -27,7 +26,7 @@
             'type'  => 'submit',
             'class' => 'btn btn-primary',
         ], lang('Update'));
-        echo form_close('demo');
+        echo form_close();
         ?>
             </div>
         </div> -->
@@ -45,7 +44,6 @@
                 <?php
         echo form_open('update', [
             'class' => 'settings',
-            'demo'  => 1,
         ]);
         echo form_label(lang('PayPal locale'));
         echo form_input('paypal_locale', $option['paypal_locale'], ['class' => 'form-control']);
@@ -56,7 +54,7 @@
             'type'  => 'submit',
             'class' => 'btn btn-primary',
         ], lang('Update'));
-        echo form_close('demo'); ?>
+        echo form_close(); ?>
             </div>
         </div> -->
 
@@ -74,83 +72,13 @@
             </div>
             <div class="card-body">
 
-                <?php
-                if(session('company_demo_mode') == 0) {
-                    $hidden = ['setting_id' => $settings->setting_id];
-                    $attributes = [
-                        'class'        => 'settings',
-                        'autocomplete' => 'off',
-                    ];
-                    echo form_open('update', $attributes, $hidden);
-                    ?>
-                    <div class="custom-control custom-switch mb-3">
-                        <?php if(session('daycare_id') > 1): ?>
-                            <input type="checkbox" class="custom-control-input" id="stripe_toggle" name="stripe_toggle"
-                                <?php
-                                if($settings->stripe_toggle == 1) {
-                                    echo "checked";
-                                }
-                                ?>
-                            >
-                        <?php endif; ?>
-                        <label class="custom-control-label" for="stripe_toggle">
-                            <strong>Stripe Test Mode</strong>
-                        </label>
-                    </div>
-                    <div class="test_stripe text-danger
-                      <?php
-                    if($settings->stripe_toggle == 0) {
-                        echo "d-none";
-                    }
-                    ?>
-                    ">
-                        <?php
-                        if(session('daycare_id') > 1):
-                            echo form_label(lang('Stripe test public key'));
-                            echo form_input('stripe_pk_test', $settings->stripe_pk_test, ['class' => 'form-control']);
-                            echo form_label(lang('Stripe test secret key'));
-                            echo form_password('stripe_sk_test', $settings->stripe_sk_test, ['class' => 'form-control']);
-                        else:
-                            echo '<div class="alert alert-danger">NOT AVAILABLE IN DEMO MODE!</div>';
-                        endif;
-                        echo "<br/>";
-                        ?>
-                    </div>
-                    <div class="live_stripe text-success
-                    <?php
-                    if($settings->stripe_toggle == 1) {
-                        echo "d-none";
-                    }
-                    ?>
-                    ">
-                        <?php
-                        if(session('daycare_id') > 1):
-                            echo form_label(lang('Stripe live public key'));
-                            echo form_input('stripe_pk_live', $settings->stripe_pk_live, ['class' => 'form-control']);
-                            echo form_label(lang('Stripe live secret key'));
-                            echo form_password('stripe_sk_live', $settings->stripe_sk_live, ['class' => 'form-control']);
-                        else:
-                            echo '<div class="alert alert-danger">NOT AVAILABLE IN DEMO MODE!</div>';
-                        endif;
-                        echo '<br/>';
-                        ?>
-                    </div>
-                    <?php
-                    echo form_label(lang('Enabled'), 'stripe_enabled');
-                    echo form_dropdown('stripe_enabled', [
-                        0 => lang('No'),
-                        1 => lang('Yes'),
-                    ], $settings->stripe_enabled, ['class' => 'form-control']);
-                    echo '<br/>';
-                    echo form_button([
-                        'type'  => 'submit',
-                        'class' => 'btn btn-primary',
-                    ], lang('Update'));
-                    echo form_close('demo');
-                }
-                else {
-                    echo '<div class="alert alert-danger">'.lang('feature_disabled_in_demo').'</div>';
-                } ?>
+                <?php if(session('daycare_id') > 1):
+                    $this->load->view('admin/billing/stripe');
+                else:
+                    echo '<div class="alert alert-danger">NOT AVAILABLE IN DEMO MODE!</div>';
+                endif;
+                ?>
+
             </div>
         </div>
     </div>
@@ -166,7 +94,6 @@
                 <?php echo lang('Add a payment method'); ?> <span class="field_required"> *</span>
                 <?php echo form_open('paymentMethods', [
                     'class' => 'settings',
-                    'demo'  => 1,
                 ]);
                 echo '<div class="input-group">';
                 echo form_input('title', NULL, [
@@ -179,7 +106,7 @@
                     'class' => 'btn btn-primary',
                 ], '<i class="fa fa-plus"></i> '.lang('Add'));
                 echo '</span></div>';
-                echo form_close('demo'); ?>
+                echo form_close(); ?>
                 <br/>
                 <table class="table table-bordered">
                     <?php foreach ($payMethods as $payMethod) : ?>
